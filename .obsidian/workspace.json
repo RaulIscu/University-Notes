@@ -1,0 +1,187 @@
+{
+  "main": {
+    "id": "520f6c04a0499475",
+    "type": "split",
+    "children": [
+      {
+        "id": "2f34fdfc4e05a620",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "949c3ae227ebc020",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "FONDAMENTI DI PROGRAMMAZIONE/Generatori e contenitori.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Generatori e contenitori"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "7066ab35263183b4",
+    "type": "split",
+    "children": [
+      {
+        "id": "a84259c290f80ed7",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "81ef32eb7b860f30",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "c19158ee1988cd1f",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "232cb5f2dd2e106f",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "691838f246faa396",
+    "type": "split",
+    "children": [
+      {
+        "id": "4313fba723e98c97",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "3a7ab9846de07d06",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "FONDAMENTI DI PROGRAMMAZIONE/Linguaggi compilati e interpretati.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for Linguaggi compilati e interpretati"
+            }
+          },
+          {
+            "id": "5bbfba884e9f4fba",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "FONDAMENTI DI PROGRAMMAZIONE/Linguaggi compilati e interpretati.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from Linguaggi compilati e interpretati"
+            }
+          },
+          {
+            "id": "52c045a03fccc3de",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "c8e5c93dbef2dfab",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "FONDAMENTI DI PROGRAMMAZIONE/Linguaggi compilati e interpretati.md"
+              },
+              "icon": "lucide-list",
+              "title": "Outline of Linguaggi compilati e interpretati"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false
+    }
+  },
+  "active": "949c3ae227ebc020",
+  "lastOpenFiles": [
+    "Untitled.canvas",
+    "FONDAMENTI DI PROGRAMMAZIONE/Generatori e contenitori.md",
+    "METODI MATEMATICI PER INFORMATICA/Principio moltiplicativo.md",
+    "FONDAMENTI DI PROGRAMMAZIONE/Valori booleani.md",
+    "FONDAMENTI DI PROGRAMMAZIONE/Zip, map e filter.md",
+    "FONDAMENTI DI PROGRAMMAZIONE/Variabili e namespace.md",
+    "FONDAMENTI DI PROGRAMMAZIONE/Cos'è Python.md",
+    "FONDAMENTI DI PROGRAMMAZIONE/Breve storia dei computer e della programmazione.md",
+    "FONDAMENTI DI PROGRAMMAZIONE/Cicli.md",
+    "FONDAMENTI DI PROGRAMMAZIONE/Operazioni matematiche.md",
+    "FONDAMENTI DI PROGRAMMAZIONE/Stringhe.md",
+    "FONDAMENTI DI PROGRAMMAZIONE/Funzioni.md",
+    "FONDAMENTI DI PROGRAMMAZIONE/Linguaggi compilati e interpretati.md",
+    "Untitled",
+    "FONDAMENTI DI PROGRAMMAZIONE/Generatori e contenitori",
+    "PROGETTAZIONE DI SISTEMI DIGITALI",
+    "CALCOLO DIFFERENZIALE",
+    "METODI MATEMATICI PER INFORMATICA",
+    "FONDAMENTI DI PROGRAMMAZIONE"
+  ]
+}
