@@ -4,4 +4,8 @@ Ad esempio, supponiamo di doverci vestire e di dover scegliere uno tra 3 pantalo
 
 > *3 ∙ 2 ∙ 3 = 18*
 
-Generalizzando, se devo scegliere un numero *n* di elementi, avendo *a1* scelte per il primo, *a2* scelte per il secondo, e così via fino ad avere *an*, 
+Generalizzando, se si deve scegliere un numero *n* di elementi, avendo *a1* scelte per il primo, *a2* scelte per il secondo, e così via fino ad avere *an* scelte, si ottiene che le possibili combinazioni sono:
+
+> *a1 ∙ a2 ∙ ... ∙ an*
+
+
