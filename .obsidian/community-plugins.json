@@ -1,3 +1,7 @@
 [
-  "obsidian-mkdocs-publisher"
+  "obsidian-linter",
+  "math-in-callout",
+  "obsidian-tasks-plugin",
+  "obsidian-icon-folder",
+  "better-word-count"
 ]
