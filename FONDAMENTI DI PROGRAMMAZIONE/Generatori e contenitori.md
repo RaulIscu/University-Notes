@@ -65,5 +65,3 @@ Infine, analizziamo le operazioni fattibili nell’ambito dei **dizionari**:
 - **```D.setdefault(key, default)```**, che risulta nel valore associato alla chiave *key*, nel caso in cui essa sia presente (altrimenti la inserisce con accoppiato il valore *default*);
 - **```D1.update(D2)```**, che modifica il dizionario D1 aggiungendo, in ordine, le coppie “chiave : valore” di D2;
 - **```D.values()```**, che restituisce un elenco dei valori del dizionario D (compresi eventuali duplicati).
-
-	adtasfdasjdgasgdkgakgadvjasbgkhdagskud
