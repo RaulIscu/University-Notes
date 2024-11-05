@@ -66,3 +66,4 @@ Infine, analizziamo le operazioni fattibili nell’ambito dei **dizionari**:
 - **```D1.update(D2)```**, che modifica il dizionario D1 aggiungendo, in ordine, le coppie “chiave : valore” di D2;
 - **```D.values()```**, che restituisce un elenco dei valori del dizionario D (compresi eventuali duplicati).
 
+	adtasfdasjdgasgdkgakgadvjasbgkhdagskud
