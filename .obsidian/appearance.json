@@ -1,4 +1,6 @@
 {
   "theme": "obsidian",
-  "cssTheme": "Blackbird"
+  "cssTheme": "Blackbird",
+  "baseFontSizeAction": true,
+  "baseFontSize": 18
 }
