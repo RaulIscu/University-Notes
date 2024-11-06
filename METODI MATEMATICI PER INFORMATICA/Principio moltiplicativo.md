@@ -4,7 +4,7 @@ Ad esempio, supponiamo di doverci vestire e di dover scegliere uno tra 3 pantalo
 
 > *3 ∙ 2 ∙ 3 = 18*
 
-Generalizzando, se si deve scegliere un numero *n* di elementi, avendo *a1* scelte per il primo, *a2* scelte per il secondo, e così via fino ad avere *an* scelte, si ottiene che le possibili combinazioni sono:
+Generalizzando, arriviamo okdckhwiou se si deve scegliere un numero *n* di elementi, avendo *a1* scelte per il primo, *a2* scelte per il secondo, e così via fino ad avere *an* scelte, si ottiene che le possibili combinazioni sono:
 
 ![[panini.png]]
 
@@ -14,7 +14,7 @@ Analizziamo, ora, un esempio diverso: supponiamo di avere 8 atleti che corrono i
 
 Generalizzando, se si considera l'insieme A = {*a1*, *a2*, ..., *an*}, formato da *n* elementi, il numero di sequenze ordinate di lunghezza *k* di elementi di A senza ripetizioni (dette anche **disposizioni semplici di ordine *k* di *n* elementi**) è dato da:
 
-  ![[disp_senza_rip.png]]
+![[disp_senza_rip.png]]
 Considerando lo stesso insieme A, il numero di sequenze ordinate di lunghezza k di elementi di A con possibili ripetizioni (dette anche **disposizioni con ripetizioni di ordine k di n elementi**) è invece dato da:
 
 ![[disp_con_rip.jpg]]

@@ -11,10 +11,14 @@
             "id": "b8ea56f64a5116b2",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "METODI MATEMATICI PER INFORMATICA/Principio moltiplicativo.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "Principio moltiplicativo"
             }
           }
         ]
@@ -135,10 +139,10 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "perm.png"
+                "file": "METODI MATEMATICI PER INFORMATICA/Principio moltiplicativo.md"
               },
               "icon": "lucide-list",
-              "title": "Outline of perm"
+              "title": "Outline of Principio moltiplicativo"
             }
           }
         ]
@@ -160,13 +164,13 @@
       "publish:Publish changes...": false
     }
   },
-  "active": "81ef32eb7b860f30",
+  "active": "b8ea56f64a5116b2",
   "lastOpenFiles": [
+    "METODI MATEMATICI PER INFORMATICA/Principio additivo.md",
+    "METODI MATEMATICI PER INFORMATICA/Principio moltiplicativo.md",
     "panini.png",
     "disp_con_rip.jpg",
     "disp_senza_rip.png",
-    "METODI MATEMATICI PER INFORMATICA/Principio additivo.md",
-    "METODI MATEMATICI PER INFORMATICA/Principio moltiplicativo.md",
     "perm.png",
     "Pasted image 20241105204212.png",
     "FONDAMENTI DI PROGRAMMAZIONE/Generatori e contenitori.md",
