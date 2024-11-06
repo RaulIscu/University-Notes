@@ -8,17 +8,17 @@
         "type": "tabs",
         "children": [
           {
-            "id": "b8ea56f64a5116b2",
+            "id": "e0eb7d973a095449",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "METODI MATEMATICI PER INFORMATICA/Principio moltiplicativo.md",
+                "file": "METODI MATEMATICI PER INFORMATICA/Passaggio al complemento.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Principio moltiplicativo"
+              "title": "Passaggio al complemento"
             }
           }
         ]
@@ -139,10 +139,10 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "METODI MATEMATICI PER INFORMATICA/Principio moltiplicativo.md"
+                "file": "METODI MATEMATICI PER INFORMATICA/Passaggio al complemento.md"
               },
               "icon": "lucide-list",
-              "title": "Outline of Principio moltiplicativo"
+              "title": "Outline of Passaggio al complemento"
             }
           }
         ]
@@ -164,10 +164,12 @@
       "publish:Publish changes...": false
     }
   },
-  "active": "b8ea56f64a5116b2",
+  "active": "e0eb7d973a095449",
   "lastOpenFiles": [
     "METODI MATEMATICI PER INFORMATICA/Principio additivo.md",
+    "METODI MATEMATICI PER INFORMATICA/Disposizioni e permutazioni.md",
     "METODI MATEMATICI PER INFORMATICA/Principio moltiplicativo.md",
+    "METODI MATEMATICI PER INFORMATICA/Passaggio al complemento.md",
     "panini.png",
     "disp_con_rip.jpg",
     "disp_senza_rip.png",
