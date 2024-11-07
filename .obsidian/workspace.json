@@ -8,13 +8,17 @@
         "type": "tabs",
         "children": [
           {
-            "id": "c5cd410ab9def5d9",
+            "id": "613856f896f847d7",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "FONDAMENTI DI PROGRAMMAZIONE/File.md",
+                "mode": "preview",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "File"
             }
           }
         ]
@@ -134,9 +138,11 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {},
+              "state": {
+                "file": "FONDAMENTI DI PROGRAMMAZIONE/File.md"
+              },
               "icon": "lucide-list",
-              "title": "Outline"
+              "title": "Outline of File"
             }
           }
         ]
@@ -158,8 +164,11 @@
       "publish:Publish changes...": false
     }
   },
-  "active": "c5cd410ab9def5d9",
+  "active": "613856f896f847d7",
   "lastOpenFiles": [
+    "FONDAMENTI DI PROGRAMMAZIONE/Generatori e contenitori.md",
+    "FONDAMENTI DI PROGRAMMAZIONE/File.md",
+    "FONDAMENTI DI PROGRAMMAZIONE/Cicli.md",
     "PROGETTAZIONE DI SISTEMI DIGITALI/Algebra booleana.md",
     "PROGETTAZIONE DI SISTEMI DIGITALI/Sistema esadecimale.md",
     "PROGETTAZIONE DI SISTEMI DIGITALI/Sistema binario.md",
@@ -179,14 +188,12 @@
     "disp_senza_rip.png",
     "perm.png",
     "Pasted image 20241105204212.png",
-    "FONDAMENTI DI PROGRAMMAZIONE/Generatori e contenitori.md",
     "Untitled.canvas",
     "FONDAMENTI DI PROGRAMMAZIONE/Valori booleani.md",
     "FONDAMENTI DI PROGRAMMAZIONE/Zip, map e filter.md",
     "FONDAMENTI DI PROGRAMMAZIONE/Variabili e namespace.md",
     "FONDAMENTI DI PROGRAMMAZIONE/Cos'è Python.md",
     "FONDAMENTI DI PROGRAMMAZIONE/Breve storia dei computer e della programmazione.md",
-    "FONDAMENTI DI PROGRAMMAZIONE/Cicli.md",
     "FONDAMENTI DI PROGRAMMAZIONE/Operazioni matematiche.md",
     "FONDAMENTI DI PROGRAMMAZIONE/Stringhe.md",
     "Untitled",
