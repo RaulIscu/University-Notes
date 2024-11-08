@@ -1,4 +1,4 @@
-Consideriamo il seguente quesito, simile all'esempio trattato parlando del [[Principio additivo]]: 
+Consideriamo il seguente quesito, simile all'esempio trattato parlando del [[Principio additivo |principio additivo]]: 
 > quante targhe automobilistiche contengono almeno una P?
 
 Potremmo provare a procedere usando proprio il principio additivo. Consideriamo, quindi, i seguenti tipi, a seconda della posizione di una P nella targa:

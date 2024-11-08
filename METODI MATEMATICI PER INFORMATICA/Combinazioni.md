@@ -33,6 +33,11 @@ Supponiamo, ora, di voler sapere quante sono le possibili delegazioni formate di
 $$C₈₀,₄ × 4$$
 2. scelgo 1 capogruppo tra gli 80 membri totali (80 scelte) e poi scelgo i rimanenti 3 membri della delegazione, e dunque si ha:
 $$80 × C₇₉,₃$$
-Entrambe le soluzioni sono corrette, e possono quindi essere eguagliate; si ha quindi che:
-$$C₈₀,₄ × C₄,₁ = C₈₀,₁ × C₇₉,₃ → C(n,m) × m = n × C(n-1,m-1)$$
 
+Entrambe le soluzioni sono corrette, e possono quindi essere eguagliate; si ha quindi che:
+![[comb_num1.png]]
+![[comb_num2.png]]
+L'equazione generalizzata appena ottenuta si può riscrivere in maniera totalmente combinatoria, e in seguito ancora generalizzata:
+![[comb_num3.png]]
+![[comb_num4.png]]
+[CONTINUO: DISPENSA 4]
