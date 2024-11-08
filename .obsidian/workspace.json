@@ -4,21 +4,35 @@
     "type": "split",
     "children": [
       {
-        "id": "6e05d69e4e13070a",
+        "id": "621b4bc9f1858443",
         "type": "tabs",
         "children": [
           {
-            "id": "613856f896f847d7",
+            "id": "ba2fa7a179870004",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "FONDAMENTI DI PROGRAMMAZIONE/File.md",
+                "file": "METODI MATEMATICI PER INFORMATICA/Combinazioni.md",
                 "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "File"
+              "title": "Combinazioni"
+            }
+          },
+          {
+            "id": "7d2d5497566a2420",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "METODI MATEMATICI PER INFORMATICA/Disposizioni e permutazioni.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Disposizioni e permutazioni"
             }
           }
         ]
@@ -139,10 +153,10 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "FONDAMENTI DI PROGRAMMAZIONE/File.md"
+                "file": "METODI MATEMATICI PER INFORMATICA/Combinazioni.md"
               },
               "icon": "lucide-list",
-              "title": "Outline of File"
+              "title": "Outline of Combinazioni"
             }
           }
         ]
@@ -164,25 +178,27 @@
       "publish:Publish changes...": false
     }
   },
-  "active": "613856f896f847d7",
+  "active": "ba2fa7a179870004",
   "lastOpenFiles": [
-    "FONDAMENTI DI PROGRAMMAZIONE/Generatori e contenitori.md",
+    "comb.png",
+    "METODI MATEMATICI PER INFORMATICA/Disposizioni e permutazioni.md",
+    "METODI MATEMATICI PER INFORMATICA/Combinazioni.md",
+    "METODI MATEMATICI PER INFORMATICA/Principio moltiplicativo.md",
+    "METODI MATEMATICI PER INFORMATICA/Principio di inclusione-esclusione.md",
+    "METODI MATEMATICI PER INFORMATICA/Principio additivo.md",
+    "METODI MATEMATICI PER INFORMATICA/Passaggio al complemento.md",
+    "FONDAMENTI DI PROGRAMMAZIONE/All e any.md",
+    "PROGETTAZIONE DI SISTEMI DIGITALI/Sistema binario.md",
     "FONDAMENTI DI PROGRAMMAZIONE/File.md",
+    "FONDAMENTI DI PROGRAMMAZIONE/Generatori e contenitori.md",
     "FONDAMENTI DI PROGRAMMAZIONE/Cicli.md",
     "PROGETTAZIONE DI SISTEMI DIGITALI/Algebra booleana.md",
     "PROGETTAZIONE DI SISTEMI DIGITALI/Sistema esadecimale.md",
-    "PROGETTAZIONE DI SISTEMI DIGITALI/Sistema binario.md",
     "Pasted image 20241107085126.png",
     "add_binaria.png",
-    "METODI MATEMATICI PER INFORMATICA/Passaggio al complemento.md",
     "FONDAMENTI DI PROGRAMMAZIONE/Funzioni.md",
-    "METODI MATEMATICI PER INFORMATICA/Principio additivo.md",
-    "METODI MATEMATICI PER INFORMATICA/Disposizioni e permutazioni.md",
-    "METODI MATEMATICI PER INFORMATICA/Combinazioni.md",
-    "METODI MATEMATICI PER INFORMATICA/Principio di inclusione-esclusione.md",
     "FONDAMENTI DI PROGRAMMAZIONE/Import.md",
     "FONDAMENTI DI PROGRAMMAZIONE/Linguaggi compilati e interpretati.md",
-    "METODI MATEMATICI PER INFORMATICA/Principio moltiplicativo.md",
     "panini.png",
     "disp_con_rip.jpg",
     "disp_senza_rip.png",
