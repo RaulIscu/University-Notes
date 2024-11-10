@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "184b0ccc4705d4a8",
+        "id": "c05e11c23562d9d5",
         "type": "tabs",
         "children": [
           {
-            "id": "2bbf65b3615556eb",
+            "id": "d9945e52f9777e0a",
             "type": "leaf",
             "state": {
               "type": "empty",
@@ -158,8 +158,12 @@
       "publish:Publish changes...": false
     }
   },
-  "active": "81ef32eb7b860f30",
+  "active": "d9945e52f9777e0a",
   "lastOpenFiles": [
+    "FONDAMENTI DI PROGRAMMAZIONE/Input da tastiera.md",
+    "FONDAMENTI DI PROGRAMMAZIONE/Funzioni.md",
+    "FONDAMENTI DI PROGRAMMAZIONE/All e any.md",
+    "FONDAMENTI DI PROGRAMMAZIONE/Lambda.md",
     "images",
     "METODI MATEMATICI PER INFORMATICA/Principio di inclusione-esclusione.md",
     "METODI MATEMATICI PER INFORMATICA/Combinazioni.md",
@@ -174,7 +178,6 @@
     "METODI MATEMATICI PER INFORMATICA/Disposizioni e permutazioni.md",
     "METODI MATEMATICI PER INFORMATICA/Principio moltiplicativo.md",
     "METODI MATEMATICI PER INFORMATICA/Principio additivo.md",
-    "FONDAMENTI DI PROGRAMMAZIONE/All e any.md",
     "PROGETTAZIONE DI SISTEMI DIGITALI/Sistema binario.md",
     "FONDAMENTI DI PROGRAMMAZIONE/File.md",
     "FONDAMENTI DI PROGRAMMAZIONE/Generatori e contenitori.md",
@@ -183,7 +186,6 @@
     "PROGETTAZIONE DI SISTEMI DIGITALI/Sistema esadecimale.md",
     "Pasted image 20241107085126.png",
     "images/add_binaria.png",
-    "FONDAMENTI DI PROGRAMMAZIONE/Funzioni.md",
     "FONDAMENTI DI PROGRAMMAZIONE/Import.md",
     "FONDAMENTI DI PROGRAMMAZIONE/Linguaggi compilati e interpretati.md",
     "images/panini.png",
