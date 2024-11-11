@@ -4,17 +4,35 @@
     "type": "split",
     "children": [
       {
-        "id": "c05e11c23562d9d5",
+        "id": "87e235e33061f3ba",
         "type": "tabs",
         "children": [
           {
-            "id": "d9945e52f9777e0a",
+            "id": "b9e19a0db01f682c",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "METODI MATEMATICI PER INFORMATICA/Iniettività, suriettività e biettività.md",
+                "mode": "preview",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "Iniettività, suriettività e biettività"
+            }
+          },
+          {
+            "id": "711b0f6e6480bf62",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "METODI MATEMATICI PER INFORMATICA/Disposizioni e permutazioni.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Disposizioni e permutazioni"
             }
           }
         ]
@@ -134,9 +152,11 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {},
+              "state": {
+                "file": "METODI MATEMATICI PER INFORMATICA/Iniettività, suriettività e biettività.md"
+              },
               "icon": "lucide-list",
-              "title": "Outline"
+              "title": "Outline of Iniettività, suriettività e biettività"
             }
           }
         ]
@@ -158,28 +178,32 @@
       "publish:Publish changes...": false
     }
   },
-  "active": "d9945e52f9777e0a",
+  "active": "b9e19a0db01f682c",
   "lastOpenFiles": [
+    "METODI MATEMATICI PER INFORMATICA/Funzioni.md",
+    "METODI MATEMATICI PER INFORMATICA/Iniettività, suriettività e biettività.md",
+    "METODI MATEMATICI PER INFORMATICA/Disposizioni e permutazioni.md",
+    "METODI MATEMATICI PER INFORMATICA/Funzioni inverse.md",
+    "METODI MATEMATICI PER INFORMATICA/Funzioni composte.md",
+    "METODI MATEMATICI PER INFORMATICA/Caratterizzazione di iniezioni, suriezioni e biezioni.md",
+    "METODI MATEMATICI PER INFORMATICA/Principio moltiplicativo.md",
+    "METODI MATEMATICI PER INFORMATICA/Principio di inclusione-esclusione.md",
+    "METODI MATEMATICI PER INFORMATICA/Principio additivo.md",
+    "METODI MATEMATICI PER INFORMATICA/Passaggio al complemento.md",
+    "METODI MATEMATICI PER INFORMATICA/Combinazioni.md",
+    "FONDAMENTI DI PROGRAMMAZIONE/File.md",
     "FONDAMENTI DI PROGRAMMAZIONE/Input da tastiera.md",
     "FONDAMENTI DI PROGRAMMAZIONE/Funzioni.md",
     "FONDAMENTI DI PROGRAMMAZIONE/All e any.md",
     "FONDAMENTI DI PROGRAMMAZIONE/Lambda.md",
     "images",
-    "METODI MATEMATICI PER INFORMATICA/Principio di inclusione-esclusione.md",
-    "METODI MATEMATICI PER INFORMATICA/Combinazioni.md",
     "images/comb_pecoranera.png",
-    "METODI MATEMATICI PER INFORMATICA/Passaggio al complemento.md",
-    "METODI MATEMATICI PER INFORMATICA/Untitled.md",
     "images/comb_num4.png",
     "images/comb_num3.png",
     "images/comb_num2.png",
     "images/comb_num1.png",
     "images/comb.png",
-    "METODI MATEMATICI PER INFORMATICA/Disposizioni e permutazioni.md",
-    "METODI MATEMATICI PER INFORMATICA/Principio moltiplicativo.md",
-    "METODI MATEMATICI PER INFORMATICA/Principio additivo.md",
     "PROGETTAZIONE DI SISTEMI DIGITALI/Sistema binario.md",
-    "FONDAMENTI DI PROGRAMMAZIONE/File.md",
     "FONDAMENTI DI PROGRAMMAZIONE/Generatori e contenitori.md",
     "FONDAMENTI DI PROGRAMMAZIONE/Cicli.md",
     "PROGETTAZIONE DI SISTEMI DIGITALI/Algebra booleana.md",
@@ -194,10 +218,6 @@
     "FONDAMENTI DI PROGRAMMAZIONE/Valori booleani.md",
     "FONDAMENTI DI PROGRAMMAZIONE/Zip, map e filter.md",
     "FONDAMENTI DI PROGRAMMAZIONE/Variabili e namespace.md",
-    "FONDAMENTI DI PROGRAMMAZIONE/Cos'è Python.md",
-    "FONDAMENTI DI PROGRAMMAZIONE/Breve storia dei computer e della programmazione.md",
-    "FONDAMENTI DI PROGRAMMAZIONE/Operazioni matematiche.md",
-    "FONDAMENTI DI PROGRAMMAZIONE/Stringhe.md",
     "FONDAMENTI DI PROGRAMMAZIONE/Generatori e contenitori",
     "PROGETTAZIONE DI SISTEMI DIGITALI",
     "CALCOLO DIFFERENZIALE",
