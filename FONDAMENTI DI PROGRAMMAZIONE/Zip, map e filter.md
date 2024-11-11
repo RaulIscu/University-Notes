@@ -18,7 +18,7 @@ restituirà la seguente lista:
 [(1, 'a', 'A'), (2, 'b', 'B'), (3, 'c', 'C'), (4, 'd', 'D')]
 ```
 
-Nel caso in cui sia necessario trasformare una o più sequenze di valori in nuove sequenze, invece di utilizzare un ciclo ```for```, o anche di utilizzare la funzione ```zip```, è possibile utilizzare la funzione ```map(funzione, contenitore1, contenitore2, …)```, che consente di semplificare l’operazione inserendo semplicemente l’azione da compiere su ogni dato (o gruppo di dati). Ad esempio, considerando i contenitori dell’esempio precedente, eseguire il codice:ù
+Nel caso in cui sia necessario trasformare una o più sequenze di valori in nuove sequenze, invece di utilizzare un ciclo ```for```, o anche di utilizzare la funzione ```zip```, è possibile utilizzare la funzione ```map(funzione, contenitore1, contenitore2, …)```, che consente di semplificare l’operazione inserendo semplicemente l’azione da compiere su ogni dato (o gruppo di dati). Ad esempio, considerando i contenitori dell’esempio precedente, eseguire il codice:
 
 ```
 return map(funzione, L1, S2, L3)

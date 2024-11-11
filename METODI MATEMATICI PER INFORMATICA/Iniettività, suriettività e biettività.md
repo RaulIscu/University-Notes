@@ -20,3 +20,5 @@ $$i ≠ i' → f(i) = f(i')$$
 In termini di diagrammi, una funzione è suriettiva se e solo se ogni punto del codominio ha almeno una freccia entrante. In termini grafici, invece, una funzione è suriettiva se e solo se ogni asse verticale contiene almeno un punto del grafico della funzione. Una funzione *f: X → Y* non è suriettiva se e solo se esiste *y ∈ Y* tale che:
 $$∀x ∈ X → f(x) ≠ y$$
 Una funzione *f: X → Y* è detta **biettiva** se è sia suriettiva che iniettiva, dunque se ogni elemento del codominio *Y* è immagine di esattamente un elemento del dominio *X*. In termini di diagrammi, una funzione è biettiva se e solo se ogni punto del codominio ha esattamente una freccia entrante.
+
+[DISPENSA 8]
