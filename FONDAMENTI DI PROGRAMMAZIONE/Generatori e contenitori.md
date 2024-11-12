@@ -2,7 +2,7 @@ Per scrivere lunghe liste di valori, si può usare un **generatore**, un oggetto
 - ```range(101)``` = 0, 1, 2, …, 100; 
 - ```range(3, 101)``` = 3, 4, 5, …, 100; 
 - ```range(3, 101, 2)``` = 3, 5, 7, ..., 99.
-
+___
 Avendo introdotto i generatori, diventa importante ora parlare anche dei **contenitori**, definibili in generale come insiemi di elementi aventi varie caratteristiche. In particolare, vediamo:
 - la **lista** (```list```), un insieme indicizzato e mutabile di elementi eterogenei;
 - la **tupla** (```tuple```), un insieme indicizzato e immutabile di elementi eterogenei;
@@ -10,9 +10,7 @@ Avendo introdotto i generatori, diventa importante ora parlare anche dei **conte
 - il **dizionario** (```dict```), un insieme mutabile di coppie “chiave : valore” indicizzato sulle chiavi.
 
 A seconda del tipo di contenitore, si utilizzano caratteri diversi per indicarne uno: la lista si delimita con delle parentesi quadre (```[ ]```), la tupla si delimita con delle parentesi tonde (```( )```), e l’insieme si delimita con delle parentesi graffe (```{ }```), così come il dizionario.
-
-[REGISTRAZIONI DEL PROF]
-
+___
 Approfondiamo le varie operazioni fattibili sui diversi contenitori visti finora. Innanzitutto, vediamo come si può agire su una **lista**:
 - **```elemento in L```**, istruzione che restituirà ```True``` nel caso in cui l’elemento considerato è effettivamente presente nella lista L, e ```False``` se non è presente;
 - **```L[i]```**, restituirà l’elemento presente all’indice *i* della lista L;
