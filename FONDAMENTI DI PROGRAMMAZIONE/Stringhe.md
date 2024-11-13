@@ -1,7 +1,7 @@
 Le **stringhe** (**```str```**) sono dati più complessi di ```int``` o ```float```; è possibile pensare una stringa codificata in memoria come *array*, ossia come una sequenza di elementi uguali. Nel linguaggio Python, la stringa è una struttura dati di tipo **immutabile**: una volta creata una specifica stringa, essa non potrà essere “modificata” in sé.
 
 Una qualsiasi stringa, per essere tale, deve essere delimitata da **apici** (*‘ ‘*) o **doppi apici** (*“ “*). Se si vuole scrivere una stringa di testo che contiene accapi, esse vanno delimitate da **tripli apici** (*''' '''* o *“”” “””*).
-
+___
 Ci sono varie azioni possibili che riguardano le stringhe, tra cui **```len(stringa)```**, che permette di ottenere la lunghezza (o il numero di caratteri) di una determinata stringa, e **```stringa[i]```**, che restituisce il carattere all’indice *i* di una determinata stringa.
 > É infatti possibile “**indicizzare**” la stringa, e accedere in maniera secca a ciascun carattere (azione che viene definita *random access*; nel fare ciò, è importante ricordare che il primo carattere avrà indice *0*, il secondo *1* e così via. Inoltre, per individuare singoli caratteri si possono utilizzare anche numeri negativi: *-1* indica l’ultimo carattere della stringa, *-2* il penultimo e così via.
 
@@ -26,5 +26,5 @@ Ci sono molte altre funzioni che possono essere utili nel lavorare con stringhe,
 - **```stringa.upper()```**, che converte la stringa considerata in una stringa equivalente ma composta esclusivamente da caratteri maiuscoli.
 
 Inoltre, mediante la cosiddetta ***string interpolation***, è possibile costruire facilmente dei testi che contengono valori presi da variabili o calcolati con espressioni. Per fare ciò, basterà precedere la stringa con ```f``` (che sta per ```formatted```) e inserire i valori da interpolare tra parentesi graffe.
-
+___
 Qualsiasi testo scritto in un programma Python che viene preceduto da un cancelletto (```#```) viene considerato come commento, non come istruzione, e non verrà quindi interpretato da Python.
