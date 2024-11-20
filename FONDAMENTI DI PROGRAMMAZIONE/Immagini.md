@@ -54,7 +54,7 @@ import images
 img3[40][30:250] = [(255,0,0)] * 220
 images.save(img3, '3cime-2.png')
 ```
-Si nota che nei codici analizzati finora si utilizzano funzioni specifiche, importate dalla libreria **`images`**; questa libreria non è predefinita di Python, ma creata *ad hoc* per lavorare sulle immagini nel corso. In generale, le funzioni principali di questa libreria sono:
+Si nota che nei codici analizzati finora si utilizzano funzioni specifiche, importate dalla libreria **`images`**; questa libreria non è predefinita di Python, ma creata *ad hoc* per lavorare sulle immagini nel corso. In generale, le funzioni di questa libreria sono:
 - **`images.visd(immagine)`**, che permette di visualizzare un'immagine presa come argomento;
 - **`images.load(filename)`**, che permette di caricare nel programma un'immagine salvata in memoria;
 - **`images.save(immagine, filename)`**, che permette di salvare in memoria un'immagine su cui si è lavorato nel programma.
@@ -71,3 +71,11 @@ def draw_pixel(img, x, y, colore):
 draw_pixel(img3, 20, 2000, red)
 ```
 Ciò che fa il blocco di codice all'interno della definizione di `draw_pixel()` è ricavare altezza e larghezza dell'immagine considerata, arrotondare eventuali valori `float` inseriti come coordinate del *pixel*, e modificare quest'ultimo solo se esso è effettivamente presente all'interno dell'immagine.
+___
+[RUOTARE UN'IMMAGINE IN SENSO ANTIORARIO]
+___
+[DISEGNARE UNA LINEA]
+___
+[LEZIONE 12]
+___
+Molte operazioni che si possono fare su qualsiasi *editor* di foto possono essere eseguite anche su Python

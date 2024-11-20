@@ -4,21 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "8608c7eb1d835f8f",
+        "id": "c98419850c9ce3ab",
         "type": "tabs",
         "children": [
           {
-            "id": "33816941ce996bdd",
+            "id": "2a3b89fd4fd7bc30",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "FONDAMENTI DI PROGRAMMAZIONE/Immagini.md",
+                "file": "FONDAMENTI DI PROGRAMMAZIONE/Zip, map e filter.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Immagini"
+              "title": "Zip, map e filter"
             }
           }
         ]
@@ -139,10 +139,10 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "FONDAMENTI DI PROGRAMMAZIONE/Immagini.md"
+                "file": "FONDAMENTI DI PROGRAMMAZIONE/Zip, map e filter.md"
               },
               "icon": "lucide-list",
-              "title": "Outline of Immagini"
+              "title": "Outline of Zip, map e filter"
             }
           }
         ]
@@ -164,24 +164,26 @@
       "publish:Publish changes...": false
     }
   },
-  "active": "33816941ce996bdd",
+  "active": "2a3b89fd4fd7bc30",
   "lastOpenFiles": [
-    "FONDAMENTI DI PROGRAMMAZIONE/Gestione degli errori.md",
     "FONDAMENTI DI PROGRAMMAZIONE/Immagini.md",
-    "FONDAMENTI DI PROGRAMMAZIONE/Variabili e namespace.md",
-    "FONDAMENTI DI PROGRAMMAZIONE/Cicli.md",
     "FONDAMENTI DI PROGRAMMAZIONE/Generatori e contenitori.md",
-    "FONDAMENTI DI PROGRAMMAZIONE/File.md",
-    "FONDAMENTI DI PROGRAMMAZIONE/Zip, map e filter.md",
     "FONDAMENTI DI PROGRAMMAZIONE/Valori booleani.md",
     "FONDAMENTI DI PROGRAMMAZIONE/Stringhe.md",
-    "FONDAMENTI DI PROGRAMMAZIONE/Funzioni.md",
-    "METODI MATEMATICI PER INFORMATICA/Funzioni composte.md",
     "FONDAMENTI DI PROGRAMMAZIONE/Operazioni matematiche.md",
-    "METODI MATEMATICI PER INFORMATICA/Iniettività, suriettività e biettività.md",
     "FONDAMENTI DI PROGRAMMAZIONE/Lambda.md",
-    "FONDAMENTI DI PROGRAMMAZIONE/Input da tastiera.md",
+    "FONDAMENTI DI PROGRAMMAZIONE/Import.md",
+    "FONDAMENTI DI PROGRAMMAZIONE/Funzioni.md",
+    "FONDAMENTI DI PROGRAMMAZIONE/File.md",
+    "FONDAMENTI DI PROGRAMMAZIONE/Cicli.md",
     "FONDAMENTI DI PROGRAMMAZIONE/All e any.md",
+    "FONDAMENTI DI PROGRAMMAZIONE/Zip, map e filter.md",
+    "FONDAMENTI DI PROGRAMMAZIONE/Breve storia dei computer e della programmazione.md",
+    "FONDAMENTI DI PROGRAMMAZIONE/Gestione degli errori.md",
+    "FONDAMENTI DI PROGRAMMAZIONE/Variabili e namespace.md",
+    "METODI MATEMATICI PER INFORMATICA/Funzioni composte.md",
+    "METODI MATEMATICI PER INFORMATICA/Iniettività, suriettività e biettività.md",
+    "FONDAMENTI DI PROGRAMMAZIONE/Input da tastiera.md",
     "METODI MATEMATICI PER INFORMATICA/Funzioni.md",
     "METODI MATEMATICI PER INFORMATICA/Disposizioni e permutazioni.md",
     "METODI MATEMATICI PER INFORMATICA/Funzioni inverse.md",
@@ -190,7 +192,6 @@
     "METODI MATEMATICI PER INFORMATICA/Principio di inclusione-esclusione.md",
     "METODI MATEMATICI PER INFORMATICA/Principio additivo.md",
     "METODI MATEMATICI PER INFORMATICA/Passaggio al complemento.md",
-    "METODI MATEMATICI PER INFORMATICA/Combinazioni.md",
     "images",
     "images/comb_pecoranera.png",
     "images/comb_num4.png",
@@ -198,7 +199,6 @@
     "images/comb_num2.png",
     "images/comb_num1.png",
     "images/comb.png",
-    "PROGETTAZIONE DI SISTEMI DIGITALI/Sistema binario.md",
     "Pasted image 20241107085126.png",
     "images/add_binaria.png",
     "images/panini.png",
