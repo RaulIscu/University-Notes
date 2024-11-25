@@ -86,7 +86,8 @@ Molte operazioni che si possono fare su qualsiasi *editor* di foto possono esser
 - modificare la luminosità;
 - modificare il contrasto;
 - rendere il negativo di un'immagine;
-- sfocare l'immagine.
+- sfocare l'immagine;
+- inserire del rumore.
 
 Per **ritagliare un'immagine**, si distinguono due passaggi principali: prima si elimina un determinato numero di righe di *pixel* da sopra e sotto l'immagine, poi si toglie un determinato numero di colonne di *pixel* dall'immagine risultante. Per fare queste due operazioni, risulta fondamentale applicare lo *[[Generatori e contenitori|slicing]]*:
 ```
@@ -220,3 +221,18 @@ def blur(img, k):
 			nuova[y][x] = colore_medio(vicinato)
 	return nuova
 ```
+Per **inserire del rumore** in un'immagine, si potrà aggiungere del colore in maniera casuale a ciascun *pixel*; per fare ciò, basterà considerare ogni singolo *pixel* dell'immagine, e aggiungere, per ognuno dei canali RGB del *pixel*, un valore casuale nel range *[-k; k]*, assicurandosi che il risultato sia incluso nell'intervallo compreso tra 0 e 255:
+```
+from random import randint
+
+def filtro_rumore_casuale(colore, k):
+	return tuple(bound(C + randint(-k, k)) for C in colore)
+
+def rumore(img, k):
+	nuova = copy.deepcopy(img)
+	for y, riga in enumerate(img):
+		for x, colore in enumerate(riga):
+			nuova[y][x] = filtro_rumore_casuale(colore, k)
+	return nuova
+```
+___
