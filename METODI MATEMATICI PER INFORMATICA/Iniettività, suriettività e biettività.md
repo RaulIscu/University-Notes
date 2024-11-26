@@ -6,7 +6,7 @@ Consideriamo un altro esempio, supponendo di voler distribuire 3 giochi tra 5 ba
 cardinalità *n* corrisponde al numero di **[[Disposizioni e permutazioni|disposizioni semplici]]**:
 $$num(f_i : n → k) = n!/(n-k)!$$
 Infine, analizziamo un esempio in cui si vogliono distribuire 8 giochi tra 5 bambini, in modo che ciascuno abbia almeno un gioco, e di voler sapere in quanti modi possibili si può fare questa operazione. Il problema è risolvibile mediante il [[Principio di inclusione-esclusione|principio di inclusione-esclusione]]; alternativamente, in termini di funzioni, sto considerando le funzioni con dominio {1, 2, 3, 4, 5, 6, 7, 8} e codominio {1, 2, 3, 4, 5} tali che ogni elemento del codominio sia immagine di almeno un elemento del dominio. Questo tipo di funzione si definisce come funzione "**suriettiva**".
-
+___
 Mediante i precedenti esempi, capiamo quanto i concetti di "funzione iniettiva" e "funzione suriettiva" siano, in realtà, abbastanza naturali e immediati. Approfondiamo le definizioni di questi due concetti da un punto di vista più classico e propriamente matematico.
 
 >Una funzione *f: X → Y* è detta **iniettiva** se ogni elemento del codominio *Y* è immagine di al più un elemento del dominio *X*. Tale definizione può essere riformulata nel modo seguente: 
@@ -20,5 +20,8 @@ $$i ≠ i' → f(i) = f(i')$$
 In termini di diagrammi, una funzione è suriettiva se e solo se ogni punto del codominio ha almeno una freccia entrante. In termini grafici, invece, una funzione è suriettiva se e solo se ogni asse verticale contiene almeno un punto del grafico della funzione. Una funzione *f: X → Y* non è suriettiva se e solo se esiste *y ∈ Y* tale che:
 $$∀x ∈ X → f(x) ≠ y$$
 Una funzione *f: X → Y* è detta **biettiva** se è sia suriettiva che iniettiva, dunque se ogni elemento del codominio *Y* è immagine di esattamente un elemento del dominio *X*. In termini di diagrammi, una funzione è biettiva se e solo se ogni punto del codominio ha esattamente una freccia entrante.
-
-[DISPENSA 8]
+___
+[INIETTIVITA', UNIONI E IMMAGINI: DISPENSA 8]
+___
+[DIMOSTRAZIONI DI NON INIETTIVITA' E DI NON SURIETTIVITA': DISPENSA 8]
+___
