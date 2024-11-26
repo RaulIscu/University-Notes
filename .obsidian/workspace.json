@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "METODI MATEMATICI PER INFORMATICA/Funzioni composte.md",
+                "file": "METODI MATEMATICI PER INFORMATICA/Funzioni inverse.md",
                 "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Funzioni composte"
+              "title": "Funzioni inverse"
             }
           }
         ]
@@ -139,10 +139,10 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "METODI MATEMATICI PER INFORMATICA/Funzioni composte.md"
+                "file": "METODI MATEMATICI PER INFORMATICA/Funzioni inverse.md"
               },
               "icon": "lucide-list",
-              "title": "Outline of Funzioni composte"
+              "title": "Outline of Funzioni inverse"
             }
           }
         ]
@@ -166,6 +166,7 @@
   },
   "active": "d3b3f1abe9f92df2",
   "lastOpenFiles": [
+    "METODI MATEMATICI PER INFORMATICA/Funzioni composte.md",
     "METODI MATEMATICI PER INFORMATICA/Iniettività, suriettività e biettività.md",
     "METODI MATEMATICI PER INFORMATICA/Funzioni.md",
     "FONDAMENTI DI PROGRAMMAZIONE/Immagini.md",
@@ -183,7 +184,6 @@
     "FONDAMENTI DI PROGRAMMAZIONE/Breve storia dei computer e della programmazione.md",
     "FONDAMENTI DI PROGRAMMAZIONE/Gestione degli errori.md",
     "FONDAMENTI DI PROGRAMMAZIONE/Variabili e namespace.md",
-    "METODI MATEMATICI PER INFORMATICA/Funzioni composte.md",
     "FONDAMENTI DI PROGRAMMAZIONE/Input da tastiera.md",
     "METODI MATEMATICI PER INFORMATICA/Disposizioni e permutazioni.md",
     "METODI MATEMATICI PER INFORMATICA/Funzioni inverse.md",
