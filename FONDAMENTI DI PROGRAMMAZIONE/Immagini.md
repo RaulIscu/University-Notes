@@ -8,7 +8,7 @@ Ciascuno di questi valori viene, in genere, codificato in un *byte* (8 *bit*), e
 
 Nell'analisi del modello *RGB*, i casi particolari più lampanti sono il bianco, rappresentato dal massimo della luminosità per tutti e 3 i parametri (`255, 255, 255`), e il nero, rappresentato invece dal minimo della luminosità per tutti e 3 i parametri (`0, 0, 0`).
 ___
-Abbiamo stabilito che una qualsiasi immagine può essere interpretata come una griglia (o **matrice**) di *pixel*; per semplicità, dunque, in un programma un'immagine può venir rappresentata come una [[Generatori e contenitori|lista]] di liste di triple (tuple con 3 elementi). Ad esempio, se volessimo rappresentare la bandiera italiana, il programma corrispondente sarebbe il seguente:
+Abbiamo stabilito che una qualsiasi immagine può essere interpretata come una griglia (o **matrice**) di *pixel*; per semplicità, dunque, in un programma un'immagine può essere rappresentata come una [[Generatori e contenitori|lista]] di liste di triple (tuple con 3 elementi). Ad esempio, se volessimo rappresentare la bandiera italiana, il programma corrispondente sarebbe il seguente:
 ```
 import images
 img = [
@@ -72,11 +72,99 @@ draw_pixel(img3, 20, 2000, red)
 ```
 Ciò che fa il blocco di codice all'interno della definizione di `draw_pixel()` è ricavare altezza e larghezza dell'immagine considerata, arrotondare eventuali valori `float` inseriti come coordinate del *pixel*, e modificare quest'ultimo solo se esso è effettivamente presente all'interno dell'immagine.
 ___
-[RUOTARE UN'IMMAGINE IN SENSO ANTIORARIO]
+[RUOTARE UN'IMMAGINE IN SENSO ANTIORARIO E ORARIO]
 ___
-[DISEGNARE UNA LINEA]
+Disegnare una **linea** di *pixel* orizzontale o verticale su un'immagine di partenza è abbastanza immediato: la prima si può facilmente ottenere con un'assegnamento a *slice*, mentre la seconda modificando *pixel* dello stesso indice in varie righe consecutive di *pixel*.
+
+Il discorso si complica quando si vuole creare una generica **linea diagonale**. Per fare ciò, tornerà utile ricordare l'equazione generica di una retta, e ragionare scandendo il cateto più lungo del triangolo rettangolo immaginario di cui la linea diagonale che vogliamo disegnare è ipotenusa. Presupponendo di avere le coordinate del *pixel* di inizio e del *pixel* di termine della linea che si vuole disegnare, si dovranno calcolare le lunghezze dei due cateti del triangolo immaginario, e confrontarle; a questo punto, in base a quale cateto (orizzontale `dx` o verticale `dy`) sarà più lungo, si calcolerà il coefficiente angolare della retta che si vuole disegnare e lo si utilizzerà, insieme all'equazione generica della retta passante per un punto, per disegnare uno ad uno i *pixel*:
+```
+def draw_line(img, x1, y1, x2, y2, colore):
+	dx = x2 - x1
+	dy = y2 - y1
+	if abs(dx) >= abs(dy):
+		if x1 > x2:
+			x1, y1, x2, y2 = x2, y2, x1, y1
+			dx *= -1
+			dy *= -1
+		m = dy/dx
+		for x in range(x1, x2 + 1):
+			y = m * (x - x1) + y1
+			draw_pixel(img, x, y, colore)
+	else:
+		if y1 > y2 :
+			x1, y1, x2, y2 = x2, y2, x1, y1
+			dx *= -1
+			dy *= -1
+		m = dx/dy
+		for y in range(y1, y2 + 1):
+			x = m * (y - y1) + x1
+			draw_pixel(img, x, y, colore)
+```
 ___
-[LEZIONE 12]
+Distinguiamo vari casi possibili di disegno di un **rettangolo** su un'immagine, partendo dai più facili. Probabilmente, il caso più basilare sarà il disegno di un **rettangolo vuoto e privo di inclinazione**, ossia con lati che sono orizzontali e verticali: per fare ciò, si può semplicemente implementare 4 volte la funzione generica `draw_line()` appena definita, o in alternativa colorare manualmente i singoli *pixel* del perimetro del rettangolo. Supponendo che i *pixel* siano forniti nell'ordine giusto, le due modalità di disegno portano alle seguenti funzioni:
+```
+def draw_empty_rectangle(img, x1, y1, x2, y2, colore):
+	draw_line(img, x1, y1, x2, y1, colore)
+	draw_line(img, x1, y2, x2, y2, colore)
+	draw_line(img, x1, y1, x1, y2, colore)
+	draw_line(img, x2, y1, x2, y2, colore)
+
+def draw_empty_rectangle2(img, x1, y1, x2, y2, colore):
+	for x in range(x1, x2 + 1):
+		draw_pixel(img, x, y1, colore)
+		draw_pixel(img, x, y2, colore)
+	for y in range(y1, y2+1):
+		draw_pixel(img, x1, y, colore)
+		draw_pixel(img, x2, y, colore)
+```
+Nel caso in cui il **rettangolo** che vogliamo disegnare sia sempre **privo di inclinazione**, ma **pieno**, l'operazione diventa in realtà ancora più semplice, in quanto basterà programmare due cicli annidati, che vanno quindi a colorare tutti i *pixel* appartenenti al rettangolo che si vuole disegnare:
+```
+def draw_rectangle(img, x1, y1, x2, y2, colore):
+	for x in range(x1, x2 + 1):
+		for y in range(y1, y2 + 1):
+			draw_pixel(img, x, y, colore)
+```
+[DISEGNARE UN RETTANGOLO INCLINATO] 
+___
+É possibile disegnare anche figure curve. Vediamo, ad esempio, l'**ellisse**: essa è definita come una figura dotata di due fuochi, per cui la somma delle distanze di ogni suo punto dai due fuochi è costante. Da ciò, si ricava che se la somma delle distanze dai due fuochi di un punto è minore di questa costante, il punto si trova all'interno dell'ellisse; viceversa, se la somma delle distanze dai due fuochi di un punto è maggiore, questo si trova all'esterno dell'ellisse.
+
+Si può sfruttare la proprietà appena esplicitata per disegnare in maniera facile un'**ellisse piena**: per fare ciò, conoscendo le coordinate dei due fuochi, basterà infatti controllare ogni *pixel* dell'immagine, calcolandone la distanza dai due fuochi, e se quest'ultima risulterà minore di *D = 2a* (dove *a* è il semiasse maggiore dell'ellisse), colorare il *pixel* considerato:
+```
+from math import dist
+
+def draw_ellisse(img, x1, y1, x2, y2, D, colore):
+	larghezza = len(img[0])
+	altezza = len(img)
+	for x in range(larghezza):
+		for y in range(altezza):
+			D1 = dist((x, y), (x1, y1))
+			D2 = dist((x, y), (x2, y2))
+			if D1 + D2 <= D:
+				img[y][x] = colore
+```
+Nel caso in cui si volesse, invece, disegnare un'**ellisse vuota**, si dovranno colorare esclusivamente i *pixel* che distano all'incirca D dai due fuochi: per ogni *pixel* dell'immagine, dunque, si dovrà controllare che:
+$$|D1+D2-D| < 1$$
+In alternativa, se si vuole essere precisi, si può diminuire il valore di errore a valori più piccoli di 1, senza però esagerare. Nell'esempio seguente si utilizza il valore 0.6:
+```
+def draw_ellisse_vuota(img, x1, y1, x2, y2, D, colore):
+	larghezza = len(img[0])
+	altezza = len(img)
+	for x in range(larghezza):
+		for y in range(altezza):
+			D1 = dist((x, y), (x1, y1))
+			D2 = dist((x, y), (x2, y2))
+			if abs((D1 + D2) - D) < .6:
+				img[y][x] = colore
+```
+Vediamo ora il **cerchio**, figura che non è altro che un caso particolare di ellisse, in cui i due fuochi coincidono e in cui, dunque, la somma delle distanze di un punto del cerchio dai due fuochi rappresenta il diametro del cerchio stesso. Si potranno, dunque, implementare le funzioni utilizzate per disegnare le ellissi:
+```
+def draw_circle(img, x, y, r, colore):
+	draw_ellisse(img, x, y, x, y, 2*r, colore)
+
+def draw_circle_vuoto(img, x, y, r, colore):
+	draw_ellisse_vuota(img, x, y, x, y, 2*r, colore)
+```
+In generale, per disegnare una qualsiasi curva generica (parabola, iperbole, ecc. ecc.), si potrà arrivare a un procedimento sottoforma di codice conoscendone semplicemente le proprietà principali.
 ___
 Molte operazioni che si possono fare su qualsiasi *editor* di foto possono essere eseguite anche su Python. In particolare, approfondiamo le seguenti operazioni:
 - ritagliare;
