@@ -37,8 +37,17 @@ Il secondo metodo, che opera da sinistra verso destra, consiste nel:
 Ad esempio, per convertire il decimale 333₁₀ in esadecimale, si trova la più grande potenza di 16 che sia minore o uguale a 333, ossia 16² = 256, la si sottrae (333 - (256 * 1) = 77) e si segna 1; poi, 16¹ = 16 è contenuta 4 volte in 77, quindi si sottrae (77 - (16 * 4) = 13) e si segna 4; infine, 16⁰ = 1 è contenuta 13 volte in 13, quindi si sottrae (13 - (1 * 13) = 0) e si segna D. Si ottiene così:
 $$333₁₀ = 14D₁₆$$
 ___
-Per convertire un **esadecimale in decimale**,
+Per convertire un **esadecimale in decimale**, si moltiplica ogni cifra del numero esadecimale, da destra verso sinistra, per 16*ⁱ* (dove *i* è un numero che va da 0 a N - 1, con N pari al numero delle cifre del numero esadecimale), e si sommano i risultati.
+
+Ad esempio, per convertire l'esadecimale 2ED₁₆ in decimale, si fa:
+$$2ED₁₆ = (13 * 16^0) + (14 * 16^1) + (2 * 16^2) = 749₁₀$$
 ___
-Per convertire un **binario in esadecimale**,
+Per convertire un **binario in esadecimale**, si suddivide il numero in *nibble* da 4 bit andando da destra verso sinistra (completando, eventualmente, l'ultimo *nibble* con degli zeri a sinistra dell'ultimo bit), e a ogni *nibble* si associa la cifra esadecimale corrispondente.
+
+Ad esempio, per convertire il binario 1111010₂ in esadecimale, lo si suddivide nei *nibble* 1010 e (0)111, che corrispondono rispettivamente alle cifre esadecimali A e 7. Si ottiene così:
+$$1111010₂ = 7A₁₆$$
 ___
-Per convertire un **esadecimale in binario**,
+Per convertire un **esadecimale in binario**, basterà operare in maniera inversa alla conversione da binario a esadecimale, associando a ogni cifra esadecimale il *nibble* di bit binari corrispondente.
+
+Ad esempio, per convertire 2ED₁₆ in binario, si considera che 2₁₆ = 0010₂, che E₁₆ = 1110₂ e che D₁₆ = 1101₂. Si ottiene così:
+$$2ED₁₆ = 001011101101₂$$
