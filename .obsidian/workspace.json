@@ -4,21 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "76f8c941e1d22ac1",
+        "id": "81794f1694181d32",
         "type": "tabs",
         "children": [
           {
-            "id": "cc21a7344de104b8",
+            "id": "566de61e979bc226",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "FONDAMENTI DI PROGRAMMAZIONE/Ricorsione.md",
-                "mode": "preview",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "Ricorsione"
+              "title": "New tab"
             }
           }
         ]
@@ -138,14 +134,23 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "FONDAMENTI DI PROGRAMMAZIONE/Ricorsione.md"
-              },
+              "state": {},
               "icon": "lucide-list",
-              "title": "Outline of Ricorsione"
+              "title": "Outline"
+            }
+          },
+          {
+            "id": "1c574a5e840078b9",
+            "type": "leaf",
+            "state": {
+              "type": "advanced-tables-toolbar",
+              "state": {},
+              "icon": "spreadsheet",
+              "title": "Advanced Tables"
             }
           }
-        ]
+        ],
+        "currentTab": 4
       }
     ],
     "direction": "horizontal",
@@ -161,17 +166,21 @@
       "templates:Insert template": false,
       "command-palette:Open command palette": false,
       "audio-recorder:Start/stop recording": false,
-      "publish:Publish changes...": false
+      "publish:Publish changes...": false,
+      "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "cc21a7344de104b8",
+  "active": "566de61e979bc226",
   "lastOpenFiles": [
-    "PROGETTAZIONE DI SISTEMI DIGITALI/Conversioni tra decimali, binari ed esadecimali.md",
     "PROGETTAZIONE DI SISTEMI DIGITALI/Sistema binario.md",
+    "PROGETTAZIONE DI SISTEMI DIGITALI/Addizione e sottrazione tra binari.md",
+    "PROGETTAZIONE DI SISTEMI DIGITALI/Porte logiche.md",
+    "images/binaryaddition.png",
+    "images/binaryaddition.png",
+    "FONDAMENTI DI PROGRAMMAZIONE/Ricorsione.md",
+    "PROGETTAZIONE DI SISTEMI DIGITALI/Conversioni tra decimali, binari ed esadecimali.md",
     "PROGETTAZIONE DI SISTEMI DIGITALI/Sistema esadecimale.md",
     "FONDAMENTI DI PROGRAMMAZIONE/File.md",
-    "PROGETTAZIONE DI SISTEMI DIGITALI/Addizione e sottrazione tra binari.md",
-    "FONDAMENTI DI PROGRAMMAZIONE/Ricorsione.md",
     "FONDAMENTI DI PROGRAMMAZIONE/All e any.md",
     "METODI MATEMATICI PER INFORMATICA/Cardinalità.md",
     "FONDAMENTI DI PROGRAMMAZIONE/Operazioni matematiche.md",
@@ -191,7 +200,6 @@
     "FONDAMENTI DI PROGRAMMAZIONE/Funzioni.md",
     "FONDAMENTI DI PROGRAMMAZIONE/Cicli.md",
     "FONDAMENTI DI PROGRAMMAZIONE/Breve storia dei computer e della programmazione.md",
-    "FONDAMENTI DI PROGRAMMAZIONE/Gestione degli errori.md",
     "images",
     "images/comb_pecoranera.png",
     "images/comb_num4.png",
@@ -201,8 +209,6 @@
     "images/comb.png",
     "Pasted image 20241107085126.png",
     "images/add_binaria.png",
-    "images/panini.png",
-    "images/disp_con_rip.jpg",
     "Untitled.canvas",
     "FONDAMENTI DI PROGRAMMAZIONE/Generatori e contenitori",
     "PROGETTAZIONE DI SISTEMI DIGITALI",
