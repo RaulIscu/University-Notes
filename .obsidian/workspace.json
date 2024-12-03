@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "PROGETTAZIONE DI SISTEMI DIGITALI/Conversioni tra decimali, binari ed esadecimali.md",
+                "file": "FONDAMENTI DI PROGRAMMAZIONE/Ricorsione.md",
                 "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Conversioni tra decimali, binari ed esadecimali"
+              "title": "Ricorsione"
             }
           }
         ]
@@ -139,10 +139,10 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "PROGETTAZIONE DI SISTEMI DIGITALI/Conversioni tra decimali, binari ed esadecimali.md"
+                "file": "FONDAMENTI DI PROGRAMMAZIONE/Ricorsione.md"
               },
               "icon": "lucide-list",
-              "title": "Outline of Conversioni tra decimali, binari ed esadecimali"
+              "title": "Outline of Ricorsione"
             }
           }
         ]
@@ -166,11 +166,11 @@
   },
   "active": "cc21a7344de104b8",
   "lastOpenFiles": [
-    "FONDAMENTI DI PROGRAMMAZIONE/File.md",
     "PROGETTAZIONE DI SISTEMI DIGITALI/Conversioni tra decimali, binari ed esadecimali.md",
-    "PROGETTAZIONE DI SISTEMI DIGITALI/Addizione e sottrazione tra binari.md",
     "PROGETTAZIONE DI SISTEMI DIGITALI/Sistema binario.md",
     "PROGETTAZIONE DI SISTEMI DIGITALI/Sistema esadecimale.md",
+    "FONDAMENTI DI PROGRAMMAZIONE/File.md",
+    "PROGETTAZIONE DI SISTEMI DIGITALI/Addizione e sottrazione tra binari.md",
     "FONDAMENTI DI PROGRAMMAZIONE/Ricorsione.md",
     "FONDAMENTI DI PROGRAMMAZIONE/All e any.md",
     "METODI MATEMATICI PER INFORMATICA/Cardinalità.md",
