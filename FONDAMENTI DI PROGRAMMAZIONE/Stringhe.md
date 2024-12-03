@@ -1,6 +1,6 @@
-Le **stringhe** (**```str```**) sono dati più complessi di ```int``` o ```float```; è possibile pensare una stringa codificata in memoria come *array*, ossia come una sequenza di elementi uguali. Nel linguaggio Python, la stringa è una struttura dati di tipo **immutabile**: una volta creata una specifica stringa, essa non potrà essere “modificata” in sé.
+Le **stringhe** (**```str```**) sono dati più complessi di ```int``` o ```float```; è possibile pensare una stringa codificata in memoria come *array*, ossia come una sequenza di elementi uguali. In Python, la stringa è una struttura dati di tipo **immutabile**: una volta creata una specifica stringa, essa non potrà essere “modificata” in sé.
 
-Una qualsiasi stringa, per essere tale, deve essere delimitata da **apici** (*‘ ‘*) o **doppi apici** (*“ “*). Se si vuole scrivere una stringa di testo che contiene accapi, esse vanno delimitate da **tripli apici** (*''' '''* o *“”” “””*).
+Una qualsiasi stringa, per essere tale, deve essere delimitata da **apici** (*‘ ‘*) o **doppi apici** (*“ “*). Se si vuole, invece, scrivere una stringa di testo che contiene accapi, esse vanno delimitate da **tripli apici** (*''' '''* o *“”” “””*). Va da sé che, se si delimita una stringa con un determinato tipo di apice, non si potrà includere tale apice all'interno della stringa stessa; l'unico modo per fare ciò senza incorrere in errori è includere il frammento di stringa in questione, delimitato dagli apici, tra dei *backslash* (`\ ... \`).
 ___
 Ci sono varie azioni possibili che riguardano le stringhe, tra cui **```len(stringa)```**, che permette di ottenere la lunghezza (o il numero di caratteri) di una determinata stringa, e **```stringa[i]```**, che restituisce il carattere all’indice *i* di una determinata stringa.
 > É infatti possibile “**indicizzare**” la stringa, e accedere in maniera secca a ciascun carattere (azione che viene definita *random access*; nel fare ciò, è importante ricordare che il primo carattere avrà indice *0*, il secondo *1* e così via. Inoltre, per individuare singoli caratteri si possono utilizzare anche numeri negativi: *-1* indica l’ultimo carattere della stringa, *-2* il penultimo e così via.
@@ -13,6 +13,8 @@ Da una stringa di partenza, inoltre, si può effettuare un’operazione di ***sl
 La sezione estratta non deve necessariamente essere formata da caratteri consecutivi: aggiungendo il parametro *inc* nella funzione, è possibile estrarre caratteri, all’interno dell’intervallo considerato, ogni gruppo di caratteri formato da un numero *inc* di caratteri. Si può anche “rovesciare” una stringa inserendo un incremento negativo (ad esempio, ```stringa[::-1]``` restituisce la stessa stringa ma letta al contrario).
 
 Ci sono molte altre funzioni che possono essere utili nel lavorare con stringhe, tra cui:
+- `stringa1 + stringa2`, che permette di concatenare le due stringhe considerate;
+- `stringa * n`, che ritornerà una stringa costituita dalla concatenazione della stringa considerata con sé stessa `n` volte;
 - **```stringa.capitalize()```**, che “capitalizza” la stringa rendendone maiuscolo il primo carattere;
 - **```stringa.count(elemento)```**, che conta quante volte un determinato elemento è presente nella stringa considerata;
 - **```stringa.index(elemento)```**, che restituisce l’indice di inizio della prima occorrenza dell’elemento nella stringa considerata;

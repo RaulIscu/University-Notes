@@ -1,7 +1,8 @@
-I valori booleani possono essere combinati con **operatori logici** come ```and```, ```or``` e ```not```:
+I valori booleani sono 2: **`True`** e **`False`**. Questi due valori possono essere combinati con **operatori logici** come ```and```, ```or``` e ```not```:
 - ```and``` restituirà un valore ```True``` solo se tutti i valori booleani considerati risultano ```True```;
 - ```or``` restituirà un valore ```True``` anche con solo un valore ```True```; 
 - ```not``` rovescia il valore booleano considerato (restituirà ```False``` se il valore è ```True``` e viceversa).
+
 Questi tre operatori vanno considerati con un preciso ordine di precedenza, ossia ```not``` ⇒ ```and``` ⇒ ```or```.
 
 La combinazione di condizioni vero/falso serve a indicare al programma comportamenti diversi a seconda del risultato della condizione. Per scegliere di eseguire parti diverse di codice in situazioni diverse, vengono utilizzate istruzioni come **```if```**, **```elif```** ed **```else```**:
