@@ -45,3 +45,38 @@ $$F(A, B) = Σ(1, 3)$$
 La forma POS, inoltre, può essere scritta utilizzando la notazione Π, che prende in argomento i maxtermini da considerare o gli indici delle righe della tavola di verità corrispondenti a tali maxtermini; ad esempio:
 $$F(A, B) = Π(M₀, M₂)$$
 $$F(A, B) = Π(0, 2)$$
+___
+Ovviamente, un circuito combinatorio può avere **molteplici *output***, ognuno dei quali è definito da una diversa funzione booleana degli *input*. Nonostante ciò, risulta spesso conveniente definire tutti gli *output* in una singola tavola di verità.
+
+Un esempio di circuito combinatorio a più *output* è il cosiddetto "circuito di priorità", un circuito in cui vi è, in parole povere, una gerarchia di importanza tra i vari *input* e dal quale, in base ad essa, risulta sempre un unico dei *output* dai vari possibili. Per visualizzare meglio questo meccanismo, possiamo immaginare un'università in cui il rettore, il presidente di un dipartimento, un professore di tale dipartimento e uno studente richiedono di utilizzare una determinata aula. Tra di essi, naturalmente, ci sarà una differenza di priorità, che va a decrescere andando da rettore a studente: dunque, ad esempio, la richiesta del rettore vincerà su tutte le altre, mentre quella dello studente vincerà solo se nessun'altro avrà richiesto l'aula nello stesso giorno.
+
+Immaginiamo, ora, di esprimere questo concetto con un circuito di priorità. Associamo a ciascun personaggio un *output*:
+- *Y₃* rappresenterà la vittoria del rettore;
+- *Y₂* rappresenterà la vittoria del presidente di dipartimento;
+- *Y₁* rappresenterà la vittoria del professore;
+- *Y₀* rappresenterà la vittoria dello studente.
+
+Analogamente a come sono configurati gli *output*, associamo anche i vari *input* *A₃*, *A₂*, *A₁* e *A₀*. Notiamo, ora, alcune cose: *Y₃* risulterà `True` ogni volta che *A₃* sarà `True`(ossia, il rettore otterrà l'aula ogni volta che la richiederà, essendo il più importante dei quattro); *Y₂* risulterà `True` ogni volta che *A₂* sarà `True` e *A₃* sarà `False` (ossia, il presidente di dipartimento otterrà l'aula ogni volta che la richiederà, a patto che non lo faccia il rettore); e così via. Una tavola di verità che descrive il funzionamento di tale circuito può essere la seguente:
+
+![[prioritycirc_example_truth.png]]
+Se volessimo, invece, rappresentare il circuito con una [[PLA]], si otterrebbe:
+
+![[prioritycirc_example_pla.png]]
+
+Dall'analisi di questo circuito, si osserva che se determinati *input* sono attivi, per gli *output* è irrilevante lo stato degli altri *input*. Gli *input* irrilevanti per un determinato *output*, dunque, non importano, e vengono perciò definiti "***don't care***". I *don't care* si indicano in una tavola di verità con una *X*. Questo concetto permette spesso di semplificare notevolmente la tavola di verità di un circuito; ad esempio, quella del circuito appena analizzato diventa:
+
+![[prioritycirc_example_dontcare.png]]
+___
+I circuiti logici in forma SOP operano nella cosiddetta "logica a due livelli", in quanto i vari *literals* sono connessi a un primo livello di porte *AND* e a un secondo livello di porte *OR*. Spesso, tuttavia, un circuito viene costruito utilizzando più di questi due livelli, in quanto fare ciò consentirebbe di utilizzare meno componenti; se un circuito possiede più di due "livelli", esso opera nella **logica combinatoria multilivello**.
+
+Un caso semplice in cui risulta immediata la convenienza della logica multilivello è la porta *XOR* a 3 *input*. Volendo rappresentare il funzionamento di una porta *XOR* con la logica a due livelli, si otterrebbe un circuito del genere:
+
+![[xor3_twolevel.png]]
+
+Invece, se si volesse trascendere la logica a due livelli, si potrebbe rappresentare il funzionamento di tale circuito semplicemente con due porte *XOR* a due *input*, disposte nella maniera seguente:
+
+![[xor3_multilevel.png]]
+
+Volendo esagerare l'esempio appena analizzato, la convenienza risulta ancora più evidente: ad esempio, una porta *XOR* a 8 *input* necessiterebbe di 128 porte *AND* a 8 *input* e di una porta *OR* a 128 *input* per essere schematizzata con la logica a due livelli; invece, molto più convenientemente, si potrebbero utilizzare tre livelli di porte *XOR* a 2 *input*, per un totale di 7 porte.
+
+In generale, scegliere la migliore implementazione multilivello di una determinata funzione logica non è sempre immediato, e il significato stesso di "migliore" potrebbe variare in base al contesto.

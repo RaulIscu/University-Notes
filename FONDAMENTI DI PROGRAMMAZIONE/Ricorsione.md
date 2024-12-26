@@ -108,3 +108,7 @@ def cerca_file_sizes(directory):
 	return risultato
 ```
 ___
+[ALBERO BINARIO]
+
+Analizzare un albero binario è uno degli esempi più classici di applicazione di un metodo ricorsivo; ma cosa sono gli alberi binari? Un **albero binario** è una conformazione "ad albero" che rispetta principi simili a quelli delle *directory*: si parte, dunque, da un nodo di partenza (che viene detto "**radice**"), privo di "padri", che si divide di volta in volta in al più due "figli"; tale operazione continua finché si arriverà a nodi senza figli (che vengono detti "**foglie**"). Un'informazione da tenere a mente riguardo queste strutture particolari è che ogni nodo ha al più un solo padre; inoltre, a differenza degli alberi che siamo abituati a vedere, negli alberi binari (o *n*-ari) la radice si trova in alto e l'albero si dirama verso il basso.
+

@@ -53,6 +53,9 @@ Infine, se si vuole salvare un'immagine su cui si è lavorato:
 import images
 img3[40][30:250] = [(255,0,0)] * 220
 images.save(img3, '3cime-2.png')
+
+for righe in img[1:-1]:
+	righe[34] = colore
 ```
 Si nota che nei codici analizzati finora si utilizzano funzioni specifiche, importate dalla libreria **`images`**; questa libreria non è predefinita di Python, ma creata *ad hoc* per lavorare sulle immagini nel corso. In generale, le funzioni di questa libreria sono:
 - **`images.visd(immagine)`**, che permette di visualizzare un'immagine presa come argomento;
@@ -91,7 +94,7 @@ def draw_line(img, x1, y1, x2, y2, colore):
 			y = m * (x - x1) + y1
 			draw_pixel(img, x, y, colore)
 	else:
-		if y1 > y2 :
+		if y1 > y2:
 			x1, y1, x2, y2 = x2, y2, x1, y1
 			dx *= -1
 			dy *= -1

@@ -47,5 +47,5 @@ Molte delle porte logiche analizzate finora possono avere anche **più di 2 *inp
 - la porta *OR*, che con un numero *N* di *input* restituirà come *output* un valore `True` se almeno uno degli *N* *input* sarà `True`;
 - la porta *NOR*, che con un numero *N* di *input* restituirà come *output* un valore `True` solo se tutti gli *N* *input* saranno `False`;
 - la porta *NAND*, che con un numero *N* di *input* restituirà sempre come *output* un valore `True`, a meno che tutti gli *N* *input* siano `True`;
-- la porta *XOR*;
+- la porta *XOR*, che con un numero *N* di *input* restituirà come *output* un valore `True` se un numero dispari di *input* sarà `True`;
 - la porta *XNOR*.

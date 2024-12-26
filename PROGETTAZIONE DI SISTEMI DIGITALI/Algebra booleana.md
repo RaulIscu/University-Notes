@@ -40,7 +40,7 @@ Analizziamo singolarmente i vari teoremi:
 - i teoremi dal T9 al T11 sono utili per semplificare dei circuiti ridondanti ed eliminare componenti non necessarie.
 
 Il teorema T12, detto anche **teorema di De Morgan**, risulta forse il più importante e comune tra i teoremi a più variabili analizzati. Il teorema, sostanzialmente, afferma che il complemento di un *AND* di più termini corrisponde all'*OR* tra i complementi dei singoli termini considerati; il suo duale, invece, afferma la stessa cosa ma con un *OR* al posto dell'*AND* e viceversa.
-
+___
 Secondo il teorema di De Morgan, dunque, una porta NAND corrisponde a un *OR* con gli *input* negati, e viceversa una porta *NOR* corrisponde a un *AND* con gli *input* negati. Graficamente:
 
 ![[demorgan.png]]
@@ -49,3 +49,8 @@ Sapere ciò ci consente di semplificare dei circuiti sfruttando la tecnica che v
 - operare un *bubble pushing* su una porta *OR* renderà tale porta un *AND*, e viceversa;
 - operare un *bubble pushing* dall'*output* agli *input* di una porta logica negherà tutti gli *input* di tale porta logica;
 - operare un *bubble pushing* dagli *input* all'*output* di una porta logica negherà l'*output* di tale porta logica.
+
+Tale tecnica risulta utilissima nei circuiti CMOS, in quanto essi preferiscono generalmente porte *NAND* e *NOR* a porte *AND* e *OR*. Operare il *bubble pushing* permette, a partire da un circuito di *NAND* e *NOR*, di rendere più leggibile tale circuito, e di ottenere più facilmente un'equazione booleana che ne descriva il funzionamento. Per operare al meglio il *bubble pushing* su un circuito, oltre alle regole di base stabilite prima, conviene seguire anche le seguenti:
+- cominciare dagli *output* del circuito e muoversi verso gli *input*;
+- lavorando in questa direzione, disegnare ogni porta logica in modo da favorire la "semplificazione" di più *bubble* possibili (ad esempio, se la porta considerata ha una *bubble* su un *input*, conviene rappresentare la porta logica che fornisce tale *input* con una *bubble* sull'*output*, in modo che le due *bubble* si cancellino a vicenda).
+
