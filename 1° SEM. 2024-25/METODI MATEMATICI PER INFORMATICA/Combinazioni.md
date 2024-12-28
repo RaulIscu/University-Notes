@@ -35,9 +35,13 @@ $$C₈₀,₄ × 4$$
 $$80 × C₇₉,₃$$
 
 Entrambe le soluzioni sono corrette, e possono quindi essere eguagliate; si ha quindi che:
+
 ![[comb_num1.png]]
 ![[comb_num2.png]]
+
 L'equazione generalizzata appena ottenuta si può riscrivere in maniera totalmente combinatoria, e in seguito ancora generalizzata:
+
 ![[comb_num3.png]]
 ![[comb_num4.png]]
+
 [CONTINUO: DISPENSA 4]

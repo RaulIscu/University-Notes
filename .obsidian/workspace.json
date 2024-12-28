@@ -4,17 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "2ccbd2e1de359c3b",
+        "id": "b60ff65262242250",
         "type": "tabs",
         "children": [
           {
-            "id": "575e301345c6b7ec",
+            "id": "e6632bffbba23e5b",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Multiplexer.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "Multiplexer"
             }
           }
         ]
@@ -134,9 +138,11 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {},
+              "state": {
+                "file": "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Multiplexer.md"
+              },
               "icon": "lucide-list",
-              "title": "Outline"
+              "title": "Outline of Multiplexer"
             }
           },
           {
@@ -170,50 +176,50 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "575e301345c6b7ec",
+  "active": "81ef32eb7b860f30",
   "lastOpenFiles": [
-    "PROGETTAZIONE DI SISTEMI DIGITALI/Mappe di Karnaugh.md",
-    "PROGETTAZIONE DI SISTEMI DIGITALI/Circuiti combinatori.md",
-    "PROGETTAZIONE DI SISTEMI DIGITALI/Algebra booleana.md",
-    "images/xor3_multilevel.png",
-    "images/xor3_twolevel.png",
-    "PROGETTAZIONE DI SISTEMI DIGITALI/Porte logiche.md",
-    "images/prioritycirc_example_dontcare.png",
-    "images/prioritycirc_example_pla.png",
-    "images/prioritycirc_example_truth.png",
-    "PROGETTAZIONE DI SISTEMI DIGITALI/Circuiti.md",
-    "PROGETTAZIONE DI SISTEMI DIGITALI/PLA.md",
-    "images/pla_example.png",
-    "PROGETTAZIONE DI SISTEMI DIGITALI/Sistema binario.md",
-    "FONDAMENTI DI PROGRAMMAZIONE/Ricorsione.md",
-    "FONDAMENTI DI PROGRAMMAZIONE/Immagini.md",
-    "FONDAMENTI DI PROGRAMMAZIONE/Generatori e contenitori.md",
-    "FONDAMENTI DI PROGRAMMAZIONE/OOP.md",
-    "FONDAMENTI DI PROGRAMMAZIONE/Stringhe.md",
-    "FONDAMENTI DI PROGRAMMAZIONE/File.md",
-    "FONDAMENTI DI PROGRAMMAZIONE/Funzioni.md",
-    "FONDAMENTI DI PROGRAMMAZIONE/Errori.md",
-    "FONDAMENTI DI PROGRAMMAZIONE/Cicli.md",
-    "FONDAMENTI DI PROGRAMMAZIONE/All e any.md",
-    "FONDAMENTI DI PROGRAMMAZIONE/Lambda.md",
-    "images/demorgan.png",
-    "images/theorems2_boolean.png",
-    "images/theorems1_boolean.png",
-    "images/axioms_boolean.png",
-    "PROGETTAZIONE DI SISTEMI DIGITALI/Circuiti sequenziali.md",
-    "PROGETTAZIONE DI SISTEMI DIGITALI/Addizione e sottrazione tra binari.md",
-    "FONDAMENTI DI PROGRAMMAZIONE/Valori booleani.md",
-    "FONDAMENTI DI PROGRAMMAZIONE/Operatori matematici e di comparazione.md",
-    "FONDAMENTI DI PROGRAMMAZIONE/Input.md",
-    "FONDAMENTI DI PROGRAMMAZIONE/Print.md",
-    "FONDAMENTI DI PROGRAMMAZIONE/Import.md",
-    "FONDAMENTI DI PROGRAMMAZIONE/Variabili e namespace.md",
-    "images",
+    "1° SEM. 2024-25",
+    "1° SEM. 2024-25/images/mux.png",
+    "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Mappe di Karnaugh.md",
+    "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Addizione e sottrazione tra binari.md",
+    "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Multiplexer.md",
+    "1° SEM. 2024-25/FONDAMENTI DI PROGRAMMAZIONE/All e any.md",
+    "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Circuiti.md",
+    "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Circuiti combinatori.md",
+    "1° SEM. 2024-25/images/kmap_example_1.png",
+    "1° SEM. 2024-25/images/kmap_example.png",
+    "1° SEM. 2024-25/images/kmap_example_truth.png",
+    "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Decoder.md",
+    "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Tristate buffer.md",
+    "1° SEM. 2024-25/images/tristate_buffer_low.png",
+    "1° SEM. 2024-25/images/tristate_buffer.png",
+    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Combinazioni.md",
+    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Cardinalità.md",
+    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Iniettività, suriettività e biettività.md",
+    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Insiemi infiniti, numerabili e non-numerabili.md",
+    "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Conversioni tra decimali, binari ed esadecimali.md",
+    "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Algebra booleana.md",
+    "1° SEM. 2024-25/images/xor3_multilevel.png",
+    "1° SEM. 2024-25/images/xor3_twolevel.png",
+    "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Porte logiche.md",
+    "1° SEM. 2024-25/images/prioritycirc_example_dontcare.png",
+    "1° SEM. 2024-25/images/prioritycirc_example_pla.png",
+    "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/PLA.md",
+    "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Sistema binario.md",
+    "1° SEM. 2024-25/FONDAMENTI DI PROGRAMMAZIONE/Ricorsione.md",
+    "1° SEM. 2024-25/FONDAMENTI DI PROGRAMMAZIONE/Immagini.md",
+    "1° SEM. 2024-25/FONDAMENTI DI PROGRAMMAZIONE/Generatori e contenitori.md",
+    "1° SEM. 2024-25/FONDAMENTI DI PROGRAMMAZIONE/OOP.md",
+    "1° SEM. 2024-25/FONDAMENTI DI PROGRAMMAZIONE/Stringhe.md",
+    "1° SEM. 2024-25/FONDAMENTI DI PROGRAMMAZIONE/File.md",
+    "1° SEM. 2024-25/FONDAMENTI DI PROGRAMMAZIONE/Funzioni.md",
+    "1° SEM. 2024-25/FONDAMENTI DI PROGRAMMAZIONE/Errori.md",
+    "1° SEM. 2024-25/images",
     "Untitled.canvas",
     "FONDAMENTI DI PROGRAMMAZIONE/Generatori e contenitori",
-    "PROGETTAZIONE DI SISTEMI DIGITALI",
-    "CALCOLO DIFFERENZIALE",
-    "METODI MATEMATICI PER INFORMATICA",
-    "FONDAMENTI DI PROGRAMMAZIONE"
+    "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI",
+    "1° SEM. 2024-25/CALCOLO DIFFERENZIALE",
+    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA",
+    "1° SEM. 2024-25/FONDAMENTI DI PROGRAMMAZIONE"
   ]
 }
