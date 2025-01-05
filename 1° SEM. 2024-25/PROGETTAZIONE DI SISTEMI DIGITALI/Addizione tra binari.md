@@ -9,5 +9,3 @@ Vediamo un esempio, sommando i binari 1011 e 0011:
 In questo caso, la somma che avviene nella prima colonna avrà come risultato 10₂, ossia 2, dunque si segna 0 e si riporta 1; nella seconda colonna, la somma avrà come risultato 11₂, ossia 3, dunque si segna 1 e si riporta 1; e così via.
 
 In un'addizione tra binari arbitraria, compiuta manualmente, si può tranquillamente sforare il numero di bit dei binari iniziali senza conseguenze; in un sistema digitale, tuttavia, ciò può creare problemi, in quanto il sistema opererà su un numero fisso di bit (pari a quello dei binari iniziali), e ignorerà qualsiasi bit in posizioni superiori a quelle considerate. Quando ciò avviene, si verifica un cosiddetto "***overflow***"; l'avvenire di un *overflow* può essere accertato controllando se vi è un riporto a partire dal *msb* (*most significant bit*).
-___
-[SOTTRAZIONE TRA BINARI]

@@ -23,8 +23,8 @@ Un'**equazione booleana** viene espressa mediante variabili binarie, che possono
 - una variabile priva di negazioni si trova nella sua "forma vera" (***true form***);
 - il "**complemento**" di una variabile è il suo inverso;
 - una variabile (o il suo complemento) viene definita anche come un "***literal***";
-- l'*AND* di uno o più *literals* viene anche detto "**prodotto**" o "**implicante**";
-- l'*OR* di uno o più *literals* viene anche detto "**somma**";
+- l'*AND* di due o più *literals* viene anche detto "**prodotto**" o "**implicante**";
+- l'*OR* di due o più *literals* viene anche detto "**somma**";
 - un prodotto che coinvolge tutti gli *input* di un determinato circuito viene detto "**mintermine**" (***minterm***) di quel circuito;
 - una somma che coinvolge tutti gli *input* di un determinato circuito viene detto "**maxtermine**" (***maxterm***) di quel circuito.
 
