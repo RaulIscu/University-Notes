@@ -14,7 +14,7 @@
               "type": "markdown",
               "state": {
                 "file": "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Addizione tra binari.md",
-                "mode": "preview",
+                "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
@@ -180,6 +180,8 @@
   "lastOpenFiles": [
     "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Sistema binario.md",
     "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Addizione tra binari.md",
+    "1° SEM. 2024-25/images/ieee754_specialcases.png",
+    "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Moltiplicazione tra binari.md",
     "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Sistema esadecimale.md",
     "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Conversioni tra decimali, binari ed esadecimali.md",
     "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Algebra booleana.md",
@@ -200,7 +202,6 @@
     "1° SEM. 2024-25/images/glitch_example2.png",
     "1° SEM. 2024-25/images/glitch_example1.png",
     "1° SEM. 2024-25/images/delay_buffer_pdcd.png",
-    "1° SEM. 2024-25/images/delay_buffer.png",
     "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Decoder.md",
     "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Multiplexer.md",
     "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Variabili.md",
@@ -215,8 +216,6 @@
     "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Iniettività, suriettività e biettività.md",
     "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Insiemi infiniti, numerabili e non-numerabili.md",
     "1° SEM. 2024-25/FONDAMENTI DI PROGRAMMAZIONE/Ricorsione.md",
-    "1° SEM. 2024-25/FONDAMENTI DI PROGRAMMAZIONE/Immagini.md",
-    "1° SEM. 2024-25/FONDAMENTI DI PROGRAMMAZIONE/Generatori e contenitori.md",
     "1° SEM. 2024-25/images",
     "Untitled.canvas",
     "FONDAMENTI DI PROGRAMMAZIONE/Generatori e contenitori",
