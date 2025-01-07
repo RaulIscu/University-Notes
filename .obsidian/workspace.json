@@ -4,21 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "0e52d1e22bb9d8c7",
+        "id": "80d5bb3f704df681",
         "type": "tabs",
         "children": [
           {
-            "id": "f31eb1e40813e672",
+            "id": "2967b7a709cd0529",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Addizione tra binari.md",
-                "mode": "source",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "Addizione tra binari"
+              "title": "New tab"
             }
           }
         ]
@@ -138,11 +134,9 @@
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {
-                "file": "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Addizione tra binari.md"
-              },
+              "state": {},
               "icon": "lucide-list",
-              "title": "Outline of Addizione tra binari"
+              "title": "Outline"
             }
           },
           {
@@ -176,12 +170,13 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "f31eb1e40813e672",
+  "active": "2967b7a709cd0529",
   "lastOpenFiles": [
-    "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Sistema binario.md",
-    "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Addizione tra binari.md",
-    "1° SEM. 2024-25/images/ieee754_specialcases.png",
     "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Moltiplicazione tra binari.md",
+    "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Addizione tra binari.md",
+    "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Sistema binario.md",
+    "1° SEM. 2024-25/images/binarymult.png",
+    "1° SEM. 2024-25/images/ieee754_specialcases.png",
     "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Sistema esadecimale.md",
     "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Conversioni tra decimali, binari ed esadecimali.md",
     "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Algebra booleana.md",
@@ -201,7 +196,6 @@
     "1° SEM. 2024-25/images/glitch_fix.png",
     "1° SEM. 2024-25/images/glitch_example2.png",
     "1° SEM. 2024-25/images/glitch_example1.png",
-    "1° SEM. 2024-25/images/delay_buffer_pdcd.png",
     "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Decoder.md",
     "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Multiplexer.md",
     "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Variabili.md",
