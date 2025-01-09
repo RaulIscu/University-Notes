@@ -1,4 +1,4 @@
-Un ***decoder*** è un componente di logica combinatoria. Sostanzialmente, il suo scopo è quello di scegliere esattamente un *output* tra diversi possibili *output* possibile, in base alla combinazione di *input* che riceve; per questa esclusività degli *output*, essi vengono definiti "*one-hot*", in quanto solo uno di loro è "attivo" in qualsiasi momento.
+Un ***decoder*** è un componente di logica combinatoria. Sostanzialmente, il suo scopo è quello di scegliere esattamente un *output* tra diversi possibili *output*, in base alla combinazione di *input* che riceve; per questa esclusività degli *output*, essi vengono definiti "*one-hot*", in quanto solo uno di loro è "attivo" in qualsiasi momento.
 
 In generale, un *decoder* può avere un numero *i* di *input* e un numero *2ⁱ* di *output*.
 ___
