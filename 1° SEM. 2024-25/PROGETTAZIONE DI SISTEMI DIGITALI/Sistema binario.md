@@ -12,7 +12,7 @@ In un sistema **segno/grandezza**, un numero binario composto da *N* bit present
 $$5₁₀ = 0101₂$$
 dove l'*msb*, ossia 0, indica che si tratta di un numero positivo, mentre i restanti bit, ossia 101, rappresentano il valore assoluto, pari a 5.
 
-Sfortunatamente, il sistema segno/grandezza presenta varie imperfezioni: ad esempio, non è possibile effettuare un'ordinaria [[Addizione tra binari|addizione tra binari]] scritti in tale sistema; inoltre, in tale sistema vi è una rappresentazione distinta per +0 e -0.
+Sfortunatamente, il sistema segno/grandezza presenta varie imperfezioni: ad esempio, non è possibile effettuare un'ordinaria [[Addizione tra binari|addizione tra binari]] scritti in tale sistema; inoltre, vi è una rappresentazione distinta per +0 e -0.
 
 Per venir meno a questi problemi, è stato ideato il sistema del **complemento a due**. In un numero binario scritto in complemento a due, l'*msb* ha valore negativo invece che positivo. Ad esempio:
 $$-2₁₀ = 1110₂$$
