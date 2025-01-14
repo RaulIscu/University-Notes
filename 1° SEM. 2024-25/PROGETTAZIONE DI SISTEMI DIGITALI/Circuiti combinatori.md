@@ -37,7 +37,7 @@ A partire da una tavola di verità, ci sono principalmente due modi di arrivare 
 - la forma "***sum of products***" (o **SOP**);
 - la forma "***product of sums***" (o **POS**).
 
-La forma **SOP** consiste nello scrivere l'equazione booleana relativa a un circuito combinatorio sommando tutti i mintermini (quindi, i prodotti) del circuito stesso per cui l'*output* risulta essere `True`. La forma **POS**, invece, consiste nello scrivere l'equazione booleana relativa a un circuito combinatorio moltiplicando tutti i maxtermini (quindi, le somme) per cui l'*output* risulta essere `False`. Nel fare ciò, è importante ricordare che, in una tavola di verità, a ogni riga viene associato un mintermine che sia `True` per quella riga e un maxtermine che sia `False` per quella riga.
+La forma **SOP** consiste nello scrivere l'equazione booleana relativa a un circuito combinatorio sommando tutti i mintermini (quindi, i prodotti) del circuito stesso per cui l'*output* risulta essere `True`. La forma **POS**, invece, consiste nello scrivere l'equazione booleana relativa a un circuito combinatorio moltiplicando tutti i maxtermini (quindi, le somme) per cui l'*output* risulta essere `False`.
 
 Alternativamente, la forma SOP può essere scritta utilizzando la notazione Σ, che prende in argomento i mintermini da considerare o gli indici delle righe della tavola di verità corrispondenti a tali mintermini; ad esempio:
 $$F(A, B) = Σ(m₁, m₃)$$

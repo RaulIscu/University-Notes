@@ -12,7 +12,7 @@ In un sistema **segno/grandezza**, un numero binario composto da *N* bit present
 $$5₁₀ = 0101₂$$
 dove l'*msb*, ossia 0, indica che si tratta di un numero positivo, mentre i restanti bit, ossia 101, rappresentano il valore assoluto, pari a 5.
 
-Sfortunatamente, il sistema segno/grandezza presenta varie imperfezioni: ad esempio, non è possibile effettuare un'ordinaria [[Addizione tra binari|addizione tra binari]] scritti in tale sistema; inoltre, in tale sistema vi è una rappresentazione distinta per +0 e -0.
+Sfortunatamente, il sistema segno/grandezza presenta varie imperfezioni: ad esempio, non è possibile effettuare un'ordinaria [[Addizione tra binari|addizione tra binari]] scritti in tale sistema; inoltre, vi è una rappresentazione distinta per +0 e -0.
 
 Per venir meno a questi problemi, è stato ideato il sistema del **complemento a due**. In un numero binario scritto in complemento a due, l'*msb* ha valore negativo invece che positivo. Ad esempio:
 $$-2₁₀ = 1110₂$$
@@ -31,7 +31,7 @@ Come già accennato, l'addizione binaria funziona regolarmente per i numeri scri
 
 Per estendere un numero scritto in complemento a due a un numero maggiore di bit, si dovranno aggiungere a sinistra del numero in questione tante copie dell'*msb* iniziale quanti sono i bit che si vogliono aggiungere al numero.
 ___
-Anche i sistemi appena visti, però, non sono sufficienti a coprire qualsiasi numero possibile: abbiamo considerato, infatti, solo numeri interi, tralasciando completamente numeri dotati di parti decimali, ossia frazioni. Per rappresentare quest'ultime, esistono principalmente due sistemi: il "***fixed point***" e il "***floating point***".
+Anche i sistemi appena visti, però, non sono sufficienti a coprire qualsiasi numero possibile: abbiamo considerato, infatti, solo numeri interi, tralasciando completamente numeri dotati di parti frazionarie. Per rappresentare quest'ultimi, esistono principalmente due sistemi: il "***fixed point***" e il "***floating point***".
 
 Un numero frazionario scritto in ***fixed point*** presenta, come suggerisce il nome, un punto binario "fisso", che separa la parte intera da quella frazionaria; il numero di bit conferito a ciascuna di queste due parti del numero viene convenzionalmente stabilito a priori, e per questo il punto in sé viene spesso omesso. Per quanto riguarda la rappresentazione concreta della parte frazionaria, si segue lo stesso ragionamento applicato per dei numeri binari basilari: si moltiplica, dunque, il bit in questione (1 o 0) per la potenza di 2 avente come esponente la posizione del bit, con la particolarità che la parte frazionaria avrà posizioni negative, partendo da -1 per i decimi. Ad esempio:
 $$6.75₁₀ = 0110.1100₂ = 01101100 = 2² + 2¹ + 2^-¹ + 2^-²$$
