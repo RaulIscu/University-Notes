@@ -16,7 +16,7 @@ Per comprendere meglio il circuito, consideriamo le 4 casistiche possibili in ba
 
 I due sotto-casi del quarto e ultimo caso possono essere riassunti supponendo che Q abbia un qualsiasi valore noto precedente a quello corrente. Possiamo chiamare questo valore Q*prev*, ed esso rappresenterà semplicemente la variabile di stato del *latch*. Dunque, in "assenza" di *input*, ossia quando S e R sono uguali a 0, il circuito ricorda il suo stato precedente, dato da Q*prev*, e rimane in esso.
 
-Possiamo riassumere i casi analizzati finora in una tavola di verità, che ci aiuterà a spiegare meglio il funzionamento dell'*SR latch*:
+Possiamo riassumere i casi analizzati in una tavola di verità, che ci aiuterà a spiegare meglio il funzionamento dell'*SR latch*:
 
 ![[sr_latch_truth.png]]
 
@@ -27,4 +27,25 @@ Solitamente, un *SR latch* viene costruito con le porte *NOR* che abbiamo visto,
 ![[sr_latch_symbol.png]]
 
 ___
+L'*SR latch* risulta non ottimale in molte situazioni, proprio per il fatto che il circuito si comporta in maniera anomala nel caso in cui sia *S* che *R* sono attivi; inoltre, ciascuno dei due *input* determina non solo quale sarà lo stato del circuito, ma anche quando questo andrà a cambiare, mentre solitamente è più comodo che queste due incognite vengano risolte separatamente.
 
+È per compensare a questi problemi che viene introdotto il "***D latch***", dove *D* sta per "*Data*". Anche questo circuito presenta due *input*, ossia *D* (che controlla lo stato del *latch*) e *CLK*, che sta per "*clock*" (che controlla quando lo stato del *latch* va a cambiare). Graficamente, un generico *D latch* può essere implementato nel modo seguente:
+
+![[d_latch.png]]
+
+Per comprendere meglio il circuito, consideriamo le casistiche possibili in base agli *input* *D* e *CLK*:
+- se ***CLK = 0***, allora *S* = *R* = *0* indipendentemente dal valore di *D*;
+- se ***CLK = 1*** e ***D = 1***, allora *S = 1* e *R = 0*;
+- se ***CLK = 1*** e ***D = 0***, allora *S* = *0* e *R* = *1*.
+
+Possiamo riassumere i casi analizzati in una tavola di verità, che ci aiuterà a spiegare meglio il funzionamento del *D latch*:
+
+![[d_latch_truth.png]]
+
+Avendo i valori di *S* e *R*, naturalmente, gli *output* Q e Q' verranno determinati in base alla tavola di verità dell'*SR latch*. Si nota, dunque, che se *CLK = 0*, *Q = Qprev* (il circuito, dunque, ricorderà il suo valore precedente); invece, se *CLK = 1*, *Q = D*. Mediante questo meccanismo, il *D latch* evita il caso anomalo dell'attivazione contemporanea di *S* e *R*.
+
+Insomma, in un *D latch*, **l'*input* *CLK* è quello che determina quando l'informazione** (*D*) **entra nel circuito**: per questo, quando *CLK = 1*, il circuito viene detto "**trasparente**", in quanto si comporta come un *[[Porte logiche|BUFFER]]* e trasmette come *output* il valore di *D*; quando, invece, *CLK = 0*, il circuito viene detto "**opaco**", in quanto non lascia passare l'informazione *D* e l'*output* mantiene il suo valore precedente.
+
+In generale, qualsiasi circuito che rispetti la tavola di verità appena analizzata può essere definito *D latch*, e graficamente rappresentato con il seguente simbolo:
+
+![[d_latch_symbol.png]]
