@@ -42,5 +42,26 @@ Intuitivamente, dato he non abbiamo richiesto che gli elementi menzionati siano 
 
 Si osserva che esiste un percorso di lunghezza *i* tra *a* e *b* se e solo se *(a, b)* ∈ *Rⁱ*. Dunque l’unione *R¹* ∪ *R²* ∪ ... ∪ *Rⁱ* contiene tutte e sole le coppie *(a, b)* per cui esiste un percorso di lunghezza ≤ *i* da *a* a *b*.
 
-[DIMOSTRAZIONE: DISPENSA 12]
+Una dimostrazione rigorosa dell’osservazione precedente si può ottenere per induzione matematica, dimostrando che l’equivalenza è vera per ogni possibile *l* ∈ {1, 2, 3, ...}. Limitiamoci a qualche osservazione:
+- per *l* = 1 stiamo dicendo che *R₁* (ossia *R*) contiene tutte e sole le coppie *(a, b)* ∈ *A × A* per cui esiste un percorso di lunghezza 1 da *a* verso *b*. Queste sono tutte le coppie *(a, b)* ∈ *R*, dunque l’identità è verificata.
+- per *l* = 2 stiamo dicendo che *R₂* contiene tutte e sole le coppie in *R ◦ R*, ossia le coppie *(x, y)* tali per cui esiste *z* ∈ *A* tale che valgano *xRz* e *zRy*. Dunque esiste un percorso di lunghezza 2 da *x* verso *y*: *xRzRy*. Viceversa se esiste un percorso di lunghezza 2 da *x* verso *y* allora la coppia *(x, y)* è in *R ◦ R* (per definizione di composizione).
+- per *l* = 3 stiamo dicendo che *R₃* contiene tutte e sole le coppie in *(R ◦ R) ◦ R*, ossia le coppie *(x, y)* tali per cui esiste *z* ∈ *A* tale che *(x, z)* ∈ *R ◦ R* e *(z, y)* ∈ *R*. Per quanto visto sopra, *(x, z)* ∈ *R ◦ R* equivale all’esistenza di un percorso di lunghezza 2 da *x* verso *z*, e *(z, y)* ∈ *R* equivale all’esistenza di un percorso di lunghezza 1 da *z* verso *y*: dunque, esiste un percorso di lunghezza 3 da *x* verso *z*.
+
+Si ottiene, dunque, che *R∞* coincide con l’insieme delle coppie *(a, b)* per cui, per qualche *l*, esiste un percorso di lunghezza *l* tra *a* e *b*. Quest'identità è molto utile, perché in molti casi è più semplice e intuitivo ragionare in termini di percorsi che non in termini di iterazione della composizione di *R* con se stessa. Per esempio, in termini di percorsi è evidente il concetto di transitività: se esiste un percorso da *a* verso *b* e un percorso da *b* verso *c*, di certo esiste un percorso da *a* verso *c*.
+___
+Dimostriamo, appoggiandoci alla nozione di percorso, che ***R∞* è la chiusura transitiva di *R***.
+
+Si tratta di dimostrare che *R∞* soddisfa le tre condizioni che definiscono la chiusura transitiva *RT*, ossia:
+1. *R∞* estende *R*;
+2. *R∞* è transitiva;
+3. *R∞* è la più piccola relazione transitiva che estende *R*.
+
+Il punto 1 viene dimostrato immediatamente in quanto *R* = *R₁*, che è necessariamente contenuta in *R∞*.
+
+Per il punto 2, siano *(a, b)* ∈ *R∞* e *(b, c)* ∈ *R∞*: per l’equivalenza tra appartenenza a una composizone *Rⁱ* ed esistenza di un percorso di lunghezza *i*, *(a, b)* ∈ *R∞* equivale a dire che esiste un percorso (di una qualche lunghezza *i*) da *a* verso *b*; analogamente, *(b, c)* ∈ *R∞* equivale a dire che esiste un percorso (di una qualche lunghezza *j*) da *b* verso *c*. Dunque esiste un percorso (di lunghezza *i* + *j*) tra *a* e *c*: si ottiene, così, che *(a, c)* ∈ *R∞*. Abbiamo così dimostrato che *R∞* è transitiva.
+
+Per il punto 3, ci limitiamo a considerazioni intuitive (in quanto una dimostrazione rigorosa richiede l’induzione). Per dimostrare che *R∞* è la più piccola relazione transitiva che estende *R*, si considera una relazione arbitraria *S* ⊆ *A × A* transitiva che estende *R*, e si dimostra che necesariamente deve includere
+*R∞*, ossia *R∞* ⊆ *S*. Osserviamo che, dato che *R* ⊆ *S*, tutte le frecce di *R* sono frecce anche di *S*, e dunque se esiste un percorso da *a* verso *b* in *R* quello è anche un percorso da *a* verso *b* in *S*. In termini insiemistici, questo significa che, per ogni *i*, *Rⁱ* ⊆ *Sⁱ*, e questo implica a sua volta che *R∞* ⊆ *S∞*. D’altra parte, è facile convincersi che, dato che *S* è transitiva, comporre *S* con sé stessa non porta fuori da *S*, e dunque vale anche che *S∞* ⊆ *S*. Si ottiene, così, che *R∞* ⊆ *S∞* ⊆ *S*, e dunque che *R∞* ⊆ *S*.
+___
+Se pensiamo di voler calcolare RT, l’unione infinita delle iterazioni di *R* non è molto conveniente da trovare. Consideriamo, però, cosa accade nel caso di una relazione *R* su un insieme finito.
 
