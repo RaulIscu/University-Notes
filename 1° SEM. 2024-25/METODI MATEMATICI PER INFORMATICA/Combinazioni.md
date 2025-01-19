@@ -41,3 +41,31 @@ I gruppi del primo tipo contengono la pecora nera *p* e altre *k − 1* pecore s
 ![[comb_pecoranera.png]]
 
 Quest'identità permette di calcolare il valore di un coefficiente binomiale ricorsivamente usando valori più piccoli, sfruttando l'ipotetica esistenza di un "**elemento pecora nera**" nell'insieme di partenza.
+___
+Sfruttando il principio ricavato dalla risoluzione del [[Problema delle caramelle|problema delle caramelle]], è possibile definire un tipo particolare di combinazione, ossia la **combinazione con ripetizione**.
+
+Consideriamo, ad esempio, l’insieme *A* = {a, b, c, d}. Si vogliono contare i modi di scegliere 6 elementi in *A* con possibili ripetizioni, senza dare importanza all’ordine. Una di queste scelte, per intenderci, potrebbe essere {a, a, c, c, c, d}. Chiamiamo "combinazione con ripetizione" di ordine *k* di *n* oggetti un raggruppamento di *k* oggetti scelti tra *n* con possibili ripetizioni, e denotiamo il loro numero con:
+
+![[comb_ripetizione.png]]
+
+Per sapere, in generale, a quanto ammonta questo valore, risulta utile impostare e analizzare una tabella come la seguente:
+
+![[comb_ripetizione_tab.png]]
+
+in cui gli elementi della prima riga (*a₁*, *a₂*, ecc. ecc.) sono gli *n* elementi dell'insieme di partenza, mentre gli elementi della seconda riga (*m₁*, *m₂*, ecc. ecc.) rappresentano il numero di volte che un certo elemento dell'insieme di partenza è incluso nel raggruppamento che si vuole fare. A conti fatti, dunque, si dovrà avere che *k* = *m₁ + m₂ + ... + mn*.
+
+Ci si accorge abbastanza facilmente che tale equazione coincide con una tipica equazione di un problema di scrittura additiva, e dunque che il problema appena spiegato equivale a un problema di caramelle; insomma, il numero delle combinazioni con ripetizione di ordine *k* di *n* oggetti è esattamente uguale al numero di modi di distribuire *k* caramelle tra *n* bambini. Quindi, si ha che:
+
+![[comb_ripetizione_formula.png]]
+___
+Le combinazioni sono uno strumento molto utile quando si lavora con gli **anagrammi**.
+
+Se si considerano parole composte da lettere uniche (nessuna lettera della parola compare più di una volta al suo interno), il numero di possibili anagrammi di tali parole si può trovare applicando banalmente il [[Principio moltiplicativo|principio moltiplicativo]]: ad esempio, i possibili anagrammi della parola "padre" sono 5! = 120.
+
+Tuttavia, la situazione si complica se si considerano parole che presentano al proprio interno lettere che si ripetono. Ad esempio, i possibili anagrammi della parola "nonna" non sono 5! = 120, perché nel contare i possibili anagrammi di una parola non si considerano copie della stessa lettera come lettere distinte. Occorre, quindi, applicare la regola del pastore, dividendo il risultato precedente per il numero di [[Disposizioni e permutazioni|permutazioni]] dell'insieme di lettere identiche presenti nella parola (in questo caso, tale insieme è {n₁, n₂, n₃}, e quindi occorre dividere per 3! = 6). Dunque, il numero di anagrammi della parola "nonna" è 5! / 3! = 20.
+
+Si applica un ragionamento analogo se le lettere che si ripetono sono più di una; ad esempio, i possibili anagrammi della parola "nonno" sono (5! / 3!) / 2! = 5! / (3! × 2!) = 10, in quanto, ragionando gradualmente, si deve prima dividere il numero di anagrammi totali per le permutazioni delle 3 "n", e poi per le permutazioni delle 2 "o".
+
+Insomma, se si vogliono formare gli anagrammi di una parola formata da *n* occorrenze di lettere, di cui *n₁* sono identiche, si hanno *n!* / *n₁!* possibilità; se ci sono *n₁* lettere identiche di un tipo e *n₂* di un altro tipo, si hanno *n!* / (*n₁!* × *n₂!*) possibilità; e così via. Generalizzando, gli anagrammi di una parola lunga *n* lettere, in cui compaiono *t* gruppi di *n₁*, *n₂*, ..., *nt* lettere ripetute, sono:
+
+![[anagrammi_lettererip.png]]
