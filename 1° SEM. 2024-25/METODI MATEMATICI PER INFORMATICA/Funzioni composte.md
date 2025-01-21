@@ -24,8 +24,7 @@ Dimostriamo il primo punto. Supponiamo che *f* e *g* siano entrambe iniettive; d
 $$(g ◦ f)(x) = (g ◦ f)(x')$$
 che per definizione significa che:
 $$g(f(x)) = g(f(x'))$$
-Dato che *g* è iniettiva per ipotesi, se *g* mappa gli elementi f(x) e f(x′) del suo dominio *Y* nello stesso elemento del codominio *Z*, deve essere necessariamente *f(x) = f(x′)*.
-Dato che *f* è iniettiva per ipotesi, se *f* mappa gli elementi *x* e *x'* del suo dominio *X* nello stesso elemento del codominio *Y*, deve essere necessariamente *x = x'*. Ma questo contraddice l’ipotesi che *x* e *x'* siano distinti. Abbiamo così raggiunto una contraddizione, e dunque si è dimostrato che *g ◦ f* è iniettiva.
+Dato che *g* è iniettiva per ipotesi, se *g* mappa gli elementi f(x) e f(x′) del suo dominio *Y* nello stesso elemento del codominio *Z*, deve essere necessariamente *f(x) = f(x′)*. Dato che *f* è iniettiva per ipotesi, se *f* mappa gli elementi *x* e *x'* del suo dominio *X* nello stesso elemento del codominio *Y*, deve essere necessariamente *x = x'*. Ma questo contraddice l’ipotesi che *x* e *x'* siano distinti. Abbiamo così raggiunto una contraddizione, e dunque si è dimostrato che *g ◦ f* è iniettiva.
 
 Dimostriamo il secondo punto, e quindi che ogni elemento del codominio *Z* è immagine via *g ◦ f* di almeno un elemento del dominio *X*. Scegliamo un arbitrario *z ∈ Z*. Dato che *g: Y → Z* è suriettiva per ipotesi, *∃y ∈ Y* tale che *g(y) = z*; sia *y₀* un tale *y*. Dato che *f: X → Y* è suriettiva per ipotesi, *∃x ∈ X* tale che *f(g(y₀)) = z*; sia *x₀* un tale *x*. Abbiamo dunque dimostrato che *∃x ∈ X* tale che *g(f(x)) = z*.
 

@@ -4,5 +4,5 @@ La nozione di **funzione inversa** è piuttosto naturale nella pratica matematic
 > Sia *f: X → Y* una funzione. Una funzione *g: Y → X* si dice l’inversa di *f* se e solo se *(g ◦ f)* è l’identità su *X*, e *(f ◦ g)* è l’identità su *Y*.
 
 La funzione inversa di *f(x)* si denota con:
-$$f(x)^-1$$
+$$f(x)^-¹$$
 Sappiamo già che l’esistenza di una *g* come nella definizione qui sopra equivale alla biettività di *f*; dunque una tale *g* non esiste per *f* arbitrarie. Una funzione *f: X → Y* è **invertibile** se esiste la funzione inversa.

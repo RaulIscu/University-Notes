@@ -25,7 +25,7 @@ Se *f: X → Y* e *A ⊆ X*, vale sempre *f(A) ⊆ f(X)*; per dimostrarlo, scriv
 > f(A) = {y ∈ Y | ∃a ∈ A t.c. f(a) = y}
 
 Sia *y* arbitrario in *f(A)*. Per definizione *y ∈ Y* e per qualche *a ∈ A* abbiamo *f(a) = y*. Dato che *A ⊆ X*, vale che *y ∈ Y*, e per qualche *x ∈ X* abbiamo *f(x) = y*; dunque *y ∈ f(X)*.
-
+___
 Esistono diversi modi di **rappresentare una funzione** (in particolare una funzione con dominio finito) che risultano comodi e adatti in diverse situazioni:
 1. **rappresentazione grafica**; una funzione da un dominio *X* a un codominio *Y* si può rappresentare graficamente su un piano cartesiano, numerando le ascisse con gli elementi del dominio e le ordinate con gli elementi del codominio, e segnando punti in *(x, y)* se *f(x) = y*; dal grafico si può facilmente giudicare se quella considerata è effettivamente una funzione: a ogni punto in ascissa deve corrispondere uno e un solo punto in ordinata;
 2. **rappresentazione diagrammatica**; una funzione da un dominio finito *X* a un codominio finito *Y* si può rappresentare con un diagramma a frecce disegnando a sinistra tanti pallini quanti sono gli elementi di *X*, e a destra tanti pallini quanti sono gli elementi di *Y*, e mettendo una freccia da sinistra a destra tra ogni elemento di *X* e la sua immagine secondo *f*. Anche dal diagramma si può giudicare se quella considerata è una funzione: da ogni punto a sinistra deve uscire esattamente una freccia;
