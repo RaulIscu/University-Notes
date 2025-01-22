@@ -7,7 +7,22 @@ Generalizzando, applicando il principio moltiplicativo, se si considera l'insiem
 ![[disp_senza_rip.png]]
 
 Nel caso in cui *n = k*, il problema diventa trovare il numero di modi per riordinare gli *n* elementi considerati in una sequenza; si tratta, dunque, di una **permutazione**, la cui soluzione si ottiene come:
+
 ![[perm.png]]
+
 Considerando lo stesso insieme A, il numero di sequenze ordinate di lunghezza k di elementi di A con possibili ripetizioni (dette anche **disposizioni con ripetizioni di ordine k di n elementi**) è invece dato da:
 
 ![[disp_con_rip.jpg]]
+
+___
+Le permutazioni, in particolare, sono uno strumento molto utile quando si lavora con gli **anagrammi**.
+
+Se si considerano parole composte da lettere uniche (nessuna lettera della parola compare più di una volta al suo interno), il numero di possibili anagrammi di tali parole si può trovare applicando banalmente il [[Principio moltiplicativo|principio moltiplicativo]]: ad esempio, i possibili anagrammi della parola "padre" sono 5! = 120.
+
+Tuttavia, la situazione si complica se si considerano parole che presentano al proprio interno lettere che si ripetono. Ad esempio, i possibili anagrammi della parola "nonna" non sono 5! = 120, perché nel contare i possibili anagrammi di una parola non si considerano copie della stessa lettera come lettere distinte. Occorre, quindi, applicare la regola del pastore, dividendo il risultato precedente per il numero di permutazioni dell'insieme di lettere identiche presenti nella parola (in questo caso, tale insieme è {n₁, n₂, n₃}, e quindi occorre dividere per 3! = 6). Dunque, il numero di anagrammi della parola "nonna" è 5! / 3! = 20.
+
+Si applica un ragionamento analogo se le lettere che si ripetono sono più di una; ad esempio, i possibili anagrammi della parola "nonno" sono (5! / 3!) / 2! = 5! / (3! × 2!) = 10, in quanto, ragionando gradualmente, si deve prima dividere il numero di anagrammi totali per le permutazioni delle 3 "n", e poi per le permutazioni delle 2 "o".
+
+Insomma, se si vogliono formare gli anagrammi di una parola formata da *n* occorrenze di lettere, di cui *n₁* sono identiche, si hanno *n!* / *n₁!* possibilità; se ci sono *n₁* lettere identiche di un tipo e *n₂* di un altro tipo, si hanno *n!* / (*n₁!* × *n₂!*) possibilità; e così via. Generalizzando, gli anagrammi di una parola lunga *n* lettere, in cui compaiono *t* gruppi di *n₁*, *n₂*, ..., *nt* lettere ripetute, sono:
+
+![[anagrammi_lettererip.png]]

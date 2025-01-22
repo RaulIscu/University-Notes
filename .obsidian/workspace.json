@@ -8,20 +8,105 @@
         "type": "tabs",
         "children": [
           {
+            "id": "901766a40bf5da6c",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Principio moltiplicativo.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Principio moltiplicativo"
+            }
+          },
+          {
             "id": "d8aa8ae7689ab659",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Logica proposizionale.md",
+                "file": "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Disposizioni e permutazioni.md",
+                "mode": "preview",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Disposizioni e permutazioni"
+            }
+          },
+          {
+            "id": "03190ba96d3497b4",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Principio additivo.md",
+                "mode": "preview",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Principio additivo"
+            }
+          },
+          {
+            "id": "ffdc1a6ebd93b476",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Passaggio al complemento.md",
+                "mode": "preview",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Passaggio al complemento"
+            }
+          },
+          {
+            "id": "f580d937b06d1798",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Combinazioni.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Logica proposizionale"
+              "title": "Combinazioni"
+            }
+          },
+          {
+            "id": "517fcbde6c1220d8",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Problema delle caramelle.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Problema delle caramelle"
+            }
+          },
+          {
+            "id": "7d2f4e7ee1f7e015",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Principio di inclusione-esclusione.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Principio di inclusione-esclusione"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -139,10 +224,10 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Logica proposizionale.md"
+                "file": "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Disposizioni e permutazioni.md"
               },
               "icon": "lucide-list",
-              "title": "Outline of Logica proposizionale"
+              "title": "Outline of Disposizioni e permutazioni"
             }
           },
           {
@@ -177,11 +262,19 @@
   },
   "active": "d8aa8ae7689ab659",
   "lastOpenFiles": [
+    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Combinazioni.md",
+    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Passaggio al complemento.md",
+    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Principio additivo.md",
+    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Disposizioni e permutazioni.md",
+    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Principio moltiplicativo.md",
+    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Principio di inclusione-esclusione.md",
+    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Problema delle caramelle.md",
+    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Dimostrazione per doppio conteggio.md",
+    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Logica proposizionale.md",
     "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Relazioni d'ordine.md",
     "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Relazioni d'equivalenza.md",
     "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Relazioni.md",
     "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Cardinalità.md",
-    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Logica proposizionale.md",
     "1° SEM. 2024-25/FONDAMENTI DI PROGRAMMAZIONE/Stringhe.md",
     "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Flip-flop.md",
     "1° SEM. 2024-25/images/truth_example1.png",
@@ -189,17 +282,12 @@
     "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Funzioni inverse.md",
     "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Funzioni.md",
     "1° SEM. 2024-25/images/assegnamento_estensione.png",
-    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Principio di inclusione-esclusione.md",
-    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Problema delle caramelle.md",
     "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Funzioni composte.md",
     "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Insiemi infiniti, numerabili e non-numerabili.md",
     "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Iniettività, suriettività e biettività.md",
     "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Caratterizzazione di iniezioni, suriezioni e biezioni.md",
-    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Principio moltiplicativo.md",
     "1° SEM. 2024-25/images/caramelle_example3.png",
-    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Combinazioni.md",
     "1° SEM. 2024-25/images/anagrammi_lettererip.png",
-    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Disposizioni e permutazioni.md",
     "1° SEM. 2024-25/FONDAMENTI DI PROGRAMMAZIONE/File.md",
     "1° SEM. 2024-25/FONDAMENTI DI PROGRAMMAZIONE/Breve storia dei computer e della programmazione.md",
     "1° SEM. 2024-25/images/comb_ripetizione_formula.png",
@@ -207,10 +295,7 @@
     "1° SEM. 2024-25/images/comb_ripetizione.png",
     "1° SEM. 2024-25/images/caramelle_almenouna.png",
     "1° SEM. 2024-25/images/caramelle.png",
-    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Passaggio al complemento.md",
     "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Dimostrazione per traduzione.md",
-    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Dimostrazione per doppio conteggio.md",
-    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Principio additivo.md",
     "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Chiusura transitiva.md",
     "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Latch.md",
     "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE",

@@ -3,7 +3,7 @@ Supponiamo, ad esempio, di voler comporre dei panini, formati da pane, una prote
 - Categoria n°2, o *B*, formata da panini con pane ai semi di sesamo;
 - Categoria n°3, o *C*, formata da panini con pane integrale.
 
-Con le condizioni poste in precedenza, ciascuna delle 3 categorie conterrà al suo interno 12 panini possibili. A questo punto, per ottenere il numero di panini possibili totali, basterà sommare il numero di possibilità delle tre categorie; il risultato ottenuto sarà lo stesso dato dallo svolgimento del problema mediante il principio moltiplicativo.
+Con le condizioni poste in precedenza, ciascuna delle 3 categorie conterrà al suo interno 12 panini possibili. A questo punto, per ottenere il numero di panini possibili totali, basterà sommare il numero di possibilità delle tre categorie; il risultato ottenuto sarà lo stesso dato dallo svolgimento del problema mediante il [[Principio moltiplicativo|principio moltiplicativo]].
 
 Agendo mediante l’uso di categorie, è importante ricordare che quest’ultime dovranno essere **esaustive** (la somma dei sottoinsiemi-categoria dovrà dare l’insieme totale) ed **esclusive** (ognuna delle possibilità potrà trovarsi in una e una sola categoria).
 
@@ -17,7 +17,7 @@ Generalizzando, in questi casi vale il **principio additivo**, o **principio di 
 
 Per poter formalizzare al meglio tale principio, ricordiamo alcune nozioni insiemistiche fondamentali:
 - un **insieme** è una collezione di oggetti non ripetuti e privo di ordine, tipicamente indicato, in matematica, come un gruppo di elementi racchiuso tra parentesi graffe; può essere finito, infinito, o vuoto, e può essere indicato come la totalità degli elementi che rispettano una particolare proprietà;
-- un **sottoinsieme** X di un insieme Y (per cui XY) è tale se e solo se tutti gli elementi di X sono anche elementi di Y.
+- un **sottoinsieme** X di un insieme Y (per cui X ⊆ Y) è tale se e solo se tutti gli elementi di X sono anche elementi di Y.
 
 Arriviamo dunque, all’espressione formale del principio additivo: considerando un insieme finito *A* e siano *T1*, *T2*, …, *Tn* sottoinsiemi di *A*, se *T1* ⋃ *T2* ⋃ … ⋃ *Tn* = *A* e suddetti sottoinsiemi sono **mutualmente esclusivi** (l’intersezione tra qualsiasi coppia di sottoinsiemi è l’insieme vuoto), allora il numero di elementi di *A* corrisponde alla somma del numero di elementi dei vari sottoinsiemi di *A*. Una qualsiasi suddivisione dell’insieme di partenza A che rispetta le due condizioni di esclusività ed esaustività è detta **partizione**. In altre parole una partizione di un insieme *A* è una famiglia di sottoinsiemi di *A* tale che l’unione di questi sottoinsiemi coincide con *A* (esaustività) e questi sottoinsiemi sono due a due disgiunti (esclusività).
 
