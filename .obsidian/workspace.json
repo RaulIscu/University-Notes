@@ -4,109 +4,80 @@
     "type": "split",
     "children": [
       {
-        "id": "c35b9ac0979920ca",
+        "id": "a091523ca9f9239a",
         "type": "tabs",
         "children": [
           {
-            "id": "901766a40bf5da6c",
+            "id": "eac00654430d57b7",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Principio moltiplicativo.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Principio moltiplicativo"
-            }
-          },
-          {
-            "id": "d8aa8ae7689ab659",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Disposizioni e permutazioni.md",
+                "file": "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Sistema binario.md",
                 "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Disposizioni e permutazioni"
+              "title": "Sistema binario"
             }
           },
           {
-            "id": "03190ba96d3497b4",
+            "id": "3aae890a584c665f",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Principio additivo.md",
+                "file": "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Addizione tra binari.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Addizione tra binari"
+            }
+          },
+          {
+            "id": "cb44ab35e8d73a30",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Moltiplicazione tra binari.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Moltiplicazione tra binari"
+            }
+          },
+          {
+            "id": "a5ecfb5f6d25324b",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Sistema esadecimale.md",
                 "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Principio additivo"
+              "title": "Sistema esadecimale"
             }
           },
           {
-            "id": "ffdc1a6ebd93b476",
+            "id": "57b13087dba621da",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Passaggio al complemento.md",
-                "mode": "preview",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Passaggio al complemento"
-            }
-          },
-          {
-            "id": "f580d937b06d1798",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Combinazioni.md",
+                "file": "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Conversioni tra decimali, binari ed esadecimali.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Combinazioni"
-            }
-          },
-          {
-            "id": "517fcbde6c1220d8",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Problema delle caramelle.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Problema delle caramelle"
-            }
-          },
-          {
-            "id": "7d2f4e7ee1f7e015",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Principio di inclusione-esclusione.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Principio di inclusione-esclusione"
+              "title": "Conversioni tra decimali, binari ed esadecimali"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -224,10 +195,10 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Disposizioni e permutazioni.md"
+                "file": "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Sistema binario.md"
               },
               "icon": "lucide-list",
-              "title": "Outline of Disposizioni e permutazioni"
+              "title": "Outline of Sistema binario"
             }
           },
           {
@@ -260,44 +231,43 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "d8aa8ae7689ab659",
+  "active": "eac00654430d57b7",
   "lastOpenFiles": [
+    "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Sistema esadecimale.md",
+    "1° SEM. 2024-25/images/hex_addition.png",
+    "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Sistema binario.md",
+    "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Moltiplicazione tra binari.md",
+    "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Addizione tra binari.md",
+    "1° SEM. 2024-25/images/hex_table.png",
+    "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Conversioni tra decimali, binari ed esadecimali.md",
+    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Cardinalità.md",
+    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Iniettività, suriettività e biettività.md",
+    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Insiemi infiniti, numerabili e non-numerabili.md",
+    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Problema delle caramelle.md",
+    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Principio di inclusione-esclusione.md",
+    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Funzioni inverse.md",
     "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Combinazioni.md",
+    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Disposizioni e permutazioni.md",
     "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Passaggio al complemento.md",
     "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Principio additivo.md",
-    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Disposizioni e permutazioni.md",
     "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Principio moltiplicativo.md",
-    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Principio di inclusione-esclusione.md",
-    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Problema delle caramelle.md",
     "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Dimostrazione per doppio conteggio.md",
     "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Logica proposizionale.md",
     "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Relazioni d'ordine.md",
     "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Relazioni d'equivalenza.md",
     "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Relazioni.md",
-    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Cardinalità.md",
     "1° SEM. 2024-25/FONDAMENTI DI PROGRAMMAZIONE/Stringhe.md",
     "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Flip-flop.md",
     "1° SEM. 2024-25/images/truth_example1.png",
     "1° SEM. 2024-25/images/truth_example.png",
-    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Funzioni inverse.md",
     "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Funzioni.md",
     "1° SEM. 2024-25/images/assegnamento_estensione.png",
     "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Funzioni composte.md",
-    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Insiemi infiniti, numerabili e non-numerabili.md",
-    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Iniettività, suriettività e biettività.md",
-    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Caratterizzazione di iniezioni, suriezioni e biezioni.md",
     "1° SEM. 2024-25/images/caramelle_example3.png",
     "1° SEM. 2024-25/images/anagrammi_lettererip.png",
-    "1° SEM. 2024-25/FONDAMENTI DI PROGRAMMAZIONE/File.md",
-    "1° SEM. 2024-25/FONDAMENTI DI PROGRAMMAZIONE/Breve storia dei computer e della programmazione.md",
     "1° SEM. 2024-25/images/comb_ripetizione_formula.png",
     "1° SEM. 2024-25/images/comb_ripetizione_tab.png",
     "1° SEM. 2024-25/images/comb_ripetizione.png",
-    "1° SEM. 2024-25/images/caramelle_almenouna.png",
-    "1° SEM. 2024-25/images/caramelle.png",
-    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Dimostrazione per traduzione.md",
-    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Chiusura transitiva.md",
-    "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Latch.md",
     "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE",
     "2° SEM. 2024-25",
     "1° SEM. 2024-25",
