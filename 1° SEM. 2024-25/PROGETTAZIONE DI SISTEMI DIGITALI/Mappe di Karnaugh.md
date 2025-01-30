@@ -14,7 +14,7 @@ Un'altra proprietà interessante delle *K-map* è che sono "**circolari**", nel 
 
 A questo punto, si può notare immediatamente che solo due dei mintermini saranno presenti nell'equazione booleana del circuito, ossia quelli indicati da un 1 nella *K-map*. Si potrebbe, dunque, semplificare l'equazione algebricamente, oppure graficamente lavorando proprio sulla *K-map*. Per fare ciò, basterà:
 - raggruppare gli 1 in caselle adiacenti;
-- per ogni raggruppamento, segnare l'implicante corrispondente ad esso;
+- per ogni raggruppamento, segnare l'implicante corrispondente ad esso (l'implicante relativo al raggruppamento più grande verrà definito "implicante primo");
 - se all'interno di un raggruppamento è presente una variabile insieme al suo complemento, escludere tale variabile dall'implicante.
 
 Nell'esempio, si cerchieranno gli 1 nelle caselle a sinistra, ottenendo:

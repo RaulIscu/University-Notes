@@ -1,6 +1,6 @@
 Le **moltiplicazioni tra binari** funzionano in maniera analoga, in realtà, alle moltiplicazioni tra numeri decimali. Dopo aver appropriamente incolonnato i numeri da moltiplicare, si procede al calcolo dei vari "prodotti parziali", ottenuti moltiplicando il moltiplicando per ogni singola cifra del moltiplicatore; come per i numeri decimali, ognuno di questi prodotti parziali andrà poi appuntato spostato a sinistra di una cifra (in questo caso, di un bit) rispetto a quello precedente. Una volta trovati tutti i prodotti parziali ed essersi assicurati di averli incolonnati accuratamente, si può procedere alla loro somma. 
 
-Di seguito, per esempio, la moltiplicazione tra i numeri 5 (0101₂) e 7 (0111₂):
+Di seguito, per esempio, la moltiplicazione tra i numeri 5₁₀, ossia 0101₂, e 7₁₀, ossia 0111₂:
 
 ![[binarymult.png]]
 
