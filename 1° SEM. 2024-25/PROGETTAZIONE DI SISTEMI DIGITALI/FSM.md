@@ -82,3 +82,49 @@ In una codifica *one-hot*, ogni bit, naturalmente, viene conservato in un singol
 
 Relativamente alla codifica *one-hot*, è possibile anche scegliere una sua variante, ossia la codifica ***one-cold***: come suggerisce il nome, essa funziona in maniera analoga alla *one-hot* con la differenza che un solo bit alla volta può essere "cold", o 0.
 ___
+L'esempio che abbiamo utilizzato prima per rappresentare il funzionamento delle *FSM* ha portato alla creazione di una macchina di Moore, in cui gli *output* dipendono esclusivamente dallo stato della macchina; per questo motivo, essi potevano facilmente essere appuntati all'interno dello stato nel quale si verificavano.
+
+Il discorso cambia quando si trattano le **macchine di Mealy**, ossia delle *FSM* in cui gli *output* non dipendono solo dallo stato ma anche dagli *input* correnti. Per questa particolarità, nei diagrammi di transizione tra stati delle macchine di Mealy gli *output* non vengono appuntati all'interno degli stati, ma sull'arco che indica la transizione tra di essi, abbinati agli *input* che li provocano.
+
+Un esempio di diagramma di transizione tra stati di una macchina di Mealy può essere il seguente:
+
+![[mealy_example_std.png]]
+
+In vari casi, implementare una macchina di Mealy risulta essere più vantaggioso rispetto a una macchina di Moore, in quanto generalmente, per lo stesso funzionamento, una macchina di Mealy presenta meno stati. È possibile notarlo immediatamente implementando lo stesso funzionamento illustrato dal diagramma precedente con una macchina di Moore, che presenterà 3 stati invece di 2:
+
+![[mealy_example_moorestd.png]]
+
+Analizzando le tempistiche dei due circuiti, si trova che, per la stessa sequenza di *input*, la macchina di Mealy restituisce 1 come *output* un ciclo prima di quella di Moore. Inoltre, notiamo che, per questo esempio, la macchina di Mealy è più conveniente anche rispetto al numero di porte logiche utilizzate nell'implementazione dei circuiti. Di seguito il confronto tra la macchina di Moore (a) e la macchina di Mealy (b):
+
+![[mealymoore_compare.png]]
+___
+Progettare un'*FSM* complessa risulta più facile se si riesce a suddividerla in macchine più semplici, in modo che l'*output* di alcune diventi l'*input* di altre. Questo procedimento viene chiamato anche "**fattorizzazione**" di una *FSM*.
+
+Vediamo un esempio di fattorizzazione ampliando l'esempio iniziale. Supponiamo, a partire dalla stessa situazione a cui eravamo rimasti, di voler aggiungere una "modalità parata" al sistema di semafori, che quando attivata mantenga verdi i semafori su Bravado Blvd. (L*b*) e rossi quelli su Academic Ave. (L*a*), in modo da lasciar fluire senza problemi la parata su Bravado Blvd. fino al suo termine.
+
+Per aggiungere questa funzionalità, occorrerà considerare due nuovi *input*, uno che faccia entrare il sistema in modalità parata (chiameremo *P* questo *input*), e un altro che faccia tornare il sistema al suo normale funzionamento (chiameremo *R* questo *input*). Dunque, quando il sistema entra in modalità parata, la macchina procede nella sua sequenza normale finché le luci L*b* non diventano verdi, e rimane in questo stato finché il sistema non esce dalla modalità parata.
+
+È possibile implementare il tutto in una sola *FSM* più grande e complessa, come la seguente:
+
+![[fsm_factoring_example.png]]
+
+che, per quanto funzionante, risulta notevolmente più contorta e difficile da progettare e analizzare. In alternativa, è possibile operare una fattorizzazione in due *FSM* più semplici; fare ciò risulterà in circuiti con meno porte logiche, in un minor numero di stati da considerare, e generalmente in un sistema molto più intuitivo. Per il nostro esempio, una soluzione che coinvolge una fattorizzazione può essere la seguente:
+
+![[fsm_factoring_example1.png]]
+___
+Se si vuole ottenere il diagramma di transizione tra stati di una *FSM* a partire dal circuito che detta il suo funzionamento, converrà seguire i seguenti passaggi:
+1. analizzare il circuito, individuando i vari *input*, *output* e bit di stato;
+2. ottenere equazioni booleane relative al *next state* e agli *output*;
+3. creare delle tabelle per *next state* e *output*, e semplificare la tabella di stati per eliminare stati irraggiungibili;
+4. codificare ogni stato valido e ogni *output*, e assegnare dei nomi con cui riscrivere le tabelle;
+5. disegnare il diagramma di transizione tra stati della *FSM*.
+
+Oltre a questi passaggi, può essere utile riassumere il funzionamento dell'*FSM* a parole, specificando cosa essa debba fare e in corrispondenza a quali eventi, in modo da avere un quadro più chiaro di come procedere.
+___
+In generale, invece, possiamo delineare un percorso di passaggi da attraversare quando si vuole **progettare una qualsiasi *FSM***. Questi passaggi sono:
+1. identificare gli *input* e gli *output* della macchina;
+2. abbozzare un diagramma di transizione tra stati;
+3. se si vuole implementare una macchina di Moore, creare una tabella di transizione tra stati e una tabella per gli *output*; se si vuole implementare una macchina di Mealy, creare una tabella combinata per stati e *output*;
+4. codificare stati e *output* della macchina;
+5. ottenere equazioni booleane relative al *next state* e agli *output*;
+6. progettare e implementare il circuito che detterà il funzionamento dell'*FSM*.
