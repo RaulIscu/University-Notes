@@ -2,7 +2,7 @@ Un **circuito sequenziale** è un circuito in cui gli *output* dipendono sia dag
 
 In un circuito sequenziale potrebbero essere ricordati degli *input* precisi, oppure essi potrebbero essere condensati in un'informazione riassuntiva chiamata lo "**stato**" del sistema. Lo stato di un circuito è, solitamente, rappresentato da una determinata quantità di bit chiamati "**variabili di stato**", che contengono le informazioni relative al funzionamento passato del circuito necessarie per definire il funzionamento futuro dello stesso.
 ___
-Il componente fondamentale di un circuito dotato di memoria, e dunque anche di un circuito sequenziale, è un "**elemento bistabile**", ossia un elemento che presenta due stati stabili e distinti. Un esempio basilare di un elemento del genere è il seguente:
+Il componente fondamentale di un circuito dotato di memoria, e dunque di un circuito sequenziale, è un "**elemento bistabile**", ossia un elemento che presenta due stati stabili e distinti. Un esempio basilare di un elemento del genere è il seguente:
 
 ![[bistable_example.png]]
 
