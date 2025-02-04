@@ -11,22 +11,22 @@ Come si può notare immediatamente, questo piccolo circuito è costituito da due
 ![[bistable_example1.png]]
 
 Essendo un circuito ciclico, Q dipenderà dal suo complemento e viceversa. Cerchiamo, dunque, di analizzare il circuito in base a due casistiche, Q = 0 e Q = 1:
-- se Q = 0, la porta I2 riceverà in *input* Q e ritornerà il suo complemento, ossia 1, che verrà ricevuto a sua volta come *input* da I1, che ritornerà Q, ossia 0;
-- se Q = 1, la porta I2 riceverà in *input* Q e ritornerà il suo complemento, ossia 0, che verrà ricevuto a sua volta come *input* da I1, che ritornerà Q, ossia 1.
+- se Q = 0, la porta I2 riceverà in *input* Q e ritornerà Q', ossia 1, che verrà ricevuto a sua volta come *input* da I1, che ritornerà Q, ossia 0;
+- se Q = 1, la porta I2 riceverà in *input* Q e ritornerà Q', ossia 0, che verrà ricevuto a sua volta come *input* da I1, che ritornerà Q, ossia 1.
 
 Si noti che entrambe le casistiche hanno un risultato finale che coincide con le condizioni stabilite inizialmente: ciò vuol dire che entrambi i casi sono "**stabili**"; inoltre, essendoci due stati stabili per il circuito, si può affermare che esso sia effettivamente bistabile.
 
-In generale, un elemento con *N* stati stabili può "trasportare" un numero di bit di informazione pari a log₂*N*. Dunque, un elemento bistabile come quello appena analizzato trasporta un bit di informazione, che in questo caso corrisponde all'*output* Q: infatti, conoscere il valore della variabile Q ci consente di sapere tutto il necessario sul passato funzionamento del circuito per predire e conoscere accuratamente il suo funzionamento futuro. Questo perché, se sappiamo che Q = 0, vorrà dire che anche in futuro Q rimarrà sempre 0, e lo stesso vale se Q = 1. Anche il complemento di Q è una variabile di stato accettabile, ma la sua considerazione insieme a Q non aggiungerà informazioni ulteriori, dunque sceglierne una rende l'altra trascurabile.
+In generale, un elemento con *N* stati stabili può "conservare" un numero di bit di informazione pari a log₂*N*. Dunque, un elemento bistabile come quello appena analizzato conserva un bit di informazione, che in questo caso corrisponde all'*output* Q: infatti, conoscere il valore della variabile Q ci consente di sapere tutto il necessario sul passato funzionamento del circuito per predire e conoscere accuratamente il suo funzionamento futuro. Questo perché, se sappiamo che Q = 0, vorrà dire che anche in futuro Q rimarrà sempre 0, e lo stesso vale se Q = 1. Anche Q' è una variabile di stato accettabile, ma la sua considerazione insieme a Q non aggiungerà informazioni ulteriori, dunque sceglierne una rende l'altra trascurabile.
 ___
 Circuiti sequenziali come quello appena analizzato, seppur utili per conservare un bit di informazione, non sono molto pratici, in quanto non presentano *input*, e dunque non possono essere effettivamente controllati. Altri componenti, invece, consentono questo controllo proprio disponendo di *input* manipolabili: i più comuni e diffusi sono i *[[Latch|latch]]* e i *[[Flip-flop|flip-flop]]*.
 ___
-In generale, un circuito sequenziale è composto da elementi che sono tutti non combinatori, e dunque il cui *output* non può sempre essere determinato a priori semplicemente analizzando l'*input* attuale. Ci sono, partendo da questa caratteristica, alcuni casi "estremi" di circuiti sequenziali, che si comportano in maniere anomale o imprevedibili; vediamo alcuni esempi.
+In generale, un circuito sequenziale è composto da elementi non combinatori, e dunque il cui *output* non può sempre essere determinato a priori semplicemente analizzando l'*input* attuale. Ci sono, partendo da questa caratteristica, alcuni casi "estremi" di circuiti sequenziali, che si comportano in maniere anomale o imprevedibili; vediamo alcuni esempi.
 
 Supponiamo di avere un circuito formato esclusivamente da tre porte *NOT* collegate in un ciclo chiuso, in modo che l'*output* dell'ultimo *NOT* diventi l'*input* del primo, nel modo seguente:
 
 ![[astable_circuit_example.png]]
 
-Se ponessimo, inizialmente, *X = 0*, si avrebbe di conseguenza *Y = 1*, seguito da *Z = 0*, che porta così a *X = 1*; notiamo subito un'incongruenza con le nostre condizioni iniziali, che ci porta ad affermare che il circuito considerato non presenta stati stabili, e in quanto tale viene definito "**instabile**" o "**astabile**". In particolare, analizzando le forme d'onda relative a tale circuito (tenendo conto che ogni porta *NOT* ha un *propagation delay* di 1 ns), si nota che esso presenta un funzionamento ciclico e periodico. Infatti:
+Se ponessimo, inizialmente, *X = 0*, si avrebbe di conseguenza *Y = 1*, seguito da *Z = 0*, che porta così a *X = 1*; notiamo subito un'incongruenza con le nostre condizioni iniziali, che ci porta ad affermare che il circuito considerato non presenta stati stabili, e in quanto tale viene definito "**instabile**" o "**astabile**". In particolare, analizzando le forme d'onda relative a tale circuito (supponendo che ogni porta *NOT* ha un *propagation delay* di 1 ns), si nota che esso presenta un funzionamento ciclico e periodico. Infatti:
 
 ![[astable_circuit_examplewave.png]]
 
