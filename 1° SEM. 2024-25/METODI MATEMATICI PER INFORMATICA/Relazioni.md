@@ -30,7 +30,7 @@ In un **grafo semplice diretto** (o **digrafo**), per rappresentare una relazion
 
 Nel caso di una relazione *R* su un singolo insieme *A*, possiamo disegnare una volta sola gli elementi di *A* e disegnare una freccia tra ogni coppia *(a₁, a₂)* di elementi di *A* per cui vale *(a₁, a₂)* ∈ *R*. In un grafo diretto, è possibile che una freccia parta e arrivi allo stesso valore, mentre non è mai possibile che due frecce distinte abbiano stessa origine e stessa destinazione.
 
-Alternativamente, si può usare una **matrice**. Questa rappresentazione è particolarmente importante per il suo utilizzo nel rappresentare relazioni nei calcolatori elettronici, e ne permette una manipolazione abbastanza efficiente. Se *R* è una relazione tra *A* = {*a₁, a₂,* ecc. ecc.} e *B* = {*b₁, b₂,* ecc. ecc.}, la matrice di *R*, denotata MR è una matrice definita come segue:
+Alternativamente, si può usare una **matrice**. Questa rappresentazione è particolarmente importante per il suo utilizzo nel rappresentare relazioni nei calcolatori elettronici, e ne permette una manipolazione abbastanza efficiente. Se *R* è una relazione tra *A* = {*a₁, a₂,* ecc. ecc.} e *B* = {*b₁, b₂,* ecc. ecc.}, la matrice di *R*, denotata M*R* è una matrice definita come segue:
 
 ![[matrixdef_relazioni.png]]
 

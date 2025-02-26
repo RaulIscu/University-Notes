@@ -122,9 +122,9 @@ Se si vuole ottenere il diagramma di transizione tra stati di una *FSM* a partir
 Oltre a questi passaggi, può essere utile riassumere il funzionamento dell'*FSM* a parole, specificando cosa essa debba fare e in corrispondenza a quali eventi, in modo da avere un quadro più chiaro di come procedere.
 ___
 In generale, invece, possiamo delineare un percorso di passaggi da attraversare quando si vuole **progettare una qualsiasi *FSM***. Questi passaggi sono:
-1. identificare gli *input* e gli *output* della macchina;
-2. abbozzare un diagramma di transizione tra stati;
-3. se si vuole implementare una macchina di Moore, creare una tabella di transizione tra stati e una tabella per gli *output*; se si vuole implementare una macchina di Mealy, creare una tabella combinata per stati e *output*;
-4. codificare stati e *output* della macchina;
-5. ottenere equazioni booleane relative al *next state* e agli *output*;
-6. progettare e implementare il circuito che detterà il funzionamento dell'*FSM*.
+6. identificare gli *input* e gli *output* della macchina;
+7. abbozzare un diagramma di transizione tra stati;
+8. se si vuole implementare una macchina di Moore, creare una tabella di transizione tra stati e una tabella per gli *output*; se si vuole implementare una macchina di Mealy, creare una tabella combinata per stati e *output*;
+9. codificare stati e *output* della macchina;
+10. ottenere equazioni booleane relative al *next state* e agli *output*;
+11. progettare e implementare il circuito che detterà il funzionamento dell'*FSM*.

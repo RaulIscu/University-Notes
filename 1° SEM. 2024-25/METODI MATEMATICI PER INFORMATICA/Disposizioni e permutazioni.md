@@ -2,7 +2,7 @@ Analizziamo un esempio: supponiamo di avere 8 atleti che corrono in una gara, e 
 
 > *8 ∙ 7 ∙ 6 = 336*
 
-Generalizzando, applicando il principio moltiplicativo, se si considera l'insieme A = {*a1*, *a2*, ..., *an*}, formato da *n* elementi, il numero di sequenze ordinate di lunghezza *k* di elementi di A senza ripetizioni (dette anche **disposizioni semplici di ordine *k* di *n* elementi**) è dato da:
+Generalizzando, applicando il principio moltiplicativo, se si considera l'insieme A = {*a₁*, *a₂*, ..., a*n*}, formato da *n* elementi, il numero di sequenze ordinate di lunghezza *k* di elementi di *A* senza ripetizioni (dette anche **disposizioni semplici di ordine *k* di *n* elementi**) è dato da:
 
 ![[disp_senza_rip.png]]
 
@@ -10,10 +10,9 @@ Nel caso in cui *n = k*, il problema diventa trovare il numero di modi per riord
 
 ![[perm.png]]
 
-Considerando lo stesso insieme A, il numero di sequenze ordinate di lunghezza k di elementi di A con possibili ripetizioni (dette anche **disposizioni con ripetizioni di ordine k di n elementi**) è invece dato da:
+Considerando lo stesso insieme *A*, il numero di sequenze ordinate di lunghezza *k* di elementi di *A* con possibili ripetizioni (dette anche **disposizioni con ripetizioni di ordine *k* di *n* elementi**) è invece dato da:
 
 ![[disp_con_rip.jpg]]
-
 ___
 Le permutazioni, in particolare, sono uno strumento molto utile quando si lavora con gli **anagrammi**.
 

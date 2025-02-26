@@ -4,6 +4,6 @@ Ad esempio, supponiamo di doverci vestire e di dover scegliere uno tra 3 pantalo
 
 > *3 ∙ 2 ∙ 3 = 18*
 
-Generalizzando, arriviamo alla formulazione generale del principio moltiplicativo: se si deve scegliere un numero *n* di elementi, avendo *a1* scelte per il primo, *a2* scelte per il secondo, e così via fino ad avere *an* scelte, si ottiene che le possibili combinazioni sono:
+Generalizzando, arriviamo alla formulazione generale del principio moltiplicativo: se si deve scegliere un numero *n* di elementi, avendo *a₁* scelte per il primo, *a₂* scelte per il secondo, e così via fino ad avere a*n* scelte, si ottiene che le possibili combinazioni sono:
 
 ![[panini.png]]

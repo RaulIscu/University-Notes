@@ -13,7 +13,7 @@ Qui sopra abbiamo considerato le funzioni *s: N → N* definita come *s(n) = n +
 $$n → (n + 1)^2$$
 Da questo esempio si vede facilmente che nelle composizioni l’ordine conta: se infatti componiamo *s* e *q* applicando prima *q* e poi *s* otteniamo una funzione diversa, che si comporta così:
 $$n → n^2 + 1$$
-In generale, **la composizione di funzioni** (laddove è definita) **non è commutativa in generale**.
+In generale, **la composizione di funzioni** (laddove è definita) **non è commutativa**.
 ___
 Vediamo le proprietà di **iniettività**, **suriettività** e **biettività** in relazione alle composizioni di funzioni; siano *f: X → Y* e *g: Y → Z* due funzioni:
 1. se *f* e *g* sono iniettive allora *g ◦ f* è iniettiva;

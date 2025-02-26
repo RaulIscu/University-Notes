@@ -4,21 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "e2242dede21f0dce",
+        "id": "efc98254973f7424",
         "type": "tabs",
         "children": [
           {
-            "id": "636112a8383eaa5c",
+            "id": "09581ee22c71f7a0",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Algebra booleana.md",
-                "mode": "preview",
+                "file": "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Untitled.md",
+                "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Algebra booleana"
+              "title": "Untitled"
             }
           }
         ]
@@ -140,13 +140,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Algebra booleana.md",
+                "file": "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Untitled.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of Algebra booleana"
+              "title": "Outline of Untitled"
             }
           },
           {
@@ -179,18 +179,40 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "636112a8383eaa5c",
+  "active": "81ef32eb7b860f30",
   "lastOpenFiles": [
+    "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Untitled.md",
+    "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Algebra booleana.md",
+    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Logica proposizionale.md",
+    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Relazioni.md",
+    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Problema delle caramelle.md",
+    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Dimostrazione per traduzione.md",
+    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Dimostrazione per doppio conteggio.md",
+    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Relazioni d'ordine.md",
+    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Chiusura transitiva.md",
+    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Insiemi infiniti, numerabili e non-numerabili.md",
+    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Cardinalità.md",
+    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Relazioni d'equivalenza.md",
+    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Funzioni.md",
+    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Iniettività, suriettività e biettività.md",
+    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Funzioni composte.md",
+    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Funzioni inverse.md",
+    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Combinazioni.md",
+    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Disposizioni e permutazioni.md",
+    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Caratterizzazione di iniezioni, suriezioni e biezioni.md",
+    "2° SEM. 2024-25/images",
+    "2° SEM. 2024-25/INTRODUZIONE AGLI ALGORITMI",
+    "2° SEM. 2024-25/CALCOLO INTEGRALE",
+    "2° SEM. 2024-25/ARCHITETTURA DEGLI ELABORATORI",
+    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Principio di inclusione-esclusione.md",
+    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Passaggio al complemento.md",
+    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Principio additivo.md",
+    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Principio moltiplicativo.md",
+    "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Conversioni tra decimali, binari ed esadecimali.md",
     "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/FSM.md",
     "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Sistema binario.md",
-    "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Addizione tra binari.md",
-    "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Circuiti sequenziali.md",
-    "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Latch.md",
-    "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Flip-flop.md",
-    "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Tempi (sequenziali).md",
     "1° SEM. 2024-25/images/pipeline_example2.png",
     "1° SEM. 2024-25/images/pipeline_example1.png",
-    "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Tempi (combinatori).md",
     "1° SEM. 2024-25/images/pipeline_example.png",
     "1° SEM. 2024-25/images/sync_example.png",
     "1° SEM. 2024-25/images/sync_symbol.png",
@@ -199,32 +221,12 @@
     "1° SEM. 2024-25/FONDAMENTI DI PROGRAMMAZIONE/clkskew_example3.png",
     "1° SEM. 2024-25/images/clkskew_example2.png",
     "1° SEM. 2024-25/images/clkskew_example1.png",
-    "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Circuiti combinatori.md",
-    "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Circuiti.md",
-    "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Porte logiche.md",
-    "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Algebra booleana.md",
-    "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Multiplexer.md",
-    "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Decoder.md",
-    "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Tristate buffer.md",
-    "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Mappe di Karnaugh.md",
-    "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/PLA.md",
-    "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Conversioni tra decimali, binari ed esadecimali.md",
-    "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Sistema esadecimale.md",
-    "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Moltiplicazione tra binari.md",
-    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Cardinalità.md",
-    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Iniettività, suriettività e biettività.md",
-    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Insiemi infiniti, numerabili e non-numerabili.md",
-    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Problema delle caramelle.md",
-    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Principio di inclusione-esclusione.md",
     "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE",
     "2° SEM. 2024-25",
     "1° SEM. 2024-25",
     "1° SEM. 2024-25/images",
     "Untitled.canvas",
     "FONDAMENTI DI PROGRAMMAZIONE/Generatori e contenitori",
-    "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI",
-    "1° SEM. 2024-25/CALCOLO DIFFERENZIALE",
-    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA",
-    "1° SEM. 2024-25/FONDAMENTI DI PROGRAMMAZIONE"
+    "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI"
   ]
 }
