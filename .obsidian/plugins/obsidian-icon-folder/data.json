@@ -6,11 +6,11 @@
     "emojiStyle": "native",
     "iconColor": null,
     "recentlyUsedIcons": [
+      "LiWorkflow",
       "LiCode2",
       "LiPercent",
       "📸",
-      "LiCircuitBoard",
-      "LiCalculator"
+      "LiCircuitBoard"
     ],
     "recentlyUsedIconsSize": 5,
     "rules": [],
@@ -36,5 +36,6 @@
   "1° SEM. 2024-25/FONDAMENTI DI PROGRAMMAZIONE": "LiCode2",
   "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA": "LiPercent",
   "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI": "LiCircuitBoard",
-  "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE": "LiCode2"
+  "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE": "LiCode2",
+  "2° SEM. 2024-25/INTRODUZIONE AGLI ALGORITMI": "LiWorkflow"
 }

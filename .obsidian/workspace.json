@@ -4,21 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "efc98254973f7424",
+        "id": "6af562af4d4ce44c",
         "type": "tabs",
         "children": [
           {
-            "id": "09581ee22c71f7a0",
+            "id": "04324eae6e89b87f",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "2° SEM. 2024-25/CALCOLO INTEGRALE/Serie.md",
-                "mode": "source",
+                "file": "2° SEM. 2024-25/INTRODUZIONE AGLI ALGORITMI/Cos'è un algoritmo.md",
+                "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Serie"
+              "title": "Cos'è un algoritmo"
             }
           }
         ]
@@ -140,13 +140,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "2° SEM. 2024-25/CALCOLO INTEGRALE/Serie.md",
+                "file": "2° SEM. 2024-25/INTRODUZIONE AGLI ALGORITMI/Cos'è un algoritmo.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of Serie"
+              "title": "Outline of Cos'è un algoritmo"
             }
           },
           {
@@ -179,11 +179,17 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "09581ee22c71f7a0",
+  "active": "04324eae6e89b87f",
   "lastOpenFiles": [
-    "2° SEM. 2024-25/CALCOLO INTEGRALE/Programma generale.md",
+    "2° SEM. 2024-25/INTRODUZIONE AGLI ALGORITMI/Modello di calcolatore.md",
+    "2° SEM. 2024-25/INTRODUZIONE AGLI ALGORITMI/Cos'è un algoritmo.md",
+    "2° SEM. 2024-25/ARCHITETTURA DEGLI ELABORATORI/Untitled.md",
+    "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Sintassi.md",
+    "2° SEM. 2024-25/INTRODUZIONE AGLI ALGORITMI/Notazione asintotica.md",
+    "2° SEM. 2024-25/INTRODUZIONE AGLI ALGORITMI/Modalità d'esame.md",
+    "2° SEM. 2024-25/ARCHITETTURA DEGLI ELABORATORI/Libro.md",
     "2° SEM. 2024-25/CALCOLO INTEGRALE/Serie.md",
-    "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Untitled.md",
+    "2° SEM. 2024-25/CALCOLO INTEGRALE/Programma generale.md",
     "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Algebra booleana.md",
     "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Logica proposizionale.md",
     "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Relazioni.md",
@@ -201,16 +207,10 @@
     "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Funzioni inverse.md",
     "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Combinazioni.md",
     "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Disposizioni e permutazioni.md",
-    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Caratterizzazione di iniezioni, suriezioni e biezioni.md",
     "2° SEM. 2024-25/images",
     "2° SEM. 2024-25/INTRODUZIONE AGLI ALGORITMI",
     "2° SEM. 2024-25/CALCOLO INTEGRALE",
     "2° SEM. 2024-25/ARCHITETTURA DEGLI ELABORATORI",
-    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Principio di inclusione-esclusione.md",
-    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Passaggio al complemento.md",
-    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Principio additivo.md",
-    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Principio moltiplicativo.md",
-    "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Conversioni tra decimali, binari ed esadecimali.md",
     "1° SEM. 2024-25/images/pipeline_example2.png",
     "1° SEM. 2024-25/images/pipeline_example1.png",
     "1° SEM. 2024-25/images/pipeline_example.png",
