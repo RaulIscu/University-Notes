@@ -4,17 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "a9cdaf2e8e656a88",
+        "id": "1d12c4a802b99e4e",
         "type": "tabs",
         "children": [
           {
-            "id": "759436912f830873",
+            "id": "b04d6fc3a9662f37",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Sintassi.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "Sintassi"
             }
           }
         ]
@@ -136,12 +140,13 @@
             "state": {
               "type": "outline",
               "state": {
+                "file": "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Sintassi.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline"
+              "title": "Outline of Sintassi"
             }
           },
           {
@@ -174,9 +179,14 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "759436912f830873",
+  "active": "b04d6fc3a9662f37",
   "lastOpenFiles": [
+    "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Java dal CMD.md",
+    "1° SEM. 2024-25/FONDAMENTI DI PROGRAMMAZIONE/Linguaggi compilati e interpretati.md",
+    "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Programmazione a oggetti.md",
+    "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Sintassi.md",
     "2° SEM. 2024-25/INTRODUZIONE AGLI ALGORITMI/Notazione asintotica.md",
+    "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Variabili.md",
     "2° SEM. 2024-25/images/notazioneθ.png",
     "2° SEM. 2024-25/images/notazioneO.png",
     "2° SEM. 2024-25/images/notazioneΩ.png",
@@ -189,7 +199,6 @@
     "2° SEM. 2024-25/INTRODUZIONE AGLI ALGORITMI/Random Access Machine.md",
     "2° SEM. 2024-25/INTRODUZIONE AGLI ALGORITMI/Modello di calcolatore.md",
     "2° SEM. 2024-25/ARCHITETTURA DEGLI ELABORATORI/Untitled.md",
-    "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Sintassi.md",
     "2° SEM. 2024-25/INTRODUZIONE AGLI ALGORITMI/Modalità d'esame.md",
     "2° SEM. 2024-25/ARCHITETTURA DEGLI ELABORATORI/Libro.md",
     "2° SEM. 2024-25/CALCOLO INTEGRALE/Serie.md",
@@ -205,9 +214,6 @@
     "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Insiemi infiniti, numerabili e non-numerabili.md",
     "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Cardinalità.md",
     "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Relazioni d'equivalenza.md",
-    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Funzioni.md",
-    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Iniettività, suriettività e biettività.md",
-    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Funzioni composte.md",
     "2° SEM. 2024-25/images",
     "2° SEM. 2024-25/INTRODUZIONE AGLI ALGORITMI",
     "2° SEM. 2024-25/CALCOLO INTEGRALE",

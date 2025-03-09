@@ -35,3 +35,28 @@ In altre parole, *f(n) = θ(g(n))* se è contemporaneamente *O(g(n))* e *Ω(g(n)
 
 Ad esempio, avendo *f(n) = 3n + 3*, si può affermare che *f(n) = θ(n)*, in quanto esistono *c₁* (ad esempio, *c₁ = 3*), *c₂* (ad esempio, *c₂ = 4*) e *n₀* (ad esempio, *n₀ = 3*) tali che venga rispettata la condizione stabilita in precedenza (infatti, *3n ≤ 3n + 3 ≤ 4n* per ogni *n ≥ 3*).
 ___
+Per semplificare il calcolo del costo computazionale asintotico degli algoritmi, si possono sfruttare delle semplici regole di **algebra sulla notazione asintotica**.
+
+Vediamo, innanzitutto, delle proprietà relative alle **costanti moltiplicative**:
+- per ogni *k > 0* e per ogni *f(n) ≥ 0*, se *f(n)* è un *O(g(n))*, allora anche *k ∙ f(n)* è un *O(g(n))*;
+- per ogni *k > 0* e per ogni *f(n) ≥ 0*, se *f(n)* è un *Ω(g(n))*, allora anche *k ∙ f(n)* è un *Ω(g(n))*;
+- per ogni *k > 0* e per ogni *f(n) ≥ 0*, se *f(n)* è un *θ(g(n))*, allora anche *k ∙ f(n)* è un *θ(g(n))*.
+
+Informalmente, queste tre regole si possono riassumere tenendo a mente che **le costanti moltiplicative sono trascurabili nel calcolo delle notazioni asintotiche**. Questa regola generale, tuttavia, vale sempre tranne quando tali costanti moltiplicative si trovano negli esponenti.
+
+Passiamo, ora, a delle proprietà relative alla **commutatività della somma**:
+- per ogni *f(n), d(n) > 0*, se *f(n)* è un *O(g(n))* e *d(n)* è un *O(h(n))*, allora *f(n) + d(n)* è un *O(g(n) + h(n))* = O(max(g(n),h(n)));
+- per ogni *f(n), d(n) > 0*, se *f(n)* è un *Ω(g(n))* e *d(n)* è un *Ω(h(n))*, allora *f(n) + d(n)* è un *Ω(g(n) + h(n))* = Ω(max(g(n),h(n)));
+- per ogni *f(n), d(n) > 0*, se *f(n)* è un *θ(g(n))* e *d(n*) è un *θ(h(n))*, allora *f(n) + d(n)* è un *θ(g(n) + h(n))* = θ(max(g(n),h(n))).
+
+Informalmente, queste tre regole si possono riassumere tenendo a mente che **le notazioni asintotiche commutano con l’operazione della somma**.
+
+Infine, analizziamo le proprietà relative alla **commutatività del prodotto**:
+- per ogni *f(n), d(n) > 0*, se *f(n)* è un *O(g(n))* e *d(n)* è un *O(h(n))*, allora *f(n)d(n)* è un *O(g(n)h(n))*;
+- per ogni *f(n), d(n) > 0*, se *f(n)* è un *Ω(g(n))* e *d(n)* è un *Ω(h(n))*, allora *f(n)d(n)* è un *Ω(g(n)h(n))*;
+- per ogni *f(n), d(n) > 0*, se *f(n)* è un *θ(g(n))* e *d(n*) è un *θ(h(n))*, allora *f(n)d(n)* è un *θ(g(n)h(n))*.
+
+Informalmente, queste tre regole si possono riformulare dicendo che **le notazioni asintotiche commutano con l’operazione del prodotto**.
+
+
+

@@ -1,4 +1,4 @@
-Nei **linguaggi compilati** (come C, C++, Objective C, Swift, Pascal, Delphi, Rust e “Java”), la programmazione avviene in 3 fasi:
+Nei **linguaggi compilati** (come C, C++, Objective C, Swift, Pascal, Delphi, Rust e Java), la programmazione avviene in 3 fasi:
 - **compilazione**, in cui il programma analizza un file di testo che contiene tutte le istruzioni, e avviene automaticamente la “generazione assembly” (o “formato intermedio"), creando istruzioni che hanno un diretto collegamento con il processore, che procede a generare del “codice oggetto”;
 - ***linking***, in cui si ottiene il programma eseguibile (.exe) sommando il codice oggetto alle librerie necessarie;
 - **esecuzione**, in cui si carica il file eseguibile nella memoria e si esegue partendo da un indirizzo fissato in memoria.
