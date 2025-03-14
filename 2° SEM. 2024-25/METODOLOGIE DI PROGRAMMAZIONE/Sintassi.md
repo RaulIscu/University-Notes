@@ -19,3 +19,22 @@ Passando alla seconda riga, si assiste alla definizione di un **metodo**, in par
 Il metodo definito è un metodo **`main()`**, molto importante in quanto **ogni programma scritto in Java deve contenere un metodo che si chiama `main`**. Come per buona parte dei linguaggi di programmazione, il nome dei metodi (o, in altre parole, delle funzioni) è sempre seguito da parentesi tonde (`()`), al cui interno è possibile specificare, al momento della definizione, il tipo specifico di *input* previso per tale metodo: in questo caso, ad esempio, il metodo dovrà ricevere in *input* valori di tipo `String`.
 
 All'interno del corpo del metodo `main`, poi, troviamo un'**istruzione**, ossia l'azione che verrà eseguita alla chiamata del metodo in questione. In Java, ogni istruzione deve essere terminata con un punto e virgola (`;`). In questo caso, il metodo `main()` porterà alla stampa, nella *console*, della frase "*Hello, World!*" (in particolare, il metodo specifico `System.out.println()` porterà alla stampa del testo seguito da un accapo).
+___
+Prescindendo un po' dall'esempio precedente, esplicitiamo altre caratteristiche e regole di Java importanti da ricordare per scrivere un programma formalmente corretto.
+
+Java è un linguaggio *free-form*, e in quanto tale **non necessita di alcun tipo di indentazione**: questa, infatti, viene inserita puramente per scopi di leggibilità. Potenzialmente, dunque, un programma Java potrebbe essere anche scritto in una sola riga di codice, a patto però che siano presente gli opportuni spazi vuoti come separatori tra le varie parti del codice.
+
+Gli **identificatori**, ossia semplicemente i nomi appartenenti a un oggetto, una classe, o a qualsiasi altro elemento di un programma, possono essere una qualsiasi sequenza di lettere (maiuscole e minuscole), numeri e simboli scelti tra *underscore* (`_`) e segno del dollaro (`$`), anche se quest'ultimo va usato solo in contesti specifici. Un identificatore non può iniziare con un numero; è, inoltre, importante ricordare che Java è un linguaggio ***case-sensitive***, dunque scrivere, ad esempio, scrivere `example` o `Example` porta a due elementi diversi.
+
+Per inserire dei **commenti**, ossia del testo all'interno del codice che però non viene effettivamente utilizzato, si distinguono tre casi:
+- per inserire una sola riga di commento, si deve iniziare la riga con `//`;
+- per inserire un commento multi-riga, si inizia con `/*` e si finisce con `*/`;
+- per inserire un "*documentation comment*", ossia un commento che viene sfruttato per generare un *file* di documentazione in formato HTML, si inizia con `/**` e si finisce con `*/`.
+
+Ci sono poi, vari **separatori**, che vengono usati in diversi contesti per vari scopi, i principali dei quali sono:
+- le **parentesi tonde** (`()`), utilizzate per contenere i vari parametri di un metodo, per definire precedenze in operazioni complesse e per contenere delle condizioni nei controlli;
+- le **parentesi quadre** (`[]`), utilizzate spesso in relazione ad *array*;
+- le **parentesi graffe** (`{}`), utilizzate principalmente per contenere e delimitare blocchi di codice;
+- il **punto e virgola** (`;`), utilizzato per terminare una qualsiasi istruzione;
+- la **virgola** (`,`), utilizzata per separare identificatori consecutivi nella dichiarazione di una variabile, e per separare le condizioni all'interno di un ciclo *for*;
+- il **punto** (`.`), utilizzato per separare una variabile o un metodo dalla variabile di riferimento, o pacchetti da classi e sotto-pacchetti.
