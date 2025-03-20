@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Sintassi.md",
-                "mode": "preview",
+                "file": "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Array.md",
+                "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Sintassi"
+              "title": "Array"
             }
           }
         ]
@@ -78,7 +78,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 321.50418853759766,
+    "collapsed": true
   },
   "right": {
     "id": "691838f246faa396",
@@ -140,13 +141,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Sintassi.md",
+                "file": "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Array.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "Outline of Sintassi"
+              "title": "Outline of Array"
             }
           },
           {
@@ -181,20 +182,23 @@
   },
   "active": "965f2c3af5ddda04",
   "lastOpenFiles": [
-    "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Classi.md",
+    "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Istruzioni di controllo.md",
+    "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Array.md",
+    "2° SEM. 2024-25/INTRODUZIONE AGLI ALGORITMI/Ricerca.md",
     "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Variabili.md",
     "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Tipi primitivi.md",
+    "Untitled.canvas",
+    "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Classi.md",
     "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Librerie/Math.md",
+    "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Programmazione a oggetti.md",
     "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Operatori.md",
+    "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Sintassi.md",
     "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/LIBRERIE/Untitled",
     "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Librerie",
-    "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Sintassi.md",
     "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Il metodo main().md",
     "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Progetto.md",
     "1° SEM. 2024-25/FONDAMENTI DI PROGRAMMAZIONE/Cicli.md",
-    "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Programmazione a oggetti.md",
     "2° SEM. 2024-25/INTRODUZIONE AGLI ALGORITMI/Ricorsione.md",
-    "2° SEM. 2024-25/INTRODUZIONE AGLI ALGORITMI/Ricerca.md",
     "2° SEM. 2024-25/INTRODUZIONE AGLI ALGORITMI/Notazione asintotica.md",
     "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Java dal CMD.md",
     "1° SEM. 2024-25/FONDAMENTI DI PROGRAMMAZIONE/Linguaggi compilati e interpretati.md",
@@ -214,8 +218,6 @@
     "2° SEM. 2024-25/ARCHITETTURA DEGLI ELABORATORI/Libro.md",
     "2° SEM. 2024-25/CALCOLO INTEGRALE/Serie.md",
     "2° SEM. 2024-25/CALCOLO INTEGRALE/Programma generale.md",
-    "1° SEM. 2024-25/PROGETTAZIONE DI SISTEMI DIGITALI/Algebra booleana.md",
-    "1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Logica proposizionale.md",
     "2° SEM. 2024-25/images",
     "2° SEM. 2024-25/INTRODUZIONE AGLI ALGORITMI",
     "2° SEM. 2024-25/CALCOLO INTEGRALE",
@@ -226,7 +228,6 @@
     "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE",
     "2° SEM. 2024-25",
     "1° SEM. 2024-25",
-    "1° SEM. 2024-25/images",
-    "Untitled.canvas"
+    "1° SEM. 2024-25/images"
   ]
 }
