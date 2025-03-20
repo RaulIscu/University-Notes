@@ -95,6 +95,4 @@ Concretamente, tale operazione prevede il seguente codice:
 nomeDellaClasse nomeDellOggetto = new nomeDellaClasse();
 ```
 
-
-
 Per accedere agli attributi e ai metodi di un oggetto appartenente a una determinata classe, si seguirà l'identificatore di tale oggetto con un punto (`.`) e con il nome dell'attributo a cui si vuole accedere, o del metodo che si vuole operare, come nel seguente esempio.
