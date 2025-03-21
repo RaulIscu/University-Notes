@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "3c4eea079589605c",
+        "id": "db9106e197f5d118",
         "type": "tabs",
         "children": [
           {
-            "id": "5f9dc2ea982b430e",
+            "id": "a4b6f26094fb2c88",
             "type": "leaf",
             "state": {
               "type": "empty",
@@ -175,9 +175,10 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "5f9dc2ea982b430e",
+  "active": "a4b6f26094fb2c88",
   "lastOpenFiles": [
     "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Public, private, static, final.md",
+    "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Programmazione a oggetti.md",
     "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Metodi.md",
     "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Classi.md",
     "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Stringhe.md",
@@ -189,7 +190,6 @@
     "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Tipi primitivi.md",
     "Untitled.canvas",
     "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Librerie/Math.md",
-    "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Programmazione a oggetti.md",
     "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Operatori.md",
     "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Sintassi.md",
     "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/LIBRERIE/Untitled",
