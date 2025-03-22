@@ -62,3 +62,4 @@ class Box {
 }
 ```
 ___
+[METODI CON NUMERO VARIABILE DI ARGOMENTI: chapter 7 varargs]

@@ -96,3 +96,30 @@ nomeDellaClasse nomeDellOggetto = new nomeDellaClasse();
 ```
 
 Per accedere agli attributi e ai metodi di un oggetto appartenente a una determinata classe, si seguirà l'identificatore di tale oggetto con un punto (`.`) e con il nome dell'attributo a cui si vuole accedere, o del metodo che si vuole operare, come nel seguente esempio.
+___
+È possibile definire una classe all'interno di un'altra classe, andando a creare una **classe annidata**.
+
+Naturalmente, se una classe B viene definita all'interno di una classe A, la classe B non potrà esistere indipendentemente dalla classe A. Inoltre, **una classe annidata ha accesso a tutti i membri della classe che la contiene**, inclusi quelli dichiarati come [[Public, private, static, final|privati]]; tuttavia, **la classe che racchiude quelle annidate** (per intenderci, la classe A) **non ha accesso ai loro membri privati**. Una classe annidata viene considerata come un membro della classe all'interno della quale è definita.
+
+Una classe annidata può essere di due tipi, **statica** o **non-statica**. Una classe annidata statica, definita dunque sfruttando la parola chiave `static`, non potrà accedere direttamente ai membri non-statici della classe che la racchiude; per questo motivo, in realtà, le classi annidate statiche vengono usate di rado.
+
+Molto più comuni sono invece le **classi annidate non-statiche**, denominate semplicemente "***inner classes***", o "classi interne". Esse, essendo non-statiche, hanno accesso a tutti i membri delle classi che le racchiudono, e potranno accedere ad essi direttamente. **Dichiarare una *inner class*** è molto semplice e intuitivo, come si può vedere nel seguente esempio:
+
+```
+class Outer {
+	int outer_x = 100;
+
+	void test() {
+		Inner inner = new Inner();
+		inner.display();
+	}
+
+	class Inner {
+		void display() {
+			System.out.println("display: outer_x = " + outer_x);
+		}
+	}
+}
+```
+
+Seppur, nell'esempio, la *inner class* venga dichiarata come un membro di una determinata classe esterna, è perfettamente possibile dichiarare una *inner class* all'interno di qualsiasi blocco di codice, tenendo comunque a mente dello *scope* che essa avrà.

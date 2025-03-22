@@ -7,5 +7,14 @@ Vediamo, a questo punto, come eseguire opportunamente un file `.java` a un livel
 Una volta all'interno della giusta *directory*, si potrà procedere a **compilare il programma** desiderato. Per fare ciò, occorrerà chiamare il compilatore di Java e indicargli il *file* che ci interessa, mediante il comando `javac nomeDelFile.java`.
 
 Ora, se il passaggio precedente è stato completato senza intoppi, sarà possibile eseguire il programma. A questo scopo, il comando che si vorrà scrivere è `java nomeDelFile`: inviando questo comando, si avrà eseguito con successo il programma precedentemente compilato.
+___
+A volte, si vorranno dare delle informazioni o dei dati aggiuntivi a un programma nel momento in cui lo si eseguirà. Per fare ciò, è possibile passare dei ***command-line arguments*** al metodo *[[Il metodo main()|main()]]* del programma in questione.
 
+I *command-line arguments* vengono passati al metodo *main()* al momento dell'esecuzione del programma dal *command prompt*. Per passarli a quest'ultimo, sarà sufficiente inserirli subito dopo il nome del programma che si vuole eseguire, come nel seguente esempio generico:
+
+```
+java nomeDelFile argomento0 argomento1 argomento2 ...
+```
+
+Accedere a questi argomenti dal codice è molto facile: infatti, i *command-line arguments*, una volta forniti, vengono conservati in un *[[Array|array]]* di [[2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Stringhe|stringhe]] (**`String args[]`**), facilmente accessibili mediante l'indicizzazione di tale *array* (ad esempio, il primo dei *command-line arguments* si otterrà come `args[0]`, il secondo come `args[1]`, e così via).
 
