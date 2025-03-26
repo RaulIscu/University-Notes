@@ -63,6 +63,12 @@ else {
 
 In questo contesto, gli *if statement* sono eseguiti in ordine dal primo all'ultimo: se *condizione1* viene soddisfatta, verrà eseguita *istruzione1* e tutto il resto della *if-else-if ladder* viene bypassata; altrimenti, si passa a *condizione2*, e così via. Nel caso in cui nessuna delle condizioni degli *else if* viene soddisfatta, si passa all'*else* finale, che agisce quindi come condizione di default.
 
+Infine, è possibile definire un *if statement* in maniera compatta utilizzando il cosiddetto **operatore condizionale**, che segue il seguente formato:
+
+```
+condizione ? valoreSeVero : valoreSeFalso;
+```
+
 Lo ***switch** statement*, a grandi linee, funziona in maniera simile a un *if-else-if ladder*, ma è spesso preferibile ad esso, essendo generalmente più efficiente (a livello di compilazione e di costo computazionale) oltre a risultare più organizzato e comprensibile. Inoltre, si tratta sostanzialmente di un meccanismo diverso: mentre un *if* va a controllare espressioni booleane, lo *switch* ricerca uguaglianze tra valori di espressioni. La forma generale di uno *switch statement* è la seguente:
 
 ```
@@ -86,7 +92,17 @@ switch (espressione) {
 
 L'espressione analizzata dallo *switch* può essere di tipo `byte`, `short`, `int`, `char` o anche `String`. Ognuno dei valori specificati nei vari casi deve essere costante e unico, e non è possibile avere più casi uguali. Similmente all'*if-else-if ladder*, lo *switch statement* ha il seguente funzionamento: il valore attuale di *espressione* è confrontato con ognuno dei valori dei vari *case*, andando dall'alto verso il basso; se viene trovata una coincidenza, viene eseguito il blocco di istruzioni relativo al caso in questione; invece, se non vengono trovate coincidenze, viene eseguito il blocco di istruzioni relativo a *default*. Tuttavia, essendo tale blocco opzionale, se ciò accade e non è presente alcun blocco di default non viene eseguito nulla. L'inserimento di `break` al termine del blocco di istruzioni di ogni *case* permette di uscire fuori dallo *switch statement* dopo l'esecuzione di uno dei blocchi; l'istruzione `break`, infatti, porterà all'esecuzione del codice immediatamente seguente allo *switch statement*.
 
-Come con gli *if statements*, è possibile avere anche degli ***switch* annidati**.
+Come con gli *if statements*, è possibile avere anche degli ***switch* annidati**. Inoltre, a partire da Java 13, è possibile costruire degli ***switch* compatti**, che non solo richiedono meno righe ma non necessitano neanche dell'inserimento dell'istruzione `break` all'interno di ogni *case*:
+
+```
+switch (espressione) {
+	case valore1 -> istruzione1;
+	case valore2 -> istruzione2;
+	...
+	case valoreN -> istruzioneN;
+	default -> istruzioneDefault;
+}
+```
 ___
 Le **istruzioni di iterazione**, lavorando in Java, possono presentarsi in tre forme: i ***while loops***, i ***do-while loops*** e i ***for loops***. Queste istruzioni, ovviamente, permettono di creare dei *loop*, che eseguiranno ripetutamente uno stesso blocco di istruzioni finché non si raggiungerà una condizione di termine.
 

@@ -6,7 +6,7 @@ Per **dichiarare una classe**, si comincia con la parola chiave **`class`**, seg
 
 ```
 class nomeDellaClasse {
-
+	corpoDellaClasse
 }
 ```
 
@@ -96,6 +96,56 @@ nomeDellaClasse nomeDellOggetto = new nomeDellaClasse();
 ```
 
 Per accedere agli attributi e ai metodi di un oggetto appartenente a una determinata classe, si seguirà l'identificatore di tale oggetto con un punto (`.`) e con il nome dell'attributo a cui si vuole accedere, o del metodo che si vuole operare, come nel seguente esempio.
+___
+Tendenzialmente, quando si vanno a dichiarare le variabili di istanza (dette anche **campi** della classe), esse vengono definite come [[Public, private, static, final|private]]: questo per garantire un opportuno incapsulamento, oltre che per assicurare la consistenza e la costanza dei dati.
+
+È naturale chiedersi, perciò, come possiamo accedere comodamente a queste variabili private. Per permettere ciò, spesso la dichiarazione dei metodi di una classe include quella di metodi **`get()`** e **`set()`**, nomi generici per indicare metodi che possono rispettivamente restituire e manipolare il valore di un campo della classe.
+
+Vediamo un esempio:
+
+```
+public class Box {
+	private double width;
+	private double length;
+	private double height;
+
+	public Box(double w, double l, double h) {
+		width = w;
+		length = l;
+		height = h;
+	}
+
+	public double getWidth() {
+		return this.width;
+	}
+
+	public double getLength() {
+		return this.length;
+	}
+
+	public double getHeight() {
+		return this.height;
+	}
+
+	public void setWidth(double newWidth) {
+		this.width = newWidth;
+	}
+
+	public void setLength(double newLength) {
+		this.length = newLength;
+	}
+
+	public void setHeight(double newHeight) {
+		this.height = newHeight;
+	}
+
+	public double volume() {
+		return width * length * height;
+	}
+}
+```
+
+In questo esempio, vengono implementati dei metodi `get()` e `set()` per ognuna delle variabili di istanza della classe. I metodi `get()`, per loro natura, restituiranno un valore dello stesso tipo della variabile di istanza a cui stanno facendo riferimento; i metodi `set()`, al contrario, non ritornano nulla (`void`), in quanto vanno solo a modificare gli attributi dell'oggetto in questione.
 ___
 È possibile definire una classe all'interno di un'altra classe, andando a creare una **classe annidata**.
 
