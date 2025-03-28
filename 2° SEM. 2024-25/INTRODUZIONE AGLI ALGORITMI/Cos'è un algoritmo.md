@@ -4,11 +4,11 @@ Un comando "**elementare**" è un comando che non può essere scomposto in coman
 
 Se un algoritmo è ben specificato, e dunque composto da comandi elementari e univoci, chi lo esegue non ha necessità di interpretare o riflettere sulle istruzioni, ma può eseguirle con precisione e in sequenza senza problemi. Generalmente, dunque, se si verifica un errore nell'esecuzione di un algoritmo, esso sarà generalmente ascrivibile a un errore nella progettazione dell'algoritmo stesso.
 ___
-Per risolvere un problema mediante un algoritmo, è ovviamente necessario gestire, organizzare e manipolare dei dati. A tal fine, bisogna definire delle opportune "**strutture dati**", che si occupano proprio di queste mansioni, in modo da semplificare il tutto.
+Per poter risolvere un problema mediante un algoritmo, è ovviamente necessario gestire, organizzare e manipolare dei dati. A tal fine, bisogna definire delle opportune "**strutture dati**", che si occupano proprio di queste mansioni, in modo da semplificare il tutto.
 
 In genere, non esiste una struttura dati universalmente migliore di un'altra, o una struttura dati imprescindibile per un problema più che per un altro; è importante, invece, conoscere al meglio tutte le strutture dati fondamentali, e saper decidere sul momento quale convenga utilizzare. Progettare un buon algoritmo implica sempre anche una scelta efficace della struttura dati.
 ___
-Un algoritmo deve produrre un output in un **tempo finito e ragionevole**, preferibilmente il più corto possibile.
+Un algoritmo deve produrre un *output* in un **tempo finito e ragionevole**, preferibilmente il più corto possibile.
 
 Nello studio e progettazione di un algoritmo, dunque, un aspetto fondamentale è la sua **efficienza**, ossia la quantificazione delle sue esigenze in termini di **tempi di esecuzione** e di **memoria richiesta**. Per confrontare due algoritmi che risolvono uno stesso problema, è fondamentale conoscerne questi due parametri, e saper così discernere quale dei due sia il più efficiente nella risoluzione di tale problema. 
 

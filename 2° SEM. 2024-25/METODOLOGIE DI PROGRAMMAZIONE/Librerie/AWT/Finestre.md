@@ -133,4 +133,7 @@ fillPolygon(int[] x, int[] y, int numPoints);
 
 I vertici del poligono hanno coordinate specificate dalle coppie di interi in stessi indici degli *array* *x* e *y*, mentre il numero di vertici del poligono va specificato in *numPoints*.
 
-[pag. 1265]
+Spesso, si vorrà ridimensionare un oggetto di tipo `Graphics` in modo da adattarlo alle dimensioni della finestra in cui si sta lavorando. Per fare ciò, occorrerà ottenere un oggetto di tipo `Dimension` relativo alla finestra in questione, in modo da avere gli interi relativi alla larghezza e all'altezza della finestra, utilizzando il metodo `getSize()`. Tuttavia, bisogna tenere a mente che queste sono le dimensioni della finestra intera, che non corrisponderanno alle dimensioni della regione disegnabile: per ottenere quest'ultime, occorrerà sottrarre ai numeri ottenuti in precedenza le dimensioni dei bordi della finestra, inclusa la barra del titolo.
+
+[getInsets(): pag. 1265]
+___

@@ -14,14 +14,22 @@ $$0 ≤ f(n) ≤ c g(n)$$
 Graficamente, deve valere ciò:
 
 ![[notazioneO.png]]
+In *O(g(n))*, dunque, troviamo tutte le funzioni "**dominate**" dalla funzione *g(n)*.
 
-Ad esempio, avendo *f(n) = 3n + 3*, si può affermare che *f(n) = O(n²)*, in quanto esistono *c* (ad esempio *c* = 6) e *n₀* (ad esempio *n₀ = 1*) tali che venga rispettata la condizione stabilita in precedenza (infatti, *6n² ≥ 3n + 3* per ogni *n ≥ 1*). Tra l'altro, per gli stessi valori, possiamo affermare anche che *f(n) = O(n)* per la stessa coppia di valori. È facile convincersi che, data una funzione *f(n)*, esistono infinite funzioni *g(n)* per cui *f(n)* risulta un *O(g(n))*.
+Ad esempio, avendo *f(n) = 3n + 3*, si può affermare che *f(n) = O(n)*, in quanto esistono *c* (ad esempio *c* = 6) e *n₀* (ad esempio *n₀ = 1*) tali che venga rispettata la condizione stabilita in precedenza (infatti, *6n ≥ 3n + 3* per ogni *n ≥ 1*). Invece, avendo *f(n) = n² + 4n*, si può affermare che *f(n) = O(n²)*, in quanto esistono *c* (ad esempio *c = 5*) e *n₀* (ad esempio *n₀ = 1*) tali che venga rispettata la condizione stabilita in precedenza (infatti, *5n² ≥ n² + 4n*).
+
+Possiamo notare un pattern: infatti, concludiamo che un polinomio di primo grado si trova sempre in *O(n)*; un polinomio di secondo grado, invece, si trova in *O(n²)*, e così via. In generale, infatti, **sia *f(n)* un polinomio di grado *i*, possiamo affermare che *f(n)* è in *O(nⁱ)***.
+
+[LOGARITMI CON O-GRANDE]
+
+È facile convincersi che, data una funzione *f(n)*, esistono infinite funzioni *g(n)* per cui *f(n)* risulta un *O(g(n))*.
 ___
 Parliamo, ora, della **notazione *Ω***. Date due funzioni *f(n)* e *g(n)*, entrambe positive, si dice che "***f(n)* è un *Ω(g(n))***" se esistono due costanti *c* e *n₀* tali che, per ogni *n ≥ n₀*, vale che:
 $$f(n) ≥ c g(n)$$
 Graficamente, deve valere ciò:
 
 ![[notazioneΩ.png]]
+In *Ω(g(n))*, dunque, troviamo tutte le funzioni che "**dominano**" la funzione *g(n)*.
 
 Ad esempio, avendo *f(n) = 2n² + 3*, si può affermare che *f(n) = Ω(n)*, in quanto esistono *c* (ad esempio *c = 1*) e *n₀* (in questo caso, qualunque valore) tali che venga rispettata la condizione stabilita in precedenza (infatti, *2n² + 3 ≥ n* per ogni *n ∈ R*). Tra l'altro, per *c ≤ 2* e per ogni *n ∈ R*, possiamo affermare anche che *f(n) = Ω(n²)*.
 
@@ -58,5 +66,5 @@ Infine, analizziamo le proprietà relative alla **commutatività del prodotto**:
 
 Informalmente, queste tre regole si possono riformulare dicendo che **le notazioni asintotiche commutano con l’operazione del prodotto**.
 
-
+$$sum($$
 
