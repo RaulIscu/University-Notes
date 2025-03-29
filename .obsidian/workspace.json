@@ -78,7 +78,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 321.50418853759766
+    "width": 321.50418853759766,
+    "collapsed": true
   },
   "right": {
     "id": "691838f246faa396",
@@ -181,6 +182,8 @@
   },
   "active": "07d844297f452fb9",
   "lastOpenFiles": [
+    "2° SEM. 2024-25/images/limiti_asintotiche.png",
+    "2° SEM. 2024-25/images/hierarchy_algo.png",
     "2° SEM. 2024-25/INTRODUZIONE AGLI ALGORITMI/Criteri di misura del costo.md",
     "2° SEM. 2024-25/INTRODUZIONE AGLI ALGORITMI/Random Access Machine.md",
     "2° SEM. 2024-25/INTRODUZIONE AGLI ALGORITMI/Cos'è un algoritmo.md",
@@ -211,7 +214,6 @@
     "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/LIBRERIE/Untitled",
     "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Librerie",
     "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Il metodo main().md",
-    "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Progetto.md",
     "2° SEM. 2024-25/images/notazioneθ.png",
     "2° SEM. 2024-25/images/notazioneO.png",
     "2° SEM. 2024-25/images/notazioneΩ.png",
@@ -224,7 +226,6 @@
     "2° SEM. 2024-25/CALCOLO INTEGRALE",
     "2° SEM. 2024-25/ARCHITETTURA DEGLI ELABORATORI",
     "1° SEM. 2024-25/images/pipeline_example2.png",
-    "1° SEM. 2024-25/images/pipeline_example1.png",
     "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE",
     "2° SEM. 2024-25",
     "1° SEM. 2024-25"
