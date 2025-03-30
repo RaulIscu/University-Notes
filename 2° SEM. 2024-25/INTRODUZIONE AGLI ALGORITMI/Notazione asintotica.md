@@ -66,4 +66,25 @@ La prima afferma che, se il limite per *n* che tende a +∞ del rapporto tra due
 
 Invece, se il limite in questione **non esiste**, sarà necessario ricorrere ad altri metodi.
 ___
-[ALGEBRA DELLA NOTAZIONE ASINTOTICA: pag. 16]
+Per semplificare il calcolo del costo computazionale tramite la notazione asintotica, è possibile utilizzare anche tre **regole algebriche**: la regola delle **costanti moltiplicative**, la regola della **commutatività della somma**, e la regola della **commutatività del prodotto**.
+
+La regola delle **costanti moltiplicative** si esplica in tre sotto-regole, quante sono le varie forme di notazione asintotica:
+- per ogni *k > 0* e *f(n) ≥ 0*, se *f(n)* è in *O(g(n))* allora lo è anche *k ∙ f(n)*;
+- per ogni *k > 0* e *f(n) ≥ 0*, se *f(n)* è in *Ω(g(n))* allora lo è anche *k ∙ f(n)*;
+- per ogni *k > 0* e *f(n) ≥ 0*, se *f(n)* è in *θ(g(n))* allora lo è anche *k ∙ f(n)*.
+
+Informalmente, questa regola afferma che **le costanti moltiplicative possono essere ignorate** durante il calcolo di un qualsiasi limite asintotico, a patto però che queste non si trovino all'esponente della funzione su cui si sta lavorando.
+
+La regola della **commutatività della somma** si esplica anch'essa in tre sotto-regole. Sia *f(n)* la somma di due funzioni *p(n)* e *q(n)*, per ogni *p(n), q(n) > 0*:
+- se *p(n)* è in *O(g(n))* e *q(n)* è in *O(h(n))*, allora *f(n)* sarà in *O(g(n) + h(n)) = O(max(g(n), h(n)))*;
+- se *p(n)* è in *Ω(g(n))* e *q(n)* è in *Ω(h(n))*, allora *f(n)* sarà in *Ω(g(n) + h(n)) = Ω(max(g(n), h(n)))*;
+- se *p(n)* è in *θ(g(n))* e *q(n)* è in *θ(h(n))*, allora *f(n)* sarà in *θ(g(n) + h(n)) = θ(max(g(n), h(n)))*.
+
+Informalmente, questa regola afferma che, data una funzione *f(n) = p(n) + q(n)*, allora **un qualsiasi limite asintotico di *f(n)* sarà uguale al massimo tra i limiti asintotici di *p(n)* e di *q(n)***.
+
+Infine, la regola della **commutatività del prodotto** si esplica anch'essa in tre sotto-regole. Sia *f(n)* il prodotto di due funzioni *p(n)* e *q(n)*, per ogni *p(n), q(n) > 0*:
+- se *p(n)* è in *O(g(n))* e *q(n)* è in *O(h(n))*, allora *f(n)* sarà in *O(g(n) ∙ h(n))*;
+- se *p(n)* è in *Ω(g(n))* e *q(n)* è in *Ω(h(n))*, allora *f(n)* sarà in *Ω(g(n) ∙ h(n))*;
+- se *p(n)* è in *θ(g(n))* e *q(n)* è in *θ(h(n))*, allora *f(n)* sarà in *θ(g(n) ∙ h(n))*.
+
+Informalmente, questa regola afferma che, data una funzione *f(n) = p(n) ∙ q(n)*, allora **un qualsiasi limite asintotico di *f(n)* sarà uguale al prodotto tra i limiti asintotici di *p(n)* e di *q(n)***.
