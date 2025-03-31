@@ -24,7 +24,7 @@ La parola di memoria è l’unità massima sulla quale è possibile operare medi
 
 La *RAM* è piuttosto costosa, e perde il suo contenuto quando viene a mancare l’alimentazione elettrica: questa caratteristica si indica col termine "**volatilità**".
 ___
-### La memoria secondaria
+### La memoria di massa
 
 Per superare il problema della volatilità, si deve fare ricorso anche a un tipo diverso di memoria. È qui che entra in gioco la **memoria secondaria**. Essa ha le seguenti caratteristiche:
 - conserva il suo contenuto anche in assenza di alimentazione elettrica;
