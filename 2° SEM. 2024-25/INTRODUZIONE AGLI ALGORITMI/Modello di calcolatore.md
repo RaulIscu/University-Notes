@@ -4,6 +4,8 @@ Per poter approfondire al meglio il problema del costo computazionale degli algo
 - una **memoria secondaria**, detta anche memoria di massa;
 - dei **dispositivi di *input* e di *output*** (come tastiere, schermi, stampanti, ecc. ecc.).
 ___
+### La RAM
+
 Concentriamoci, in particolare, sulla ***RAM***. Essa può essere vista come una lunga sequenza di componenti elementari, ognuna delle quali contenente un'unità di informazione, il ***bit*** (o *binary digit*); ciascuna di queste componenti viene detta "**cella di memoria**".
 
 Un gruppo di 8 bit viene anche detto "***byte***"; questi sono, a loro volta, raggruppati in strutture dette "**registri di memoria**" o "**parole di memoria**", caratterizzate dal fatto che su di esse la *CPU* è in grado di operare con un'unica operazione. Nei calcolatori moderni, una parola di memoria può essere costituita da 4 *bytes* (in un calcolatore a 32 *bit*) o 8 *bytes* (in un calcolatore a 64 *bit*).
@@ -22,6 +24,8 @@ La parola di memoria è l’unità massima sulla quale è possibile operare medi
 
 La *RAM* è piuttosto costosa, e perde il suo contenuto quando viene a mancare l’alimentazione elettrica: questa caratteristica si indica col termine "**volatilità**".
 ___
+### La memoria secondaria
+
 Per superare il problema della volatilità, si deve fare ricorso anche a un tipo diverso di memoria. È qui che entra in gioco la **memoria secondaria**. Essa ha le seguenti caratteristiche:
 - conserva il suo contenuto anche in assenza di alimentazione elettrica;
 - è molto più lenta della memoria centrale;

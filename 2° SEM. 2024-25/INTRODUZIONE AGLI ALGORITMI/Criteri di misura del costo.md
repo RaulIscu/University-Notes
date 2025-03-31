@@ -1,9 +1,13 @@
+### Misura costante e misura logaritmica
+
 Supponiamo di avere una parola di memoria di dimensione *i*: se è soddisfatta l’ipotesi che ogni dato in *input* ha dimensioni minori di 2*ⁱ*, ciascuna operazione elementare sui dati del problema verrà eseguita in un tempo costante. In tal caso, si parla di "**misura di costo uniforme**". 
 
 Tale criterio, però, risulta essere più un'idealizzazione e non è sempre realistico, in quanto è perfettamente possibile che un dato del problema sia più grande, e per memorizzarlo si dovranno quindi usare più parole di memoria. Di conseguenza, anche le operazioni elementari su di esso dovranno essere reiterate per tutte le parole di memoria che lo contengono, e quindi richiederanno un tempo che non è più costante.
 
 Converrà utilizzare, quindi, il criterio di "**misura di costo logaritmico**", che risulta essere perfettamente realistico e risolve il problema sopra esposto, assumendo che il costo delle operazioni elementari sia una funzione della dimensione degli operandi (ossia dei dati). Poiché il numero di *bit* necessari per memorizzare un valore *n* è proporzionale a *log₂n*, si parla di misura di costo logaritmico. Essa però implica rilevanti complicazioni nei calcoli dell’efficienza di un algoritmo, per cui non verrà approfondita in questo corso.
 ___
+### Esempio
+
 Analizziamo informalmente un semplicissimo algoritmo di esempio, applicando entrambi i criteri al fine di evidenziarne le differenze. L’algoritmo consiste di un ciclo, reiterato *i* volte, che calcola il valore 2*ⁱ*:
 
 ```
