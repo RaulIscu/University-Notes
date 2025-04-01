@@ -52,8 +52,7 @@ Unendo i concetti di limite asintotico inferiore e superiore appena spiegati, po
 Per "**domina**", si intende che la prima funzione *f(n)* si trova in *Ω(g(n))*, dove *g(n)* è la seconda funzione del confronto; possiamo ripercorrere la scala al contrario, affermando invece che una funzione "**viene dominata**" da un'altra, ovvero che la prima funzione *f(n)* si trova in *O(g(n))*, dove *g(n)* è la seconda funzione del confronto.
 
 Per comodità, di seguito si ricorda la gerarchia degli ordini di grandezza in maniera compatta:
-
-![[hierarchy_algo.png]]
+$$1 < log^a(n) < \sqrt[b]{n} < n^c < d^n < n! < n^n$$
 ___
 ### La notazione *θ*
 
@@ -71,9 +70,9 @@ ___
 In generale, possiamo formulare alcune regole per facilitare il **calcolo delle notazioni asintotiche** utilizzando dei **limiti**.
 
 Di seguito, le regole in questione formalizzate in maniera compatta:
-
-![[limiti_asintotiche.png]]
-
+$$\lim_{n \to +\infty}\frac{f(n)}{g(n)} = k > 0, \mbox{ allora } f(n) = θ(g(n))$$
+$$\lim_{n \to +\infty}\frac{f(n)}{g(n)} = +\infty, \mbox{ allora } f(n) = Ω(g(n)) \mbox{ ma } f(n) \ne θ(g(n))$$
+$$\lim_{n \to +\infty}\frac{f(n)}{g(n)} = 0, \mbox{ allora } f(n) = O(g(n)) \mbox{ ma } f(n) \ne θ(g(n))$$
 La prima afferma che, se il limite per *n* che tende a +∞ del rapporto tra due funzioni *f(n)* e *g(n)* è pari a una costante positiva, allora si ottiene che *f(n)* è in *θ(g(n))*. La seconda afferma che, se lo stesso limite è pari a +∞, allora si ottiene che *f(n)* è in *Ω(g(n))*, ma non è in *θ(g(n))*. Infine, la terza afferma che, se lo stesso limite è pari a 0, allora si ottiene che *f(n)* è in *O(g(n))*, ma non è in *θ(g(n))*.
 
 Invece, se il limite in questione **non esiste**, sarà necessario ricorrere ad altri metodi.
@@ -83,22 +82,25 @@ ___
 Per semplificare il calcolo del costo computazionale tramite la notazione asintotica, è possibile utilizzare anche tre **regole algebriche**: la regola delle **costanti moltiplicative**, la regola della **commutatività della somma**, e la regola della **commutatività del prodotto**.
 
 La regola delle **costanti moltiplicative** si esplica in tre sotto-regole, quante sono le varie forme di notazione asintotica:
-- per ogni *k > 0* e *f(n) ≥ 0*, se *f(n)* è in *O(g(n))* allora lo è anche *k ∙ f(n)*;
-- per ogni *k > 0* e *f(n) ≥ 0*, se *f(n)* è in *Ω(g(n))* allora lo è anche *k ∙ f(n)*;
-- per ogni *k > 0* e *f(n) ≥ 0*, se *f(n)* è in *θ(g(n))* allora lo è anche *k ∙ f(n)*.
+
+$$\mbox{per ogni } k > 0 \mbox{ e } f(n) \ge 0, \mbox{ se } f(n) \mbox{ è in } O(g(n)) \mbox{ allora lo è anche } k ⋅ f(n)$$
+$$\mbox{per ogni } k > 0 \mbox{ e } f(n) \ge 0, \mbox{ se } f(n) \mbox{ è in } Ω(g(n)) \mbox{ allora lo è anche } k ⋅ f(n)$$
+$$\mbox{per ogni } k > 0 \mbox{ e } f(n) \ge 0, \mbox{ se } f(n) \mbox{ è in } θ(g(n)) \mbox{ allora lo è anche } k ⋅ f(n)$$
 
 Informalmente, questa regola afferma che **le costanti moltiplicative possono essere ignorate** durante il calcolo di un qualsiasi limite asintotico, a patto però che queste non si trovino all'esponente della funzione su cui si sta lavorando.
 
 La regola della **commutatività della somma** si esplica anch'essa in tre sotto-regole. Sia *f(n)* la somma di due funzioni *p(n)* e *q(n)*, per ogni *p(n), q(n) > 0*:
-- se *p(n)* è in *O(g(n))* e *q(n)* è in *O(h(n))*, allora *f(n)* sarà in *O(g(n) + h(n)) = O(max(g(n), h(n)))*;
-- se *p(n)* è in *Ω(g(n))* e *q(n)* è in *Ω(h(n))*, allora *f(n)* sarà in *Ω(g(n) + h(n)) = Ω(max(g(n), h(n)))*;
-- se *p(n)* è in *θ(g(n))* e *q(n)* è in *θ(h(n))*, allora *f(n)* sarà in *θ(g(n) + h(n)) = θ(max(g(n), h(n)))*.
+
+$$\mbox{se } p(n) \mbox{ è in } O(g(n)) \mbox{ e } q(n) \mbox{ è in } O(h(n)), \mbox{ allora } f(n) \mbox{ sarà in } O(g(n) \mbox{ } + \mbox{ } h(n)) = O(\mbox{max}(g(n), h(n)))$$
+$$\mbox{se } p(n) \mbox{ è in } Ω(g(n)) \mbox{ e } q(n) \mbox{ è in } Ω(h(n)), \mbox{ allora } f(n) \mbox{ sarà in } Ω(g(n) \mbox{ } + \mbox{ } h(n)) = Ω(\mbox{max}(g(n), h(n)))$$
+$$\mbox{se } p(n) \mbox{ è in } θ(g(n)) \mbox{ e } q(n) \mbox{ è in } θ(h(n)), \mbox{ allora } f(n) \mbox{ sarà in } θ(g(n) \mbox{ } + \mbox{ } h(n)) = θ(\mbox{max}(g(n), h(n)))$$
 
 Informalmente, questa regola afferma che, data una funzione *f(n) = p(n) + q(n)*, allora **un qualsiasi limite asintotico di *f(n)* sarà uguale al massimo tra i limiti asintotici di *p(n)* e di *q(n)***.
 
 Infine, la regola della **commutatività del prodotto** si esplica anch'essa in tre sotto-regole. Sia *f(n)* il prodotto di due funzioni *p(n)* e *q(n)*, per ogni *p(n), q(n) > 0*:
-- se *p(n)* è in *O(g(n))* e *q(n)* è in *O(h(n))*, allora *f(n)* sarà in *O(g(n) ∙ h(n))*;
-- se *p(n)* è in *Ω(g(n))* e *q(n)* è in *Ω(h(n))*, allora *f(n)* sarà in *Ω(g(n) ∙ h(n))*;
-- se *p(n)* è in *θ(g(n))* e *q(n)* è in *θ(h(n))*, allora *f(n)* sarà in *θ(g(n) ∙ h(n))*.
+
+$$\mbox{se } p(n) \mbox{ è in } O(g(n)) \mbox{ e } q(n) \mbox{ è in } O(h(n)), \mbox{ allora } f(n) \mbox{ sarà in } O(g(n) \mbox{ } ⋅ \mbox{ } h(n))$$
+$$\mbox{se } p(n) \mbox{ è in } Ω(g(n)) \mbox{ e } q(n) \mbox{ è in } Ω(h(n)), \mbox{ allora } f(n) \mbox{ sarà in } Ω(g(n) \mbox{ } ⋅ \mbox{ } h(n))$$
+$$\mbox{se } p(n) \mbox{ è in } θ(g(n)) \mbox{ e } q(n) \mbox{ è in } θ(h(n)), \mbox{ allora } f(n) \mbox{ sarà in } θ(g(n) \mbox{ } ⋅ \mbox{ } h(n))$$
 
 Informalmente, questa regola afferma che, data una funzione *f(n) = p(n) ∙ q(n)*, allora **un qualsiasi limite asintotico di *f(n)* sarà uguale al prodotto tra i limiti asintotici di *p(n)* e di *q(n)***.
