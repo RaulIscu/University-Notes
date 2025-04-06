@@ -17,7 +17,7 @@ ___
 
 La prima è quella delle **istruzioni elementari**, ossia tutte le istruzioni con un tempo di esecuzione costante, che non dipende quindi dalla dimensione degli *input* (operazioni aritmetiche, lettura o scrittura di una variabile, valutazione di una condizione logica, stampa, ecc. ecc.); essendo il loro tempo di esecuzione costante, generalmente queste istruzioni hanno un costo computazionale di ***θ(1)***.
 
-La seconda è quella dei **blocchi *if/else***, che hanno un costo pari alla **somma** del costo della **verifica della condizione** (solitamente pari a *θ(1)*) e di quello **massimo tra i costi complessivi del blocco *if* o del blocco *else***.
+La seconda è quella dei **blocchi *if/else***, che hanno un costo pari alla **somma** del costo della **verifica della condizione** (solitamente pari a *θ(1)*) e di quello **massimo tra i costi complessivi del blocco *if* e del blocco *else***.
 
 Infine, la terza è quella dei **blocchi iterativi**, che hanno un costo pari alla **somma effettiva** (dunque non asintotica) **dei costi di ciascuna iterazione**, compreso il costo della verifica della condizione; quindi, se tutte le iterazioni hanno lo stesso costo, il costo complessivo del blocco iterativo è pari al prodotto del costo di una singola iterazione per il numero di iterazioni. Inoltre, è importante ricordare che la condizione viene valutata una volta in più rispetto al numero di iterazioni, in quanto l'ultima valutazione, che darà esito negativo, sarà quella che terminerà il blocco.
 
