@@ -14,7 +14,7 @@ ___
 ### La notazione *O*
 
 Partiamo dalla **notazione *O***. Date due funzioni *f(n)* e *g(n)*, entrambe positive, si dice che "***f(n)* è un *O(g(n))***" se esistono due costanti *c* e *n₀* tali che, per ogni *n ≥ n₀*, vale che:
-$$0 ≤ f(n) ≤ c g(n)$$
+$$0 ≤ f(n) ≤ c ⋅ g(n)$$
 Graficamente, deve valere ciò:
 
 ![[notazioneO.png]]
@@ -29,7 +29,7 @@ ___
 ### La notazione *Ω*
 
 Parliamo, ora, della **notazione *Ω***. Date due funzioni *f(n)* e *g(n)*, entrambe positive, si dice che "***f(n)* è un *Ω(g(n))***" se esistono due costanti *c* e *n₀* tali che, per ogni *n ≥ n₀*, vale che:
-$$f(n) ≥ c g(n)$$
+$$f(n) ≥ c ⋅ g(n)$$
 Graficamente, deve valere ciò:
 
 ![[notazioneΩ.png]]
@@ -57,7 +57,7 @@ ___
 ### La notazione *θ*
 
 Date due funzioni *f(n)* e *g(n)*, entrambe positive, si dice che "***f(n)* è un *θ(g(n))***" se esistono tre costanti *c₁*, *c₂* e *n₀* tali che, per ogni *n ≥ n₀*, vale che:
-$$c_1g(n) ≤ f(n) ≤ c_2g(n)$$
+$$c_1 ⋅ g(n) ≤ f(n) ≤ c_2 ⋅ g(n)$$
 In altre parole, *f(n) = θ(g(n))* se è contemporaneamente in *O(g(n))* e in *Ω(g(n))*. Graficamente, deve valere ciò:
 
 ![[notazioneθ.png]]
