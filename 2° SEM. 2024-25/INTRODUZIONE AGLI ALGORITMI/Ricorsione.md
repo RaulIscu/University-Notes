@@ -96,7 +96,7 @@ $$T(n) = T(n - k) + \underbrace{θ(1) + θ(1) + \cdots + θ(1)}_{k \mbox{ volte}
 Dopo un determinato numero di ricorsioni, però, l'equazione di ricorrenza raggiungerà il suo caso base, in questo caso *T(1)*. La catena, dunque, procederà finché *n - k = 1*, in modo che *T(n - k)* corrisponda a *T(1)*. Ne segue, dunque, che il numero di ricorsioni sarà:
 $$k = n - 1$$
 Una volta trovato *k*, basterà sostituirlo nell'equazione precedentemente trovata per calcolare il **costo computazionale generico** dell'algoritmo dell'esempio:
-$$T(n) = T(n - k) + k ⋅ θ(1) = T(n - (n - 1)) + (n - 1) ⋅ θ(1) = T(1) + θ(n) = θ(1) + θ(n) = θ(n)$$
+$$\begin{align} T(n) &= T(n - k) + k ⋅ θ(1) \\ &= T(n - (n - 1)) + (n - 1) ⋅ θ(1) \\ &= T(1) + θ(n) \\ &= θ(1) + θ(n) \\ &= θ(n) \end{align}$$
 
 Vediamo un altro esempio, considerando la seguente equazione di ricorrenza:
 $$T = \begin{cases} T(n) = T(\frac{n}{2}) + θ(1) \\ T(1) = θ(1) \end{cases}$$
@@ -107,38 +107,55 @@ $$\frac{n}{2^k} = 1$$
 ossia quando il numero di ricorsioni è pari a:
 $$k = log_2(n)$$
 Risostituiamo *k* all'interno dell'equazione generalizzata, e facendo i calcoli si otterrà il costo computazionale generico dell'algoritmo:
-$$T(n) = T\left(\frac{n}{2^k} \right) + k ⋅ θ(1) = T(1) + log_2(n) ⋅ θ(1) = θ(1) + θ(log_2(n)) = θ(log_2(n))$$
-[casi particolari: pag. 58 - 59 - 60]
+$$\begin{align} T(n) &= T\left(\frac{n}{2^k} \right) + k ⋅ θ(1) \\ &= T(1) + log_2(n) ⋅ θ(1) \\ &= θ(1) + θ(log_2(n)) \\ &= θ(log_2(n)) \end{align}$$
 ___
 ### Metodo di sostituzione
 
-L'idea alla base del **metodo di sostituzione** consiste nell'**ipotizzare una soluzione per l'equazione di ricorrenza**, e dimostrare poi tale ipotesi tramite l'**induzione**. Lo svantaggio, piuttosto evidente, di tale metodo, è quello di poter procedere solo per tentativi.
+L'idea alla base del **metodo di sostituzione** consiste nell'**ipotizzare una soluzione per l'equazione di ricorrenza**, e dimostrare poi tale ipotesi tramite l'**induzione**. Lo svantaggio, piuttosto evidente, di tale metodo, è quello di poter procedere solo per tentativi. 
+
+Inoltre, si punta a cercare la funzione più piccola possibile se si sta cercando O, e quella più grande possibile se si sta cercando Ω, in quanto tutte le funzioni più grandi nel primo caso, o più piccole nel secondo, sarebbero soluzioni valide pur essendo potenzialmente molto imprecise nella loro approssimazione.
 
 Consideriamo, ad esempio, la seguente equazione di ricorrenza:
 $$T = \begin{cases} T(n) = T(n - 1) + θ(1) \\ T(1) = θ(1) \end{cases}$$
-Ipotizziamo la soluzione "*T(n) = O(n)*", ossia che *T(n) ≤ kn* per una certa costante *k*. 
+Ipotizziamo la soluzione "T(n) = O(n)", ossia che *T(n) ≤ kn* per una certa costante *k*. Per semplicità, conviene **sostituire le notazioni asintotiche** presenti all'interno dell'equazione con due costanti, riscrivendola come segue:
+$$T = \begin{cases} T(n) = T(n - 1) + c \\ T(1) = d \end{cases}$$
+Analizziamo ora il **caso base**, che si verifica in questo caso quando *n = 1*; per ipotesi, affermiamo che:
+$$T(1) ≤ k ⋅ 1 \Rightarrow T(1) ≤ k \Rightarrow d ≤ k$$
+Dunque, la disuguaglianza ipotizzata sarà vera se e solo se varrà che *d ≤ k*.
 
-[CONTINUO: pag. 60 - 61 - 62]
+A questo punto, consideriamo il **passo induttivo**. Vogliamo verificare che l'ipotesi *T(n) ≤ kn* valga per un *n* generico; sapendo che *T(n) = T(n - 1) + c* (dall'equazione di ricorrenza), possiamo affermare che:
+$$T(n - 1) + c ≤ kn$$
+Per ipotesi, *T(n - 1) ≤ k(n - 1)*, dunque sostituendo nella disequazione si ottiene che:
+$$k(n - 1) + c ≤ kn \Rightarrow kn - k + c ≤ kn \Rightarrow c ≤ k$$
+L'ipotesi è corretta solo se vengono rispettate sia *d ≤ k* che *c ≤ k*; esistendo sicuramente almeno un tale valore di *k*, si può affermare che T(n) è in O(n).
+
+Ipotizziamo, adesso, la soluzione "T(n) = Ω(n)", ossia che *T(n) ≥ hn* per una certa costante *h*. Applicando passaggi perfettamente analoghi a quelli utilizzati per verificare la prima ipotesi, si ottiene che:
+$$\begin{align} c ≥ h \\ d ≥ h \end{align}$$
+L'ipotesi è corretta solo se vengono rispettate entrambe queste disuguaglianze; esistendo sicuramente almeno un tale valore di *h*, si può affermare che T(n) è in Ω(n). Ovviamente, avendo verificato che T(n) è sia in O(n) che in Ω(n), si arriva alla conclusione che **T(n) è in θ(n)**.
 ___
 ### Metodo dell'albero
 
-Il **metodo dell'albero** costituisce semplicemente la **rappresentazione grafica del metodo iterativo**, rendendolo più semplice e chiaro rispetto alla sua controparte scritta.
+[pag. 62 - 63 - 64 - 65]
+___
+### Metodo principale
 
-Consideriamo, ad esempio, la seguente equazione di ricorrenza:
-$$T = \begin{cases} T(n) = 2T(\frac{n}{2}) + θ(n^2) \\ T(1) = θ(1) \end{cases}$$
-Utilizzando il metodo iterativo, la prima iterazione corrisponderebbe alla forma generica espressa nell'equazione di ricorrenza; la seconda corrisponderebbe a
-$$T(n) = 2\left(2T\left(\frac{n}{2^2} \right) + θ\left(\left(\frac{n}{2} \right)^2 \right) \right) + θ(n^2) = 4T\left(\frac{n}{2^2}\right) + 2θ\left(\left(\frac{n}{2} \right)^2 \right) + θ(n^2)$$
-e così via. La generalizzazione sfruttando il metodo iterativo risulta essere:
-$$T(n) = 2^{k - 1}T\left(\frac{n}{2^k} \right) + \left(\sum_{i = 0}^{k} 2^i ⋅ θ\left(\left(\frac{n}{2^i} \right)^2 \right) \right) = 2^{k - 1}T\left(\frac{n}{2^k} \right) + \left(\sum_{i = 0}^{k - 1}θ\left(\frac{n^2}{2^i} \right) \right) = 2^{k - 1}T\left(\frac{n}{2^k} \right) + θ(n^2) ⋅ \sum_{i = 0}^{k - 1}\frac{1}{2^i}$$
+L'idea alla base del **metodo principale** consiste nell'**avere una formula in grado di calcolare rapidamente il costo computazionale** di un algoritmo. Per natura del metodo, il suo svantaggio più grande è la sua limitatezza: esso, infatti, può essere applicato solo su equazioni di ricorrenza espresse nel formato:
+$$T(n) = \alpha ⋅ T\left(\frac{n}{\beta} \right) + f(n)$$
+con *T(1) = θ(1)* e con f(n) pari a un qualsiasi costo computazionale espresso nella [[Notazione asintotica|notazione asintotica]] θ. Di seguito l'enunciato di questo metodo.
 
-Con il metodo dell'albero, la prima iterazione corrisponde a:
+Dati *α ≥ 1* e *β ≥ 1*, una funzione asintoticamente positiva f(n) e un'equazione di ricorrenza della forma:
+$$T = \begin{cases} T(n) = \alpha ⋅ T\left(\frac{n}{\beta} \right) + f(n) \\ T(1) = \theta(1) \end{cases}$$
+si distinguono tre casi.
 
-![[metodoalbero_example1.png]]
-
-La seconda iterazione, invece, verrebbe rappresentata così:
-
-![[metodoalbero_example2.png]]
-
-e così via, fino ad arrivare a una generalizzazione del genere:
-
-![[metodoalbero_example3.png]]
+Nel **primo caso**, se per qualche costante *ε > 0* si ha che:
+$$f(n) = O(n^{log_\beta(\alpha) - \epsilon})$$
+allora possiamo affermare che:
+$$T(n) = \theta(n^{log_\beta(\alpha)})$$
+Poi, nel **secondo caso**, se si ha che:
+$$f(n) = \theta(n^{log_\beta(\alpha)})$$
+allora possiamo affermare che:
+$$T(n) = \theta(n^{log_\beta(\alpha)} ⋅ log(n))$$
+Infine, nel **terzo caso**, se per qualche costante *ε > 0*, per qualche costante *0 < c < 1* e per *n* abbastanza grande, si ha che:
+$$f(n) = \Omega(n^{log_\beta(\alpha) + \epsilon}) \mbox{ } \mbox{ e che } \mbox{ } \alpha ⋅ f \left(\frac{n}{\beta} \right) ≤ c ⋅ f(n)$$
+allora possiamo affermare che:
+$$T(n) = θ(f(n))$$

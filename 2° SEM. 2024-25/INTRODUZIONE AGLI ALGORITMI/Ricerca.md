@@ -28,7 +28,7 @@ def ricerca_sequenziale(A, v):
 
 Senza bisogno di un'analisi approfondita, ci si rende conto che nel **caso migliore** (ossia quello in cui l'elemento non solo è presente nell'*array*, ma si trova alla prima posizione) tale algoritmo ha un [[Costo computazionale|costo computazionale]] pari a ***θ(1)***. Invece, nel **caso peggiore** (ossia quello in cui l'elemento non è presente nell'*array*), tale algoritmo ha un costo computazionale di ***θ(n)***.
 
-Poiché caso peggiore e caso migliore presentano costi computazionali differenti, non è possibile trovare una stima del costo valida per casi generici, diremo che il costo computazionale dell'algoritmo è in *O(n)*, per evidenziare il fatto che ci sono *input* in cui questo costo viene raggiunto, ma anche *input* per cui il costo è minore.
+Poiché caso peggiore e caso migliore presentano costi computazionali differenti, non è possibile trovare una stima del costo valida per casi generici. Diremo quindi che il costo computazionale dell'algoritmo è in *O(n)*, per evidenziare il fatto che ci sono *input* in cui questo costo viene raggiunto, ma anche *input* per cui il costo è minore.
 
 In questi casi, è necessaria una **stima del costo medio** dell'algoritmo, ossia del costo che è più probabile avere. Per ottenerla, ipotizziamo di avere un *array* A contenente *n* elementi, al cui interno ogni posizione ha la stessa probabilità di contenere il valore v; in queste condizioni, è possibile affermare che la probabilità che v sia in *k*-esima posizione è:
 $$P = \frac{1}{n}$$

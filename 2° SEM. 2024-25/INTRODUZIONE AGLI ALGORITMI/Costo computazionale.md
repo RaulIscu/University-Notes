@@ -53,7 +53,7 @@ $$(n - 1) ⋅ θ(1) + θ(1) = θ(n - 1) + θ(1) = θ(n) + θ(1) = θ(n)$$
 Per il terzo blocco, si ha solamente l'istruzione di ritorno, che è un'istruzione elementare, per cui il costo computazionale del blocco è:
 $$θ(1)$$
 Una volta calcolato il costo di ognuno dei tre blocchi, è possibile sommare asintoticamente i loro costi parziali per ottenere il costo complessivo dell'algoritmo, che è pari a:
-$$T(n) = θ(1) + θ(n) + θ(1) = θ(n)$$
+$$\begin{align} T(n) &= θ(1) + θ(n) + θ(1) \\ &= θ(n) \end{align}$$
 ___
 ### Esempio 2: somma dei primi *n* interi
 
@@ -70,7 +70,7 @@ def calcola_somma_1(n):
 ```
 
 Seguendo gli stessi ragionamenti applicati nell'esempio precedente, arriviamo facilmente alla conclusione che il costo computazionale di questo algoritmo è:
-$$T(n) = θ(1) + (n ⋅ θ(1) + θ(1)) + θ(1) = θ(n)$$
+$$\begin{align} T(n) &= θ(1) + (n ⋅ θ(1) + θ(1)) + θ(1) \\ &= θ(n) \end{align}$$
 Notiamo, tuttavia, questa operazione è facilmente semplificabile ricordando la regola che permette di calcolare in maniera diretta la somma dei primi *n* interi:
 $$\sum_{k=0}^{n} = \frac{n(n + 1)}{2}$$
 È possibile, dunque, riscrivere l'algoritmo in maniera molto più ottimizzata:
@@ -82,7 +82,7 @@ def calcola_somma_2(n):
 ```
 
 Il costo complessivo di questa nuova versione dell'algoritmo è molto minore:
-$$T(n) = θ(1) + θ(1) = θ(1)$$
+$$\begin{align} T(n) &= θ(1) + θ(1) \\ &= θ(1) \end{align}$$
 ___
 ### Esempio 3: valutazione di un polinomio in un punto
 
@@ -108,7 +108,7 @@ $$\sum_{i = 0}^{n}θ(i)$$
 Nell'ambito del calcolo della notazione asintotica, le sommatorie godono della proprietà per cui esse sono intercambiabili con la notazione utilizzata. Infatti, la sommatoria precedente è riscrivibile nel modo seguente:
 $$\sum_{i = 0}^{n}θ(i) = θ(\sum_{i = 0}^{n}i) = θ(\frac{n(n + 1)}{2}) = θ(n²)$$
 Dunque, il costo complessivo dell'algoritmo sarà:
-$$T(n) = θ(1) + \sum_{i = 0}^{n}(θ(1) + θ(i) + θ(1)) + θ(1) = θ(1) + θ(n²) + θ(1) = θ(n²)$$
+$$\begin{align} T(n) &= θ(1) + \sum_{i = 0}^{n}(θ(1) + θ(i) + θ(1)) + θ(1) \\ &= θ(1) + θ(n²) + θ(1) \\ &= θ(n²) \end{align}$$
 Tuttavia, è possibile ottimizzare questo algoritmo: infatti, piuttosto che ricalcolare la potenza ad ogni termine del polinomio, è possibile evitare completamente questa operazione ed eliminare anche il ciclo *for* annidato. Lo pseudocodice per l'algoritmo ottimizzato è il seguente:
 
 ```
@@ -122,7 +122,7 @@ def calcola_polinomio_2(A, x):
 ```
 
 Il costo complessivo di questa versione dell'algoritmo è:
-$$T(n) = θ(1) + n ⋅ θ(1) + θ(1) = θ(n)$$
+$$\begin{align} T(n) &= θ(1) + n ⋅ θ(1) + θ(1) \\ &= θ(n) \end{align}$$
 ___
 ### Esempio 4: analisi di caso migliore e caso peggiore
 
@@ -172,7 +172,7 @@ $$k ⋅ k = n$$
 Genericamente, il numero di iterazioni effettuate dal ciclo sarà:
 $$k^2 = n \Rightarrow k = \sqrt{n}$$
 Il costo computazionale complessivo dell'algoritmo sarà quindi pari a:
-$$T(n) = θ(1) + \sqrt{n} ⋅ θ(1) + θ(1) = θ(\sqrt{n})$$
+$$\begin{align} T(n) &= θ(1) + \sqrt{n} ⋅ θ(1) + θ(1) \\ &= θ(\sqrt{n}) \end{align}$$
 ___
 ### Esempio 6: iterazioni logaritmiche
 
@@ -195,7 +195,7 @@ $$\frac{n}{3^k} = 1$$
 Genericamente, il numero di iterazioni effettuate dal ciclo sarà:
 $$\frac{n}{3^k} = 1 \Rightarrow n = 3^k \Rightarrow k = log_3(n)$$
 Il costo computazionale complessivo dell'algoritmo sarà quindi pari a:
-$$T(n) = θ(1) + log_3(n) ⋅ θ(1) + θ(1) = θ(log(n))$$
+$$\begin{align} T(n) &= θ(1) + log_3(n) ⋅ θ(1) + θ(1) \\ &= θ(log(n)) \end{align}$$
 ___
 ### Esempio 7: iterazioni esponenziali
 
@@ -225,7 +225,7 @@ $$3^n - 1 - 2k = 1 + 2k$$
 Genericamente, il numero di iterazioni effettuate dal ciclo sarà:
 $$3^n - 1 - 2k = 1 + 2k \Rightarrow 3^n - 2 = 4k \Rightarrow k = \frac{3^n - 2}{4}$$
 Il costo computazionale complessivo dell'algoritmo sarà quindi pari a:
-$$T(n) = θ(1) + n ⋅ θ(1) + \frac{3^n - 2}{4} ⋅ θ(1) + θ(1) = θ(n) + θ(3^n) = θ(3^n)$$
+$$\begin{align} T(n) &= θ(1) + n ⋅ θ(1) + \frac{3^n - 2}{4} ⋅ θ(1) + θ(1) \\ &= θ(n) + θ(3^n) \\ &= θ(3^n) \end{align}$$
 ___
 ### Esempio 8: iterazioni con logaritmi di logaritmi
 
@@ -247,7 +247,7 @@ $$2^{2^k} = n$$
 Genericamente, il numero di iterazioni effettuate dal ciclo sarà:
 $$2^{2^k} = n \Rightarrow 2^k = log_2(n) \Rightarrow k = log_2(log_2(n))$$
 Il costo computazionale complessivo dell'algoritmo sarà quindi pari a:
-$$T(n) = θ(1) + log_2(log_2(n)) ⋅ θ(1) + θ(1) = θ(log(log(n)))$$
+$$\begin{align} T(n) &= θ(1) + log_2(log_2(n)) ⋅ θ(1) + θ(1) \\ &= θ(log(log(n))) \end{align}$$
 ___
 ### Esempio 9: cicli *while* e *for* annidati
 
@@ -287,5 +287,4 @@ $$(k + 1)^3 = n \Rightarrow k + 1 = \sqrt[3]{n} \Rightarrow k = \sqrt[3]{n} - 1$
 Infine, analizzando il ciclo *for* annidato all'interno del secondo ciclo *while*, si evince subito che esso viene eseguito *p* volte ad ogni iterazione del ciclo *while*. Dunque, il numero totale di iterazioni effettuate dal ciclo *for* sarà:
 $$k = (\sqrt[3]{n} - 1)(2 + 2log_5(n))^2$$
 Il costo computazionale complessivo dell'algoritmo sarà quindi pari a:
-$$T(n) = θ(1) + log_5(n) ⋅ θ(1) + (\sqrt[3]{n} - 1)((2 + 2log_5(n))^2 ⋅ θ(1) + θ(1)) + θ(1)  = θ(1) + θ(log(n)) + (\sqrt[3]{n} - 1)(θ(log^2(n)) + θ(1)) + θ(1)$$
-$$= θ(1) + θ(log(n)) + θ(\sqrt[3]{n} ⋅ log^2(n)) + θ(\sqrt[3]{n}) = θ(\sqrt[3]{n} ⋅ log^2(n))$$
+$$\begin{align} T(n) &= θ(1) + log_5(n) ⋅ θ(1) + (\sqrt[3]{n} - 1)((2 + 2log_5(n))^2 ⋅ θ(1) + θ(1)) + θ(1) \\ &= θ(1) + θ(log(n)) + (\sqrt[3]{n} - 1)(θ(log^2(n)) + θ(1)) + θ(1) \\ &= θ(1) + θ(log(n)) + θ(\sqrt[3]{n} ⋅ log^2(n)) + θ(\sqrt[3]{n}) \\ &= θ(\sqrt[3]{n} ⋅ log^2(n)) \end{align}$$

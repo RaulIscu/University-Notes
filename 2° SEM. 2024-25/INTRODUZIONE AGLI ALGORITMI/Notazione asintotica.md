@@ -52,7 +52,7 @@ Unendo i concetti di limite asintotico inferiore e superiore appena spiegati, po
 Per "**domina**", si intende che la prima funzione *f(n)* si trova in *Ω(g(n))*, dove *g(n)* è la seconda funzione del confronto; possiamo ripercorrere la scala al contrario, affermando invece che una funzione "**viene dominata**" da un'altra, ovvero che la prima funzione *f(n)* si trova in *O(g(n))*, dove *g(n)* è la seconda funzione del confronto.
 
 Per comodità, di seguito si ricorda la gerarchia degli ordini di grandezza in maniera compatta:
-$$1 < log^a(n) < \sqrt[b]{n} < n^c < d^n < n! < n^n$$
+$$1 < log^a(n) < \sqrt[b]{n} < n < n ⋅ log^c(n) < n^d < e^n < n! < n^n$$
 ___
 ### La notazione *θ*
 
