@@ -104,3 +104,8 @@ $$\mbox{se } p(n) \mbox{ è in } Ω(g(n)) \mbox{ e } q(n) \mbox{ è in } Ω(h(n)
 $$\mbox{se } p(n) \mbox{ è in } θ(g(n)) \mbox{ e } q(n) \mbox{ è in } θ(h(n)), \mbox{ allora } f(n) \mbox{ sarà in } θ(g(n) \mbox{ } ⋅ \mbox{ } h(n))$$
 
 Informalmente, questa regola afferma che, data una funzione *f(n) = p(n) ∙ q(n)*, allora **un qualsiasi limite asintotico di *f(n)* sarà uguale al prodotto tra i limiti asintotici di *p(n)* e di *q(n)***.
+___
+### Sommatorie notevoli
+
+Di seguito, alcune **sommatorie notevoli** che potranno tornare utile nel calcolo e nella semplificazione di notazioni asintotiche:
+$$\sum_{i = 0}^{n}i = \theta(n^2) \mbox{, }\mbox{ }\mbox{ } \sum_{i= 0}^{n}2^i = \theta(2^n) \mbox{, }\mbox{ }\mbox{ } \sum_{i = 0}^{n}i2^i = \theta(n2^n) \mbox{, }\mbox{ }\mbox{ } \sum_{i = 0}^{n}log(i) = \theta(nlog(n)) \mbox{, }\mbox{ }\mbox{ } \sum_{i = 0}^{n}\frac{1}{i} = \theta(log(n)) \mbox{, }\mbox{ }\mbox{ } \sum_{i = 0}^{n}k^i = \theta(1) \mbox{ }\mbox{ se } k < 1$$
