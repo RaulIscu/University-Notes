@@ -83,7 +83,7 @@ $$S_{n} = \begin{cases} 1 & \mbox{se } n \mbox{ è pari} \\ 0 & \mbox{se } n \mb
 ___
 ### Serie telescopiche
 
-Le **serie telescopiche** sono un tipo particolare di serie numerica convergente. Tali serie vengono definite così per via del modo in cui **ogni termine della serie vada ad annullare un termine precedente (interamente o parzialmente)**, portando la serie a "chiudersi" su sé stessa come un telescopio. Per comprendere meglio questo concetto, analizziamo un esempio:
+Le **serie telescopiche** sono un tipo particolare di serie numerica, e risultano essere **convergenti**. Tali serie vengono definite così per via del modo in cui **ogni termine della serie vada ad annullare un termine precedente (interamente o parzialmente)**, portando la serie a "chiudersi" su sé stessa come un telescopio. Per comprendere meglio questo concetto, analizziamo un esempio:
 $$\sum_{k = 2}^{\infty}\left( \frac{1}{k-1} - \frac{1}{k} \right)$$
 Espandendo i suoi termini, risulta evidente come essi si cancellino a vicenda (tranne per la prima frazione del primo termine, la seconda frazione di ogni termine viene annullata dalla prima del termine successivo):
 $$\begin{align} S_{n} &= \sum_{k=2}^{n}\left( \frac{1}{k-1} - \frac{1}{k} \right) \\ &= \left( \frac{1}{1} - \frac{1}{2} \right) + \left( \frac{1}{2} - \frac{1}{3} \right) + \left( \frac{1}{3} - \frac{1}{4} \right) + \space \dots \space + \left( \frac{1}{n-1} - \frac{1}{n} \right) \\ &= \frac{1}{1} - \frac{1}{2} + \frac{1}{2} - \frac{1}{3} + \frac{1}{3} - \frac{1}{4} + \space \dots \space + \frac{1}{n - 1} - \frac{1}{n} \\ &= 1 - \frac{1}{n} \end{align}$$
@@ -98,9 +98,37 @@ $$\sum_{k=2}^{+\infty} \left( \frac{1}{k^2} - \frac{1}{(k - 2)^2} \right) = \lim
 ___
 ### Serie geometriche
 
-[pag. 10]
+Le **serie geometriche** sono un altro tipo particolare di serie. Dato $q \in \mathbb{R}$, considerando la successione $(q^k)_{k \in \mathbb{N}^+}$ (definita "progressione geometrica"), le serie che ne derivano vengono definite "**serie geometriche**". La loro analisi risulta interessante, soprattutto poiché il loro comportamento varia al variare della base $q$. In particolare:
+- se $q = 1$, allora si ha che
+$$\sum_{k=0}^{+\infty}q^k = \lim_{n \to +\infty}\sum_{k=0}^{n}1 = \lim_{n \to +\infty}n + 1 = +\infty$$
+- se $q \ne 1$, allora si ha che
+$$\begin{align} S_{n} - qS_{n} &= \sum_{k=0}^{n}q^k - q\sum_{k=0}^{n}q^k \\ &= \sum_{k=0}^{n}q^k - \sum_{k=0}^{n}q^{k+1} \\ &= (1 + q + q^2 + \space \dots \space + q^n) - (q + q^2 + q^3 + \space \dots \space + q^n + q^{n + 1}) \\ &= 1 + q^{n + 1} \end{align}$$
+  Si nota, infatti, che (tranne per il primo termine della prima parentesi) ogni termine della prima parentesi viene annullato dal termine all'indice precedente della seconda parentesi. Possiamo, quindi, affermare che:
+  $$S_{n} - qS_{n} = 1 + q^{n + 1} \Longrightarrow S_{n} = \frac{1 + q^{n + 1}}{1 - q}$$
+Unendo questi due casi, otteniamo che:
+$$S_{n} = \sum_{k=0}^{n}q^k = \begin{cases} \frac{1 + q^{n + 1}}{1 - q} & \mbox{se } q \ne 1 \\ n + 1 & \mbox{se } q = 1 \end{cases}$$
+Per capire come si comporta una serie geometrica per $n \rightarrow +\infty$, bisogna analizzare il comportamento del termine $q^{n + 1}$ nell'unico caso rilevante, ossia quando $q \ne 1$; per fare ciò, calcoliamo il seguente limite:
+$$\lim_{n \to +\infty}q^{n + 1} = \begin{cases} +\infty & \mbox{se } q > 1 \\ 0 & \mbox{se } -1 < q < 1 \\ \not\exists & \mbox{se } q \le -1 \end{cases}$$
+Unendo i due risultati, si ottiene quindi la seguente definizione generica del risultato di una serie geometrica:
+
+> Data una **serie geometrica**, in base alla variazione di $q$ si avranno i seguenti risultati:
+> $$\sum_{k=o}^{\infty}q^k = \begin{cases} +\infty & \mbox{se } q > 1 \\ \frac{1}{1 - q} & \mbox{se } -1 < q < 1 \\ \not\exists & \mbox{se } q \le -1 \end{cases}$$
 ___
 ### Serie armoniche
 
+Le **serie armoniche** sono un altro tipo particolare di serie, e risultano essere **divergenti**.
 
+> Una serie viene definita **armonica** se assume la seguente forma:
+> $$\sum_{k=1}^{+\infty} \frac{1}{k}$$
+> Tale tipo di serie risulta essere **divergente**, e in particolare risulta sempre in $+\infty$.
+
+A prima vista, si potrebbe pensare che tale serie sia in qualche modo convergente, dato che, all'aumentare di $k$, verranno sommati termini sempre più vicini allo 0. Si può dimostrare, tuttavia, che tale serie risulta effettivamente in $+\infty$.
+
+[DIMOSTRAZIONE: pag. 11 - 12]
+
+È opportuno, però, precisare che tale serie diverge solo se l'esponente del denominatore (che possiamo definire $\alpha$) è minore o uguale a $1$; infatti, per esponenti maggiori di $1$, si dimostra che la serie armonica converge. Conviene, quindi, ricavare una **forma generalizzata** della serie armonica:
+
+> Una **serie armonica generalizzata** ha i seguenti risultati al variare di $\alpha$:
+> $$\sum_{k=1}^{+\infty} \frac{1}{k^\alpha} = \begin{cases} +\infty & \mbox{se } \alpha \le 1 \\ < +\infty & \mbox{se } \alpha > 1 \end{cases}$$
+> dove $< +\infty$ indica la convergenza a un determinato valore della serie.
 ___

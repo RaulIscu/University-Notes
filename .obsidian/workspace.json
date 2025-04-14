@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "2° SEM. 2024-25/CALCOLO INTEGRALE/Serie.md",
+                "file": "2° SEM. 2024-25/CALCOLO INTEGRALE/Teoremi, condizioni e criteri di convergenza.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Serie"
+              "title": "Teoremi, condizioni e criteri di convergenza"
             }
           }
         ]
@@ -183,6 +183,7 @@
   "active": "ac9ea245d5933b44",
   "lastOpenFiles": [
     "2° SEM. 2024-25/CALCOLO INTEGRALE/Serie.md",
+    "2° SEM. 2024-25/CALCOLO INTEGRALE/Teoremi, condizioni e criteri di convergenza.md",
     "2° SEM. 2024-25/CALCOLO INTEGRALE",
     "2° SEM. 2024-25/INTRODUZIONE AGLI ALGORITMI/Ricorsione.md",
     "2° SEM. 2024-25/INTRODUZIONE AGLI ALGORITMI/Notazione asintotica.md",
@@ -213,7 +214,6 @@
     "1° SEM. 2024-25/FONDAMENTI DI PROGRAMMAZIONE/Input.md",
     "1° SEM. 2024-25/FONDAMENTI DI PROGRAMMAZIONE/Import.md",
     "1° SEM. 2024-25/FONDAMENTI DI PROGRAMMAZIONE/Immagini.md",
-    "1° SEM. 2024-25/FONDAMENTI DI PROGRAMMAZIONE/Generatori e contenitori.md",
     "2° SEM. 2024-25/images/limiti_asintotiche.png",
     "2° SEM. 2024-25/images/hierarchy_algo.png",
     "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Librerie/AWT",
