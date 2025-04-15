@@ -103,14 +103,34 @@ La serie ottenuta risulta essere un multiplo di una serie armonica generalizzata
 ___
 ### Criterio del rapporto
 
-[pag. 21 - 22 - 23]
+> Data una successione $a_{k}$ a termini positivi, tale per cui:
+> $$\lim_{n \to +\infty} \frac{a_{n + 1}}{a_{n}} = l$$
+> con $0 \le l < +\infty$, possiamo affermare che:
+> - se $l < 1$, allora la serie associata alla successione $a_{k}$ **converge**;
+> - se $l > 1$, allora la serie associata alla succeessione $a_{k}$ **diverge**.
+> 
+> Invece, se $l = 1$, non si possono trarre conclusioni.
+
+[DIMOSTRAZIONE: pag. 21 - 22]
+
+Per comprendere meglio il funzionamento del **criterio del rapporto**, analizziamo degli esempi. Consideriamo la seguente serie:
+$$\sum_{k = 0}^{\infty} \frac{k^3}{2^k}$$
+Applicando il criterio, si ottiene:
+$$\lim_{n \to +\infty} \frac{\frac{(n + 1)^3}{2^{n + 1}}}{\frac{n^3}{2^n}} = \lim_{n \to +\infty} \left( \frac{(n + 1)^3}{2^{n + 1}} \cdot \frac{2^n}{n^3} \right) = \lim_{n \to +\infty} \left( \frac{(n + 1)^3}{2} \cdot \frac{1}{n^3} \right) = \frac{1}{2}$$
+In questo caso, si ha che $l = \frac{1}{2}$, e dato che $l < 1$ possiamo affermare che la serie converge. Vediamo, ora, un altro esempio con la seguente serie:
+$$\sum_{k = 0}^{\infty} \frac{k!}{2^k}$$
+Applicando il criterio, si ottiene:
+$$\lim_{n \to +\infty} \frac{\frac{(n + 1)!}{2^{n + 1}}}{\frac{n!}{2^n}} = \lim_{n \to +\infty} \left( \frac{(n + 1)!}{2^{n + 1}} \cdot \frac{2^n}{n!} \right) = \lim_{n \to +\infty} \left( \frac{(n + 1)!}{2} \cdot \frac{1}{n!} \right) = \lim_{n \to +\infty} \frac{n + 1}{2} = +\infty$$
+In questo caso, si ha che $l = +\infty$, e dato che $l > 1$ possiamo affermare che la serie diverge.
 ___
 ### Criterio della radice
 
-
+[pag. 24 - 25]
 ___
 ### Criterio di Leibniz
 
-
+[pag. 26 - 27 - 28]
 ___
 ### Criterio di convergenza assoluta
+
+[pag. 28 - 29]
