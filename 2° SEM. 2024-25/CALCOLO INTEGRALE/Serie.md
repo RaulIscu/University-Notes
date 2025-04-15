@@ -130,5 +130,7 @@ A prima vista, si potrebbe pensare che tale serie sia in qualche modo convergent
 
 > Una **serie armonica generalizzata** ha i seguenti risultati al variare di $\alpha$:
 > $$\sum_{k=1}^{+\infty} \frac{1}{k^\alpha} = \begin{cases} +\infty & \mbox{se } \alpha \le 1 \\ < +\infty & \mbox{se } \alpha > 1 \end{cases}$$
-> dove $< +\infty$ indica la convergenza a un determinato valore della serie.
+> dove $< +\infty$ indica la convergenza a un determinato valore della serie.ù
+
+[DIMOSTRAZIONE: pag. 13]
 ___

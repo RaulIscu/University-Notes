@@ -38,15 +38,72 @@ In particolare, se la successione considerata in questo corollario è una succes
 ___
 ### Criterio del confronto diretto
 
-[pag. 17]
+Proviamo ad analizzare una serie più complessa di quelle viste finora, come la seguente:
+$$\sum_{k=1}^{+\infty}\sin\left( \frac{1}{k^2} \right)$$
+Si nota subito che si tratta di una serie con termini di segno costante (in particolare, positivi), dunque essa dovrà necessariamente convergere o divergere. Si nota, poi, anche che:
+$$\lim_{n \to +\infty}\sin\left( \frac{1}{n^2} \right) = 0$$
+Venendo meno la condizione di non convergenza, non è possibile escludere questo comportamento, e dunque **non è possibile stabilire con certezza se la serie in questione converga o diverga**. Proviamo un altro approccio, ossia **confrontare** i termini della serie con quelli di un'altra, per cui sia più facile stabilire se essa converga.
+
+Per poter fare ciò, bisogna trovare una funzione con cui effettuare il confronto. Ponendo $\frac{1}{k^2} = x$, proviamo ad esempio a dimostrare che $\forall x \in \mathbb{R}^+$ (per ogni $x$ positiva appartenente ai reali) vale che $\sin x \le x$:
+- creiamo la funzione $f(x) = \sin x - x$, e consideriamo la sua derivata $f'(x) = \cos x - 1$;
+- per $x \ge 0$, si nota che $f'(x) \le 0$;
+- essendo la derivata $f'(x)$ negativa per ogni $x$ positiva, ciò vuol dire che la funzione $f(x)$ sarà decrescente nello stesso intervallo;
+- si può assumere, perciò, che per $x \ge 0$ si abbia che $\sin x - x \le 0$, e dunque che $\sin x \le x$, come volevasi dimostrare.
+
+Avendo dimostrato che $\sin x \le x$, possiamo sostituire la $x$ e affermare che $\sin \left( \frac{1}{k^2} \right) \le \frac{1}{k^2}$, e dunque che:
+$$0 \le \sum_{k = 1}^{\infty}\sin\left( \frac{1}{k^2} \right) \le \sum_{k = 1}^{\infty} \frac{1}{k^2}$$
+Si nota immediatamente che la seconda serie del confronto non è altro che una [[Serie|serie armonica]] con $\alpha > 1$, che risulta perciò essere convergente a un determinato valore finito $l$. Dunque, poiché la serie di partenza è positiva e limitata da una serie convergente, anch'essa **deve necessariamente convergere** a un valore finito.
+
+Generalizzando questo procedimento, possiamo ottenere il seguente teorema che definisce il cosiddetto "**criterio del confronto diretto**":
+
+> Siano $a_{k}$ e $b_{k}$ due successioni, tali che esista un valore $N \in \mathbb{N}$ per cui, $\forall n \ge N$, valga che $0 \le a_{n} \le b_{n}$. Verificato ciò, **se la serie associata a $b_{k}$ converge, allora anche la serie associata a $a_{k}$ converge**:
+> $$\mbox{se } \sum_{k=0}^{\infty}b_{k} \mbox{ converge, allora anche } \sum_{k=0}^{\infty}a_{k} \mbox{ converge}$$
+
+Da questo criterio ne deriva il **corollario**, ossia che:
+
+> $$\mbox{se } \sum_{k=0}^{\infty}a_{k} \mbox{ non converge, allora anche } \sum_{k=0}^{\infty}b_{k} \mbox{ non converge}$$
 ___
 ### Criterio del confronto asintotico
 
+Vediamo, ora, un altro esempio:
+$$\sum_{k = 1}^{\infty}\sin\left( \frac{1}{k} \right)$$
+Notiamo facilmente che anche questa è una serie con termini a segno costante (in particolare, positivi), dunque essa dovrà necessariamente convergere o divergere. Analogamente all'esempio del capitolo precedente, si nota anche che:
+$$\lim_{n \to +\infty}\sin\left( \frac{1}{n} \right) = 0$$
+Non si può, dunque, verificare se la serie risulta essere convergente o divergente. Proviamo, quindi, ad applicare il **criterio del confronto diretto** anche in questo caso: sfruttando la dimostrazione del capitolo precedente, sappiamo che $\sin \frac{1}{k} \le \frac{1}{k}$, e possiamo quindi affermare che:
+$$0 \le \sum_{k = 1}^{\infty}\sin \left(\frac{1}{k} \right) \le \sum_{k = 1}^{\infty} \frac{1}{k}$$
+La serie usata per il confronto, tuttavia, è la serie armonica con $\alpha = 1$, e in quanto tale risulta essere divergente: questo particolare confronto non ci è quindi di nessun aiuto, così come non lo sarebbe qualsiasi confronto con serie divergenti (l'obiettivo del confronto diretto è proprio dimostrare la convergenza di una serie mostrando che essa è delimitata da un'altra serie convergente).
 
+È possibile applicare un'altra strategia: utilizzando i limiti notevoli, sappiamo che:
+$$\lim_{n \to +\infty} \frac{\sin\left( \frac{1}{n} \right)}{\frac{1}{n}} = \lim_{y \to 0} \frac{\sin y}{y} = 1$$
+Dunque, per $n \rightarrow +\infty$, si ha che $\sin \left(\frac{1}{n} \right) \sim \frac{1}{n}$ (letto "$\sin\left( \frac{1}{n} \right)$ è simile a $\frac{1}{n}$"), ossia che i due termini si comportano in modo equivalente per $n \rightarrow +\infty$, e quindi lo stesso faranno le serie ad essi associate. Pertanto, sapendo che la serie derivata da $\frac{1}{k}$ diverge positivamente, ne risulta che anche la serie di partenza diverge positivamente.
+
+Generalizzando questo procedimento, possiamo ottenere il seguente teorema che definisce il cosiddetto "**criterio del confronto asintotico**":
+
+> Siano $a_{k}$ e $b_{k}$ due successioni, tali che:
+> $$\lim_{n \to +\infty} \frac{a_{n}}{b_{n}} =  l$$
+> con $l$ che corrisponde a un numero finito positivo, allora si ha che **le serie derivate dalle due successioni hanno lo stesso carattere**. Ciò vuol dire che:
+> $$\sum_{k = 0}^{\infty}a_{k} \space \mbox{ converge/diverge} \iff \sum_{k = 0}^{\infty}b_{k} \mbox{ converge/diverge}$$
+
+[DIMOSTRAZIONE: pag. 19 - 20]
+
+Il criterio del confronto asintotico è di fatto uno degli strumenti più utili e comuni per determinare la convergenza o divergenza di una serie, in quanto affidabile e facile da applicare.
+___
+### Approssimazione di Stirling
+
+A partire dal criterio del confronto asintotico, si è elaborata un'approssimazione molto utile in alcuni casi particolari, chiamata "**approssimazione di Stirling**":
+
+> Per $k \rightarrow +\infty$, possiamo affermare che **$k!$ è simile a $k^k \cdot e^{-k} \cdot \sqrt{2 \pi k}$**, ossia che:
+> $$k! \sim k^k e^{-k} \sqrt{2 \pi k} \space \Longrightarrow \lim_{k \to +\infty} \frac{k!}{k^k e^{-k} \sqrt{2 \pi k}} = 1$$
+
+Questa consapevolezza facilita notevolmente l'analisi di alcuni limiti, che sarebbero altrimenti complessi da confrontare. Ad esempio, consideriamo la seguente serie:
+$$\sum_{k=0}^{\infty} \frac{k^k}{e^k \cdot k!}$$
+È possibile riscrivere il termine del denominatore $k!$ utilizzando l'approssimazione di Stirling, e a quel punto semplificare il tutto fino ad ottenere una serie notevolmente più facile da analizzare e gestire:
+$$\sum_{k=0}^{\infty} \frac{k^k}{e^k \cdot k!} \sim \sum_{k=1}^{\infty} \frac{k^k}{e^k \cdot k^k \cdot e^{-k} \cdot \sqrt{2 \pi k}} = \sum_{k=1}^{\infty} \frac{1}{\sqrt{2 \pi} \sqrt{k}} = \frac{1}{\sqrt{2 \pi}} \cdot \sum_{k=1}^{\infty} \left(\frac{1}{\sqrt{k}} \right)$$
+La serie ottenuta risulta essere un multiplo di una serie armonica generalizzata con $\alpha < 1$: dunque, così come diverge quest'ultima, diverge anche la serie iniziale.
 ___
 ### Criterio del rapporto
 
-
+[pag. 21 - 22 - 23]
 ___
 ### Criterio della radice
 
