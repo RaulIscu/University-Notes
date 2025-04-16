@@ -107,7 +107,7 @@ ___
 > $$\lim_{n \to +\infty} \frac{a_{n + 1}}{a_{n}} = l$$
 > con $0 \le l < +\infty$, possiamo affermare che:
 > - se $l < 1$, allora la serie associata alla successione $a_{k}$ **converge**;
-> - se $l > 1$, allora la serie associata alla succeessione $a_{k}$ **diverge**.
+> - se $l > 1$, allora la serie associata alla successione $a_{k}$ **diverge**.
 > 
 > Invece, se $l = 1$, non si possono trarre conclusioni.
 
@@ -125,12 +125,58 @@ In questo caso, si ha che $l = +\infty$, e dato che $l > 1$ possiamo affermare c
 ___
 ### Criterio della radice
 
-[pag. 24 - 25]
+> Data una successione $a_{k}$ a termini positivi, tale per cui:
+> $$\lim_{n \to +\infty} \sqrt[n]{a_{n}} = l$$
+> con $0 \le l < +\infty$, possiamo affermare che:
+> - se $l < 1$, allora la serie associata alla successione $a_{k}$ **converge**;
+> - se $l > 1$, allora la serie associata alla successione $a_{k}$ **diverge**.
+> 
+> Invece, se $l = 1$, non si possono trarre conclusioni.
+
+[DIMOSTRAZIONE: pag. 24 - 25]
+
+Il criterio del rapporto e il criterio della radice risultano essere effettivamente molto simili, e spesso il limite calcolato tramite l'uno o l'altro criterio coincide. Pertanto, **la scelta tra l'uno o l'altro ricade sulla preferenza personale e sulla serie particolare** che si sta cercando di analizzare. Considerando, ad esempio, la seguente serie che abbiamo analizzato già in precedenza:
+$$\sum_{k = 0}^{\infty} \frac{k!}{2^k}$$
+Per questo esempio, il criterio del rapporto risulta ottimale, mentre il criterio della radice potrebbe essere più complesso da applicare.
 ___
 ### Criterio di Leibniz
 
-[pag. 26 - 27 - 28]
+I criteri di convergenza finora mostrati lavoravano su serie con termini a segno costante. Non abbiamo, però, ancora modo di determinare con certezza la convergenza o divergenza di una **serie con termini a segno alterno**, che tendenzialmente sono serie in cui un termine è costituito (in parte o totalmente) da:
+$$(-1)^k$$
+Per analizzare questo tipo di serie, si utilizza il "**criterio di Leibniz**":
+
+> Sia $a_{k}$ una successione a segno alterno, ossia $a_{k} = (-1)^k \cdot b_{k}$. Se si verificano i seguenti tre requisiti:
+> - $b_{k}$ è una successione di termini di **segno non negativo**;
+> - $\forall k \in \mathbb{N}^+$ si ha che $b_{k + 1} \le b_{k}$, ossia **$b_{k}$ è una successione decrescente**;
+> - **$\lim_{n \to +\infty} b_{n} = 0$**;
+>
+> allora la serie $\sum_{k = 0}^{\infty} a_{k}$ **converge**.
+
+[DIMOSTRAZIONE: pag. 26 - 27]
+
+Vediamo un esempio di applicazione del criterio di Leibniz, analizzando la seguente serie:
+$$\sum_{k=1}^{\infty} \frac{(-1)^k}{k}$$
+Si nota immediatamente che si tratta di una serie con termini di segno alterno, data la presenza di $(-1)^k$: procediamo, dunque, a verificare che rispetti le tre condizioni necessarie per applicare il criterio di Leibniz:
+- $b_{k} = \frac{1}{k}$ è una successione di termini di segno positivo, dunque non negativo;
+- $b_{k + 1} \le b_{k} \Longrightarrow \frac{1}{k + 1} \le \frac{1}{k}$ è vero per ogni $k$, quindi $b_{k}$ risulta essere una successione decrescente;
+- per $n \rightarrow +\infty$, $b_{n} \rightarrow 0$.
+
+Essendo soddisfatte tutte e tre le condizioni, possiamo affermare che la serie in questione converge.
 ___
 ### Criterio di convergenza assoluta
 
-[pag. 28 - 29]
+Nonostante il criterio di Leibniz venga applicato su serie a segno alterno, per poter essere utilizzato **è necessario che l'alternanza tra i segni sia regolare**, e che quindi il segno ad ogni termine (positivo, negativo, positivo, negativo, ecc. ecc.). Possono però esserci casi in cui quest'alternanza non sia regolare. Ad esempio, la seguente serie:
+$$\sum_{k = 1}^{\infty} \frac{\sin k}{k^2}$$
+presenta termini positivi per $0 \le k \le \pi$ e negativi per $\pi \le k \le 2\pi$. Dunque, in questo caso non è possibile applicare il criterio di Leibniz. In questi casi, si deve ricorrere al cosiddetto "**criterio di convergenza assoluta**":
+
+> Data una successione $a_{k}$, si può affermare che:
+> $$\sum_{k = 0}^{\infty} |a_{k}| \mbox{ converge } \Longrightarrow \space \sum_{k = 0}^{\infty}a_{k} \mbox{ converge}$$
+> In tal caso, si dice che la serie **converge assolutamente**.
+
+[DIMOSTRAZIONE: pag. 28 - 29]
+
+Applichiamo il criterio di convergenza assoluta sulla serie mostrata precedentemente. Si ha che:
+$$\sum_{k = 1}^{\infty} \left | \frac{\sin k}{k^2} \right | = \sum_{k = 1}^{\infty} \frac{\left |\sin k \right|}{k^2}$$
+A questo punto, applichiamo il criterio del confronto diretto, dimostrando che la serie è limitata da una serie armonica generalizzata con $\alpha > 1$:
+$$0 \le \sum_{k = 1}^{\infty} \frac{\left | \sin k \right |}{k^2} \le \sum_{k = 1}^{\infty} \frac{1}{k^2}$$
+Essendo vera questa disuguaglianza, possiamo affermare che la serie $\sum_{k=1}^{\infty} \frac{\left | \sin k \right |}{k^2}$ converge, pertanto la serie iniziale converge assolutamente (e quindi anche normalmente).

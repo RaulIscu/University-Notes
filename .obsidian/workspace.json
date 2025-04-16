@@ -14,7 +14,7 @@
               "type": "markdown",
               "state": {
                 "file": "2° SEM. 2024-25/CALCOLO INTEGRALE/Teoremi, condizioni e criteri di convergenza.md",
-                "mode": "source",
+                "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
@@ -78,8 +78,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 321.50418853759766,
-    "collapsed": true
+    "width": 321.50418853759766
   },
   "right": {
     "id": "691838f246faa396",
