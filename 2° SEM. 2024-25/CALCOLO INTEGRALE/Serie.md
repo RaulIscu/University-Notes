@@ -112,7 +112,7 @@ $$\lim_{n \to +\infty}q^{n + 1} = \begin{cases} +\infty & \mbox{se } q > 1 \\ 0 
 Unendo i due risultati, si ottiene quindi la seguente definizione generica del risultato di una serie geometrica:
 
 > Data una **serie geometrica**, in base alla variazione di $q$ si avranno i seguenti risultati:
-> $$\sum_{k=o}^{\infty}q^k = \begin{cases} +\infty & \mbox{se } q > 1 \\ \frac{1}{1 - q} & \mbox{se } -1 < q < 1 \\ \not\exists & \mbox{se } q \le -1 \end{cases}$$
+> $$\sum_{k = 0}^{\infty}q^k = \begin{cases} +\infty & \mbox{se } q > 1 \\ \frac{1}{1 - q} & \mbox{se } -1 < q < 1 \\ \not\exists & \mbox{se } q \le -1 \end{cases}$$
 ___
 ### Serie armoniche
 
