@@ -76,13 +76,86 @@ Essendo $l = 0$, abbiamo che $\rho = \frac{1}{0} = +\infty$. Notiamo facilmente 
 ___
 ### Derivazione di serie di potenze
 
-[pag. 36 - 37 - 38]
+Consideriamo una serie di potenze generica:
+$$f(x) = \sum_{k = 0}^{\infty} a_{k}(x - x_{0})^k = a_{0} + a_{1}(x - x_{0}) + a_{2}(x - x_{0})^2 + \dots$$
+Essendo una serie di potenze una funzione a tutti gli effetti, essa gode della proprietà della **derivabilità**: in particolare, se una funzione può essere espressa sotto forma di una somma infinita di termini, ne segue che la derivata di tale funzione possa essere espressa sotto forma di una somma infinita delle derivate di ogni termine originale.
+
+Per derivare tale serie, notiamo che i vari termini della successione dei coefficienti siano delle semplici **costanti moltiplicative**, mentre per derivare i termine $(x - x_{0})^k$ bisognerà applicare la regola di **derivazione delle potenze**. Dunque, per la **derivata di primo ordine $f'(x)$** si ottiene che:
+$$\begin{align} f'(x) &= \frac{d}{dx}(a_{0} + a_{1}(x - x_{0}) + a_{2}(x - x_{0})^2 + a_{3}(x - x_{0})^3 + \dots) \\ &= 0 + a_{1} + 2a_{2}(x - x_{0}) + 3a_{3}(x - x_{0})^2 + \dots \\ &= \sum_{k = 1}^{\infty}ka_{k} \cdot (x - x_{0})^{k - 1} \end{align}$$
+Seguendo lo stesso procedimento, si può ricavare anche la **derivata di secondo ordine $f''(x)$**:
+$$\begin{align} f''(x) = \frac{d}{dx}f'(x) &= \frac{d}{dx}(a_{1} + 2a_{2}(x - x_{0}) + 3a_{3}(x - x_{0})^2 + 4a_{4}(x - x_{0})^3 + \dots) \\ &= 0 + 2a_{2} + 6a_{3}(x - x_{0}) + 12a_{4}(x - x_{0})^2 + \dots \\ &= \sum_{k = 2}^{\infty} k(k - 1)a_{k} \cdot (x - x_{0})^{k - 2} \end{align}$$
+A questo punto, è possibile ottenere una generalizzazione della **derivata di ordine $j$ di una serie di potenze**:
+$$f^{(j)}(x) = \sum_{k = j}^{\infty} k(k - 1)(k - 2)\dots(k - j + 1)a_{k} \cdot (x - x_{0})^{k - j}$$
+Rimane ora da analizzare l'**intervallo di convergenza** di questa derivazione generale di ordine $j$. Per poter fare ciò, effettuiamo un cambio di variabile ponendo $i = k - j$, in modo da poter ricondurre il tutto a una serie di potenze standard:
+$$\begin{align} f^{(j)}(x) &= \sum_{k = j}^{\infty} k(k - 1)(k - 2)\dots(k - j + 1)a_{k} \cdot (x - x_{0})^{k - j} \\ &= \sum_{i = 0}^{\infty} (i + j)(i + j - 1)(i + j - 2)\dots(i + 1)a_{i + j} \cdot (x - x_{0})^i \end{align}$$
+Notiamo subito che il centro della serie $x_{0}$ rimane invariato rispetto alla serie iniziale; invece, per quanto riguarda il centro di convergenza:
+$$l = \lim_{i \to +\infty} \left| \frac{(i + j + 1)(i + j)(i + j - 1)\dots(i + 2)a_{i + j + 1}}{(i + j)(i + j - 1)(i + j - 2)\dots(i + 1)a_{i + j}} \right| = \lim_{i \to +\infty} \left| \frac{a_{i + j + 1}}{a_{i + j}}\right| = \lim_{n \to +\infty} \left| \frac{a_{n + 1}}{a_{n}} \right|$$
+Ciò ci fa capire che il calcolo del raggio ci convergenza di una serie di potenze e quello della sua derivata di ordine $j$ sono perfettamente identici, dunque **l'intervallo di convergenza di una serie di potenze e della sua $j$-esima derivata sono equivalenti**. Possiamo formalizzare le informazioni ottenute nel modo seguente:
+
+> Data la serie di potenze
+> $$f(x) = \sum_{k = 0}^{\infty} a_{k}(x - x_{0})^k$$
+> avente intervallo di convergenza $X$, la serie è derivabile infinite volte in tale intervallo, e la sua $j$-esima derivata, equivalente a:
+> $$f^{(j)}(x) = \sum_{k = j}^{\infty} k(k - 1)(k - 2)\dots(k - j + 1)a_{k} \cdot (x - x_{0})^{k - j}$$
+> avrà sempre il medesimo intervallo di convergenza $X$.
 ___
 ### Serie di Taylor
 
-[pag. 39 - 40 - 41 - 42 - 43]
-___
-### Espansioni di Taylor (notevoli e non)
+> Siano $[a, b] \subseteq \mathbb{R}$, $f: [a, b] \rightarrow \mathbb{R}$ una determinata funzione e $x_{0} \in (a, b)$, definiamo "**polinomio di Taylor di ordine $n$ di $x$ centrato in $x_{0}$**", indicato come $T_{n}(x; x_{0})$, il polinomio:
+> $$T_{n}(x; x_{0}) = f(x_{0}) + f'(x_{0})(x - x_{0}) + \frac{f''(x_{0})}{2}(x - x_{0})^2 + \frac{f'''(x_{0})}{6}(x - x_{0})^3 + \dots + \frac{f^{(n)}(x_{0})}{n!}(x - x_{0})^k$$
+> dove $f^{(n)}$ indica la derivata di ordine $n$ della funzione $f$.
 
-[pag. 44]
+Volendo esprimere questo polinomio in forma contratta, lo si potrebbe fare con la seguente sommatoria:
+$$T_{n}(x; x_{0}) = \sum_{k = 0}^{n} \frac{f^{(k)}(x_{0})}{k!}(x - x_{0})^k$$
+Il **polinomio di Taylor** risulta fondamentale per lo studio di funzioni più complesse. Infatti, il teorema di Taylor afferma che, al crescere dell'ordine $n$ del polinomio, l'approssimazione tra la funzione $f(x)$ e il polinomio $T_{n}(x; x_{0})$ tende ad essere trascurabile per valori di $x$ molto vicini al centro $x_{0}$. In altre parole, per valori vicini al centro $x_{0}$, **è possibile approssimare una funzione tramite un suo polinomio di Taylor di ordine sufficientemente alto**.
+
+Formalmente, l'enunciato del **teorema di Taylor** è il seguente:
+
+> Siano $[a, b] \subseteq \mathbb{R}$, $f: [a, b] \rightarrow \mathbb{R}$ una determinata funzione e $x_{0} \in (a, b)$, esiste sempre una funzione $R_{n}(x)$ detta "**resto infinitesimale**" per cui si ha che:
+> $$f(x) = T_{n}(x; x_{0}) + R_{n}(x; x_{0})$$
+> Inoltre, si ha che:
+> $$\lim_{x \to x_{0}} \frac{R_{n}(x; x_{0})}{(x - x_{0})^n} = 0$$
+
+Esistono vari modi per rappresentare il resto infinitesimale introdotto dal teorema di Taylor: in questo corso, verrà utilizzato il cosiddetto "**resto di Lagrange**", che assume la seguente forma:
+$$R_{n}(x; x_{0}) = \frac{f^{(n + 1)}(\xi)}{(n + 1)!}(x - x_{0})^{n + 1}$$
+con $\xi \in (x, x_{0})$.
+
+Per comprendere meglio i concetti appena introdotti, applichiamoli su un esempio, considerando la funzione $f(x) = e^{\sin x}$ e supponendo di volerla approssimare intorno al centro $x_{0} = \pi$. Il polinomio di Taylor di ordine $1$ centrato in $\pi$ è pari a:
+$$\begin{align} T_{1}(x; \pi) &= f(\pi) + f'(\pi)(x - \pi) \\ &= e^{\sin \pi} + \cos(\pi) e^{\sin \pi}(x - \pi) \\ &= 1 - (x - \pi) \end{align}$$
+Essendo l'ordine scelto relativamente basso, anche l'approssimazione non è molto accurata (infatti, graficamente si nota che essa risulta "corretta" solo per il centro $\pi$). Vediamo, però, cosa succede se si aumenta l'ordine del polinomio, passando all'ordine $2$:
+$$\begin{align} T_{2}(x; \pi) &= f(\pi) + f'(\pi)(x - \pi) + \frac{f''(\pi)}{2}(x - \pi)^2 \\ &= e^{\sin \pi} + \cos(\pi)e^{\sin \pi}(x - \pi) + \frac{(\cos^2\pi - \sin \pi)e^{\sin \pi}}{2}(x - \pi)^2 \\ &= 1 - (x - \pi) + \frac{1}{2}(x - \pi)^2 \end{align}$$
+Ora l'intorno di approssimazione è aumentato, e aumenterà ogni volta che si aumenterà l'ordine del polinomio di Taylor. Proprio per questo motivo, **se l'ordine del polinomio tende all'infinito**, il resto infinitesimale diventerà insignificante e sostanzialmente **la funzione andrà a coincidere con il suo polinomio di Taylor**.
+
+Notiamo, infatti, che:
+$$\begin{align} \lim_{n \to +\infty} f(x) &= \lim_{n \to +\infty} \left(T_{n}(x; x_{0}) + R_{n}(x; x_{0}) \right) \\ &=  \lim_{n \to +\infty} \left( \sum_{k = 0}^{n} \frac{f^{(k)}(x_{0})}{k!}(x - x_{0})^k + \frac{f^{(n + 1)}(\xi)}{(n + 1)!}(x - x_{0})^{n + 1}\right) \\ &= \sum_{k = 0}^{\infty} \frac{f^{(k)}(x_{0})}{k!}(x - x_{0})^k \end{align}$$
+Dunque, estendendo l'ordine a $+\infty$, si ottiene che la funzione $f(x)$ coincide esattamente con una serie, la quale viene detta "**serie di Taylor**"; si nota, tra l'altro, che una serie di Taylor non è altro che una **serie di potenze**, e dunque tale convergenza al valore della funzione si verifica solo ed esclusivamente all'interno del raggio di convergenza della serie stessa.
+
+Formalmente:
+
+> Siano $[a, b] \subseteq \mathbb{R}$, $f: [a, b] \rightarrow \mathbb{R}$ una determinata funzione e $x_{0} \in (a, b)$, definiamo come **serie di Taylor di $f$ di centro $x_{0}$** il polinomio di Taylor di ordine $+\infty$ associato alla funzione $f$. 
+> 
+> In particolare, per ogni $x \in [x_{0} - \rho, x_{0} + \rho]$, dove $\rho$ è il raggio di convergenza di tale serie, si ha che:
+> $$f(x) = \sum_{k = 0}^{\infty} \frac{f^{(k)}(x_{0})}{k!}(x - x_{0})^k$$
+
+[ESEMPI: pag. 41 - 42 - 43]
+___
+### Espansioni di Taylor notevoli
+
+Di seguito, si elencano le **espansioni di Taylor più comuni**, assieme al loro intervallo di convergenza.
+
+La serie di Taylor di **$f(x) = e^x$**, avente intervallo di convergenza pari a $\mathbb{R}$, è:
+$$e^x = \sum_{k = 0}^{\infty} \frac{x^k}{k!}$$
+La serie di Taylor di **$f(x) = \cos x$**, avente intervallo di convergenza pari a $\mathbb{R}$, è:
+$$\cos x = \sum_{k = 0}^{\infty} \frac{(-1)^kx^{2k}}{(2k)!}$$
+La serie di Taylor di **$f(x) = \sin x$**, avente intervallo di convergenza pari a $\mathbb{R}$, è:
+$$\sin x = \sum_{k = 0}^{\infty} \frac{(-1)^kx^{2k + 1}}{(2k + 1)!}$$
+La serie di Taylor di **$f(x) = \frac{1}{1 - x}$**, avente intervallo di convergenza pari a $(-1, 1)$, è:
+$$\frac{1}{1 - x} = \sum_{k = 0}^{\infty} x^k$$
+La serie di Taylor di **$f(x) = \ln(1 + x)$**, avente intervallo di convergenza pari a $(-1, 1)$, è:
+$$\ln(1 + x) = \sum_{k = 0}^{\infty} \frac{(-1)^kx^{k + 1}}{k + 1}$$
+La serie di Taylor di **$f(x) = \arctan x$**, avente intervallo di convergenza pari a $(-1, 1)$, è:
+$$\arctan x = \sum_{k = 0}^{\infty} \frac{(-1)^kx^{2k + 1}}{2k + 1}$$
+Conoscere tali espansioni notevoli è utile non solo per analizzare le funzioni ad esse associate, ma anche per semplificare l'analisi di altre **funzioni composte, in parte, da quest'ultime**. Ad esempio, applicando l'espansione notevole di $e^x$, è facile trovare quella di $xe^x$:
+$$xe^x = x\sum_{k = 0}^{\infty} \frac{x^k}{k!} = \sum_{k = 0}^{\infty} \frac{x^{k + 1}}{k!}$$
+Inoltre, è opportuno ricordare che le serie di Taylor non sono altro che serie di potenze; dunque, se necessario, è possibile sfruttare **cambi di variabile** (a patto che essi siano permessi dall'intervallo di convergenza) per ottenere le **espansioni di funzioni composte**. Ad esempio, ponendo $x^2 = y$:
+$$\cos(x^2) = \cos y = \sum_{k = 0}^{\infty} \frac{(-1)^ky^{2k}}{(2k)!} = \sum_{k = 0}^{\infty} \frac{(-1)^k(x^2)^{2k}}{(2k)!} = \sum_{k = 0}^{\infty} \frac{(-1)^kx^{4k}}{(2k)!}$$
 ___

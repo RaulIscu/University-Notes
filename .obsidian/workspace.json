@@ -14,7 +14,7 @@
               "type": "markdown",
               "state": {
                 "file": "2° SEM. 2024-25/CALCOLO INTEGRALE/Serie.md",
-                "mode": "source",
+                "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
@@ -49,8 +49,7 @@
               "title": "Serie di potenze"
             }
           }
-        ],
-        "currentTab": 2
+        ]
       }
     ],
     "direction": "vertical"
@@ -208,15 +207,17 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "9067d0e99d92d559",
+  "active": "3d30b3d63df08bc9",
   "lastOpenFiles": [
-    "2° SEM. 2024-25/CALCOLO INTEGRALE/Teoremi, condizioni e criteri di convergenza.md",
     "2° SEM. 2024-25/CALCOLO INTEGRALE/Serie di potenze.md",
+    "2° SEM. 2024-25/CALCOLO INTEGRALE/Equazioni differenziali.md",
+    "2° SEM. 2024-25/CALCOLO INTEGRALE/Numeri complessi.md",
+    "2° SEM. 2024-25/INTRODUZIONE AGLI ALGORITMI/Costo computazionale.md",
     "2° SEM. 2024-25/CALCOLO INTEGRALE/Serie.md",
+    "2° SEM. 2024-25/CALCOLO INTEGRALE/Teoremi, condizioni e criteri di convergenza.md",
     "2° SEM. 2024-25/CALCOLO INTEGRALE",
     "2° SEM. 2024-25/INTRODUZIONE AGLI ALGORITMI/Ricorsione.md",
     "2° SEM. 2024-25/INTRODUZIONE AGLI ALGORITMI/Notazione asintotica.md",
-    "2° SEM. 2024-25/INTRODUZIONE AGLI ALGORITMI/Costo computazionale.md",
     "2° SEM. 2024-25/INTRODUZIONE AGLI ALGORITMI/Ricerca.md",
     "2° SEM. 2024-25/INTRODUZIONE AGLI ALGORITMI/Criteri di misura del costo.md",
     "2° SEM. 2024-25/images/metodoalbero_example1.png",
@@ -240,8 +241,6 @@
     "1° SEM. 2024-25/FONDAMENTI DI PROGRAMMAZIONE/Operatori matematici e di comparazione.md",
     "1° SEM. 2024-25/FONDAMENTI DI PROGRAMMAZIONE/Linguaggi compilati e interpretati.md",
     "1° SEM. 2024-25/FONDAMENTI DI PROGRAMMAZIONE/Lambda.md",
-    "1° SEM. 2024-25/FONDAMENTI DI PROGRAMMAZIONE/Input.md",
-    "1° SEM. 2024-25/FONDAMENTI DI PROGRAMMAZIONE/Import.md",
     "2° SEM. 2024-25/images/limiti_asintotiche.png",
     "2° SEM. 2024-25/images/hierarchy_algo.png",
     "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Librerie/AWT",
