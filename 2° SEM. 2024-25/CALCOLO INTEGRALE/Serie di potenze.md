@@ -97,6 +97,9 @@ Ciò ci fa capire che il calcolo del raggio ci convergenza di una serie di poten
 > avente intervallo di convergenza $X$, la serie è derivabile infinite volte in tale intervallo, e la sua $j$-esima derivata, equivalente a:
 > $$f^{(j)}(x) = \sum_{k = j}^{\infty} k(k - 1)(k - 2)\dots(k - j + 1)a_{k} \cdot (x - x_{0})^{k - j}$$
 > avrà sempre il medesimo intervallo di convergenza $X$.
+
+Inoltre, se si vuole calcolare il valore della derivata $j$-esima di una serie di potenze con centro $x_{0}$ proprio nel punto $x_{0}$, esso sarà uguale a:
+$$f^{(j)}(x_{0}) = j! \cdot a_{j}$$
 ___
 ### Serie di Taylor
 

@@ -81,10 +81,17 @@ Generalizzando questo procedimento, possiamo ottenere il seguente teorema che de
 
 > Siano $a_{k}$ e $b_{k}$ due successioni, tali che:
 > $$\lim_{n \to +\infty} \frac{a_{n}}{b_{n}} =  l$$
-> con $l$ che corrisponde a un numero finito positivo, allora si ha che **le serie derivate dalle due successioni hanno lo stesso carattere**. Ciò vuol dire che:
+> con $l$ che corrisponde a un numero finito positivo (escluso lo 0), allora si ha che **le serie derivate dalle due successioni hanno lo stesso carattere**. Ciò vuol dire che:
 > $$\sum_{k = 0}^{\infty}a_{k} \space \mbox{ converge/diverge} \iff \sum_{k = 0}^{\infty}b_{k} \mbox{ converge/diverge}$$
 
 [DIMOSTRAZIONE: pag. 19 - 20]
+
+Come abbiamo visto, questo enunciato non considera il caso in cui $l = 0$. Tuttavia, questo risultato non è completamente inutile, ma solo meno versatile ai fini del calcolo del carattere della serie $a_{n}$; possiamo affermare, infatti, solo che:
+
+> Siano $a_{k}$ e $b_{k}$ due successioni, tali che:
+> $$\lim_{n \to +\infty} \frac{a_{n}}{b_{n}} = 0$$
+> allora si ha che se la serie derivata da $b_{n}$ converge, allora anche la serie derivata da $a_{n}$ converge, ossia:
+> $$\sum_{k = 0}^{\infty} b_{k} \mbox{ converge } \Longrightarrow \sum_{k = 0}^{\infty} a_{k} \mbox{ converge}$$
 
 Il criterio del confronto asintotico è di fatto uno degli strumenti più utili e comuni per determinare la convergenza o divergenza di una serie, in quanto affidabile e facile da applicare.
 ___

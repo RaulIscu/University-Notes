@@ -2,5 +2,12 @@
   "readableLineLength": false,
   "alwaysUpdateLinks": true,
   "newFileLocation": "current",
-  "rightToLeft": false
+  "rightToLeft": false,
+  "pdfExportSettings": {
+    "includeName": false,
+    "pageSize": "A3",
+    "landscape": false,
+    "margin": "2",
+    "downscalePercent": 100
+  }
 }

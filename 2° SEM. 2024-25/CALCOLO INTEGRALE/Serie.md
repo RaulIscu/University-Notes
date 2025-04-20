@@ -2,7 +2,7 @@
 
 In matematica, una **successione** è l'insieme ordinato dei valori assunti da una funzione:
 $$a: S \rightarrow \mathbb{R}$$
-dove $S \subseteq \mathbb{N}$. Si tratta, quindi, di una **funzione *a*<sub>k</sub> che associa dei valori ad un sottoinsieme dei numeri naturali**. Formalmente, una successione descritta dalla funzione *a* andrebbe indicata come l'insieme ordinato:
+dove $S \subseteq \mathbb{N}$. Si tratta, quindi, di una **funzione $a_{k}$ che associa dei valori ad un sottoinsieme dei numeri naturali**. Formalmente, una successione descritta dalla funzione *a* andrebbe indicata come l'insieme ordinato:
 $$(a_k)_{k \in S} = \left \{a(1), a(2), a(3), \mbox{... }, a(n) \right \}$$
 Tuttavia, per praticità e semplicità, in questo corso ci si limiterà alla notazione seguente:
 $$a_k = a_1, a_2, a_3, \mbox{... }, a_n$$
@@ -17,9 +17,8 @@ Naturalmente, ogni successione dà vita ad una somma dei suoi termini, e vicever
 $$S_n = \sum_{k = 1}^{n}a_k = a_1 + a_2 + a_3 + \mbox{... } + a_n$$
 Cosa succederebbe, a questo punto, se l'insieme dei termini da sommare fosse illimitato, e quindi se $S = \mathbb{N}$? Ovviamente, si avrebbe un infinito numero di termini per la sommatoria, che possiamo definire utilizzando il **limite** per $n \rightarrow +\infty$ di $S_{n}$; tale limite viene definito "**serie numerica**".
 
-> Data una successione a<sub>k</sub>, si dice **serie numerica** il limite per $n \rightarrow +\infty$ della somma $S_n$:
+> Data una successione $a_{k}$, si dice **serie numerica** il limite per $n \rightarrow +\infty$ della somma $S_n$:
 $$\lim_{n \to +\infty}S_n = \lim_{n \to +\infty}\sum_{k = 1}^{n}a_k = \sum_{k = 1}^{\infty}a_k$$
-
 ___
 ### Serie convergenti e divergenti
 
@@ -80,10 +79,13 @@ non è né divergente né convergente. Per piccoli valori di $n$, notiamo che:
 
 Otteniamo, quindi, che:
 $$S_{n} = \begin{cases} 1 & \mbox{se } n \mbox{ è pari} \\ 0 & \mbox{se } n \mbox{ è dispari} \end{cases}$$
+Il valore generico $p$ da cui parte la sommatoria ("$k = p$") di una serie **non influenza il carattere della stessa**: che essa valga per $k$ che va da 0 a $+\infty$ o da 10 a $+\infty$, ciò non cambierà il carattere della serie in questione. Inoltre, si può dimostrare che **la somma di due serie convergenti è anch'essa convergente**, mentre **la somma tra una serie convergente e una divergente è anch'essa divergente**.
 ___
 ### Serie telescopiche
 
-Le **serie telescopiche** sono un tipo particolare di serie numerica, e risultano essere **convergenti**. Tali serie vengono definite così per via del modo in cui **ogni termine della serie vada ad annullare un termine precedente (interamente o parzialmente)**, portando la serie a "chiudersi" su sé stessa come un telescopio. Per comprendere meglio questo concetto, analizziamo un esempio:
+Le **serie telescopiche** sono un tipo particolare di serie numerica, e risultano essere **convergenti**. Tali serie vengono definite così per via del modo in cui **ogni termine della serie vada ad annullare un termine precedente (interamente o parzialmente)**, portando la serie a "chiudersi" su sé stessa come un telescopio. Generalmente, una serie telescopica è una serie che si presenta o che può essere ricondotta alla seguente forma:
+$$\sum_{k = p}^{\infty} a_{k + 1} - a_{k}, \mbox{ oppure } \sum_{k = p}^{\infty} a_{k - 1} - a_{k}, \mbox{ oppure } \sum_{k = p}^{\infty} a_{k} - a_{k - 2} \space \dots$$
+Per comprendere meglio questo concetto, analizziamo un esempio:
 $$\sum_{k = 2}^{\infty}\left( \frac{1}{k-1} - \frac{1}{k} \right)$$
 Espandendo i suoi termini, risulta evidente come essi si cancellino a vicenda (tranne per la prima frazione del primo termine, la seconda frazione di ogni termine viene annullata dalla prima del termine successivo):
 $$\begin{align} S_{n} &= \sum_{k=2}^{n}\left( \frac{1}{k-1} - \frac{1}{k} \right) \\ &= \left( \frac{1}{1} - \frac{1}{2} \right) + \left( \frac{1}{2} - \frac{1}{3} \right) + \left( \frac{1}{3} - \frac{1}{4} \right) + \space \dots \space + \left( \frac{1}{n-1} - \frac{1}{n} \right) \\ &= \frac{1}{1} - \frac{1}{2} + \frac{1}{2} - \frac{1}{3} + \frac{1}{3} - \frac{1}{4} + \space \dots \space + \frac{1}{n - 1} - \frac{1}{n} \\ &= 1 - \frac{1}{n} \end{align}$$
@@ -112,7 +114,7 @@ $$\lim_{n \to +\infty}q^{n + 1} = \begin{cases} +\infty & \mbox{se } q > 1 \\ 0 
 Unendo i due risultati, si ottiene quindi la seguente definizione generica del risultato di una serie geometrica:
 
 > Data una **serie geometrica**, in base alla variazione di $q$ si avranno i seguenti risultati:
-> $$\sum_{k = 0}^{\infty}q^k = \begin{cases} +\infty & \mbox{se } q > 1 \\ \frac{1}{1 - q} & \mbox{se } -1 < q < 1 \\ \not\exists & \mbox{se } q \le -1 \end{cases}$$
+> $$\sum_{k = p}^{\infty}q^k = \begin{cases} +\infty & \mbox{se } q > 1 \\ \frac{q^p}{1 - q} & \mbox{se } -1 < q < 1 \\ \mbox{indeterminata} & \mbox{se } q \le -1 \end{cases}$$
 ___
 ### Serie armoniche
 
@@ -130,7 +132,7 @@ A prima vista, si potrebbe pensare che tale serie sia in qualche modo convergent
 
 > Una **serie armonica generalizzata** ha i seguenti risultati al variare di $\alpha$:
 > $$\sum_{k=1}^{+\infty} \frac{1}{k^\alpha} = \begin{cases} +\infty & \mbox{se } \alpha \le 1 \\ < +\infty & \mbox{se } \alpha > 1 \end{cases}$$
-> dove $< +\infty$ indica la convergenza a un determinato valore della serie.ù
+> dove $< +\infty$ indica la convergenza della serie a un determinato valore.
 
 [DIMOSTRAZIONE: pag. 13]
 ___
