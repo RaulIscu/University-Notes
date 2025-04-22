@@ -84,19 +84,41 @@ ___
 ### Serie telescopiche
 
 Le **serie telescopiche** sono un tipo particolare di serie numerica, e risultano essere **convergenti**. Tali serie vengono definite così per via del modo in cui **ogni termine della serie vada ad annullare un termine precedente (interamente o parzialmente)**, portando la serie a "chiudersi" su sé stessa come un telescopio. Generalmente, una serie telescopica è una serie che si presenta o che può essere ricondotta alla seguente forma:
-$$\sum_{k = p}^{\infty} a_{k + 1} - a_{k}, \mbox{ oppure } \sum_{k = p}^{\infty} a_{k - 1} - a_{k}, \mbox{ oppure } \sum_{k = p}^{\infty} a_{k} - a_{k - 2} \space \dots$$
+$$\sum_{k = p}^{\infty} a_{k + m} - a_{k}, \mbox{ oppure } \sum_{k = p}^{\infty} a_{k} - a_{k + m}$$
+È possibile calcolare in maniera relativamente immediata il valore a cui converge una serie telescopica; per fare ciò, distinguiamo tra le due casistiche, anche se la differenza risulta essere minima. Nel primo caso, ossia $\sum_{k = p}^{\infty} a_{k + m} - a_{k}$, vediamo cosa succede per piccoli valori di $m$ se espandiamo i termini della somma parziale $S_{n}$ di questa serie:
+- se $m = 1$, abbiamo che:
+$$\begin{align} S_{n} &= \sum_{k = p}^{n} a_{k + 1} - a_{k} \\ &= (a_{p + 1} - a_{p}) + (a_{p + 2} - a_{p + 1}) + (a_{p + 3} - a_{p + 2}) + \dots + (a_{n} - a_{n - 1}) + (a_{n + 1} - a_{n}) \\ &= -a_{p} + a_{n + 1} \end{align}$$
+- se $m = 2$, abbiamo che:
+$$\begin{align} S_{n} &= \sum_{k = p}^{n} a_{k + 2} - a_{k} \\ &= (a_{p + 2} - a_{p}) + (a_{p + 3} - a_{p + 1}) + (a_{p + 4} - a_{p + 2}) + \dots + (a_{n} - a_{n - 2}) + (a_{n + 1} - a_{n - 1}) + (a_{n + 2} - a_{n}) \\ &= -a_{p} -a_{p + 1} + a_{n + 1} + a_{n + 2} \end{align}$$
+
+Generalizzando, dunque, abbiamo che:
+
+> Data una serie telescopica della forma
+> $$\sum_{k = p}^{\infty} a_{k + m} - a_{k}$$
+> essa converge al valore $l$, con $l$ pari a:
+> $$l = - a_{p} - a_{p + 1} - \dots - a_{p + m - 1} + \lim_{n \to +\infty} \left(a_{n + 1} + a_{n + 2} + \dots + a_{n + m} \right)$$
+
+Vediamo cosa succede nel secondo caso, ossia $\sum_{k = p}^{\infty} a_{k} - a_{k + m}$, per piccoli valori di $m$ se si espandono i termini della somma parziale $S_{n}$:
+- se $m = 1$, abbiamo che:
+$$\begin{align} S_{n} &= \sum_{k = p}^{n} a_{k} - a_{k + 1} \\ &= (a_{p} - a_{p + 1}) + (a_{p + 1} - a_{p + 2}) + (a_{p + 2} - a_{p + 3}) + \dots + (a_{n - 1} - a_{n}) + (a_{n} - a_{n + 1}) \\ &= a_{p} - a_{n + 1} \end{align}$$
+- se $m = 2$, abbiamo che:
+$$\begin{align} S_{n} &= \sum_{k = p}^{n} a_{k} - a_{k + 2} \\ &= (a_{p} - a_{p + 2}) + (a_{p + 1} - a_{p + 3}) + (a_{p + 2} - a_{p + 4}) + \dots + (a_{n - 2} - a_{n}) + (a_{n - 1} - a_{n + 1}) + (a_{n} - a_{n + 2}) \\ &= a_{p} + a_{p + 1} - a_{n + 1} - a_{n + 2} \end{align}$$
+
+Generalizzando, dunque, abbiamo che:
+
+> Data una serie telescopica della forma
+> $$\sum_{k = p}^{\infty} a_{k} - a_{k + m}$$
+> essa converge al valore $l$, con $l$ pari a:
+> $$l = a_{p} + a_{p + 1} + \dots + a_{p + m - 1} - \lim_{n \to +\infty} \left(a_{n + 1} + a_{n + 2} + \dots + a_{n + m} \right)$$
+
 Per comprendere meglio questo concetto, analizziamo un esempio:
 $$\sum_{k = 2}^{\infty}\left( \frac{1}{k-1} - \frac{1}{k} \right)$$
-Espandendo i suoi termini, risulta evidente come essi si cancellino a vicenda (tranne per la prima frazione del primo termine, la seconda frazione di ogni termine viene annullata dalla prima del termine successivo):
-$$\begin{align} S_{n} &= \sum_{k=2}^{n}\left( \frac{1}{k-1} - \frac{1}{k} \right) \\ &= \left( \frac{1}{1} - \frac{1}{2} \right) + \left( \frac{1}{2} - \frac{1}{3} \right) + \left( \frac{1}{3} - \frac{1}{4} \right) + \space \dots \space + \left( \frac{1}{n-1} - \frac{1}{n} \right) \\ &= \frac{1}{1} - \frac{1}{2} + \frac{1}{2} - \frac{1}{3} + \frac{1}{3} - \frac{1}{4} + \space \dots \space + \frac{1}{n - 1} - \frac{1}{n} \\ &= 1 - \frac{1}{n} \end{align}$$
-La serie in questione, dunque, risulta convergere in $1$, in quanto:
-$$\sum_{k=2}^{+\infty} \left( \frac{1}{k - 1} - \frac{1}{k} \right) = \lim_{n \to +\infty}S_{n} = \lim_{n \to +\infty}\left(1 - \frac{1}{n} \right) = 1$$
+Ponendo $a_{k} = \frac{1}{k - 1}$ e $a_{k + m} = \frac{1}{k}$, ci troviamo nel secondo caso, con $m = 1$. Il valore $l$ a cui converge la serie sarà dunque:
+$$l = a_{2} - \lim_{n \to +\infty} \left( \frac{1}{n + 1} \right) = 1 - 0 = 1$$
 Vediamo un altro esempio, analizzando la seguente serie:
 $$\sum_{k = 3}^{+\infty} \left(\frac{1}{k^2} - \frac{1}{(k - 2)^2}\right)$$
-Espandendo i suoi termini, risulta evidente come essi si cancellino a vicenda (tranne per le seconde frazioni dei primi due termini, la prima frazione di un termine viene annullata dalla seconda del termine dopo il successivo):
-$$\begin{align} S_{n} &= \sum_{k = 3}^{n}\left( \frac{1}{k^2} - \frac{1}{(k - 2)^2} \right) \\ &= \left( \frac{1}{3^2} - \frac{1}{1^2} \right) + \left( \frac{1}{4^2} - \frac{1}{2^2} \right) + \left( \frac{1}{5^2} - \frac{1}{3^2} \right) + \space \dots \space + \left( \frac{1}{n^2} - \frac{1}{(n - 2)^2} \right) \\ &= - \frac{1}{1^2} - \frac{1}{2^2} + \frac{1}{(n-1)^2} + \frac{1}{n^2} \end{align}$$
-La serie in questione, dunque, risulta convergere in $-\frac{5}{4}$, in quanto:
-$$\sum_{k=2}^{+\infty} \left( \frac{1}{k^2} - \frac{1}{(k - 2)^2} \right) = \lim_{n \to +\infty}S_{n} = \lim_{n \to +\infty}\left(- \frac{5}{4} + \frac{1}{(n-1)^2} + \frac{1}{n^2} \right) = -\frac{5}{4}$$
+Ponendo $a_{k} = \frac{1}{(k - 2)^2}$ e $a_{k + m} = \frac{1}{k^2}$, ci troviamo nel primo caso, con $m = 2$. Il valore $l$ a cui converge la serie sarà dunque:
+$$l = - a_{3} - a_{4} + \lim_{n \to +\infty} \left( \frac{1}{(n + 1)^2} + \frac{1}{(n + 2)^2} \right) = - 1 - \frac{1}{4} + 0 = -\frac{5}{4}$$
 ___
 ### Serie geometriche
 

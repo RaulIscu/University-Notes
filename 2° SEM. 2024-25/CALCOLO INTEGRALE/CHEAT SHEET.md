@@ -19,10 +19,16 @@ La somma tra due serie convergenti è anch'essa una serie convergente; invece, l
 ___
 #### Serie telescopiche
 
-Una **serie telescopica** è una serie **convergente**, che si riconosce perché i suoi termini tendono ad "annullarsi" l'un l'altro. Ad esempio, la seguente serie è una serie telescopica:
-$$\sum_{k = 2}^{\infty} \left( \frac{1}{k - 1} - \frac{1}{k} \right)$$
-Infatti, sviluppando i suoi termini, notiamo che, tranne per la prima frazione del primo termine, la seconda frazione di ogni termine viene annullata dalla prima del termine successivo: $$\begin{align} S_{n} &= \sum_{k=2}^{n}\left( \frac{1}{k-1} - \frac{1}{k} \right) \\ &= \left( \frac{1}{1} - \frac{1}{2} \right) + \left( \frac{1}{2} - \frac{1}{3} \right) + \left( \frac{1}{3} - \frac{1}{4} \right) + \space \dots \space + \left( \frac{1}{n-1} - \frac{1}{n} \right) \\ &= \frac{1}{1} - \frac{1}{2} + \frac{1}{2} - \frac{1}{3} + \frac{1}{3} - \frac{1}{4} + \space \dots \space + \frac{1}{n - 1} - \frac{1}{n} \\ &= 1 - \frac{1}{n} \end{align}$$La serie in questione, dunque, risulta convergere in $1$, in quanto:
-$$\sum_{k=2}^{\infty} \left( \frac{1}{k - 1} - \frac{1}{k} \right) = \lim_{n \to +\infty}S_{n} = \lim_{n \to +\infty}\left(1 - \frac{1}{n} \right) = 1$$
+Una **serie telescopica** è una serie **convergente**, che si riconosce perché i suoi termini tendono ad "annullarsi" l'un l'altro. Essa può presentarsi sotto due forme:
+$$\sum_{k = p}^{\infty} a_{k + m} - a_{k}, \mbox{ oppure } \sum_{k = p}^{\infty} a_{k} - a_{k + m}$$
+Data una serie telescopica della forma
+$$\sum_{k = p}^{\infty} a_{k + m} - a_{k}$$
+essa converge al valore $l$, con $l$ pari a:
+$$l = - a_{p} - a_{p + 1} - \dots - a_{p + m - 1} + \lim_{n \to +\infty} \left(a_{n + 1} + a_{n + 2} + \dots + a_{n + m} \right)$$
+Invece, data una serie telescopica della forma
+$$\sum_{k = p}^{\infty} a_{k} - a_{k + m}$$
+essa converge al valore $l$, con $l$ pari a:
+$$l = a_{p} + a_{p + 1} + \dots + a_{p + m - 1} - \lim_{n \to +\infty} \left(a_{n + 1} + a_{n + 2} + \dots + a_{n + m} \right)$$
 ___
 #### Serie geometriche
 
