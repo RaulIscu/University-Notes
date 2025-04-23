@@ -4,21 +4,17 @@
     "type": "split",
     "children": [
       {
-        "id": "e7c142209eb6b570",
+        "id": "d6933ba7765396fb",
         "type": "tabs",
         "children": [
           {
-            "id": "4d7c7ac73b965466",
+            "id": "884662182d81fca9",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "2° SEM. 2024-25/CALCOLO INTEGRALE/CHEAT SHEET.md",
-                "mode": "preview",
-                "source": false
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "CHEAT SHEET"
+              "title": "New tab"
             }
           }
         ]
@@ -179,12 +175,16 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "4d7c7ac73b965466",
+  "active": "884662182d81fca9",
   "lastOpenFiles": [
-    "2° SEM. 2024-25/CALCOLO INTEGRALE/Serie.md",
     "2° SEM. 2024-25/CALCOLO INTEGRALE/CHEAT SHEET.md",
-    "2° SEM. 2024-25/CALCOLO INTEGRALE/Teoremi, condizioni e criteri di convergenza.md",
     "2° SEM. 2024-25/CALCOLO INTEGRALE/Serie di potenze.md",
+    "2° SEM. 2024-25/images/metodoalbero_example1.png",
+    "2° SEM. 2024-25/images/mc_logaritmico2.png",
+    "2° SEM. 2024-25/images/array2d_example.png",
+    "2° SEM. 2024-25/images/mc_logaritmico1.png",
+    "2° SEM. 2024-25/CALCOLO INTEGRALE/Teoremi, condizioni e criteri di convergenza.md",
+    "2° SEM. 2024-25/CALCOLO INTEGRALE/Serie.md",
     "2° SEM. 2024-25/CALCOLO INTEGRALE/Equazioni differenziali.md",
     "2° SEM. 2024-25/CALCOLO INTEGRALE/Numeri complessi.md",
     "2° SEM. 2024-25/INTRODUZIONE AGLI ALGORITMI/Costo computazionale.md",
@@ -193,7 +193,6 @@
     "2° SEM. 2024-25/INTRODUZIONE AGLI ALGORITMI/Notazione asintotica.md",
     "2° SEM. 2024-25/INTRODUZIONE AGLI ALGORITMI/Ricerca.md",
     "2° SEM. 2024-25/INTRODUZIONE AGLI ALGORITMI/Criteri di misura del costo.md",
-    "2° SEM. 2024-25/images/metodoalbero_example1.png",
     "2° SEM. 2024-25/images/metodoalbero_example2.png",
     "2° SEM. 2024-25/images/metodoalbero_example3.png",
     "Pasted image 20250403121229.png",
@@ -212,16 +211,12 @@
     "1° SEM. 2024-25/FONDAMENTI DI PROGRAMMAZIONE/Ricorsione.md",
     "1° SEM. 2024-25/FONDAMENTI DI PROGRAMMAZIONE/Print.md",
     "1° SEM. 2024-25/FONDAMENTI DI PROGRAMMAZIONE/Operatori matematici e di comparazione.md",
-    "1° SEM. 2024-25/FONDAMENTI DI PROGRAMMAZIONE/Linguaggi compilati e interpretati.md",
     "2° SEM. 2024-25/images/limiti_asintotiche.png",
     "2° SEM. 2024-25/images/hierarchy_algo.png",
     "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Librerie/AWT",
-    "2° SEM. 2024-25/images/array2d_example.png",
     "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/LIBRERIE/Untitled",
     "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Librerie",
     "2° SEM. 2024-25/images/notazioneθ.png",
-    "2° SEM. 2024-25/images/notazioneO.png",
-    "2° SEM. 2024-25/images/notazioneΩ.png",
     "2° SEM. 2024-25/images",
     "2° SEM. 2024-25/INTRODUZIONE AGLI ALGORITMI",
     "2° SEM. 2024-25/CALCOLO INTEGRALE",

@@ -17,7 +17,7 @@ ___
 Una delle caratteristiche principali delle serie di potenze risulta essere il loro "**intervallo di convergenza**":
 
 > Data una serie di potenze, definiamo come **intervallo di convergenza** della serie l'intervallo $X \subseteq \mathbb{R}$ per cui, per ogni $x \in X$, esiste un valore finito $l \in \mathbb{R}$ tale che:
-> $$\sum_{k = 0}^{\infty} a_{k} \cdot (x - x_{0})^k = l$$
+> $$\sum_{k = p}^{\infty} a_{k} \cdot (x - x_{0})^k = l$$
 > In parole povere, l'intervallo di convergenza di una serie di potenze è **l'intervallo $X \subseteq \mathbb{R}$ per cui tale serie risulta essere convergente**.
 
 Ad esempio, tornando alla serie geometrica, sappiamo che il suo intervallo di convergenza è l'intervallo $(-1, 1)$, in quanto per ogni $x \in (-1, 1)$ la serie geometrica converge al valore $\frac{1}{1 - x}$.
@@ -27,7 +27,7 @@ Data una serie di potenze avente come intervallo di convergenza l'insieme $X$, s
 Le serie di potenze, inoltre, posseggono la seguente proprietà:
 
 > Data la serie di potenze
-> $$\sum_{k = 0}^{\infty} a_{k} \cdot (x - x_{0})^k$$
+> $$\sum_{k = p}^{\infty} a_{k} \cdot (x - x_{0})^k$$
 > se la serie converge per un valore $x' \neq x_{0}$, allora la serie converge anche per ogni $x \in \mathbb{R}$ tale che $|x| < |x'|$, o in altre parole, per ogni $x \in (-x', x')$.
 
 [DIMOSTRAZIONE: pag. 33]
@@ -40,7 +40,7 @@ A questo punto, introduciamo il concetto di "**raggio di convergenza**":
 > $$\sum_{k = 0}^{\infty} a_{k} \cdot (x - x_{0})^k$$
 > definiamo come **raggio di convergenza** $\rho$ della serie l'estremo superiore di tutti i valori $x \ge 0$ per cui la serie di potenze converge.
 
-Dalla definizione appena data, segue che $\rho$ debba avere un valore positivo, incluso dunque nell'intervallo $[0, +\infty)$. Inoltre, ricordando che il centro della serie $x_{0}$ risulta sempre essere anche il centro del suo insieme di convergenza, possiamo affermare che:
+Dalla definizione appena data, segue che $\rho$ debba avere un valore non-negativo, incluso dunque nell'intervallo $[0, +\infty)$. Inoltre, ricordando che il centro della serie $x_{0}$ risulta sempre essere anche il centro del suo insieme di convergenza, possiamo affermare che:
 - per ogni $x \in \mathbb{R}$ tale per cui $|x - x_{0}| < \rho$, la serie **converge**;
 - per ogni $x \in \mathbb{R}$ tale per cui $|x - x_{0}| > \rho$, la serie **non converge**;
 - per ogni $x \in \mathbb{R}$ tale per cui $|x - x_{0}| = \rho$, **il comportamento della serie è ignoto**.
@@ -93,7 +93,7 @@ $$l = \lim_{i \to +\infty} \left| \frac{(i + j + 1)(i + j)(i + j - 1)\dots(i + 2
 Ciò ci fa capire che il calcolo del raggio ci convergenza di una serie di potenze e quello della sua derivata di ordine $j$ sono perfettamente identici, dunque **l'intervallo di convergenza di una serie di potenze e della sua $j$-esima derivata sono equivalenti**. Possiamo formalizzare le informazioni ottenute nel modo seguente:
 
 > Data la serie di potenze
-> $$f(x) = \sum_{k = 0}^{\infty} a_{k}(x - x_{0})^k$$
+> $$f(x) = \sum_{k = 0}^{\infty} a_{k} \cdot (x - x_{0})^k$$
 > avente intervallo di convergenza $X$, la serie è derivabile infinite volte in tale intervallo, e la sua $j$-esima derivata, equivalente a:
 > $$f^{(j)}(x) = \sum_{k = j}^{\infty} k(k - 1)(k - 2)\dots(k - j + 1)a_{k} \cdot (x - x_{0})^{k - j}$$
 > avrà sempre il medesimo intervallo di convergenza $X$.

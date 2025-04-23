@@ -40,16 +40,16 @@ ___
 #### Serie armoniche
 
 Una **serie armonica** è una serie del seguente tipo:
-$$\sum_{k = 1}^{\infty} \frac{1}{k^\alpha}$$
+$$\sum_{k = p}^{\infty} \frac{1}{k^\alpha}$$
 A seconda del valore $\alpha$, la serie assume i seguenti valori:
- $$\sum_{k=1}^{+\infty} \frac{1}{k^\alpha} = \begin{cases} +\infty & \mbox{se } \alpha \le 1 \\ < +\infty & \mbox{se } \alpha > 1 \end{cases}$$dove $< +\infty$ indica la convergenza della serie a un determinato valore.
+ $$\sum_{k=p}^{+\infty} \frac{1}{k^\alpha} = \begin{cases} +\infty & \mbox{se } \alpha \le 1 \\ < +\infty & \mbox{se } \alpha > 1 \end{cases}$$dove $< +\infty$ indica la convergenza della serie a un determinato valore.
 ___
 ## TEOREMI, CONDIZIONI E CRITERI DI CONVERGENZA
 
 #### Serie a termini di segno costante
 
 Sia $a_{k}$ una successione; se ogni termine della successione è positivo, allora la corrispondente serie
-$$\sum_{k = 0}^{\infty} a_{k}$$
+$$\sum_{k = p}^{\infty} a_{k}$$
 o converge a un valore positivo o diverge a $+\infty$. Invece, se ogni termine della successione è negativo, allora la corrispondente serie o converge a un valore negativo o diverge a $-\infty$.
 
 Una serie a termini di segno costante **non è mai indeterminata**.
@@ -57,9 +57,9 @@ ___
 #### Condizione di convergenza di una serie
 
 Se una serie converge, allora un suo singolo termine deve tendere a 0:
-$$\mbox{se } \sum_{k=0}^{\infty}a_{k} \space \mbox{ converge, allora } \lim_{n \to +\infty}a_{n} = 0$$
+$$\mbox{se } \sum_{k=p}^{\infty}a_{k} \space \mbox{ converge, allora } \lim_{n \to +\infty}a_{n} = 0$$
 Ne deriva il seguente corollario, che è quello che risulta più utile per l'analisi di una serie:
-$$\mbox{se } \lim_{n \to +\infty}a_{n} \ne 0 \mbox{, allora } \sum_{k=0}^{\infty}a_{k} \mbox{ non converge}$$
+$$\mbox{se } \lim_{n \to +\infty}a_{n} \ne 0 \mbox{, allora } \sum_{k=p}^{\infty}a_{k} \mbox{ non converge}$$
 ___
 #### Criterio del confronto diretto
 
@@ -120,17 +120,74 @@ Data una successione $a_{k}$:
 $$\sum_{k = 0}^{\infty} |a_{k}| \mbox{ converge } \Longrightarrow \space \sum_{k = 0}^{\infty}a_{k} \mbox{ converge}$$
 In tal caso, si dice che la serie converge assolutamente.
 ___
-## GUIDA PER ESERCIZI DI ANALISI DI UNA SERIE
+## SERIE DI POTENZE
 
-Se si deve ricavare il **carattere di una serie** (convergente, divergente, ecc. ecc.):
-1. verificare che si tratti di una serie telescopica, geometrica o armonica;
-	1. se la serie è **telescopica**, allora sarà convergente;
-	2. se la serie è **geometrica**, ricavare il risultato in base al valore di $q$;
-	3. se la serie è **armonica**, ricavare il risultato in base al valore di $\alpha$;
-2. se non rientra in nessuna delle tre categorie precedenti, verificare che si tratti di una **serie con termini a segno costante**;
-	4. applicare **il corollario della condizione di convergenza** di una serie;
-	5. se il passaggio precedente non porta ulteriori conclusioni, applicare il criterio del **confronto diretto** o del **confronto asintotico**;
-	6. se il passaggio precedente non porta ulteriori conclusioni, applicare il criterio del **rapporto** o della **radice**;
-3. se non rientra nella categoria precedente, verificare che si tratti di una **serie con termini a segno alterno** ($a_{k} = (-1)^k \cdot b_{k}$);
-	1. applicare il **criterio di Leibniz**;
-4. se non rientra nella categoria precedente, applicare il **criterio di convergenza assoluta** e ricondursi a uno dei criteri precedenti.
+#### Cos'è una serie di potenze?
+
+Data una successione $a_{k}$ e un valore $x_{0} \in \mathbb{R}$, si definisce come **serie di potenze di centro $x_{0}$ associata alla successione $a_{k}$** la seguente serie:
+$$\sum_{k = 0}^{\infty} a_{k} \cdot (x - x_{0})^k$$
+dove la successione $a_{k}$ è detta "**successione dei coefficienti**", mentre il valore $x_{0}$ è detto "**centro della serie**".
+___
+#### Intervallo di convergenza
+
+Una serie di potenze è a tutti gli effetti una funzione $f(x)$. In particolare, per ogni serie di potenze si può trovare il relativo **intervallo di convergenza**, ossia l'intervallo $X \subseteq \mathbb{R}$ per cui, per ogni $x \in X$, vale che:
+$$\sum_{k = p}^{\infty} a_{k} \cdot (x - x_{0})^k = l$$
+dove $l$ è un valore finito appartenente ai reali. In altre parole, l'intervallo di convergenza è l'intervallo $X \subseteq \mathbb{R}$ per cui, per ogni $x \in X$, la serie di potenze in questione risulta essere convergente.
+
+Ad esempio, l'intervallo di convergenza della serie geometrica (che è una serie di potenze con $a_{k} = 1$ e $x_{0} = 0$) è $X = (-1, 1)$.
+
+Data una qualsiasi serie di potenze e il suo intervallo di convergenza $X$, si avrà sempre che $x_{0} \in X$; in particolare, il centro della serie $x_{0}$ risulterà essere sempre il centro dell'intervallo di convergenza $X$.
+
+Data una qualsiasi serie di potenze, se la serie converge per un valore $x' \neq x_{0}$, allora la serie converge anche per ogni $x \in \mathbb{R}$ tale che $|x| < |x'|$, o in altre parole per ogni $x \in (-x', x')$.
+___
+#### Raggio di convergenza
+
+Data la serie di potenze
+$$\sum_{k = 0}^{\infty} a_{k} \cdot (x - x_{0})^k$$
+definiamo come **raggio di convergenza** $\rho$ della serie l'estremo superiore di tutti i valori $x \ge 0$ per cui la serie di potenze converge.
+
+Il raggio di convergenza $\rho$ di una qualsiasi serie di potenze ha sempre un valore non-negativo, incluso dunque nell'intervallo $[0, +\infty)$. Ricordando che il centro di una serie $x_{0}$ risulta essere anche il centro del suo insieme di convergenza, possiamo affermare che:
+- per ogni $x \in \mathbb{R}$ tale per cui $|x - x_{0}| < \rho$, la serie **converge**;
+- per ogni $x \in \mathbb{R}$ tale per cui $|x - x_{0}| > \rho$, la serie **non converge**;
+- per ogni $x \in \mathbb{R}$ tale per cui $|x - x_{0}| = \rho$, **il comportamento della serie è ignoto**.
+
+Il valore del raggio di convergenza di una serie di potenze è dato da:
+$$\rho = \lim_{n \to +\infty} \frac{1}{\left| \frac{a_{n + 1}}{a_{n}} \right|} = \lim_{n \to +\infty} \frac{1}{\sqrt[n]{|a_{n}|}}$$
+In forma impropria ma più comoda, possiamo quindi affermare che dato il limite:
+$$\lim_{n \to +\infty} \left| \frac{a_{n + 1}}{a_{n}} \right| = \lim_{n \to +\infty} \sqrt[n]{\left| a_{n} \right|} = l$$
+si ha che $\rho = \frac{1}{l}$.
+
+Ottenuto il raggio di convergenza di una serie di potenze, il suo intervallo di convergenza sarà $(x_{0} - \rho, x_{0} + \rho)$; per verificare se la serie converga anche per gli estremi dell'intervallo appena ottenuto, si dovranno analizzare le due serie specifiche che si ottengono sostituendo $x = x_{0} - \rho$ e $x = x_{0} + \rho$.
+___
+#### Derivazione di serie di potenze
+
+Essendo una serie di potenze una funzione di $x$, essa gode della proprietà della derivabilità.
+
+Data una serie di potenze generica
+$$f(x) = \sum_{k = p}^{\infty} a_{k} \cdot (x - x_{0})^k$$
+avente intervallo di convergenza $X$, la serie è derivabile infinite volte in tale intervallo, e la sua $j$-esima derivata, equivalente a:
+$$f^{(j)}(x) = \sum_{k = p + j}^{\infty} k(k - 1)(k - 2)\dots(k - j + 1)a_{k} \cdot (x - x_{0})^{k - j}$$
+avrà sempre il medesimo intervallo di convergenza $X$.
+
+Se si vuole calcolare il valore della derivata $j$-esima di una serie di potenze con centro $x_{0}$ proprio nel punto $x_{0}$, esso sarà uguale a:
+$$f^{(j)}(x_{0}) = j! \cdot a_{j}$$
+___
+#### Serie di Taylor
+
+
+___
+#### Espansioni di Taylor notevoli
+
+La serie di Taylor di **$f(x) = e^x$**, avente intervallo di convergenza pari a $\mathbb{R}$, è:
+$$e^x = \sum_{k = 0}^{\infty} \frac{x^k}{k!}$$
+La serie di Taylor di **$f(x) = \cos x$**, avente intervallo di convergenza pari a $\mathbb{R}$, è:
+$$\cos x = \sum_{k = 0}^{\infty} \frac{(-1)^kx^{2k}}{(2k)!}$$
+La serie di Taylor di **$f(x) = \sin x$**, avente intervallo di convergenza pari a $\mathbb{R}$, è:
+$$\sin x = \sum_{k = 0}^{\infty} \frac{(-1)^kx^{2k + 1}}{(2k + 1)!}$$
+La serie di Taylor di **$f(x) = \frac{1}{1 - x}$**, avente intervallo di convergenza pari a $(-1, 1)$, è:
+$$\frac{1}{1 - x} = \sum_{k = 0}^{\infty} x^k$$
+La serie di Taylor di **$f(x) = \ln(1 + x)$**, avente intervallo di convergenza pari a $(-1, 1)$, è:
+$$\ln(1 + x) = \sum_{k = 0}^{\infty} \frac{(-1)^kx^{k + 1}}{k + 1}$$
+La serie di Taylor di **$f(x) = \arctan x$**, avente intervallo di convergenza pari a $(-1, 1)$, è:
+$$\arctan x = \sum_{k = 0}^{\infty} \frac{(-1)^kx^{2k + 1}}{2k + 1}$$
+___
