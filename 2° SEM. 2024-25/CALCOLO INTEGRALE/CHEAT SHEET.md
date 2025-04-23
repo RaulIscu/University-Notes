@@ -172,7 +172,23 @@ $$f^{(j)}(x_{0}) = j! \cdot a_{j}$$
 ___
 #### Serie di Taylor
 
+Dato un intervallo $[a, b] \subseteq \mathbb{R}$, una determinata funzione $f: [a, b] \rightarrow \mathbb{R}$ e un valore $x_{0} \in (a, b)$, si definisce "**polinomio di Taylor di ordine $n$ di $f(x)$ centrato in $x_{0}$**", indicato come $T_{n}(x; x_{0})$, il polinomio:
+$$T_{n}(x; x_{0}) = \sum_{k = 0}^{n} \frac{f^{(k)}(x_{0})}{k!}(x - x_{0})^k$$
+dove $f^{(k)}(x_{0})$ rappresenta la derivata $k$-esima di $f(x)$ nel punto $x_{0}$. Come è facile notare, il polinomio di Taylor è costituito sostanzialmente da una serie di potenze.
 
+Il teorema di Taylor afferma che, al crescere dell'ordine $n$ del polinomio, l'approssimazione tra la funzione $f(x)$ e il polinomio $T_{n}(x; x_{0})$ tende ad essere trascurabile per valori di $x$ vicini al centro $x_{0}$ (in parole povere, un polinomio di Taylor di ordine sufficientemente alto approssima in maniera accurata la funzione $f(x)$, per valori $x$ vicini a $x_{0}$).
+
+Infatti, sempre secondo il teorema di Taylor, avendo gli stessi presupposti stabiliti in precedenza, si può affermare che:
+$$f(x) = T_{n}(x; x_{0}) + R_{n}(x; x_{0})$$
+dove $R_{n}(x; x_{0})$ rappresenta il cosiddetto "**resto infinitesimale**". Più ci si avvicina a $x_{0}$, più il resto infinitesimale tende a 0, e dunque il polinomio di Taylor risulta essere un'approssimazione più accurata della funzione $f(x)$.
+
+In questo corso, il resto infinitesimale viene rappresentato usando il "**resto di Lagrange**", calcolabile con la seguente formula:
+$$R_{n}(x; x_{0}) = \frac{f^{(n + 1)}(\xi)}{(n + 1)!}(x - x_{0})^{n + 1}$$
+con $\xi \in (x, x_{0})$.
+
+Come abbiamo detto, più aumenta l'ordine del polinomio di Taylor più è accurata la sua approssimazione della funzione a cui è associato: dunque, se l'ordine del polinomio tende a $+\infty$, si ha che il resto infinitesimale risulta trascurabile, e quindi sostanzialmente **la funzione andrà a coincidere con il suo polinomio di Taylor**. Dunque, si ha che:
+$$f(x) = \sum_{k = 0}^{\infty} \frac{f^{(k)}(x_{0})}{k!}(x - x_{0})^k$$
+tenendo però a mente che questo vale solo all'interno dell'intervallo di convergenza della serie di Taylor stessa.
 ___
 #### Espansioni di Taylor notevoli
 
