@@ -118,7 +118,7 @@ $$l = a_{2} - \lim_{n \to +\infty} \left( \frac{1}{n + 1} \right) = 1 - 0 = 1$$
 Vediamo un altro esempio, analizzando la seguente serie:
 $$\sum_{k = 3}^{+\infty} \left(\frac{1}{k^2} - \frac{1}{(k - 2)^2}\right)$$
 Ponendo $a_{k} = \frac{1}{(k - 2)^2}$ e $a_{k + m} = \frac{1}{k^2}$, ci troviamo nel primo caso, con $m = 2$. Il valore $l$ a cui converge la serie sarà dunque:
-$$l = - a_{3} - a_{4} + \lim_{n \to +\infty} \left( \frac{1}{(n + 1)^2} + \frac{1}{(n + 2)^2} \right) = - 1 - \frac{1}{4} + 0 = -\frac{5}{4}$$
+$$l = - a_{3} - a_{4} + \lim_{n \to +\infty} \left( \frac{1}{(n - 1)^2} + \frac{1}{n^2} \right) = - 1 - \frac{1}{4} + 0 = -\frac{5}{4}$$
 ___
 ### Serie geometriche
 

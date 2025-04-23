@@ -35,7 +35,7 @@ ___
 Una **serie geometrica** è una serie del seguente tipo:
 $$\sum_{k = p}^{\infty} q^k$$
 con $q \in \mathbb{R}$. A seconda del valore di $q$, queste serie assumono i seguenti valori:
-$$\sum_{k = p}^{\infty}q^k = \begin{cases} +\infty & \mbox{se } q > 1 \\ \frac{q^p}{1 - q} & \mbox{se } -1 < q < 1 \\ \mbox{indeterminata} & \mbox{se } q \le -1 \end{cases}$$
+$$\sum_{k = p}^{\infty}q^k = \begin{cases} +\infty & \mbox{se } q \ge 1 \\ \frac{q^p}{1 - q} & \mbox{se } -1 < q < 1 \\ \mbox{indeterminata} & \mbox{se } q \le -1 \end{cases}$$
 ___
 #### Serie armoniche
 
