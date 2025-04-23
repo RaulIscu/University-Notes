@@ -103,7 +103,7 @@ con $0 \le l < +\infty$, possiamo affermare che:
 - se $l > 1$, allora la serie associata alla successione $a_{k}$ **diverge**;
 - se $l = 1$, non si possono trarre conclusioni.
 
-Tendenzialmente, il criterio della radice risulta utile quando nella serie compaiono **potenze di $n$**.
+Tendenzialmente, il criterio della radice risulta utile quando nella serie compaiono **esponenziali** e **potenze di $n$**.
 ___
 #### Criterio di Leibniz
 
@@ -137,8 +137,6 @@ dove $l$ è un valore finito appartenente ai reali. In altre parole, l'intervall
 Ad esempio, l'intervallo di convergenza della serie geometrica (che è una serie di potenze con $a_{k} = 1$ e $x_{0} = 0$) è $X = (-1, 1)$.
 
 Data una qualsiasi serie di potenze e il suo intervallo di convergenza $X$, si avrà sempre che $x_{0} \in X$; in particolare, il centro della serie $x_{0}$ risulterà essere sempre il centro dell'intervallo di convergenza $X$.
-
-Data una qualsiasi serie di potenze, se la serie converge per un valore $x' \neq x_{0}$, allora la serie converge anche per ogni $x \in \mathbb{R}$ tale che $|x| < |x'|$, o in altre parole per ogni $x \in (-x', x')$.
 ___
 #### Raggio di convergenza
 
