@@ -194,12 +194,16 @@ ___
 
 La serie di Taylor di **$f(x) = e^x$**, avente intervallo di convergenza pari a $\mathbb{R}$, è:
 $$e^x = \sum_{k = 0}^{\infty} \frac{x^k}{k!}$$
+La serie di Taylor di $f(x) = e^{-x}$, avente intervallo di convergenza pari a $\mathbb{R}$, è:
+$$e^{-x} = \sum_{k = 0}^{\infty} \frac{(-1)^kx^k}{k!}$$
 La serie di Taylor di **$f(x) = \cos x$**, avente intervallo di convergenza pari a $\mathbb{R}$, è:
 $$\cos x = \sum_{k = 0}^{\infty} \frac{(-1)^kx^{2k}}{(2k)!}$$
 La serie di Taylor di **$f(x) = \sin x$**, avente intervallo di convergenza pari a $\mathbb{R}$, è:
 $$\sin x = \sum_{k = 0}^{\infty} \frac{(-1)^kx^{2k + 1}}{(2k + 1)!}$$
 La serie di Taylor di **$f(x) = \frac{1}{1 - x}$**, avente intervallo di convergenza pari a $(-1, 1)$, è:
 $$\frac{1}{1 - x} = \sum_{k = 0}^{\infty} x^k$$
+La serie di Taylor di $f(x) = \frac{1}{1 + x}$, avente intervallo di convergenza pari a $(-1, 1)$, è:
+$$\frac{1}{1 + x} = \sum_{k = 0}^{\infty} (-1)^k x^k$$
 La serie di Taylor di **$f(x) = \ln(1 + x)$**, avente intervallo di convergenza pari a $(-1, 1)$, è:
 $$\ln(1 + x) = \sum_{k = 0}^{\infty} \frac{(-1)^kx^{k + 1}}{k + 1}$$
 La serie di Taylor di **$f(x) = \arctan x$**, avente intervallo di convergenza pari a $(-1, 1)$, è:

@@ -6,7 +6,7 @@
   "pdfExportSettings": {
     "includeName": false,
     "pageSize": "A3",
-    "landscape": false,
+    "landscape": true,
     "margin": "2",
     "downscalePercent": 100
   }
