@@ -109,6 +109,10 @@ L'istruzione **`jal`** ("jump and link") va a salvare nel registro `rd` l'indiri
 
 L'istruzione **`jalr`** ("jump and link register") funziona sostanzialmente allo stesso modo dell'istruzione appena spiegata, con la differenza che, invece di saltare a `PC + offset`, si salta all'indirizzo dato da `rs1 + offset`.
 ___
+### Come si traducono le istruzioni in linguaggio macchina?
+
+[02 / pag. da 75 a 81]
+___
 ### Direttive per l'assemblatore
 
 Le **direttive**, nell'utilizzo di RARS, rappresentano sostanzialmente degli indicatori che specificano all'assemblatore la natura o lo scopo del codice che le segue. Due delle direttive più comunemente utilizzate sono:
@@ -259,11 +263,59 @@ Per eseguire concretamente le istruzioni codificate nei modi appena visti, bisog
 ___
 ### Vettori e matrici
 
-[05]
+Un **vettore** è una **sequenza di elementi di dimensioni uguali**, memorizzati in memoria consecutivamente e indirizzabili con indici che vanno da 0 a $N - 1$, dove $N$ è la lunghezza del vettore e dunque il numero dei suoi elementi. Naturalmente, lo spazio totale in termini di memoria occupato da un vettore sarà dato dal prodotto tra $N$ e la dimensione di un singolo elemento.
+
+Tendenzialmente, risulta comodo definire staticamente vettori che verranno eventualmente utilizzati in un programma nella sezione [[Assembly e RARS#Direttive per l'assemblatore|.data]], usando un'[[Assembly e RARS#Etichette|etichetta]] che andrà a rappresentare l'indirizzo in memoria del primo elemento del vettore.
+
+Dunque, per **accedere all'elemento $i$-esimo di un vettore** bisognerà aggiungere all'indirizzo di base un determinato `offset`, dato dal prodotto tra l'indice $i$ e la dimensione di un singolo elemento del vettore. Ad esempio, lavorando sul vettore:
+
+```
+vector: .word 1, 2, 3, 4
+```
+
+l'indirizzo base del vettore, ossia quello del primo elemento, sarà `vector`, dunque caricare il valore memorizzato all'indirizzo `vector` mediante un'istruzione come `la t0, vector` restituirà `1`. Per accedere, ad esempio, al secondo elemento del vettore, bisogna tenere a mente la dimensione di un elemento di quest'ultimo: in questo caso, ogni elemento occupa una word, ossia 32 bit o 4 byte, dunque l'`offset` sarà dato da $1 \times 4$; supponendo che il registro `t0` contenga l'indice dell'elemento desiderato, che `t1` contenga l'indirizzo base del vettore, e che si voglia memorizzare l'indirizzo dell'elemento desiderato in `t2`, per ottenere quest'ultimo si dovrà implementare un codice del genere:
+
+```
+slli t2, t0, 2
+add t2, t2, t1
+lw s0, (t2)
+```
+
+Ovviamente, a seconda della dimensione di ogni elemento del vettore in questione (word, mezza word, byte, ecc. ecc.), si andrà a modificare la prima istruzione.
+
+Per quanto riguarda le **matrici** (in particolare, qui andremo a trattare quelle **bidimensionali** e **tridimensionali**), esse vengono trattate concretamente come dei vettori monodimensionali, o più propriamente come sequenze di più vettori. Per capire meglio questo concetto, parliamo prima di tutto delle matrici a due dimensioni.
+
+Una **matrice a due dimensioni**, di dimensioni $M \times N$, non è altro che una successione di $M$ vettori monodimensionali di lunghezza $N$: se ne evince che il numero totale di elementi della matrice sarà proprio $M \times N$, che lo spazio totale occupato in memoria dalla matrice sarà dato dal prodotto tra il numero totale dei suoi elementi e la dimensione di un singolo elemento, e che in quanto equivalente a una sequenza di vettori monodimensionali la si definisce staticamente come un vettore di lunghezza $M \times N$.
+
+Supponiamo, ora, di avere una matrice con $M$ righe e $N$ colonne, e di voler **accedere all'elemento `matrix[x][y]`**: si dovrà accedere all'indirizzo ottenuto sommando l'indirizzo base della matrice con un `offset` dato dal prodotto tra $(y \times N + x)$ e la dimensione in byte di un singolo elemento. Questa formula può essere dimostrata ragionando sul numero di elementi che precedono l'elemento cercato: sappiamo, infatti, che prima di quest'ultimo ci saranno non solo $y \times C$ elementi, ossia $y$ righe di $C$ elementi, ma anche altri $x$ elementi sulla sua stessa riga, arrivando così alla formula appena data. Ad esempio, supponendo di avere una matrice bidimensionali di dimensioni 4x3, ossia da 4 righe e 3 colonne, per accedere all'elemento `matrix[1][2]` si dovrà implementare il seguente codice:
+
+```
+.data
+matrix: .word 1, 2, 3,
+              4, 5, 6,
+              7, 8, 9,
+              10, 11, 12
+
+.text
+main:
+	li t0, 3
+	li t1, 1
+	li t2, 2
+
+	mul t3, t1, t0
+	add t3, t3, t2
+	slli t3, t3, 2
+
+	la t4, matrix
+	add t5, t3, t4
+	lw t6, 0(t5)
+```
+
+Un discorso sostanzialmente analogo vale per una **matrice a tre dimensioni**, di dimensioni $M \times N \times P$, interpretabile come una successione di $P$ matrici di dimensioni $M \times N$. In questo caso, per ottenere la formula dell'`offset`, sappiamo prima di tutto che l'elemento `matrix[x][y][z]` sarà preceduto da $z$ matrici di dimensioni $M \times N$, ma anche da $y$ righe di $M$ elementi, e infine da $x$ elementi sulla sua riga; dunque, la formula per ottenere l'`offset` da sommare all'indirizzo base della matrice per ottenere l'indirizzo dell'elemento `matrix[x][y][z]` è $(z \times (M \times N)) + (y \times N) + x$.
 ___
 ### Funzioni
 
-[06 - 07]
+[07]
 ___
 ### Ricorsione
 

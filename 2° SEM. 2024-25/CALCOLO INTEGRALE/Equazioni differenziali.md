@@ -113,6 +113,7 @@ In generale, invece, possiamo affermare che:
 > dove $C$ è una qualsiasi costante appartenente ai reali, mentre $A(t)$ è la primitiva di $a(t)$, ossia una funzione tale per cui $A'(t) = a(t)$ (per semplicità, è possibile omettere il parametro reale $c$ che si dovrebbe solitamente sommare alla primitiva).
 ___
 ### Equazioni differenziali lineari non omogenee del primo ordine
+
 In questo paragrafo, si analizzeranno quelle EDO lineari in cui $a(t) \ne 0$ e $b(t) \ne 0$, ossia che non sono né elementari né omogenee.
 
 Per risolvere questo tipo di equazione, uno dei metodi migliori è quello che viene spesso definito "**metodo del fattore integrante**", che prevede una serie di passaggi.
@@ -139,3 +140,10 @@ $$\begin{align} y' \cdot e^{- \frac{t^2}{2}} - t \cdot y \cdot e^{- \frac{t^2}{2
 Infine, andiamo ad esplicitare la funzione incognita moltiplicando entrambi i membri per $e^{-A(t)} = e^{\frac{t^2}{2}}$:
 $$\begin{align} y \cdot e^{- \frac{t^2}{2}} = -2e^{- \frac{t^2}{2}} + c &\Longrightarrow y \cdot e^{- \frac{t^2}{2}}e^{\frac{t^2}{2}} = -2e^{- \frac{t^2}{2}}e^{\frac{t^2}{2}} + c\cdot e^{\frac{t^2}{2}} \\ &\Longrightarrow y = -2 + c \cdot e^{\frac{t^2}{2}} \end{align}$$
 ___
+### Equazioni differenziali lineari omogenee del secondo ordine
+
+[pag. 118 - 119 - 120 - 121 - 122]
+___
+### Equazioni differenziali lineari non omogenee del secondo ordine
+
+[pag. 123 - 124 - 125 - 126 - 127 - 128 - 129]
