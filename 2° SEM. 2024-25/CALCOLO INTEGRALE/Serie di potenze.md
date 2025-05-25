@@ -63,10 +63,10 @@ $$l = \lim_{n \to +\infty} \left| \frac{\frac{1}{(n + 2)(n + 3)}}{\frac{1}{(n + 
 Essendo $l = 1$, abbiamo che $\rho = \frac{1}{1} = 1$. Notiamo facilmente che il centro della serie sia $x_{0} = 2$, dunque l'intervallo di convergenza della serie sarà $(2 - \rho, 2 + \rho) = (1, 3)$. Ora, dato che il teorema utilizzato non ci permette di conoscere il comportamento della serie per $x = 1$ e $x = 3$, analizziamo questi casi utilizzando gli altri strumenti che abbiamo a disposizione:
 - per $x = 1$, si ha che:
 $$\sum_{k = 0}^{\infty} \frac{(1 - 2)^k}{(k + 1)(k + 2)} = \sum_{k = 0}^{\infty} \frac{(-1)^k}{k^2 + 3k + 2}$$
-  applicando il [[Teoremi, condizioni e criteri di convergenza#Criterio di Leibniz|criterio di Leibniz]], si trova che la serie ottenuta **converge**;
+  applicando il [[Teoremi, condizioni e criteri di convergenza delle serie#Criterio di Leibniz|criterio di Leibniz]], si trova che la serie ottenuta **converge**;
 - per $x = 3$, si ha che:
 $$\sum_{k = 0}^{\infty} \frac{(3 - 2)^k}{(k + 1)(k + 2)} = \sum_{k = 0}^{\infty} \frac{1}{k^2 + 3k + 2}$$
-  applicando il [[Teoremi, condizioni e criteri di convergenza#Criterio del confronto asintotico|criterio del confronto asintotico]], la serie ottenuta è confrontabile con una serie armonica generalizzata con $\alpha > 1$, e dunque **converge**.
+  applicando il [[Teoremi, condizioni e criteri di convergenza delle serie#Criterio del confronto asintotico|criterio del confronto asintotico]], la serie ottenuta è confrontabile con una serie armonica generalizzata con $\alpha > 1$, e dunque **converge**.
 
 Convergendo la serie sia per $x = 1$ che per $x = 3$, possiamo ampliare il suo intervallo di convergenza a $[1, 3]$. Vediamo ora un altro esempio, con la seguente serie di potenze:
 $$\sum_{k = 0}^{\infty} \frac{3^k(2x - 1)^k}{k!} = \sum_{k = 0}^{\infty} \frac{6^k}{k!} \left(x - \frac{1}{2} \right)^k$$
