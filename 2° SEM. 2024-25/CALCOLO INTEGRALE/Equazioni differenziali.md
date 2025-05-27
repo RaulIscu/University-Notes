@@ -142,8 +142,62 @@ $$\begin{align} y \cdot e^{- \frac{t^2}{2}} = -2e^{- \frac{t^2}{2}} + c &\Longri
 ___
 ### Equazioni differenziali lineari omogenee del secondo ordine
 
-[pag. 118 - 119 - 120 - 121 - 122]
+Vediamo, ora, le **EDO lineari omogenee del secondo ordine**, e in particolare quelle a coefficienti reali costanti, ossia equazioni differenziali che assumono genericamente la seguente forma:
+$$ay'' + by' + cy = 0$$
+Per questo tipo di equazioni, l'insieme delle soluzioni di una determinata equazione consiste in uno "**spazio vettoriale**" di dimensione 2: in parole povere, ciò vuol dire che:
+- trovata una soluzione $y$, anche $Ay$ (per ogni $A \in \mathbb{R}$) sarà una soluzione; 
+- trovate due soluzioni $y_{1}$ e $y_{2}$, anche la somma $y = Ay_{1} + By_{2}$ sarà una soluzione.
+
+Generalmente, l'obiettivo è trovare queste due soluzioni qualsiasi $y_{1}$ e $y_{2}$, e impostare la **soluzione generica** dell'equazione.
+
+> Per risolvere un'**EDO lineare omogenea del secondo ordine** a coefficienti reali costanti, ossia un'equazione differenziale del tipo:
+> $$ay'' + by' + cy = 0$$
+> si dovrà:
+> - **risolvere l'equazione caratteristica** $a\lambda^2 + b\lambda + c = 0$, trovando così due soluzioni $\lambda_{1}$ e $\lambda_{2}$;
+> - **ricavare due soluzioni $y_{1}$ e $y_{2}$** in base ai valori di $\lambda_{1}$ e $\lambda_{2}$:
+> 	- se si avranno **due soluzioni reali e distinte** ($\Delta > 0$), ossia $\lambda_{1} \neq \lambda_{2}$, allora le basi dello spazio delle soluzioni saranno $y_{1} = e^{\lambda_{1}t}$ e $y_{2} = e^{\lambda_{2}t}$, e dunque la soluzione generica sarà $y(t) = Ae^{\lambda_{1}t} + Be^{\lambda_{2}t}$;
+> 	- se si avranno **due soluzioni reali e coincidenti** ($\Delta = 0$), ossia $\lambda_{1} = \lambda_{2}$, allora le basi dello spazio delle soluzioni saranno $y_{1} = e^{\lambda t}$ e $y_{2} = te^{\lambda t}$, e dunque la soluzione generica sarà $y(t) = Ae^{\lambda t} + Bte^{\lambda t}$;
+> 	- se si avranno **due soluzioni complesse e distinte** ($\Delta < 0$), ossia $\lambda_{1} = \alpha + \beta i$ e $\lambda_{2} = \alpha - \beta i$, allora le basi dello spazio delle soluzioni saranno $y_{1} = e^{\alpha t} \cdot \cos \beta t$ e $y_{2} = e^{\alpha t} \cdot \sin \beta t$, e dunque la soluzione generica sarà $y(t) = Ae^{\alpha t} \cdot \cos \beta t + Be^{\alpha t} \cdot \sin \beta t$.
+> - eventualmente, **ricavare i coefficienti $A$ e $B$** se ci si trova in un [[Equazioni differenziali#Problema di Cauchy|problema di Cauchy]].
+
+Per comprendere meglio come applicare questo metodo, proviamo ad analizzare il seguente esempio:
+$$\begin{cases} y'' + 2y' + 2y = 0 \\ y(0) = 1 \\ y'(0) = 1 \end{cases}$$
+L'equazione caratteristica associata all'equazione differenziale presente nel problema di Cauchy è:
+$$\lambda^2 + 2\lambda + 2 = 0$$
+Andando a risolvere quest'equazione per trovare $\lambda_{1}$ e $\lambda_{2}$, si ottiene che:
+$$\lambda_{1,\, 2} = \frac{-2 \pm \sqrt{4 - 4(1)(2)}}{2} = \frac{-2 \pm 2\sqrt{-1}}{2} = \frac{2(-1 \pm i)}{2} = -1 \pm i$$
+Avendo, quindi, che $\lambda_{1} = -1 + i$ e che $\lambda_{2} = -1 - i$, riconosciamo di trovarci nel terzo caso, con $\alpha = -1$ e $\beta = 1$. Dunque, si ha che:
+$$y_{1} = e^{-t} \cdot \cos t, \, \, \, y_{2} = e^{-t} \cdot \sin t \, \, \, \, \, \Longrightarrow \, \, \, \, \, y(t) = Ae^{-t} \cdot \cos t + Be^{-t} \cdot \sin t$$
+A questo punto, trovandoci in un problema di Cauchy, sarà possibile ricavare i coefficienti $A$ e $B$ per trovare una soluzione unica. Per fare ciò, a partire dalla soluzione generica appena trovata, ricaviamone la derivata $y'(t)$:
+$$\begin{align} y(t) = Ae^{-t} \cdot \cos t + Be^{-t} \cdot \sin t \, \, \, &\Longrightarrow \, \, \, y'(t) = A(-e^{-t} \cdot \cos t - e^{-t} \cdot \sin t) + B(-e^{-t} \cdot \sin t + e^{-t} \cdot \cos t) \\ &\Longrightarrow \, \, \, y'(t) = -Ae^{-t} \cdot \cos t - Ae^{-t} \cdot \sin t - Be^{-t} \cdot \sin t + Be^{-t} \cdot \cos t \\ &\Longrightarrow \, \, \, y'(t) = e^{-t}(- A\sin t - A\cos t - B\sin t + B\cos t) \end{align}$$
+A questo punto, possiamo impostare un sistema di equazioni per trovare i coefficienti $A$ e $B$:
+$$\begin{cases} y(0) = 1 \\ y'(0) = 1 \end{cases}\, \, \, \, \, \Longrightarrow \, \, \, \, \, \begin{cases} Ae^{0} \cdot \cos 0 + Be^{0} \cdot \sin 0 = 1 \\ e^{0}(- A\sin 0 - A \cos 0 - B \sin 0 + B \cos 0) = 1 \end{cases}\, \, \, \, \, \Longrightarrow \, \, \, \, \, \begin{cases} A = 1 \\ - A + B = 1 \end{cases}\, \, \, \, \, \Longrightarrow \, \, \, \, \, \begin{cases} A = 1 \\ B = 2 \end{cases}$$
+L'unica soluzione del problema di Cauchy, dunque, è la seguente:
+$$y(t) = e^{-t} \cdot \cos t + 2e^{-t} \cdot \sin t = e^{-t}(\cos t + 2 \sin t)$$
 ___
 ### Equazioni differenziali lineari non omogenee del secondo ordine
 
-[pag. 123 - 124 - 125 - 126 - 127 - 128 - 129]
+Analizziamo, infine, le **EDO lineari non omogenee del secondo ordine**, ossia quelle equazioni differenziali che si presentano nella seguente forma:
+$$ay'' + by' + cy = f(t)$$
+> Per risolvere un'**EDO lineare non omogenea del secondo ordine**, ossia un'equazione differenziale del tipo:
+> $$ay'' + by' + cy = f(t)$$
+> si dovrà:
+> - **determinare la soluzione generica $y_{o}(t) = Ay_{1} + By_{2}$ dell'equazione omogenea associata** (ossia, la stessa equazione differenziale ma con $f(t) = 0$);
+> - a partire dalle soluzioni $y_{1}$ e $y_{2}$ trovate, bisogna **ricavare una soluzione particolare della forma $y_{p}(t) = A(t)y_{1} + B(t)y_{2}$**, con $A(t)$ e $B(t)$ che potranno essere trovate risolvendo il seguente sistema di equazioni;
+> $$\begin{cases} A'(t)y_{1} + B'(t)y_{2} = 0 \\ A'(t)y_{1}' + B'(t)y_{2}' = f(t) \end{cases}$$
+> - trovata anche la soluzione particolare $y_{p}(t)$, la soluzione generica dell'equazione iniziale sarà $y(t) = y_{o}(t) + y_{p}(t)$.
+
+Per comprendere meglio come applicare questo metodo, proviamo ad analizzare il seguente esempio:
+$$y'' - 2y' + y = \frac{e^x}{x^4}$$
+Prima di tutto, andiamo a ricavare $y_{o}(t)$, ossia la soluzione generica dell'equazione omogenea associata. Per fare ciò, risolviamo la seguente equazione:
+$$\lambda^2 - 2\lambda + 1 = 0\, \, \, \, \, \Longrightarrow \, \, \, \, \, \lambda_{1} = \lambda_{2} = 1$$
+Ci troviamo nel caso in cui le due soluzioni $\lambda_{1}$ e $\lambda_{2}$ sono uguali, dunque le basi dello spazio delle soluzioni saranno $y_{1} = e^{t}$ e $y_{2} = te^{t}$, portando alla seguente soluzione generica $y_{o}(t)$:
+$$\begin{cases} y_{1} = e^{t} \\ y_{2} = te^{t} \end{cases}\, \, \, \Rightarrow \, \, \, y_{o}(t) = Ae^{t} + Bte^{t}$$
+Ora, possiamo trovare la soluzione particolare $y_{p}(t)$. Per fare ciò, impostiamo il sistema di equazioni che ci permetterà di ottenere $A(t)$ e $B(t)$:
+$$\begin{cases} A'(t)e^{t} + B'(t)te^{t} = 0 \\ A'(t)e^{t} + B'(t)(e^{t} + te^{t}) = \frac{e^{t}}{t^4} \end{cases}\, \, \, \Rightarrow \, \, \, \begin{cases} A'(t) = -\frac{B'(t)te^{t}}{e^{t}} \\ A'(t)e^{t} + B'(t)e^{t} + B'(t)te^{t} = \frac{e^{t}}{t^4} \end{cases}\, \, \, \Rightarrow \, \, \, \begin{cases} A'(t) = -B'(t)t \\ -B'(t)te^{t} + B'(t)e^{t} + B'(t)te^{t} = \frac{e^{t}}{t^4} \end{cases}\, \, \, \Rightarrow \, \, \, \begin{cases} A'(t) = -B'(t)t \\ B'(t)e^{t} = \frac{e^{t}}{t^4} \end{cases}\, \, \, \Rightarrow \, \, \, \begin{cases} A'(t) = -\frac{1}{t^3} \\ B'(t) = \frac{1}{t^4} \end{cases}$$
+Avendo trovato $A'(t)$ e $B'(t)$, trovare $A(t)$ e $B(t)$ consiste semplicemente nell'integrare le funzioni appena trovate:
+$$A(t) = - \int \frac{1}{t^3}\, dt = - \int t^{-3}\, dt = \frac{1}{2t^2}\, \, \, \, \, \, \, \, \, \, B(t) = \int \frac{1}{t^4}\, dt = \int t^{-4}\, dt = -\frac{1}{3t^3}$$
+A questo punto, ricaviamo la soluzione particolare $y_{p}(t)$:
+$$y_{p}(t) = A(t)y_{1} + B(t)y_{2} = \frac{1}{2t^2}e^{t} - \frac{1}{3t^3}te^{t} = \frac{e^t}{2t^2} - \frac{e^{t}}{3t^2} = \frac{e^t}{6t^2}$$
+Infine, arriviamo alla soluzione generica dell'equazione differenziale che volevamo risolvere, ossia $y(t) = y_{o}(t) + y_{p}(t)$:
+$$y(t) = Ae^{t} + Bte^{t} + \frac{e^{t}}{6t^2}$$

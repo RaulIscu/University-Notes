@@ -75,7 +75,11 @@ Tenendo a mente la definizione geometrica di integrale, dunque del fatto che cor
 
 Quest'ultima proprietà ci permette di fare delle assunzioni aggiuntive, ad esempio in relazione alla definizione di **funzione integrabile** che è stata fornita a inizio paragrafo: supponendo, infatti, di avere una funzione non integrabile, e dunque discontinua e non monotona, in un intervallo $[a, b]$, per calcolarne l'integrale in tale intervallo sarà sufficiente **scomporre l'integrale in vari integrali su sotto-intervalli** dell'intervallo iniziale, in modo da avere un frammento di funzione monotono o continuo in ognuno di questi sotto-intervalli. Possiamo, quindi, affermare che:
 
-> Una funzione $f$ è **integrabile** in un intervallo $[a, b]$ se all'interno di tale intervallo presenta un **numero finito di cambi di monotonia** e un **numero finito di discontinuità**.
+> Una funzione $f$ è **integrabile** in un intervallo $[a, b]$ se all'interno di tale intervallo:
+> - è **monotona** e **limitata**;
+> - è **continua**;
+> - presenta un **numero finito di cambi di monotonia**;
+> - presenta un **numero finito di discontinuità**.
 
 Inoltre, sempre la proprietà dell'additività ci permette di calcolare integrali in cui la funzione non assume valori strettamente positivi nell'intervallo considerato. Ad esempio, avendo una funzione come la seguente:
 
@@ -94,6 +98,9 @@ Finora si sono analizzati solo casi di integrali su intervalli $[a, b]$ dove eff
 
 > La proprietà della **differenza** tra integrali afferma che, sia $[a, b]$ un intervallo e sia $c \in [a, b]$, se $f$ è una funzione integrabile in $[a, b]$ allora l'integrale di $f$ in $[c, b]$ è esprimibile come:
 > $$\int_{c}^{b} f(x)\, dx = \int_{a}^{b} f(x)\, dx - \int_{a}^{c} f(x)\, dx$$
+
+Se l'intervallo di integrazione coincide con un punto $a$, allora il valore dell'integrale sarà sempre $0$, qualsiasi sia la funzione integranda:
+$$\int_{a}^{a} f(x)\, dx = 0$$
 ___
 ### Teorema fondamentale del calcolo integrale
 
@@ -143,7 +150,7 @@ $$\int x^{-1}\, dx = \int \frac{1}{x}\, dx = \ln|x| + c$$
 - l'integrale di $e^x$ è pari a:
 $$\int e^x\, dx = e^x + c$$
 - l'integrale di $e^{\alpha x}$ è pari a:
-$$\int e^{\alpha x}\, dx = \frac{e^{\alpha x}}{x} + c$$
+$$\int e^{\alpha x}\, dx = \frac{e^{\alpha x}}{\alpha} + c$$
 - l'integrale di $\cos(\alpha x)$ è pari a:
 $$\int \cos(\alpha x)\, dx = \frac{\sin(\alpha x)}{\alpha} + c$$
 - l'integrale di $\sin(\alpha x)$ è pari a:
@@ -161,7 +168,7 @@ $$\int \frac{1}{\alpha x + \beta}\, dx = \frac{\ln |\alpha x + \beta|}{\alpha} +
 - l'integrale di $e^{\alpha x} \cdot \cos(\beta x)$ è pari a:
 $$\int e^{\alpha x} \cdot \cos(\beta x)\, dx = \frac{e^{\alpha x}(\alpha \cos(\beta x) + \beta \sin(\beta x))}{\beta^2 + \alpha^2} + c$$
 - l'integrale di $e^{\alpha x} \cdot \sin(\beta x)$ è pari a:
-$$\int e^{\alpha x} \cdot \sin(\beta x) = \frac{e^{\alpha x}(\alpha \sin(\beta x) - \beta \cos(\beta x))}{\beta^2 + \alpha^2} + c$$
+$$\int e^{\alpha x} \cdot \sin(\beta x)\, dx = \frac{e^{\alpha x}(\alpha \sin(\beta x) - \beta \cos(\beta x))}{\beta^2 + \alpha^2} + c$$
 ___
 ### Integrali immediati di funzioni composte
 
@@ -357,11 +364,60 @@ ___
 ___
 ### Integrali impropri
 
-[pag. 90 - 91 - 92 - 93 - 94]
+> Un "**integrale improprio**", detto anche "integrale generalizzato", è un integrale in cui la funzione integranda, l'intervallo di integrazione o entrambi sono **illimitati**.
 
-> Un "**integrale improprio**" è un integrale in cui la funzione integranda, l'intervallo di integrazione o entrambi sono **illimitati**.
+Vediamo, innanzitutto, cosa succede se **la funzione integranda è illimitata**. Supponiamo di avere una funzione continua $f(x)$, e di considerarla su un intervallo $[a, b)$ per cui essa risulti illimitata a sinistra di $b$ (quindi, si avrebbe che $\lim_{x \to b^-} f(x) = \pm \infty$). In questo caso, se volessimo integrare $f(x)$ nell'intervallo $[a, b]$, si risulterebbe in un integrale improprio della seguente forma:
+$$\int_{a}^{b} f(x)\, dx = \lim_{\epsilon \to 0} \int_{a}^{b - \epsilon}f(x)\, dx$$
+dove $\epsilon$ è una quantità piccola arbitraria. L'idea, dunque, è di **risolvere prima un integrale "proprio"**, ossia in cui sia l'intervallo di integrazione che la funzione integranda in tale intervallo sono limitati, nell'intervallo $[a, b - \epsilon]$, e poi di far tendere il valore di $\epsilon$ a 0 in modo da ottenere il risultato effettivo dell'integrale che si stava cercando.
 
+Lo stesso discorso vale per l'altro estremo di integrazione $a$. Supponendo che la funzione $f(x)$ risulti illimitata a destra di $a$ (quindi, si avrebbe che $\lim_{x \to a^+} f(x) = \pm \infty$), l'integrazione di tale funzione risulterebbe nel seguente integrale improprio:
+$$\int_{a}^{b} f(x)\, dx = \lim_{\epsilon \to 0} \int_{a + \epsilon}^{b} f(x)\, dx$$
+> In un integrale definito, se la **funzione integranda $f(x)$** risulta essere **illimitata** in prossimità di uno o entrambi gli estremi dell'intervallo di integrazione $[a, b]$, allora la risoluzione di tale integrale sarà data da uno dei seguenti integrali impropri:
+> $$\lim_{\epsilon \to 0} \int_{a}^{b - \epsilon} f(x)\, dx \, \, \, \, \, \, \, \, \, \, \, \, \, \, \, \, \, \, \, \, \lim_{\epsilon \to 0} \int_{a + \epsilon}^{b} f(x)\, dx \, \, \, \, \, \, \, \, \, \, \, \, \, \, \, \, \, \, \, \, \lim_{\epsilon \to 0} \int_{a + \epsilon}^{b - \epsilon} f(x)\, dx$$
+> in base a in prossimità a quali estremi la funzione risulti essere illimitata. A seconda del risultato del limite, si ha che:
+> - se il limite **esiste ed è finito**, allora si dice che l'integrale **converge** e che $f(x)$ è "**integrabile in senso improprio**";
+> - se il limite **esiste ed è pari a $\pm \infty$**, allora si dice che l'integrale **diverge**;
+> - se il limite **non esiste**, allora si dice che l'integrale è **indeterminato**.
 
+Vediamo, ora, cosa succede se **l'intervallo di integrazione è illimitato**. Supponiamo di voler integrare una funzione continua $f(x)$, e di volerla integrare sull'intervallo illimitato $[a, +\infty)$. In questo caso, si dovrebbe andare a risolvere il seguente integrale improprio:
+$$\int_{a}^{+\infty} f(x)\, dx = \lim_{M \to +\infty} \int_{a}^{M} f(x)\, dx$$
+Per quanto riguarda la risoluzione concreta di tale integrale, si sfrutta lo stesso procedimento esplicitato prima, che contempla prima il calcolo dell'integrale proprio e poi lo svolgimento del limite. Inoltre, anche in questo caso il discorso non cambia se l'intervallo è illimitato nell'altro senso, ossia avendo $(-\infty, b]$. Infatti:
+$$\int_{-\infty}^{b} f(x)\, dx = \lim_{M \to -\infty} \int_{M}^{b} f(x)\, dx$$
+> In un integrale definito, se l'**intervallo di integrazione** risulta essere **illimitato** in un verso, allora la risoluzione di tale integrale sarà data da uno dei seguenti integrali impropri:
+> $$\lim_{M \to +\infty} \int_{a}^{M} f(x)\, dx \, \, \, \, \, \, \, \, \, \, \, \, \, \, \, \, \, \, \, \, \lim_{M \to -\infty} \int_{M}^{b} f(x)\, dx$$
+> in base a quale degli estremi dell'intervallo di integrazione sia pari a $\infty$. A seconda del risultato del limite, valgono le stesse distinzioni fatte per gli integrali impropri con funzione integranda illimitata.
+>
+> Nel caso in cui l'intervallo di integrazione risulti essere **illimitato in entrambi i versi**, ossia $(-\infty, +\infty)$, conviene scegliere un determinato valore di "separazione" ed applicare la proprietà dell'[[Integrali#Proprietà degli integrali|additività di un integrale]]:
+> $$\int_{-\infty}^{+\infty} f(x)\, dx = \int_{-\infty}^{a} f(x)\, dx + \int_{a}^{+\infty} f(x)\, dx$$
+
+Ma come risolvere un integrale in cui **sia l'intervallo di integrazione sia la funzione integranda sono illimitati**? Similmente all'approccio utilizzato per l'integrazione in un intervallo illimitato in entrambi i versi, conviene sfruttare l'additività dell'integrale e ricondursi a una somma di integrali in cui ognuno di essi presenta una sola "particolarità", sia essa un estremo di integrazione divergente o un estremo di integrazione in prossimità del quale è la funzione integranda a divergere.
+
+Potrebbe essere utile, a questo punto, approfondire dei **criteri di convergenza** per gli integrali impropri, per capire se uno di essi converge o meno senza doverlo necessariamente risolvere, processo spesso tedioso o molto più difficile. I criteri di convergenza che analizzeremo sono i seguenti:
+- criterio del **confronto**;
+- criterio del **confronto asintotico**.
+
+> Il **criterio del confronto** afferma che, siano $f(x)$ e $g(x)$ due funzioni continue, tali per cui $0 \le f(x) \le g(x)$ nell'intervallo $[a, +\infty)$, allora:
+> $$\text{se } \int_{a}^{+\infty}g(x)\, dx \text{ converge, allora anche } \int_{a}^{+\infty} f(x)\, dx \text{ converge}$$$$\text{se } \int_{a}^{+\infty}f(x)\, dx \text{ diverge, allora anche } \int_{a}^{+\infty} g(x)\, dx \text{ diverge}$$
+
+> Il **criterio del confronto asintotico** afferma che, siano $f(x)$ e $g(x)$ due funzioni continue, tali per cui $f(x) \sim g(x)$ per $x \to +\infty$, ossia tali per cui $\lim_{x \to +\infty}f(x) = \lim_{x \to +\infty}g(x)$, allora:
+> $$\int_{a}^{+\infty}f(x)\, dx \text{ converge/diverge a } +\infty \iff \int_{a}^{+\infty}g(x)\, dx \text{ converge/diverge a } +\infty$$
+
+Di seguito, infine, il comportamento di alcuni **integrali impropri "notevoli"**. Il seguente integrale improprio:
+$$\int_{a}^{+\infty} \frac{1}{x^\alpha}\, dx$$
+per $a > 0$:
+- se $\alpha > 1$, **converge**;
+- se $\alpha \le 1$, **diverge a $+\infty$**.
+
+Il seguente integrale improprio:
+$$\int_{a}^{+\infty} \frac{1}{x^\alpha \ln^\beta x}\, dx$$
+per $a > 1$:
+- se $\alpha > 1$, oppure se $\alpha = 1$ e $\beta > 1$, **converge**;
+- se $\alpha < 1$, oppure se $\alpha = 1$ e $\beta \le 1$, **diverge a $+\infty$**.
+
+Il seguente integrale improprio:
+$$\int_{a}^{b} \frac{1}{(x - a)^\alpha}\, dx$$
+- se $\alpha < 1$, **converge**;
+- se $\alpha \ge 1$, **diverge**.
 ___
 ### Criteri di convergenza degli integrali
 
