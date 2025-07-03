@@ -8,7 +8,7 @@ tipo nomeDelMetodo(parametri) {
 ___
 In Java, è possibile definire, all'interno di una classe, più di un metodo con lo stesso identificatore, finché vengano dichiarati diversi parametri per ciascuno di questi metodi. 
 
-Questo particolare procedimento viene definito "***method overloading***", ed è una delle manifestazioni più palesi del principio di [[Programmazione a oggetti|polimorfismo]] all'interno di Java. Infatti, invocando un metodo definito in questo modo, che condivide quindi il suo identificatore con altri metodi, **sarà il tipo e il numero dei parametri presi in *input* dal metodo a guidare l'esecuzione verso una sua determinata versione** piuttosto che un'altra. È per questo che risulta fondamentale, se si vuole operare un *method overloading*, differenziare i parametri dei metodi in questione.
+Questo particolare procedimento viene definito "***method overloading***", ed è una delle manifestazioni più palesi del principio di [[Java e la OOP|polimorfismo]] all'interno di Java. Infatti, invocando un metodo definito in questo modo, che condivide quindi il suo identificatore con altri metodi, **sarà il tipo e il numero dei parametri presi in *input* dal metodo a guidare l'esecuzione verso una sua determinata versione** piuttosto che un'altra. È per questo che risulta fondamentale, se si vuole operare un *method overloading*, differenziare i parametri dei metodi in questione.
 
 Vediamo, di seguito, un esempio concreto:
 

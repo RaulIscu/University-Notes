@@ -3,9 +3,9 @@
 In matematica, una **successione** è l'insieme ordinato dei valori assunti da una funzione:
 $$a: S \rightarrow \mathbb{R}$$
 dove $S \subseteq \mathbb{N}$. Si tratta, quindi, di una **funzione $a_{k}$ che associa dei valori ad un sottoinsieme dei numeri naturali**. Formalmente, una successione descritta dalla funzione *a* andrebbe indicata come l'insieme ordinato:
-$$(a_k)_{k \in S} = \left \{a(1), a(2), a(3), \mbox{... }, a(n) \right \}$$
+$$(a_k)_{k \in S} = \left \{a(1),\, a(2),\, a(3),\, \mbox{...},\, a(n) \right \}$$
 Tuttavia, per praticità e semplicità, in questo corso ci si limiterà alla notazione seguente:
-$$a_k = a_1, a_2, a_3, \mbox{... }, a_n$$
+$$a_k = a_1,\, a_2,\, a_3,\, \mbox{...},\, a_n$$
 dove il pedice di ogni valore viene detto "**indice della successione**".
 
 Alcuni esempi di successione sono i seguenti:
@@ -13,11 +13,11 @@ Alcuni esempi di successione sono i seguenti:
 - se $a_{k} = 2^k$, allora $(a_{k})_{n \in S} = 2, 4, 8, 16, 32, \space \dots, \space 2^n$;
 - se $a_{k} = \frac{1}{k}$, allora $(a_{k})_{n \in S} = 1, \frac{1}{2}, \frac{1}{3}, \frac{1}{4}, \frac{1}{5}, \space \dots, \space \frac{1}{n}$.
 
-Naturalmente, ogni successione dà vita ad una somma dei suoi termini, e viceversa. È possibile, infatti, **considerare ogni termine di una successione come un termine di una sommatoria**; in particolare, indicando con $S_n$ la sommatoria dei primi $n$ termini di una successione, si otterrebbe:
+Naturalmente, ogni successione dà vita ad una somma dei suoi termini, e viceversa. È possibile, infatti, **considerare ogni termine di una successione come un termine di una sommatoria**; in particolare, indicando con $S_n$ la "**somma parziale**", ossia la sommatoria dei primi $n$ termini di una successione, si otterrebbe:
 $$S_n = \sum_{k = 1}^{n}a_k = a_1 + a_2 + a_3 + \mbox{... } + a_n$$
 Cosa succederebbe, a questo punto, se l'insieme dei termini da sommare fosse illimitato, e quindi se $S = \mathbb{N}$? Ovviamente, si avrebbe un infinito numero di termini per la sommatoria, che possiamo definire utilizzando il **limite** per $n \rightarrow +\infty$ di $S_{n}$; tale limite viene definito "**serie numerica**".
 
-> Data una successione $a_{k}$, si dice **serie numerica** il limite per $n \rightarrow +\infty$ della somma $S_n$:
+> Data una successione $a_{k}$, si dice **serie numerica** il limite per $n \rightarrow +\infty$ della sua somma parziale $S_n$:
 $$\lim_{n \to +\infty}S_n = \lim_{n \to +\infty}\sum_{k = 1}^{n}a_k = \sum_{k = 1}^{\infty}a_k$$
 ___
 ### Serie convergenti e divergenti
@@ -83,7 +83,7 @@ Il valore generico $p$ da cui parte la sommatoria ("$k = p$") di una serie **non
 ___
 ### Serie telescopiche
 
-Le **serie telescopiche** sono un tipo particolare di serie numerica, e risultano essere **convergenti**. Tali serie vengono definite così per via del modo in cui **ogni termine della serie vada ad annullare un termine precedente (interamente o parzialmente)**, portando la serie a "chiudersi" su sé stessa come un telescopio. Generalmente, una serie telescopica è una serie che si presenta o che può essere ricondotta alla seguente forma:
+Le **serie telescopiche** sono un tipo particolare di serie numerica, e risultano solitamente essere **convergenti**. Tali serie vengono definite così per via del modo in cui **ogni termine della serie vada ad annullare un termine precedente (interamente o parzialmente)**, portando la serie a "chiudersi" su sé stessa come un telescopio. Generalmente, una serie telescopica è una serie che si presenta o che può essere ricondotta alla seguente forma:
 $$\sum_{k = p}^{\infty} a_{k + m} - a_{k}, \mbox{ oppure } \sum_{k = p}^{\infty} a_{k} - a_{k + m}$$
 È possibile calcolare in maniera relativamente immediata il valore a cui converge una serie telescopica; per fare ciò, distinguiamo tra le due casistiche, anche se la differenza risulta essere minima. Nel primo caso, ossia $\sum_{k = p}^{\infty} a_{k + m} - a_{k}$, vediamo cosa succede per piccoli valori di $m$ se espandiamo i termini della somma parziale $S_{n}$ di questa serie:
 - se $m = 1$, abbiamo che:

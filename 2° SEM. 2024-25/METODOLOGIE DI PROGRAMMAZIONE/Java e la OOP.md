@@ -1,3 +1,30 @@
+### Caratteristiche di Java
+
+
+___
+### Cos'è la programmazione a oggetti?
+
+
+___
+### Incapsulamento
+
+
+___
+### Ereditarietà
+
+[tra le altre cose, EREDITARIETA' vs. COMPOSIZIONE]
+___
+### Polimorfismo
+
+
+___
+### Astrazione
+
+
+___
+
+
+
 Java è un linguaggio che si basa sulla **programmazione a oggetti**, o ***OOP*** (*Object Oriented Programming*). Qualsiasi programma scritto in Java utilizzerà, in qualche modo, una forma di programmazione a oggetti, e risulta quindi fondamentale comprendere al meglio questo concetto.
 
 In generale, un programma consiste sostanzialmente di due elementi: **codice** e **dati**. Un programma qualsiasi, dunque, può essere organizzato in maniera più incentrata su una o l'altra componente: nel primo caso, si avrà un programma scritto attorno a "cosa sta succedendo", mentre nel secondo un programma basato su "chi viene affetto" da ogni azione. Il primo metodo dà vita alla "**programmazione procedurale**", mentre il secondo, concepito in parte per gestire complessità che il primo fatica a contenere, dà vita proprio alla "**programmazione a oggetti**". Nella programmazione a oggetti, dunque, un programma è organizzato attorno ai dati su cui lavora (chiamati, appunto, "oggetti").

@@ -4,17 +4,21 @@
     "type": "split",
     "children": [
       {
-        "id": "fb62e27bdfa48577",
+        "id": "a2eacf9e9d6871e7",
         "type": "tabs",
         "children": [
           {
-            "id": "eb30233d26cd9af7",
+            "id": "ef13d96ad396ede0",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Design pattern.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "Design pattern"
             }
           }
         ]
@@ -74,7 +78,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 321.50418853759766
+    "width": 321.50418853759766,
+    "collapsed": true
   },
   "right": {
     "id": "691838f246faa396",
@@ -175,42 +180,42 @@
       "table-editor-obsidian:Advanced Tables Toolbar": false
     }
   },
-  "active": "eb30233d26cd9af7",
+  "active": "ef13d96ad396ede0",
   "lastOpenFiles": [
+    "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Design pattern.md",
+    "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Istruzioni di controllo.md",
+    "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Strutture dati.md",
+    "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Operatori.md",
+    "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Modificatori d'accesso.md",
+    "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Classi.md",
+    "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Espressioni lambda e referenze a metodo.md",
+    "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Interfacce.md",
+    "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Il metodo main().md",
+    "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Enum.md",
+    "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Stringhe.md",
+    "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Sintassi.md",
+    "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Metodi.md",
+    "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Java e la OOP.md",
+    "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Tipi primitivi.md",
+    "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Java dal CMD.md",
+    "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Variabili.md",
+    "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/UML.md",
+    "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Librerie/Math.md",
+    "1° SEM. 2024-25/FONDAMENTI DI PROGRAMMAZIONE/Generatori e contenitori.md",
+    "2° SEM. 2024-25/CALCOLO INTEGRALE/CHEAT SHEET.md",
     "2° SEM. 2024-25/CALCOLO INTEGRALE/Equazioni differenziali.md",
     "2° SEM. 2024-25/CALCOLO INTEGRALE/Integrali.md",
-    "2° SEM. 2024-25/CALCOLO INTEGRALE/Numeri complessi.md",
+    "2° SEM. 2024-25/CALCOLO INTEGRALE/Serie.md",
     "2° SEM. 2024-25/CALCOLO INTEGRALE/Teoremi, condizioni e criteri di convergenza delle serie.md",
+    "2° SEM. 2024-25/CALCOLO INTEGRALE/Serie di potenze.md",
     "2° SEM. 2024-25/images/integral_negative.png",
     "2° SEM. 2024-25/images/integral5.png",
     "2° SEM. 2024-25/images/integral4.png",
-    "2° SEM. 2024-25/CALCOLO INTEGRALE/Untitled.md",
     "2° SEM. 2024-25/images/integral3.png",
     "2° SEM. 2024-25/images/integral2.png",
     "2° SEM. 2024-25/images/integral1.png",
-    "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Librerie/Swing/JTextComponent/JTextArea.md",
-    "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Librerie/Swing/JTextComponent/JTextEditorPane.md",
-    "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Librerie/Swing/JTextComponent/JTextField.md",
-    "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Librerie/Swing/AbstractButton/JMenuItem.md",
-    "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Librerie/Swing/AbstractButton/JToggleButton.md",
-    "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Librerie/Swing/JList.md",
     "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Librerie/Swing/JTextComponent",
     "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Librerie/Swing/AbstractButton",
-    "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Librerie/Swing/JTable.md",
-    "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Librerie/Swing/JTree.md",
-    "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Librerie/Swing/JColorChooser.md",
-    "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Librerie/Swing/JFileChooser.md",
-    "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Librerie/Swing/JPopupMenu.md",
-    "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Librerie/Swing/JScrollBar.md",
-    "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Librerie/Swing/JSlider.md",
-    "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Librerie/Swing/JToolBar.md",
-    "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Librerie/Swing/JMenuBar.md",
-    "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Librerie/Swing/JComboBox.md",
-    "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Librerie/Swing/JOptionPane.md",
-    "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Librerie/Swing/JLayeredPane.md",
-    "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Librerie/Swing/JSplitPane.md",
-    "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Librerie/Swing/JInternalFrame.md",
-    "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Librerie/Swing/JRootPane.md",
     "2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Librerie/Swing",
     "2° SEM. 2024-25/images/complex_graph.png",
     "2° SEM. 2024-25/images/metodoalbero_example1.png",

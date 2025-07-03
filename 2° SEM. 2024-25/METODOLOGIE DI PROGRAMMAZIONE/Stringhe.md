@@ -29,7 +29,7 @@ La classe `String` contiene diversi metodi utili per lavorare con oggetti di que
 - **`indexOf(stringa)`**, che viene utilizzato per ottenere il primo indice di partenza della sottostringa *stringa* all'interno della stringa di partenza (restituisce -1 se il carattere non è presente);
 - **`length()`**, che viene utilizzato per ottenere la lunghezza della stringa su cui viene invocato;
 - **`replace(old, new)`**, che viene utilizzato per ottenere una nuova stringa a partire da quella di partenza, in cui il carattere o la sottostringa *old* vengono rimpiazzati con il carattere o la sottostringa *new*;
-- **`split(separatore)`**, che viene utilizzato per ottenere un *[[Array|array]]* di sottostringhe a partire dalla stringa di partenza, separandola in corrispondenza di ogni occorrenza di *separatore* al suo interno;
+- **`split(separatore)`**, che viene utilizzato per ottenere un *[[Strutture dati|array]]* di sottostringhe a partire dalla stringa di partenza, separandola in corrispondenza di ogni occorrenza di *separatore* al suo interno;
 - **`startsWith(stringa)`**, che viene utilizzato per verificare se la stringa di partenza comincia con *stringa*;
 - **`substring(start, end)`**, che viene utilizzato per ottenere una sottostringa della stringa di partenza, presa dall'indice *start* all'indice *end* di quest'ultima (se non si inserisce il parametro *end*, si otterrà la sottostringa che va da *start* alla fine della stringa di partenza);
 - **`toLowerCase()`**, che viene utilizzato per ottenere una nuova stringa corrispondente a quella di partenza tutta minuscola;
