@@ -1,6 +1,6 @@
 Il concetto di **relazione** in matematica non è troppo diverso dal significato che si attribuisce generalmente a tale termine. Alcuni esempi di relazione potrebbero essere "*a* è padre di *b*" o "*n* è minore di *m*".
 
-Volendo fare un confronto con le [[1° SEM. 2024-25/METODI MATEMATICI PER INFORMATICA/Funzioni|funzioni]], notiamo che sono due operazioni molto simili sotto alcuni punti di vista, ma le relazioni presentano due differenze fondamentali:
+Volendo fare un confronto con le [[PRIMO ANNO - 1° SEM. (2024-25)/METODI MATEMATICI PER INFORMATICA/Funzioni|funzioni]], notiamo che sono due operazioni molto simili sotto alcuni punti di vista, ma le relazioni presentano due differenze fondamentali:
 - una relazione non è sempre definita;
 - una relazione può associare anche più "*output*" a un solo "*input*".
 ---

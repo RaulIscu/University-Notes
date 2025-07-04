@@ -16,5 +16,5 @@ I *command-line arguments* vengono passati al metodo *main()* al momento dell'es
 java nomeDelFile argomento0 argomento1 argomento2 ...
 ```
 
-Accedere a questi argomenti dal codice è molto facile: infatti, i *command-line arguments*, una volta forniti, vengono conservati in un *[[Strutture dati|array]]* di [[2° SEM. 2024-25/METODOLOGIE DI PROGRAMMAZIONE/Stringhe|stringhe]] (**`String args[]`**), facilmente accessibili mediante l'indicizzazione di tale *array* (ad esempio, il primo dei *command-line arguments* si otterrà come `args[0]`, il secondo come `args[1]`, e così via).
+Accedere a questi argomenti dal codice è molto facile: infatti, i *command-line arguments*, una volta forniti, vengono conservati in un *[[Strutture dati|array]]* di [[PRIMO ANNO - 2° SEM. (2024-25)/METODOLOGIE DI PROGRAMMAZIONE/Stringhe|stringhe]] (**`String args[]`**), facilmente accessibili mediante l'indicizzazione di tale *array* (ad esempio, il primo dei *command-line arguments* si otterrà come `args[0]`, il secondo come `args[1]`, e così via).
 

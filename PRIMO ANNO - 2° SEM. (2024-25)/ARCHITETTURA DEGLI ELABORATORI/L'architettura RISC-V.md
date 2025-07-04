@@ -2,7 +2,7 @@
 
 Un **calcolatore** è composto da una miriade di vari componenti, suddivisibili in varie categorie e che interagiscono tutti tra loro. Uno dei più importanti componenti di un calcolatore, se non il più importante, è la sua CPU.
 
-La **CPU** (o **Central Processing Unit**), detta anche "processore" di un calcolatore, rappresenta la parte attiva di quest'ultimo, la componente che esegue fedelmente le istruzioni di un programma. È in grado di effettuare operazioni aritmetiche, compiere dei controlli su di esse, inviare segnali per attivare i dispositivi di I/O (*input*/*output*), e altro ancora.
+La **CPU** (o **Central Processing Unit**), detta anche "processore" di un calcolatore, rappresenta la parte attiva di quest'ultimo, la componente che esegue fedelmente le istruzioni di un programma. È in grado di effettuare operazioni aritmetiche, compiere dei controlli su di esse, inviare segnali per attivare i dispositivi di I/O (input/output), e altro ancora.
 
 Tendenzialmente, un processore comprende due componenti principali:
 - un'**unità di elaborazione dati** (o **datapath**), che provvede ad eseguire concretamente le operazioni da eseguire;
