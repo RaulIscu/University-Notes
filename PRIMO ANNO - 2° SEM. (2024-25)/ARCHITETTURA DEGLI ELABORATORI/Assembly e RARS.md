@@ -103,7 +103,7 @@ ___
 
 Le principali **istruzioni di salto incondizionato** previste dall'architettura RISC-V sono le seguenti:
 - **`jal rd, 100`**;
-- **`jalr rd 100(rs1)`**.
+- **`jalr rd, 100(rs1)`**.
 
 L'istruzione **`jal`** ("jump and link") va a salvare nel registro `rd` l'indirizzo dell'istruzione successiva ad essa, dunque `PC + 4`, e in seguito salta all'istruzione che si trova all'indirizzo `PC + offset`, dove `offset` è la costante inserita espressa in byte (nell'esempio, $100$).
 

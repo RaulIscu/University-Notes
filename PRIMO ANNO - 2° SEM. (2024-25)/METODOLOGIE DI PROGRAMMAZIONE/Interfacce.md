@@ -85,14 +85,56 @@ Il contratto definito dall'interfaccia va a teorizzare un **oggetto che contiene
 ___
 #### Stream
 
+L'interfaccia **`Stream<T>`** è stata introdotta in Java 8, si trova nel package **`java.util.stream`** e rappresenta, sostanzialmente, un **flusso astratto di elementi** di un certo tipo, su cui possono essere eseguite varie **operazioni funzionali in stile dichiarativo**.
 
+Un oggetto `Stream` può essere **creato** in vari modi, tra cui:
+- a partire da una struttura dati che implementa l'interfaccia `Collection`, utilizzando **`Collection.stream()`**;
+- a partire da un elenco di dati o elementi, utilizzando **`Stream.of(...)`**;
+- a partire da un array, utilizzando **`Arrays.stream(array)`**;
+- a partire dalle righe di un file, utilizzando **`Files.lines(path)`**.
+
+Un oggetto `Stream` viene sempre generato a partire da una fonte di dati separata (ad esempio una collezione, un [[Strutture dati#Array|array]] o un file), ma non costituisce di per sé una fonte di dati; insomma, uno Stream non memorizza nulla, ma permette di definire e applicare efficientemente **una pipeline di operazioni** su dati già esistenti.
+
+Uno Stream particolare **può essere consumato una sola volta**, può essere eseguito in maniera **sequenziale** o **parallela** con altri Stream, e **non va mai a modificare la sorgente originale**. Le operazioni che si possono compiere su di esso si dividono principalmente in due categorie: **intermedie** e **terminali**. La pipeline di operazioni di uno Stream, tendenzialmente, è costituita da un certo numero di operazioni intermedie in sequenza, che restituiscono ognuna un nuovo Stream diverso da quello di partenza, seguite da un'operazione terminale che lo esaurisce.
+
+Per poter utilizzare in maniera ottimale gli oggetti che implementano l'interfaccia `Stream<T>`, analizziamo i principali metodi definiti al suo interno, e quindi le principali **operazioni** che possono essere eseguite su di essi. Le principali **operazioni intermedie** sono:
+- **`distinct()`**, che permette di scartare qualsiasi elemento duplicato presente nello stream;
+- **`filter(Predicate<T> p)`**, che permette di filtrare gli elementi dello stream in base alla condizione booleana definita da `p` (se `p` restituisce `true` per un certo elemento, esso viene conservato, altrimenti viene scartato);
+- **`flatMap(Function<T, R> f)`**, che permette di "appiattire" stream ottenuti a partire da strutture dati annidate, trasformando gli elementi in base a `f`;
+- **`limit(int n)`**, che permette di ottenere uno stream contenente solo i primi `n` elementi dello stream di partenza;
+- **`map(Function<T, R> f)`**, che permette di trasformare gli elementi dello stream (solitamente, con qualche conversione di tipo) in base alla funzione definita da `f`;
+- **`skip(int n)`**, che permette di ottenere uno stream contenente tutti gli elementi seguenti ai primi `n` dello stream di partenza;
+- **`sorted()`**, che permette di riordinare gli elementi dello stream in base all'implementazione di `Comparable` relativa al tipo degli oggetti contenuti al suo interno;
+- **`sorted(Comparator c)`**, che permette di riordinare gli elementi dello stream in base al comparatore `c`.
+
+Per quanto riguarda, invece, le principali **operazioni terminali**, esse sono:
+- **`allMatch(Predicate<T> p)`**, che restituisce `true` se tutti gli elementi dello stream rispettano la condizione booleana definita da `p`, e `false` altrimenti;
+- **`anyMatch(Predicate<T> p)`**, che restituisce `true` se almeno uno degli elementi dello stream rispetta la condizione booleana definita da `p`, e `false` altrimenti;
+- **`collect(Collector)`**, che permette di raccogliere gli elementi dello stream in una determinata struttura dati in base al `Collector` preso in input;
+- **`count()`**, che restituisce il numero di elementi presenti nello stream;
+- **`findAny()`**, che restituisce un elemento qualsiasi dello stream;
+- **`findFirst()`**, che restituisce il primo elemento dello stream;
+- **`forEach(Consumer<T> c)`**, che permette di eseguire l'azione definita da `c` su ogni elemento dello stream;
+- **`noneMatch(Predicate<T> p)`**, che restituisce `true` se nessuno degli elementi dello stream rispetta la condizione booleana definita da `p`, e `false` altrimenti;
+- **`toArray()`**, che restituisce un array contenente tutti gli elementi dello stream.
+
+Si tratta di uno strumento molto potente soprattutto per la **manipolazione di grandi quantità di dati**, e la sua **struttura** **dichiarativa**, **leggibile** e **concisa** lo rendono anche particolarmente comodo da utilizzare. Inoltre, per natura si integra molto facilmente con **[[Espressioni lambda e riferimenti a metodi#Espressioni lambda|espressioni lambda]]**, e il supporto al **parallelismo** consente eventualmente di lavorare su più stream in contemporanea velocemente.
 ___
 #### Iterable
 
+L'interfaccia **`Iterable<T>`** è un'interfaccia importantissima e relativamente di base che si trova nel package **`java.lang`**. Essa rappresenta una **generica collezione di elementi iterabili**, ossia una collezione i cui elementi possono essere ottenuti uno ad uno, tipicamente tramite un **[[Istruzioni di controllo#Il *for loop*|for-each loop]]**, tant'è che l'implementazione dell'interfaccia `Iterable<T>` è concretamente necessaria per poter utilizzare un qualsiasi oggetto in un loop del genere.
 
+Si tratta, quindi, di un'interfaccia importantissima, e pressoché essenziale per qualsiasi [[Strutture dati|struttura dati]] si voglia definire. Infatti, anche l'interfaccia **`Collection`** rappresenta, di fatto, una sottoclasse di `Iterable`, e quindi qualsiasi classe implementi la prima andrà automaticamente ad implementare anche la seconda.
+
+L'interfaccia `Iterable` definisce **un solo metodo astratto**, ossia **`iterator()`**, che restituisce un oggetto di tipo `Iterator` responsabile dello scorrimento degli elementi della collezione, e a partire da Java 8 anche alcuni metodi di default, ossia:
+- **`forEach(Consumer<? super T> c)`**, che funziona in maniera analoga al metodo omonimo definito in `Stream`, e dunque va ad eseguire l'azione definita da `c` su ogni elemento della collezione;
+- **`spliterator()`**, che restituisce un oggetto di tipo `Spliterator` relativo alla collezione, utile per delle elaborazioni parallele.
+
+Notiamo, però, un'incongruenza: **`Iterable<T>` definisce al suo interno un solo metodo astratto, eppure non è considerata un'interfaccia funzionale**. Perché?
+
+Seppur venga rispettata la definizione formale di [[Interfacce#Interfacce funzionali|interfaccia funzionale]], `Iterable` funziona in maniera completamente diversa da una qualsiasi delle interfacce appartenenti a tale categoria. Quest'ultime, infatti, rappresentano in particolare un **comportamento** o una **funzione** ben precisa, che nella maggior parte dei casi presenta un input, un output, o entrambi. Ciò non può assolutamente essere affermato per `Iterable`, che rappresenta la funzionalità di un contenitore iterabile di dati. Oltre a ciò, un altro fattore che favorisce notevolmente la sua separazione dalle interfacce funzionali è la sua **incompatibilità con le espressioni lambda**, che sono invece il fulcro del funzionamento di interfacce come `Predicate`, `Function` e molte altre.
 ___
 #### Iterator
-
 
 
 ___
@@ -146,11 +188,34 @@ ___
 ___
 #### Predicate e BiPredicate
 
+L'interfaccia funzionale **`Predicate<T>`** rappresenta una **funzione logica** basata su **un singolo argomento** di tipo generico `T` in input. Il suo unico **metodo astratto** è:
 
+```
+boolean test(T t);
+```
+
+ma presenta anche altri **metodi di default**, come:
+- **`Predicate<T> and(Predicate<? super T> other)`**, che restituisce un nuovo `Predicate` corrispondente all'AND tra quello su cui viene chiamato il metodo e `other`;
+- **`Predicate<T> or(Predicate<? super T> other)`**, che restituisce un nuovo `Predicate` corrispondente all'OR tra quello su cui viene chiamato il metodo e `other`;
+- **`Predicate<T> negate()`**, che restituisce un nuovo `Predicate` corrispondente alla negazione logica di quello su cui viene chiamato il metodo.
+
+Invece, l'interfaccia funzionale **`BiPredicate<T, U>`** rappresenta sempre una **funzione logica** ma basata su **due argomenti** di tipi generici `T` e `U` in input. Presenta gli stessi metodi (astratti e non), con le opportune variazioni per permettere l'utilizzo di più di un input.
 ___
 #### Function e BiFunction
 
+L'interfaccia funzionale **`Function<T, R>`** rappresenta una **funzione che prende un input di tipo `T` e restituisce un output di tipo `R`**. Naturalmente, viene utilizzata soprattutto per operazioni di trasformazione e conversione di tipo. Il suo unico **metodo astratto** è:
 
+```
+R apply(T t);
+```
+
+ma presenta anche altri **metodi di default**, come:
+- **`Function<V, R> compose(Function<? super V, ? extends T> before)`**, che restituisce una nuova `Function` corrispondente all'applicazione sequenziale prima di `before` e poi di quella su cui viene chiamato il metodo;
+- **`Function<T, V> andThen(Function<? super R, ? extends V> after)`**, che restituisce una nuova `Function` corrispondente all'applicazione sequenziale prima di quella su cui viene chiamato il metodo e poi di `after`;
+- **`Function<T, T> identity()`**, che restituisce una nuova `Function` corrispondente a un'identità (come output avrà il suo input, privo di variazioni).
+
+Invece, l'interfaccia funzionale **`BiFunction<T, U, R>`** rappresenta una **funzione che prende due input di tipo `T` e `U` e restituisce un output di tipo `R`**. Presenta lo stesso metodo astratto, con le opportune variazioni per permettere l'utilizzo di più di un input, mentre come metodo di default si ha solo:
+- **`BiFunction<T, U, V> andThen(Function<? super R, ? extends V> after)`**, che restituisce una nuova `BiFunction` corrispondente all'applicazione sequenziale prima di quella su cui viene chiamato il metodo e poi di `after`.
 ___
 #### Consumer e BiConsumer
 

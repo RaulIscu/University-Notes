@@ -1,6 +1,8 @@
 {
   "theme": "obsidian",
-  "cssTheme": "Vanilla AMOLED",
+  "cssTheme": "Hipstersmoothie",
   "baseFontSizeAction": true,
-  "baseFontSize": 18
+  "baseFontSize": 18,
+  "accentColor": "#2766be",
+  "nativeMenus": false
 }
