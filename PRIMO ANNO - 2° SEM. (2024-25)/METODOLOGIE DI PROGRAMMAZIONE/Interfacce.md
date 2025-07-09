@@ -138,6 +138,10 @@ ___
 
 
 ___
+#### Comparable
+
+
+___
 ## Interfacce funzionali
 
 In poche parole, un'**interfaccia funzionale** è un tipo particolare di [[Interfacce#Cos'è un interfaccia?|interfaccia]] che si caratterizza per **definire un solo metodo astratto** al suo interno. Per indicare che un'interfaccia è funzionale al momento della sua definizione, si può anticipare il corpo dell'interfaccia con la seguente annotazione facoltativa:
@@ -178,10 +182,6 @@ Sotto questo punto di vista, possiamo vedere l'interfaccia funzionale come una "
 ___
 ## Alcune interfacce funzionali comuni
 
-#### Comparable
-
-
-___
 #### Comparator
 
 
@@ -203,7 +203,7 @@ Invece, l'interfaccia funzionale **`BiPredicate<T, U>`** rappresenta sempre una 
 ___
 #### Function e BiFunction
 
-L'interfaccia funzionale **`Function<T, R>`** rappresenta una **funzione che prende un input di tipo `T` e restituisce un output di tipo `R`**. Naturalmente, viene utilizzata soprattutto per operazioni di trasformazione e conversione di tipo. Il suo unico **metodo astratto** è:
+L'interfaccia funzionale **`Function<T, R>`** rappresenta una **funzione che accetta un input di tipo `T` e restituisce un output di tipo `R`**. Naturalmente, viene utilizzata soprattutto per operazioni di trasformazione e conversione di tipo. Il suo unico **metodo astratto** è:
 
 ```
 R apply(T t);
@@ -219,9 +219,22 @@ Invece, l'interfaccia funzionale **`BiFunction<T, U, R>`** rappresenta una **fun
 ___
 #### Consumer e BiConsumer
 
+L'interfaccia funzionale **`Consumer<T>`** rappresenta un'**operazione che accetta un input di tipo `T` e non restituisce nulla**. Viene utilizzata soprattutto per operazioni come stampe, logging, salvataggi o modifiche su oggetti mutabili. Il suo unico **metodo astratto** è:
 
+```
+void accept(T t);
+```
+
+e presenta anche un **metodo di default**, ossia:
+- **`Consumer<T> andThen(Consumer<? super T> after)`**, che restituisce un nuovo `Consumer` corrispondente all'applicazione sequenziale prima di quello su cui viene chiamato il metodo e poi di `after`.
+
+Invece, l'interfaccia funzionale **`BiConsumer<T, U>`** rappresenta un'**operazione che accetta due input di tipi `T` e `U` e non restituisce nulla**. Presenta gli stessi metodi (astratti e non), con le opportune variazioni per permettere l'utilizzo di più di un input.
 ___
 #### Supplier
 
+L'interfaccia funzionale **`Supplier<T>`** rappresenta un'**operazione che non accetta input e restituisce un output di tipo `T`**. Viene utilizzata soprattutto per fornire elementi come valori casuali, istanze ritardate di determinate classi, o dati predefiniti. Il suo unico **metodo astratto** è:
 
+```
+T get();
+```
 ___
