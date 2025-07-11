@@ -106,7 +106,23 @@ Per accedere agli attributi e ai metodi di un oggetto appartenente a una determi
 ___
 ## Classi astratte
 
+Una **classe astratta** è un tipo particolare di classe, che si differenzia dalle altre principalmente per il fatto che **non può essere istanziata direttamente**. Generalmente, una classe astratta può contenere:
+- **metodi astratti**, ossia metodi solo "dichiarati" ma privi di un corpo di codice;
+- **metodi concreti**;
+- **campi**;
+- **costruttori**, che possono però essere richiamati solo da eventuali sottoclassi.
 
+Per distinguere una classe astratta da una normale, si utilizza la keyword **`abstract`** prima di `class`. Ad esempio, supponendo di voler definire una classe astratta `Animale`, scriveremmo:
+
+```
+public abstract class Animale {
+	...
+}
+```
+
+Una classe astratta viene tipicamente utilizzata in strutture [[Java e la OOP#Ereditarietà|ereditarie]], dove si vuole definire una **base di comportamento comune** tra tutte le classi che la ereditano, ma lasciando allo stesso tempo spazio per un'implementazione personalizzata da parte di quest'ultime (i metodi astratti di una classe astratta vengono definiti proprio a questo scopo).
+
+Si tratta di una soluzione che permette un maggiore **riutilizzo del codice**, una maggiore **flessibilità**, e favorisce una migliore **organizzazione logica** delle classi di un programma. Alcuni svantaggi, invece, potrebbero essere l'**impossibilità di istanza diretta**, la maggiore **difficoltà nel testing**, nonché la limitazione che l'**ereditarietà singola** di Java pone a qualsiasi struttura di classi del genere, e che viene in parte ammorbidita tramite l'utilizzo delle **[[Interfacce#Interfacce vs. classi astratte|interfacce]]**.
 ___
 ## Classi annidate
 
