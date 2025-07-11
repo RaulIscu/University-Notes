@@ -24,7 +24,7 @@ public class NomeDellaClasse {
 - ogni singola classe deve essere scritta in un ***file* separato** (fatta eccezione per le [[Classi#Classi annidate|classi annidate]]), che va nominato con lo stesso identico nome assegnato alla classe, e che deve disporre dell'estensione "**.java**";
 - i nomi assegnati come identificatori delle classi hanno sempre l'**iniziale maiuscola**, e, come per gli altri casi, ogni parola che compone tale identificatore dovrà disporre anch'essa dell'iniziale maiuscola.
 ___
-## Variabili d'istanza, metodi e costruttori
+## Campi, metodi e costruttori
 
 All'interno del corpo di una classe, si andranno a definire le sue varie componenti (i cosiddetti "**membri**" della classe), che solitamente si dividono in:
 - **campi** della classe, ossia le variabili definite al suo interno che, perciò, verranno utilizzate da essa (in particolare, i campi possono essere definiti come `static`, e quindi come indipendenti da una particolare istanza della classe; in caso contrario, sono più propriamente detti "**variabili d'istanza**", in quanto ogni istanza della classe conterrà la propria copia di tali campi);
