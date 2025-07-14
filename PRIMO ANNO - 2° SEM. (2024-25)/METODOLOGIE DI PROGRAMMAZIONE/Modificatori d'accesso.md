@@ -20,7 +20,7 @@ Tendenzialmente, il modificatore `private` viene utilizzato per incapsulare dati
 ___
 ### Protected
 
-Definire qualcosa come **`protected`**, vuol dire renderlo **accessibile all'interno della stessa classe e di eventuali sottoclassi**.
+Definire qualcosa come **`protected`**, vuol dire renderlo **accessibile all'interno della stessa classe, di tutte le eventuali sottoclassi, e del package** dove si trova la classe in questione.
 
 Tendenzialmente, il modificatore `protected` viene usato per favorire un corretto incapsulamento proprio in relazione alle sottoclassi, consentendo di controllare l'[[Java e la OOP#Ereditarietà|ereditarietà]] tra classi.
 ___
