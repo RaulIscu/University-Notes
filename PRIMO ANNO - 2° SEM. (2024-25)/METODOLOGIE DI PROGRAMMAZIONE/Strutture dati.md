@@ -155,7 +155,7 @@ In Java, ci sono principalmente **tre tipi** di insiemi:
 
 Tutti e tre sono basati su **`Set`**, una sotto-interfaccia di `Collection` e `Iterable`. La loro particolarità, e principale differenza rispetto alle [[Strutture dati#Le liste ArrayList, LinkedList|liste]], è che **non possono contenere elementi duplicati**.
 
-Un insieme di tipo **`HashSet`** consiste in un insieme di elementi che vengono memorizzati in una **tabella di hash**, in modo da consentire un aggiunta e una ricerca molto efficienti. Se si è sicuri di non prevedere duplicati nei dati che si stanno manipolando, spesso un `HashSet` risulta essere una delle opzioni più preferibili.
+Un insieme di tipo **`HashSet`** consiste in un insieme di elementi che vengono memorizzati in una **tabella di hash**, in modo da consentire un aggiunta e una ricerca molto efficienti. Se si è sicuri di non prevedere duplicati nei dati che si stanno manipolando, spesso un `HashSet` risulta essere una delle opzioni più preferibili; tuttavia, questa struttura dati **non permette di essere ordinata** in modo convenzionale, quindi diventa inutilizzabile se si vuole conservare un ordine nei dati memorizzati.
 
 Un `HashSet` viene dichiarato come un oggetto di tipo `Set<E>`, e una sua costruzione assume tendenzialmente la seguente forma:
 
@@ -172,17 +172,102 @@ I metodi principali che presenta l'`HashSet` per visualizzare e manipolare i dat
 - **`remove(E e)`**, che rimuove l'elemento `e` dall'insieme, se esso è presente al suo interno;
 - **`size()`**, che restituisce il numero di elementi contenuti nell'insieme.
 
-[TREESET]
+Un insieme di tipo **`TreeSet`** presenta sostanzialmente le stesse caratteristiche dell'`HashSet`, ma a differenza di quest'ultimo **ordina automaticamente gli elementi aggiunti ad esso** in base all'ordinamento naturale previsto per il loro tipo, o in base a un [[Interfacce#Comparator|comparatore]] personalizzato se questo viene specificato nella costruzione dell'insieme, e mantiene tale ordine (questa caratteristica è ottenuta mediante l'implementazione interna particolare del `TreeSet`, che corrisponde a una variante di albero binario di ricerca chiamata "**red-black tree**").
 
-[LINKEDHASHSET]
+Un `TreeSet` viene dichiarato come un oggetto di tipo `TreeSet<E>`, e una sua costruzione assume tendenzialmente la seguente forma:
+
+```
+TreeSet<E> identificatore = new TreeSet<>();
+```
+
+I metodi principali che presenta il `TreeSet` per visualizzare e manipolare i dati contenuti al suo interno sono gli stessi previsti per l'`HashSet`, con l'aggiunta dei seguenti:
+- **`ceiling(E e)`**, che restituisce l'elemento dell'insieme più piccolo maggiore o uguale di `e`, o `null` se un elemento del genere non è trovato;
+- **`descendingSet()`**, che restituisce l'insieme iniziale ma ordinato in ordine decrescente;
+- **`first()`**, che restituisce il primo elemento dell'insieme, che essendo un insieme ordinato corrisponderà all'elemento "minore";
+- **`floor(E e)`**, che restituisce l'elemento dell'insieme più grande minore o uguale di `e`, o `null` se un elemento del genere non è trovato;
+- **`headSet(E e)`**, che restituisce un sottoinsieme degli elementi contenuti nell'insieme di partenza che sono minori di `e`;
+- **`higher(E e)`**, che restituisce l'elemento dell'insieme più piccolo maggiore di `e`, o `null` se un elemento del genere non è trovato;
+- **`last()`**, che restituisce l'ultimo elemento dell'insieme, che essendo un insieme ordinato corrisponderà all'elemento "maggiore";
+- **`lower(E e)`**, che restituisce l'elemento dell'insieme più grande minore di `e`, o `null` se un elemento del genere non è trovato;
+- **`pollFirst()`**, che rimuove e restituisce il primo elemento dell'insieme;
+- **`pollLast()`**, che rimuove e restituisce l'ultimo elemento dell'insieme;
+- **`subSet(E from, E to)`**, che restituisce un sottoinsieme degli elementi contenuti nell'insieme di partenza tra `from` (incluso) e `to` (escluso);
+- **`tailSet(E e)`**, che restituisce un sottoinsieme degli elementi contenuti nell'insieme di partenza che sono maggiori o uguali di `e`.
+
+Un insieme di tipo **`LinkedHashSet`** presenta sostanzialmente le stesse caratteristiche dell'`HashSet`, ma a differenza di quest'ultimo **mantiene l'ordine di inserimento degli elementi** al suo interno, implementando una **linked list** doppiamente collegata per mantenere tale ordine e per permettere una ricerca rapida.
+
+Un `LinkedHashSet` viene dichiarato come un oggetto di tipo `LinkedHashSet<E>`, e una sua costruzione assume tendenzialmente la seguente forma:
+
+```
+LinkedHashSet<E> identificatore = new LinkedHashSet<>();
+```
+
+I metodi principali che presenta il `LinkedHashSet` per visualizzare e manipolare i dati contenuti al suo interno sono gli stessi identici previsti per l'`HashSet`, e non ne vengono aggiunti altri particolarmente rilevanti.
 ___
 #### Le mappe: HashMap, TreeMap e LinkedHashMap
 
-[INTRODUZIONE]
+In Java, ci sono principalmente **tre tipi** di mappe:
+- le **`HashMap`**;
+- le **`TreeMap`**;
+- le **`LinkedHashMap`**.
 
-[HASHMAP]
+Tutte e tre sono basati su **`Map`**, una sotto-interfaccia di `Collection` e `Iterable`. La loro particolarità, e principale differenza rispetto alle altre strutture dati viste finora, è che non contengono singoli elementi, ma **coppie di elementi della forma "chiave-valore"**, con le chiavi che **non possono essere duplicate**.
 
-[TREEMAP]
+Parlando di mappe, è importante anche parlare dell'interfaccia **`Map.Entry`**, un'interfaccia annidata statica contenuta all'interno dell'interfaccia `Map`, che rappresenta una singola "**entry**" della mappa, ossia **una singola coppia chiave-valore**. Questa classe permette una comoda iterazione sulle entry di una mappa, consentendo di lavorare contemporaneamente su una chiave e sui valori associati ad essa, anche grazie a metodi come:
+- **`getKey()`** per ottenere la chiave associata a una entry;
+- **`getValue()`** per ottenere il valore associato a una entry;
+- **`setValue(V value)`** per settare il valore associato a una entry a `value` e restituire il valore precedente;
+- **`equals(Map.Entry entry)`** per confrontare due entry, che vengono considerate uguali nel momento in cui sia le loro chiavi che i rispettivi valori coincidono.
 
-[LINKEDHASHMAP]
+Una mappa di tipo **`HashMap`** consiste in un insieme di coppie "chiave-valore" che vengono memorizzate in una **tabella di hash**, in modo da consentire un aggiunta e una ricerca molto efficienti. Come detto, le chiavi delle varie coppie devono essere **uniche**, e nel caso delle `HashMap` non è supportato `null` né come chiave né come valore; inoltre, questa struttura dati **non permette di essere ordinata** in modo convenzionale, quindi diventa inutilizzabile se si vuole conservare un ordine nei dati memorizzati.
+
+Una `HashMap` viene dichiarata come un oggetto di tipo `HashMap<K, V>`, e una sua costruzione assume tendenzialmente la seguente forma:
+
+```
+Map<K, V> identificatore = new HashMap<>();
+```
+
+I metodi principali che presenta l'`HashMap` per visualizzare e manipolare i dati contenuti al suo interno sono i seguenti:
+- **`clear()`**, che rimuove tutti gli elementi della mappa;
+- **`compute(K key, BiFunction<? super K, ? super V, ? super V> function)`**,
+- **`containsKey(K key)`**, che restituisce `true` se la mappa contiene la chiave `key`, o `false` altrimenti;
+- **`containsValue(V value)`**, che restituisce `true` se almeno una chiave è associata al valore `value`, o `false` altrimenti;
+- **`entrySet()`**, che restituisce un insieme contenente tutte le entry presenti nella mappa (rappresenta l'unico modo per ottenere concretamente degli oggetti di tipo `Map.Entry`);
+- **`forEach(BiConsumer<? super K, ? super V> action)`**, che esegue un'azione definita da `action` per ogni entry della mappa;
+- **`get(K key)`**, che restituisce il valore associato alla chiave `key`, o `null` se la chiave in questione non è presente;
+- **`getOrDefault(K key, V defaultValue)`**, che restituisce il valore associato alla chiave `key`, o il valore `defaultValue` se la chiave in questione non è presente; 
+- **`isEmpty()`**, che restituisce `true` se la mappa è vuota, o `false` altrimenti;
+- **`keySet()`**, che restituisce un insieme contenente tutte le chiavi presenti nella mappa;
+- **`put(K key, V value)`**, che inserisce la entry con la chiave `key` e il valore `value` nella mappa, e se una entry con tale chiave è già presente, restituisce il vecchio valore e lo sovrascrive con `value`;
+- **`putIfAbsent(K key, V value)`**, che inserisce la entry con la chiave `key` e il valore `value` nella mappa solo se tale chiave non è già presente;
+- **`remove(K key)`**, che rimuove dalla mappa la entry contenente la chiave `key` e restituisce il valore associato ad essa (o `null` se assente);
+- **`replace(K key, V value)`**, che sostituisce il valore associato alla chiave `key` con il valore `value` solo se tale chiave è presente nella mappa;
+- **`replace(K key, V oldValue, V newValue)`**, che sostituisce il valore associato alla chiave `key` con il valore `newValue` solo se tale chiave è presente nella mappa e il valore ad essa associato in precedenza corrisponde a `oldValue`;
+- **`replaceAll(BiFunction<? super K, ? super V, ? extends V> function)`**, che sostituisce i valori di tutte le entry della mappa con il risultato della funzione `function` applicata su ognuna di esse;
+- **`values()`**, che restituisce una `Collection` contenente tutti i valori presenti nella mappa.
+
+Una mappa di tipo **`TreeMap`** presenta sostanzialmente le stesse caratteristiche dell'`HashMap`, ma a differenza di quest'ultima **ordina automaticamente le entry aggiunte ad essa** in base all'ordinamento naturale previsto per il tipo delle chiavi, o in base a un [[Interfacce#Comparator|comparatore]] personalizzato se questo viene specificato nella costruzione della mappa, e mantiene tale ordine (questa caratteristica è ottenuta mediante l'implementazione interna particolare della `TreeMap`, che corrisponde a una variante di albero binario di ricerca chiamata "**red-black tree**").
+
+Una `TreeMap` viene dichiarata come un oggetto di tipo `TreeMap<K, V>`, e una sua costruzione assume tendenzialmente la seguente forma:
+
+```
+TreeMap<K, V> identificatore = new TreeMap<>();
+```
+
+I metodi principali che presenta la `TreeMap` per visualizzare e manipolare i dati contenuti al suo interno sono gli stessi previsti per l'`HashMap`, con l'aggiunta dei seguenti:
+- **`firstKey()`**, che restituisce la prima chiave della mappa;
+- **`higherKey(K key)`**, che restituisce la chiave successiva alla chiave `key` nella mappa;
+- **`lastKey()`**, che restituisce l'ultima chiave della mappa;
+- **`lowerKey(K key)`**, che restituisce la chiave precedente alla chiave `key` nella mappa;
+- **`subMap(K fromKey, K toKey)`**, che restituisce una sottomappa delle entry contenute nella mappa di partenza tra `fromKey` (inclusa) e `toKey` (esclusa).
+
+Una mappa di tipo **`LinkedHashMap`** presenta sostanzialmente le stesse caratteristiche dell'`HashMap`, ma a differenza di quest'ultima **mantiene l'ordine di inserimento delle entry** al suo interno, implementando una **linked list** doppiamente collegata per mantenere tale ordine e per permettere una ricerca rapida.
+
+Una `LinkedHashMap` viene dichiarata come un oggetto di tipo `LinkedHashMap<K, V>`, e una sua costruzione assume tendenzialmente la seguente forma:
+
+```
+LinkedHashMap<K, V> identificatore = new LinkedHashMap<>();
+```
+
+I metodi principali che presenta il `LinkedHashMap` per visualizzare e manipolare i dati contenuti al suo interno sono gli stessi identici previsti per l'`HashMap`, e non ne vengono aggiunti altri particolarmente rilevanti.
 ___

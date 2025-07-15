@@ -100,14 +100,14 @@ Ora, per leggere effettivamente qualcosa tramite lo `Scanner`, basterà utilizza
 Supponiamo di voler leggere, nel nostro esempio, l'intera stringa prima del newline inserita dall'utente. In questo caso, dovremo scrivere il seguente codice:
 
 ```
-String nome = scanner.nextLine();
+String nome = sc.nextLine();
 ```
 
 A questo punto, se volessimo chiedere un ulteriore input e leggerlo come un `int`, scriveremo il seguente codice:
 
 ```
 System.out.print("Inserisci la tua età: ");
-int eta = scanner.nextInt();
+int eta = sc.nextInt();
 ```
 
 Sarà possibile leggere quanti input si vorrà, e contenerli in un pari numero di [[Variabili|variabili]]. Una volta terminata la ricezione di input dall'utente, converrà sempre chiudere lo `Scanner`, utilizzando l'istruzione **`sc.close()`**.
