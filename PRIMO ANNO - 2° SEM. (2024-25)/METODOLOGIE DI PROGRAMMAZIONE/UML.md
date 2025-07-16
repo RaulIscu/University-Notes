@@ -75,7 +75,7 @@ Oltre alle regole spiegate prima, ci sono altre **convenzioni aggiuntive** per r
 Infine, è possibile anche inserire dei cosiddetti "**stereotipi UML**" in certi contesti, principalmente per indicare il ruolo o la particolare natura di una classe. Si tratta di **etichette opzionali** racchiuse tra parentesi del tipo **`<< >>`** e inserite nella sezione relativa al nome di una classe, come:
 - **`<<interface>>`**, che indica che la classe in questione è un'[[Interfacce|interfaccia]];
 - **`<<abstract>>`**, che indica che la classe in questione è una [[Classi#Classi astratte|classe astratta]];
-- **`<<enumeration>>`**, che indica che la classe in questione è un'[[Enumerazioni|enumerazione]].
+- **`<<enumeration>>`**, che indica che la classe in questione è un'[[Classi#Enumerazioni|enumerazione]].
 ___
 ## I collegamenti tra classi in UML
 

@@ -184,7 +184,16 @@ ___
 
 #### Comparator
 
+L'interfaccia funzionale **`Comparator<T>`** rappresenta un **criterio di ordinamento** tra oggetti di tipo generico `T`. Il suo unico **metodo astratto** è:
 
+```
+int compare(T o1, T o2);
+```
+
+che, per convenzione, deve ritornare un numero negativo se, secondo il criterio di ordinamento deciso, `o1` è "minore" di `o2`, un numero positivo se `o1` è "maggiore" di `o2`, e $0$ se `o1` è "uguale" a `o2`. Oltre a questo metodo, presenta anche altri **metodi di default**, come:
+- **`comparing(Function<T, U> f)`**, che restituisce un `Comparator` creato automaticamente su un attributo dell'oggetto di tipo `T`, sfruttando `f`;
+- **`thenComparing(Function<T, U> f)`**, utilizzato in concatenazione con il metodo precedente, per applicare un ordinamento secondario definito da `f` successivo a quello iniziale;
+- **`reversed()`**, che inverte l'ordine di un `Comparator`.
 ___
 #### Predicate e BiPredicate
 

@@ -196,3 +196,80 @@ pulsante.addActionListener(new ActionListener() {
 
 Si tratta, concretamente, di uno strumento abbastanza situazionale, soprattutto per la sua **impossibilità di riutilizzo**, per l'**assenza di costruttori** e per la **minore leggibilità in situazioni complesse**. Ciononostante, in varie circostanze permette di ottimizzare la creazione di oggetti e di gestire in modo rapido varie componenti del programma che si sta progettando.
 ___
+## Enumerazioni
+
+In Java, un'**enumerazione** è un particolare tipo di classe, che rappresenta un **insieme finito di costanti**. Internamente, ogni elemento di un'enumerazione, e quindi ognuna di queste costanti, consiste in **un'istanza pubblica, statica e finale** (`public static final`) della classe a cui appartiene.
+
+Un'enumerazione, detta anche "**classe `enum`**", è definita sostituendo quest'ultima alla normale keyword `class`; ad esempio, una classe `enum` basilare può essere la seguente:
+
+```
+public enum Giorno {
+	LUNEDI,
+	MARTEDI,
+	MERCOLEDI,
+	GIOVEDI,
+	VENERDI,
+	SABATO,
+	DOMENICA;
+}
+```
+
+Essendo ognuna delle 7 costanti un'istanza della classe `Giorno`, si può accedere facilmente ad esse ad esempio assegnandole a una variabile:
+
+```
+Giorno oggi = Giorno.LUNEDI;
+```
+
+Quello precedente, però, è un esempio molto basilare di enumerazione. È possibile, infatti, che una classe `enum` abbia anche altre componenti similmente a una normale [[Classi|classe]], come:
+- **campi**;
+- **metodi** (concreti o astratti);
+- **costruttori**.
+
+È possibile, ad esempio, **associare delle proprietà ad ognuna delle istanze** di un'enumerazione, in modo da caratterizzare meglio ciascuna di esse e rendere, così, l'intera classe più versatile ed espressiva. In questo contesto torna utile definire un **costruttore**; tuttavia, potrebbe venire spontaneo chiedersi a che scopo definire un costruttore, se è stato stabilito che ogni oggetto `enum` è già un'istanza della sua classe. Nel caso delle enumerazioni, lo scopo del costruttore (definito sempre come **privato** o come **package-private**) è più che altro **fornire indicazioni su cosa rappresentano le proprietà di un'istanza**, oltre che **inizializzarle al momento del caricamento della stessa**. Ad esempio, supponiamo ora di avere la seguente enumerazione `StatoOrdine`:
+
+```
+public enum StatoOrdine {
+	IN_ATTESA("In attesa di approvazione", false),
+	SPEDITO("Ordine spedito", false),
+    CONSEGNATO("Ordine consegnato", true);
+
+	private final String descrizione;
+	private final boolean isCompletato;
+
+	StatoOrdine(String descrizione, boolean isCompletato) {
+		this.descrizione = descrizione;
+		this.isCompletato = isCompletato;
+	}
+}
+```
+
+In un contesto del genere, ogni istanza di `StatoOrdine` presenta anche alcune informazioni associate ad essa, e il costruttore viene utilizzato internamente da Java, al momento del caricamento dell'istanza, per associare il valore corretto a ogni campo e per inizializzare concretamente quest'ultimi. In questo modo, sapremo che la `descrizione` è la [[Stringhe|stringa]] al primo posto, mentre la variabile `isCompletato` è il valore [[Tipi primitivi#I booleani `boolean`|booleano]] al secondo posto.
+
+Inoltre, avendo chiarito che un'istanza `enum` può avere effettivamente delle [[Classi#Campi, metodi e costruttori|variabili d'istanza]], si potranno implementare dei **metodi getter** per ottenere in maniera sicura tali valori. Ampliando sempre la classe `StatoOrdine`, otteniamo:
+
+```
+public enum StatoOrdine {
+	IN_ATTESA("In attesa di approvazione", false),
+	SPEDITO("Ordine spedito", false),
+    CONSEGNATO("Ordine consegnato", true);
+
+	private final String descrizione;
+	private final boolean isCompletato;
+
+	StatoOrdine(String descrizione, boolean isCompletato) {
+		this.descrizione = descrizione;
+		this.isCompletato = isCompletato;
+	}
+
+	public String getDescrizione() {
+		return this.descrizione;
+	}
+
+	public boolean isCompletato() {
+		return this.isCompletato;
+	}
+}
+```
+
+È possibile, se si desidera, definire anche altri **metodi** per svolgere qualsiasi operazione si voglia, e addirittura definire dei **metodi astratti** da sovrascrivere in ogni istanza.
+___
