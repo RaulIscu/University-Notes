@@ -262,17 +262,67 @@ Si noti che, sotto un certo punto di vista, la pipeline di costruzione di un ogg
 
 Va comunque detto che un'implementazione del pattern Builder non è sempre consigliata, soprattutto se ad essere istanziati sono oggetti semplici che presentano pochi campi, oppure nel caso in cui ci siano molte classi da costruire (in entrambi questi casi, aggiungere per ogni classe un proprio Builder diventerebbe dispendioso e, per certi versi, anche inutile).
 ___
-## Adapter
-
-
-___
 ## Decorator
 
 
 ___
 ## Observer
 
+Il *design pattern* **Observer** appartiene alla categoria dei **pattern comportamentali**, e il suo scopo principale è quello di **facilitare l'aggiornamento di certi oggetti in base a cambiamenti che avvengono in un altro oggetto**; concretamente, un'applicazione corretta di questo pattern va a definire una **relazione uno-a-molti**, in modo che quando un certo oggetto (il "**Subject**") cambia stato, esso notifichi automaticamente tutti gli oggetti che lo stanno "osservando" (gli "**Observer**").
 
+Generalmente, un'implementazione del pattern Observer rispetta una struttura che comprende le seguenti componenti:
+- una classe **`Observer`**, che consiste nella classe dell'oggetto "osservante", che tendenzialmente presenta un metodo che verrà chiamato quando viene notificato dall'oggetto "osservato", oppure un qualche altro modo di aggiornare il loro comportamento o i loro dati in base ad esso;
+- una classe **`Subject`**, che consiste nella classe dell'oggetto "osservato", che tendenzialmente presenta dei metodi per aggiungere e rimuovere degli `Observer` ad esso, e quindi anche un campo costituito dalla lista di tali `Observer`, così come un metodo per notificare comodamente tutti gli `Observer` legati ad esso.
+
+In alternativa, per un maggior **disaccoppiamento** e una maggiore **modularità**, è possibile anche definire **`Observer` e `Subject` come [[Interfacce|interfacce]]**, e creare delle classi `ConcreteObserver` e `ConcreteSubject` che vanno a implementare quest'ultime.
+
+Vediamo un esempio di applicazione di tale pattern. Supponiamo di voler definire una classe `NewsReader`, che sarà il nostro `Observer`:
+
+```
+public class NewsReader {
+	private String name;
+
+	public NewsReader(String name) {
+		this.name = name;
+	}
+
+	public void update(String message) {
+		System.out.println(name + " ha ricevuto notizia: " + message);
+	}
+}
+```
+
+Ora, definiamo la classe "osservata", ossia il nostro `Subject`, che chiameremo `NewsAgency`:
+
+```
+public class NewsAgency {
+	private List<NewsReader> readers = new ArrayList<>();
+	private String news;
+
+	public void attach(NewsReader nr) {
+		readers.add(nr);
+	}
+
+	public void detach(NewsReader nr) {
+		readers.add(nr);
+	}
+
+	public void notifyReaders() {
+		for (NewsReader nr : readers) {
+			nr.update(news);
+		}
+	}
+
+	public void setNews(String news) {
+		this.news = news;
+		notifyReaders();
+	} 
+}
+```
+
+Grazie a questa implementazione, è possibile aggiungere o rimuovere facilmente degli `Observer` con i metodi `attach()` e `detach()`, e notificare comodamente tutti gli `Observer` legati al `Subject` tramite il metodo `notifyReaders()`, che richiama il metodo `update()` su ognuno degli osservatori e che viene chiamato ogni volta che vengono aggiornate le notizie tramite il metodo `setNews()`.
+
+Come si può facilmente intuire, il *design pattern* Observer risulta particolarmente utile quando **un cambiamento di un oggetto deve influenzare automaticamente altri oggetti**, quando si vogliono **disaccoppiare varie componente** per rendere la struttura del programma più modulare e flessibile, e soprattutto quando si lavora con **GUI reattive e mutevoli**.
 ___
 ## Strategy
 

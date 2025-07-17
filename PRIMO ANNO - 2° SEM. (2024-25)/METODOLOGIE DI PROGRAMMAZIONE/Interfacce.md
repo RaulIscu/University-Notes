@@ -124,7 +124,7 @@ ___
 
 L'interfaccia **`Iterable<T>`** è un'interfaccia importantissima e relativamente di base che si trova nel package **`java.lang`**. Essa rappresenta una **generica collezione di elementi iterabili**, ossia una collezione i cui elementi possono essere ottenuti uno ad uno, tipicamente tramite un **[[Istruzioni di controllo#Il *for loop*|for-each loop]]**, tant'è che l'implementazione dell'interfaccia `Iterable<T>` è concretamente necessaria per poter utilizzare un qualsiasi oggetto in un loop del genere.
 
-Si tratta, quindi, di un'interfaccia importantissima, e pressoché essenziale per qualsiasi [[Strutture dati|struttura dati]] si voglia definire. Infatti, anche l'interfaccia **`Collection`** rappresenta, di fatto, una sottoclasse di `Iterable`, e quindi qualsiasi classe implementi la prima andrà automaticamente ad implementare anche la seconda.
+Si tratta, quindi, di un'interfaccia pressoché essenziale per qualsiasi [[Strutture dati|struttura dati]] si voglia definire. Infatti, anche l'interfaccia **`Collection`** rappresenta, di fatto, una sottoclasse di `Iterable`, e quindi qualsiasi classe implementi la prima andrà automaticamente ad implementare anche la seconda.
 
 L'interfaccia `Iterable` definisce **un solo metodo astratto**, ossia **`iterator()`**, che restituisce un oggetto di tipo `Iterator` responsabile dello scorrimento degli elementi della collezione, e a partire da Java 8 anche alcuni metodi di default, ossia:
 - **`forEach(Consumer<? super T> c)`**, che funziona in maniera analoga al metodo omonimo definito in `Stream`, e dunque va ad eseguire l'azione definita da `c` su ogni elemento della collezione;
@@ -136,11 +136,56 @@ Seppur venga rispettata la definizione formale di [[Interfacce#Interfacce funzio
 ___
 #### Iterator
 
+Se l'interfaccia `Iterable<T>` definisce una generica collezione di elementi iterabili, e presenta un metodo `iterator()` per creare l'oggetto responsabile di tale iterazione, l'interfaccia **`Iterator<T>`** rappresenta proprio questo oggetto. Si tratta, quindi, di un'interfaccia importantissima, che fornisce sostanzialmente dei metodi per **scorrere uno alla volta gli elementi di una collezione**. In particolare, i **metodi principali** definiti all'interno di `Iterator<T>` sono:
+- **`hasNext()`**, che restituisce `true` se è presente almeno un altro elemento successivo a quello considerato attualmente, o `false` altrimenti;
+- **`next()`**, che restituisce l'elemento successivo a quello considerato attualmente;
+- **`remove()`**, che rimuove dalla collezione l'elemento considerato attualmente (la sua implementazione è opzionale).
 
+Per comprendere meglio il funzionamento di `Iterable` e `Iterator`, supponiamo di voler creare una classe personalizzata `MiaCollezione`:
+
+```
+public class MiaCollezione implements Iterable<String> {
+	private String[] dati = {"a", "b", "c"};
+
+	public Iterator<String> iterator() {
+		return new Iterator<String>() {
+			private int indice = 0;
+
+			public boolean hasNext() {
+				return indice < dati.length;
+			}
+
+			public String next() {
+				return dati[indice++];
+			}
+		}
+	}
+}
+```
+
+Come possiamo notare, la classe `MiaCollezione` implementa l'interfaccia `Iterable`, ed è quindi obbligata a fornire una definizione concreta per il metodo `iterator()`, all'interno del quale si definisce la [[Classi#Classi anonime|classe anonima]] `Iterator`, classe a cui apparterrà l'oggetto eventualmente restituito dal metodo. In questo modo, siamo certi che la classe `MiaCollezione` sarà perfettamente capace di fornire un'iterazione di sé stessa in un for-each loop, o anche utilizzando direttamente `Iterator`, ad esempio scrivendo il seguente codice:
+
+```
+Iterator<String> it = collezione.iterator();
+while (it.hasNext()) {
+	...
+}
+```
+
+Come abbiamo detto, non è strettamente necessario fornire un'implementazione concreta per il metodo `remove()`, tuttavia esso è un metodo particolarmente importante se si prevede di **rimuovere elementi in-place durante l'iterazione**. C'è, però, da tenere a mente una regola: **non bisogna mai utilizzare `remove()` in un for-each loop**, ma solo se si lavora apertamente con un `Iterator` come nell'esempio precedente. Infatti, cercare di fare ciò porterebbe a un'[[Eccezioni|eccezione]], ossia `ConcurrentModificationException`.
 ___
 #### Comparable
 
+L'interfaccia **`Comparable<T>`** è un'interfaccia molto importante e comune, che si trova nel package **`java.lang`**. Essa rappresenta un **oggetto che può essere confrontato e ordinato con altri oggetti del suo tipo** mediante un ordine "naturale" definito a priori per la classe. È molto importante definire un ordinamento di questo tipo soprattutto perché, di fatto, è il criterio che regola il funzionamento di metodi come `Collections.sort()` o `Arrays.sort()`.
 
+L'interfaccia `Comparable` definisce **un solo metodo astratto**, ossia **`compareTo(T other)`**, responsabile del confronto tra due oggetti di tipo `T`, ossia quello su cui viene chiamato il metodo e `other`, e che convenzionalmente restituisce:
+- un intero maggiore di $0$ se l'oggetto chiamante è "maggiore" di `other`;
+- un intero minore di $0$ se l'oggetto chiamante è "minore" di `other`;
+- $0$ se l'oggetto chiamante è "uguale" a `other`.
+
+Notiamo, però, un'incongruenza: **`Comparable<T>` definisce al suo interno un solo metodo astratto, eppure non è considerata un'interfaccia funzionale**. Perché?
+
+Seppur venga rispettata la definizione formale di [[Interfacce#Interfacce funzionali|interfaccia funzionale]], `Comparable` funziona in maniera completamente diversa da una qualsiasi delle interfacce appartenenti a tale categoria. Quest'ultime, infatti, rappresentano in particolare un **comportamento** o una **funzione** ben precisa, mentre ciò non può assolutamente essere affermato per `Comparable`, che piuttosto definisce a priori il criterio per cui due oggetti di una stessa classe sono confrontati. La differenza è ancora più evidente se si paragona `Comparable<T>` a `Comparator<T>`: quest'ultima, infatti, è un'interfaccia funzionale in quanto definisce, al suo interno (mediante espressioni lambda o riferimenti a metodo) un criterio di ordinamento situazionale tra due oggetti dello stesso tipo; invece, `Comparable` definisce un criterio di ordinamento universale e naturale tra questi due oggetti, all'interno della loro stessa classe, e oltretutto necessita di un oggetto chiamante e non può operare in maniera "funzionale" su due oggetti presi in input.
 ___
 ## Interfacce funzionali
 
