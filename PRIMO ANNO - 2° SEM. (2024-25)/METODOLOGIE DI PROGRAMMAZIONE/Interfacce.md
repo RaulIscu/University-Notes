@@ -118,7 +118,7 @@ Per quanto riguarda, invece, le principali **operazioni terminali**, esse sono:
 - **`noneMatch(Predicate<T> p)`**, che restituisce `true` se nessuno degli elementi dello stream rispetta la condizione booleana definita da `p`, e `false` altrimenti;
 - **`toArray()`**, che restituisce un array contenente tutti gli elementi dello stream.
 
-Si tratta di uno strumento molto potente soprattutto per la **manipolazione di grandi quantità di dati**, e la sua **struttura** **dichiarativa**, **leggibile** e **concisa** lo rendono anche particolarmente comodo da utilizzare. Inoltre, per natura si integra molto facilmente con **[[Espressioni lambda e riferimenti a metodi#Espressioni lambda|espressioni lambda]]**, e il supporto al **parallelismo** consente eventualmente di lavorare su più stream in contemporanea velocemente.
+Si tratta di uno strumento molto potente soprattutto per la **manipolazione di grandi quantità di dati**, e la sua **struttura** **dichiarativa**, **leggibile** e **concisa** lo rendono anche particolarmente comodo da utilizzare. Inoltre, per natura si integra molto facilmente con **[[Espressioni lambda e riferimenti a metodo#Espressioni lambda|espressioni lambda]]**, e il supporto al **parallelismo** consente eventualmente di lavorare su più stream in contemporanea velocemente.
 ___
 #### Iterable
 
@@ -195,7 +195,7 @@ In poche parole, un'**interfaccia funzionale** è un tipo particolare di [[Inter
 @FunctionalInterface
 ```
 
-Si tratta di uno strumento più potente di quello che può sembrare, soprattutto per la possibilità del loro **utilizzo insieme a [[Espressioni lambda e riferimenti a metodi#Espressioni lambda|espressioni lambda]] e [[Espressioni lambda e riferimenti a metodi#Riferimenti a metodi|riferimenti a metodi]]**. Infatti, essendo dotate di un solo metodo astratto, è possibile istanziare delle interfacce funzionali con compiti personalizzati in maniera comoda e veloce, proprio sfruttando i due strumenti appena citati. Ad esempio, supponiamo di definire la seguente interfaccia funzionale:
+Si tratta di uno strumento più potente di quello che può sembrare, soprattutto per la possibilità del loro **utilizzo insieme a [[Espressioni lambda e riferimenti a metodo#Espressioni lambda|espressioni lambda]] e [[Espressioni lambda e riferimenti a metodo#Riferimenti a metodi|riferimenti a metodi]]**. Infatti, essendo dotate di un solo metodo astratto, è possibile istanziare delle interfacce funzionali con compiti personalizzati in maniera comoda e veloce, proprio sfruttando i due strumenti appena citati. Ad esempio, supponiamo di definire la seguente interfaccia funzionale:
 
 ```
 @FunctionalInterface
