@@ -65,9 +65,9 @@ ___
 
 #### Collection
 
-L'interfaccia **`Collection<E>`** è una delle interfacce più importanti, se non la più importante, del [[Strutture dati#Java Collection Framework|Java Collection Framework]].
+L'interfaccia **`Collection<E>`** è una delle interfacce più importanti, se non la più importante, del [[PRIMO ANNO - 2° SEM. (2024-25)/METODOLOGIE DI PROGRAMMAZIONE/Strutture dati#Java Collection Framework|Java Collection Framework]].
 
-Si trova nel package **`java.util`**, e rappresenta la principale interfaccia implementata dalle più comuni **[[Strutture dati|strutture dati]]** del framework, che in particolare vanno singolarmente a implementare delle sotto-interfacce di `Collection<E>`, come `List<E>`, `Set<E>` o `Queue<E>` (l'unica eccezione tra le strutture dati più utilizzate è `Map<K, V>`).
+Si trova nel package **`java.util`**, e rappresenta la principale interfaccia implementata dalle più comuni **[[PRIMO ANNO - 2° SEM. (2024-25)/METODOLOGIE DI PROGRAMMAZIONE/Strutture dati|strutture dati]]** del framework, che in particolare vanno singolarmente a implementare delle sotto-interfacce di `Collection<E>`, come `List<E>`, `Set<E>` o `Queue<E>` (l'unica eccezione tra le strutture dati più utilizzate è `Map<K, V>`).
 
 Il contratto definito dall'interfaccia va a teorizzare un **oggetto che contiene un gruppo di elementi** (a seconda della sottoclasse, sono permessi o meno duplicati), e fornisce una lista di metodi di base per aggiungere, rimuovere, visualizzare e iterare sugli elementi. In particolare, i **metodi principali** definiti all'interno di `Collection<E>` sono:
 - **`boolean add(E e)`**;
@@ -93,7 +93,7 @@ Un oggetto `Stream` può essere **creato** in vari modi, tra cui:
 - a partire da un array, utilizzando **`Arrays.stream(array)`**;
 - a partire dalle righe di un file, utilizzando **`Files.lines(path)`**.
 
-Un oggetto `Stream` viene sempre generato a partire da una fonte di dati separata (ad esempio una collezione, un [[Strutture dati#Array|array]] o un file), ma non costituisce di per sé una fonte di dati; insomma, uno Stream non memorizza nulla, ma permette di definire e applicare efficientemente **una pipeline di operazioni** su dati già esistenti.
+Un oggetto `Stream` viene sempre generato a partire da una fonte di dati separata (ad esempio una collezione, un [[PRIMO ANNO - 2° SEM. (2024-25)/METODOLOGIE DI PROGRAMMAZIONE/Strutture dati#Array|array]] o un file), ma non costituisce di per sé una fonte di dati; insomma, uno Stream non memorizza nulla, ma permette di definire e applicare efficientemente **una pipeline di operazioni** su dati già esistenti.
 
 Uno Stream particolare **può essere consumato una sola volta**, può essere eseguito in maniera **sequenziale** o **parallela** con altri Stream, e **non va mai a modificare la sorgente originale**. Le operazioni che si possono compiere su di esso si dividono principalmente in due categorie: **intermedie** e **terminali**. La pipeline di operazioni di uno Stream, tendenzialmente, è costituita da un certo numero di operazioni intermedie in sequenza, che restituiscono ognuna un nuovo Stream diverso da quello di partenza, seguite da un'operazione terminale che lo esaurisce.
 
@@ -124,7 +124,7 @@ ___
 
 L'interfaccia **`Iterable<T>`** è un'interfaccia importantissima e relativamente di base che si trova nel package **`java.lang`**. Essa rappresenta una **generica collezione di elementi iterabili**, ossia una collezione i cui elementi possono essere ottenuti uno ad uno, tipicamente tramite un **[[Istruzioni di controllo#Il *for loop*|for-each loop]]**, tant'è che l'implementazione dell'interfaccia `Iterable<T>` è concretamente necessaria per poter utilizzare un qualsiasi oggetto in un loop del genere.
 
-Si tratta, quindi, di un'interfaccia pressoché essenziale per qualsiasi [[Strutture dati|struttura dati]] si voglia definire. Infatti, anche l'interfaccia **`Collection`** rappresenta, di fatto, una sottoclasse di `Iterable`, e quindi qualsiasi classe implementi la prima andrà automaticamente ad implementare anche la seconda.
+Si tratta, quindi, di un'interfaccia pressoché essenziale per qualsiasi [[PRIMO ANNO - 2° SEM. (2024-25)/METODOLOGIE DI PROGRAMMAZIONE/Strutture dati|struttura dati]] si voglia definire. Infatti, anche l'interfaccia **`Collection`** rappresenta, di fatto, una sottoclasse di `Iterable`, e quindi qualsiasi classe implementi la prima andrà automaticamente ad implementare anche la seconda.
 
 L'interfaccia `Iterable` definisce **un solo metodo astratto**, ossia **`iterator()`**, che restituisce un oggetto di tipo `Iterator` responsabile dello scorrimento degli elementi della collezione, e a partire da Java 8 anche alcuni metodi di default, ossia:
 - **`forEach(Consumer<? super T> c)`**, che funziona in maniera analoga al metodo omonimo definito in `Stream`, e dunque va ad eseguire l'azione definita da `c` su ogni elemento della collezione;

@@ -90,7 +90,7 @@ In Java, ci sono principalmente **due tipi** di liste:
 
 Entrambe sono basate su **`List`**, una sotto-interfaccia derivata da `Collection` e da `Iterable`.
 
-Una lista di tipo **`ArrayList`** consiste in una **lista dinamica**, basata sull'[[Strutture dati#Array|array]] ma molto più flessibile e manipolabile, innanzitutto per le sue dimensioni variabili e per il ridimensionamento dinamico della stessa. Si tratta di una struttura potente per memorizzare oggetti (anche duplicati) per cui è importante un accesso rapido tramite indice, ma lo spostamento, l'inserimento o la rimozione di elementi in mezzo alla lista risultano relativamente lenti.
+Una lista di tipo **`ArrayList`** consiste in una **lista dinamica**, basata sull'[[PRIMO ANNO - 2° SEM. (2024-25)/METODOLOGIE DI PROGRAMMAZIONE/Strutture dati#Array|array]] ma molto più flessibile e manipolabile, innanzitutto per le sue dimensioni variabili e per il ridimensionamento dinamico della stessa. Si tratta di una struttura potente per memorizzare oggetti (anche duplicati) per cui è importante un accesso rapido tramite indice, ma lo spostamento, l'inserimento o la rimozione di elementi in mezzo alla lista risultano relativamente lenti.
 
 Un'`ArrayList` viene dichiarata come un oggetto di tipo `List<E>`, e una sua costruzione assume tendenzialmente la seguente forma:
 
@@ -153,7 +153,7 @@ In Java, ci sono principalmente **tre tipi** di insiemi:
 - i **`TreeSet`**;
 - i **`LinkedHashSet`**.
 
-Tutti e tre sono basati su **`Set`**, una sotto-interfaccia di `Collection` e `Iterable`. La loro particolarità, e principale differenza rispetto alle [[Strutture dati#Le liste ArrayList, LinkedList|liste]], è che **non possono contenere elementi duplicati**.
+Tutti e tre sono basati su **`Set`**, una sotto-interfaccia di `Collection` e `Iterable`. La loro particolarità, e principale differenza rispetto alle [[PRIMO ANNO - 2° SEM. (2024-25)/METODOLOGIE DI PROGRAMMAZIONE/Strutture dati#Le liste ArrayList, LinkedList|liste]], è che **non possono contenere elementi duplicati**.
 
 Un insieme di tipo **`HashSet`** consiste in un insieme di elementi che vengono memorizzati in una **tabella di hash**, in modo da consentire un aggiunta e una ricerca molto efficienti. Se si è sicuri di non prevedere duplicati nei dati che si stanno manipolando, spesso un `HashSet` risulta essere una delle opzioni più preferibili; tuttavia, questa struttura dati **non permette di essere ordinata** in modo convenzionale, quindi diventa inutilizzabile se si vuole conservare un ordine nei dati memorizzati.
 

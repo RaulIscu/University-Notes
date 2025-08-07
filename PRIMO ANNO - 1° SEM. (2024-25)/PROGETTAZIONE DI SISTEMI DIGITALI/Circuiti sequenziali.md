@@ -1,3 +1,5 @@
+## Cos'è un circuito sequenziale
+
 Un **circuito sequenziale** è un circuito in cui gli *output* dipendono sia dagli *input* attuali che da quelli precedenti (esso, dunque, "ricorda" gli *input* precedenti a quelli attuali, infatti un circuito sequenziale è dotato di memoria).
 
 In un circuito sequenziale potrebbero essere ricordati degli *input* precisi, oppure essi potrebbero essere condensati in un'informazione riassuntiva chiamata lo "**stato**" del sistema. Lo stato di un circuito è, solitamente, rappresentato da una determinata quantità di bit chiamati "**variabili di stato**", che contengono le informazioni relative al funzionamento passato del circuito necessarie per definire il funzionamento futuro dello stesso.

@@ -14,7 +14,7 @@ Gli **interi** (con segno) vengono suddivisi in 4 tipi primitivi:
 - **`int`**;
 - **`long`**.
 
-Una variabile di tipo **`byte`** può contenere un intero segnato di **8 bit**, che può quindi rappresentare un qualsiasi intero nell'intervallo **$[-128,\, 127]$**. In genere, questo tipo torna utile quando si lavora con [[Interfacce#Stream|stream]] di dati provenienti dalla rete o da un file, quando si vuole risparmiare memoria nel salvataggio di dati in [[Strutture dati#Array|array]], o quando si lavora con dati espressi in binario.
+Una variabile di tipo **`byte`** può contenere un intero segnato di **8 bit**, che può quindi rappresentare un qualsiasi intero nell'intervallo **$[-128,\, 127]$**. In genere, questo tipo torna utile quando si lavora con [[Interfacce#Stream|stream]] di dati provenienti dalla rete o da un file, quando si vuole risparmiare memoria nel salvataggio di dati in [[PRIMO ANNO - 2° SEM. (2024-25)/METODOLOGIE DI PROGRAMMAZIONE/Strutture dati#Array|array]], o quando si lavora con dati espressi in binario.
 
 Una variabile di tipo **`short`** può contenere un intero segnato di **16 bit**, che può quindi rappresentare un qualsiasi intero tra **$[-32\,768,\, 32\,767]$**. Similmente al byte, questo tipo viene spesso utilizzato quando si vuole risparmiare memoria nel salvataggio di dati.
 
@@ -28,7 +28,7 @@ Ognuno dei tipi primitivi appena analizzati dispone di una **classe wrapper**, c
 - **`Integer`**;
 - **`Long`**.
 
-Utilizzare un valore tramite la sua classe wrapper è necessario in alcuni contesti (ad esempio, nelle [[Strutture dati#Java Collection Framework|collezioni]]), e utile in altri per la possibilità di sfruttare alcuni metodi come `Integer.parseInt()` o `Long.compare()`.
+Utilizzare un valore tramite la sua classe wrapper è necessario in alcuni contesti (ad esempio, nelle [[PRIMO ANNO - 2° SEM. (2024-25)/METODOLOGIE DI PROGRAMMAZIONE/Strutture dati#Java Collection Framework|collezioni]]), e utile in altri per la possibilità di sfruttare alcuni metodi come `Integer.parseInt()` o `Long.compare()`.
 ___
 ## I reali: `float`, `double`
 
@@ -60,7 +60,7 @@ Entrambi i tipi primitivi appena analizzati dispongono di una **classe wrapper**
 - **`Float`**;
 - **`Double`**.
 
-Utilizzare un valore tramite la sua classe wrapper è necessario in alcuni contesti (ad esempio, nelle [[Strutture dati#Java Collection Framework|collezioni]]), e utile in altri per la possibilità di sfruttare alcuni metodi come `Double.parseDouble()` o `Float.isNan()`. Inoltre, tali classi presentano alcune **costanti** che potrebbero tornare utili nel calcolo matematico, come:
+Utilizzare un valore tramite la sua classe wrapper è necessario in alcuni contesti (ad esempio, nelle [[PRIMO ANNO - 2° SEM. (2024-25)/METODOLOGIE DI PROGRAMMAZIONE/Strutture dati#Java Collection Framework|collezioni]]), e utile in altri per la possibilità di sfruttare alcuni metodi come `Double.parseDouble()` o `Float.isNan()`. Inoltre, tali classi presentano alcune **costanti** che potrebbero tornare utili nel calcolo matematico, come:
 - **`POSITIVE_INFINITY`**, che rappresenta $+\infty$;
 - **`NEGATIVE_INFINITY`**, che rappresenta $-\infty$;
 - **`NaN`**, che rappresenta un "non-numero".

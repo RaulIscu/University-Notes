@@ -12,7 +12,7 @@ String identificatore = "testo";
 
 dove `identificatore` rappresenta, ovviamente, l'identificatore della variabile in questione, e `testo` è la sequenza di caratteri concreta che viene associata alla variabile (nell'inizializzazione di una stringa, il testo della stringa va sempre racchiuso tra virgolette).
 
-A livello interno, la classe `String` memorizza i suoi caratteri in un **[[Strutture dati#Array|array]] di [[Tipi primitivi#I caratteri `char`|caratteri]]**, attributo che viene definito come **`final`** e che quindi non può essere modificato una volta inizializzato (per questo motivo una stringa è immutabile).
+A livello interno, la classe `String` memorizza i suoi caratteri in un **[[PRIMO ANNO - 2° SEM. (2024-25)/METODOLOGIE DI PROGRAMMAZIONE/Strutture dati#Array|array]] di [[Tipi primitivi#I caratteri `char`|caratteri]]**, attributo che viene definito come **`final`** e che quindi non può essere modificato una volta inizializzato (per questo motivo una stringa è immutabile).
 ___
 ## Metodi principali
 
@@ -47,7 +47,7 @@ I principali **metodi di "modifica"** sono i seguenti:
 - **`trim()`**, che restituisce la stringa di partenza ma priva di eventuali spazi vuoti iniziali o finali.
 
 I principali **metodi di splitting e parsing** sono i seguenti:
-- **`getBytes()`**, che restituisce un [[Strutture dati#Array|array]] di [[Tipi primitivi#Gli interi `byte`, `short`, `int` e `long`|byte]] che corrisponde alla sequenza di caratteri della stringa in questione;
+- **`getBytes()`**, che restituisce un [[PRIMO ANNO - 2° SEM. (2024-25)/METODOLOGIE DI PROGRAMMAZIONE/Strutture dati#Array|array]] di [[Tipi primitivi#Gli interi `byte`, `short`, `int` e `long`|byte]] che corrisponde alla sequenza di caratteri della stringa in questione;
 - **`split(String regex)`**, che restituisce un array di stringhe ottenute dividendo la stringa in questione in corrispondenza ad ogni occorrenza di `regex` al suo interno;
 - **`toCharArray`**, che restituisce un array di [[Tipi primitivi#I caratteri `char`|caratteri]] che corrisponde alla sequenza di caratteri della stringa in questione.
 

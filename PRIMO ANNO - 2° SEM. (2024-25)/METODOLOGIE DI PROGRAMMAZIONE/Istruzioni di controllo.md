@@ -209,7 +209,7 @@ for (tipo variabileIterata : collezione) {
 
 dove `tipo` specifica il tipo delle variabili che verranno utilizzate dal ciclo, `variabileIterata` è il nome della variabile che conterrà mano a mano gli elementi della collezione considerata, e quest'ultima è indicata da `collezione`. Ad ogni iterazione del *loop*, nella variabile iterata viene conservato l'elemento successivo della collezione; ciò avviene finché non vengono esauriti tutti gli elementi della collezione. Nonostante il *for-each loop* termini automaticamente una volta esauriti gli elementi dell'*array*, è possibile terminare il ciclo prima utilizzando l'istruzione `break`.
 
-È importante ricordare che, iterando su una [[Strutture dati|struttura dati]] con un *for-each loop*, le variabili iterate sono utilizzate esclusivamente per essere lette, e non potranno essere modificate dal blocco di istruzioni incluso nel corpo del ciclo. Ad esempio, nel seguente codice:
+È importante ricordare che, iterando su una [[PRIMO ANNO - 2° SEM. (2024-25)/METODOLOGIE DI PROGRAMMAZIONE/Strutture dati|struttura dati]] con un *for-each loop*, le variabili iterate sono utilizzate esclusivamente per essere lette, e non potranno essere modificate dal blocco di istruzioni incluso nel corpo del ciclo. Ad esempio, nel seguente codice:
 
 ```
 int nums[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
