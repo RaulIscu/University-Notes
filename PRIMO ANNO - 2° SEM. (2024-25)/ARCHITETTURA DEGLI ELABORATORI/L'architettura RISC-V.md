@@ -1,15 +1,3 @@
-### Cos'è una CPU?
-
-Un **calcolatore** è composto da una miriade di vari componenti, suddivisibili in varie categorie e che interagiscono tutti tra loro. Uno dei più importanti componenti di un calcolatore, se non il più importante, è la sua CPU.
-
-La **CPU** (o **Central Processing Unit**), detta anche "processore" di un calcolatore, rappresenta la parte attiva di quest'ultimo, la componente che esegue fedelmente le istruzioni di un programma. È in grado di effettuare operazioni aritmetiche, compiere dei controlli su di esse, inviare segnali per attivare i dispositivi di I/O (input/output), e altro ancora.
-
-Tendenzialmente, un processore comprende due componenti principali:
-- un'**unità di elaborazione dati** (o **datapath**), che provvede ad eseguire concretamente le operazioni da eseguire;
-- un'**unità di controllo**, che indica al datapath, alla memoria e ai dispositivi di I/O che cosa fare con i dati ottenuti dalle varie operazioni, in base alle istruzioni fornite dal programma che sta venendo eseguito.
-
-All'interno di un processore, poi, è possibile trovare un tipo particolare di memoria, la cosiddetta **memoria cache**, che consiste in una memoria di modeste dimensioni ma particolarmente veloce; essa è costruita utilizzando la tecnologia di memoria **SRAM**, o "**Static Random Access Memory**", più veloce ma più costosa delle memorie di tipo **DRAM**, o "**Dynamic Random Access Memory**".
-___
 ### Cosa si intende per "architettura"?
 
 Per facilitare la progettazione, la configurazione e l'utilizzo di un calcolatore, uno dei concetti più importanti da tenere a mente è quello dell'**astrazione**, e uno dei gradi più importanti di astrazione è l'**interfaccia tra l'hardware e il software di più basso livello**. Questa comunicazione tra le due parti avviene attraverso una sorta di "vocabolario", le cui parole sono dette "**istruzioni**"; l'insieme di queste istruzioni, e quindi il vocabolario stesso, viene detto **ISA** (**Instruction Set Architecture**), ossia "architettura dell'insieme di istruzioni", o più semplicemente "**architettura**" del calcolatore.
@@ -30,4 +18,5 @@ In questo corso, il linguaggio che verrà maggiormente approfondito è l'**archi
 Approfondendo il secondo punto, l'architettura RISC-V, in un'implementazione a 32 bit, prevede **32 registri da 32 bit** (o una parola) **ciascuno**, indicizzati da `x0` a `x31` (il registro `x0` conterrà sempre il valore 0). La presenza di questi registri, che saranno destinati a contenere gli operandi delle varie operazioni che si vogliono eseguire, permette un accesso molto più veloce ai dati stessi. Nominare i vari registri come `x0`, `x1`, `x2` e così via è una convenzione dell'architettura RISC-V; questa convenzione vale per tutti i registri ad eccezione di alcuni particolari, che hanno un nome personalizzato.
 
 Inoltre, in tale tipo di architettura, si potranno accedere a un massimo di **$2^{30}$ parole di memoria indirizzate al byte**: per questo motivo, due variabili successive in memoria avranno indirizzi a distanza 4. Alla memoria si può accedere solamente attraverso istruzioni di **[[Assembly e RARS#Istruzioni di trasferimento dati|trasferimento dati]]**.
+___
 
