@@ -146,11 +146,11 @@ Vediamo cosa viene indicato da ciascuno dei 6 campi in cui è divisa la sequenza
 Come si può notare, l'istruzione appena analizzata, così come qualsiasi istruzione RISC-V, **richiede esattamente 32 bit**, o **una parola**, di memoria.
 
 Questa scomposizione di un'istruzione in campi è definita "**formato**" dell'istruzione. Per rendere più facile la trattazione, ai diversi campi di un'istruzione RISC-V viene associato un nome; nel caso del formato appena analizzato, questi nomi sono:
-- **`codop`** per il sesto campo;
-- **`rd`** per il quinto campo;
-- **`funz3`** per il quarto campo;
-- **`rs1`** e **`rs2`** per il terzo e secondo campo;
-- **`funz7`** per il primo campo.
+- **`codop`** per il sesto campo, lungo 7 bit;
+- **`rd`** per il quinto campo, lungo 5 bit;
+- **`funz3`** per il quarto campo, lungo 3 bit;
+- **`rs1`** e **`rs2`** per il terzo e secondo campo, lunghi 5 bit ciascuno;
+- **`funz7`** per il primo campo, lungo 7 bit.
 
 Il **`codop`**, chiamato anche "**codice operativo**", è il numero che codifica l'operazione base dell'istruzione in questione (in questo caso, la somma); oltre al `codop` in sé, i campi **`funz3`** e **`funz7`** forniscono ulteriori informazioni aggiuntive. I campi **`rs1`** e **`rs2`**, invece, contengono il numero associato ai due registri che contengono i due **operandi** dell'operazione (in questo caso, `x20` e `x21`). Infine, il campo **`rd`** contiene il numero associato al registro che conterrà il **risultato** dell'operazione (in questo caso, `x9`). Si noti come i campi destinati ai registri sono lunghi esattamente **5 bit**, dato che l'architettura RISC-V prevede 32 registri e 5 bit possono codificare esattamente 32 numeri distinti (da $0$ a $31$).
 
@@ -158,18 +158,27 @@ Tuttavia, questo **non è un formato valido universalmente per tutte le istruzio
 - il formato di **tipo R**;
 - il formato di **tipo I**;
 - il formato di **tipo S**;
+- il formato di **tipo SB**;
 - il formato di **tipo U**.
 
-Quello dell'esempio è un formato di tipo R (R sta per "registro"); analizziamo, invece, il formato di **tipo I** (I sta per "immediato"). Tale formato viene utilizzato, come suggerisce il nome, dalle **istruzioni aritmetiche in cui un operando è una costante**, ma anche dalle **istruzioni di trasferimento dati dalla memoria**. In questo caso, i campi di un'istruzione di tipo I sono divisi nel seguente modo:
-- i primi 12 bit vengono chiamati **`imm`**, o immediato;
+Quello dell'esempio è un formato di tipo R (R sta per "register"), la cui disposizione dei campi può essere schematizzata così:
+
+![[formato_r.png]]
+
+Analizziamo, invece, il formato di **tipo I** (I sta per "immediate"). Tale formato viene utilizzato, come suggerisce il nome, dalle **istruzioni aritmetiche in cui un operando è una costante**, ma anche dalle **istruzioni di trasferimento dati dalla memoria**. In questo caso, i campi di un'istruzione di tipo I sono divisi nel seguente modo:
+- i primi 12 bit vengono chiamati **`imm[11:0]`**, o **immediato**;
 - i successivi 5 bit vengono chiamati **`rs1`**;
 - i successivi 3 bit vengono chiamati **`funz3`**;
 - i successivi 5 bit vengono chiamati **`rd`**;
 - i successivi 7 bit vengono chiamati **`codop`**.
 
-Similmente alle istruzioni di tipo R, anche in questo caso troviamo i campi `codop`, `rd`, `funz3` e `rs1`, situati nella stessa posizione e aventi lo stesso scopo. Ciò che cambia è la sostituzione dei 7 bit di `funz7` e dei 5 bit di `rs2` con 12 bit di `imm`, che vanno a contenere una **costante**, interpretata in complemento a 2 e che può, perciò, rappresentare un qualsiasi intero dell'intervallo $[-2^{11}, 2^{11} - 1]$.
+Possiamo schematizzare la disposizione dei campi del formato di tipo I così:
 
-Poi, vediamo il formato di **tipo S**, utilizzato dalle **istruzioni di trasferimento dati nella memoria**, che necessitano di due registri-sorgente (uno per l'indirizzo base e un altro per il dato da memorizzare) e di una costante (l'offset rispetto all'indirizzo base). In questo caso, i campi di un'istruzione di tipo S sono divisi nel seguente modo:
+![[formato_i.png]]
+
+Similmente alle istruzioni di tipo R, anche in questo caso troviamo i campi `codop`, `rd`, `funz3` e `rs1`, situati nella stessa posizione e aventi lo stesso scopo. Ciò che cambia è la sostituzione dei 7 bit di `funz7` e dei 5 bit di `rs2` con 12 bit di `imm[11:0]`, che vanno a contenere una **costante**, interpretata in complemento a 2 e che può, perciò, rappresentare un qualsiasi intero dell'intervallo $[-2^{11}, 2^{11} - 1]$.
+
+Poi, vediamo il formato di **tipo S** (S sta per "store"), utilizzato dalle **istruzioni di trasferimento dati nella memoria**, che necessitano di due registri-sorgente (uno per l'indirizzo base e un altro per il dato da memorizzare) e di una costante (l'offset rispetto all'indirizzo base). In questo caso, i campi di un'istruzione di tipo S sono divisi nel seguente modo:
 - i primi 7 bit vengono chiamati **`imm[11:5]`**;
 - i successivi 5 bit vengono chiamati **`rs2`**;
 - i successivi 5 bit vengono chiamati **`rs1`**;
@@ -177,14 +186,40 @@ Poi, vediamo il formato di **tipo S**, utilizzato dalle **istruzioni di trasferi
 - i successivi 5 bit vengono chiamati **`imm[4:0]`**;
 - i successivi 7 bit vengono chiamati **`codop`**.
 
+Possiamo schematizzare la disposizione dei campi del formato di tipo S così:
+
+![[formato_s.png]]
+
 Anche in questo caso, i campi `codop` e `funz3` rimangono invariati, e affianco a `rs1` ritorna `rs2`, che presentano anch'essi posizioni invariate. La particolarità di questo formato sta nella **suddivisione dei bit dell'immediato**, diviso tra i primi 7 bit (quelli più significativi) e i 5 bit compresi tra `funz3` e `codop` (quelli meno significativi). Questa particolare scelta architetturale è stata fatta per semplicità, in quanto permette di **mantenere invariate le posizioni dei campi `rs2` e `rs1`** (quando presenti).
+
+[TODO: formato di tipo SB]
+
+Possiamo schematizzare la disposizione dei campi del formato di tipo SB così:
+
+![[formato_sb.png]]
+
+[TODO: spiegazione campi di formato di tipo SB]
 
 Infine, analizziamo il formato di **tipo U**, utilizzato soprattutto da **istruzioni di trasferimento di costanti di grandi dimensioni in un registro**, che necessitano di un registro-destinazione e di una costante. In questo caso, i campi di un'istruzione di tipo U sono divisi nel seguente modo:
 - i primi 20 bit vengono chiamati **`imm[19:0]`**;
 - i successivi 5 bit vengono chiamati **`rd`**;
 - i successivi 7 bit vengono chiamati **`codop`**.
 
+Possiamo schematizzare la disposizione dei campi del formato di tipo U così:
+
+[PIC: schema dei campi di un'istruzione di formato di tipo U]
+
 Qui, l'unico campo a rimanere invariato è `codop`, mentre ritorna il campo `rd`, nella stessa posizione che assumeva nei formati di tipo R e di tipo I; i primi 20 bit, invece, vengono occupati dal campo `imm[19:0]`, contenente proprio i 20 bit che verranno inseriti come bit più significativi del registro indicato da `rd`.
+
+In generale, possiamo riassumere alcune **caratteristiche comuni o ricorrenti** dell'organizzazione dei campi di questi formati, che potranno tornare utili in fase di progettazione. In particolare:
+- il campo **`codop`** è sempre contenuto nei **7 bit meno significativi** dell'istruzione, e a seconda del formato, **i campi `funz3` e `funz7` forniscono informazioni aggiuntive** sull'operazione da svolgere;
+- il primo registro operando, ossia **`rs1`**, quando presente è sempre contenuto nei **bit nelle posizioni dalla $19$ alla $15$**;
+- il secondo registro operando, ossia **`rs2`**, quando presente è sempre contenuto nei **bit nelle posizioni dalla $24$ alla $20$**;
+- il registro di destinazione, ossia **`rd`**, quando presente è sempre contenuto nei **bit nelle posizioni dalla $11$ alla $7$**.
+
+Di seguito, una **tabella riassuntiva** dell'organizzazione dei campi per i vari formati di istruzione (è stato omesso il formato U):
+
+![[formati_istruzioni_tabella.png]]
 
 La distinzione tra formati può essere facilmente svolta dall'hardware, al momento dell'esecuzione dell'istruzione, in base al valore contenuto in `codop`. Istruzioni come `add`, `sub`, `and`, `or` e `xor` utilizzano il formato di tipo R; istruzioni come `addi`, `lw`, `slli`, `srli`, `andi`, `ori` e `xori` rientrano invece nel formato di tipo I; istruzioni come `sw` vengono codificate in un formato di tipo S; infine, istruzioni come `lui` vengono codificate in un formato di tipo U.
 ___
