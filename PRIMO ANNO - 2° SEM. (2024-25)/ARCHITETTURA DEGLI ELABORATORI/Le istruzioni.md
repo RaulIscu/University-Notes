@@ -221,7 +221,9 @@ Di seguito, una **tabella riassuntiva** dell'organizzazione dei campi per i vari
 
 ![[formati_istruzioni_tabella.png]]
 
-La distinzione tra formati può essere facilmente svolta dall'hardware, al momento dell'esecuzione dell'istruzione, in base al valore contenuto in `codop`. Istruzioni come `add`, `sub`, `and`, `or` e `xor` utilizzano il formato di tipo R; istruzioni come `addi`, `lw`, `slli`, `srli`, `andi`, `ori` e `xori` rientrano invece nel formato di tipo I; istruzioni come `sw` vengono codificate in un formato di tipo S; infine, istruzioni come `lui` vengono codificate in un formato di tipo U.
+La distinzione tra formati può essere facilmente svolta dall'hardware, al momento dell'esecuzione dell'istruzione, in base al valore contenuto in `codop`. Istruzioni come `add`, `sub`, `and`, `or` e `xor` utilizzano il formato di tipo R; istruzioni come `addi`, `lw`, `slli`, `srli`, `andi`, `ori` e `xori` rientrano invece nel formato di tipo I; istruzioni come `sw` vengono codificate in un formato di tipo S; infine, istruzioni come `lui` vengono codificate in un formato di tipo U. Per completezza, di seguito una tabella con la **maggior parte delle istruzioni dell'architettura RISC-V**, con annesso per ciascuna di esse il corrispettivo **formato**:
+
+![[formati_istruzioni_tabella1.png]]
 ___
 ## Procedure
 

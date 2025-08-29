@@ -145,18 +145,13 @@ Questi 4 bit di controllo vengono generati tramite quello che nell'implementazio
 
 ![[controllo_alu_tabella.png]]
 ___
-##### Tempi di esecuzione
-
-[TODO]
-[10 ultima slide]
-___
 ## E se volessimo aggiungere altre istruzioni?
 
 L'implementazione fornita nel [[La CPU#Un'implementazione di base di un processore RISC-V|capitolo precedente]] può essere tranquillamente ampliata, aggiungendo **altre istruzioni dell'[[L'architettura RISC-V#L'architettura RISC-V|architettura RISC-V]]**.
 
-##### L'istruzione **`j`**
+##### L'istruzione `j`
 
-Proviamo, ad esempio, ad aggiungere l'istruzione **`j`**, un'istruzione di salto incondizionato. Per poter aggiungere tale istruzione, dovremmo seguire diversi passaggi:
+Proviamo, ad esempio, ad aggiungere l'istruzione **`j imm`** ("Jump"), un'istruzione di salto incondizionato. Per poter aggiungere tale istruzione, dovremmo seguire diversi passaggi:
 - definire la **codifica dell'istruzione**, cioè sostanzialmente il suo **formato**;
 - definire il suo **funzionamento**;
 - individuare le **unità funzionali necessarie**, o se esse sono già presenti nell'implementazione precedente;
@@ -168,8 +163,235 @@ Partiamo dal primo punto. Per **codificare l'istruzione**, possiamo utilizzare u
 
 ![[formato_uj.png]]
 
-Come si può notare, i campi presenti e la loro disposizione rimangono invariati, ma il campo `imm` subisce alcune variazioni nella disposizione dei suoi bit. Passiamo, ora, 
+Come si può notare, i campi presenti e la loro disposizione rimangono invariati, ma il campo `imm` subisce alcune variazioni nella disposizione dei suoi bit. Passiamo, ora, al suo **funzionamento**, in realtà abbastanza banale: all'esecuzione dell'istruzione `j`, **va sommato al PC una certa costante** fornita proprio dai 20 bit del campo `imm`. Per permettere questa funzionalità, quindi, avremo bisogno delle seguenti **unità funzionali**:
+- il **PC**;
+- un'**unità di estensione del segno**, che provvederà a riordinare i bit dell'immediato e a estenderli a 32 bit;
+- un **adder**, per eseguire la somma tra PC e immediato;
+- un **multiplexer**, o in alternativa una **porta logica**, per selezionare il nuovo PC.
+
+Notiamo che abbiamo già a disposizione, nella nostra implementazione precedente, tutte queste unità funzionali, fatta eccezione per l'ulteriore multiplexer, che andrà aggiunto.
+
+Andiamo ora, a definire il **flusso di dati** necessario per ottenere il funzionamento desiderato. La sequenza di azioni che andranno eseguite sarà: ottenere l'istruzione, estrapolandone l'immediato; riordinare i bit di quest'ultimo; sommarlo con il PC; trasmetterlo al multiplexer e, in seguito, al PC. Per quanto riguarda i **segnali di controllo**, basterà aggiungere un segnale **`Jal`** abilitato nel contesto dell'esecuzione di quest'istruzione, e assicurarsi che i già presenti `MemWrite` e `RegWrite` non siano abilitati, in modo da evitare modifiche indesiderate nella memoria e nei registri.
+
+[tempi di esecuzione: 11, slide 12]
+
+Andando ad ampliare l'implementazione precedente, otteniamo la seguente schematizzazione:
+
+![[blocco_cpu_con_j.png]]
+
+L'hardware aggiunto è costituito esclusivamente dal **segnale di controllo `Jal`** e dalla **porta OR** che riceve in input quest'ultimo insieme all'AND tra `Branch` e `Zero`. Naturalmente, un'implementazione equivalente avrebbe coinvolto un multiplexer in sostituzione della porta OR.
+___
+##### L'istruzione `jal`
+
+In seguito all'istruzione `j`, diventa molto semplice implementare anche l'istruzione **`jal rd, imm`** ("Jump And Link"), un'altra istruzione di salto incondizionato.
+
+Per l'aggiunta di questa istruzione, si seguiranno sempre gli stessi passaggi, a partire dalla **codifica** dell'istruzione: anche in questo caso, un formato che fa al caso nostro è il **formato di tipo UJ**. Per quanto riguarda il **funzionamento** di tale istruzione, essa svolge le stesse azioni di [[La CPU#L'istruzione `j`|quella precedente]], ma oltre a ciò va anche a scrivere nel registro di destinazione `rd` l'indirizzo dell'istruzione successiva, ossia $PC + 4$. Per permettere questa funzionalità, quindi, avremo bisogno delle seguenti **unità funzionali**:
+- il **PC**;
+- un'**unità di estensione del segno**, che provvederà a riordinare i bit dell'immediato e a estenderli a 32 bit;
+- un **adder**, per eseguire la somma tra PC e immediato;
+- un **multiplexer**, o in alternativa una **porta logica**, per selezionare il nuovo PC;
+- un ulteriore **multiplexer**, stavolta per selezionare il dato da scrivere nel registro `rd`.
+
+Notiamo che, supponendo di aver già implementato l'istruzione `j`, quasi tutte le componenti necessarie sono già a nostra disposizione, fatta eccezione per il secondo multiplexer, che riceverà in input l'indirizzo dell'istruzione successiva e l'eventuale dato da scrivere ottenuto dalla memoria di dati. 
+
+Andiamo ora, a definire il **flusso di dati** necessario per ottenere il funzionamento desiderato. La sequenza di azioni che andranno eseguite sarà: ottenere l'istruzione, estrapolandone l'immediato; calcolare l'indirizzo dell'istruzione successiva; riordinare i bit dell'immediato; sommare quest'ultimo con il PC; scrivere l'indirizzo dell'istruzione successiva nel registro di scrittura; mandare al PC il valore ottenuto dalla somma con l'immediato. 
+
+Per quanto riguarda i **segnali di controllo**, non servirà aggiungerne altri dato che **`Jal`** può essere utilizzato per controllare anche il multiplexer appena aggiunto, mentre ci si dovrà assicurare di abilitare **`RegWrite`** ma non **`MemWrite`**, per permettere la scrittura nel registro di destinazione e, parallelamente, evitare modifiche indesiderate nella memoria.
+
+[tempi di esecuzione: 11, slide 15]
+
+Andando ad ampliare l'implementazione precedente, otteniamo la seguente schematizzazione:
+
+![[blocco_cpu_con_jal.png]]
+
+In questo caso, l'hardware aggiunto è costituito esclusivamente dal **multiplexer** in basso a sinistra, responsabile di controllare la sorgente del dato da scrivere nel registro di destinazione.
+___
+##### L'istruzione `addi`
+
+Aggiungiamo ancora un'altra istruzione, **`addi rd, rs1, imm`** ("Add Immediate"), un'istruzione aritmetica.
+
+Innanzitutto stabiliamo la **codifica** dell'istruzione in questione, per cui la scelta del **formato di tipo I** risulta pressoché immediata. Per quanto riguarda il **funzionamento** di tale istruzione, essa andrà a operare una semplice somma tra il contenuto del registro operando `rs1` e una costante, fornita nel campo `imm` come stringa di 12 bit segnati; il risultato di tale operazione verrà poi scritto nel registro di destinazione `rd`. Per permettere questa funzionalità, quindi, avremo bisogno delle seguenti **unità funzionali**:
+- un'**ALU**, per eseguire concretamente la somma;
+- un **multiplexer**, che permetta la selezione dell'immediato come secondo operando per la somma;
+- un'**unità di estensione del segno**, per estendere l'immediato a 32 bit.
+
+Notiamo che, in realtà, tutte queste componenti sono già presenti nella nostra implementazione precedente, e non sarà dunque necessario aggiungere hardware.
+
+Andiamo ora, a definire il **flusso di dati** necessario per ottenere il funzionamento desiderato. La sequenza di azioni che andranno eseguite sarà: ottenere l'istruzione, estrapolandone l'immediato; leggere il contenuto del registro operando `rs1`; estendere l'immediato a 32 bit; trasmettere questi due valori all'ALU; effettuare la loro somma; scrivere il risultato nel registro di destinazione `rd`. Per quanto riguarda i **segnali di controllo**, non ci sarà bisogno di introdurne altri.
+
+[tempi di esecuzione: 11, slide 17]
+___
+##### L'istruzione `jalr`
+
+[TODO: 12, slide 3/4]
+___
+##### L'istruzione `jr`
+
+[TODO: 12, slide 5]
+___
+##### L'istruzione `jrr`
+
+[TODO: 12, slide 6/10]
+___
+## Malfunzionamenti della Control Unit
+
+[TODO: 12, slide 14/23]
+___
+## Pipeline
+
+Quella che abbiamo analizzato finora è un'implementazione di un processore che potremmo definire a "**singolo ciclo**", sostanzialmente un processore che esegue un'istruzione per volta, iniziando l'esecuzione della successiva solo dopo aver terminato l'esecuzione della precedente. Si tratta di un modello funzionante, ma ciononostante particolarmente inefficiente, e al giorno d'oggi poco utilizzato. Invece, la quasi totalità dei [[Il calcolatore|calcolatori]] di oggi sfruttano una tecnica chiamata "pipeline".
+
+La "**pipeline**" è una tecnica di implementazione di un processore che prevede la **sovrapposizione temporale dell'esecuzione di diverse istruzioni**. 
+
+Per comprendere subito di cosa stiamo parlando, consideriamo un esempio concreto, come fare il bucato: si tratta di un procedimento "complesso", che richiede più passaggi, tra cui:
+- caricare la lavatrice con i panni da lavare;
+- terminato il lavaggio, spostare i panni lavati nell'asciugatrice;
+- una volta asciutti, stirare i panni;
+- rimettere i panni stirati nell'armadio.
+
+Supponiamo di affrontare questa serie di passaggi usando un approccio "**non basato su pipeline**": fare ciò vorrebbe dire svolgere tutto il procedimento per un singolo carico di panni, e ripeterlo con un nuovo carico solo al termine del primo. Si tratta di un approccio funzionante, ma concretamente lento, a differenza di un approccio "**basato su pipeline**": in questo caso, dopo che la lavatrice finisce il primo ciclo di lavaggio e i panni vengono trasferiti nell'asciugatrice, si procede subito a riempire la lavatrice con il secondo carico di panni; dopo che il primo carico di panni ha terminato l'asciugatura, possiamo riempire la lavatrice con il terzo carico, l'asciugatrice con il secondo (che nel mentre è stato lavato), e procedere a stirare il terzo carico, e così via. Usare questo approccio porta a un tempo di esecuzione molto minore, come possiamo notare dai seguenti grafici:
+
+![[pipeline_esempio.png]]
+
+Seguendo un approccio basato su pipeline, **tutti gli stadi**, ossia i singoli passaggi, **del procedimento sono attivi contemporaneamente**. Infatti, applicare una pipeline non diminuisce, ovviamente, il tempo impiegato da un singolo stadio per eseguire la propria mansione, e neanche il tempo impiegato per completare un singolo procedimento; piuttosto, **ciò che viene diminuito è il tempo totale impiegato per completare più procedimenti**. In sostanza, ciò che viene migliorato è il "**throughput**" (o anche "**bandwidth**", cioè "**larghezza di banda**"), ossia il **numero di procedimenti completati per unità di tempo**.
+
+##### La pipeline nell'architettura RISC-V
+
+Gli stessi principi si possono applicare anche ai processori, dove ciò che si vuole porre in pipeline è l'**esecuzione di più istruzioni**. Come abbiamo già accennato, l'esecuzione di un'istruzione RISC-V può essere sostanzialmente divisa in **5 fasi**:
+- l'**instruction fetch** (**IF**), che coinvolge principalmente il **PC** e la **memoria delle istruzioni**;
+- l'**instruction decode** (**ID**), che coinvolge principalmente il **register file** e la **control unit**;
+- l'**execute** (**EXE**), che coinvolge principalmente l'**ALU**;
+- eventualmente il **memory access** (**MEM**), che coinvolge principalmente la **memoria di dati**;
+- eventualmente il **write back** (**WB**), che coinvolge principalmente il **register file**.
+
+Di conseguenza, possiamo affermare che la pipeline dell'architettura RISC-V ha **5 stadi**, e il tempo di esecuzione di ciascuno di essi dipende dal tempo di esecuzione delle **singole operazioni delle unità funzionali**; in particolare, possiamo assumere i seguenti valori di tempo:
+- l'**IF**, dunque la lettura dell'istruzione, dura $200\,\,ps$;
+- l'**ID**, dunque la decodifica dell'istruzione e la lettura dei registri, dura $100\,\,ps$;
+- l'**EXE**, dunque un'operazione dell'ALU, dura $200\,\,ps$;
+- il **MEM**, dunque l'accesso alla memoria di dati, dura $200\,\,ps$;
+- il **WB**, dunque la scrittura di un dato in un registro, dura $100\,\,ps$.
+
+A questo punto, tenendo a mente questi tempi e assumendo che multiplexer, unità di controllo, PC e unità di estensione del segno non introducano ulteriori ritardi, possiamo approssimare il **tempo di esecuzione delle istruzioni** di base previste nella [[La CPU#Assemblare le unità funzionali|prima implementazione]] dell'architettura RISC-V che abbiamo analizzato. La seguente tabella mostra proprio questo:
+
+![[tempi_istruzioni_tabella.png]]
+
+**In un'implementazione a singolo ciclo, tutte le istruzioni richiedono un ciclo di clock** per essere eseguite, e per soddisfare questo requisito la durata del ciclo di clock deve essere pari almeno al tempo di esecuzione dell'istruzione più "lenta". Nell'implementazione analizzata finora, tale istruzione sembra essere **`lw`**, con un tempo totale di esecuzione pari a $800\,\,ps$.
+
+Utilizzando invece un'**implementazione basata su pipeline**, **la durata del ciclo di clock deve essere pari almeno al tempo di esecuzione dello stadio più "lento"**. In questo modo, fasi diverse possono essere eseguite contemporaneamente, e l'esecuzione di più istruzioni può essere notevolmente accelerata: infatti, seguendo questa logica, la durata del ciclo di clock può scendere fino a $200\,\,ps$, **moltiplicando così la velocità del processore**.
+
+Del resto, l'architettura RISC-V è stata progettata proprio tenendo a mente un approccio basato su pipeline, e presenta diversi **vantaggi** che lo favoriscono, tra cui:
+- la **costanza nella posizione dei campi relativi ai registri** all'interno dei vari [[Le istruzioni#Come vengono rappresentate le istruzioni nel calcolatore?|formati di istruzione]], che velocizza la lettura del contenuto degli stessi (è possibile già durante la fase di ID);
+- la presenza di **operandi nella memoria solo per istruzioni di accesso alla stessa**, come `sw` e `lw`, e mai per operazioni aritmetico-logiche, che operano strettamente sui registri;
+- l'**allineamento degli operandi in memoria**, e il loro **indirizzamento**, che consentono di effettuare un singolo accesso per dato;
+- la **lunghezza fissa delle istruzioni**, sempre a 32 bit, che è il fattore determinante nel consentire una sovrapposizione tra IF e ID (essendo tutte le istruzioni della stessa lunghezza, il nuovo PC può essere calcolato a priori, senza sapere quale sia l'istruzione successiva, vantaggio che non si ha in architettura con istruzioni a dimensione variabile come la [[L'architettura RISC-V#L'architettura RISC-V|CISC]]).
+___
+## Criticità in una pipeline
+
+In una pipeline, si possono verificare diverse situazioni in cui l'**istruzione successiva non può essere eseguita nel ciclo di clock immediatamente successivo** a quello corrente, per vari possibili motivi. Questo tipo di situazioni viene definito "**hazard**", o **criticità**, e può presentarsi principalmente in tre forme:
+- hazard **strutturale**;
+- hazard **sui dati**;
+- hazard **sul controllo**.
+
+In questo capitolo, analizzeremo ciascuna di queste criticità, quando si possono verificare e come prevenirle.
+
+##### Hazard strutturali
+
+Il primo tipo di hazard che andremo ad analizzare è il cosiddetto "**hazard strutturale**" (o "**structural hazard**"), che si verifica quando **l'hardware presente non è in grado di supportare la combinazione di istruzioni che si vorrebbe eseguire in un singolo ciclo di clock**. Tornando all'[[La CPU#Pipeline|esempio concreto del bucato]], un hazard strutturale potrebbe essere l'avere una sola macchina che funga sia da lavatrice che da asciugatrice, piuttosto che due macchine separate.
+
+Nel contesto di un processore come quello che abbiamo visto finora, una simile situazione potrebbe verificarsi nel caso in cui venga utilizzata la stessa memoria sia per le istruzioni che per i dati: in questo caso, potrebbe tranquillamente succedere che, mentre un'istruzione sta effettuando un accesso alla memoria per leggere o scrivere un dato, il processore voglia effettuare il fetch di un'altra istruzione, provocando un ritardo.
+
+In realtà, essendo l'architettura RISC-V progettata appositamente per un approccio basato su pipeline, è semplice per un progettista evitare gli hazard strutturali nella fase di progettazione del [[La CPU#Cos'è una CPU?|datapath]].
+___
+##### Hazard sui dati
+
+Vediamo, ora, in cosa consiste un "**hazard sui dati**" (o "**data hazard**"): esso si verifica quando **uno stadio della pipeline deve attendere l'elaborazione di un altro stadio per poter essere eseguito**.
+
+Nel contesto di un processore dotato di pipeline, una simile situazione potrebbe verificarsi nel caso in cui **un'istruzione dipende** (ad esempio, per un suo operando) **dal risultato di un'istruzione precedente**, che sta ancora venendo eseguita. Supponiamo, ad esempio, di voler eseguire la seguente sequenza di istruzioni:
+
+```
+add x1, x2, x3
+sub x4, x1, x5
+```
+
+Si nota subito che `x1` è utilizzato come registro di destinazione nell'istruzione `add`, e come registro operando nell'istruzione `sub`; tuttavia, il risultato dell'operazione svolta dalla prima istruzione non verrà scritto nel registro in questione fino al suo 5° stadio di esecuzione, mentre la seconda istruzione potrebbe leggerne il contenuto già nel 2° stadio, provocando effettivamente un **ritardo di due cicli di clock**.
+
+In realtà, gli hazard sui dati sono una **criticità molto comune**, che potrebbero portare a diversi stalli e quindi a un rallentamento considerevole del processore. Un primo approccio per limitare quest'impatto potrebbe essere affidarsi a dei **compilatori**, che effettuino delle ottimizzazioni della serie di istruzioni, tuttavia essi hanno un potere limitato e non sufficiente a risolvere il problema. La soluzione più utilizzata, invece, è basata sull'osservazione che, in realtà, **spesso non è necessario che termini l'esecuzione di un'istruzione per risolvere un hazard sui dati**: ad esempio, nella situazione proposta poco fa, si potrebbe utilizzare il risultato della somma tra `x2` e `x3` non appena esso viene restituito dall'ALU, senza attendere che esso venga scritto in `x1` e poi letto da quest'ultimo. La tecnica che prevede l'aggiunta di un **circuito che fornisca**, in un certo punto dell'esecuzione, **il dato mancante propagandolo da una risorsa interna** è detta "**propagazione**", o "**bypass**".
+
+Applicando questo ragionamento all'esempio precedente, notiamo che ciò sarebbe possibile propagando il dato in output dalla fase EX della prima istruzione (`add x1, x2, x3`) all'input della fase EX della seconda istruzione (`sub x4, x1, x5`), come si evince dal seguente grafico:
+
+![[pipeline_bypass_esempio.png]]
+
+Naturalmente, una condizione imprescindibile per il corretto funzionamento di questo approccio è che **lo stadio che deve ricevere il dato deve essere successivo nel tempo allo stadio che lo produce**, dato che se non fosse così il primo non avrebbe nulla da ricevere, e quindi uno stallo sarebbe inevitabile. 
+
+È importante tenere a mente, del resto, che per quanto la propagazione possa essere uno strumento molto utile, **non rappresenta una soluzione universale** per tutti gli stalli nell'esecuzione di una pipeline. Supponendo, ad esempio, che l'istruzione `add` venga sostituita da un `lw`, che dunque accede a un dato in memoria piuttosto che in un registro, il dato in questione diventerebbe disponibile solamente al termine del 4° stadio della prima istruzione, rendendo un'applicazione della propagazione impossibile proprio per la regola esposta poco fa. Per questo genere di situazioni (in particolare, quella proposta ora viene detta "**load-use data hazard**"), bisognerà necessariamente **imporre uno stallo** della durata di un ciclo di clock, in modo da permettere effettivamente una qualche forma di propagazione, come possiamo vedere nel seguente grafico:
+
+![[pipeline_bypass_esempio1.png]]
+
+In queste situazioni si parla di "**stallo della pipeline**", o più comunemente di "**bolla**" o "**bubble**".
+
+Il meccanismo della propagazione, al tempo stesso, illustra un'altra caratteristica vantaggiosa dell'architettura RISC-V, ossia che **tutte le istruzioni scrivono un unico risultato** in un unico posto, e sempre **nell'ultimo stadio della pipeline**: ciò semplifica notevolmente l'eventuale applicazione della propagazione, che sarebbe molto più difficile se ogni istruzione producesse più risultati da propagare, o se essi venissero scritti prima del termine dell'esecuzione.
+
+Per concludere questo paragrafo, vediamo un esempio più complesso, con una serie di istruzioni che presenta al suo interno diversi hazard sui dati:
+
+```
+lw x1, 0(x31)
+lw x2, 4(x31)
+add x3, x1, x2
+sw x3, 12(x31)
+lw x4, 8(x31)
+add x5, x1, x4
+sw x5, 16(x31)
+```
+
+In questo contesto, notiamo che **è presente un hazard in corrispondenza di entrambe le istruzioni `add`**: infatti, la prima cerca di effettuare la somma tra i contenuti dei registri `x1` e `x2` quando `x2` ancora non contiene il dato desiderato; analogamente, la seconda cerca di effettuare la somma tra i contenuti dei registri `x1` e `x4` quando `x4` ancora non contiene il dato desiderato. Fortunatamente, in questo caso non ci si dovrà complicare troppo con bolle o propagazioni, ma basterà modificare l'ordine delle istruzioni:
+
+```
+lw x1, 0(x31)
+lw x2, 4(x31)
+lw x4, 8(x31)
+add x3, x1, x2
+sw x3, 12(x31)
+add x5, x1, x4
+sw x5, 16(x31)
+```
+
+Spostando l'istruzione `lw x4, 8(x31)`, non solo diamo tempo all'istruzione `lw x2, 4(x31)` di scrivere il dato nel registro `x2` prima che esso diventi un operando in `add x3, x1, x2`, ma consentiamo anche all'istruzione spostata di scrivere il dato nel registro `x4` prima che esso diventi un operando in `add x5, x1, x4`. La nuova serie di istruzioni, dunque, risulta ottimizzata e priva di hazard sui dati. Se invece avessimo voluto mantenere la medesima sequenza di istruzioni, sarebbe stato necessario imporre due bolle, una prima della prima istruzione `add`, e un'altra prima della seconda.
+___
+##### Hazard sul controllo
+
+Infine, parliamo degli "**hazard sul controllo**", detti anche "**control hazard**" o "**hazard sui salti condizionati**", essendo le istruzioni di questo tipo quelle in cui si presentano solitamente. Essi, infatti, si verificano quando **bisogna prendere una decisione in funzione del risultato dell'esecuzione di un'istruzione, mentre altre istruzioni stanno già venendo eseguite**, con la possibilità che quest'ultime debbano essere scartate.
+
+Nel contesto di un processore dotato di pipeline, una simile situazione potrebbe verificarsi proprio nel contesto di un'**istruzione di salto condizionato**, come **`beq`**. Infatti, l'istruzione (o le istruzioni) successiva ad essa viene caricata nel ciclo di clock immediatamente successivo, prima ancora che venga valutata la condizione su cui si basa il salto, e dunque prima che il processore sappia se quell'istruzione andrà effettivamente eseguita o meno. Una possibile soluzione può essere **imporre uno stallo della pipeline appena viene caricata un'istruzione di salto condizionato, e attendere il risultato del confronto per proseguire con l'esecuzione di altre istruzioni**. Ad esempio, avendo la seguente serie di istruzioni:
+
+```
+add x4, x5, x6
+beq x1, x0, 40
+or x7, x8, x9
+...
+```
+
+si dovrebbe inserire una bolla pari a un ciclo di clock immediatamente dopo l'IF dell'istruzione `beq x1, x0, 40`, in modo da dare tempo all'ALU di valutare se il contenuto di `x1` è uguale al contenuto di `x0`, sapendo così quale sarà la prossima istruzione da eseguire. Graficamente, possiamo visualizzare questo meccanismo nel modo seguente:
+
+![[pipeline_control_hazard.png]]
+
+A volte, però, non è possibile risolvere la criticità inserendo uno stallo di un solo ciclo di clock, e si rischia di creare rallentamenti più sostanziosi nella pipeline. Una seconda soluzione, più efficiente, potrebbe invece essere **predire un certo risultato per il confronto del salto condizionato, e procedere con l'esecuzione basandosi su tale predizione**. Tendenzialmente, l'approccio più semplice e comunque relativamente efficace è quello di **supporre che il salto non venga effettuato**, caricando a priori la prossima istruzione: infatti, se la predizione si rivela corretta si procede al massimo della velocità; se la predizione, invece, è sbagliata si procederà a "buttare" l'istruzione caricata sostituendola con quella indicata dal salto. Di seguito, due grafici che esemplificano in ordine entrambe queste casistiche:
+
+![[pipeline_control_hazard1.png]]
+
+Naturalmente, nel secondo grafico l'esclusiva presenza della bolla risulta essere una semplificazione di ciò che avviene realmente. Questo secondo approccio risulta essere più vantaggioso del primo, in quanto in alcune situazioni comporta uno stallo di uno o due cicli di clock (risultato inevitabile, invece, con il primo approccio), ma lo elimina completamente in altre.
+
+Una versione più "intelligente" di questo approccio di predizione implica il **prevedere se un salto debba essere eseguito o meno in base al contesto**. Ad esempio, consideriamo i salti posti al termine dei cicli, utilizzati per ritornare all'inizio del ciclo ed effettuare una nuova iterazione dello stesso; si tratta, naturalmente, di salti che vanno "all'indietro", e verosimilmente essi verranno eseguiti la maggior parte delle volte, dunque si potrebbe prevedere che i salti verso indirizzi minori vadano sempre eseguiti.
+
+Ciononostante, questi rimangono **approcci rigidi** alla predizione dei salti, tipici di "**predittori statici**" basati su un'ipotesi costante e noncuranti delle individualità specifiche di ciascuna istruzione di salto. Un "**predittore dinamico**", invece, determina la sua predizione per ciascun salto in base al comportamento precedente di quella specifica istruzione, ed è capace di modificare volta per volta le sue predizioni. Un'implementazione comune di predittore dinamico consiste, ad esempio, nel **memorizzare uno "storico" per ciascuna istruzione di salto condizionato**, ricordando quando è stato effettuato e quando no, e utilizzando il comportamento più frequente o più recente per effettuare la predizione. Si tratta di una soluzione che si è evoluta nel tempo, divenendo sempre più complessa ed efficiente, e arrivando ai giorni nostri a una precisione superiore al 90%.
+
+Infine, vi è un terzo e ultimo approccio per affrontare gli hazard sul controllo, detto "**decisione ritardata**", o "**salto ritardato**": applicando questo approccio, **il processore esegue sempre l'istruzione successiva al salto, ed eventualmente il salto viene eseguito dopo di essa**. Si tratta di un comportamento che può risultare controproducente, dato che apparentemente comporta un'esecuzione in ordine errato delle istruzioni, ma il compilatore riesce a prevenire eventuali errori e a garantire il comportamento previsto dal programmatore. Pur non sempre possibile, si tratta di una soluzione funzionante, adottata principalmente nell'architettura MIPS.
+___
+## Un'implementazione basata su pipeline di un processore RISC-V
+
+Ora che abbiamo approfondito il concetto di pipeline, e le possibili criticità che ne conseguono, siamo pronti a **integrare una pipeline nell'[[La CPU#Un'implementazione di base di un processore RISC-V|implementazione di base]] di processore che abbiamo analizzato in precedenza**. Per semplicità, andremo a effettuare quest'operazione sulla prima implementazione, quella che prevedeva solamente le istruzioni `add`, `sub`, `and`, `or`, `lw`, `sw` e `beq`, ma naturalmente gli stessi principi possono essere applicati anche su processori più completi.
+
+
 ___
 
+[pag. 260...]
 [pag. 24 - 34 "Prestazioni"]
-[pag. 236...]
