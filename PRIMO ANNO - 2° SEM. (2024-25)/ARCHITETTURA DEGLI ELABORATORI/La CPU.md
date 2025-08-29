@@ -260,14 +260,14 @@ Seguendo un approccio basato su pipeline, **tutti gli stadi**, ossia i singoli p
 Gli stessi principi si possono applicare anche ai processori, dove ciò che si vuole porre in pipeline è l'**esecuzione di più istruzioni**. Come abbiamo già accennato, l'esecuzione di un'istruzione RISC-V può essere sostanzialmente divisa in **5 fasi**:
 - l'**instruction fetch** (**IF**), che coinvolge principalmente il **PC** e la **memoria delle istruzioni**;
 - l'**instruction decode** (**ID**), che coinvolge principalmente il **register file** e la **control unit**;
-- l'**execute** (**EXE**), che coinvolge principalmente l'**ALU**;
+- l'**execute** (**EX**), che coinvolge principalmente l'**ALU**;
 - eventualmente il **memory access** (**MEM**), che coinvolge principalmente la **memoria di dati**;
 - eventualmente il **write back** (**WB**), che coinvolge principalmente il **register file**.
 
 Di conseguenza, possiamo affermare che la pipeline dell'architettura RISC-V ha **5 stadi**, e il tempo di esecuzione di ciascuno di essi dipende dal tempo di esecuzione delle **singole operazioni delle unità funzionali**; in particolare, possiamo assumere i seguenti valori di tempo:
 - l'**IF**, dunque la lettura dell'istruzione, dura $200\,\,ps$;
 - l'**ID**, dunque la decodifica dell'istruzione e la lettura dei registri, dura $100\,\,ps$;
-- l'**EXE**, dunque un'operazione dell'ALU, dura $200\,\,ps$;
+- l'**EX**, dunque un'operazione dell'ALU, dura $200\,\,ps$;
 - il **MEM**, dunque l'accesso alla memoria di dati, dura $200\,\,ps$;
 - il **WB**, dunque la scrittura di un dato in un registro, dura $100\,\,ps$.
 
@@ -315,7 +315,7 @@ sub x4, x1, x5
 
 Si nota subito che `x1` è utilizzato come registro di destinazione nell'istruzione `add`, e come registro operando nell'istruzione `sub`; tuttavia, il risultato dell'operazione svolta dalla prima istruzione non verrà scritto nel registro in questione fino al suo 5° stadio di esecuzione, mentre la seconda istruzione potrebbe leggerne il contenuto già nel 2° stadio, provocando effettivamente un **ritardo di due cicli di clock**.
 
-In realtà, gli hazard sui dati sono una **criticità molto comune**, che potrebbero portare a diversi stalli e quindi a un rallentamento considerevole del processore. Un primo approccio per limitare quest'impatto potrebbe essere affidarsi a dei **compilatori**, che effettuino delle ottimizzazioni della serie di istruzioni, tuttavia essi hanno un potere limitato e non sufficiente a risolvere il problema. La soluzione più utilizzata, invece, è basata sull'osservazione che, in realtà, **spesso non è necessario che termini l'esecuzione di un'istruzione per risolvere un hazard sui dati**: ad esempio, nella situazione proposta poco fa, si potrebbe utilizzare il risultato della somma tra `x2` e `x3` non appena esso viene restituito dall'ALU, senza attendere che esso venga scritto in `x1` e poi letto da quest'ultimo. La tecnica che prevede l'aggiunta di un **circuito che fornisca**, in un certo punto dell'esecuzione, **il dato mancante propagandolo da una risorsa interna** è detta "**propagazione**", o "**bypass**".
+In realtà, gli hazard sui dati sono una **criticità molto comune**, che potrebbero portare a diversi stalli e quindi a un rallentamento considerevole del processore. Un primo approccio per limitare quest'impatto potrebbe essere affidarsi a dei **compilatori**, che effettuino delle ottimizzazioni della serie di istruzioni, tuttavia essi hanno un potere limitato e non sufficiente a risolvere il problema. La soluzione più utilizzata, invece, è basata sull'osservazione che, in realtà, **spesso non è necessario che termini l'esecuzione di un'istruzione per risolvere un hazard sui dati**: ad esempio, nella situazione proposta poco fa, si potrebbe utilizzare il risultato della somma tra `x2` e `x3` non appena esso viene restituito dall'ALU, senza attendere che esso venga scritto in `x1` e poi letto da quest'ultimo. La tecnica che prevede l'aggiunta di un **circuito che fornisca**, in un certo punto dell'esecuzione, **il dato mancante propagandolo da una risorsa interna** è detta "**propagazione**", detta anche "**bypass**" o "**forwarding**".
 
 Applicando questo ragionamento all'esempio precedente, notiamo che ciò sarebbe possibile propagando il dato in output dalla fase EX della prima istruzione (`add x1, x2, x3`) all'input della fase EX della seconda istruzione (`sub x4, x1, x5`), come si evince dal seguente grafico:
 
@@ -390,8 +390,159 @@ ___
 
 Ora che abbiamo approfondito il concetto di pipeline, e le possibili criticità che ne conseguono, siamo pronti a **integrare una pipeline nell'[[La CPU#Un'implementazione di base di un processore RISC-V|implementazione di base]] di processore che abbiamo analizzato in precedenza**. Per semplicità, andremo a effettuare quest'operazione sulla prima implementazione, quella che prevedeva solamente le istruzioni `add`, `sub`, `and`, `or`, `lw`, `sw` e `beq`, ma naturalmente gli stessi principi possono essere applicati anche su processori più completi.
 
+##### Registri di pipeline
+
+Come abbiamo stabilito, un'istruzione dell'architettura RISC-V può essere "suddivisa" in **5 fasi ben distinte** (IF, ID, EX, MEM, WB), e di conseguenza la pipeline di tale architettura presenterà **5 stadi**. Perciò, per poter integrare una pipeline nella nostra implementazione, occorre innanzitutto **identificare con precisione l'hardware appartenente a ciascuno stadio della pipeline**. Nello schema seguente, rivisitiamo l'implementazione in questione evidenziando questa divisione:
+
+![[blocco_cpu_divisione_pipeline.png]]
+
+Il flusso di istruzioni e dati è quasi completamente direzionato **da sinistra verso destra**, fatta eccezione per i nodi evidenziati in arancione, ossia per la **scrittura del risultato di un'operazione nel registro di destinazione** e per la **selezione del valore successivo del PC**. Si noti, tra l'altro, che proprio queste due parti dell'implementazione possono causare **[[La CPU#Criticità in una pipeline|hazard]]**, in particolare:
+- nella scrittura del risultato di un'operazione nel registro di destinazione vi è un **hazard sui dati**;
+- nella selezione del valore successivo del PC vi è un **hazard sul controllo**.
+
+Per favorire l'esecuzione di più istruzioni contemporaneamente all'interno di questo stesso processore, in modo che in un qualsiasi momento ogni istruzione utilizzi una specifica parte del circuito, possiamo inserire dei **registri**, che lo vadano a dividere concretamente nelle sezioni relative a ciascuno stadio della pipeline e che conservino i dati parziali generati dalle istruzioni. Possiamo inserire questi registri nel modo seguente:
+
+![[blocco_cpu_divisione_pipeline_registri.png]]
+
+I registri, evidenziati in arancione, rappresentano gli "**intermezzi**" tra due fasi dell'esecuzione di un'istruzione, con tali fasi indicate dalla dicitura che si trova sopra di essi. Analizzando la quantità e il tipo di dati che dovranno conservare, possiamo capire **quanti bit conserva ciascuno di essi**:
+- il registro che si trova **tra IF e ID** va a conservare il PC (32 bit) e l'istruzione da eseguire (32 bit), dunque si tratta di un registro **a 64 bit**;
+- il registro che si trova **tra ID ed EX** va a conservare il PC (32 bit), i dati eventualmente letti da due registri (32 bit ciascuno, quindi 64 bit) e l'eventuale immediato esteso dall'unità di estensione del segno (32 bit), dunque si tratta di un registro **a 128 bit**;
+- il registro che si trova **tra EX e MEM** va a conservare un nuovo PC (32 bit), il segnale `Zero` (1 bit), il risultato dell'operazione svolta dall'ALU (32 bit) ed eventualmente il dato letto da uno dei registri (32 bit), dunque si tratta di un registro a **97 bit**;
+- il registro che si trova **tra MEM e WB** va a conservare il dato eventualmente letto dalla memoria di dati (32 bit) e il risultato dell'operazione svolta dall'ALU (32 bit), dunque si tratta di un registro **a 64 bit**.
+
+In ogni ciclo di clock, dunque, l'esecuzione di tutte le istruzioni procede da un "**registro di pipeline**" a quello successivo.
+___
+##### Esempio: esecuzione di `lw`
+
+Per comprendere meglio come ciò avviene, analizziamo nel dettaglio il funzionamento dell'istruzione `lw` in questo contesto (la scelta ricade su questa istruzione in quanto coinvolge tutte e 5 gli stadi della pipeline). 
+
+Innanzitutto, vi è la fase di **IF**, in cui l'istruzione viene prelevata dalla memoria di istruzioni utilizzando il PC, e scritta nel registro IF/ID; al tempo stesso, il contenuto del PC viene incrementato di 4 e riscritto al suo interno, in modo da essere pronto per il successivo ciclo ci clock, nonché salvato anch'esso nel registro IF/ID, in caso venga richiesto da un'istruzione successiva (come un `beq`):
+
+![[pipeline_lw_if.png]]
+
+Poi, vi è la fase di **ID**, in cui dall'istruzione vengono prelevati l'immediato di 12 bit (che verrà esteso a 32 bit dall'unità di estensione del segno) e il numero del registro da leggere e di quello di scrittura; l'immediato esteso, il contenuto del registro di lettura e anche il PC vengono poi trasmessi al registro ID/EX:
+
+![[pipeline_lw_id.png]]
+
+A questo punto, siamo arrivati alla fase di **EX**, in cui il contenuto del registro di lettura e l'immediato vengono trasmessi all'ALU per essere sommati, con il risultato di questa somma che viene trasmesso al registro EX/MEM:
+
+![[pipeline_lw_exe.png]]
+
+Procediamo alla fase di **MEM**, in cui il risultato della somma effettuata dall'ALU viene trasmessa dal registro EX/MEM alla memoria di dati, utilizzato come indirizzo del dato da leggere; quest'ultimo, poi, viene trasmesso al registro MEM/WB:
+
+![[pipeline_lw_mem.png]]
+
+Infine, giungiamo alla fase di **WB**, in cui il dato prelevato dalla memoria viene letto dal registro MEM/WB e trasferito al register file, per essere scritto nel registro di destinazione:
+
+![[pipeline_lw_wb.png]]
+
+Notiamo, tuttavia, un'**imperfezione** nell'hardware utilizzato, che porterebbe a un funzionamento errato di quest'istruzione nel contesto di una pipeline: supponendo, ad esempio, di star eseguendo più istruzioni `lw` in successione, al momento del WB di una di esse il numero del registro di scrittura non sarà più quello relativo all'istruzione in questione, ma sarà stato sostituito da quello indicato in un'istruzione successiva. In parole povere, c'è bisogno di **integrare un modo per ogni istruzione di ricordare il suo registro di scrittura**; è possibile fare ciò modificando leggermente il flusso dei dati, facendo in modo che il numero del registro di scrittura non venga subito trasmesso al register file nella fase di ID, ma sia piuttosto memorizzato stadio dopo stadio nei vari registri di pipeline, e in seguito trasmesso al register file insieme al dato da scrivere nella fase di WB. Di seguito, una variazione della nostra implementazione dotata di questo accorgimento (i cambiamenti sono evidenziati in arancione):
+
+![[pipeline_lw_fixed.png]]
+___
+##### Rappresentazione grafica della pipeline
+
+Per facilitare la comprensione del funzionamento di una pipeline, ci sono principalmente **due tipi di diagrammi** che possono essere disegnati:
+- un **diagramma di pipeline a più cicli di clock**;
+- un **diagramma di pipeline a singolo ciclo di clock**.
+
+Tendenzialmente, **un diagramma di pipeline a più cicli di clock è più semplice, ma meno dettagliato**. Vediamone un esempio, considerando la seguente serie di istruzioni:
+
+```
+lw x10, 40(x1)
+sub x11, x2, x3
+add x12, x3, x4
+lw x13, 48(x1)
+add x14, x5, x6
+```
+
+L'esecuzione in pipeline di queste istruzioni può essere rappresentata graficamente con il seguente diagramma a più cicli di clock:
+
+![[diagramma_pipeline_piùcicli_esempio.png]]
+
+Una versione più semplificata e basilare dello stesso diagramma può essere la seguente:
+
+![[diagramma_pipeline_piùcicli_esempio1.png]]
+
+In questo tipo di diagrammi, il tempo scorre **da sinistra verso destra**, e le istruzioni si susseguono **dall'alto verso il basso**.
+
+Per quanto riguarda i **diagrammi di pipeline a singolo ciclo di clock**, essi mostrano lo stato dell'unità di elaborazione durante un ciclo di clock e, solitamente, le istruzioni caricate nella pipeline vengono identificate da etichette poste sopra lo stadio in cui stanno venendo eseguite. Ad esempio, il seguente diagramma rappresenta lo stato dell'unità di elaborazione che esegue la stessa serie di istruzioni in corrispondenza del quinto ciclo di clock della pipeline:
+
+![[diagramma_pipeline_singolociclo_esempio.png]]
+___
+##### Control Unit nella pipeline
+
+A questo punto, siamo pronti ad affrontare la questione dei **segnali di controllo** e, di conseguenza, della **control unit** all'interno dell'implementazione basata su pipeline. Supponendo di aver aggiunto alla nostra implementazione l'hardware necessario per effettuare un **branch** (`beq`), l'implementazione dotata dei vari segnali di controllo è la seguente:
+
+![[cpu_pipeline_controllo.png]]
+
+Notiamo che, di fatto, i vari segnali di controllo vengono gestiti pressoché allo stesso modo dell'[[La CPU#Assemblare le unità funzionali|implementazione a singolo ciclo di clock]]; in generale, nell'inserire la control unit si cercherà di **riutilizzare il più possibile la struttura dell'implementazione precedente**.
+
+Dunque, come nell'implementazione precedente supporremo che **il PC venga aggiornato a ogni ciclo di clock**, per cui non ci sarà bisogno di alcun segnale di controllo che regoli tale operazione; per la stessa motivazione, **non si aggiungeranno neanche segnali di controllo che regolino la scrittura di dati nei registri di pipeline**. 
+
+Stabilito ciò, passiamo effettivamente a definire il **funzionamento della control unit**, ossia la particolare combinazione e sequenza di segnali di controllo che andranno abilitati in ogni momento per l'esecuzione di una determinata istruzione. In particolare, converrà **dividere i segnali di controllo in 5 categorie**, corrispondenti ai 5 stadi di esecuzione di un'istruzione RISC-V in pipeline, ossia:
+- **IF**, in cui non sarà necessario controllare nessuna unità funzionale direttamente;
+- **ID**, in cui non sarà necessario controllare nessuna unità funzionale direttamente;
+- **EX**, in cui sarà necessario controllare i segnali **`ALUOp`** e **`ALUSrc`**, dove il primo seleziona il tipo di operazione da far svolgere all'ALU, e il secondo se inviare come input all'ALU il dato letto da un registro o un immediato;
+- **MEM**, in cui sarà necessario controllare i segnali **`Branch`**, **`MemRead`** e **`MemWrite`**, dove il primo viene abilitato se viene eseguito un salto condizionato (solo in questo caso il segnale **`PCSrc`** viene abilitato, altrimenti non lo è, selezionando di default l'indirizzo dell'istruzione successiva), il secondo consente la lettura di un dato dalla memoria di dati, e il terzo consente la scrittura di un dato nella memoria di dati;
+- **WB**, in cui sarà necessario controllare i segnali **`MemtoReg`** e **`RegWrite`**, dove il primo sceglie se inviare al registro di scrittura il risultato dell'operazione eseguita dall'ALU o il dato letto dalla memoria, e il secondo consente la scrittura di un dato nel registro di destinazione.
+
+Le combinazioni di segnali di controllo necessarie per eseguire una particolare istruzione rimangono pressoché invariate, tuttavia ora è possibile raggruppare questi segnali in base alla loro "**area di competenza**", come possiamo vedere nella seguente tabella:
+
+![[segnali_controllo_pipeline_tabella.png]]
+
+Implementare la control unit significa **impostare correttamente il valore dei segnali di controllo per ciascuno stadio della pipeline, e per ciascuna istruzione**. Dato che questi segnali vengono utilizzati a partire dallo stadio EX, essi possono essere determinati **durante l'ID**, e venire poi utilizzati negli stadi successivi. Il modo più semplice per propagare questi segnali di controllo è quello di **estendere i registri di pipeline**, così che possano includere anche i bit necessari per memorizzarli e trasmetterli avanti, finché non verranno utilizzati. Il flusso dei segnali di controllo tra i vari stadi può essere visualizzato nel modo seguente:
+
+![[segnali_controllo_flusso.png]]
+
+Integrando questa modifica all'interno della nostra implementazione, otteniamo ciò:
+
+![[cpu_pipeline_cu.png]]
+
+Ora che abbiamo sostanzialmente terminato di implementare un processore RISC-V basato su pipeline, rimane un ultimo problema da affrontare: gli **[[La CPU#Criticità in una pipeline|hazard]]**.
+___
+##### Come affrontare gli hazard sui dati?
+
+Supponiamo, ad esempio, di avere la seguente serie di istruzioni:
+
+```
+sub x2, x1, x3
+and x12, x2, x5
+or x13, x6, x2
+add x14, x2, x2
+sw x15, 100(x2)
+```
+
+Notiamo che **le ultime quattro istruzioni dipendono tutte dal risultato della prima**, ossia dal contenuto del registro **`x2`**: ciò porta chiaramente a un importante **hazard sui dati**, dato che il risultato dell'istruzione `sub x2, x1, x3` si avrà solo al quinto ciclo di clock, in cui l'esecuzione di quasi tutte le altre istruzioni sarà già stata avviata, e ciò potrebbe portare a errori o a comportamenti non previsti in quest'ultime. Osservando un **[[La CPU#Rappresentazione grafica della pipeline|diagramma di pipeline a più cicli di clock]]**, questo problema diventa ancora più evidente nel notare **linee di dipendenza che vanno "indietro nel tempo"**:
+
+![[diagramma_pipeline_piùcicli_esempio2.png]]
+
+Tuttavia, è possibile risolvere il problema mediante la **[[La CPU#Hazard sui dati|propagazione]] del dato necessario**: infatti, tecnicamente, esso è disponibile già al termine del terzo ciclo di clock, e le istruzioni che ne hanno bisogno prima che esso venga eventualmente scritto nel registro `x2`, ossia `and x12, x2, x5` e `or x13, x6, x2`, lo utilizzerebbero rispettivamente nel quarto e quinto ciclo di clock. Dunque, è perfettamente possibile eseguire questa sequenza di istruzioni senza stalli, **propagando il dato alle unità che lo richiedono prima che esso venga scritto nel register file**.
+
+Ma come si applica concretamente la propagazione? Per semplicità, consideriamo un esempio del genere, in cui essa viene applicata su un **dato necessario per un'operazione da eseguire nello stadio EX**, e quindi sostanzialmente all'interno dell'**ALU**. Ciò vuol dire che quando un'istruzione si trova nello stadio EX, e ha bisogno di un dato che deve essere ancora scritto dallo stadio WB di un'istruzione precedente, occorre che il dato in questione venga portato all'input dell'ALU.
+
+Per comprendere e formalizzare al meglio queste dipendenze, possiamo adottare delle **notazioni per i campi dei registri di pipeline**, ossia per i dati particolari che vengono memorizzati e trasmessi da quest'ultimi. Ad esempio, la notazione "**ID/EX.rs1**" si riferisce al numero del primo registro di lettura del register file (`rs1`) memorizzato nel registro ID/EX. Utilizzando questa notazione, possiamo formalizzare principalmente **due coppie di condizioni che generano hazard sui dati**, ossia:
+- la condizione **1a**, ossia che **EX/MEM.rd = ID/EX.rs1**;
+- la condizione **1b**, ossia che **EX/MEM.rd = ID/EX.rs2**;
+- la condizione **2a**, ossia che **MEM/WB.rd = ID/EX.rs1**;
+- la condizione **2b**, ossia che **MEM/WB.rd = ID/EX.rs2**.
+
+Si tratta, naturalmente, di condizioni che si verificano solo nel caso in cui **il campo `RegWrite` del registro a cui appartiene `rd` è abilitato** (se non deve avvenire una scrittura di dati nel register file, propagare i dati non risulta necessario), e in cui **tale campo `rd` è diverso da $0$** (il registro `x0` deve contenere sempre il valore $0$, dunque si evita la propagazione nel caso in cui esso venga indicato come registro di scrittura, in quanto non verrà scritto nulla nel concreto).
+
+A questo punto, tornando ad esempio sul primo degli hazard che abbiamo rilevato nell'esempio precedente, esso si verifica sul registro `x2` tra la scrittura del risultato dell'istruzione `sub x2, x1, x3` e la lettura del primo operando dell'istruzione `and x12, x2, x5`; tale hazard si verifica, in particolare, quando l'istruzione `sub` si trova nello stadio MEM, mentre l'istruzione `and` si trova nello stadio EXE. Di conseguenza, possiamo affermare che si tratta di un **hazard di tipo 1a**, ossia **EX/MEM.rd = ID/EX.rs1**, dove il registro `rd`, che coincide con il registro `rs1`, è `x2`. Seguendo lo stesso ragionamento, notiamo invece che il secondo hazard rilevato consiste in un **hazard di tipo 2b**, ossia **MEM/WB.rd = ID/EX.rs2**, che coinvolge sempre il registro `x2`.
+
+Avendo capito quali tipi di hazard sui dati possono verificarsi, e avendo imparato come individuarli e categorizzarli, non ci resta che **propagare concretamente i dati corretti**. Il grafico seguente consiste in una variazione di quello mostrato in precedenza, dove vengono evidenziate **le linee di dipendenza tenendo in conto l'utilizzo della propagazione**:
+
+![[diagramma_pipeline_piùcicli_esempio3.png]]
+
+Notiamo che i dati da propagare si trovano, in questo nuovo approccio, nei **registri di pipeline**; dunque, per poterli propagare è necessario che **l'ALU possa ricevere input non solo dal registro ID/EX, ma anche da altri registri di pipeline**. Per selezionare l'origine degli input dell'ALU, possiamo aggiungere dei **multiplexer** in corrispondenza degli stessi, insieme agli appositi **segnali di controllo**. Ciascuno dei due multiplexer da inserire selezionerà una delle seguenti **tre possibili casistiche**:
+- **non avviene alcuna propagazione**, e dunque il valore di input proviene dal registro di pipeline ID/EX;
+- 
+___
+##### Come affrontare gli hazard sul controllo?
+
 
 ___
 
-[pag. 260...]
+[pag. 281...   15, slide 6]
 [pag. 24 - 34 "Prestazioni"]
