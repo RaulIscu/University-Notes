@@ -513,7 +513,7 @@ add x14, x2, x2
 sw x15, 100(x2)
 ```
 
-Notiamo che **le ultime quattro istruzioni dipendono tutte dal risultato della prima**, ossia dal contenuto del registro **`x2`**: ciò porta chiaramente a un importante **hazard sui dati**, dato che il risultato dell'istruzione `sub x2, x1, x3` si avrà solo al quinto ciclo di clock, in cui l'esecuzione di quasi tutte le altre istruzioni sarà già stata avviata, e ciò potrebbe portare a errori o a comportamenti non previsti in quest'ultime. Osservando un **[[La CPU#Rappresentazione grafica della pipeline|diagramma di pipeline a più cicli di clock]]**, questo problema diventa ancora più evidente nel notare **linee di dipendenza che vanno "indietro nel tempo"**:
+Notiamo che **le ultime quattro istruzioni dipendono tutte dal risultato della prima**, ossia dal contenuto del registro **`x2`**: ciò porta chiaramente a un importante **hazard sui dati**, dato che il risultato dell'istruzione `sub x2, x1, x3` sarà scritta nel register file solo al quinto ciclo di clock, in cui l'esecuzione di quasi tutte le altre istruzioni sarà già stata avviata, e ciò potrebbe portare a errori o a comportamenti non previsti in quest'ultime. Osservando un **[[La CPU#Rappresentazione grafica della pipeline|diagramma di pipeline a più cicli di clock]]**, questo problema diventa ancora più evidente nel notare **linee di dipendenza che vanno "indietro nel tempo"**:
 
 ![[diagramma_pipeline_piùcicli_esempio2.png]]
 
@@ -521,13 +521,15 @@ Tuttavia, è possibile risolvere il problema mediante la **[[La CPU#Hazard sui d
 
 Ma come si applica concretamente la propagazione? Per semplicità, consideriamo un esempio del genere, in cui essa viene applicata su un **dato necessario per un'operazione da eseguire nello stadio EX**, e quindi sostanzialmente all'interno dell'**ALU**. Ciò vuol dire che quando un'istruzione si trova nello stadio EX, e ha bisogno di un dato che deve essere ancora scritto dallo stadio WB di un'istruzione precedente, occorre che il dato in questione venga portato all'input dell'ALU.
 
-Per comprendere e formalizzare al meglio queste dipendenze, possiamo adottare delle **notazioni per i campi dei registri di pipeline**, ossia per i dati particolari che vengono memorizzati e trasmessi da quest'ultimi. Ad esempio, la notazione "**ID/EX.rs1**" si riferisce al numero del primo registro di lettura del register file (`rs1`) memorizzato nel registro ID/EX. Utilizzando questa notazione, possiamo formalizzare principalmente **due coppie di condizioni che generano hazard sui dati**, ossia:
+Per comprendere e formalizzare al meglio queste dipendenze, possiamo adottare delle **notazioni per i campi dei registri di pipeline**, ossia per i dati particolari che vengono memorizzati e trasmessi da quest'ultimi. Ad esempio, la notazione "**ID/EX.rs1**" si riferisce al numero del primo registro di lettura dell'istruzione (`rs1`) memorizzato nel registro ID/EX. Utilizzando questa notazione, possiamo formalizzare principalmente **due coppie di condizioni che generano hazard sui dati**, ossia:
 - la condizione **1a**, ossia che **EX/MEM.rd = ID/EX.rs1**;
 - la condizione **1b**, ossia che **EX/MEM.rd = ID/EX.rs2**;
 - la condizione **2a**, ossia che **MEM/WB.rd = ID/EX.rs1**;
 - la condizione **2b**, ossia che **MEM/WB.rd = ID/EX.rs2**.
 
 Si tratta, naturalmente, di condizioni che si verificano solo nel caso in cui **il campo `RegWrite` del registro a cui appartiene `rd` è abilitato** (se non deve avvenire una scrittura di dati nel register file, propagare i dati non risulta necessario), e in cui **tale campo `rd` è diverso da $0$** (il registro `x0` deve contenere sempre il valore $0$, dunque si evita la propagazione nel caso in cui esso venga indicato come registro di scrittura, in quanto non verrà scritto nulla nel concreto).
+
+[da MEM a MEM: 15, slide 9/18]
 
 A questo punto, tornando ad esempio sul primo degli hazard che abbiamo rilevato nell'esempio precedente, esso si verifica sul registro `x2` tra la scrittura del risultato dell'istruzione `sub x2, x1, x3` e la lettura del primo operando dell'istruzione `and x12, x2, x5`; tale hazard si verifica, in particolare, quando l'istruzione `sub` si trova nello stadio MEM, mentre l'istruzione `and` si trova nello stadio EXE. Di conseguenza, possiamo affermare che si tratta di un **hazard di tipo 1a**, ossia **EX/MEM.rd = ID/EX.rs1**, dove il registro `rd`, che coincide con il registro `rs1`, è `x2`. Seguendo lo stesso ragionamento, notiamo invece che il secondo hazard rilevato consiste in un **hazard di tipo 2b**, ossia **MEM/WB.rd = ID/EX.rs2**, che coinvolge sempre il registro `x2`.
 
@@ -537,12 +539,101 @@ Avendo capito quali tipi di hazard sui dati possono verificarsi, e avendo impara
 
 Notiamo che i dati da propagare si trovano, in questo nuovo approccio, nei **registri di pipeline**; dunque, per poterli propagare è necessario che **l'ALU possa ricevere input non solo dal registro ID/EX, ma anche da altri registri di pipeline**. Per selezionare l'origine degli input dell'ALU, possiamo aggiungere dei **multiplexer** in corrispondenza degli stessi, insieme agli appositi **segnali di controllo**. Ciascuno dei due multiplexer da inserire selezionerà una delle seguenti **tre possibili casistiche**:
 - **non avviene alcuna propagazione**, e dunque il valore di input proviene dal registro di pipeline ID/EX;
-- 
+- **il dato viene propagato dall'istruzione precedente**, e dunque il valore di input proviene dal registro di pipeline EX/MEM;
+- **il dato viene propagato dalla seconda istruzione precedente**, e dunque il valore di input proviene dal registro di pipeline MEM/WB.
+
+Di seguito, uno schema semplificato (vengono omesse varie componenti) dell'hardware appartenente agli **ultimi tre stadi della pipeline contemplando la propagazione** (le componenti aggiunte sono state evidenziate in arancione):
+
+![[cpu_pipeline_forwarding_semp.png]]
+
+La diversa combinazione dei segnali di controllo **`PropagaA`** e **`PropagaB`**, entrambi di 2 bit, determina la particolare selezione di sorgenti di dati. Il loro comportamento può essere riassunto nella seguente tabella:
+
+![[segnali_controllo_pipeline_forwarding_tabella.png]]
+
+Dato che i multiplexer si trovano nello stadio EX, possiamo affermare che **il controllo della propagazione avviene nello stadio EX**; tuttavia, ciò rende necessario **trasportare il numero dei due registri di lettura dallo stadio ID al registro di pipeline ID/EX**, in modo da poter permettere all'unità di propagazione di verificare se è presente o meno un hazard sui dati. 
+
+Stabilito ciò, possiamo esplicitare per comodità le **condizioni che devono verificarsi** perché avvenga ciascuno dei 4 hazard sui dati formalizzati in precedenza (le condizioni 1a e 1b, che rappresentano degli hazard nello stadio EX, e 2a e 2b, che rappresentano degli hazard nello stadio MEM):
+- la condizione **1a**, in corrispondenza della quale si dovrebbe avere `PropagaA = 10`, avviene quando:
+
+```
+if  (EX/MEM.RegWrite
+and (EX/MEM.rd != 0)
+and (EX/MEM.rd = ID/EX.rs1))
+```
+
+- la condizione **1b**, in corrispondenza della quale si dovrebbe avere `PropagaB = 10`, avviene quando:
+
+```
+if  (EX/MEM.RegWrite
+and (EX/MEM.rd != 0)
+and (EX/MEM.rd = ID/EX.rs2))
+```
+
+- la condizione **2a**, in corrispondenza della quale si dovrebbe avere `PropagaA = 01`, avviene quando:
+
+```
+if  (MEM/WB.RegWrite
+and (MEM/WB.rd != 0)
+and (MEM/WB.rd = ID/EX.rs1))
+```
+
+- la condizione **2b**, in corrispondenza della quale si dovrebbe avere `PropagaB = 01`, avviene quando:
+
+```
+if  (MEM/WB.RegWrite
+and (MEM/WB.rd != 0)
+and (MEM/WB.rd = ID/EX.rs2))
+```
+
+Supponendo che il register file fornisca in uscita il dato corretto anche quando un'istruzione nello stadio ID va a leggere il contenuto di un registro scritto nello stesso ciclo di clock da un'altra istruzione nello stadio WB, si ha che **non si può verificare un hazard nello stadio WB**. Un register file di questo tipo implementa una particolare forma di propagazione direttamente al suo interno, proprio per permettere ciò.
+
+Di seguito, una schematizzazione dell'**implementazione dell'unità di elaborazione con le opportune modifiche per gestire gli hazard sui dati tramite propagazione** (si tratta di uno schema semplificato, che omette varie parti come l'estensione del segno o la logica di branch):
+
+![[cpu_pipeline_forwarding_semp1.png]]
+
+Ci sono casi, tuttavia, in cui **la propagazione non è sufficiente**, e per poterla applicare sarà comunque necessario inserire degli **stalli** nell'esecuzione delle istruzioni. Si pensi, ad esempio, alla seguente sequenza di istruzioni:
+
+```
+lw x2, 20(x1)
+and x4, x2, x5
+or x8, x2, x6
+add x9, x4, x2
+sub x1, x6, x7
+```
+
+In questo esempio, una criticità del genere si presenta con l'istruzione `and x4, x2, x5`, che tenta di leggere un registro che deve ancora essere scritto dall'istruzione di load che la precede, ossia `lw x2, 20(x1)`. Visualizziamo la pipeline di queste istruzioni nel diagramma apposito:
+
+![[diagramma_pipeline_piùcicli_esempio4.png]]
+
+Durante il quarto ciclo di clock, il dato da scrivere in `x2` deve ancora essere letto dalla memoria, ed è dunque ancora non disponibile, ma al tempo stesso l'ALU si appresta a eseguire l'operazione prevista per l'istruzione successiva. Dunque, una regola che vale generalmente è che **occorre mettere in stallo la pipeline quando un'istruzione di load è seguita da un'istruzione che utilizza il dato letto da quest'ultima**.
+
+Risulta quindi necessaria, oltre all'unità di propagazione, anche una cosiddetta "**unità di rilevamento degli hazard**", che possa inserire uno stallo tra l'istruzione di load e l'istruzione successiva che dipende dalla load **durante lo stadio ID** di quest'ultima. Per le istruzioni di load, in particolare, quest'unità implementa la seguente logica:
+
+```
+if  (ID/EX.MemRead 
+and (ID/EX.rd = IF/ID.rs1) 
+or  (ID/EX.rd = IF/ID.rs2)) -> mettere in stallo la pipeline
+```
+
+dove la prima condizione (`ID/EX.MemRead`) stabilisce che l'istruzione che si trova nello stadio EX della sua esecuzione è un'istruzione di load, mentre la seconda e la terza (`ID/EX.rd = IF/ID.rs1` e `ID/EX.rd = IF/ID.rs2`) stabiliscono che il numero del registro di scrittura dell'istruzione di load coincide con il numero di uno dei registri di lettura dell'istruzione successiva. 
+
+Se tutte queste condizioni vengono rispettate, l'istruzione nello stadio ID viene messa in **stallo per un ciclo di clock**, permettendo in seguito alla **propagazione** di gestire le dipendenze (in alternativa, sarebbe necessario un ulteriore ciclo di clock di stallo). Al tempo stesso, se l'istruzione nello stadio ID viene messa in stallo, lo stesso deve accadere anche per l'**istruzione nello stadio IF**. Per impedire a queste due istruzioni di procedere nella pipeline, basterebbe semplicemente **impedire l'aggiornamento del PC e del registro di pipeline IF/ID**; al tempo stesso, però, occorre che l'esecuzione degli stadi successivi a ID continui senza effetti, che questi stadi lavorino "a vuoto". Per permettere ciò, bisogna eseguire una "istruzione" particolare, ossia una **`nop`** ("**not operation**").
+
+Ma come possiamo inserire concretamente una `nop` nella pipeline? **Impostando a $0$ tutti i 7 segnali di controllo degli stadi EX, MEM e WB**, è possibile creare effettivamente un'istruzione che non produce risultati, che è proprio ciò di cui abbiamo bisogno. Dunque, andiamo a "trasformare" l'istruzione `and x4, x2, x5` in una `nop`, andando ad **azzerare i segnali di controllo contenuti nei campi EX, MEM e WB del registro di pipeline ID/EX**, che verranno poi trasmessi in avanti ad ogni ciclo di clock, producendo l'assenza di effetti desiderata. Possiamo visualizzare in maniera più chiara ciò che avviene con il seguente diagramma:
+
+![[diagramma_pipeline_piùcicli_esempio5.png]]
+
+Notiamo che, in questo modo, **l'esecuzione dell'intera sequenza di istruzioni**, a partire dalla seconda, **viene ritardata di un ciclo di clock**. La seconda e la terza istruzione, in particolare, dovranno ripetere nel quarto ciclo di clock ciò che avevano già fatto nel terzo. Di seguito, vediamo una versione aggiornata dell'unità di elaborazione, dotata di un'**unità di rilevamento degli hazard** per gestire questo tipo di situazioni (anche stavolta, vengono omesse parti come logica di branch ed estensione del segno):
+
+![[cpu_pipeline_forwarding_semp2.png]]
+
+Ricapitolando, l'**unità di propagazione** controlla i **multiplexer agli input dell'ALU**, in modo da selezionare accuratamente la sorgente degli operandi in base ai segnali di controllo `PropagaA` e `PropagaB`; l'**unità di rilevamento degli hazard** controlla invece la **riscrittura del PC e del registro di pipeline IF/ID**, così come il **multiplexer che seleziona i segnali di controllo da scrivere nel registro di pipeline ID/EX**.
 ___
 ##### Come affrontare gli hazard sul controllo?
 
+[pag. 287...   16, slide 3]
+___
+## Eccezioni
+
 
 ___
-
-[pag. 281...   15, slide 6]
-[pag. 24 - 34 "Prestazioni"]
