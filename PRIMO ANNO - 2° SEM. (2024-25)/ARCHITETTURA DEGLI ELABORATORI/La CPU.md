@@ -631,9 +631,68 @@ Ricapitolando, l'**unità di propagazione** controlla i **multiplexer agli input
 ___
 ##### Come affrontare gli hazard sul controllo?
 
-[pag. 287...   16, slide 3]
+Prima di procedere, forniamo di seguito una schematizzazione alternativa del nostro processore rispetto a quella vista al termine del [[La CPU#Come affrontare gli hazard sui dati?|paragrafo precedente]], che omette buona parte della logica di propagazione e di rilevamento degli hazard, ma in cui è possibile trovare la **logica di branch e di estensione del segno**:
+
+![[cpu_pipeline_forwarding.png]]
+
+Supponiamo, ad esempio, di avere la seguente serie di istruzioni:
+
+```
+beq x1, x0, 16
+and x12, x2, x5
+or x13, x6, x2
+add x14, x2, x2
+
+...
+
+lw x4, 100(x7)
+```
+
+e supponiamo che la prima di queste istruzioni, ossia **`beq x1, x0, 16`**, si trovi all'indirizzo $40$, e che l'istruzione **`lw x4, 100(x7)`** si trovi all'indirizzo $72$, rendendola così l'eventuale **destinazione del salto condizionato** della prima istruzione (nelle istruzioni di salto condizionato, l'offset è misurato in mezze parole, dove una mezza parola è pari a 2 byte). Possiamo visualizzare graficamente la corrispondente **pipeline di esecuzione** con il seguente diagramma:
+
+![[diagramma_pipeline_piùcicli_esempio6.png]]
+
+Come sappiamo, **l'istruzione di salto condizionato decide se saltare o meno nello stadio MEM**, corrispondente nell'esempio al quarto ciclo di clock: ciò implica, trovandoci in una pipeline, che nel mentre è stata avviata l'esecuzione di **altre tre istruzioni successive**, che potrebbero compromettere la sequenza di esecuzione o portare a comportamenti imprevisti se il salto venisse effettuato. Ci troviamo, dunque, di fronte a un **hazard sul controllo**. Sostanzialmente, **non esiste una situazione assolutamente efficace per risolvere gli hazard sul controllo**, essendo essi per natura almeno un minimo imprevedibili; per questo motivo, i metodi di risoluzione di questo tipo di hazard rappresentano più che altro delle **ottimizzazioni**, e le modifiche all'hardware sono relativamente semplici.
+
+Un primo approccio, molto basilare e inefficiente, potrebbe essere **mettere in stallo la pipeline fino alla valutazione della condizione**; si tratta di un "rimedio" che rallenterebbe fin troppo la pipeline, e quindi da evitare. 
+
+Una tecnica, invece, frequentemente utilizzata è quella di **predire che il salto non venga effettuato**: in questo modo, le istruzioni successive verrebbero comunque caricate nella pipeline, e nel caso in cui il salto venga effettuato, queste (che, a quel punto, si troveranno nelle fasi di IF, ID ed EX) verranno **scartate**, facendo ripartire l'esecuzione a partire dall'istruzione corrispondente all'indirizzo di destinazione del salto. Si tratta di un rimedio che, per quanto non completamente efficace, permette di **accelerare l'esecuzione in tutti i casi in cui il salto non viene effettuato**. 
+
+Concretamente, per "scartare" le istruzioni, basterà **trasformarle in `nop` portando i segnali di controllo a $0$**, così come si è fatto per ottenere lo stallo nel caso degli [[La CPU#Come affrontare gli hazard sui dati?|hazard sui dati]]. La differenza è che non si effettuerà un **flush** solo di un'istruzione, ma di tre istruzioni che si trovano negli stadi IF, ID ed EX.
+
+Un modo, poi, per **migliorare le prestazioni sui salti condizionati** consiste nell'**anticipare la decisione del salto stesso**. Per fare ciò, bisognerà anticipare due azioni all'interno della pipeline: il **calcolo dell'indirizzo di destinazione** e la **valutazione della condizione su cui si basa il salto**. La prima anticipazione è quella più facilmente realizzabile: infatti, il PC e l'immediato che andrà sommato ad esso sono disponibili già nel registro di pipeline IF/ID, e sarà dunque sufficiente **spostare il sommatore destinato al calcolo del nuovo indirizzo dallo stadio EX allo stadio ID**. 
+
+La seconda anticipazione, invece, è più complessa. Nel caso in cui il salto in questione sia di tipo **`beq`**, o "**branch if equal**", si vuole confrontare il contenuto dei due registri letti nello stadio ID e verificare che il loro contenuto sia uguale. Questo test di uguaglianza, invece che con una sottrazione all'interno dell'ALU, può essere eseguito da un **comparatore** inserito tra i due contenuti letti dal register file: concretamente, ciò che fa il comparatore è dapprima uno [[Porte logiche#Porte logiche a più input *AND*, *OR*, *NAND*, *NOR*, *XOR* e *XNOR*|XOR]] bit a bit del contenuto dei due registri, e in seguito un OR sull'output dei vari XOR effettuati (se l'output dell'OR è $0$, allora i due registri confrontati sono uguali). 
+
+Tuttavia, spostare questo confronto nello stadio ID implica l'aggiunta di **altra logica di propagazione e di rilevamento degli hazard**. Infatti, ci sono principalmente **due complicazioni** con questo approccio:
+1. durante lo stadio ID si deve decodificare l'istruzione, decidere se occorre propagare gli operandi all'ingresso del comparatore e valutare l'uguaglianza, in modo che si possa scrivere nel PC l'indirizzo di destinazione del salto se questo deve avvenire; ciò rende necessaria l'aggiunta di **ulteriore logica di propagazione**;
+2. poiché i dati su cui fare il confronto sono richiesti già nello stadio ID, ma potrebbero eventualmente essere prodotti più avanti nella pipeline, è possibile che si verifichi un **hazard sui dati**, e che diventi necessario introdurre uno **stallo**; ciò avverrebbe, ad esempio, se il dato letto dalla memoria da un'istruzione di load è uno degli operandi di un'istruzione di salto condizionato immediatamente successiva (in questo caso, sarebbe necessario introdurre uno stallo di due cicli di clock).
+
+Nonostante queste complicazioni, le anticipazioni effettuate rappresentano effettivamente un miglioramento, poiché riducono universalmente a **una sola istruzione** (quella che si trova nello stadio IF) l'eventuale **scarto di un'istruzione di salto condizionato**. Per scartare quest'istruzione, invece di azzerare i vari segnali di controllo, possiamo direttamente **aggiungere un segnale di controllo `IF.Flush`**, che va ad **azzerare il campo `IF/ID.Istruzione`**, ossia l'istruzione scritta nel registro di pipeline IF/ID, rendendola così concretamente una `nop`.
+
+Con le apposite aggiunte, e reinserendo la logica implementata per affrontare gli hazard sui dati, ora la nostra unità di elaborazione può essere schematizzata nel modo seguente (per semplicità, è stata omessa un'ulteriore unità di propagazione, così come altri dettagli):
+
+![[cpu_pipeline_forwarding_efficientbeq.png]]
+
+Quella vista finora rappresenta una **"forma base" di predizione del salto**: si effettua sempre una stessa supposizione, e nel caso essa si riveli corretta bene, altrimenti si scartano le istruzioni contenute nella pipeline. Per una semplice pipeline a cinque stadi come quella analizzata finora, questo approccio risulta sufficientemente adeguato; lo stesso non si può dire, tuttavia, contestualmente a pipeline più profonde, dove il costo dei salti condizionati, in termini di cicli di clock e, di conseguenza, anche di istruzioni scartate, aumenta.
+
+A costo di aumentare l'hardware a disposizione, è possibile effettuare una **predizione dinamica dell'esito dei salti** durante l'esecuzione stessa del programma, in modo da variare di volta in volta le previsioni e ottenendo, così, un'efficienza maggiore. Un possibile approccio a riguardo consiste nel **verificare se, l'ultima volta che un'istruzione di salto condizionato è stata eseguita, tale salto sia stato effettivamente effettuato**: in caso positivo, si assume che il salto verrà effettuato anche stavolta, e vengono quindi caricate le istruzioni a partire da quella presente all'indirizzo di destinazione; altrimenti, si assume che il salto non verrà effettuato, e quindi vengono caricate le istruzioni successive.
+
+Un modo per implementare questa strategia è l'utilizzo di un "**buffer di predizione dei salti**", detto anche "**branch prediction buffer**" o "**tabella della storia dei salti**": si tratta di una **piccola memoria**, indicizzata attraverso la parte inferiore dell'indirizzo dell'istruzione di branch, che contiene **un bit che indica se il salto è stato effettuato o meno nell'ultima esecuzione**. Questa rappresenta la versione più semplice e banale realizzabile, ma aumentando la capacità di questo buffer anche solo a **due bit**, è possibile effettuare **previsioni più accurate** in alcuni contesti, ad esempio nei cicli a forte prevalenza di uno specifico tipo di scelta. Nel caso in cui si adoperino due bit per il buffer di predizione dei salti, la **scelta della previsione in base ai salti precedenti** può essere rappresentata come una **[[FSM]]**:
+
+![[fsm_predizione_dinamica_branch.png]]
+
+Un buffer di predizione dei salti può essere realizzato come un **piccolo buffer speciale**, accessibile tramite l'indirizzo dell'istruzione **durante lo stadio IF** della pipeline.
+
+[SALTO RITARDATO: 16, slide 18/21]
 ___
 ## Eccezioni
 
+Come si potrebbe immaginare, la **control unit** di un processore è la parte più complessa da far funzionare correttamente ed efficientemente. Oltre alle sfide palesi, derivate dal coordinamento dell'esecuzione di più istruzioni in una pipeline, una delle difficoltà maggiori è rappresentata dalla gestione delle "**eccezioni**" e degli "**interrupt**", eventi che alterano il normale flusso sequenziale di esecuzione delle istruzioni (ma diversi dai salti).
 
+In varie architetture, non si fa una vera e propria distinzione tra eccezioni ed interrupt, tuttavia ciò non vale solitamente per l'architettura RISC-V, che è quella che trattiamo in questo corso. Qui, si utilizzerà il termine "**eccezione**" per indicare **qualsiasi cambiamento non previsto dal flusso di controllo**, indipendentemente dalla sua natura, e il termine "**interrupt**" per indicare esclusivamente **un cambiamento con cause esterne**. Di seguito, una tabella che riassume la maggior parte di questi eventi imprevisti, categorizzandoli opportunamente:
+
+![[eccezioni_interrupt_tabella.png]]
+
+[pag. 295/300 - 17, slide 10/19]
 ___
