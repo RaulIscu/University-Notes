@@ -1,6 +1,6 @@
 ## Cos'è una CPU?
 
-La **CPU** ("**Central Processing Unit**"), o **processore**, rappresenta forse la componente più importante e imprescindibile in un qualsiasi [[Il calcolatore|calcolatore]]. Si tratta della **parte attiva** del calcolatore, quella che esegue fedelmente le istruzioni di un programma, che è in grado di effettuare operazioni aritmetiche, effettuare controlli sui risultati di quest'ultime, inviare segnali per attivare dispositivi di I/O e molto altro.
+La **CPU** ("**Central Processing Unit**"), detta anche **processore** o **unità di elaborazione**, rappresenta forse la componente più importante e imprescindibile in un qualsiasi [[Il calcolatore|calcolatore]]. Si tratta della **parte attiva** del calcolatore, quella che esegue fedelmente le istruzioni di un programma, che è in grado di effettuare operazioni aritmetiche, effettuare controlli sui risultati di quest'ultime, inviare segnali per attivare dispositivi di I/O e molto altro.
 
 Generalmente, una CPU è composta da **due componenti principali**:
 - un'**unità di elaborazione dati**, detta anche "**datapath**";
@@ -25,7 +25,7 @@ Le diverse componenti del processore, quelle che potremmo definire **[[La CPU#Un
 
 In un elemento di tipo combinatorio, in ogni istante i suoi output dipendono esclusivamente dai suoi input in tale istante (infatti, **un elemento combinatorio è privo di memoria**), di conseguenza dando gli stessi input a un elemento combinatorio si otterranno sempre gli stessi output. In un elemento di tipo sequenziale, invece, i suoi output dipendono sia dai suoi input sia dallo stato già memorizzato al suo interno (infatti, **un elemento sequenziale è dotato di memoria**); per questa caratteristica, gli elementi sequenziali vengono anche detti "**elementi di stato**". Un elemento di stato, generalmente, possiede sempre **almeno due input e un output**: i due input sono il dato da memorizzare e il **clock**, segnale che determina quando memorizzare il dato; l'output è invece il dato memorizzato al suo interno in un ciclo di clock passato.
 
-Nel nostro processore, incontreremo esempi sia dell'una che dell'altra categoria (ad esempio, l'ALU è un componente combinatorio, mentre i registri o le memorie sono componenti di stato).
+Nel nostro processore, incontreremo esempi sia dell'una che dell'altra categoria (ad esempio, l'ALU è un componente combinatorio, mentre i registri e le memorie sono componenti di stato).
 
 A questo punto, avendo stabilito con che tipo di componenti andremo a lavorare, è opportuno stabilire una **metodologia di temporizzazione**, scegliendo dunque quando i segnali potranno essere effettivamente scritti e letti. Ciò è importante per regolare il flusso delle informazioni, evitare sovrapposizioni o malfunzionamenti, e favorire una maggiore prevedibilità del circuito. Per semplicità, supporremo di utilizzare una metodologia di temporizzazione "**sensibile ai fronti**", o "**edge-triggered**", che garantisce dunque che gli elementi di stato possano essere aggiornati solamente in corrispondenza di un **fronte** del segnale di clock, ossia di una transizione tra livello alto e basso dello stesso; in particolare, verrà utilizzata una metodologia "**positive edge-triggered**", che dà dunque importanza solo ai fronti di transizione da segnale basso a segnale alto.
 ___
@@ -35,7 +35,7 @@ La prima cosa da fare, nel contesto della progettazione di un qualsiasi processo
 1. **inviare il contenuto del PC alla memoria** che contiene il programma, in modo da **prelevare l'istruzione desiderata dalla memoria** (questa operazione, per semplicità, viene anche definita come "**fetch**" dell'istruzione);
 2. **decodificare l'istruzione** in questione e, in base ai suoi campi, **leggere il contenuto dei registri desiderati**.
 
-In seguito a questi due passaggi, in base al tipo di istruzione le azioni richieste per completare l'**esecuzione** variano leggermente, pur rimanendo a grandi linee molto simili. Ad esempio, **tutte le istruzioni dell'architettura RISC-V**, eccetto per i [[Le istruzioni#Istruzioni di salto incondizionato|salti incondizionati]], **utilizzano in qualche modo l'ALU** (unità logico-aritmetica) **dopo la lettura dei registri**: le istruzioni che accedono alla memoria la usano per calcolare l'indirizzo del dato desiderato; le istruzioni aritmetiche e logiche, naturalmente, la usano per eseguire operazioni; le istruzioni di salto condizionato la usano per effettuare i confronti su cui si basano.
+In seguito a questi due passaggi, in base al tipo di istruzione le azioni richieste per completare l'**esecuzione** variano leggermente, pur rimanendo a grandi linee molto simili. Ad esempio, **quasi tutte le istruzioni dell'architettura RISC-V utilizzano in qualche modo l'ALU** (unità logico-aritmetica) **dopo la lettura dei registri**: le istruzioni che accedono alla memoria la usano per calcolare l'indirizzo del dato desiderato; le istruzioni aritmetiche e logiche, naturalmente, la usano per eseguire operazioni; le istruzioni di salto condizionato la usano per effettuare i confronti su cui si basano.
 
 Una volta terminato il lavoro con l'ALU, per completare l'esecuzione **diversi tipi di istruzioni faranno cose diverse**. Un'istruzione che accede alla memoria dovrà scriverci o leggerne dati, un'istruzione aritmetico-logica dovrà memorizzare il risultato della propria operazione nel registro di destinazione (operazione chiamata anche "write back"), un'istruzione di salto condizionato dovrà variare o meno l'indirizzo dell'istruzione successiva in base al risultato del confronto da essa eseguito.
 ___
@@ -57,7 +57,7 @@ Per quanto riguarda l'**adder**, esso avrà invece come input **due valori inter
 
 ![[pc_adder.png]]
 
-Vediamo, ora, le caratteristiche del **blocco di registri**. Nell'architettura RISC-V, esso è composto da **32 registri di 32 bit** ciascuno, e presenta in input **3 porte a 5 bit** per indicare gli eventuali 2 registri da leggere e l'eventuale registro di scrittura, così come **3 porte dati a 32 bit**, di cui **una in input** per il valore eventualmente da memorizzare, e **due in output** per i valori eventualmente letti dai registri (inoltre, per regolare la scrittura nel registro di scrittura, si dovrà utilizzare un segnale **`RegWrite`**, che se abilitato consentirà la scrittura). Graficamente, possiamo schematizzare quest'unità in questo modo:
+Vediamo, ora, le caratteristiche del **blocco di registri**. Nell'architettura RISC-V, esso è composto da **32 registri di 32 bit** ciascuno, e presenta in input **3 porte a 5 bit** per indicare gli eventuali 2 registri di lettura e l'eventuale registro di scrittura, così come **3 porte dati a 32 bit**, di cui **una in input** per il valore eventualmente da scrivere, e **due in output** per i valori eventualmente letti dai registri (inoltre, per regolare la scrittura nel registro di scrittura, si dovrà utilizzare un segnale **`RegWrite`**, che se abilitato consentirà tale operazione). Graficamente, possiamo schematizzare quest'unità in questo modo:
 
 ![[register_file.png]]
 
@@ -73,13 +73,13 @@ Un'altra componente che può tornare utile è l'**unità di estensione del segno
 
 ![[estensione_segno.png]]
 
-Tutte queste unità funzionali saranno interconnesse da vari **nodi**, definendo il flusso delle informazioni nella CPU e andando a formare il **datapath**. Naturalmente, per evitare sovrapposizioni, se un'unità funzionale può ricevere dati da più sorgenti bisogna inserire un **[[Circuiti combinatori#Multiplexer|multiplexer]]** per selezionarne una alla volta. Le unità funzionali nel datapath, poi, saranno attivate e coordinate dai segnali prodotto dalla **control unit**.
+Tutte queste unità funzionali saranno interconnesse da vari **nodi**, definendo il flusso delle informazioni nella CPU e andando a formare il **datapath**. Naturalmente, per evitare sovrapposizioni, se un'unità funzionale può ricevere dati da più sorgenti bisogna inserire dei **[[Circuiti combinatori#Multiplexer|multiplexer]]** per selezionarne una alla volta. Le unità funzionali nel datapath, poi, saranno attivate e coordinate dai segnali prodotti dalla **control unit**.
 ___
 ##### Assemblare le unità funzionali
 
 Cominciamo, a questo punto ad **assemblare le unità funzionali**, soffermandoci passo per passo sui passaggi di esecuzione di un'istruzione che abbiamo visto a inizio paragrafo. 
 
-Il primissimo passaggio, universale per tutte le istruzioni, è il **fetch** della stessa: per effettuare il fetch di un'istruzione, sarà necessario naturalmente avere il **PC**, ossia l'indirizzo di quest'ultima, e di trasmetterlo come input alla **memoria di istruzioni** in modo da ottenere, come output da essa, l'istruzione da eseguire; al tempo stesso, il PC va anche passato all'**adder**, che a meno di salti procederà ad aumentarlo di 4, ottenendo così l'indirizzo dell'istruzione successiva e ritrasmettendolo al registro del PC. È possibile ottenere un funzionamento del genere collegando le unità funzionali appena nominate in questo **circuito**:
+Il primissimo passaggio, universale per tutte le istruzioni, è il **fetch** della stessa: per effettuare il fetch di un'istruzione, sarà necessario naturalmente avere il **PC**, ossia l'indirizzo di quest'ultima, e trasmetterlo come input alla **memoria di istruzioni** in modo da ottenere, come output, l'istruzione da eseguire; al tempo stesso, il PC va anche passato a un **adder**, che a meno di salti procederà ad aumentarlo di $4$, ottenendo così l'indirizzo dell'istruzione successiva e ritrasmettendolo al registro del PC. È possibile ottenere un funzionamento del genere collegando le unità funzionali appena nominate in questo **circuito**:
 
 ![[fetch.png]]
 

@@ -2,9 +2,7 @@
 
 Per poter comunicare con un [[Il calcolatore|calcolatore]] e impartirgli dei comandi, bisogna parlare nel suo "linguaggio", utilizzando un particolare **insieme di istruzioni**, o "**instruction set**", che possiamo vedere come una sorta di vocabolario, dove una singola **istruzione** è una parola.
 
-Si potrebbe pensare che i linguaggi dei calcolatori siano molti e diversi tra loro, ma in realtà risultano essere tutti relativamente simili, perciò impararne anche uno solo costituisce un grande passo verso la comprensione di tutti gli altri. Il linguaggio analizzato in questo corso è il **RISC-V**, sviluppato all'università di Berkeley a partire dal **2010**.
-
-La somiglianza tra i vari insiemi di istruzioni è dovuta al fatto che tutti i calcolatori sono costruiti a partire dai medesimi principi fondamentali, e dalle stesse componenti hardware di base, oltre che al fatto che un qualsiasi calcolatore debba saper svolgere almeno alcune operazioni di base sempre costanti.
+Si potrebbe pensare che i linguaggi dei calcolatori siano molti e diversi tra loro, ma in realtà risultano essere tutti relativamente simili, perciò impararne anche uno solo costituisce un grande passo verso la comprensione di tutti gli altri. La somiglianza tra i vari insiemi di istruzioni è dovuta al fatto che tutti i calcolatori sono costruiti a partire dai medesimi principi fondamentali, e dalle stesse componenti hardware di base, oltre che al fatto che un qualsiasi calcolatore debba saper svolgere almeno alcune operazioni di base sempre costanti. Il linguaggio analizzato in questo corso è il **RISC-V**, sviluppato all'università di Berkeley a partire dal **2010**.
 ___
 ## Le istruzioni dell'architettura RISC-V
 
@@ -34,30 +32,26 @@ ___
 ##### Istruzioni di trasferimento dati
 
 Le principali **istruzioni di trasferimento dati** previste dall'architettura RISC-V sono le seguenti:
-- **`lw rd, 40(rs3)`**;
-- **`lwu rd, 40(rs3)`**;
-- **`sw rs1, 40(rs3)`**;
-- **`lh rd, 40(rs3)`**;
-- **`lhu rd, 40(rs3)`**;
-- **`sh rs1, 40(rs3)`**;
-- **`lb rd, 40(rs3)`**;
-- **`lbu rd, 40(rs3)`**;
-- **`sb rs1, 40(rs3)`**;
-- **`lr.d rd, (rs3)`**;
-- **`sc.d rs1, rs2, (rs3)`**;
+- **`lw rd, 40(rs1)`**;
+- **`lwu rd, 40(rs1)`**;
+- **`sw rs1, 40(rs2)`**;
+- **`lh rd, 40(rs1)`**;
+- **`lhu rd, 40(rs1)`**;
+- **`sh rs1, 40(rs2)`**;
+- **`lb rd, 40(rs1)`**;
+- **`lbu rd, 40(rs1)`**;
+- **`sb rs1, 40(rs2)`**;
 - **`lui rd, 0x12345`**.
 
-L'istruzione **`lw`** consiste nella **lettura di una parola** di memoria, e al suo spostamento in un registro. Invece, l'istruzione **`lwu`** consiste nella **lettura di una parola senza segno** della memoria, e al suo spostamento in un registro. L'istruzione **`sw`**, poi, consiste nella **memorizzazione di una parola**, ossia nello spostamento di essa da un registro (nell'esempio, `rs1`) a un indirizzo in memoria (nell'esempio, `rs3 + 40`).
+L'istruzione **`lw`** consiste nella **lettura di una parola** di memoria, e al suo spostamento in un registro. Invece, l'istruzione **`lwu`** consiste nella **lettura di una parola senza segno** della memoria, e al suo spostamento in un registro. L'istruzione **`sw`**, poi, consiste nella **memorizzazione di una parola**, ossia nello spostamento di essa da un registro (nell'esempio, `rs1`) a un indirizzo in memoria (nell'esempio, `rs2 + 40`).
 
-L'istruzione **`lh`** consiste nella **lettura di una mezza parola** di memoria, e al suo spostamento in un registro. Invece, l'istruzione **`lhu`** consiste nella **lettura di una mezza parola senza segno** della memoria, e al suo spostamento in un registro. L'istruzione **`sh`**, poi, consiste nella **memorizzazione di una mezza parola**, ossia nello spostamento di essa da un registro (nell'esempio, `rs1`) a un indirizzo in memoria (nell'esempio, `rs3 + 40`).
+L'istruzione **`lh`** consiste nella **lettura di una mezza parola** di memoria, e al suo spostamento in un registro. Invece, l'istruzione **`lhu`** consiste nella **lettura di una mezza parola senza segno** della memoria, e al suo spostamento in un registro. L'istruzione **`sh`**, poi, consiste nella **memorizzazione di una mezza parola**, ossia nello spostamento di essa da un registro (nell'esempio, `rs1`) a un indirizzo in memoria (nell'esempio, `rs2 + 40`).
 
-L'istruzione **`lb`** consiste nella **lettura di un byte** di memoria, e al suo spostamento in un registro. Invece, l'istruzione **`lbu`** consiste nella **lettura di un byte senza segno** della memoria, e al suo spostamento in un registro. L'istruzione **`sb`**, poi, consiste nella **memorizzazione di un byte**, ossia nello spostamento di esso da un registro (nell'esempio, `rs1`) a un indirizzo in memoria (nell'esempio, `rs3 + 40`).
-
-[ISTRUZIONI LR.D E SC.D]
+L'istruzione **`lb`** consiste nella **lettura di un byte** di memoria, e al suo spostamento in un registro. Invece, l'istruzione **`lbu`** consiste nella **lettura di un byte senza segno** della memoria, e al suo spostamento in un registro. L'istruzione **`sb`**, poi, consiste nella **memorizzazione di un byte**, ossia nello spostamento di esso da un registro (nell'esempio, `rs1`) a un indirizzo in memoria (nell'esempio, `rs2 + 40`).
 
 L'istruzione **`lui`** consiste nel **caricamento nel registro `rd` dei 20 bit più significativi di una costante**, inserendoli nei 20 bit più significativi (dall'indice $12$ all'indice $31$) del registro in questione, e riempiendo i restanti 12 bit meno significativi (dall'indice $0$ all'indice $11$) con degli zeri. 
 
-Nell'utilizzo di molte delle istruzioni di trasferimento dati, si utilizza il valore contenuto in un determinato registro come "**indirizzo di base**", e gli viene sommata una costante di "**offset**": la somma tra questi due valori consisterà tendenzialmente nell'indirizzo di memoria a cui accedere per eseguire l'istruzione in questione. Ad esempio, nell'esempio di `lw`, si legge la parola contenuta in memoria all'indirizzo `rs3 + 40`, e la si sposta nel registro `rd`.
+Nell'utilizzo di molte delle istruzioni di trasferimento dati, si utilizza il valore contenuto in un determinato registro come "**indirizzo di base**", e gli viene sommata una costante di "**offset**": la somma tra questi due valori consisterà tendenzialmente nell'indirizzo di memoria a cui accedere per eseguire l'istruzione in questione. Ad esempio, nell'esempio di `lw`, si legge la parola contenuta in memoria all'indirizzo `rs1 + 40`, e la si sposta nel registro `rd`.
 ___
 ##### Istruzioni logiche
 
@@ -103,17 +97,15 @@ Le principali **istruzioni di salto condizionato** previste dall'architettura RI
 - **`bge rs1, rs2, 100`**;
 - **`bgeu rs1, rs2, 100`**.
 
-Possiamo generalizzare queste 6 istruzioni nella formula **`inst rs1, rs2, offset`**, dove `inst` rappresenta la particolare condizione che deve venire valutata, `rs1` e `rs2` rappresentano i due registri da confrontare, e `offset` rappresenta lo **spostamento** (in byte) **relativo al PC** (Program Counter), per calcolare così l'indirizzo a cui saltare.
+Possiamo generalizzare queste 6 istruzioni nella formula **`inst rs1, rs2, offset`**, dove `inst` rappresenta la particolare condizione che deve venire valutata, `rs1` e `rs2` rappresentano i due registri da confrontare, e `offset` rappresenta lo **spostamento** (misurato in mezze parole, dove una mezza parola equivale a 2 byte) **relativo al PC** (Program Counter), per calcolare così l'indirizzo a cui saltare.
 
 Vediamo ora, che condizione vanno a valutare le varie singole istruzioni:
-- **`beq`** controlla se `rs1` e `rs2` sono uguali, e in tal caso salta all'indirizzo desiderato;
-- **`bne`** controlla se `rs1` e `rs2` sono diversi, e in tal caso salta all'indirizzo desiderato;
-- **`blt`** controlla se `rs1` è minore di `rs2` (tenendo conto del segno), e in tal caso salta all'indirizzo desiderato;
-- **`bltu`** controlla se `rs1` è minore di `rs2` (senza considerare il segno), e in tal caso salta all'indirizzo desiderato;
-- **`bge`** controlla se `rs1` è maggiore o uguale di `rs2` (tenendo conto del segno), e in tal caso salta all'indirizzo desiderato;
-- **`bgeu`** controlla se `rs1` è maggiore o uguale di `rs2` (senza considerare il segno), e in tal caso salta all'indirizzo desiderato;
-
-[SLT E SLTI]
+- **`beq`** ("Branch if EQual") controlla se `rs1` e `rs2` sono uguali, e in tal caso salta all'indirizzo desiderato;
+- **`bne`** ("Branch if Not Equal") controlla se `rs1` e `rs2` sono diversi, e in tal caso salta all'indirizzo desiderato;
+- **`blt`** ("Branch if Less Than") controlla se `rs1` è minore di `rs2` (tenendo conto del segno), e in tal caso salta all'indirizzo desiderato;
+- **`bltu`** ("Branch if Less Than Unsigned") controlla se `rs1` è minore di `rs2` (senza considerare il segno), e in tal caso salta all'indirizzo desiderato;
+- **`bge`** ("Branch if Greater than or Equal") controlla se `rs1` è maggiore o uguale di `rs2` (tenendo conto del segno), e in tal caso salta all'indirizzo desiderato;
+- **`bgeu`** ("Branch if Greater than or Equal Unsigned") controlla se `rs1` è maggiore o uguale di `rs2` (senza considerare il segno), e in tal caso salta all'indirizzo desiderato.
 ___
 ##### Istruzioni di salto incondizionato
 
@@ -121,9 +113,9 @@ Le principali **istruzioni di salto incondizionato** previste dall'architettura 
 - **`jal rd, 100`**;
 - **`jalr rd, 100(rs1)`**.
 
-L'istruzione **`jal`** ("jump and link") va a salvare nel registro `rd` l'indirizzo dell'istruzione successiva ad essa, dunque `PC + 4`, e in seguito salta all'istruzione che si trova all'indirizzo `PC + offset`, dove `offset` è la costante inserita espressa in byte (nell'esempio, $100$).
+L'istruzione **`jal`** ("Jump And Link") va a salvare nel registro `rd` l'indirizzo dell'istruzione successiva ad essa, dunque `PC + 4`, e in seguito salta all'istruzione che si trova all'indirizzo `PC + offset`, dove `offset` è la costante inserita espressa in byte (nell'esempio, $100$).
 
-L'istruzione **`jalr`** ("jump and link register") funziona sostanzialmente allo stesso modo dell'istruzione appena spiegata, con la differenza che, invece di saltare a `PC + offset`, si salta all'indirizzo dato da `rs1 + offset`.
+L'istruzione **`jalr`** ("Jump And Link relative to Register") funziona sostanzialmente allo stesso modo dell'istruzione appena spiegata, con la differenza che, invece di saltare a `PC + offset`, si salta all'indirizzo dato da `rs1 + offset`.
 ___
 ## Come vengono rappresentate le istruzioni nel calcolatore?
 
@@ -135,13 +127,13 @@ A livello di base, le varie componenti di un'istruzione (dette anche **campi**, 
 add x9, x20, x21
 ```
 
-che indica al calcolatore di sommare i valori presenti nei registri `x20` e `x21` e di memorizzare il risultato di tale operazione nel registro `x9`. Tale istruzione astratta viene codificata nella seguente sequenza di 32 bit:
+che indica al calcolatore di sommare i valori presenti nei registri `x20` e `x21` e di scrivere il risultato di tale operazione nel registro `x9`. Tale istruzione astratta viene codificata nella seguente sequenza di 32 bit:
 
 ```
 0000000 10101 10100 000 01001 0110011
 ```
 
-Vediamo cosa viene indicato da ciascuno dei 6 campi in cui è divisa la sequenza di bit. La combinazione del primo, del quarto e del sesto campo (dunque, la combinazione dei numeri decimali $0$, $0$ e $51$) indica al processore che l'istruzione in questione è una **somma**; il secondo campo indica, invece, il numero del **registro del primo operando**, così come il terzo campo indica il numero del **registro del secondo operando**; infine, il quinto campo indica il numero del **registro dove memorizzare il risultato**.
+Vediamo cosa viene indicato da ciascuno dei 6 campi in cui è divisa la sequenza di bit. La combinazione del primo, del quarto e del sesto campo (dunque, la combinazione dei numeri decimali $0$, $0$ e $51$) indica al processore che l'istruzione in questione è una **somma**; il secondo campo indica, invece, il numero del **registro del primo operando**, così come il terzo campo indica il numero del **registro del secondo operando**; infine, il quinto campo indica il numero del **registro dove scrivere il risultato**.
 
 Come si può notare, l'istruzione appena analizzata, così come qualsiasi istruzione RISC-V, **richiede esattamente 32 bit**, o **una parola**, di memoria.
 
@@ -154,18 +146,19 @@ Questa scomposizione di un'istruzione in campi è definita "**formato**" dell'is
 
 Il **`codop`**, chiamato anche "**codice operativo**", è il numero che codifica l'operazione base dell'istruzione in questione (in questo caso, la somma); oltre al `codop` in sé, i campi **`funz3`** e **`funz7`** forniscono ulteriori informazioni aggiuntive. I campi **`rs1`** e **`rs2`**, invece, contengono il numero associato ai due registri che contengono i due **operandi** dell'operazione (in questo caso, `x20` e `x21`). Infine, il campo **`rd`** contiene il numero associato al registro che conterrà il **risultato** dell'operazione (in questo caso, `x9`). Si noti come i campi destinati ai registri sono lunghi esattamente **5 bit**, dato che l'architettura RISC-V prevede 32 registri e 5 bit possono codificare esattamente 32 numeri distinti (da $0$ a $31$).
 
-Tuttavia, questo **non è un formato valido universalmente per tutte le istruzioni** dell'architettura RISC-V, in quanto non ricopre in maniera efficiente tutte le situazioni in cui operano quest'ultime. Ad esempio, nell'utilizzo dell'istruzione `lw` sono richiesti 2 registri e una costante (l'offset), tuttavia mantenere il formato appena analizzato limiterebbe la costante a un valore massimo di $31$. Per ovviare a questa problematica, si è deciso di mantenere la lunghezza fissa di 32 bit per ogni istruzione, ma di **predisporre diversi formati** per diversi tipi di istruzione; i principali sono:
+Tuttavia, questo **non è un formato valido universalmente per tutte le istruzioni** dell'architettura RISC-V, in quanto non ricopre in maniera efficiente tutte le situazioni in cui operano quest'ultime. Ad esempio, nell'utilizzo dell'istruzione `lw` sono richiesti 2 registri e una costante (l'offset), tuttavia mantenere il formato appena analizzato limiterebbe la costante a un valore massimo di $31$. Per ovviare a questa problematica, si è deciso di mantenere la lunghezza fissa di 32 bit per ogni istruzione, ma di **predisporre diversi formati** per diversi tipi di istruzione; essi sono:
 - il formato di **tipo R**;
 - il formato di **tipo I**;
 - il formato di **tipo S**;
 - il formato di **tipo SB**;
-- il formato di **tipo U**.
+- il formato di **tipo U**;
+- il formato di **tipo UJ**.
 
-Quello dell'esempio è un formato di tipo R (R sta per "register"), la cui disposizione dei campi può essere schematizzata così:
+Quello dell'esempio è un formato di tipo R (R sta per "Register"), la cui disposizione dei campi può essere schematizzata così:
 
 ![[formato_r.png]]
 
-Analizziamo, invece, il formato di **tipo I** (I sta per "immediate"). Tale formato viene utilizzato, come suggerisce il nome, dalle **istruzioni aritmetiche in cui un operando è una costante**, ma anche dalle **istruzioni di trasferimento dati dalla memoria**. In questo caso, i campi di un'istruzione di tipo I sono divisi nel seguente modo:
+Analizziamo, invece, il formato di **tipo I** (I sta per "Immediate"). Tale formato viene utilizzato, come suggerisce il nome, dalle **istruzioni aritmetiche in cui un operando è una costante**, ma anche dalle **istruzioni di trasferimento dati dalla memoria**. In questo caso, i campi di un'istruzione di tipo I sono divisi nel seguente modo:
 - i primi 12 bit vengono chiamati **`imm[11:0]`**, o **immediato**;
 - i successivi 5 bit vengono chiamati **`rs1`**;
 - i successivi 3 bit vengono chiamati **`funz3`**;
@@ -178,7 +171,7 @@ Possiamo schematizzare la disposizione dei campi del formato di tipo I così:
 
 Similmente alle istruzioni di tipo R, anche in questo caso troviamo i campi `codop`, `rd`, `funz3` e `rs1`, situati nella stessa posizione e aventi lo stesso scopo. Ciò che cambia è la sostituzione dei 7 bit di `funz7` e dei 5 bit di `rs2` con 12 bit di `imm[11:0]`, che vanno a contenere una **costante**, interpretata in complemento a 2 e che può, perciò, rappresentare un qualsiasi intero dell'intervallo $[-2^{11}, 2^{11} - 1]$.
 
-Poi, vediamo il formato di **tipo S** (S sta per "store"), utilizzato dalle **istruzioni di trasferimento dati nella memoria**, che necessitano di due registri-sorgente (uno per l'indirizzo base e un altro per il dato da memorizzare) e di una costante (l'offset rispetto all'indirizzo base). In questo caso, i campi di un'istruzione di tipo S sono divisi nel seguente modo:
+Poi, vediamo il formato di **tipo S** (S sta per "Store"), utilizzato dalle **istruzioni di trasferimento dati nella memoria**, che necessitano di due registri-sorgente (uno per l'indirizzo base e un altro per il dato da memorizzare) e di una costante (l'offset rispetto all'indirizzo base). In questo caso, i campi di un'istruzione di tipo S sono divisi nel seguente modo:
 - i primi 7 bit vengono chiamati **`imm[11:5]`**;
 - i successivi 5 bit vengono chiamati **`rs2`**;
 - i successivi 5 bit vengono chiamati **`rs1`**;
@@ -190,7 +183,7 @@ Possiamo schematizzare la disposizione dei campi del formato di tipo S così:
 
 ![[formato_s.png]]
 
-Anche in questo caso, i campi `codop` e `funz3` rimangono invariati, e affianco a `rs1` ritorna `rs2`, che presentano anch'essi posizioni invariate. La particolarità di questo formato sta nella **suddivisione dei bit dell'immediato**, diviso tra i primi 7 bit (quelli più significativi) e i 5 bit compresi tra `funz3` e `codop` (quelli meno significativi). Questa particolare scelta architetturale è stata fatta per semplicità, in quanto permette di **mantenere invariate le posizioni dei campi `rs2` e `rs1`** (quando presenti).
+Anche in questo caso, i campi `codop` e `funz3` rimangono invariati, e affianco a `rs1` ritorna `rs2`, anch'essi con posizioni invariate. La particolarità di questo formato sta nella **suddivisione dei bit dell'immediato**, diviso tra i primi 7 bit (quelli più significativi) e i 5 bit compresi tra `funz3` e `codop` (quelli meno significativi). Questa particolare scelta architetturale è stata fatta per semplicità, in quanto permette di **mantenere invariate le posizioni dei campi `rs2` e `rs1`**.
 
 [TODO: formato di tipo SB]
 
@@ -200,7 +193,7 @@ Possiamo schematizzare la disposizione dei campi del formato di tipo SB così:
 
 [TODO: spiegazione campi di formato di tipo SB]
 
-Infine, analizziamo il formato di **tipo U**, utilizzato soprattutto da **istruzioni di trasferimento di costanti di grandi dimensioni in un registro**, che necessitano di un registro-destinazione e di una costante. In questo caso, i campi di un'istruzione di tipo U sono divisi nel seguente modo:
+Ora, analizziamo il formato di **tipo U**, utilizzato soprattutto da **istruzioni di trasferimento di costanti di grandi dimensioni in un registro**, che necessitano di un registro-destinazione e di una costante. In questo caso, i campi di un'istruzione di tipo U sono divisi nel seguente modo:
 - i primi 20 bit vengono chiamati **`imm[19:0]`**;
 - i successivi 5 bit vengono chiamati **`rd`**;
 - i successivi 7 bit vengono chiamati **`codop`**.
@@ -211,17 +204,19 @@ Possiamo schematizzare la disposizione dei campi del formato di tipo U così:
 
 Qui, l'unico campo a rimanere invariato è `codop`, mentre ritorna il campo `rd`, nella stessa posizione che assumeva nei formati di tipo R e di tipo I; i primi 20 bit, invece, vengono occupati dal campo `imm[19:0]`, contenente proprio i 20 bit che verranno inseriti come bit più significativi del registro indicato da `rd`.
 
+[TODO: formato di tipo UJ]
+
 In generale, possiamo riassumere alcune **caratteristiche comuni o ricorrenti** dell'organizzazione dei campi di questi formati, che potranno tornare utili in fase di progettazione. In particolare:
 - il campo **`codop`** è sempre contenuto nei **7 bit meno significativi** dell'istruzione, e a seconda del formato, **i campi `funz3` e `funz7` forniscono informazioni aggiuntive** sull'operazione da svolgere;
 - il primo registro operando, ossia **`rs1`**, quando presente è sempre contenuto nei **bit nelle posizioni dalla $19$ alla $15$**;
 - il secondo registro operando, ossia **`rs2`**, quando presente è sempre contenuto nei **bit nelle posizioni dalla $24$ alla $20$**;
 - il registro di destinazione, ossia **`rd`**, quando presente è sempre contenuto nei **bit nelle posizioni dalla $11$ alla $7$**.
 
-Di seguito, una **tabella riassuntiva** dell'organizzazione dei campi per i vari formati di istruzione (è stato omesso il formato U):
+Di seguito, una **tabella riassuntiva** dell'organizzazione dei campi per i vari formati di istruzione (sono omessi i formati U e UJ):
 
 ![[formati_istruzioni_tabella.png]]
 
-La distinzione tra formati può essere facilmente svolta dall'hardware, al momento dell'esecuzione dell'istruzione, in base al valore contenuto in `codop`. Istruzioni come `add`, `sub`, `and`, `or` e `xor` utilizzano il formato di tipo R; istruzioni come `addi`, `lw`, `slli`, `srli`, `andi`, `ori` e `xori` rientrano invece nel formato di tipo I; istruzioni come `sw` vengono codificate in un formato di tipo S; infine, istruzioni come `lui` vengono codificate in un formato di tipo U. Per completezza, di seguito una tabella con la **maggior parte delle istruzioni dell'architettura RISC-V**, con annesso per ciascuna di esse il corrispettivo **formato**:
+La distinzione tra formati può essere facilmente svolta dall'hardware, al momento dell'esecuzione dell'istruzione, in base al valore contenuto in `codop`. Istruzioni come `add`, `sub`, `and`, `or` e `xor` utilizzano il formato di tipo R; istruzioni come `addi`, `lw`, `slli`, `srli`, `andi`, `ori` e `xori` rientrano invece nel formato di tipo I; istruzioni come `sw` vengono codificate in un formato di tipo S; istruzioni come `lui` vengono codificate in un formato di tipo U. Per completezza, di seguito una tabella con la **maggior parte delle istruzioni dell'architettura RISC-V**, con annesso per ciascuna di esse il corrispettivo **formato**:
 
 ![[formati_istruzioni_tabella1.png]]
 ___
@@ -256,6 +251,69 @@ Stabilito che possono esserci dei registri con valori da preservare nel caso in 
 - i registri **`x8`**, **`x9`** e **da `x18` a `x27`** sono considerati **registri da preservare** in caso di chiamata a procedura (ovviamente, solo nel caso in cui quest'ultima li vada a utilizzare).
 ___
 ## Pseudoistruzioni
+
+Oltre alle istruzioni di base che abbiamo visto finora, è possibile utilizzare anche le cosiddette "**pseudoistruzioni**", che non sono implementate in maniera diretta nell'hardware ma che possono essere facilmente tradotte in linguaggio macchina dal compilatore. Le pseudoistruzioni risultano comode in quanto, tendenzialmente, vanno a riassumere due o più istruzioni in una sola, oppure vanno a semplificare l'implementazione di una determinata istruzione; vediamo le principali:
+- **`la rd, address`**;
+- **`li rd, 10`**;
+- **`mv rd, rs1`**;
+- **`not rd, rs1`**
+- **`neg rd, rs1`**;
+- **`beqz rs1, label`** e simili;
+- **`bgt rs1, rs2, label`**;
+- **`j label`**.
+
+La pseudoistruzione **`la rd, address`** consente di **caricare un indirizzo di memoria `address` in un registro `rd`**. Chiamare questa pseudoistruzione equivale a chiamare le seguenti istruzioni di base:
+
+```
+lui rd, address[31:12]
+addi rd, rd, address[11:0]
+```
+
+La pseudoistruzione **`li rd, 10`** consente di **caricare una costante in un registro `rd`**. Chiamare questa pseudoistruzione equivale a chiamare le seguenti istruzioni di base:
+
+```
+
+```
+
+La pseudoistruzione **`mv rd, rs1`** consente di **copiare i contenuti di un registro `rs1` in un altro registro `rd`**. Chiamare questa pseudoistruzione equivale a chiamare la seguente istruzione di base:
+
+```
+addi rd, rs1, 0
+```
+
+[TODO: `not rd, rs1`]
+
+La pseudoistruzione **`neg rd, rs1`** consente di **salvare in un registro `rd` il valore contenuto in un altro registro `rs1` invertendo il segno**. Chiamare questa pseudoistruzione equivale a chiamare la seguente istruzione di base:
+
+```
+sub rd, x0, rs1
+```
+
+La pseudoistruzione **`beqz rs1, label`** consente di **saltare all'etichetta `label` se il valore contenuto nel registro `rs1` è uguale a 0**. Chiamare questa pseudoistruzione equivale a chiamare la seguente istruzione di base:
+
+```
+beq rs1, x0, label
+```
+
+Questa è solo una di più pseudoistruzioni molto simili, ossia:
+- `beqz rs1, label`, salta a `label` se `rs1` è uguale a 0;
+- `bnez rs1, label`, salta a `label` se `rs1` è diverso da 0;
+- `blez rs1, label`, salta a `label` se `rs1` è minore o uguale a 0;
+- `bltz rs1, label`, salta a `label` se `rs1` è minore di 0;
+- `bgez rs1, label`, salta a `label` se `rs1` è maggiore o uguale a 0;
+- `bgtz rs1, label`, salta a `label` se `rs1` è maggiore di 0.
+
+La pseudoistruzione **`bgt rs1, rs2, label`** consente di **saltare all'etichetta `label` se il valore contenuto in un registro `rs1` è magggiore di quello contenuto in un altro registro `rs2`**. Chiamare questa pseudoistruzione equivale a chiamare la seguente istruzione di base:
+
+```
+blt rs2, rs1, label
+```
+
+La pseudoistruzione `j label` consente di **saltare incondizionatamente all'etichetta `label` senza salvare un indirizzo di ritorno**. Chiamare questa pseudoistruzione equivale a chiamare la seguente istruzione di base:
+
+```
+jal x0, label
+```
 
 [pag. 115]
 ___
