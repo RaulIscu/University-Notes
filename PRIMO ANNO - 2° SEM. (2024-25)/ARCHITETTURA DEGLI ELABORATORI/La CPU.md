@@ -694,5 +694,50 @@ In varie architetture, non si fa una vera e propria distinzione tra eccezioni ed
 
 ![[eccezioni_interrupt_tabella.png]]
 
-[pag. 295/300 - 17, slide 10/19]
+##### Come gestire le eccezioni?
+
+Supponiamo che si verifichi un malfunzionamento dell'hardware in corrispondenza dell'esecuzione dell'istruzione **`add x11, x12, x11`**.
+
+In un contesto del genere, il processore dovrà:
+1. **bloccare l'esecuzione dell'istruzione** che ha provocato l'eccezione;
+2. **completare l'esecuzione delle istruzioni precedenti**, se possibile;
+3. **svuotare la pipeline** dalle istruzioni successive;
+4. **scrivere la causa dell'eccezione**;
+5. **salvare l'indirizzo dell'istruzione responsabile** dell'eccezione;
+6. **trasferire il controllo a** un indirizzo specifico del **sistema operativo**.
+
+La scrittura della **causa** dell'eccezione, nell'architettura RISC-V, avviene in un registro dedicato, chiamato "**Supervisor Exception Cause Register**", in breve "**SCAUSE**". Per quanto riguarda, invece, l'**indirizzo dell'istruzione responsabile**, per ospitarlo è previsto un altro registro apposito, chiamato "**Supervision Exception Cause Register**", in breve "**SEPC**".
+
+Il **sistema operativo**, dotato delle informazioni contenute in questi due registri, potrà esaminarle e agire di conseguenza: ad esempio, potrebbe fornire alcuni servizi al programma utente; in casi più semplici, potrebbe eseguire un'azione predeterminata in risposta al malfunzionamento; alternativamente, esso potrebbe anche decidere di terminare l'esecuzione del programma e di segnalare l'errore. Dopo aver preso le misure opportune, il sistema operativo andrà a **riprendere l'esecuzione del programma, se possibile**, utilizzando il contenuto del registro SEPC per determinare il punto da cui ripartire.
+
+Un metodo alternativo consiste nell'adottare degli "**interrupt vettorizzati**", nei quali l'indirizzo a cui si deve trasferire il controllo all'avvenire di un'eccezione viene determinato dalla causa dell'eccezione stessa. In questo contesto, il sistema operativo riconoscerà il motivo dell'eccezione in base all'indirizzo da cui inizia la risposta ad essa. Per utilizzare degli interrupt vettorizzati, sarà necessario implementare una "**Vector Interrupt Table**", una "tabella" che contenga tutti gli indirizzi iniziali delle routine di gestione delle varie eccezioni, e una "**Vector Interrupt Controller**", che contribuirà a mappare l'eccezione all'opportuna routine della Vector Interrupt Table.
+
+L'architettura RISC-V non utilizza questo metodo, dunque nel suo caso **le eccezioni non sono vettorizzate** e sarà necessaria la **decodifica del registro SCAUSE** per comprendere la natura dell'eccezione e agire di conseguenza. Invece, per architetture con una **vettorizzazione delle eccezioni**, gli indirizzi delle stesse potrebbero essere spaziati, ad esempio, di $32$ byte, e il sistema operativo dovrà registrare la causa dell'eccezione ed elaborare una risposta che non può superare tale spazio.
+___
+##### Come implementare un processore che possa gestire le eccezioni?
+
+Implementare dell'**hardware che permetta la gestione delle eccezioni** nell'[[La CPU#Come affrontare gli hazard sul controllo?|unità di elaborazione vista finora]] è in realtà abbastanza semplice. Infatti, saranno sufficienti:
+- alcuni **registri**;
+- alcuni **segnali di controllo**;
+- un'**estensione della control unit**.
+
+Trovandoci nell'architettura RISC-V, supponiamo di voler implementare il primo dei due metodi forniti per gestire le eccezioni (implementare, eventualmente, il secondo non porterebbe a maggiori difficoltà), ossia quello che fa riferimento a **un singolo indirizzo per rispondere a qualsiasi eccezione**, e supponiamo che tale indirizzo sia **`0x1C090000`**.
+
+I registri che dovremo aggiungere, di conseguenza, sono proprio i registri **SEPC** e **SCAUSE**. Vediamo le caratteristiche specifiche di ciascuno di essi:
+- il registro **SEPC** consiste in un **registro a 32 bit**, utilizzato per memorizzare l'**indirizzo dell'istruzione che ha causato l'eccezione** (tale registro sarebbe utile anche scegliendo l'approccio delle eccezioni vettorizzate);
+- il registro **SCAUSE** consiste in un **registro a 32 bit** (alcuni bit, ad oggi, sono inutilizzati), utilizzato per memorizzare la **causa dell'eccezione**.
+
+In un'**unità di elaborazione dotata di pipeline**, la gestione delle eccezioni ricorda per certi versi quella degli **[[La CPU#Come affrontare gli hazard sul controllo?|hazard sul controllo]]**: infatti, all'avvenire di un'eccezione, il processore andrà ad effettuare il **flush** delle istruzioni successive a quella responsabile della stessa la cui esecuzione sia già iniziata, ed effettuerà un **salto** all'indirizzo di risposta dell'eccezione (nel nostro caso, `0x1C900000`). Nel contesto degli hazard sui salti condizionati, abbiamo visto come effettuare il flush di un'istruzione nello **stadio IF** convertendola in una `nop`, **"annullando" sostanzialmente l'istruzione** stessa; se l'istruzione da scartare si trova nello **stadio ID**, invece, si utilizzerà il multiplexer già presente per **impostare a $0$ i segnali di controllo della pipeline**. 
+
+Considerando anche le eccezioni, bisognerà inserire un nuovo segnale di controllo, che possiamo chiamare **`ID.Flush`**, che verrà trasmesso come input a un OR insieme al segnale di stallo precedentemente fornito dall'unità di rilevamento degli hazard, in modo da regolare il flush dell'istruzione dello stadio ID in base al contesto. Per scartare, invece, un'istruzione che si trova nello stadio EX, occorrerà inserire un ulteriore segnale di controllo, che possiamo chiamare **`EX.Flush`**, che insieme a un nuovo **multiplexer** consentirà di impostare a $0$ i segnali di controllo anche di questo stadio.
+
+A questo punto, ci rimane solo da inserire un meccanismo per poter **trasmettere al PC l'indirizzo `0x1C900000`**: per fare ciò, potremmo aggiungere un nuovo input al multiplexer che seleziona il nuovo PC, collegato semplicemente al valore `0x1C900000`.
+
+Aggiungendo le modifiche di cui abbiamo parlato alla nostra unità di elaborazione, otteniamo uno schema del genere:
+
+![[cpu_pipeline_eccezioni.png]]
+
+La soluzione adottata finora risulta però essere più o meno limitata: sarebbe difficoltoso, con 5 istruzioni attive a ogni ciclo di clock, associare ciascuna eccezione all'istruzione corretta; inoltre, esiste la possibilità che nello stesso ciclo di clock si verifichino più eccezioni. Per ovviare a quest'ultimo problema, si associa una certa **priorità** alle varie eccezioni, in modo da determinare immediatamente quale eccezione debba essere gestita per prima; inoltre, nella maggior parte delle implementazioni RISC-V, l'hardware ordina le eccezioni in modo che **venga interrotta la prima istruzione che ha generato un'eccezione**. In questo modo, il registro SEPC mantiene l'indirizzo delle istruzioni interrotte e il registro SCAUSE, in caso di più eccezioni nello stesso ciclo di clock, memorizza l'eccezione a priorità più elevata.
+
+[17, slide 15/18]
 ___
