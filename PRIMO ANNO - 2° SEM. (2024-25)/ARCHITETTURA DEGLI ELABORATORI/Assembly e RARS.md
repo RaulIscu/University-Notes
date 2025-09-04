@@ -1,3 +1,5 @@
+Di seguito, si troveranno alcuni paragrafi in cui si esporranno concetti e convenzioni relative alla **programmazione in linguaggio assembly**, e in particolare collegate al software di programmazione **RARS**. Si consideri questo file come "espansione" di "[[Le istruzioni]]" sotto questo punto di vista.
+
 ### Direttive per l'assemblatore
 
 Le **direttive**, nell'utilizzo di RARS, rappresentano sostanzialmente degli indicatori che specificano all'assemblatore la natura o lo scopo del codice che le segue. Due delle direttive più comunemente utilizzate sono:
@@ -125,8 +127,4 @@ main:
 ```
 
 Un discorso sostanzialmente analogo vale per una **matrice a tre dimensioni**, di dimensioni $M \times N \times P$, interpretabile come una successione di $P$ matrici di dimensioni $M \times N$. In questo caso, per ottenere la formula dell'`offset`, sappiamo prima di tutto che l'elemento `matrix[z][y][x]` sarà preceduto da $z$ matrici di dimensioni $M \times N$, ma anche da $y$ righe di $M$ elementi, e infine da $x$ elementi sulla sua riga; dunque, la formula per ottenere l'`offset` da sommare all'indirizzo base della matrice per ottenere l'indirizzo dell'elemento `matrix[z][y][x]` è $(z \times (M \times N)) + (y \times N) + x$.
-___
-### Ricorsione
-
-[08]
 ___
