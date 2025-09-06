@@ -228,13 +228,15 @@ $$AMAT = \text{Durata di una hit} + (\text{Frequenza di miss} \cdot \text{Penali
 
 Un altro fattore impattante sulle prestazioni di una cache è la sua **dimensione**. **Una cache più grande**, infatti, **avrà bisogno di un tempo di accesso maggiore**.
 ___
-##### Alternative alla mappatura diretta: cache fully-associative e set-associative
+##### Cache fully-associative
 
 Finora, da quando abbiamo cominciato ad analizzare nel dettaglio il [[La memoria#Come funziona una cache?|funzionamento di una cache]], abbiamo utilizzato uno schema "**a mappatura diretta**", detto anche "**direct mapping**", in cui esiste una mappatura diretta tra indirizzi della memoria principale e singole linee della cache. Questo approccio, però, non è l'unico per determinare la posizione di un blocco di dati, e alcune alternative possono portare a una **riduzione della frequenza di miss**.
 
 Se una cache a mappatura diretta prevede che ogni indirizzo di memoria sia mappato a una determinata linea della cache, la prima alternativa che andremo ad approfondire, ossia la **cache "completamente associativa"**, o "**fully-associative**", fa l'esatto opposto. Una memoria cache di questo tipo permette che **un blocco di dati della memoria principale possa essere scritto in una qualsiasi linea della cache**. Per trovare un certo blocco di dati in una cache di questo tipo, la ricerca deve essere effettuata su tutte le linee della stessa, e per rendere più efficace tale ricerca essa viene svolta **in parallelo** utilizzando un **comparatore** per ogni blocco della cache. Seppur questa soluzione fornisca **massima flessibilità**, per farla funzionare è necessario **hardware più complesso e più costoso**.
+___
+##### Cache set-associative
 
-Vi è un'ulteriore alternativa, un approccio intermedio tra mappatura diretta e associatività completa, ossia la cosiddetta **cache "set-associative"**. In una cache set-associative, **ogni blocco della memoria principale può essere scritto in un numero prefissato** (almeno 2) **di posizioni alternative**; in particolare, una cache set-associative con $n$ possibili scelte di posizione è chiamata "**set-associative a $n$ vie**", dunque una cache set-associative a $n$ vie è costituita da un certo numero di **insiemi**, o **set**, ciascuno dei quali costituito da **$n$ linee**. Dunque, ogni blocco della memoria principale viene mappato a un unico set della cache, individuato dal campo **indice**, e potrà essere scritto in una qualsiasi delle linee costituenti il set.
+Vi è un'ulteriore alternativa, un approccio intermedio tra mappatura diretta e [[La memoria#Cache fully-associative|associatività completa]], ossia la cosiddetta **cache "set-associative"**. In una cache set-associative, **ogni blocco della memoria principale può essere scritto in un numero prefissato** (almeno 2) **di posizioni alternative**; in particolare, una cache set-associative con $n$ possibili scelte di posizione è chiamata "**set-associative a $n$ vie**", dunque una cache set-associative a $n$ vie è costituita da un certo numero di **insiemi**, o **set**, ciascuno dei quali costituito da **$n$ linee**. Dunque, ogni blocco della memoria principale viene mappato a un unico set della cache, individuato dal campo **indice**, e potrà essere scritto in una qualsiasi delle linee costituenti il set.
 
 Come abbiamo già visto, la linea di destinazione nella cache di un blocco di dati della memoria principale in una cache a mappatura diretta si ottiene con la seguente formula:
 $$(\text{numero del blocco in memoria})\,\,\text{modulo}\,\,(\text{numero di linee nella cache})$$
@@ -248,7 +250,39 @@ Di seguito, un insieme di esempi di cache set-associative con **diversi gradi di
 
 Il principale **vantaggio dell'aumento del grado di associatività** è, in genere, una **diminuzione della frequenza di miss**; parallelamente, però, all'aumentare dell'associatività vi è anche uno **svantaggio**, ossia il **potenziale aumento del tempo di hit**.
 
+Per comprendere meglio come il grado di associatività influenza la frequenza di miss, vediamo un **esempio**. Consideriamo **tre cache** di piccole dimensioni, ciascuna costituita da **4 linee da una parola** ciascuna: in particolare, la prima cache è **fully-associative**, la seconda è **set-associative a 2 vie** e la terza è **a mappatura diretta**. A questo punto, supponiamo di voler determinare il **numero di miss** nelle tre casistiche quando vengono richiesti i blocchi di memoria con la seguente sequenza di indirizzi: $0, 8, 0, 6, 8$.
 
+Partiamo dall'ultima cache, quella **a mappatura diretta**. Determiniamo, innanzitutto, a quali linee della cache corrispondano i diversi indirizzi dell'esempio:
+
+![[cache_associatività_esempio.png]]
+
+A questo punto, vediamo cosa succede in risposta a ciascuna richiesta della sequenza, e schematizziamo il tutto in una tabella (le linee non valide sono vuote, e i dati appena scritti nella cache sono indicati in arancione):
+
+![[cache_associatività_esempio1.png]]
+
+Come si può notare, la cache a mappatura diretta genera **5 miss su 5 richieste di dati**: la **1°** richiede un dato da una linea non valida, ossia la prima; la **2°** richiede un dato diverso da quello già contenuto nella prima linea; la **3°** ha lo stesso comportamento della 2°; la **4°**, come la 1°, richiede un dato da una linea non valida, ossia la terza; infine, la **5°** ha nuovamente lo stesso comportamento della 2°.
+
+Vediamo ora come si comporta la cache **set-associative**. Come detto in precedenza, si tratta di una cache set-associative a 2 vie, dunque formata da 2 set di 2 linee ciascuno. Determiniamo, innanzitutto, a quali linee della cache corrispondano i diversi indirizzi dell'esempio:
+
+![[cache_associatività_esempio2.png]]
+
+Ora, dato che in caso di miss si può scegliere quale linea del set sostituire, è necessario stabilire una modalità di sostituzione: solitamente, le cache set-associative sostituiscono il blocco di dati contenuto nella linea aggiornata meno di recente. A questo punto, utilizzando questa modalità, vediamo cosa succede in risposta a ciascuna richiesta della sequenza, e schematizziamo nuovamente il tutto in una tabella:
+
+![[cache_associatività_esempio3.png]]
+
+Come si può notare, la cache set-associative a 2 vie genera **4 miss su 5 richieste di dati**: la **1°** richiede un dato da un set con solo linee non valide; la **2°** richiede un dato non presente nel set considerato; la **3°** richiede un dato effettivamente presente nel set considerato, e ha dunque successo; la **4°** richiede un dato non presente nel set considerato, dunque va a sostituire il blocco di dati della linea utilizzata meno di recente con quello richiesto; infine, la **5°** ha lo stesso comportamento della 4°.
+
+Infine, analizziamo il comportamento della cache **fully-associative**. Dato che un qualsiasi blocco di dati della memoria può essere scritto in qualsiasi linea della cache, non sarà necessario alcun indirizzamento. A questo punto, vediamo cosa succede in risposta a ciascuna richiesta della sequenza, e schematizziamo ancora una volta il tutto in una tabella:
+
+![[cache_associatività_esempio4.png]]
+
+Come si può notare, la cache fully-associative genera **3 miss su 5 richieste di dati**: la **1°** richiede un dato non presente nella cache; la **2°** ha lo stesso comportamento della **1°**; la **3°** richiede un dato effettivamente presente nella cache, e ha dunque successo; la **4°** ha nuovamente lo stesso comportamento della 1°; infine, la **5°** ha successo.
+
+Delle tre cache analizzate, quella fully-associative ha generato il minor numero di miss, cioè 3, che era anche il miglior risultato ottenibile (vengono richiesti dati da 3 indirizzi di blocco di memoria diversi); è confermata, così, la regola per cui **all'aumentare del grado di associatività tende a diminuire la frequenza di miss**. Per comprendere veramente quanto ciò sia vero anche in contesti reali, di seguito si riporta una tabella recante le frequenze di miss in una cache di dati con associatività variabile da 1 a 8 vie, grande $64\text{ KiB}$ ($1\text{ KiB} = 1024\text{ byte}$) e dotata di linee da 16 parole ciascuna:
+
+![[cache_associatività_esempio5.png]]
+
+Ora passiamo ad analizzare aspetti più concreti di una cache set-associative, ad esempio **come viene trovato un blocco di dati al suo interno**. 
 ___
 
-[pag. 368... - 18, slide 18/19 - 19, slide 11]
+[pag. 371... - 18, slide 18/19 - 19, slide 12]
