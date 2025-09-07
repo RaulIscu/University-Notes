@@ -236,7 +236,7 @@ Se una cache a mappatura diretta prevede che ogni indirizzo di memoria sia mappa
 ___
 ##### Cache set-associative
 
-Vi è un'ulteriore alternativa, un approccio intermedio tra mappatura diretta e [[La memoria#Cache fully-associative|associatività completa]], ossia la cosiddetta **cache "set-associative"**. In una cache set-associative, **ogni blocco della memoria principale può essere scritto in un numero prefissato** (almeno 2) **di posizioni alternative**; in particolare, una cache set-associative con $n$ possibili scelte di posizione è chiamata "**set-associative a $n$ vie**", dunque una cache set-associative a $n$ vie è costituita da un certo numero di **insiemi**, o **set**, ciascuno dei quali costituito da **$n$ linee**. Dunque, ogni blocco della memoria principale viene mappato a un unico set della cache, individuato dal campo **indice**, e potrà essere scritto in una qualsiasi delle linee costituenti il set.
+Vi è un'ulteriore alternativa, un approccio intermedio tra mappatura diretta e [[La memoria#Cache fully-associative|associatività completa]], ossia la cosiddetta **cache "set-associative"**. In una cache set-associative, **ogni blocco della memoria principale può essere scritto in un numero prefissato** (almeno 2) **di posizioni alternative**; in particolare, una cache set-associative con $n$ possibili scelte di posizione è chiamata "**set-associative a $n$ vie**", dunque una cache set-associative a $n$ vie è costituita da un certo numero di **insiemi**, o **set**, ciascuno dei quali raccoglie al suo interno **$n$ linee** provenienti ciascuna da una via diversa. In questo contesto, ogni blocco della memoria principale viene mappato a un unico set della cache, individuato dal campo **indice**, e potrà essere scritto in una qualsiasi delle linee costituenti il set.
 
 Come abbiamo già visto, la linea di destinazione nella cache di un blocco di dati della memoria principale in una cache a mappatura diretta si ottiene con la seguente formula:
 $$(\text{numero del blocco in memoria})\,\,\text{modulo}\,\,(\text{numero di linee nella cache})$$
@@ -262,7 +262,7 @@ A questo punto, vediamo cosa succede in risposta a ciascuna richiesta della sequ
 
 Come si può notare, la cache a mappatura diretta genera **5 miss su 5 richieste di dati**: la **1°** richiede un dato da una linea non valida, ossia la prima; la **2°** richiede un dato diverso da quello già contenuto nella prima linea; la **3°** ha lo stesso comportamento della 2°; la **4°**, come la 1°, richiede un dato da una linea non valida, ossia la terza; infine, la **5°** ha nuovamente lo stesso comportamento della 2°.
 
-Vediamo ora come si comporta la cache **set-associative**. Come detto in precedenza, si tratta di una cache set-associative a 2 vie, dunque formata da 2 set di 2 linee ciascuno. Determiniamo, innanzitutto, a quali linee della cache corrispondano i diversi indirizzi dell'esempio:
+Vediamo ora come si comporta la cache **set-associative**. Come detto in precedenza, si tratta di una cache set-associative a 2 vie, dunque formata da 2 set di 2 linee ciascuno. Determiniamo, innanzitutto, a quali set della cache (e quindi, a quali linee) corrispondano i diversi indirizzi dell'esempio:
 
 ![[cache_associatività_esempio2.png]]
 
@@ -282,7 +282,69 @@ Delle tre cache analizzate, quella fully-associative ha generato il minor numero
 
 ![[cache_associatività_esempio5.png]]
 
-Ora passiamo ad analizzare aspetti più concreti di una cache set-associative, ad esempio **come viene trovato un blocco di dati al suo interno**. 
-___
+Ora passiamo ad analizzare aspetti più concreti di una cache set-associative, ad esempio **come viene trovato un blocco di dati al suo interno**. Proprio come in una cache a mappatura diretta, ogni blocco di dati scritto nella cache è abbinato a un campo tag, che permette di individuarne l'indirizzo in relazione alla memoria principale; in particolare, un indirizzo di memoria in cache set-associative o a mappatura diretta rispecchia la seguente struttura:
 
-[pag. 371... - 18, slide 18/19 - 19, slide 12]
+![[cache_setassociative_indirizzo.png]]
+
+Il campo **tag** viene controllato per verificare se corrisponde a quello dell'indirizzo del dato o dell'istruzione richiesta dal processore. Il contenuto del campo **indice**, invece, serve a selezionare e indicare il set che può contenere l'elemento cercato. Infine, il campo **offset di blocco** rappresenta la posizione del dato desiderato all'interno del blocco di dati. 
+
+Oltre a questo indirizzo, nella cache vanno ovviamente memorizzati anche i dati effettivi. Riassumiamo, quindi, la struttura di una cache e come calcolarne le dimensioni: una cache set-associative a $n$ vie contiene **$S$ set**, ciascuno dei quali composto da **$n$ linee**, contenenti **blocchi di dati da $m$ word**; la dimensione effettiva di ogni linea è data dalla somma di:
+- un **bit di validità**;
+- il **tag**;
+- l'**indice**;
+- l'**offset di blocco**;
+- il **blocco di dati** in sé.
+
+Per calcolare i bit necessari per l'**indice** (che rappresenta l'indice del set all'interno del quale ci si trova) basterà calcolare il valore: $$\log_{2}S$$Per calcolare i bit necessari per l'**offset di blocco** (che rappresenta la posizione del dato in questione prima tra le word del blocco, poi tra i byte della word), invece, si calcolerà il valore: $$\log_{2}(m \cdot 4) = \log_{2}(m) + 2$$La dimensione del **tag**, di conseguenza, supponendo di avere una memoria con indirizzi da 32 bit, sarà pari a: $$32 - \text{n° di bit dell'indice} - \text{n° di bit dell'offset}$$Per quanto riguarda il **blocco di dati** effettivo, esso avrà dimensioni pari a:
+$$m \cdot 32$$
+Il contenuto del campo tag viene esaminato **in parallelo** per tutti i blocchi dell'insieme selezionato, dato che una ricerca sequenziale richiederebbe un tempo molto maggiore. Supponendo di mantenere costante la dimensione totale della cache, abbiamo visto che **al crescere dell'associatività aumenta il numero di linee di un singolo set**, e di conseguenza anche **il numero di confronti da effetturare in parallelo per trovare il dato richiesto**: ogni volta che raddoppia il grado di associatività, raddoppia anche il numero di linee all'interno di un singolo set, mentre viene dimezzato il numero di quest'ultimi. Analogamente, ogni incremento dell'associatività di un fattore 2 fa diminuire di 1 bit la dimensione del campo indice, e aumentare di 1 bit quella del campo tag: perciò, in una cache fully-associative, in cui è presente un solo set e quindi tutte le linee vanno esaminate in parallelo, il campo indice non esiste più e la ricerca viene condotta su tutta la cache.
+
+In una cache a mappatura diretta, si richiede **un unico comparatore**, dato che il dato cercato può trovarsi in una sola posizione. Invece, in una cache set-associative a $n$ vie, saranno necessari **$n$ comparatori**, oltre a un **multiplexer con $n$ ingressi e un'uscita** richiesto per scegliere uno dei quattro possibili blocchi di dati da restituire. Dunque, l'accesso alla cache avviene innanzitutto tramite l'**indice**, in modo da individuare il set appropriato, e in seguito esaminando in parallelo i **tag** dei vari dati contenuti nelle linee di tale set. Possiamo visualizzare meglio questo meccanismo con la seguente rappresentazione:
+
+![[cache_setassociative_circuito.png]]
+
+Capiamo, adesso, **come scegliere il blocco di dati da sostituire** quando si verifica una miss. Infatti, se in una cache a mappatura diretta questa scelta poteva avere un unico risultato, in una cache set-associative **tutti i blocchi del set considerato sono possibili candidati per la sostituzione**. 
+
+Comunemente, si utilizza un approccio detto **LRU**, o "**Least Recently Used**": il blocco sostituito è quello rimasto inutilizzato più a lungo (è lo stesso approccio che si è utilizzato nello scorso esempio). A livello rudimentale, si può implementare questa soluzione associando ad ogni linea di un set un **bit `Used`**, che viene impostato a $1$ quando si accede a tale linea e che viene reimpostato a $0$ dopo un certo intervallo di tempo.
+
+Un'altra alternativa è l'approccio detto **LFU**, o "**Least Frequently Used**": in questo caso, il blocco sostituito è quello meno utilizzato. Per implementare questa soluzione, si potrebbe associare un **contatore** a ciascuna linea ed aggiornarlo ad ogni accesso; fare ciò, tuttavia, richiede hardware più complesso.
+
+Ancora, si potrebbe semplicemente **sostituire un blocco "casuale"**, o magari sostituire i blocchi **in sequenza**.
+___
+##### Cache multilivello
+
+L'utilizzo delle cache, naturalmente, porta come vantaggio primario di **ridurre il gap tra l'elevata frequenza di clock del processore e il molto più lento accesso alla memoria principale**. Spesso, per migliorare ancora di più questa situazione, un processore può supportare un **livello di cache aggiuntivo**. Di solito, questo secondo livello di cache si trova sullo stesso chip del processore, e viene utilizzato quando si verifica una miss all'interno della cache primaria: se il secondo livello di cache contiene il dato desiderato, allora **la penalità di miss sarà essenzialmente pari al tempo di accesso ad esso**; se, invece, il dato desiderato non è contenuto neanche nel secondo livello, è inevitabile l'accesso alla memoria principale e una **penalità di miss elevata**. Una cache divisa in più "livelli", come quella ipotizzata finora, viene detta "**cache multilivello**".
+
+Per comprendere meglio come implementare una cache multilivello possa migliorare le prestazioni di un processore, vediamo un esempio. Supponiamo di disporre di un processore con frequenza di clock pari a 4 GHz e con un CPI di $1$ (se non si considerano le miss); supponiamo poi che il tempo di accesso alla memoria principale, che comprende tutto il tempo richiesto per gestire la miss corrispondente, sia di $100\,\,ns$, e che la frequenza di miss della cache sia pari al $2\%$ delle istruzioni. La penalità di miss per la memoria principale sarà pari a:
+$$\frac{100\,\,ns}{0.25\,\,\frac{ns}{\text{ciclo di clock}}} = 400 \text{ cicli di clock}$$
+Dunque, il numero medio di cicli di stallo per istruzione è pari a:
+$$400 \cdot 2\% = 8$$
+il che porta il CPI totale a:
+$$\text{CPI totale = CPI di base + n° di cicli di stallo per istruzione = 1 + 8 = 9}$$
+Supponiamo, ora, di introdurre anche una cache secondaria, con tempo di accesso pari a $5\,\,ns$ sia in caso di hit che di miss, e grande a sufficienza da ridurre la frequenza di miss della memoria principale allo $0.5\%$. La penalità di miss per la cache secondaria sarà pari a:
+$$\frac{5\,\,ns}{0.25 \frac{ns}{\text{ciclo di clock}}} = 20 \text{ cicli di clock}$$
+Se la miss viene risolta dalla cache secondaria, questo tempo costituisce la penalità di miss totale; invece, se la miss richiede anche l'accesso alla memoria principale, il tempo totale di miss sarà dato dalla somma del tempo di accesso alla cache secondaria e di quello alla memoria principale. Dunque, il nuovo CPI totale sarà dato da:
+$$\begin{align} \text{CPI totale} &= \text{CPI di base} + \text{n° di stalli primari per istruzione} + \text{n° di stalli secondari per istruzione} \\ &= 1 + (20 \cdot 2\%) + (400 \cdot 0.5\%) \\ &= 1 + 0.4 + 2 = 3.4 \end{align}$$
+Notiamo, dunque, che **l'introduzione di una cache multilivello ha portato a un miglioramento significativo delle prestazioni**, arrivando quasi a triplicare la velocità d'esecuzione del processore.
+
+Le considerazioni da fare in fase di progettazione sono molto diverse per la cache primaria e per la cache secondaria: in particolare, una cache a due livelli permette di progettare la **cache primaria** focalizzandosi sulla **minimizzazione del tempo di hit**, in modo da ottenere un periodo di clock più breve oppure un numero minore di stadi di [[La CPU#Pipeline|pipeline]], e di progettare la **cache secondaria** focalizzandosi sulla **frequenza di miss**, per ridurre la penalità dovuta ai lunghi tempi di accesso alla memoria principale.
+___
+## Memoria virtuale
+
+Nel [[La memoria#La cache|capitolo precedente]], abbiamo visto come le memorie cache forniscano un accesso veloce a una porzione di dati e istruzioni contenuti nella memoria principale, e in particolar modo a quei dati utilizzati più di recente o più frequentemente. Allo stesso modo, **anche la memoria principale può fungere da "cache" per la memoria di massa**, secondo una tecnica chiamata "**memoria virtuale**".
+
+Ci sono principalmente due motivazioni che giustificano l'utilizzo di questa tecnica:
+- favorire una **gestione efficiente e sicura della memoria** in corrispondenza dell'esecuzione di più programmi e processi;
+- **estendere**, almeno apparentemente, **i limiti** posti dalla cache e dalla memoria principale **in termini di quantità di dati**.
+
+In parole povere, la memoria virtuale si occupa di gestire automaticamente i due livelli della [[La memoria#Gerarchia delle memorie|gerarchia]] costituiti dalla **memoria principale**, chiamata anche "**memoria fisica**" per distinguerla da quella virtuale, e dalla **memoria di massa**.
+
+I concetti che stanno alla base della memoria virtuale sono simili a quelli della cache. Un **blocco della memoria virtuale** viene definito "**pagina**", di conseguenza le **miss di una memoria virtuale** sono dette "**page fault**". Sostanzialmente, quando si utilizza la memoria virtuale, il processore genera **indirizzi virtuali**, che vengono poi tradotti da una combinazione di hardware e software in **indirizzi fisici**, che possono essere utilizzati per accedere alla vera posizione dei dati. Possiamo visualizzare questo procedimento con la seguente rappresentazione:
+
+![[memoria_virtuale.png]]
+
+Come si può vedere, mentre il processore genera indirizzi virtuali l'accesso effettivo alla memoria viene svolto attraverso indirizzi fisici; inoltre, sia la memoria virtuale che la memoria fisica sono suddivise in pagine, in modo tale che una pagina virtuale venga mappata su una pagina fisica. È possibile, naturalmente, che una pagina virtuale non sia presente nella memoria principale, e in tal caso essa dovrà trovarsi nel disco. Le pagine fisiche, poi, possono essere condivise facendo in modo che due indirizzi virtuali puntino allo stesso indirizzo fisico: in questo modo, ad esempio, due diversi programmi potranno condividere dati o codice.
+
+Questo processo di mappatura tra memoria virtuale e fisica prende il nome di "**traduzione dell'indirizzo**", o anche "**mappatura dell'indirizzo**". 
+___
+[pag. 392... - 19, slide 15/17 - 19, slide 22 - 20, slide 12]
