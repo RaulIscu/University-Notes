@@ -1,4 +1,4 @@
-Di seguito, si troveranno alcuni paragrafi in cui si esporranno concetti e convenzioni relative alla **programmazione in linguaggio assembly**, e in particolare collegate al software di programmazione **RARS**. Si consideri questo file come "espansione" di "[[Le istruzioni]]" sotto questo punto di vista.
+Di seguito, si troveranno alcuni paragrafi in cui si esporranno concetti e convenzioni relative alla **programmazione in linguaggio assembly**, e in particolare collegate al software di programmazione **RARS**. Si consideri questo file come "espansione" di "[[03 - Le istruzioni]]" sotto questo punto di vista.
 
 ### Direttive per l'assemblatore
 
@@ -51,7 +51,7 @@ fine:
 
 il funzionamento delle istruzioni di salto inserite risulta molto più intuitivo: il primo salto condizionato che troviamo, ossia `beq x1, x4, fine`, salta direttamente all'etichetta `fine` se il valore contenuto nel registro `x1` è uguale a quello del registro `x4`; il secondo salto condizionato, ossia `bne x8, x0, odd`, salta all'etichetta `odd` se il valore contenuto in `x8` è diverso da 0; infine, la pseudoistruzione `j even_check` rappresenta un salto incondizionato all'etichetta `even_check`.
 
-Le etichette, dette anche "**label**", vengono sostituite dall'assemblatore con indirizzi di memoria reali al momento della compilazione del codice. Risulta chiaro, dunque, che possono essere utilizzate anche per indicare comodamente dei dati dichiarati nella sezione [[Assembly e RARS#Direttive per l'assemblatore|.data]]; ad esempio, scrivere `array: .word 1, 2, 3, 4` associa al vettore appena creato l'etichetta `array`, che potrà poi essere comodamente inserita nel proprio programma.
+Le etichette, dette anche "**label**", vengono sostituite dall'assemblatore con indirizzi di memoria reali al momento della compilazione del codice. Risulta chiaro, dunque, che possono essere utilizzate anche per indicare comodamente dei dati dichiarati nella sezione [[04 - Assembly e RARS#Direttive per l'assemblatore|.data]]; ad esempio, scrivere `array: .word 1, 2, 3, 4` associa al vettore appena creato l'etichetta `array`, che potrà poi essere comodamente inserita nel proprio programma.
 ___
 ### Syscall
 
@@ -80,7 +80,7 @@ ___
 
 Un **vettore** è una **sequenza di elementi di dimensioni uguali**, memorizzati in memoria consecutivamente e indirizzabili con indici che vanno da 0 a $N - 1$, dove $N$ è la lunghezza del vettore e dunque il numero dei suoi elementi. Naturalmente, lo spazio totale in termini di memoria occupato da un vettore sarà dato dal prodotto tra $N$ e la dimensione di un singolo elemento.
 
-Tendenzialmente, risulta comodo definire staticamente vettori che verranno eventualmente utilizzati in un programma nella sezione [[Assembly e RARS#Direttive per l'assemblatore|.data]], usando un'[[Assembly e RARS#Etichette|etichetta]] che andrà a rappresentare l'indirizzo in memoria del primo elemento del vettore.
+Tendenzialmente, risulta comodo definire staticamente vettori che verranno eventualmente utilizzati in un programma nella sezione [[04 - Assembly e RARS#Direttive per l'assemblatore|.data]], usando un'[[04 - Assembly e RARS#Etichette|etichetta]] che andrà a rappresentare l'indirizzo in memoria del primo elemento del vettore.
 
 Dunque, per **accedere all'elemento $i$-esimo di un vettore** bisognerà aggiungere all'indirizzo di base un determinato `offset`, dato dal prodotto tra l'indice $i$ e la dimensione di un singolo elemento del vettore. Ad esempio, lavorando sul vettore:
 

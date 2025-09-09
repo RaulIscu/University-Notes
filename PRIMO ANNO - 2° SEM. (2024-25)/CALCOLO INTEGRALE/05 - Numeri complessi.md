@@ -16,4 +16,5 @@ Graficamente, i numeri complessi possono essere interpretati come un **piano car
 ___
 ### Formula di Eulero
 
-[pag. 46]
+
+---
