@@ -233,10 +233,6 @@ ___
 
 [TODO: 12, slide 6/10]
 ___
-## Malfunzionamenti della Control Unit
-
-[TODO: 12, slide 14/23]
-___
 ## Pipeline
 
 Quella che abbiamo analizzato finora è un'implementazione di un processore che potremmo definire a "**singolo ciclo**", sostanzialmente un processore che esegue un'istruzione per volta, iniziando l'esecuzione della successiva solo dopo aver terminato l'esecuzione della precedente. Si tratta di un modello funzionante, ma ciononostante particolarmente inefficiente, e al giorno d'oggi poco utilizzato. Invece, la quasi totalità dei [[01 - Il calcolatore|calcolatori]] di oggi sfruttano una tecnica chiamata "pipeline".
@@ -397,8 +393,8 @@ Come abbiamo stabilito, un'istruzione dell'architettura RISC-V può essere "sudd
 ![[blocco_cpu_divisione_pipeline.png]]
 
 Il flusso di istruzioni e dati è quasi completamente direzionato **da sinistra verso destra**, fatta eccezione per i nodi evidenziati in arancione, ossia per la **scrittura del risultato di un'operazione nel registro di destinazione** e per la **selezione del valore successivo del PC**. Si noti, tra l'altro, che proprio queste due parti dell'implementazione possono causare **[[05 - La CPU#Criticità in una pipeline|hazard]]**, in particolare:
-- nella scrittura del risultato di un'operazione nel registro di destinazione vi è un **hazard sui dati**;
-- nella selezione del valore successivo del PC vi è un **hazard sul controllo**.
+- nella scrittura del risultato di un'operazione nel registro di destinazione può verificarsi un **hazard sui dati**;
+- nella selezione del valore successivo del PC può verificarsi un **hazard sul controllo**.
 
 Per favorire l'esecuzione di più istruzioni contemporaneamente all'interno di questo stesso processore, in modo che in un qualsiasi momento ogni istruzione utilizzi una specifica parte del circuito, possiamo inserire dei **registri**, che lo vadano a dividere concretamente nelle sezioni relative a ciascuno stadio della pipeline e che conservino i dati parziali generati dalle istruzioni. Possiamo inserire questi registri nel modo seguente:
 
@@ -519,9 +515,7 @@ Notiamo che **le ultime quattro istruzioni dipendono tutte dal risultato della p
 
 Tuttavia, è possibile risolvere il problema mediante la **[[05 - La CPU#Hazard sui dati|propagazione]] del dato necessario**: infatti, tecnicamente, esso è disponibile già al termine del terzo ciclo di clock, e le istruzioni che ne hanno bisogno prima che esso venga eventualmente scritto nel registro `x2`, ossia `and x12, x2, x5` e `or x13, x6, x2`, lo utilizzerebbero rispettivamente nel quarto e quinto ciclo di clock. Dunque, è perfettamente possibile eseguire questa sequenza di istruzioni senza stalli, **propagando il dato alle unità che lo richiedono prima che esso venga scritto nel register file**.
 
-Ma come si applica concretamente la propagazione? Per semplicità, consideriamo un esempio del genere, in cui essa viene applicata su un **dato necessario per un'operazione da eseguire nello stadio EX**, e quindi sostanzialmente all'interno dell'**ALU**. Ciò vuol dire che quando un'istruzione si trova nello stadio EX, e ha bisogno di un dato che deve essere ancora scritto dallo stadio WB di un'istruzione precedente, occorre che il dato in questione venga portato all'input dell'ALU.
-
-Per comprendere e formalizzare al meglio queste dipendenze, possiamo adottare delle **notazioni per i campi dei registri di pipeline**, ossia per i dati particolari che vengono memorizzati e trasmessi da quest'ultimi. Ad esempio, la notazione "**ID/EX.rs1**" si riferisce al numero del primo registro di lettura dell'istruzione (`rs1`) memorizzato nel registro ID/EX. Utilizzando questa notazione, possiamo formalizzare principalmente **due coppie di condizioni che generano hazard sui dati**, ossia:
+Ma come si applica concretamente la propagazione? Per semplicità, consideriamo un esempio del genere, in cui essa viene applicata su un **dato necessario per un'operazione da eseguire nello stadio EX**, e quindi sostanzialmente all'interno dell'**ALU**. Per comprendere e formalizzare al meglio queste dipendenze, possiamo adottare delle **notazioni per i campi dei registri di pipeline**, ossia per i dati particolari che vengono memorizzati e trasmessi da quest'ultimi. Ad esempio, la notazione "**ID/EX.rs1**" si riferisce al numero del primo registro di lettura dell'istruzione (`rs1`) memorizzato nel registro ID/EX. Utilizzando questa notazione, possiamo formalizzare principalmente **due coppie di condizioni che generano hazard sui dati**, ossia:
 - la condizione **1a**, ossia che **EX/MEM.rd = ID/EX.rs1**;
 - la condizione **1b**, ossia che **EX/MEM.rd = ID/EX.rs2**;
 - la condizione **2a**, ossia che **MEM/WB.rd = ID/EX.rs1**;

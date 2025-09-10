@@ -1,10 +1,10 @@
 ## Cos'è una stringa?
 
-Le **stringhe** sono un particolare tipo di dato, rappresentante sostanzialmente una **sequenza di caratteri**. In Java, esse **non appartengono ai [[Tipi primitivi|tipi primitivi]]**, ma sono a tutti gli effetti degli **[[Classi#Classi e oggetti|oggetti]]**, definiti dalla classe **`String`**, situata nel package **`java.lang`**.
+Le **stringhe** sono un particolare tipo di dato, rappresentante sostanzialmente una **sequenza di caratteri**. In Java, esse **non appartengono ai [[07 - Tipi primitivi|tipi primitivi]]**, ma sono a tutti gli effetti degli **[[02 - Classi#Classi e oggetti|oggetti]]**, definiti dalla classe **`String`**, situata nel package **`java.lang`**.
 
 In Java, **le stringhe sono immutabili**: insomma, una volta che un oggetto di tipo `String` viene creato, non è possibile modificarlo in maniera convenzionale. Ciò, tuttavia, non rappresenta un grande problema, in quanto all'evenienza, se è necessario "modificare" una stringa, è sempre possibile crearne una nuova che soddisfi le proprie necessità a partire da quella iniziale.
 
-Pur essendo un oggetto, una stringa non viene creata utilizzando un costruttore. Per definire una [[Variabili|variabile]] che vada a contenere una stringa, si scrive un codice del genere:
+Pur essendo un oggetto, una stringa non viene creata utilizzando un costruttore. Per definire una [[05 - Variabili|variabile]] che vada a contenere una stringa, si scrive un codice del genere:
 
 ```
 String identificatore = "testo";
@@ -12,7 +12,7 @@ String identificatore = "testo";
 
 dove `identificatore` rappresenta, ovviamente, l'identificatore della variabile in questione, e `testo` è la sequenza di caratteri concreta che viene associata alla variabile (nell'inizializzazione di una stringa, il testo della stringa va sempre racchiuso tra virgolette).
 
-A livello interno, la classe `String` memorizza i suoi caratteri in un **[[PRIMO ANNO - 2° SEM. (2024-25)/METODOLOGIE DI PROGRAMMAZIONE/Strutture dati#Array|array]] di [[Tipi primitivi#I caratteri `char`|caratteri]]**, attributo che viene definito come **`final`** e che quindi non può essere modificato una volta inizializzato (per questo motivo una stringa è immutabile).
+A livello interno, la classe `String` memorizza i suoi caratteri in un **[[14 - Strutture dati#Array|array]] di [[07 - Tipi primitivi#I caratteri `char`|caratteri]]**, attributo che viene definito come **`final`** e che quindi non può essere modificato una volta inizializzato (per questo motivo una stringa è immutabile).
 ___
 ## Metodi principali
 
@@ -47,9 +47,9 @@ I principali **metodi di "modifica"** sono i seguenti:
 - **`trim()`**, che restituisce la stringa di partenza ma priva di eventuali spazi vuoti iniziali o finali.
 
 I principali **metodi di splitting e parsing** sono i seguenti:
-- **`getBytes()`**, che restituisce un [[PRIMO ANNO - 2° SEM. (2024-25)/METODOLOGIE DI PROGRAMMAZIONE/Strutture dati#Array|array]] di [[Tipi primitivi#Gli interi `byte`, `short`, `int` e `long`|byte]] che corrisponde alla sequenza di caratteri della stringa in questione;
+- **`getBytes()`**, che restituisce un [[14 - Strutture dati#Array|array]] di [[07 - Tipi primitivi#Gli interi `byte`, `short`, `int` e `long`|byte]] che corrisponde alla sequenza di caratteri della stringa in questione;
 - **`split(String regex)`**, che restituisce un array di stringhe ottenute dividendo la stringa in questione in corrispondenza ad ogni occorrenza di `regex` al suo interno;
-- **`toCharArray`**, che restituisce un array di [[Tipi primitivi#I caratteri `char`|caratteri]] che corrisponde alla sequenza di caratteri della stringa in questione.
+- **`toCharArray`**, che restituisce un array di [[07 - Tipi primitivi#I caratteri `char`|caratteri]] che corrisponde alla sequenza di caratteri della stringa in questione.
 
 È possibile, inoltre, concatenare varie stringhe in maniera immediata utilizzando l'operatore **`+`**.
 ___
@@ -110,5 +110,5 @@ System.out.print("Inserisci la tua età: ");
 int eta = sc.nextInt();
 ```
 
-Sarà possibile leggere quanti input si vorrà, e contenerli in un pari numero di [[Variabili|variabili]]. Una volta terminata la ricezione di input dall'utente, converrà sempre chiudere lo `Scanner`, utilizzando l'istruzione **`sc.close()`**.
+Sarà possibile leggere quanti input si vorrà, e contenerli in un pari numero di [[05 - Variabili|variabili]]. Una volta terminata la ricezione di input dall'utente, converrà sempre chiudere lo `Scanner`, utilizzando l'istruzione **`sc.close()`**.
 ___

@@ -1,6 +1,6 @@
 ## Caratteristiche di Java
 
-**Java** è un **linguaggio di programmazione** creato dalla **Sun Microsystems** e pubblicato ufficialmente per la prima volta nel **1995**. Si tratta di un linguaggio completamente basato sulla **[[Java e la OOP#Cos'è la programmazione a oggetti?|programmazione a oggetti]]**, o **OOP**, ampiamente utilizzato anche da applicazioni e aziende famosissime e diffuse (tra le altre, Java viene utilizzato nello sviluppo di Spotify, Airbnb, Google, Instagram, Netflix, e molte altre).
+**Java** è un **linguaggio di programmazione** creato dalla **Sun Microsystems** e pubblicato ufficialmente per la prima volta nel **1995**. Si tratta di un linguaggio completamente basato sulla **[[01 - Java e la OOP#Cos'è la programmazione a oggetti?|programmazione a oggetti]]**, o **OOP**, ampiamente utilizzato anche da applicazioni e aziende famosissime e diffuse (tra le altre, Java viene utilizzato nello sviluppo di Spotify, Airbnb, Google, Instagram, Netflix, e molte altre).
 
 La principale caratteristica che differenzia Java dagli altri linguaggi del genere è la sua possibilità di essere notevolmente ***cross-platform***: un programma Java, infatti, rispetta la politica "**WORA**", ossia "***write once, run anywhere***", ed è sostanzialmente **neutro rispetto all'architettura che lo esegue**. Ciò viene ottenuto soprattutto grazie agli strumenti contenuti nel **Java Development Kit**, o **JDK**, che contiene principalmente questi strumenti:
 - la **Java Virtual Machine**, la componente che più di tutte è responsabile dell'abilità di essere *cross-platform* di Java;
@@ -21,19 +21,19 @@ La corretta applicazione del paradigma della programmazione a oggetti, il più d
 - **ereditarietà**;
 - **polimorfismo**;
 - **astrazione**.
-___
-## Incapsulamento
+
+##### Incapsulamento
 
 L'**incapsulamento** è il principio che professa la **protezione dei dati** da accessi non controllati ed eventualmente inopportuni. Un'applicazione corretta dell'incapsulamento in un programma porta all'**occultamento di informazioni non necessarie all'utente**, rendendo invece pubblica una certa "interfaccia", tendenzialmente corrispondente con un insieme di metodi pubblici.
 
-Protagonisti nell'applicazione concreta dell'incapsulamento sono i **[[Modificatori d'accesso|modificatori d'accesso]]**, e il contesto principale dove viene utilizzato è nella **definizione dei [[Classi#Campi, metodi e costruttori|campi di una classe]]**, che vengono solitamente definiti come  `private` e sono resi visualizzabili e manipolabili tramite dei metodi "getter" e "setter" definiti come `public`.
+Protagonisti nell'applicazione concreta dell'incapsulamento sono i **[[03 - Modificatori d'accesso|modificatori d'accesso]]**, e il contesto principale dove viene utilizzato è nella **definizione dei [[02 - Classi#Campi, metodi e costruttori|campi di una classe]]**, che vengono solitamente definiti come  `private` e sono resi visualizzabili e manipolabili tramite dei metodi "getter" e "setter" definiti come `public`.
 
 Un corretto utilizzo dell'incapsulamento offre vari vantaggi, tra cui:
 - maggiore **protezione** e un miglior **controllo dei dati**, il cui accesso viene regolato e permesso solo sotto certe condizioni (ad esempio, è possibile progettare metodi getter e setter che prevedano dei controlli o delle operazioni particolari);
 - **semplificazione dell'ambiente di lavoro** (nascondere informazioni non necessarie per l'utente rende minore l'ammontare totale di informazioni disponibili);
 - spesso, **maggiore manutenibilità del codice**, così come una maggiore **riutilizzabilità**.
 ___
-## Ereditarietà
+##### Ereditarietà
 
 L'**ereditarietà** è il principio che viene applicato quando **una classe "eredita" dei membri da un'altra classe**. Un'applicazione corretta dell'ereditarietà porta alla creazione di una **struttura gerarchica** di classi, dove le classi ereditanti vengono dette "**sottoclassi**" e quelle da cui si eredita "**superclassi**" o "**classi base**".
 
@@ -51,16 +51,16 @@ public class Cane extends Animale {
 
 In un esempio del genere, la sottoclasse `Cane` potrà accedere tranquillamente a tutti i membri della superclasse definiti come `public` e `protected`, oltre che a quelli `default` (package-private) se esse si trovano nello stesso package; invece, non avrà modo di accedere ai membri privati della superclasse da cui eredita. In particolare, il **costruttore** della superclasse non viene propriamente ereditato, ma è possibile richiamarlo dal costruttore della sottoclasse utilizzando l'istruzione **`super()`**, che dovrà prendere come parametri un insieme di dati compatibili con il costruttore originario della superclasse.
 
-In Java, si può avere esclusivamente un'**ereditarietà singola**, il che vuol dire che una classe può ereditare solo da una sola superclasse. Per ovviare a questo limite, spesso si utilizzano le **[[Interfacce|interfacce]]**, per cui esso non viene posto.
+In Java, si può avere esclusivamente un'**ereditarietà singola**, il che vuol dire che una classe può ereditare solo da una sola superclasse. Per ovviare a questo limite, spesso si utilizzano le **[[12 - Interfacce|interfacce]]**, per cui esso non viene posto.
 
 È importante distinguere in maniera chiara relazioni ereditarie, di tipo "**is-a**" (`Cane` è un `Animale`), da relazioni compositive, di tipo "**has-a**" (`Auto` ha un `Motore`), e dunque più in generale tra **ereditarietà** e **composizione**. Se la prima va a istanziare relazioni puramente gerarchiche, in cui una sottoclasse può essere considerata a tutti gli effetti come la superclasse, la seconda va a creare delle "associazioni" di oggetti, in cui tendenzialmente un oggetto contiene riferimenti ad altri oggetti, e quindi può essere visto come composto da essi.
 
 Un corretto utilizzo dell'ereditarietà offre vari vantaggi, tra cui:
 - **riutilizzo** del codice delle superclassi;
 - **estendibilità**;
-- definizione di **strutture gerarchiche** ben definite, che semplificano la manutenzione e l'utilizzo del codice, e forniscono una buona **base per l'applicazione del [[Java e la OOP#Polimorfismo|polimorfismo]]**.
+- definizione di **strutture gerarchiche** ben definite, che semplificano la manutenzione e l'utilizzo del codice, e forniscono una buona **base per l'applicazione del [[01 - Java e la OOP#Polimorfismo|polimorfismo]]**.
 ___
-## Polimorfismo
+##### Polimorfismo
 
 Il **polimorfismo** è il principio che viene applicato quando **un oggetto può assumere comportamenti diversi** (la parola "polimorfismo", del resto, significa "molte forme") in base al contesto in cui viene utilizzato. Concretamente, il polimorfismo può essere applicato in vari modi, tra cui:
 - polimorfismo a ***compile-time***, o **polimorfismo statico**;
@@ -82,7 +82,7 @@ public class Calcolatrice {
 
 viene effettuato un overloading del metodo `somma()`, per cui vengono fornite due implementazioni diverse. In un contesto del genere, chiamando il metodo in questione, Java deciderà quale delle due implementazioni utilizzare a tempo di compilazione, in base ai parametri forniti concretamente nella chiamata e al tipo di ritorno previsto.
 
-Nel **polimorfismo dinamico**, invece, si parla principalmente di "***overriding***" di determinati metodi, ossia della ridefinizione di un determinato metodo, per cui viene fornita una nuova implementazione; ciò avviene strettamente in contesti legati all'**[[Java e la OOP#Ereditarietà|ereditarietà]]**, in cui una sottoclasse va a ridefinire un metodo precedentemente definito nella sua superclasse. Ad esempio, nel seguente sistema di classi:
+Nel **polimorfismo dinamico**, invece, si parla principalmente di "***overriding***" di determinati metodi, ossia della ridefinizione di un determinato metodo, per cui viene fornita una nuova implementazione; ciò avviene strettamente in contesti legati all'**[[01 - Java e la OOP#Ereditarietà|ereditarietà]]**, in cui una sottoclasse va a ridefinire un metodo precedentemente definito nella sua superclasse. Ad esempio, nel seguente sistema di classi:
 
 ```
 public class Animale {
@@ -123,17 +123,17 @@ Un corretto utilizzo del polimorfismo offre vari vantaggi, tra cui:
 - maggiore **flessibilità** del codice (del codice relativamente generico potrà lavorare con oggetti diversi se trattati in modo polimorfico);
 - **estendibilità** e **manutenibilità** del codice, principalmente per la gestione efficiente della struttura ereditaria delle classi.
 ___
-## Astrazione
+##### Astrazione
 
 L'**astrazione** è il principio che professa la **separazione tra generalizzazione e implementazione**, e che consiglia di modellare una certa entità mostrandone solo gli aspetti essenziali e nascondendone i dettagli non rilevanti. Un'applicazione corretta dell'astrazione permette di **definire cosa fa un oggetto, senza specificare come esso lo faccia**.
 
 In Java, ci sono principalmente due strumenti che permettono di applicare l'astrazione:
-- le **[[Classi#Classi astratte|classi astratte]]**;
-- le **[[Interfacce|interfacce]]**.
+- le **[[02 - Classi#Classi astratte|classi astratte]]**;
+- le **[[12 - Interfacce|interfacce]]**.
 
 Un corretto utilizzo dell'astrazione offre vari vantaggi, tra cui:
 - notevole **semplificazione della struttura** del proprio codice, oltre a maggiore **modularità** e **manutenibilità**;
 - maggiore **flessibilità** delle classi implementate;
 - **riutilizzo** del codice;
-- una solida **base per l'applicazione del [[Java e la OOP#Polimorfismo|poliformismo]]**.
+- una solida **base per l'applicazione del [[01 - Java e la OOP#Polimorfismo|poliformismo]]**.
 ___

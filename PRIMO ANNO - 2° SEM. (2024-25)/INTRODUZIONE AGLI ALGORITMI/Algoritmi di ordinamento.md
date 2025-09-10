@@ -6,15 +6,15 @@ ___
 
 
 
-#### Insertion Sort
+##### Insertion Sort
 
 
 ___
-#### Selection Sort
+##### Selection Sort
 
 
 ___
-#### Bubble Sort
+##### Bubble Sort
 
 
 ___
@@ -34,12 +34,11 @@ ___
 
 
 
-
-#### Counting Sort
+##### Counting Sort
 
 
 ___
-#### Bucket Sort
+##### Bucket Sort
 
 
 ___

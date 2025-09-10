@@ -88,7 +88,7 @@ Essendo un pattern potente ma anche rischioso da usare, si preferisce sfruttare 
 ___
 ## Simple Factory
 
-Il *design pattern* **Simple Factory** appartiene alla categoria dei **pattern creazionali** (non fa ufficialmente parte dei 23 pattern definiti dal GoF, ma è ampiamente diffuso soprattutto come variante semplificata del pattern [[Design pattern#Factory Method|Factory Method]]), e il suo scopo principale è quello di **centralizzare la costruzione di oggetti di varie classi**, separando la logica di costruzione dalle classi da istanziare e fornendo un metodo statico per gestirla.
+Il *design pattern* **Simple Factory** appartiene alla categoria dei **pattern creazionali** (non fa ufficialmente parte dei 23 pattern definiti dal GoF, ma è ampiamente diffuso soprattutto come variante semplificata del pattern [[16 - Design pattern#Factory Method|Factory Method]]), e il suo scopo principale è quello di **centralizzare la costruzione di oggetti di varie classi**, separando la logica di costruzione dalle classi da istanziare e fornendo un metodo statico per gestirla.
 
 Per comprendere meglio la struttura generale di questo pattern, analizziamo un esempio: supponiamo di avere una classe `Forma`, e varie sottoclassi `Quadrato`, `Cerchio`, `Triangolo`, ecc. che ereditano da `Forma`. Piuttosto che andare a costruire singolarmente ciascuna di queste forme, è possibile centralizzarne la costruzione in una classe `FormaFactory`, definita ad esempio nel modo seguente:
 
@@ -115,10 +115,10 @@ Allo stesso tempo, gestire un pattern Simple Factory diventa problematico quando
 ___
 ## Factory Method
 
-Il *design pattern* **Factory Method** appartiene alla categoria dei **pattern creazionali**, e il suo scopo principale è simile a quello del pattern [[Design pattern#Simple Factory|Simple Factory]] nel voler **centralizzare la costruzione di oggetti**, con la differenza che in questo caso la responsabilità della scelta della classe concreta da istanziare viene delegata a delle sottoclassi, e non a un metodo statico unico e polimorfico.
+Il *design pattern* **Factory Method** appartiene alla categoria dei **pattern creazionali**, e il suo scopo principale è simile a quello del pattern [[16 - Design pattern#Simple Factory|Simple Factory]] nel voler **centralizzare la costruzione di oggetti**, con la differenza che in questo caso la responsabilità della scelta della classe concreta da istanziare viene delegata a delle sottoclassi, e non a un metodo statico unico e polimorfico.
 
 Tendenzialmente, un'implementazione del pattern Factory Method rispetta una struttura generale che include le seguenti classi:
-- una [[Classi#Classi astratte|classe astratta]] o un'[[Interfacce|interfaccia]] **`Product`**, che definisce il contratto da rispettare per le classi da istanziare;
+- una [[02 - Classi#Classi astratte|classe astratta]] o un'[[12 - Interfacce|interfaccia]] **`Product`**, che definisce il contratto da rispettare per le classi da istanziare;
 - una serie di classi concrete **`ConcreteProduct`**, che implementano `Product` e che rappresentano le classi da istanziare;
 - una classe astratta **`Creator`**, che definisce il metodo astratto `factoryMethod()`, il cui compito è gestire la costruzione dei `Product`, e che contiene eventualmente una logica per l'utilizzo del prodotto;
 - delle sottoclassi **`ConcreteCreator`**, che estendono `Creator` andando a definire concretamente il metodo `factoryMethod()` per creare istanze specifiche di una classe `Product`.
@@ -178,7 +178,7 @@ public class WordCreator extends DocumentoCreator {
 
 Quello che avviene in questo esempio è che viene creata un'interfaccia `Documento` che definisce i metodi che devono necessariamente avere le sottoclassi che la implementano (in questo caso, una logica di apertura); in seguito, si definiscono due sottoclassi `DocumentoPDF` e `DocumentoWord` che implementano tale interfaccia e definiscono una variazione specifica del metodo `apri()`; a questo punto, si va a creare anche una classe astratta `DocumentoCreator`, che impone a sue eventuali sottoclassi di implementare un metodo `creaDocumento()`, e che fornisce anche un metodo `gestisciDocumento()` per incapsulare comodamente la creazione e l'apertura dello stesso; infine, si creano le sottoclassi `PDFCreator` e `WordCreator`, che definiscono l'implementazione specifica del metodo `creaDocumento()`, in modo che ognuna di esse istanzi il documento del tipo corrispondente.
 
-Confrontandolo con il pattern Simple Factory, il Factory Method risulta essere **più estendibile** e **più flessibile** della sua controparte semplificata, oltre a sfruttare in maggior misura il principio dell'**[[Java e la OOP#Ereditarietà|ereditarietà]]**; allo stesso tempo, tuttavia, risulta essere per natura **molto più complesso**, sia a livello di implementazione che di manutenzione.
+Confrontandolo con il pattern Simple Factory, il Factory Method risulta essere **più estendibile** e **più flessibile** della sua controparte semplificata, oltre a sfruttare in maggior misura il principio dell'**[[01 - Java e la OOP#Ereditarietà|ereditarietà]]**; allo stesso tempo, tuttavia, risulta essere per natura **molto più complesso**, sia a livello di implementazione che di manutenzione.
 
 Per questi motivi, è consigliabile utilizzare il pattern Factory Method in casi specifici dove si presenta necessariamente una **gerarchia complessa di prodotti**, o quando si vuole creare una base più facilmente estendibile in caso di aggiunta di numerose nuove tipologie di prodotti.
 ___
@@ -187,8 +187,8 @@ ___
 Il *design pattern* **Builder** appartiene alla categoria dei **pattern creazionali**, e il suo scopo principale è quello di **rendere più leggibile e semplificata la creazione di oggetti complessi**, evitando l'utilizzo di costruttori con troppi parametri e separando la configurazione di quest'ultimi.
 
 Generalmente, un'implementazione del pattern Builder rispetta una struttura che comprende le seguenti componenti:
-- una classe **`Product`**, che consiste nella classe dell'oggetto che si vuole costruire (tipicamente, il costruttore viene definito come [[Modificatori d'accesso#Private|privato]]);
-- una classe **`Builder`**, spesso definita come [[Classi#Classi annidate|classe statica interna]] a `Product`, che gestisce la costruzione di un oggetto di quest'ultima classe.
+- una classe **`Product`**, che consiste nella classe dell'oggetto che si vuole costruire (tipicamente, il costruttore viene definito come [[03 - Modificatori d'accesso#Private|privato]]);
+- una classe **`Builder`**, spesso definita come [[02 - Classi#Classi annidate|classe statica interna]] a `Product`, che gestisce la costruzione di un oggetto di quest'ultima classe.
 
 Vediamo un esempio di applicazione di tale pattern. Supponiamo di avere una classe `Computer`, che presenta vari campi come `CPU`, `GPU`, `RAM`, `SSD` e `hasWifi`; piuttosto che gestire la costruzione di una sua istanza tramite un costruttore pubblico, è possibile definire una classe statica interna, ottenendo il seguente codice:
 
@@ -264,7 +264,7 @@ Va comunque detto che un'implementazione del pattern Builder non è sempre consi
 ___
 ## Decorator
 
-
+[TODO]
 ___
 ## Observer
 
@@ -274,7 +274,7 @@ Generalmente, un'implementazione del pattern Observer rispetta una struttura che
 - una classe **`Observer`**, che consiste nella classe dell'oggetto "osservante", che tendenzialmente presenta un metodo che verrà chiamato quando viene notificato dall'oggetto "osservato", oppure un qualche altro modo di aggiornare il loro comportamento o i loro dati in base ad esso;
 - una classe **`Subject`**, che consiste nella classe dell'oggetto "osservato", che tendenzialmente presenta dei metodi per aggiungere e rimuovere degli `Observer` ad esso, e quindi anche un campo costituito dalla lista di tali `Observer`, così come un metodo per notificare comodamente tutti gli `Observer` legati ad esso.
 
-In alternativa, per un maggior **disaccoppiamento** e una maggiore **modularità**, è possibile anche definire **`Observer` e `Subject` come [[Interfacce|interfacce]]**, e creare delle classi `ConcreteObserver` e `ConcreteSubject` che vanno a implementare quest'ultime.
+In alternativa, per un maggior **disaccoppiamento** e una maggiore **modularità**, è possibile anche definire **`Observer` e `Subject` come [[12 - Interfacce|interfacce]]**, e creare delle classi `ConcreteObserver` e `ConcreteSubject` che vanno a implementare quest'ultime.
 
 Vediamo un esempio di applicazione di tale pattern. Supponiamo di voler definire una classe `NewsReader`, che sarà il nostro `Observer`:
 
@@ -326,7 +326,7 @@ Come si può facilmente intuire, il *design pattern* Observer risulta particolar
 ___
 ## Strategy
 
-
+[TODO]
 ___
 ## MVC
 
@@ -339,7 +339,7 @@ Più nel dettaglio, le interazioni tra queste tre parti seguono le seguenti stra
 - l'utente interagisce con la View;
 - la View, avendo ricevuto input dall'utente, notifica il Controller;
 - il Controller elabora l'input ricevuto e aggiorna di conseguenza il Model;
-- il Model notifica la View dei cambiamenti imposti dal Controller (o direttamente o attraverso l'implementazione di [[Design pattern#Observer|Observer]]);
+- il Model notifica la View dei cambiamenti imposti dal Controller (o direttamente o attraverso l'implementazione di [[16 - Design pattern#Observer|Observer]]);
 - la View aggiorna la GUI in base allo stato aggiornato del Model.
 
 Si tratta, come si evince subito, di un *design pattern* molto più **generale e comprensivo** di altri, che non va tanto a migliorare la progettazione di una particolare componente del proprio codice, ma piuttosto quella dell'intero programma che si sta creando. Un'applicazione strutturata rispettando il pattern MVC è, tendenzialmente, più **modulare**, **mantenibile** e **testabile**.

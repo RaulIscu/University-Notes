@@ -21,22 +21,24 @@ ___
 ## Alberi
 
 
-___
-#### Alberi binari
+
+##### Alberi binari
 
 
 ___
-#### Visite di alberi
+##### Visite di alberi
 
 
 ___
-#### Alberi binari di ricerca
+##### Alberi binari di ricerca
 
 
 ___
-#### Alberi AVL
+##### Alberi AVL
 
 
 ___
 ## Dizionari
 
+
+___

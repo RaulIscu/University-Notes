@@ -73,7 +73,7 @@ Le collezioni si dividono principalmente in **tre macro-categorie**:
 - **insiemi**;
 - **mappe**.
 
-Implementando tutte l'[[Interfacce|interfaccia]] **`Iterable<E>`**, è possibile per tutte le collezioni iterare comodamente i propri elementi in vari modi:
+Implementando tutte l'[[12 - Interfacce|interfaccia]] **`Iterable<E>`**, è possibile per tutte le collezioni iterare comodamente i propri elementi in vari modi:
 - sfruttando degli oggetti di tipo **`Iterator<E>`**;
 - mediante un ***[[Istruzioni di controllo#Il for loop*|for-each loop]]***;
 - solo per le liste, mediante un *for loop* che itera sugli indici degli elementi.
@@ -81,8 +81,8 @@ Implementando tutte l'[[Interfacce|interfaccia]] **`Iterable<E>`**, è possibile
 Oltre a queste soluzioni, è possibile anche sfruttare il metodo `Iterable.forEach(Consumer<T>)` per eseguire un'iterazione interna sugli elementi di una collezione, senza specificare necessariamente modi particolari per effettuarla (NB: utilizzare il metodo `forEach` produrrà risultati diversi in base alla classe dell'oggetto su cui si sta iterando, in quanto verrà chiamata l'implementazione di `forEach` relativa a tale classe).
 
 **È altamente sconsigliato modificare una collezione mentre si sta iterando su di essa**, a meno che non lo si stia facendo in maniera controllata (ad esempio, utilizzando `Iterator.remove()`).
-___
-#### Le liste: ArrayList, LinkedList
+
+##### Le liste: ArrayList, LinkedList
 
 In Java, ci sono principalmente **due tipi** di liste:
 - le **`ArrayList`**;
@@ -90,7 +90,7 @@ In Java, ci sono principalmente **due tipi** di liste:
 
 Entrambe sono basate su **`List`**, una sotto-interfaccia derivata da `Collection` e da `Iterable`.
 
-Una lista di tipo **`ArrayList`** consiste in una **lista dinamica**, basata sull'[[PRIMO ANNO - 2° SEM. (2024-25)/METODOLOGIE DI PROGRAMMAZIONE/Strutture dati#Array|array]] ma molto più flessibile e manipolabile, innanzitutto per le sue dimensioni variabili e per il ridimensionamento dinamico della stessa. Si tratta di una struttura potente per memorizzare oggetti (anche duplicati) per cui è importante un accesso rapido tramite indice, ma lo spostamento, l'inserimento o la rimozione di elementi in mezzo alla lista risultano relativamente lenti.
+Una lista di tipo **`ArrayList`** consiste in una **lista dinamica**, basata sull'[[14 - Strutture dati#Array|array]] ma molto più flessibile e manipolabile, innanzitutto per le sue dimensioni variabili e per il ridimensionamento dinamico della stessa. Si tratta di una struttura potente per memorizzare oggetti (anche duplicati) per cui è importante un accesso rapido tramite indice, ma lo spostamento, l'inserimento o la rimozione di elementi in mezzo alla lista risultano relativamente lenti.
 
 Un'`ArrayList` viene dichiarata come un oggetto di tipo `List<E>`, e una sua costruzione assume tendenzialmente la seguente forma:
 
@@ -146,14 +146,14 @@ Di seguito, i principali metodi utilizzabili con un `ListIterator`:
 - **`remove()`**, che rimuove l'elemento corrente dalla lista;
 - **`set(E e)`**, che sovrascrive l'elemento corrente sostituendolo con l'elemento `e`.
 ___
-#### Gli insiemi: HashSet, TreeSet e LinkedHashSet
+##### Gli insiemi: HashSet, TreeSet e LinkedHashSet
 
 In Java, ci sono principalmente **tre tipi** di insiemi:
 - gli **`HashSet`**;
 - i **`TreeSet`**;
 - i **`LinkedHashSet`**.
 
-Tutti e tre sono basati su **`Set`**, una sotto-interfaccia di `Collection` e `Iterable`. La loro particolarità, e principale differenza rispetto alle [[PRIMO ANNO - 2° SEM. (2024-25)/METODOLOGIE DI PROGRAMMAZIONE/Strutture dati#Le liste ArrayList, LinkedList|liste]], è che **non possono contenere elementi duplicati**.
+Tutti e tre sono basati su **`Set`**, una sotto-interfaccia di `Collection` e `Iterable`. La loro particolarità, e principale differenza rispetto alle [[14 - Strutture dati#Le liste ArrayList, LinkedList|liste]], è che **non possono contenere elementi duplicati**.
 
 Un insieme di tipo **`HashSet`** consiste in un insieme di elementi che vengono memorizzati in una **tabella di hash**, in modo da consentire un aggiunta e una ricerca molto efficienti. Se si è sicuri di non prevedere duplicati nei dati che si stanno manipolando, spesso un `HashSet` risulta essere una delle opzioni più preferibili; tuttavia, questa struttura dati **non permette di essere ordinata** in modo convenzionale, quindi diventa inutilizzabile se si vuole conservare un ordine nei dati memorizzati.
 
@@ -172,7 +172,7 @@ I metodi principali che presenta l'`HashSet` per visualizzare e manipolare i dat
 - **`remove(E e)`**, che rimuove l'elemento `e` dall'insieme, se esso è presente al suo interno;
 - **`size()`**, che restituisce il numero di elementi contenuti nell'insieme.
 
-Un insieme di tipo **`TreeSet`** presenta sostanzialmente le stesse caratteristiche dell'`HashSet`, ma a differenza di quest'ultimo **ordina automaticamente gli elementi aggiunti ad esso** in base all'ordinamento naturale previsto per il loro tipo, o in base a un [[Interfacce#Comparator|comparatore]] personalizzato se questo viene specificato nella costruzione dell'insieme, e mantiene tale ordine (questa caratteristica è ottenuta mediante l'implementazione interna particolare del `TreeSet`, che corrisponde a una variante di albero binario di ricerca chiamata "**red-black tree**").
+Un insieme di tipo **`TreeSet`** presenta sostanzialmente le stesse caratteristiche dell'`HashSet`, ma a differenza di quest'ultimo **ordina automaticamente gli elementi aggiunti ad esso** in base all'ordinamento naturale previsto per il loro tipo, o in base a un [[12 - Interfacce#Comparator|comparatore]] personalizzato se questo viene specificato nella costruzione dell'insieme, e mantiene tale ordine (questa caratteristica è ottenuta mediante l'implementazione interna particolare del `TreeSet`, che corrisponde a una variante di albero binario di ricerca chiamata "**red-black tree**").
 
 Un `TreeSet` viene dichiarato come un oggetto di tipo `TreeSet<E>`, e una sua costruzione assume tendenzialmente la seguente forma:
 
@@ -204,7 +204,7 @@ LinkedHashSet<E> identificatore = new LinkedHashSet<>();
 
 I metodi principali che presenta il `LinkedHashSet` per visualizzare e manipolare i dati contenuti al suo interno sono gli stessi identici previsti per l'`HashSet`, e non ne vengono aggiunti altri particolarmente rilevanti.
 ___
-#### Le mappe: HashMap, TreeMap e LinkedHashMap
+##### Le mappe: HashMap, TreeMap e LinkedHashMap
 
 In Java, ci sono principalmente **tre tipi** di mappe:
 - le **`HashMap`**;
@@ -246,7 +246,7 @@ I metodi principali che presenta l'`HashMap` per visualizzare e manipolare i dat
 - **`replaceAll(BiFunction<? super K, ? super V, ? extends V> function)`**, che sostituisce i valori di tutte le entry della mappa con il risultato della funzione `function` applicata su ognuna di esse;
 - **`values()`**, che restituisce una `Collection` contenente tutti i valori presenti nella mappa.
 
-Una mappa di tipo **`TreeMap`** presenta sostanzialmente le stesse caratteristiche dell'`HashMap`, ma a differenza di quest'ultima **ordina automaticamente le entry aggiunte ad essa** in base all'ordinamento naturale previsto per il tipo delle chiavi, o in base a un [[Interfacce#Comparator|comparatore]] personalizzato se questo viene specificato nella costruzione della mappa, e mantiene tale ordine (questa caratteristica è ottenuta mediante l'implementazione interna particolare della `TreeMap`, che corrisponde a una variante di albero binario di ricerca chiamata "**red-black tree**").
+Una mappa di tipo **`TreeMap`** presenta sostanzialmente le stesse caratteristiche dell'`HashMap`, ma a differenza di quest'ultima **ordina automaticamente le entry aggiunte ad essa** in base all'ordinamento naturale previsto per il tipo delle chiavi, o in base a un [[12 - Interfacce#Comparator|comparatore]] personalizzato se questo viene specificato nella costruzione della mappa, e mantiene tale ordine (questa caratteristica è ottenuta mediante l'implementazione interna particolare della `TreeMap`, che corrisponde a una variante di albero binario di ricerca chiamata "**red-black tree**").
 
 Una `TreeMap` viene dichiarata come un oggetto di tipo `TreeMap<K, V>`, e una sua costruzione assume tendenzialmente la seguente forma:
 

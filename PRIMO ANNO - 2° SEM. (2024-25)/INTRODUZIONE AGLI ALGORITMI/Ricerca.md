@@ -1,5 +1,5 @@
 
-___
+
 ## Ricerca sequenziale
 
 

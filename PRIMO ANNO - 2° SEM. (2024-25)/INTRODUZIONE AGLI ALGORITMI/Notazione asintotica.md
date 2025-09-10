@@ -22,19 +22,19 @@ ___
 
 
 
-#### Costanti moltiplicative
+##### Costanti moltiplicative
 
 
 ___
-#### Commutatività della somma
+##### Commutatività della somma
 
 
 ___
-#### Commutatività del prodotto
+##### Commutatività del prodotto
 
 
 ___
-#### Sommatorie notevoli
+##### Sommatorie notevoli
 
 
 ___

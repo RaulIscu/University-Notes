@@ -4,12 +4,12 @@ Alcune delle componenti fondamentali e più utili di un qualsiasi linguaggio di 
 - le istruzioni di **salto**, che permettono al programma di essere eseguito in maniera non-lineare.
 
 Di seguito, verrà analizzata nel dettaglio ciascuna di queste categorie.
-___
+
 ## Istruzioni di selezione
 
 Le **istruzioni di selezione**, lavorando in Java, possono presentarsi principalmente in due forme: gli ***if statements*** e gli ***switch statements***. Come anticipato precedentemente, queste due istruzioni permettono di controllare il flusso di esecuzione del programma considerato, in base ad alcune condizioni che verranno controllate proprio al momento dell'esecuzione.
-___
-#### L'*if statement*
+
+##### L'*if statement*
 
 L'***if statement*** viene usato, a livello basilare, per selezionare uno tra due possibili percorsi di esecuzione in base a una determinata condizione. Generalmente, un *if statement* si presenta nel modo seguente:
 
@@ -28,7 +28,7 @@ if (condizione) istruzione1;
 else istruzione2;
 ```
 
-La **condizione**, invece, è sostanzialmente una qualsiasi espressione che restituisce un valore [[Tipi primitivi|booleano]], e va necessariamente racchiusa all'interno di parentesi tonde.
+La **condizione**, invece, è sostanzialmente una qualsiasi espressione che restituisce un valore [[07 - Tipi primitivi|booleano]], e va necessariamente racchiusa all'interno di parentesi tonde.
 
 Un *if statement* segue questo funzionamento: se la condizione stabilita è `true`, allora viene eseguito il codice contenuto nel corpo dell'`if`; altrimenti, se esiste (l'inserimento di un'istruzione `else` è, infatti, opzionale), viene eseguito il codice contenuto nel corpo dell'`else`. In un *if statement* del genere, non può mai succedere che vengano eseguiti entrambi i blocchi di istruzioni.
 
@@ -68,7 +68,7 @@ Infine, è possibile definire un *if statement* in maniera compatta utilizzando 
 condizione ? valoreSeVero : valoreSeFalso;
 ```
 ___
-#### Lo *switch statement*
+##### Lo *switch statement*
 
 Lo ***switch** statement*, a grandi linee, funziona in maniera simile a un *if-else-if ladder*, ma è spesso preferibile ad esso, essendo generalmente più efficiente (a livello di compilazione e di costo computazionale) oltre a risultare più organizzato e comprensibile. Inoltre, si tratta sostanzialmente di un meccanismo diverso: mentre un *if* va a controllare espressioni booleane, lo *switch* ricerca **uguaglianze tra espressioni**. La forma generale di uno *switch statement* è la seguente:
 
@@ -133,8 +133,8 @@ ___
 ## Istruzioni di iterazione
 
 Le **istruzioni di iterazione**, lavorando in Java, possono presentarsi in tre forme: i ***while loops***, i ***do-while loops*** e i ***for loops***. Queste istruzioni, ovviamente, permettono di creare dei *loop*, che eseguiranno ripetutamente uno stesso blocco di istruzioni finché non si raggiungerà una condizione di termine.
-___
-#### Il *while loop*
+
+##### Il *while loop*
 
 Il ***while loop*** è probabilmente l'istruzione iterativa più importante e basilare utilizzata all'interno di Java. Come suggerisce il nome, permette di ripetere un blocco di codice **finché** la condizione che viene controllata è `true`. Genericamente, assume la seguente forma:
 
@@ -148,7 +148,7 @@ dove `condizione` può essere una qualsiasi espressione che restituisce un valor
 
 Per via del funzionamento del *while loop*, se la condizione che controlla è inizialmente `false`, il blocco di istruzioni relativo ad esso non verrà mai eseguito, neanche se in seguito la condizione diventerà `true`.
 ___
-#### Il *do-while loop*
+##### Il *do-while loop*
 
 Il ***do-while loop*** elude, parzialmente, questa caratteristica. Si tratta, infatti, di un *while* il cui corpo di codice viene sempre eseguito almeno una volta, anche se la sua condizione è inizialmente falsa: ciò avviene, banalmente, perché il corpo di codice viene posto prima della condizione legata ad esso. Genericamente, il *do-while loop* assume la seguente forma:
 
@@ -160,7 +160,7 @@ do {
 
 Ogni iterazione di un *do-while loop* eseguirà prima il suo corpo di codice, e solo dopo valuterà la sua condizione: a quel punto, se la condizione risulterà essere `true`, tutto il procedimento verrà ripetuto; altrimenti, il ciclo viene terminato.
 ___
-#### Il *for loop*
+##### Il *for loop*
 
 Il ***for loop***, in Java, si presenta principalmente in due forme: una è quella più "tradizionale", mentre la seconda è il cosiddetto "***for-each loop***". La **forma tradizionale** del *for loop* assume, genericamente, la seguente forma:
 
@@ -209,7 +209,7 @@ for (tipo variabileIterata : collezione) {
 
 dove `tipo` specifica il tipo delle variabili che verranno utilizzate dal ciclo, `variabileIterata` è il nome della variabile che conterrà mano a mano gli elementi della collezione considerata, e quest'ultima è indicata da `collezione`. Ad ogni iterazione del *loop*, nella variabile iterata viene conservato l'elemento successivo della collezione; ciò avviene finché non vengono esauriti tutti gli elementi della collezione. Nonostante il *for-each loop* termini automaticamente una volta esauriti gli elementi dell'*array*, è possibile terminare il ciclo prima utilizzando l'istruzione `break`.
 
-È importante ricordare che, iterando su una [[PRIMO ANNO - 2° SEM. (2024-25)/METODOLOGIE DI PROGRAMMAZIONE/Strutture dati|struttura dati]] con un *for-each loop*, le variabili iterate sono utilizzate esclusivamente per essere lette, e non potranno essere modificate dal blocco di istruzioni incluso nel corpo del ciclo. Ad esempio, nel seguente codice:
+È importante ricordare che, iterando su una [[14 - Strutture dati|struttura dati]] con un *for-each loop*, le variabili iterate sono utilizzate esclusivamente per essere lette, e non potranno essere modificate dal blocco di istruzioni incluso nel corpo del ciclo. Ad esempio, nel seguente codice:
 
 ```
 int nums[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
@@ -224,8 +224,8 @@ ___
 ## Istruzioni di salto
 
 Infine, le **istruzioni di salto**, in Java, possono anch'esse presentarsi in tre forme: il ***break***, il ***continue*** e il ***return***. Queste istruzioni vengono utilizzate per "saltare" ad altre parti del codice.
-___
-#### L'istruzione *break*
+
+##### L'istruzione *break*
 
 L'istruzione **`break`** viene spesso utilizzata per forzare il termine di un qualsiasi ciclo, saltando al codice immediatamente successivo al blocco in questione (quando viene utilizzato in *loop* annidati, il `break` ha effetto solo sul suo livello). Alternativamente, è possibile espandere l'istruzione `break` con un'**etichetta**, che permette di saltare a blocchi di codice ben precisi. Infatti, si può assegnare un'etichetta a un blocco di codice impostandolo nel seguente modo:
 
@@ -243,7 +243,7 @@ break etichetta;
 
 Ciò, tuttavia, è possibile solo con blocchi di codice che racchiudono il blocco dove è presente l'istruzione `break` in questione.
 ___
-#### L'istruzione *continue*
+##### L'istruzione *continue*
 
 L'istruzione **`continue`**, invece, consente di forzare una nuova iterazione del *loop*, andando a ignorare determinate istruzioni nell'iterazione in cui viene eseguito. Ad esempio, nel seguente *for loop*:
 
@@ -258,7 +258,7 @@ se il numero considerato nell'iterazione corrente è dispari, e dunque il resto 
 
 Analogamente a `break`, anche `continue` consente l'utilizzo di etichette, precisamente alla stessa maniera e con le stesse restrizioni.
 ___
-#### L'istruzione *return*
+##### L'istruzione *return*
 
 L'istruzione **`return`** viene usata, appunto, per fare in modo che un metodo "restituisca" qualcosa. Oltre a questa sua caratteristica principale, esso può essere effettivamente considerato un'istruzione di salto in quanto, alla sua esecuzione, viene immediatamente terminata l'esecuzione del metodo in cui è presente.
 ___

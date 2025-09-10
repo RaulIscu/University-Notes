@@ -1,7 +1,7 @@
 Java è un **linguaggio compilato**, dunque per poter essere eseguito deve prima passare per un **compilatore**, che legge il codice del file e, sfruttando vari strumenti, genera un eseguibile. È quest'ultimo ad essere, appunto, eseguito per ottenere il funzionamento del programma scritto.
 
 Java dispone di un proprio compilatore, chiamato "**Java Compiler**", o **`javac`**.
-___
+
 ## Come compilare ed eseguire un file .java da terminale
 
 Per eseguire opportunamente un file `.java` dal **terminale**, ad esempio da Windows Powershell, dovremo innanzitutto **assicurarci di trovarci nella** cartella, o "**directory**", **apposita**, ossia quella contenente il file che ci interessa: per spostarci nella directory desiderata, su Windows, è possibile sfruttare il comando **`cd`** ("*current directory*") seguito dal nome della directory in cui si vuole entrare, ricordando che quest'ultima deve trovarsi nella directory in cui siamo situati attualmente. Per tornare, invece, in una directory precedente, basterà utilizzare il comando **`cd ..`**; se invece si vuole avere un elenco dei contenuti della directory attuale, si può utilizzare il comando **`dir`**.
@@ -20,6 +20,6 @@ I *command-line arguments* vengono passati al metodo `main()` al momento dell'es
 java nomeDelFile argomento0 argomento1 argomento2 ...
 ```
 
-Accedere a questi argomenti dal codice è molto facile: infatti, i *command-line arguments*, una volta forniti, vengono conservati in un [[PRIMO ANNO - 2° SEM. (2024-25)/METODOLOGIE DI PROGRAMMAZIONE/Strutture dati#Array|array]] di [[Stringhe|stringhe]] (**`String args[]`**), facilmente accessibili mediante l'indicizzazione di tale array (ad esempio, il primo dei *command-line arguments* si otterrà come `args[0]`, il secondo come `args[1]`, e così via).
+Accedere a questi argomenti dal codice è molto facile: infatti, i *command-line arguments*, una volta forniti, vengono conservati in un [[14 - Strutture dati#Array|array]] di [[08 - Stringhe|stringhe]] (**`String args[]`**), facilmente accessibili mediante l'indicizzazione di tale array (ad esempio, il primo dei *command-line arguments* si otterrà come `args[0]`, il secondo come `args[1]`, e così via).
 ___
 
