@@ -14,7 +14,7 @@ Gli **interi** (con segno) vengono suddivisi in 4 tipi primitivi:
 - **`int`**;
 - **`long`**.
 
-Una variabile di tipo **`byte`** può contenere un intero segnato di **8 bit**, che può quindi rappresentare un qualsiasi intero nell'intervallo **$[-128,\, 127]$**. In genere, questo tipo torna utile quando si lavora con [[12 - Interfacce#Stream|stream]] di dati provenienti dalla rete o da un file, quando si vuole risparmiare memoria nel salvataggio di dati in [[14 - Strutture dati#Array|array]], o quando si lavora con dati espressi in binario.
+Una variabile di tipo **`byte`** può contenere un intero segnato di **8 bit**, che può quindi rappresentare un qualsiasi intero nell'intervallo **$[-128,\, 127]$**. In genere, questo tipo torna utile quando si lavora con [[MDP12 - Interfacce#Stream|stream]] di dati provenienti dalla rete o da un file, quando si vuole risparmiare memoria nel salvataggio di dati in [[MDP14 - Strutture dati#Array|array]], o quando si lavora con dati espressi in binario.
 
 Una variabile di tipo **`short`** può contenere un intero segnato di **16 bit**, che può quindi rappresentare un qualsiasi intero tra **$[-32\,768,\, 32\,767]$**. Similmente al byte, questo tipo viene spesso utilizzato quando si vuole risparmiare memoria nel salvataggio di dati.
 
@@ -28,7 +28,7 @@ Ognuno dei tipi primitivi appena analizzati dispone di una **classe wrapper**, c
 - **`Integer`**;
 - **`Long`**.
 
-Utilizzare un valore tramite la sua classe wrapper è necessario in alcuni contesti (ad esempio, nelle [[14 - Strutture dati#Java Collection Framework|collezioni]]), e utile in altri per la possibilità di sfruttare alcuni metodi come `Integer.parseInt()` o `Long.compare()`.
+Utilizzare un valore tramite la sua classe wrapper è necessario in alcuni contesti (ad esempio, nelle [[MDP14 - Strutture dati#Java Collection Framework|collezioni]]), e utile in altri per la possibilità di sfruttare alcuni metodi come `Integer.parseInt()` o `Long.compare()`.
 ___
 ## I reali: `float`, `double`
 
@@ -60,7 +60,7 @@ Entrambi i tipi primitivi appena analizzati dispongono di una **classe wrapper**
 - **`Float`**;
 - **`Double`**.
 
-Utilizzare un valore tramite la sua classe wrapper è necessario in alcuni contesti (ad esempio, nelle [[14 - Strutture dati#Java Collection Framework|collezioni]]), e utile in altri per la possibilità di sfruttare alcuni metodi come `Double.parseDouble()` o `Float.isNan()`. Inoltre, tali classi presentano alcune **costanti** che potrebbero tornare utili nel calcolo matematico, come:
+Utilizzare un valore tramite la sua classe wrapper è necessario in alcuni contesti (ad esempio, nelle [[MDP14 - Strutture dati#Java Collection Framework|collezioni]]), e utile in altri per la possibilità di sfruttare alcuni metodi come `Double.parseDouble()` o `Float.isNan()`. Inoltre, tali classi presentano alcune **costanti** che potrebbero tornare utili nel calcolo matematico, come:
 - **`POSITIVE_INFINITY`**, che rappresenta $+\infty$;
 - **`NEGATIVE_INFINITY`**, che rappresenta $-\infty$;
 - **`NaN`**, che rappresenta un "non-numero".
@@ -75,7 +75,7 @@ ___
 
 Infine, i **booleani**, appartenenti al tipo **`boolean`**, rappresentano valori logici come "vero", ossia **`true`**, e "falso", ossia **`false`**.
 
-Tutti gli [[06 - Operatori#Operatori logici|operatori logici]] e gli [[06 - Operatori#Operatori di confronto|operatori di confronto]] ritornano un booleano come risultato della loro operazione.
+Tutti gli [[MDP06 - Operatori#Operatori logici|operatori logici]] e gli [[MDP06 - Operatori#Operatori di confronto|operatori di confronto]] ritornano un booleano come risultato della loro operazione.
 ___
 ## Conversioni di tipo
 
@@ -84,7 +84,7 @@ E se volessimo convertire variabili di un tipo in variabili di un altro? Ci sono
 - mediante un **casting esplicito**;
 - mediante una **type promotion**.
 
-Un "**casting implicito**", detto anche "*widening conversion*", avviene in maniera automatica e senza perdita di dati quando si cerca di convertire una variabile di un tipo più "piccolo", o meno preciso, in una di un tipo più "grande", o più preciso. Ad esempio, supponiamo di avere una [[05 - Variabili|variabile]] `num` di tipo `int`, a cui si è assegnato il valore `42`, e di voler memorizzare quello stesso dato in una variabile di tipo `long`, con il seguente codice:
+Un "**casting implicito**", detto anche "*widening conversion*", avviene in maniera automatica e senza perdita di dati quando si cerca di convertire una variabile di un tipo più "piccolo", o meno preciso, in una di un tipo più "grande", o più preciso. Ad esempio, supponiamo di avere una [[MDP05 - Variabili|variabile]] `num` di tipo `int`, a cui si è assegnato il valore `42`, e di voler memorizzare quello stesso dato in una variabile di tipo `long`, con il seguente codice:
 
 ```
 int num = 42;

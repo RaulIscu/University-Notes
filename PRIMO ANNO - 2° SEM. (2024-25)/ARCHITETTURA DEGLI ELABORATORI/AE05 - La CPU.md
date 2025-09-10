@@ -1,6 +1,6 @@
 ## Cos'è una CPU?
 
-La **CPU** ("**Central Processing Unit**"), detta anche **processore** o **unità di elaborazione**, rappresenta forse la componente più importante e imprescindibile in un qualsiasi [[01 - Il calcolatore|calcolatore]]. Si tratta della **parte attiva** del calcolatore, quella che esegue fedelmente le istruzioni di un programma, che è in grado di effettuare operazioni aritmetiche, effettuare controlli sui risultati di quest'ultime, inviare segnali per attivare dispositivi di I/O e molto altro.
+La **CPU** ("**Central Processing Unit**"), detta anche **processore** o **unità di elaborazione**, rappresenta forse la componente più importante e imprescindibile in un qualsiasi [[AE01 - Il calcolatore|calcolatore]]. Si tratta della **parte attiva** del calcolatore, quella che esegue fedelmente le istruzioni di un programma, che è in grado di effettuare operazioni aritmetiche, effettuare controlli sui risultati di quest'ultime, inviare segnali per attivare dispositivi di I/O e molto altro.
 
 Generalmente, una CPU è composta da **due componenti principali**:
 - un'**unità di elaborazione dati**, detta anche "**datapath**";
@@ -10,9 +10,9 @@ Potremmo definire queste due componenti come rispettivamente il braccio e la men
 ___
 ## Un'implementazione di base di un processore RISC-V
 
-In generale, le **prestazioni di un calcolatore** sono principalmente influenzate da tre fattori chiave: il **numero di istruzioni** da eseguire, la **durata del ciclo di clock** e il **numero di cicli di clock per istruzione** (o **CPI**). Seppur il primo di questi fattori dipenda soprattutto dall'architettura e dall'[[03 - Le istruzioni#Cos'è un'istruzione?|insieme di istruzioni]] utilizzato, gli altri due dipendono esclusivamente dalla **particolare implementazione della CPU** di tale calcolatore.
+In generale, le **prestazioni di un calcolatore** sono principalmente influenzate da tre fattori chiave: il **numero di istruzioni** da eseguire, la **durata del ciclo di clock** e il **numero di cicli di clock per istruzione** (o **CPI**). Seppur il primo di questi fattori dipenda soprattutto dall'architettura e dall'[[AE03 - Le istruzioni#Cos'è un'istruzione?|insieme di istruzioni]] utilizzato, gli altri due dipendono esclusivamente dalla **particolare implementazione della CPU** di tale calcolatore.
 
-Per comprendere meglio come l'implementazione della CPU vada ad influenzarne le prestazioni, proviamo ad **esaminare un'implementazione basilare di una CPU nell'architettura RISC-V**. Il processore che andremo ad analizzare comprende solo un piccolo sottoinsieme delle effettive [[03 - Le istruzioni#Le istruzioni dell'architettura RISC-V|istruzioni]] previste per tale architettura, ossia:
+Per comprendere meglio come l'implementazione della CPU vada ad influenzarne le prestazioni, proviamo ad **esaminare un'implementazione basilare di una CPU nell'architettura RISC-V**. Il processore che andremo ad analizzare comprende solo un piccolo sottoinsieme delle effettive [[AE03 - Le istruzioni#Le istruzioni dell'architettura RISC-V|istruzioni]] previste per tale architettura, ossia:
 - alcune istruzioni di trasferimento dati (**`lw`** e **`sw`**);
 - alcune istruzioni aritmetiche e logiche (**`add`**, **`sub`**, **`and`**, **`or`**);
 - un'istruzione di salto condizionato (**`beq`**).
@@ -21,7 +21,7 @@ Per comprendere meglio come l'implementazione della CPU vada ad influenzarne le 
 
 Prima di addentrarci nell'analisi e nella progettazione del processore, ricordiamo alcuni **concetti fondamentali** per la comprensione di ciò che segue.
 
-Le diverse componenti del processore, quelle che potremmo definire **[[05 - La CPU#Unità funzionali|unità funzionali]]**, possono appartenere a due diverse classi di elementi logici: ci sono elementi che si limitano a operare su dei dati, ossia elementi di tipo **combinatorio**, ed elementi che contengono al loro interno uno stato, ossia elementi di tipo **sequenziale**. 
+Le diverse componenti del processore, quelle che potremmo definire **[[AE05 - La CPU#Unità funzionali|unità funzionali]]**, possono appartenere a due diverse classi di elementi logici: ci sono elementi che si limitano a operare su dei dati, ossia elementi di tipo **combinatorio**, ed elementi che contengono al loro interno uno stato, ossia elementi di tipo **sequenziale**. 
 
 In un elemento di tipo combinatorio, in ogni istante i suoi output dipendono esclusivamente dai suoi input in tale istante (infatti, **un elemento combinatorio è privo di memoria**), di conseguenza dando gli stessi input a un elemento combinatorio si otterranno sempre gli stessi output. In un elemento di tipo sequenziale, invece, i suoi output dipendono sia dai suoi input sia dallo stato già memorizzato al suo interno (infatti, **un elemento sequenziale è dotato di memoria**); per questa caratteristica, gli elementi sequenziali vengono anche detti "**elementi di stato**". Un elemento di stato, generalmente, possiede sempre **almeno due input e un output**: i due input sono il dato da memorizzare e il **clock**, segnale che determina quando memorizzare il dato; l'output è invece il dato memorizzato al suo interno in un ciclo di clock passato.
 
@@ -83,11 +83,11 @@ Il primissimo passaggio, universale per tutte le istruzioni, è il **fetch** del
 
 ![[fetch.png]]
 
-Si noti che **tutti i nodi del circuito** appena esposto, in realtà, **rappresentano dei bus da 32 bit**. A questo punto, abbiamo estratto con successo un'istruzione dalla memoria, sotto forma di una stringa di 32 bit; come ben sappiamo, però, non tutte le [[03 - Le istruzioni#Come vengono rappresentate le istruzioni nel calcolatore?|istruzioni]] hanno lo stesso formato e non possono essere interpretate allo stesso modo.
+Si noti che **tutti i nodi del circuito** appena esposto, in realtà, **rappresentano dei bus da 32 bit**. A questo punto, abbiamo estratto con successo un'istruzione dalla memoria, sotto forma di una stringa di 32 bit; come ben sappiamo, però, non tutte le [[AE03 - Le istruzioni#Come vengono rappresentate le istruzioni nel calcolatore?|istruzioni]] hanno lo stesso formato e non possono essere interpretate allo stesso modo.
 
 Consideriamo, ad esempio, le istruzioni in formato di tipo R, come `add x1, x2, x3`, che legge il contenuto dei registri `x2` e `x3`, li somma e scrive il risultato nel registro `x1`. Naturalmente, il primo componente fondamentale per l'esecuzione di un'istruzione del genere è il **register file**, che ricevendo in input l'istruzione dovrà **decodificarla**, individuando i campi contenenti i registri operandi e il registro di scrittura del risultato, leggere i contenuti dei registri operandi e restituirli come output. A questo punto, per eseguire concretamente l'operazione dettata dall'istruzione in esecuzione, sarà necessaria un'**ALU**, che esegua tale operazione sui dati ricevuti dal register file e ne fornisca il risultato in output. Quest'ultimo, come vedremo tra poco, potrà poi essere restituito come input al register file, in modo da venire memorizzato nel registro di scrittura.
 
-Vediamo, ora cosa succederebbe con istruzioni come `lw x1, offset(x2)` (di tipo I) o `sw x1, offset(x2)` (di tipo S), utilizzate rispettivamente per caricare un dato dalla memoria a un registro e per trasferire un dato da un registro alla memoria. In entrambi i casi, per l'esecuzione dell'istruzione è necessario calcolare un indirizzo di memoria mediante l'ALU, sommando il contenuto del registro `x2` con l'`offset`, un intero segnato di 12 bit (nel formato di tipo I è interamente memorizzato in un unico campo `imm[11:0]`, mentre nel formato di tipo S è diviso nei suoi 7 bit più significativi, scritti in `imm[11:5]`, e nei suoi 5 bit meno significativi, scritti in `imm[4:0]`). Riguardo, invece, al registro `x1`, nel caso dell'istruzione `lw` esso diventa un registro di scrittura per il dato letto dalla memoria, mentre nel caso dell'istruzione `sw` esso è un registro di lettura che fornisce il dato da scrivere in memoria. Come abbiamo detto parlando dell'[[05 - La CPU#Unità funzionali|ALU]], però, essa riceve come input due stringhe di 32 bit, lunghezza diversa dai 12 bit che abbiamo per la costante dell'istruzione: diventa, dunque, necessaria l'**unità di estensione del segno**, che andrà a estendere la costante fornita dall'istruzione in un valore a 32 bit. Infine, dato che si sta lavorando con la memoria (scrivendo e leggendo dati), risulta ovviamente necessario l'utilizzo di una **memoria di dati**, che in caso di lettura riceva in input l'indirizzo del dato desiderato e restituisca quest'ultimo in output, e in caso di scrittura riceva invece in input il dato da scrivere e l'indirizzo di memoria dove farlo.
+Vediamo, ora cosa succederebbe con istruzioni come `lw x1, offset(x2)` (di tipo I) o `sw x1, offset(x2)` (di tipo S), utilizzate rispettivamente per caricare un dato dalla memoria a un registro e per trasferire un dato da un registro alla memoria. In entrambi i casi, per l'esecuzione dell'istruzione è necessario calcolare un indirizzo di memoria mediante l'ALU, sommando il contenuto del registro `x2` con l'`offset`, un intero segnato di 12 bit (nel formato di tipo I è interamente memorizzato in un unico campo `imm[11:0]`, mentre nel formato di tipo S è diviso nei suoi 7 bit più significativi, scritti in `imm[11:5]`, e nei suoi 5 bit meno significativi, scritti in `imm[4:0]`). Riguardo, invece, al registro `x1`, nel caso dell'istruzione `lw` esso diventa un registro di scrittura per il dato letto dalla memoria, mentre nel caso dell'istruzione `sw` esso è un registro di lettura che fornisce il dato da scrivere in memoria. Come abbiamo detto parlando dell'[[AE05 - La CPU#Unità funzionali|ALU]], però, essa riceve come input due stringhe di 32 bit, lunghezza diversa dai 12 bit che abbiamo per la costante dell'istruzione: diventa, dunque, necessaria l'**unità di estensione del segno**, che andrà a estendere la costante fornita dall'istruzione in un valore a 32 bit. Infine, dato che si sta lavorando con la memoria (scrivendo e leggendo dati), risulta ovviamente necessario l'utilizzo di una **memoria di dati**, che in caso di lettura riceva in input l'indirizzo del dato desiderato e restituisca quest'ultimo in output, e in caso di scrittura riceva invece in input il dato da scrivere e l'indirizzo di memoria dove farlo.
 
 Graficamente, possiamo schematizzare il blocco di unità funzionali responsabile dell'esecuzione delle istruzioni trattate finora nel modo seguente:
 
@@ -124,7 +124,7 @@ Per quanto riguarda il segnale **`ALUOp`**, esso rappresenta in realtà un segna
 ___
 ##### Come viene controllata l'ALU?
 
-Nell'implementazione progettata [[05 - La CPU#Assemblare le unità funzionali|un paio di paragrafi fa]], in base all'istruzione in esecuzione l'ALU dovrà eseguire una delle seguenti **quattro operazioni**:
+Nell'implementazione progettata [[AE05 - La CPU#Assemblare le unità funzionali|un paio di paragrafi fa]], in base all'istruzione in esecuzione l'ALU dovrà eseguire una delle seguenti **quattro operazioni**:
 - **somma**;
 - **sottrazione**;
 - **AND**;
@@ -147,7 +147,7 @@ Questi 4 bit di controllo vengono generati tramite quello che nell'implementazio
 ___
 ## E se volessimo aggiungere altre istruzioni?
 
-L'implementazione fornita nel [[05 - La CPU#Un'implementazione di base di un processore RISC-V|capitolo precedente]] può essere tranquillamente ampliata, aggiungendo **altre istruzioni dell'[[02 - L'architettura RISC-V#L'architettura RISC-V|architettura RISC-V]]**.
+L'implementazione fornita nel [[AE05 - La CPU#Un'implementazione di base di un processore RISC-V|capitolo precedente]] può essere tranquillamente ampliata, aggiungendo **altre istruzioni dell'[[AE02 - L'architettura RISC-V#L'architettura RISC-V|architettura RISC-V]]**.
 
 ##### L'istruzione `j`
 
@@ -185,7 +185,7 @@ ___
 
 In seguito all'istruzione `j`, diventa molto semplice implementare anche l'istruzione **`jal rd, imm`** ("Jump And Link"), un'altra istruzione di salto incondizionato.
 
-Per l'aggiunta di questa istruzione, si seguiranno sempre gli stessi passaggi, a partire dalla **codifica** dell'istruzione: anche in questo caso, un formato che fa al caso nostro è il **formato di tipo UJ**. Per quanto riguarda il **funzionamento** di tale istruzione, essa svolge le stesse azioni di [[05 - La CPU#L'istruzione `j`|quella precedente]], ma oltre a ciò va anche a scrivere nel registro di destinazione `rd` l'indirizzo dell'istruzione successiva, ossia $PC + 4$. Per permettere questa funzionalità, quindi, avremo bisogno delle seguenti **unità funzionali**:
+Per l'aggiunta di questa istruzione, si seguiranno sempre gli stessi passaggi, a partire dalla **codifica** dell'istruzione: anche in questo caso, un formato che fa al caso nostro è il **formato di tipo UJ**. Per quanto riguarda il **funzionamento** di tale istruzione, essa svolge le stesse azioni di [[AE05 - La CPU#L'istruzione `j`|quella precedente]], ma oltre a ciò va anche a scrivere nel registro di destinazione `rd` l'indirizzo dell'istruzione successiva, ossia $PC + 4$. Per permettere questa funzionalità, quindi, avremo bisogno delle seguenti **unità funzionali**:
 - il **PC**;
 - un'**unità di estensione del segno**, che provvederà a riordinare i bit dell'immediato e a estenderli a 32 bit;
 - un **adder**, per eseguire la somma tra PC e immediato;
@@ -235,7 +235,7 @@ ___
 ___
 ## Pipeline
 
-Quella che abbiamo analizzato finora è un'implementazione di un processore che potremmo definire a "**singolo ciclo**", sostanzialmente un processore che esegue un'istruzione per volta, iniziando l'esecuzione della successiva solo dopo aver terminato l'esecuzione della precedente. Si tratta di un modello funzionante, ma ciononostante particolarmente inefficiente, e al giorno d'oggi poco utilizzato. Invece, la quasi totalità dei [[01 - Il calcolatore|calcolatori]] di oggi sfruttano una tecnica chiamata "pipeline".
+Quella che abbiamo analizzato finora è un'implementazione di un processore che potremmo definire a "**singolo ciclo**", sostanzialmente un processore che esegue un'istruzione per volta, iniziando l'esecuzione della successiva solo dopo aver terminato l'esecuzione della precedente. Si tratta di un modello funzionante, ma ciononostante particolarmente inefficiente, e al giorno d'oggi poco utilizzato. Invece, la quasi totalità dei [[AE01 - Il calcolatore|calcolatori]] di oggi sfruttano una tecnica chiamata "pipeline".
 
 La "**pipeline**" è una tecnica di implementazione di un processore che prevede la **sovrapposizione temporale dell'esecuzione di diverse istruzioni**. 
 
@@ -267,7 +267,7 @@ Di conseguenza, possiamo affermare che la pipeline dell'architettura RISC-V ha *
 - il **MEM**, dunque l'accesso alla memoria di dati, dura $200\,\,ps$;
 - il **WB**, dunque la scrittura di un dato in un registro, dura $100\,\,ps$.
 
-A questo punto, tenendo a mente questi tempi e assumendo che multiplexer, unità di controllo, PC e unità di estensione del segno non introducano ulteriori ritardi, possiamo approssimare il **tempo di esecuzione delle istruzioni** di base previste nella [[05 - La CPU#Assemblare le unità funzionali|prima implementazione]] dell'architettura RISC-V che abbiamo analizzato. La seguente tabella mostra proprio questo:
+A questo punto, tenendo a mente questi tempi e assumendo che multiplexer, unità di controllo, PC e unità di estensione del segno non introducano ulteriori ritardi, possiamo approssimare il **tempo di esecuzione delle istruzioni** di base previste nella [[AE05 - La CPU#Assemblare le unità funzionali|prima implementazione]] dell'architettura RISC-V che abbiamo analizzato. La seguente tabella mostra proprio questo:
 
 ![[tempi_istruzioni_tabella.png]]
 
@@ -276,10 +276,10 @@ A questo punto, tenendo a mente questi tempi e assumendo che multiplexer, unità
 Utilizzando invece un'**implementazione basata su pipeline**, **la durata del ciclo di clock deve essere pari almeno al tempo di esecuzione dello stadio più "lento"**. In questo modo, fasi diverse possono essere eseguite contemporaneamente, e l'esecuzione di più istruzioni può essere notevolmente accelerata: infatti, seguendo questa logica, la durata del ciclo di clock può scendere fino a $200\,\,ps$, **moltiplicando così la velocità del processore**.
 
 Del resto, l'architettura RISC-V è stata progettata proprio tenendo a mente un approccio basato su pipeline, e presenta diversi **vantaggi** che lo favoriscono, tra cui:
-- la **costanza nella posizione dei campi relativi ai registri** all'interno dei vari [[03 - Le istruzioni#Come vengono rappresentate le istruzioni nel calcolatore?|formati di istruzione]], che velocizza la lettura del contenuto degli stessi (è possibile già durante la fase di ID);
+- la **costanza nella posizione dei campi relativi ai registri** all'interno dei vari [[AE03 - Le istruzioni#Come vengono rappresentate le istruzioni nel calcolatore?|formati di istruzione]], che velocizza la lettura del contenuto degli stessi (è possibile già durante la fase di ID);
 - la presenza di **operandi nella memoria solo per istruzioni di accesso alla stessa**, come `sw` e `lw`, e mai per operazioni aritmetico-logiche, che operano strettamente sui registri;
 - l'**allineamento degli operandi in memoria**, e il loro **indirizzamento**, che consentono di effettuare un singolo accesso per dato;
-- la **lunghezza fissa delle istruzioni**, sempre a 32 bit, che è il fattore determinante nel consentire una sovrapposizione tra IF e ID (essendo tutte le istruzioni della stessa lunghezza, il nuovo PC può essere calcolato a priori, senza sapere quale sia l'istruzione successiva, vantaggio che non si ha in architettura con istruzioni a dimensione variabile come la [[02 - L'architettura RISC-V#L'architettura RISC-V|CISC]]).
+- la **lunghezza fissa delle istruzioni**, sempre a 32 bit, che è il fattore determinante nel consentire una sovrapposizione tra IF e ID (essendo tutte le istruzioni della stessa lunghezza, il nuovo PC può essere calcolato a priori, senza sapere quale sia l'istruzione successiva, vantaggio che non si ha in architettura con istruzioni a dimensione variabile come la [[AE02 - L'architettura RISC-V#L'architettura RISC-V|CISC]]).
 ___
 ## Criticità in una pipeline
 
@@ -292,11 +292,11 @@ In questo capitolo, analizzeremo ciascuna di queste criticità, quando si posson
 
 ##### Hazard strutturali
 
-Il primo tipo di hazard che andremo ad analizzare è il cosiddetto "**hazard strutturale**" (o "**structural hazard**"), che si verifica quando **l'hardware presente non è in grado di supportare la combinazione di istruzioni che si vorrebbe eseguire in un singolo ciclo di clock**. Tornando all'[[05 - La CPU#Pipeline|esempio concreto del bucato]], un hazard strutturale potrebbe essere l'avere una sola macchina che funga sia da lavatrice che da asciugatrice, piuttosto che due macchine separate.
+Il primo tipo di hazard che andremo ad analizzare è il cosiddetto "**hazard strutturale**" (o "**structural hazard**"), che si verifica quando **l'hardware presente non è in grado di supportare la combinazione di istruzioni che si vorrebbe eseguire in un singolo ciclo di clock**. Tornando all'[[AE05 - La CPU#Pipeline|esempio concreto del bucato]], un hazard strutturale potrebbe essere l'avere una sola macchina che funga sia da lavatrice che da asciugatrice, piuttosto che due macchine separate.
 
 Nel contesto di un processore come quello che abbiamo visto finora, una simile situazione potrebbe verificarsi nel caso in cui venga utilizzata la stessa memoria sia per le istruzioni che per i dati: in questo caso, potrebbe tranquillamente succedere che, mentre un'istruzione sta effettuando un accesso alla memoria per leggere o scrivere un dato, il processore voglia effettuare il fetch di un'altra istruzione, provocando un ritardo.
 
-In realtà, essendo l'architettura RISC-V progettata appositamente per un approccio basato su pipeline, è semplice per un progettista evitare gli hazard strutturali nella fase di progettazione del [[05 - La CPU#Cos'è una CPU?|datapath]].
+In realtà, essendo l'architettura RISC-V progettata appositamente per un approccio basato su pipeline, è semplice per un progettista evitare gli hazard strutturali nella fase di progettazione del [[AE05 - La CPU#Cos'è una CPU?|datapath]].
 ___
 ##### Hazard sui dati
 
@@ -384,7 +384,7 @@ Infine, vi è un terzo e ultimo approccio per affrontare gli hazard sul controll
 ___
 ## Un'implementazione basata su pipeline di un processore RISC-V
 
-Ora che abbiamo approfondito il concetto di pipeline, e le possibili criticità che ne conseguono, siamo pronti a **integrare una pipeline nell'[[05 - La CPU#Un'implementazione di base di un processore RISC-V|implementazione di base]] di processore che abbiamo analizzato in precedenza**. Per semplicità, andremo a effettuare quest'operazione sulla prima implementazione, quella che prevedeva solamente le istruzioni `add`, `sub`, `and`, `or`, `lw`, `sw` e `beq`, ma naturalmente gli stessi principi possono essere applicati anche su processori più completi.
+Ora che abbiamo approfondito il concetto di pipeline, e le possibili criticità che ne conseguono, siamo pronti a **integrare una pipeline nell'[[AE05 - La CPU#Un'implementazione di base di un processore RISC-V|implementazione di base]] di processore che abbiamo analizzato in precedenza**. Per semplicità, andremo a effettuare quest'operazione sulla prima implementazione, quella che prevedeva solamente le istruzioni `add`, `sub`, `and`, `or`, `lw`, `sw` e `beq`, ma naturalmente gli stessi principi possono essere applicati anche su processori più completi.
 
 ##### Registri di pipeline
 
@@ -392,7 +392,7 @@ Come abbiamo stabilito, un'istruzione dell'architettura RISC-V può essere "sudd
 
 ![[blocco_cpu_divisione_pipeline.png]]
 
-Il flusso di istruzioni e dati è quasi completamente direzionato **da sinistra verso destra**, fatta eccezione per i nodi evidenziati in arancione, ossia per la **scrittura del risultato di un'operazione nel registro di destinazione** e per la **selezione del valore successivo del PC**. Si noti, tra l'altro, che proprio queste due parti dell'implementazione possono causare **[[05 - La CPU#Criticità in una pipeline|hazard]]**, in particolare:
+Il flusso di istruzioni e dati è quasi completamente direzionato **da sinistra verso destra**, fatta eccezione per i nodi evidenziati in arancione, ossia per la **scrittura del risultato di un'operazione nel registro di destinazione** e per la **selezione del valore successivo del PC**. Si noti, tra l'altro, che proprio queste due parti dell'implementazione possono causare **[[AE05 - La CPU#Criticità in una pipeline|hazard]]**, in particolare:
 - nella scrittura del risultato di un'operazione nel registro di destinazione può verificarsi un **hazard sui dati**;
 - nella selezione del valore successivo del PC può verificarsi un **hazard sul controllo**.
 
@@ -472,7 +472,7 @@ A questo punto, siamo pronti ad affrontare la questione dei **segnali di control
 
 ![[cpu_pipeline_controllo.png]]
 
-Notiamo che, di fatto, i vari segnali di controllo vengono gestiti pressoché allo stesso modo dell'[[05 - La CPU#Assemblare le unità funzionali|implementazione a singolo ciclo di clock]]; in generale, nell'inserire la control unit si cercherà di **riutilizzare il più possibile la struttura dell'implementazione precedente**.
+Notiamo che, di fatto, i vari segnali di controllo vengono gestiti pressoché allo stesso modo dell'[[AE05 - La CPU#Assemblare le unità funzionali|implementazione a singolo ciclo di clock]]; in generale, nell'inserire la control unit si cercherà di **riutilizzare il più possibile la struttura dell'implementazione precedente**.
 
 Dunque, come nell'implementazione precedente supporremo che **il PC venga aggiornato a ogni ciclo di clock**, per cui non ci sarà bisogno di alcun segnale di controllo che regoli tale operazione; per la stessa motivazione, **non si aggiungeranno neanche segnali di controllo che regolino la scrittura di dati nei registri di pipeline**. 
 
@@ -495,7 +495,7 @@ Integrando questa modifica all'interno della nostra implementazione, otteniamo c
 
 ![[cpu_pipeline_cu.png]]
 
-Ora che abbiamo sostanzialmente terminato di implementare un processore RISC-V basato su pipeline, rimane un ultimo problema da affrontare: gli **[[05 - La CPU#Criticità in una pipeline|hazard]]**.
+Ora che abbiamo sostanzialmente terminato di implementare un processore RISC-V basato su pipeline, rimane un ultimo problema da affrontare: gli **[[AE05 - La CPU#Criticità in una pipeline|hazard]]**.
 ___
 ##### Come affrontare gli hazard sui dati?
 
@@ -509,11 +509,11 @@ add x14, x2, x2
 sw x15, 100(x2)
 ```
 
-Notiamo che **le ultime quattro istruzioni dipendono tutte dal risultato della prima**, ossia dal contenuto del registro **`x2`**: ciò porta chiaramente a un importante **hazard sui dati**, dato che il risultato dell'istruzione `sub x2, x1, x3` sarà scritta nel register file solo al quinto ciclo di clock, in cui l'esecuzione di quasi tutte le altre istruzioni sarà già stata avviata, e ciò potrebbe portare a errori o a comportamenti non previsti in quest'ultime. Osservando un **[[05 - La CPU#Rappresentazione grafica della pipeline|diagramma di pipeline a più cicli di clock]]**, questo problema diventa ancora più evidente nel notare **linee di dipendenza che vanno "indietro nel tempo"**:
+Notiamo che **le ultime quattro istruzioni dipendono tutte dal risultato della prima**, ossia dal contenuto del registro **`x2`**: ciò porta chiaramente a un importante **hazard sui dati**, dato che il risultato dell'istruzione `sub x2, x1, x3` sarà scritta nel register file solo al quinto ciclo di clock, in cui l'esecuzione di quasi tutte le altre istruzioni sarà già stata avviata, e ciò potrebbe portare a errori o a comportamenti non previsti in quest'ultime. Osservando un **[[AE05 - La CPU#Rappresentazione grafica della pipeline|diagramma di pipeline a più cicli di clock]]**, questo problema diventa ancora più evidente nel notare **linee di dipendenza che vanno "indietro nel tempo"**:
 
 ![[diagramma_pipeline_piùcicli_esempio2.png]]
 
-Tuttavia, è possibile risolvere il problema mediante la **[[05 - La CPU#Hazard sui dati|propagazione]] del dato necessario**: infatti, tecnicamente, esso è disponibile già al termine del terzo ciclo di clock, e le istruzioni che ne hanno bisogno prima che esso venga eventualmente scritto nel registro `x2`, ossia `and x12, x2, x5` e `or x13, x6, x2`, lo utilizzerebbero rispettivamente nel quarto e quinto ciclo di clock. Dunque, è perfettamente possibile eseguire questa sequenza di istruzioni senza stalli, **propagando il dato alle unità che lo richiedono prima che esso venga scritto nel register file**.
+Tuttavia, è possibile risolvere il problema mediante la **[[AE05 - La CPU#Hazard sui dati|propagazione]] del dato necessario**: infatti, tecnicamente, esso è disponibile già al termine del terzo ciclo di clock, e le istruzioni che ne hanno bisogno prima che esso venga eventualmente scritto nel registro `x2`, ossia `and x12, x2, x5` e `or x13, x6, x2`, lo utilizzerebbero rispettivamente nel quarto e quinto ciclo di clock. Dunque, è perfettamente possibile eseguire questa sequenza di istruzioni senza stalli, **propagando il dato alle unità che lo richiedono prima che esso venga scritto nel register file**.
 
 Ma come si applica concretamente la propagazione? Per semplicità, consideriamo un esempio del genere, in cui essa viene applicata su un **dato necessario per un'operazione da eseguire nello stadio EX**, e quindi sostanzialmente all'interno dell'**ALU**. Per comprendere e formalizzare al meglio queste dipendenze, possiamo adottare delle **notazioni per i campi dei registri di pipeline**, ossia per i dati particolari che vengono memorizzati e trasmessi da quest'ultimi. Ad esempio, la notazione "**ID/EX.rs1**" si riferisce al numero del primo registro di lettura dell'istruzione (`rs1`) memorizzato nel registro ID/EX. Utilizzando questa notazione, possiamo formalizzare principalmente **due coppie di condizioni che generano hazard sui dati**, ossia:
 - la condizione **1a**, ossia che **EX/MEM.rd = ID/EX.rs1**;
@@ -625,7 +625,7 @@ Ricapitolando, l'**unità di propagazione** controlla i **multiplexer agli input
 ___
 ##### Come affrontare gli hazard sul controllo?
 
-Prima di procedere, forniamo di seguito una schematizzazione alternativa del nostro processore rispetto a quella vista al termine del [[05 - La CPU#Come affrontare gli hazard sui dati?|paragrafo precedente]], che omette buona parte della logica di propagazione e di rilevamento degli hazard, ma in cui è possibile trovare la **logica di branch e di estensione del segno**:
+Prima di procedere, forniamo di seguito una schematizzazione alternativa del nostro processore rispetto a quella vista al termine del [[AE05 - La CPU#Come affrontare gli hazard sui dati?|paragrafo precedente]], che omette buona parte della logica di propagazione e di rilevamento degli hazard, ma in cui è possibile trovare la **logica di branch e di estensione del segno**:
 
 ![[cpu_pipeline_forwarding.png]]
 
@@ -652,7 +652,7 @@ Un primo approccio, molto basilare e inefficiente, potrebbe essere **mettere in 
 
 Una tecnica, invece, frequentemente utilizzata è quella di **predire che il salto non venga effettuato**: in questo modo, le istruzioni successive verrebbero comunque caricate nella pipeline, e nel caso in cui il salto venga effettuato, queste (che, a quel punto, si troveranno nelle fasi di IF, ID ed EX) verranno **scartate**, facendo ripartire l'esecuzione a partire dall'istruzione corrispondente all'indirizzo di destinazione del salto. Si tratta di un rimedio che, per quanto non completamente efficace, permette di **accelerare l'esecuzione in tutti i casi in cui il salto non viene effettuato**. 
 
-Concretamente, per "scartare" le istruzioni, basterà **trasformarle in `nop` portando i segnali di controllo a $0$**, così come si è fatto per ottenere lo stallo nel caso degli [[05 - La CPU#Come affrontare gli hazard sui dati?|hazard sui dati]]. La differenza è che non si effettuerà un **flush** solo di un'istruzione, ma di tre istruzioni che si trovano negli stadi IF, ID ed EX.
+Concretamente, per "scartare" le istruzioni, basterà **trasformarle in `nop` portando i segnali di controllo a $0$**, così come si è fatto per ottenere lo stallo nel caso degli [[AE05 - La CPU#Come affrontare gli hazard sui dati?|hazard sui dati]]. La differenza è che non si effettuerà un **flush** solo di un'istruzione, ma di tre istruzioni che si trovano negli stadi IF, ID ed EX.
 
 Un modo, poi, per **migliorare le prestazioni sui salti condizionati** consiste nell'**anticipare la decisione del salto stesso**. Per fare ciò, bisognerà anticipare due azioni all'interno della pipeline: il **calcolo dell'indirizzo di destinazione** e la **valutazione della condizione su cui si basa il salto**. La prima anticipazione è quella più facilmente realizzabile: infatti, il PC e l'immediato che andrà sommato ad esso sono disponibili già nel registro di pipeline IF/ID, e sarà dunque sufficiente **spostare il sommatore destinato al calcolo del nuovo indirizzo dallo stadio EX allo stadio ID**. 
 
@@ -710,7 +710,7 @@ L'architettura RISC-V non utilizza questo metodo, dunque nel suo caso **le eccez
 ___
 ##### Come implementare un processore che possa gestire le eccezioni?
 
-Implementare dell'**hardware che permetta la gestione delle eccezioni** nell'[[05 - La CPU#Come affrontare gli hazard sul controllo?|unità di elaborazione vista finora]] è in realtà abbastanza semplice. Infatti, saranno sufficienti:
+Implementare dell'**hardware che permetta la gestione delle eccezioni** nell'[[AE05 - La CPU#Come affrontare gli hazard sul controllo?|unità di elaborazione vista finora]] è in realtà abbastanza semplice. Infatti, saranno sufficienti:
 - alcuni **registri**;
 - alcuni **segnali di controllo**;
 - un'**estensione della control unit**.
@@ -721,7 +721,7 @@ I registri che dovremo aggiungere, di conseguenza, sono proprio i registri **SEP
 - il registro **SEPC** consiste in un **registro a 32 bit**, utilizzato per memorizzare l'**indirizzo dell'istruzione che ha causato l'eccezione** (tale registro sarebbe utile anche scegliendo l'approccio delle eccezioni vettorizzate);
 - il registro **SCAUSE** consiste in un **registro a 32 bit** (alcuni bit, ad oggi, sono inutilizzati), utilizzato per memorizzare la **causa dell'eccezione**.
 
-In un'**unità di elaborazione dotata di pipeline**, la gestione delle eccezioni ricorda per certi versi quella degli **[[05 - La CPU#Come affrontare gli hazard sul controllo?|hazard sul controllo]]**: infatti, all'avvenire di un'eccezione, il processore andrà ad effettuare il **flush** delle istruzioni successive a quella responsabile della stessa la cui esecuzione sia già iniziata, ed effettuerà un **salto** all'indirizzo di risposta dell'eccezione (nel nostro caso, `0x1C900000`). Nel contesto degli hazard sui salti condizionati, abbiamo visto come effettuare il flush di un'istruzione nello **stadio IF** convertendola in una `nop`, **"annullando" sostanzialmente l'istruzione** stessa; se l'istruzione da scartare si trova nello **stadio ID**, invece, si utilizzerà il multiplexer già presente per **impostare a $0$ i segnali di controllo della pipeline**. 
+In un'**unità di elaborazione dotata di pipeline**, la gestione delle eccezioni ricorda per certi versi quella degli **[[AE05 - La CPU#Come affrontare gli hazard sul controllo?|hazard sul controllo]]**: infatti, all'avvenire di un'eccezione, il processore andrà ad effettuare il **flush** delle istruzioni successive a quella responsabile della stessa la cui esecuzione sia già iniziata, ed effettuerà un **salto** all'indirizzo di risposta dell'eccezione (nel nostro caso, `0x1C900000`). Nel contesto degli hazard sui salti condizionati, abbiamo visto come effettuare il flush di un'istruzione nello **stadio IF** convertendola in una `nop`, **"annullando" sostanzialmente l'istruzione** stessa; se l'istruzione da scartare si trova nello **stadio ID**, invece, si utilizzerà il multiplexer già presente per **impostare a $0$ i segnali di controllo della pipeline**. 
 
 Considerando anche le eccezioni, bisognerà inserire un nuovo segnale di controllo, che possiamo chiamare **`ID.Flush`**, che verrà trasmesso come input a un OR insieme al segnale di stallo precedentemente fornito dall'unità di rilevamento degli hazard, in modo da regolare il flush dell'istruzione dello stadio ID in base al contesto. Per scartare, invece, un'istruzione che si trova nello stadio EX, occorrerà inserire un ulteriore segnale di controllo, che possiamo chiamare **`EX.Flush`**, che insieme a un nuovo **multiplexer** consentirà di impostare a $0$ i segnali di controllo anche di questo stadio.
 

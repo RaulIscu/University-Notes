@@ -13,7 +13,7 @@ ___
 
 I **server** rappresentano, sostanzialmente, un'evoluzione dei calcolatori di grandi dimensioni di un tempo, e nei giorni nostri di norma si può accedere ad essi solamente attraverso la **rete**. Nella maggior parte dei casi, sono orientati all'elaborazione di **grossi carichi di dati**, che si presentano sia come singole applicazioni complesse (come, ad esempio, avviene con applicazioni ingegneristiche o scientifiche) sia come tante piccole applicazioni (come, ad esempio, avviene in un server per il web).
 
-Un server è realizzato con pressoché la stessa tecnologia di base di un [[01 - Il calcolatore#Personal Computer|PC]], ma offre una **maggiore potenza di calcolo**, una **maggiore velocità di I/O** e una **maggiore memoria**. Inoltre, ricoprono un ampio spettro in termini di prestazioni e di costi: si può passare da server di fascia bassa composti da un paio di PC senza schermo né tastiera, fino a veri e propri supercomputer formati da centinaia di migliaia di processori e dotati di una memoria di vari terabyte.
+Un server è realizzato con pressoché la stessa tecnologia di base di un [[AE01 - Il calcolatore#Personal Computer|PC]], ma offre una **maggiore potenza di calcolo**, una **maggiore velocità di I/O** e una **maggiore memoria**. Inoltre, ricoprono un ampio spettro in termini di prestazioni e di costi: si può passare da server di fascia bassa composti da un paio di PC senza schermo né tastiera, fino a veri e propri supercomputer formati da centinaia di migliaia di processori e dotati di una memoria di vari terabyte.
 ___
 ##### Calcolatori embedded
 
@@ -31,7 +31,7 @@ L'hardware di qualsiasi calcolatore deve svolgere pressoché le stesse **funzion
 
 Innanzitutto, un calcolatore deve presentare le componenti chiave che si occupano delle prime due mansioni, ossia i **dispositivi di input** (microfono, tastiera, ecc. ecc.) e i **dispositivi di output** (altoparlanti, schermo, ecc. ecc.).
 
-Poi, all'elaborazione dei dati sono destinate altre due componenti fondamentali: l'**unità di elaborazione dati**, detta anche "**datapath**", e l'**unità di controllo**, detta anche "**control unit**". Insieme, queste due componenti vengono spesso considerate come un unico blocco, che costituisce il **processore**, o **[[05 - La CPU||CPU]]**, del calcolatore.
+Poi, all'elaborazione dei dati sono destinate altre due componenti fondamentali: l'**unità di elaborazione dati**, detta anche "**datapath**", e l'**unità di controllo**, detta anche "**control unit**". Insieme, queste due componenti vengono spesso considerate come un unico blocco, che costituisce il **processore**, o **[[AE05 - La CPU||CPU]]**, del calcolatore.
 
 Infine, un calcolatore deve disporre di una **memoria**, dove tenere i programmi in esecuzione così come i dati su cui essi lavorano. Generalmente, la memoria di un calcolatore (tralasciando hard drive e memorie del genere) è costituita da chip di **DRAM**, o "**Dynamic Random Access Memory**", vantaggiose rispetto a memorie di tipo sequenziale per la capacità di accedere a qualsiasi punto della memoria nel medesimo tempo.
 

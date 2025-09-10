@@ -28,7 +28,7 @@ if (condizione) istruzione1;
 else istruzione2;
 ```
 
-La **condizione**, invece, è sostanzialmente una qualsiasi espressione che restituisce un valore [[07 - Tipi primitivi|booleano]], e va necessariamente racchiusa all'interno di parentesi tonde.
+La **condizione**, invece, è sostanzialmente una qualsiasi espressione che restituisce un valore [[MDP07 - Tipi primitivi|booleano]], e va necessariamente racchiusa all'interno di parentesi tonde.
 
 Un *if statement* segue questo funzionamento: se la condizione stabilita è `true`, allora viene eseguito il codice contenuto nel corpo dell'`if`; altrimenti, se esiste (l'inserimento di un'istruzione `else` è, infatti, opzionale), viene eseguito il codice contenuto nel corpo dell'`else`. In un *if statement* del genere, non può mai succedere che vengano eseguiti entrambi i blocchi di istruzioni.
 
@@ -209,7 +209,7 @@ for (tipo variabileIterata : collezione) {
 
 dove `tipo` specifica il tipo delle variabili che verranno utilizzate dal ciclo, `variabileIterata` è il nome della variabile che conterrà mano a mano gli elementi della collezione considerata, e quest'ultima è indicata da `collezione`. Ad ogni iterazione del *loop*, nella variabile iterata viene conservato l'elemento successivo della collezione; ciò avviene finché non vengono esauriti tutti gli elementi della collezione. Nonostante il *for-each loop* termini automaticamente una volta esauriti gli elementi dell'*array*, è possibile terminare il ciclo prima utilizzando l'istruzione `break`.
 
-È importante ricordare che, iterando su una [[14 - Strutture dati|struttura dati]] con un *for-each loop*, le variabili iterate sono utilizzate esclusivamente per essere lette, e non potranno essere modificate dal blocco di istruzioni incluso nel corpo del ciclo. Ad esempio, nel seguente codice:
+È importante ricordare che, iterando su una [[MDP14 - Strutture dati|struttura dati]] con un *for-each loop*, le variabili iterate sono utilizzate esclusivamente per essere lette, e non potranno essere modificate dal blocco di istruzioni incluso nel corpo del ciclo. Ad esempio, nel seguente codice:
 
 ```
 int nums[] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};

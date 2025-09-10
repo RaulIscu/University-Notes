@@ -158,7 +158,7 @@ Generalmente, l'obiettivo è trovare queste due soluzioni qualsiasi $y_{1}$ e $y
 > 	- se si avranno **due soluzioni reali e distinte** ($\Delta > 0$), ossia $\lambda_{1} \neq \lambda_{2}$, allora le basi dello spazio delle soluzioni saranno $y_{1} = e^{\lambda_{1}t}$ e $y_{2} = e^{\lambda_{2}t}$, e dunque la soluzione generica sarà $y(t) = Ae^{\lambda_{1}t} + Be^{\lambda_{2}t}$;
 > 	- se si avranno **due soluzioni reali e coincidenti** ($\Delta = 0$), ossia $\lambda_{1} = \lambda_{2}$, allora le basi dello spazio delle soluzioni saranno $y_{1} = e^{\lambda t}$ e $y_{2} = te^{\lambda t}$, e dunque la soluzione generica sarà $y(t) = Ae^{\lambda t} + Bte^{\lambda t}$;
 > 	- se si avranno **due soluzioni complesse e distinte** ($\Delta < 0$), ossia $\lambda_{1} = \alpha + \beta i$ e $\lambda_{2} = \alpha - \beta i$, allora le basi dello spazio delle soluzioni saranno $y_{1} = e^{\alpha t} \cdot \cos \beta t$ e $y_{2} = e^{\alpha t} \cdot \sin \beta t$, e dunque la soluzione generica sarà $y(t) = Ae^{\alpha t} \cdot \cos \beta t + Be^{\alpha t} \cdot \sin \beta t$.
-> - eventualmente, **ricavare i coefficienti $A$ e $B$** se ci si trova in un [[06 - Equazioni differenziali#Problema di Cauchy|problema di Cauchy]].
+> - eventualmente, **ricavare i coefficienti $A$ e $B$** se ci si trova in un [[CI06 - Equazioni differenziali#Problema di Cauchy|problema di Cauchy]].
 
 Per comprendere meglio come applicare questo metodo, proviamo ad analizzare il seguente esempio:
 $$\begin{cases} y'' + 2y' + 2y = 0 \\ y(0) = 1 \\ y'(0) = 1 \end{cases}$$

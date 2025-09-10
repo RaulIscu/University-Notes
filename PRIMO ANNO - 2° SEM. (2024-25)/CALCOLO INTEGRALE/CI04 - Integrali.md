@@ -127,7 +127,7 @@ $$\int_{a}^{b} f(x)\, dx = F(x) \, \, |_{a}^{b} = F(b) - F(a)$$
 ___
 ### Integrali indefiniti e funzioni primitive
 
-La funzione $F(x)$ definita dal [[04 - Integrali#Teorema fondamentale del calcolo integrale|teorema fondamentale del calcolo integrale]] viene detta "**primitiva di $f(x)$**" e, per ogni funzione $f(x)$, ne esistono **infinite**: infatti, se $F(x)$ è una primitiva di $f(x)$ allora una qualsiasi funzione $G(x) = F(x) + c$, per qualsiasi costante $c \in \mathbb{R}$, è anch'essa una primitiva di $f(x)$.
+La funzione $F(x)$ definita dal [[CI04 - Integrali#Teorema fondamentale del calcolo integrale|teorema fondamentale del calcolo integrale]] viene detta "**primitiva di $f(x)$**" e, per ogni funzione $f(x)$, ne esistono **infinite**: infatti, se $F(x)$ è una primitiva di $f(x)$ allora una qualsiasi funzione $G(x) = F(x) + c$, per qualsiasi costante $c \in \mathbb{R}$, è anch'essa una primitiva di $f(x)$.
 
 > Sia $f(x)$ una funzione integrabile, allora esistono **infinite funzioni primitive $G(x)$**, tali per cui $G'(x) = f(x)$, con $G(x) = F(x) + c$ per ogni $c \in \mathbb{R}$.
 
@@ -188,7 +188,7 @@ $$\int \frac{g'(x)}{g(x)}\, dx = \ln |g(x)| + c$$
 ___
 ### Integrazione per sostituzione
 
-Un metodo per calcolare gli integrali di funzioni per cui non è possibile applicare immediatamente gli [[04 - Integrali#Integrali immediati|integrali immediati]] è la cosiddetta "**integrazione per sostituzione**". Per comprendere questo procedimento, consideriamo il seguente esempio:
+Un metodo per calcolare gli integrali di funzioni per cui non è possibile applicare immediatamente gli [[CI04 - Integrali#Integrali immediati|integrali immediati]] è la cosiddetta "**integrazione per sostituzione**". Per comprendere questo procedimento, consideriamo il seguente esempio:
 $$\int_{1}^{4}e^{3x}\, dx$$
 Notiamo come tale integrale risulti essere simile all'integrale di $e^x$, la cui primitiva sappiamo essere $F(x) = e^x$. Per semplificare il calcolo dell'integrale, è possibile effettuare una **sostituzione di variabile** per ricondurci a tale integrale immediato.
 
@@ -215,7 +215,7 @@ $$\begin{align} \int [f(x) \cdot g(x)]'\, dx = \int f'(x)g(x) + f(x)g'(x)\, dx \
 
 Per comprendere meglio come applicare questo metodo, consideriamo il seguente esempio:
 $$\int x^3e^{x^2}\, dx$$
-Inizialmente, proviamo ad applicare l'[[04 - Integrali#Integrazione per sostituzione|integrazione per sostituzione]], ponendo $y = x^2$ e di conseguenza $\frac{dy}{2} = x\,dx$:
+Inizialmente, proviamo ad applicare l'[[CI04 - Integrali#Integrazione per sostituzione|integrazione per sostituzione]], ponendo $y = x^2$ e di conseguenza $\frac{dy}{2} = x\,dx$:
 $$\int x^3e^{x^2}\, dx = \int x^2 \cdot e^{x^2} \cdot x\, dx = \int ye^y\, \frac{dy}{2} = \frac{1}{2} \int ye^y\, dy$$
 Notiamo che non è bastato questo metodo per ricondurci a un integrale immediato, tuttavia ha sicuramente reso più semplice l'integrale di partenza. A questo punto, applichiamo l'integrazione per parti.
 
@@ -293,16 +293,16 @@ dove $P(x)$ e $Q(x)$ sono due polinomi generici in $x$ (principalmente di grado 
 
 Il primo caso che analizzeremo è quello in cui il polinomio $P(x)$ è una **costante**, mentre il polinomio $Q(x)$ è un **polinomio di 1° grado**. In queste condizioni, l'integrale si presenta nella seguente forma:
 $$\int \frac{\beta}{\gamma x + \delta}\, dx$$
-In questo caso, per risolvere l'integrale si può portare fuori la costante moltiplicativa $\beta$, e applicare quindi l'[[04 - Integrali#Integrazione per sostituzione|integrazione per sostituzione]], ponendo $y = \gamma x + \delta$ e, di conseguenza, $\frac{dy}{\gamma} = dx$:
+In questo caso, per risolvere l'integrale si può portare fuori la costante moltiplicativa $\beta$, e applicare quindi l'[[CI04 - Integrali#Integrazione per sostituzione|integrazione per sostituzione]], ponendo $y = \gamma x + \delta$ e, di conseguenza, $\frac{dy}{\gamma} = dx$:
 $$\int \frac{\beta}{\gamma x + \delta}\, dx = \beta \int \frac{1}{\gamma x + \delta}\, dx = \beta \int \frac{1}{y}\, \frac{dy}{\gamma} = \frac{\beta}{\gamma} \int \frac{1}{y}\, dy$$
-Ci siamo ricondotti, così, a un [[04 - Integrali#Integrali immediati|integrale immediato]], che possiamo facilmente risolvere:
+Ci siamo ricondotti, così, a un [[CI04 - Integrali#Integrali immediati|integrale immediato]], che possiamo facilmente risolvere:
 $$\frac{\beta}{\gamma} \int \frac{1}{y}\, dy = \frac{\beta}{\gamma}\, \ln |y| = \frac{\beta}{\gamma}\, \ln(|\gamma x + \delta|)$$
 Concludiamo, così, che:
 > $$\int \frac{\beta}{\gamma x + \delta}\, dx = \frac{\beta}{\gamma}\, \ln (|\gamma x + \delta|)$$
 
 Il secondo caso che analizzeremo è quello in cui il polinomio $P(x)$ è una **costante**, mentre il polinomio $Q(x)$ è un **quadrato**. In queste condizioni, l'integrale si presenta nella seguente forma:
 $$\int \frac{\beta}{f(x)^2}\, dx$$
-In questo caso, per risolvere l'integrale si può portare fuori la costante moltiplicativa $\beta$, e riformulare l'integrale per favorire l'applicazione di un [[04 - Integrali#Integrali immediati di funzioni composte|integrale immediato di funzione composta]]:
+In questo caso, per risolvere l'integrale si può portare fuori la costante moltiplicativa $\beta$, e riformulare l'integrale per favorire l'applicazione di un [[CI04 - Integrali#Integrali immediati di funzioni composte|integrale immediato di funzione composta]]:
 $$\int \frac{\beta}{f(x)^2}\, dx = \beta \int \frac{1}{f(x)^2}\, dx = \beta \int f(x)^{-2}\, dx$$
 Per poter applicare quest'ultimo, è importante far figurare $f'(x)$, moltiplicando e dividendo per le costanti opportune. Quindi:
 $$\beta \int f(x)^{-2}\, dx = \frac{\beta}{f'(x)} \int f'(x) \cdot f(x)^{-2}\, dx = \frac{\beta}{f'(x)} \cdot \frac{f(x)^{-1}}{-1} + c$$
@@ -387,7 +387,7 @@ $$\int_{-\infty}^{b} f(x)\, dx = \lim_{M \to -\infty} \int_{M}^{b} f(x)\, dx$$
 > $$\lim_{M \to +\infty} \int_{a}^{M} f(x)\, dx \, \, \, \, \, \, \, \, \, \, \, \, \, \, \, \, \, \, \, \, \lim_{M \to -\infty} \int_{M}^{b} f(x)\, dx$$
 > in base a quale degli estremi dell'intervallo di integrazione sia pari a $\infty$. A seconda del risultato del limite, valgono le stesse distinzioni fatte per gli integrali impropri con funzione integranda illimitata.
 >
-> Nel caso in cui l'intervallo di integrazione risulti essere **illimitato in entrambi i versi**, ossia $(-\infty, +\infty)$, conviene scegliere un determinato valore di "separazione" ed applicare la proprietà dell'[[04 - Integrali#Proprietà degli integrali|additività di un integrale]]:
+> Nel caso in cui l'intervallo di integrazione risulti essere **illimitato in entrambi i versi**, ossia $(-\infty, +\infty)$, conviene scegliere un determinato valore di "separazione" ed applicare la proprietà dell'[[CI04 - Integrali#Proprietà degli integrali|additività di un integrale]]:
 > $$\int_{-\infty}^{+\infty} f(x)\, dx = \int_{-\infty}^{a} f(x)\, dx + \int_{a}^{+\infty} f(x)\, dx$$
 
 Ma come risolvere un integrale in cui **sia l'intervallo di integrazione sia la funzione integranda sono illimitati**? Similmente all'approccio utilizzato per l'integrazione in un intervallo illimitato in entrambi i versi, conviene sfruttare l'additività dell'integrale e ricondursi a una somma di integrali in cui ognuno di essi presenta una sola "particolarità", sia essa un estremo di integrazione divergente o un estremo di integrazione in prossimità del quale è la funzione integranda a divergere.
