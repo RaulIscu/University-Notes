@@ -73,7 +73,7 @@ Le collezioni si dividono principalmente in **tre macro-categorie**:
 - **insiemi**;
 - **mappe**.
 
-Implementando tutte l'[[MDP12 - Interfacce|interfaccia]] **`Iterable<E>`**, è possibile per tutte le collezioni iterare comodamente i propri elementi in vari modi:
+Implementando tutte l'[[MDP_12 - Interfacce|interfaccia]] **`Iterable<E>`**, è possibile per tutte le collezioni iterare comodamente i propri elementi in vari modi:
 - sfruttando degli oggetti di tipo **`Iterator<E>`**;
 - mediante un ***[[Istruzioni di controllo#Il for loop*|for-each loop]]***;
 - solo per le liste, mediante un *for loop* che itera sugli indici degli elementi.
@@ -90,7 +90,7 @@ In Java, ci sono principalmente **due tipi** di liste:
 
 Entrambe sono basate su **`List`**, una sotto-interfaccia derivata da `Collection` e da `Iterable`.
 
-Una lista di tipo **`ArrayList`** consiste in una **lista dinamica**, basata sull'[[MDP14 - Strutture dati#Array|array]] ma molto più flessibile e manipolabile, innanzitutto per le sue dimensioni variabili e per il ridimensionamento dinamico della stessa. Si tratta di una struttura potente per memorizzare oggetti (anche duplicati) per cui è importante un accesso rapido tramite indice, ma lo spostamento, l'inserimento o la rimozione di elementi in mezzo alla lista risultano relativamente lenti.
+Una lista di tipo **`ArrayList`** consiste in una **lista dinamica**, basata sull'[[MDP_14 - Strutture dati#Array|array]] ma molto più flessibile e manipolabile, innanzitutto per le sue dimensioni variabili e per il ridimensionamento dinamico della stessa. Si tratta di una struttura potente per memorizzare oggetti (anche duplicati) per cui è importante un accesso rapido tramite indice, ma lo spostamento, l'inserimento o la rimozione di elementi in mezzo alla lista risultano relativamente lenti.
 
 Un'`ArrayList` viene dichiarata come un oggetto di tipo `List<E>`, e una sua costruzione assume tendenzialmente la seguente forma:
 
@@ -153,7 +153,7 @@ In Java, ci sono principalmente **tre tipi** di insiemi:
 - i **`TreeSet`**;
 - i **`LinkedHashSet`**.
 
-Tutti e tre sono basati su **`Set`**, una sotto-interfaccia di `Collection` e `Iterable`. La loro particolarità, e principale differenza rispetto alle [[MDP14 - Strutture dati#Le liste ArrayList, LinkedList|liste]], è che **non possono contenere elementi duplicati**.
+Tutti e tre sono basati su **`Set`**, una sotto-interfaccia di `Collection` e `Iterable`. La loro particolarità, e principale differenza rispetto alle [[MDP_14 - Strutture dati#Le liste ArrayList, LinkedList|liste]], è che **non possono contenere elementi duplicati**.
 
 Un insieme di tipo **`HashSet`** consiste in un insieme di elementi che vengono memorizzati in una **tabella di hash**, in modo da consentire un aggiunta e una ricerca molto efficienti. Se si è sicuri di non prevedere duplicati nei dati che si stanno manipolando, spesso un `HashSet` risulta essere una delle opzioni più preferibili; tuttavia, questa struttura dati **non permette di essere ordinata** in modo convenzionale, quindi diventa inutilizzabile se si vuole conservare un ordine nei dati memorizzati.
 
@@ -172,7 +172,7 @@ I metodi principali che presenta l'`HashSet` per visualizzare e manipolare i dat
 - **`remove(E e)`**, che rimuove l'elemento `e` dall'insieme, se esso è presente al suo interno;
 - **`size()`**, che restituisce il numero di elementi contenuti nell'insieme.
 
-Un insieme di tipo **`TreeSet`** presenta sostanzialmente le stesse caratteristiche dell'`HashSet`, ma a differenza di quest'ultimo **ordina automaticamente gli elementi aggiunti ad esso** in base all'ordinamento naturale previsto per il loro tipo, o in base a un [[MDP12 - Interfacce#Comparator|comparatore]] personalizzato se questo viene specificato nella costruzione dell'insieme, e mantiene tale ordine (questa caratteristica è ottenuta mediante l'implementazione interna particolare del `TreeSet`, che corrisponde a una variante di albero binario di ricerca chiamata "**red-black tree**").
+Un insieme di tipo **`TreeSet`** presenta sostanzialmente le stesse caratteristiche dell'`HashSet`, ma a differenza di quest'ultimo **ordina automaticamente gli elementi aggiunti ad esso** in base all'ordinamento naturale previsto per il loro tipo, o in base a un [[MDP_12 - Interfacce#Comparator|comparatore]] personalizzato se questo viene specificato nella costruzione dell'insieme, e mantiene tale ordine (questa caratteristica è ottenuta mediante l'implementazione interna particolare del `TreeSet`, che corrisponde a una variante di albero binario di ricerca chiamata "**red-black tree**").
 
 Un `TreeSet` viene dichiarato come un oggetto di tipo `TreeSet<E>`, e una sua costruzione assume tendenzialmente la seguente forma:
 
@@ -246,7 +246,7 @@ I metodi principali che presenta l'`HashMap` per visualizzare e manipolare i dat
 - **`replaceAll(BiFunction<? super K, ? super V, ? extends V> function)`**, che sostituisce i valori di tutte le entry della mappa con il risultato della funzione `function` applicata su ognuna di esse;
 - **`values()`**, che restituisce una `Collection` contenente tutti i valori presenti nella mappa.
 
-Una mappa di tipo **`TreeMap`** presenta sostanzialmente le stesse caratteristiche dell'`HashMap`, ma a differenza di quest'ultima **ordina automaticamente le entry aggiunte ad essa** in base all'ordinamento naturale previsto per il tipo delle chiavi, o in base a un [[MDP12 - Interfacce#Comparator|comparatore]] personalizzato se questo viene specificato nella costruzione della mappa, e mantiene tale ordine (questa caratteristica è ottenuta mediante l'implementazione interna particolare della `TreeMap`, che corrisponde a una variante di albero binario di ricerca chiamata "**red-black tree**").
+Una mappa di tipo **`TreeMap`** presenta sostanzialmente le stesse caratteristiche dell'`HashMap`, ma a differenza di quest'ultima **ordina automaticamente le entry aggiunte ad essa** in base all'ordinamento naturale previsto per il tipo delle chiavi, o in base a un [[MDP_12 - Interfacce#Comparator|comparatore]] personalizzato se questo viene specificato nella costruzione della mappa, e mantiene tale ordine (questa caratteristica è ottenuta mediante l'implementazione interna particolare della `TreeMap`, che corrisponde a una variante di albero binario di ricerca chiamata "**red-black tree**").
 
 Una `TreeMap` viene dichiarata come un oggetto di tipo `TreeMap<K, V>`, e una sua costruzione assume tendenzialmente la seguente forma:
 

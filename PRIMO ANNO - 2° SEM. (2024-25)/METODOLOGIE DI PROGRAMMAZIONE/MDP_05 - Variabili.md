@@ -1,7 +1,7 @@
 Una **variabile**, in Java, rappresenta il **contenitore** per qualsiasi dato o oggetto che si voglia conservare o manipolare in un programma. In maniera astratta, potremmo vedere una variabile come composta da tre parti:
 - il **tipo** della variabile, che il più delle volte corrisponderà a quello di ciò che viene conservato al suo interno;
 - l'**identificatore** della variabile, ossia il nome con cui riferirsi e accedere ad essa;
-- il **contenuto**, che può essere pressoché qualsiasi cosa (un [[MDP02 - Classi#Classi e oggetti|oggetto]], un dato di [[MDP07 - Tipi primitivi|tipo primitivo]], una [[MDP08 - Stringhe|stringa]], ecc. ecc.).
+- il **contenuto**, che può essere pressoché qualsiasi cosa (un [[MDP_02 - Classi#Classi e oggetti|oggetto]], un dato di [[MDP_07 - Tipi primitivi|tipo primitivo]], una [[MDP_08 - Stringhe|stringa]], ecc. ecc.).
 
 ## Le "fasi" di una variabile
 
@@ -33,7 +33,7 @@ ___
 
 In base a dove e come vengono create le variabili, esse presentano diversi gradi di **visibilità**. In particolare, possiamo classificare le variabili sotto questo aspetto in 3 categorie:
 - variabili **locali**, dove rientrano variabili dichiarate nel **corpo di un metodo** o di un **costruttore**, e che sono effettivamente visibili solo all'interno di tale blocco di codice;
-- variabili **d'istanza**, dove tendenzialmente rientrano le variabili dichiarate come **[[MDP02 - Classi#Campi, metodi e costruttori|campi]] non statici di una classe**, e di cui ogni oggetto di tale classe possiede una copia;
+- variabili **d'istanza**, dove tendenzialmente rientrano le variabili dichiarate come **[[MDP_02 - Classi#Campi, metodi e costruttori|campi]] non statici di una classe**, e di cui ogni oggetto di tale classe possiede una copia;
 - campi **statici** di classe, che sono comuni per tutti gli oggetti che istanziano tale classe.
 
 Una particolarità che differenzia in particolare le variabili locali dalle variabili d'istanza: **le variabili locali non hanno un valore di default**, e quindi, in caso si dichiari una variabile locale ma non la si inizializzi, un tentativo di utilizzo della stessa porterebbe a un errore di compilazione; invece, **le variabili d'istanza hanno dei valori di default** a seconda del loro tipo, in particolare:
@@ -44,7 +44,7 @@ Una particolarità che differenzia in particolare le variabili locali dalle vari
 
 e così via.
 
-La differenza di visibilità, in particolare tra variabili d'istanza e variabili locali, può dar vita a un fenomeno detto "**shadowing**", che avviene quando **una variabile locale va a "nascondere" una variabile d'istanza con lo stesso nome**. Ad esempio, nella seguente [[MDP02 - Classi#Cos'è una classe?|classe]]:
+La differenza di visibilità, in particolare tra variabili d'istanza e variabili locali, può dar vita a un fenomeno detto "**shadowing**", che avviene quando **una variabile locale va a "nascondere" una variabile d'istanza con lo stesso nome**. Ad esempio, nella seguente [[MDP_02 - Classi#Cos'è una classe?|classe]]:
 
 ```
 public class ShadowingDemo {

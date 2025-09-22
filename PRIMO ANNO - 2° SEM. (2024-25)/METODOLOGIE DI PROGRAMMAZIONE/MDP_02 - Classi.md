@@ -1,6 +1,6 @@
 ## Cos'è una classe?
 
-Nella [[MDP01 - Java e la OOP#Cos'è la programmazione a oggetti?|programmazione a oggetti]], la **classe** è uno dei componenti più importanti di un qualsiasi programma, se non il componente per eccellenza. In Java, tutto il codice che viene scritto è contenuto in una classe, e lo scambio di informazioni e messaggi tra classi diverse è alla base del funzionamento di qualsiasi applicazione scritta in Java. Ma cos'è, a livello concreto, una classe?
+Nella [[MDP_01 - Java e la OOP#Cos'è la programmazione a oggetti?|programmazione a oggetti]], la **classe** è uno dei componenti più importanti di un qualsiasi programma, se non il componente per eccellenza. In Java, tutto il codice che viene scritto è contenuto in una classe, e lo scambio di informazioni e messaggi tra classi diverse è alla base del funzionamento di qualsiasi applicazione scritta in Java. Ma cos'è, a livello concreto, una classe?
 
 Una **classe** è, sostanzialmente, del codice sorgente che descrive un particolare tipo di oggetti, il suo comportamento e le sue caratteristiche. Si tratta di un **prototipo astratto** per quel tipo di oggetto, che va a definire di fatto l'intera struttura dello stesso.
 
@@ -12,7 +12,7 @@ class NomeDellaClasse {
 }
 ```
 
-Per essere più precisi, tuttavia, è opportuno definire una classe specificando prima di tutto anche il [[MDP03 - Modificatori d'accesso|modificatore d'accesso]] desiderato. Ad esempio, la definizione opportuna per una classe pubblica è:
+Per essere più precisi, tuttavia, è opportuno definire una classe specificando prima di tutto anche il [[MDP_03 - Modificatori d'accesso|modificatore d'accesso]] desiderato. Ad esempio, la definizione opportuna per una classe pubblica è:
 
 ```
 public class NomeDellaClasse {
@@ -21,7 +21,7 @@ public class NomeDellaClasse {
 ```
 
 È importante ricordare alcune convenzioni:
-- ogni singola classe deve essere scritta in un ***file* separato** (fatta eccezione per le [[MDP02 - Classi#Classi annidate|classi annidate]]), che va nominato con lo stesso identico nome assegnato alla classe, e che deve disporre dell'estensione "**.java**";
+- ogni singola classe deve essere scritta in un ***file* separato** (fatta eccezione per le [[MDP_02 - Classi#Classi annidate|classi annidate]]), che va nominato con lo stesso identico nome assegnato alla classe, e che deve disporre dell'estensione "**.java**";
 - i nomi assegnati come identificatori delle classi hanno sempre l'**iniziale maiuscola**, e, come per gli altri casi, ogni parola che compone tale identificatore dovrà disporre anch'essa dell'iniziale maiuscola.
 ___
 ## Campi, metodi e costruttori
@@ -34,7 +34,7 @@ Convenzionalmente, la struttura generale del corpo di una classe prevede che pri
 
 Inoltre, non è necessario che ogni classe abbia al suo interno un **metodo `main()`**, soprattutto nel contesto di un programma complesso composto da più classi: infatti, esso **deve essere presente solamente nella classe da cui viene avviata l'esecuzione** del programma in questione.
 
-Di base, a meno di circostanze particolari o di utilizzi specifici, si cerca di favorire il più possibile l'**[[MDP01 - Java e la OOP#Incapsulamento|incapsulamento]]** nella definizione dei membri di una classe, soprattutto mediante le seguenti convenzioni generali:
+Di base, a meno di circostanze particolari o di utilizzi specifici, si cerca di favorire il più possibile l'**[[MDP_01 - Java e la OOP#Incapsulamento|incapsulamento]]** nella definizione dei membri di una classe, soprattutto mediante le seguenti convenzioni generali:
 - i **campi** di una classe vengono preferibilmente definiti come **privati**;
 - i **metodi** di una classe vengono preferibilmente definiti come **privati** se non vengono utilizzati al di fuori della propria classe, altrimenti come **pubblici** o **protetti** a seconda della circostanza.
 
@@ -58,7 +58,7 @@ A questo punto, abbiamo parlato di come definire campi e metodi di una classe, c
 
 Infatti, attualmente, non abbiamo modo di definire delle istruzioni particolari su come costruire un nuovo oggetto, e una sua costruzione avverrebbe con **attributi "nulli"**, privi di valore o a cui vengono automaticamente assegnati valori di default (`0.0f` per campi di tipo `float`, `0` per campi di tipo `int`, `false` per campi di tipo `boolean`, ecc. ecc.); in questo contesto, per assegnare dei valori particolari alle varie variabili d'istanza, si dovrebbero utilizzare manualmente i metodi setter relativi ad ognuna di esse.
 
-Per evitare quest'operazione supplementare, è possibile definire all'interno del corpo della classe un "**costruttore**", ossia un metodo particolare destinato esclusivamente alla **costruzione di nuove istanze della classe** in cui si trova. Si tratta di un metodo tipicamente **pubblico**, a meno di astrazioni particolari (come l'applicazione di certi [[MDP16 - Design pattern|design pattern]]), che deve necessariamente avere lo **stesso identificatore della classe** a cui appartiene e che tipicamente viene inserito nel corpo della stessa come il primo dei suoi metodi. Nel corpo del costruttore, si andranno a stabilire i valori da assegnare immediatamente alle variabili d'istanza di un oggetto. Ad esempio, supponendo di voler definire un costruttore per la classe `Box`, che presenta i campi `width`, `length` e `height`, un possibile costruttore potrebbe essere:
+Per evitare quest'operazione supplementare, è possibile definire all'interno del corpo della classe un "**costruttore**", ossia un metodo particolare destinato esclusivamente alla **costruzione di nuove istanze della classe** in cui si trova. Si tratta di un metodo tipicamente **pubblico**, a meno di astrazioni particolari (come l'applicazione di certi [[MDP_16 - Design pattern|design pattern]]), che deve necessariamente avere lo **stesso identificatore della classe** a cui appartiene e che tipicamente viene inserito nel corpo della stessa come il primo dei suoi metodi. Nel corpo del costruttore, si andranno a stabilire i valori da assegnare immediatamente alle variabili d'istanza di un oggetto. Ad esempio, supponendo di voler definire un costruttore per la classe `Box`, che presenta i campi `width`, `length` e `height`, un possibile costruttore potrebbe essere:
 
 ```
 public Box() {
@@ -78,11 +78,11 @@ public Box(int w, int l, int h) {
 }
 ```
 
-In questo modo, sarà facile costruire un certo numero di oggetti con dei valori personalizzati. Infine, è possibile anche sfruttare dell'**[[MDP01 - Java e la OOP#Polimorfismo|overloading]]** e definire più costruttori per una stessa classe, ciascuno con un funzionamento e dei parametri diversi, in modo da aumentare ancora di più la flessibilità e l'accessibilità del codice.
+In questo modo, sarà facile costruire un certo numero di oggetti con dei valori personalizzati. Infine, è possibile anche sfruttare dell'**[[MDP_01 - Java e la OOP#Polimorfismo|overloading]]** e definire più costruttori per una stessa classe, ciascuno con un funzionamento e dei parametri diversi, in modo da aumentare ancora di più la flessibilità e l'accessibilità del codice.
 ___
 ## Classi e oggetti
 
-Nel paragrafo "[[MDP02 - Classi#Cos'è una classe?|Cos'è una classe?]]", si è specificato come la classe rappresenti un "prototipo", un modello astratto per un particolare tipo di oggetto. Ma cos'è propriamente un oggetto?
+Nel paragrafo "[[MDP_02 - Classi#Cos'è una classe?|Cos'è una classe?]]", si è specificato come la classe rappresenti un "prototipo", un modello astratto per un particolare tipo di oggetto. Ma cos'è propriamente un oggetto?
 
 Un **oggetto** non è altro che una particolare **istanza di una classe**, un "esemplare" reale di quella classe. Durante l'esecuzione di un programma, possono essere create una o più istanze di una determinata classe, ossia uno o più oggetti di quel tipo, e ognuno rappresenterà un diverso esemplare appartenente ad esso. 
 
@@ -93,8 +93,8 @@ Per comprendere meglio questo concetto, vediamo le principali **differenze tra c
 Il connubio tra classi e oggetti è ciò che sta alla base di qualsiasi azione si voglia svolgere tramite codice in Java.
 
 Per **dichiarare un'istanza di una classe**, e dunque costruire un nuovo oggetto a partire da tale classe, si dovrà operare una particolare dichiarazione di variabile, che si divide in due passaggi:
-1. dichiarare una nuova variabile appartenente alla classe desiderata, analogamente a come si farebbe con uno qualsiasi dei [[MDP07 - Tipi primitivi|tipi primitivi]];
-2. assegnarle una nuova istanza della classe, sfruttando la parola chiave **`new`** e richiamandone il **[[MDP02 - Classi#Variabili d'istanza, metodi e costruttori|costruttore]]**.
+1. dichiarare una nuova variabile appartenente alla classe desiderata, analogamente a come si farebbe con uno qualsiasi dei [[MDP_07 - Tipi primitivi|tipi primitivi]];
+2. assegnarle una nuova istanza della classe, sfruttando la parola chiave **`new`** e richiamandone il **[[MDP_02 - Classi#Variabili d'istanza, metodi e costruttori|costruttore]]**.
 
 Concretamente, tale operazione assume la seguente forma:
 
@@ -120,9 +120,9 @@ public abstract class Animale {
 }
 ```
 
-Una classe astratta viene tipicamente utilizzata in strutture [[MDP01 - Java e la OOP#Ereditarietà|ereditarie]], dove si vuole definire una **base di comportamento comune** tra tutte le classi che la ereditano, ma lasciando allo stesso tempo spazio per un'implementazione personalizzata da parte di quest'ultime (i metodi astratti di una classe astratta vengono definiti proprio a questo scopo).
+Una classe astratta viene tipicamente utilizzata in strutture [[MDP_01 - Java e la OOP#Ereditarietà|ereditarie]], dove si vuole definire una **base di comportamento comune** tra tutte le classi che la ereditano, ma lasciando allo stesso tempo spazio per un'implementazione personalizzata da parte di quest'ultime (i metodi astratti di una classe astratta vengono definiti proprio a questo scopo).
 
-Si tratta di una soluzione che permette un maggiore **riutilizzo del codice**, una maggiore **flessibilità**, e favorisce una migliore **organizzazione logica** delle classi di un programma. Alcuni svantaggi, invece, potrebbero essere l'**impossibilità di istanza diretta**, la maggiore **difficoltà nel testing**, nonché la limitazione che l'**ereditarietà singola** di Java pone a qualsiasi struttura di classi del genere, e che viene in parte ammorbidita tramite l'utilizzo delle **[[MDP12 - Interfacce#Interfacce vs. classi astratte|interfacce]]**.
+Si tratta di una soluzione che permette un maggiore **riutilizzo del codice**, una maggiore **flessibilità**, e favorisce una migliore **organizzazione logica** delle classi di un programma. Alcuni svantaggi, invece, potrebbero essere l'**impossibilità di istanza diretta**, la maggiore **difficoltà nel testing**, nonché la limitazione che l'**ereditarietà singola** di Java pone a qualsiasi struttura di classi del genere, e che viene in parte ammorbidita tramite l'utilizzo delle **[[MDP_12 - Interfacce#Interfacce vs. classi astratte|interfacce]]**.
 ___
 ## Classi annidate
 
@@ -130,7 +130,7 @@ Quando una classe è detta "**annidata**", vuol dire che viene **definita all'in
 - le ***inner classes***, o "classi interne", ossia classi semplicemente definite all'interno di altre, che sono per natura associate a un'istanza della classe esterna che le racchiude;
 - le ***static nested classes***, o "classi annidate statiche", ossia classi statiche definite all'interno di altre, il che le rende indipendenti dalle istanze della classe esterna.
 
-Approfondiamo prima di tutto le **classi interne**. In questo caso, **la classe interna ha accesso a tutti i membri della classe che la contiene**, qualsiasi sia il loro [[MDP03 - Modificatori d'accesso|modificatore d'accesso]]; allo stesso tempo, però, **la classe esterna che la racchiude non ha accesso ai membri privati della classe interna**. Vediamo, a livello di sintassi, come **dichiarare una classe interna**:
+Approfondiamo prima di tutto le **classi interne**. In questo caso, **la classe interna ha accesso a tutti i membri della classe che la contiene**, qualsiasi sia il loro [[MDP_03 - Modificatori d'accesso|modificatore d'accesso]]; allo stesso tempo, però, **la classe esterna che la racchiude non ha accesso ai membri privati della classe interna**. Vediamo, a livello di sintassi, come **dichiarare una classe interna**:
 
 ```
 public class Outer {
@@ -174,11 +174,11 @@ Essendo, come abbiamo già detto, indipendenti da un'istanza della classe estern
 Outer.Inner in = new Outer.Inner();
 ```
 
-Le classi annidate, siano esse *inner classes* o *static nested classes*, vengono usate per **raggruppare classi correlate** a livello logico, per **incapsulare classi non necessarie all'esterno** di quella che le racchiude, o anche per **creare istanze temporanee e personalizzate** di certe classi o interfacce, in particolare tramite le [[MDP02 - Classi#Classi anonime|classi anonime]], che verranno approfondite nel prossimo paragrafo.
+Le classi annidate, siano esse *inner classes* o *static nested classes*, vengono usate per **raggruppare classi correlate** a livello logico, per **incapsulare classi non necessarie all'esterno** di quella che le racchiude, o anche per **creare istanze temporanee e personalizzate** di certe classi o interfacce, in particolare tramite le [[MDP_02 - Classi#Classi anonime|classi anonime]], che verranno approfondite nel prossimo paragrafo.
 ___
 ## Classi anonime
 
-Una **classe anonima** è, tecnicamente, un particolare tipo di [[MDP02 - Classi#Classi annidate|classe annidata]], in quanto è a tutti gli effetti una classe definita all'interno di un'altra. La sua particolarità, tuttavia, è quella di **non avere un nome specifico**, e di essere **definita e istanziata "al volo"**.
+Una **classe anonima** è, tecnicamente, un particolare tipo di [[MDP_02 - Classi#Classi annidate|classe annidata]], in quanto è a tutti gli effetti una classe definita all'interno di un'altra. La sua particolarità, tuttavia, è quella di **non avere un nome specifico**, e di essere **definita e istanziata "al volo"**.
 
 Tipicamente, le classi anonime vengono utilizzate per scrivere codice conciso in situazioni in cui è necessaria un'**implementazione personalizzata e temporanea** di un'interfaccia (come `ActionListener`) o di una classe astratta. Possono essere, inoltre, utili anche nel contesto di **override temporanei** di certi metodi.
 
@@ -220,7 +220,7 @@ Essendo ognuna delle 7 costanti un'istanza della classe `Giorno`, si può accede
 Giorno oggi = Giorno.LUNEDI;
 ```
 
-Quello precedente, però, è un esempio molto basilare di enumerazione. È possibile, infatti, che una classe `enum` abbia anche altre componenti similmente a una normale [[MDP02 - Classi|classe]], come:
+Quello precedente, però, è un esempio molto basilare di enumerazione. È possibile, infatti, che una classe `enum` abbia anche altre componenti similmente a una normale [[MDP_02 - Classi|classe]], come:
 - **campi**;
 - **metodi** (concreti o astratti);
 - **costruttori**.
@@ -243,9 +243,9 @@ public enum StatoOrdine {
 }
 ```
 
-In un contesto del genere, ogni istanza di `StatoOrdine` presenta anche alcune informazioni associate ad essa, e il costruttore viene utilizzato internamente da Java, al momento del caricamento dell'istanza, per associare il valore corretto a ogni campo e per inizializzare concretamente quest'ultimi. In questo modo, sapremo che la `descrizione` è la [[MDP08 - Stringhe|stringa]] al primo posto, mentre la variabile `isCompletato` è il valore [[MDP07 - Tipi primitivi#I booleani `boolean`|booleano]] al secondo posto.
+In un contesto del genere, ogni istanza di `StatoOrdine` presenta anche alcune informazioni associate ad essa, e il costruttore viene utilizzato internamente da Java, al momento del caricamento dell'istanza, per associare il valore corretto a ogni campo e per inizializzare concretamente quest'ultimi. In questo modo, sapremo che la `descrizione` è la [[MDP_08 - Stringhe|stringa]] al primo posto, mentre la variabile `isCompletato` è il valore [[MDP_07 - Tipi primitivi#I booleani `boolean`|booleano]] al secondo posto.
 
-Inoltre, avendo chiarito che un'istanza `enum` può avere effettivamente delle [[MDP02 - Classi#Campi, metodi e costruttori|variabili d'istanza]], si potranno implementare dei **metodi getter** per ottenere in maniera sicura tali valori. Ampliando sempre la classe `StatoOrdine`, otteniamo:
+Inoltre, avendo chiarito che un'istanza `enum` può avere effettivamente delle [[MDP_02 - Classi#Campi, metodi e costruttori|variabili d'istanza]], si potranno implementare dei **metodi getter** per ottenere in maniera sicura tali valori. Ampliando sempre la classe `StatoOrdine`, otteniamo:
 
 ```
 public enum StatoOrdine {

@@ -27,7 +27,7 @@ Dunque, **se una serie converge, allora un suo singolo termine deve tendere a 0*
 > Data una successione $(a_{k})_{k \in \mathbb{N}^+}$, si ha che:
 > $$\mbox{se } \sum_{k=0}^{\infty}a_{k} \space \mbox{ converge, allora } \lim_{n \to +\infty}a_{n} = 0$$
 
-È opportuno ricordare che si tratta di una semplice **implicazione logica**: dunque, seppur la premessa implichi la conclusione, non è detto che la conclusione implichi la premessa; in altre parole, se la serie converge allora un suo singolo termine tende a 0, ma non è detto che se un singolo termine della serie tende a 0 allora essa converga. Un esempio di ciò è la [[CI01 - Serie|serie armonica]], che diverge nonostante i suoi termini tendano a 0.
+È opportuno ricordare che si tratta di una semplice **implicazione logica**: dunque, seppur la premessa implichi la conclusione, non è detto che la conclusione implichi la premessa; in altre parole, se la serie converge allora un suo singolo termine tende a 0, ma non è detto che se un singolo termine della serie tende a 0 allora essa converga. Un esempio di ciò è la [[CI_01 - Serie|serie armonica]], che diverge nonostante i suoi termini tendano a 0.
 
 Dal teorema esplicitato in precedenza, deriva il seguente **corollario**:
 
@@ -52,7 +52,7 @@ Per poter fare ciò, bisogna trovare una funzione con cui effettuare il confront
 
 Avendo dimostrato che $\sin x \le x$, possiamo sostituire la $x$ e affermare che $\sin \left( \frac{1}{k^2} \right) \le \frac{1}{k^2}$, e dunque che:
 $$0 \le \sum_{k = 1}^{\infty}\sin\left( \frac{1}{k^2} \right) \le \sum_{k = 1}^{\infty} \frac{1}{k^2}$$
-Si nota immediatamente che la seconda serie del confronto non è altro che una [[CI01 - Serie|serie armonica]] con $\alpha > 1$, che risulta perciò essere convergente a un determinato valore finito $l$. Dunque, poiché la serie di partenza è positiva e limitata da una serie convergente, anch'essa **deve necessariamente convergere** a un valore finito.
+Si nota immediatamente che la seconda serie del confronto non è altro che una [[CI_01 - Serie|serie armonica]] con $\alpha > 1$, che risulta perciò essere convergente a un determinato valore finito $l$. Dunque, poiché la serie di partenza è positiva e limitata da una serie convergente, anch'essa **deve necessariamente convergere** a un valore finito.
 
 Generalizzando questo procedimento, possiamo ottenere il seguente teorema che definisce il cosiddetto "**criterio del confronto diretto**":
 

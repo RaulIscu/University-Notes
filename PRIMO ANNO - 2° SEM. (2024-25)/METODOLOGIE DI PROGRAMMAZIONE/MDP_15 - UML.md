@@ -2,17 +2,17 @@
 
 Quando si lavora a un progetto ampio e complesso, che comprende un grande numero di classi collegate in modo intricato tra di loro, diventa molto utile se non fondamentale avere uno **schema comprensivo e chiaro** di tali classi e dei modi in cui interagiscono tra di loro. È a questo scopo che si utilizza l'UML.
 
-**UML**, o ***Unified Modeling Language***, è un "**linguaggio di modellazione**" standardizzato, che in programmazione viene tendenzialmente utilizzato per **progettare** e **visualizzare il design** di un determinato software (viene utilizzato anche in altri ambiti, come l'ingegneria o l'economia, per altri scopi). In particolare, nella [[MDP01 - Java e la OOP#Cos'è la programmazione a oggetti?|OOP]], si utilizza un certo tipo di diagramma UML, il cosiddetto "**diagramma delle classi**", o ***class diagram***, che mostra, in maniera più o meno compatta:
+**UML**, o ***Unified Modeling Language***, è un "**linguaggio di modellazione**" standardizzato, che in programmazione viene tendenzialmente utilizzato per **progettare** e **visualizzare il design** di un determinato software (viene utilizzato anche in altri ambiti, come l'ingegneria o l'economia, per altri scopi). In particolare, nella [[MDP_01 - Java e la OOP#Cos'è la programmazione a oggetti?|OOP]], si utilizza un certo tipo di diagramma UML, il cosiddetto "**diagramma delle classi**", o ***class diagram***, che mostra, in maniera più o meno compatta:
 - le **classi** che compongono un programma;
 - i **membri** di tali classi;
-- i **collegamenti tra le classi**, siano essi di tipo [[MDP01 - Java e la OOP#Ereditarietà|ereditario]], compositivo, associativo, ecc. ecc.
+- i **collegamenti tra le classi**, siano essi di tipo [[MDP_01 - Java e la OOP#Ereditarietà|ereditario]], compositivo, associativo, ecc. ecc.
 ___
 ## Come costruire una classe in UML
 
 Ma come possiamo rappresentare, concretamente, una **classe** in un diagramma UML? Per convenzione, **ogni classe viene rappresentata con un rettangolo** diviso in **tre sezioni**:
 - il **nome della classe**;
 - i **campi**;
-- i **metodi** (incluso il [[MDP02 - Classi#Campi, metodi e costruttori|costruttore]]).
+- i **metodi** (incluso il [[MDP_02 - Classi#Campi, metodi e costruttori|costruttore]]).
 
 La sezione relativa al nome della classe sarà sempre la prima, ed è esclusivamente destinata a ciò; la sezione seguente sarà quella dei campi, che verranno elencati in ordine arbitrario, e la stessa cosa vale per la sezione dei metodi (preferibilmente, però, si inserisce il costruttore come il primo dei metodi).
 
@@ -22,7 +22,7 @@ Analizziamo più nel dettaglio le due sezioni principali, ossia quella dei **cam
 visibilità identificatore: Tipo
 ```
 
-Quindi, la prima cosa che si inserisce è la **visibilità** del campo, ossia sostanzialmente il suo **[[MDP03 - Modificatori d'accesso|modificatore d'accesso]]**, che per semplicità non viene inserito così com'è, ma **"codificato" da un singolo segno** secondo le convenzioni UML, che sono le seguenti:
+Quindi, la prima cosa che si inserisce è la **visibilità** del campo, ossia sostanzialmente il suo **[[MDP_03 - Modificatori d'accesso|modificatore d'accesso]]**, che per semplicità non viene inserito così com'è, ma **"codificato" da un singolo segno** secondo le convenzioni UML, che sono le seguenti:
 - il simbolo **`+`** indica un campo definito come **`public`**;
 - il simbolo **`-`** indica un campo definito come **`private`**;
 - il simbolo **`#`** indica un campo definito come **`protected`**;
@@ -73,9 +73,9 @@ Oltre alle regole spiegate prima, ci sono altre **convenzioni aggiuntive** per r
 - una classe o un membro di una classe definiti come `abstract` presentano il proprio identificatore scritto in **corsivo**.
 
 Infine, è possibile anche inserire dei cosiddetti "**stereotipi UML**" in certi contesti, principalmente per indicare il ruolo o la particolare natura di una classe. Si tratta di **etichette opzionali** racchiuse tra parentesi del tipo **`<< >>`** e inserite nella sezione relativa al nome di una classe, come:
-- **`<<interface>>`**, che indica che la classe in questione è un'[[MDP12 - Interfacce|interfaccia]];
-- **`<<abstract>>`**, che indica che la classe in questione è una [[MDP02 - Classi#Classi astratte|classe astratta]];
-- **`<<enumeration>>`**, che indica che la classe in questione è un'[[MDP02 - Classi#Enumerazioni|enumerazione]].
+- **`<<interface>>`**, che indica che la classe in questione è un'[[MDP_12 - Interfacce|interfaccia]];
+- **`<<abstract>>`**, che indica che la classe in questione è una [[MDP_02 - Classi#Classi astratte|classe astratta]];
+- **`<<enumeration>>`**, che indica che la classe in questione è un'[[MDP_02 - Classi#Enumerazioni|enumerazione]].
 ___
 ## I collegamenti tra classi in UML
 
@@ -104,7 +104,7 @@ ___
 
 La relazione di **aggregazione** rappresenta, per certi versi, una forma specializzata di associazione, e definisce sostanzialmente **una relazione di tipo "has-a" debole**, in cui la parte può esistere indipendentemente dal tutto. 
 
-Generalmente, la relazione di aggregazione si traduce, nel codice, in casi simili a quelli dell'[[MDP15 - UML#Associazione|associazione]], ma in cui risulta un po' più evidente che una classe "possiede" o "è composta" da altre classi, che a loro volta possono però esistere in maniera indipendente. Viene rappresentata con una **linea continua terminata da un rombo vuoto**, rivolto verso la classe "contenente".
+Generalmente, la relazione di aggregazione si traduce, nel codice, in casi simili a quelli dell'[[MDP_15 - UML#Associazione|associazione]], ma in cui risulta un po' più evidente che una classe "possiede" o "è composta" da altre classi, che a loro volta possono però esistere in maniera indipendente. Viene rappresentata con una **linea continua terminata da un rombo vuoto**, rivolto verso la classe "contenente".
 
 Trattandosi di una forma più specifica di associazione, anche per l'aggregazione si applicano gli stessi concetti di **cardinalità**, **direzione** e **ruolo**, rispecchiando sostanzialmente le stesse modalità e casi di utilizzo.
 ___
@@ -112,13 +112,13 @@ ___
 
 La relazione di **composizione** rappresenta una forma di aggregazione più dura, e definisce sostanzialmente **una relazione di tipo "has-a" forte**, in cui la parte non può esistere indipendentemente dal tutto. In questo contesto, il "tutto" possiede e gestisce completamente il ciclo di vita della "parte", e se il "tutto" viene distrutto in qualche modo la stessa cosa avviene per le "parti".
 
-Generalmente, la relazione di composizione si traduce, nel codice, come **una classe che istanzia, al suo interno, altre classi** e le conserva come propri attributi, e viene rappresentata con una **linea continua terminata da un rombo pieno**, rivolto verso la classe "contenente" in maniera analoga alla relazione di [[MDP15 - UML#Aggregazione|aggregazione]].
+Generalmente, la relazione di composizione si traduce, nel codice, come **una classe che istanzia, al suo interno, altre classi** e le conserva come propri attributi, e viene rappresentata con una **linea continua terminata da un rombo pieno**, rivolto verso la classe "contenente" in maniera analoga alla relazione di [[MDP_15 - UML#Aggregazione|aggregazione]].
 
 Anche in questo caso, si applicano gli stessi concetti di **cardinalità** e **ruolo**, rispecchiando sostanzialmente le stesse modalità e casi di utilizzo; invece, per quanto riguarda la **direzione**, tendenzialmente in una relazione di composizione la parte non conosce il tutto, e quindi solitamente si ha una **composizione unidirezionale**, ma non è detto che debba sempre essere così.
 ___
 ##### Ereditarietà
 
-La relazione di **[[MDP01 - Java e la OOP#Ereditarietà|ereditarietà]]**, come suggerisce il nome, rappresenta una **relazione gerarchica** tra due classi, una **relazione di tipo "is-a"** tra una superclasse e una sottoclasse, dove la sottoclasse estende la superclasse, ne eredita i campi, e può essere considerata a tutti gli effetti come la sua superclasse.
+La relazione di **[[MDP_01 - Java e la OOP#Ereditarietà|ereditarietà]]**, come suggerisce il nome, rappresenta una **relazione gerarchica** tra due classi, una **relazione di tipo "is-a"** tra una superclasse e una sottoclasse, dove la sottoclasse estende la superclasse, ne eredita i campi, e può essere considerata a tutti gli effetti come la sua superclasse.
 
 Generalmente, la relazione di ereditarietà si traduce, nel codice, come **una classe che ne estende un'altra**, e viene rappresentata con una **linea continua terminata da un triangolo vuoto**, rivolto verso la superclasse.
 
@@ -126,7 +126,7 @@ Per natura dell'ereditarietà in Java, la relazione di ereditarietà presenta de
 ___
 ##### Implementazione
 
-La relazione di **implementazione**, come suggerisce il nome, rappresenta una **relazione gerarchica** tra due classi, una **relazione di tipo "is-a"** tra un'**[[MDP12 - Interfacce|interfaccia]]** e una classe, dove quest'ultima **implementa** l'interfaccia, e ne fornisce quindi una realizzazione concreta.
+La relazione di **implementazione**, come suggerisce il nome, rappresenta una **relazione gerarchica** tra due classi, una **relazione di tipo "is-a"** tra un'**[[MDP_12 - Interfacce|interfaccia]]** e una classe, dove quest'ultima **implementa** l'interfaccia, e ne fornisce quindi una realizzazione concreta.
 
 Generalmente, la relazione di implementazione si traduce, nel codice, come **una classe che implementa un'interfaccia**, e viene rappresentata con una **linea tratteggiata terminata da un triangolo vuoto**, rivolto verso tale interfaccia.
 

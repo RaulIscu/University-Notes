@@ -8,7 +8,7 @@ In particolare, un **comando** è considerabile "**elementare**" quando non può
 
 Come abbiamo detto, un algoritmo opera su **strutture dati**: esse possono essere definite come **strumenti utilizzati per organizzare e memorizzare dei dati**, consentendone l'accesso e la modifica. In generale, **non esiste una struttura dati adeguata per ogni problema**; bisogna, invece, conoscere le proprietà, i vantaggi e gli svantaggi di tutte le principali strutture dati, in modo da saper scegliere la più adatta in base al contesto e al problema da risolvere.
 
-Infine, si è stabilito che l'esecuzione di un algoritmo deve **terminare in un tempo finito**. Con questa espressione, naturalmente, non si intende evidenziare soltanto la finitezza, ma anche la velocità e l'**efficienza** di un algoritmo, ossia la **quantificazione delle sue esigenze in termini di tempo** (tempo di esecuzione) **e spazio** (quantità di memoria richiesta). L'efficienza di un algoritmo viene spesso misurata mediante il suo **[[IAA03 - Costo computazionale|costo computazionale]]**, argomento che verrà approfondito in seguito.
+Infine, si è stabilito che l'esecuzione di un algoritmo deve **terminare in un tempo finito**. Con questa espressione, naturalmente, non si intende evidenziare soltanto la finitezza, ma anche la velocità e l'**efficienza** di un algoritmo, ossia la **quantificazione delle sue esigenze in termini di tempo** (tempo di esecuzione) **e spazio** (quantità di memoria richiesta). L'efficienza di un algoritmo viene spesso misurata mediante il suo **[[IAA_03 - Costo computazionale|costo computazionale]]**, argomento che verrà approfondito in seguito.
 ___
 ## Algoritmi e problem-solving
 

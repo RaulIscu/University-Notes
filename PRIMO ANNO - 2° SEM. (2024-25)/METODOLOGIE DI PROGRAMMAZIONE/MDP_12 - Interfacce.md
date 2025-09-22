@@ -1,6 +1,6 @@
 ## Cos'è un interfaccia?
 
-In Java, possiamo definire un'**interfaccia** come una "classe" particolare, simile per certi versi a una [[MDP02 - Classi#Classi astratte|classe astratta]], che può contenere solo:
+In Java, possiamo definire un'**interfaccia** come una "classe" particolare, simile per certi versi a una [[MDP_02 - Classi#Classi astratte|classe astratta]], che può contenere solo:
 - **metodi astratti**;
 - **metodi statici**;
 - **metodi di default**;
@@ -50,9 +50,9 @@ Le interfacce offrono vari vantaggi, tra cui una **maggiore separazione tra l'as
 ___
 ## Interfacce vs. classi astratte
 
-A primo impatto, come suggerito anche nell'introduzione del [[MDP12 - Interfacce#Cos'è un interfaccia?|paragrafo precedente]], le interfacce sembrano essere particolarmente simili a delle [[MDP02 - Classi#Classi astratte|classi astratte]], e viene naturale chiedersi perché si dovrebbe preferire l'una o l'altra.
+A primo impatto, come suggerito anche nell'introduzione del [[MDP_12 - Interfacce#Cos'è un interfaccia?|paragrafo precedente]], le interfacce sembrano essere particolarmente simili a delle [[MDP_02 - Classi#Classi astratte|classi astratte]], e viene naturale chiedersi perché si dovrebbe preferire l'una o l'altra.
 
-Innanzitutto, la caratteristica forse più importante che differenzia queste due componenti ha a che fare con il principio dell'**[[MDP01 - Java e la OOP#Ereditarietà|ereditarietà]]**. In Java, infatti, **non è prevista l'ereditarietà multipla**, il che vuol dire che una classe non può ereditare da più di una superclasse (sia essa astratta o meno); tuttavia, **una classe può implementare più di un'interfaccia**, e addirittura è possibile che una classe implementi più interfacce e al tempo stesso erediti da una superclasse. Quindi, da questo punto di vista, se si vuole raggiungere un "maggior grado di ereditarietà", il più delle volte converrà l'utilizzo di interfacce piuttosto che di classi astratte.
+Innanzitutto, la caratteristica forse più importante che differenzia queste due componenti ha a che fare con il principio dell'**[[MDP_01 - Java e la OOP#Ereditarietà|ereditarietà]]**. In Java, infatti, **non è prevista l'ereditarietà multipla**, il che vuol dire che una classe non può ereditare da più di una superclasse (sia essa astratta o meno); tuttavia, **una classe può implementare più di un'interfaccia**, e addirittura è possibile che una classe implementi più interfacce e al tempo stesso erediti da una superclasse. Quindi, da questo punto di vista, se si vuole raggiungere un "maggior grado di ereditarietà", il più delle volte converrà l'utilizzo di interfacce piuttosto che di classi astratte.
 
 Passando a dettagli più tecnici:
 - un'interfaccia può presentare solo metodi astratti, o concreti solo se definiti come `static` o come `default`; invece, una classe astratta può presentare metodi astratti e concreti, senza alcuna particolare limitazione;
@@ -65,9 +65,9 @@ ___
 
 ##### Collection
 
-L'interfaccia **`Collection<E>`** è una delle interfacce più importanti, se non la più importante, del [[MDP14 - Strutture dati#Java Collection Framework|Java Collection Framework]].
+L'interfaccia **`Collection<E>`** è una delle interfacce più importanti, se non la più importante, del [[MDP_14 - Strutture dati#Java Collection Framework|Java Collection Framework]].
 
-Si trova nel package **`java.util`**, e rappresenta la principale interfaccia implementata dalle più comuni **[[MDP14 - Strutture dati|strutture dati]]** del framework, che in particolare vanno singolarmente a implementare delle sotto-interfacce di `Collection<E>`, come `List<E>`, `Set<E>` o `Queue<E>` (l'unica eccezione tra le strutture dati più utilizzate è `Map<K, V>`).
+Si trova nel package **`java.util`**, e rappresenta la principale interfaccia implementata dalle più comuni **[[MDP_14 - Strutture dati|strutture dati]]** del framework, che in particolare vanno singolarmente a implementare delle sotto-interfacce di `Collection<E>`, come `List<E>`, `Set<E>` o `Queue<E>` (l'unica eccezione tra le strutture dati più utilizzate è `Map<K, V>`).
 
 Il contratto definito dall'interfaccia va a teorizzare un **oggetto che contiene un gruppo di elementi** (a seconda della sottoclasse, sono permessi o meno duplicati), e fornisce una lista di metodi di base per aggiungere, rimuovere, visualizzare e iterare sugli elementi. In particolare, i **metodi principali** definiti all'interno di `Collection<E>` sono:
 - **`boolean add(E e)`**;
@@ -93,7 +93,7 @@ Un oggetto `Stream` può essere **creato** in vari modi, tra cui:
 - a partire da un array, utilizzando **`Arrays.stream(array)`**;
 - a partire dalle righe di un file, utilizzando **`Files.lines(path)`**.
 
-Un oggetto `Stream` viene sempre generato a partire da una fonte di dati separata (ad esempio una collezione, un [[MDP14 - Strutture dati#Array|array]] o un file), ma non costituisce di per sé una fonte di dati; insomma, uno Stream non memorizza nulla, ma permette di definire e applicare efficientemente **una pipeline di operazioni** su dati già esistenti.
+Un oggetto `Stream` viene sempre generato a partire da una fonte di dati separata (ad esempio una collezione, un [[MDP_14 - Strutture dati#Array|array]] o un file), ma non costituisce di per sé una fonte di dati; insomma, uno Stream non memorizza nulla, ma permette di definire e applicare efficientemente **una pipeline di operazioni** su dati già esistenti.
 
 Uno Stream particolare **può essere consumato una sola volta**, può essere eseguito in maniera **sequenziale** o **parallela** con altri Stream, e **non va mai a modificare la sorgente originale**. Le operazioni che si possono compiere su di esso si dividono principalmente in due categorie: **intermedie** e **terminali**. La pipeline di operazioni di uno Stream, tendenzialmente, è costituita da un certo numero di operazioni intermedie in sequenza, che restituiscono ognuna un nuovo Stream diverso da quello di partenza, seguite da un'operazione terminale che lo esaurisce.
 
@@ -118,13 +118,13 @@ Per quanto riguarda, invece, le principali **operazioni terminali**, esse sono:
 - **`noneMatch(Predicate<T> p)`**, che restituisce `true` se nessuno degli elementi dello stream rispetta la condizione booleana definita da `p`, e `false` altrimenti;
 - **`toArray()`**, che restituisce un array contenente tutti gli elementi dello stream.
 
-Si tratta di uno strumento molto potente soprattutto per la **manipolazione di grandi quantità di dati**, e la sua **struttura** **dichiarativa**, **leggibile** e **concisa** lo rendono anche particolarmente comodo da utilizzare. Inoltre, per natura si integra molto facilmente con **[[MDP11 - Espressioni lambda e riferimenti a metodo#Espressioni lambda|espressioni lambda]]**, e il supporto al **parallelismo** consente eventualmente di lavorare su più stream in contemporanea velocemente.
+Si tratta di uno strumento molto potente soprattutto per la **manipolazione di grandi quantità di dati**, e la sua **struttura** **dichiarativa**, **leggibile** e **concisa** lo rendono anche particolarmente comodo da utilizzare. Inoltre, per natura si integra molto facilmente con **[[MDP_11 - Espressioni lambda e riferimenti a metodo#Espressioni lambda|espressioni lambda]]**, e il supporto al **parallelismo** consente eventualmente di lavorare su più stream in contemporanea velocemente.
 ___
 ##### Iterable
 
-L'interfaccia **`Iterable<T>`** è un'interfaccia importantissima e relativamente di base che si trova nel package **`java.lang`**. Essa rappresenta una **generica collezione di elementi iterabili**, ossia una collezione i cui elementi possono essere ottenuti uno ad uno, tipicamente tramite un **[[MDP09 - Istruzioni di controllo#Il *for loop*|for-each loop]]**, tant'è che l'implementazione dell'interfaccia `Iterable<T>` è concretamente necessaria per poter utilizzare un qualsiasi oggetto in un loop del genere.
+L'interfaccia **`Iterable<T>`** è un'interfaccia importantissima e relativamente di base che si trova nel package **`java.lang`**. Essa rappresenta una **generica collezione di elementi iterabili**, ossia una collezione i cui elementi possono essere ottenuti uno ad uno, tipicamente tramite un **[[MDP_09 - Istruzioni di controllo#Il *for loop*|for-each loop]]**, tant'è che l'implementazione dell'interfaccia `Iterable<T>` è concretamente necessaria per poter utilizzare un qualsiasi oggetto in un loop del genere.
 
-Si tratta, quindi, di un'interfaccia pressoché essenziale per qualsiasi [[MDP14 - Strutture dati|struttura dati]] si voglia definire. Infatti, anche l'interfaccia **`Collection`** rappresenta, di fatto, una sottoclasse di `Iterable`, e quindi qualsiasi classe implementi la prima andrà automaticamente ad implementare anche la seconda.
+Si tratta, quindi, di un'interfaccia pressoché essenziale per qualsiasi [[MDP_14 - Strutture dati|struttura dati]] si voglia definire. Infatti, anche l'interfaccia **`Collection`** rappresenta, di fatto, una sottoclasse di `Iterable`, e quindi qualsiasi classe implementi la prima andrà automaticamente ad implementare anche la seconda.
 
 L'interfaccia `Iterable` definisce **un solo metodo astratto**, ossia **`iterator()`**, che restituisce un oggetto di tipo `Iterator` responsabile dello scorrimento degli elementi della collezione, e a partire da Java 8 anche alcuni metodi di default, ossia:
 - **`forEach(Consumer<? super T> c)`**, che funziona in maniera analoga al metodo omonimo definito in `Stream`, e dunque va ad eseguire l'azione definita da `c` su ogni elemento della collezione;
@@ -132,7 +132,7 @@ L'interfaccia `Iterable` definisce **un solo metodo astratto**, ossia **`iterato
 
 Notiamo, però, un'incongruenza: **`Iterable<T>` definisce al suo interno un solo metodo astratto, eppure non è considerata un'interfaccia funzionale**. Perché?
 
-Seppur venga rispettata la definizione formale di [[MDP12 - Interfacce#Interfacce funzionali|interfaccia funzionale]], `Iterable` funziona in maniera completamente diversa da una qualsiasi delle interfacce appartenenti a tale categoria. Quest'ultime, infatti, rappresentano in particolare un **comportamento** o una **funzione** ben precisa, che nella maggior parte dei casi presenta un input, un output, o entrambi. Ciò non può assolutamente essere affermato per `Iterable`, che rappresenta la funzionalità di un contenitore iterabile di dati. Oltre a ciò, un altro fattore che favorisce notevolmente la sua separazione dalle interfacce funzionali è la sua **incompatibilità con le espressioni lambda**, che sono invece il fulcro del funzionamento di interfacce come `Predicate`, `Function` e molte altre.
+Seppur venga rispettata la definizione formale di [[MDP_12 - Interfacce#Interfacce funzionali|interfaccia funzionale]], `Iterable` funziona in maniera completamente diversa da una qualsiasi delle interfacce appartenenti a tale categoria. Quest'ultime, infatti, rappresentano in particolare un **comportamento** o una **funzione** ben precisa, che nella maggior parte dei casi presenta un input, un output, o entrambi. Ciò non può assolutamente essere affermato per `Iterable`, che rappresenta la funzionalità di un contenitore iterabile di dati. Oltre a ciò, un altro fattore che favorisce notevolmente la sua separazione dalle interfacce funzionali è la sua **incompatibilità con le espressioni lambda**, che sono invece il fulcro del funzionamento di interfacce come `Predicate`, `Function` e molte altre.
 ___
 ##### Iterator
 
@@ -163,7 +163,7 @@ public class MiaCollezione implements Iterable<String> {
 }
 ```
 
-Come possiamo notare, la classe `MiaCollezione` implementa l'interfaccia `Iterable`, ed è quindi obbligata a fornire una definizione concreta per il metodo `iterator()`, all'interno del quale si definisce la [[MDP02 - Classi#Classi anonime|classe anonima]] `Iterator`, classe a cui apparterrà l'oggetto eventualmente restituito dal metodo. In questo modo, siamo certi che la classe `MiaCollezione` sarà perfettamente capace di fornire un'iterazione di sé stessa in un for-each loop, o anche utilizzando direttamente `Iterator`, ad esempio scrivendo il seguente codice:
+Come possiamo notare, la classe `MiaCollezione` implementa l'interfaccia `Iterable`, ed è quindi obbligata a fornire una definizione concreta per il metodo `iterator()`, all'interno del quale si definisce la [[MDP_02 - Classi#Classi anonime|classe anonima]] `Iterator`, classe a cui apparterrà l'oggetto eventualmente restituito dal metodo. In questo modo, siamo certi che la classe `MiaCollezione` sarà perfettamente capace di fornire un'iterazione di sé stessa in un for-each loop, o anche utilizzando direttamente `Iterator`, ad esempio scrivendo il seguente codice:
 
 ```
 Iterator<String> it = collezione.iterator();
@@ -172,7 +172,7 @@ while (it.hasNext()) {
 }
 ```
 
-Come abbiamo detto, non è strettamente necessario fornire un'implementazione concreta per il metodo `remove()`, tuttavia esso è un metodo particolarmente importante se si prevede di **rimuovere elementi in-place durante l'iterazione**. C'è, però, da tenere a mente una regola: **non bisogna mai utilizzare `remove()` in un for-each loop**, ma solo se si lavora apertamente con un `Iterator` come nell'esempio precedente. Infatti, cercare di fare ciò porterebbe a un'[[MDP13 - Eccezioni|eccezione]], ossia `ConcurrentModificationException`.
+Come abbiamo detto, non è strettamente necessario fornire un'implementazione concreta per il metodo `remove()`, tuttavia esso è un metodo particolarmente importante se si prevede di **rimuovere elementi in-place durante l'iterazione**. C'è, però, da tenere a mente una regola: **non bisogna mai utilizzare `remove()` in un for-each loop**, ma solo se si lavora apertamente con un `Iterator` come nell'esempio precedente. Infatti, cercare di fare ciò porterebbe a un'[[MDP_13 - Eccezioni|eccezione]], ossia `ConcurrentModificationException`.
 ___
 ##### Comparable
 
@@ -185,17 +185,17 @@ L'interfaccia `Comparable` definisce **un solo metodo astratto**, ossia **`compa
 
 Notiamo, però, un'incongruenza: **`Comparable<T>` definisce al suo interno un solo metodo astratto, eppure non è considerata un'interfaccia funzionale**. Perché?
 
-Seppur venga rispettata la definizione formale di [[MDP12 - Interfacce#Interfacce funzionali|interfaccia funzionale]], `Comparable` funziona in maniera completamente diversa da una qualsiasi delle interfacce appartenenti a tale categoria. Quest'ultime, infatti, rappresentano in particolare un **comportamento** o una **funzione** ben precisa, mentre ciò non può assolutamente essere affermato per `Comparable`, che piuttosto definisce a priori il criterio per cui due oggetti di una stessa classe sono confrontati. La differenza è ancora più evidente se si paragona `Comparable<T>` a `Comparator<T>`: quest'ultima, infatti, è un'interfaccia funzionale in quanto definisce, al suo interno (mediante espressioni lambda o riferimenti a metodo) un criterio di ordinamento situazionale tra due oggetti dello stesso tipo; invece, `Comparable` definisce un criterio di ordinamento universale e naturale tra questi due oggetti, all'interno della loro stessa classe, e oltretutto necessita di un oggetto chiamante e non può operare in maniera "funzionale" su due oggetti presi in input.
+Seppur venga rispettata la definizione formale di [[MDP_12 - Interfacce#Interfacce funzionali|interfaccia funzionale]], `Comparable` funziona in maniera completamente diversa da una qualsiasi delle interfacce appartenenti a tale categoria. Quest'ultime, infatti, rappresentano in particolare un **comportamento** o una **funzione** ben precisa, mentre ciò non può assolutamente essere affermato per `Comparable`, che piuttosto definisce a priori il criterio per cui due oggetti di una stessa classe sono confrontati. La differenza è ancora più evidente se si paragona `Comparable<T>` a `Comparator<T>`: quest'ultima, infatti, è un'interfaccia funzionale in quanto definisce, al suo interno (mediante espressioni lambda o riferimenti a metodo) un criterio di ordinamento situazionale tra due oggetti dello stesso tipo; invece, `Comparable` definisce un criterio di ordinamento universale e naturale tra questi due oggetti, all'interno della loro stessa classe, e oltretutto necessita di un oggetto chiamante e non può operare in maniera "funzionale" su due oggetti presi in input.
 ___
 ## Interfacce funzionali
 
-In poche parole, un'**interfaccia funzionale** è un tipo particolare di [[MDP12 - Interfacce#Cos'è un interfaccia?|interfaccia]] che si caratterizza per **definire un solo metodo astratto** al suo interno. Per indicare che un'interfaccia è funzionale al momento della sua definizione, si può anticipare il corpo dell'interfaccia con la seguente annotazione facoltativa:
+In poche parole, un'**interfaccia funzionale** è un tipo particolare di [[MDP_12 - Interfacce#Cos'è un interfaccia?|interfaccia]] che si caratterizza per **definire un solo metodo astratto** al suo interno. Per indicare che un'interfaccia è funzionale al momento della sua definizione, si può anticipare il corpo dell'interfaccia con la seguente annotazione facoltativa:
 
 ```
 @FunctionalInterface
 ```
 
-Si tratta di uno strumento più potente di quello che può sembrare, soprattutto per la possibilità del loro **utilizzo insieme a [[MDP11 - Espressioni lambda e riferimenti a metodo#Espressioni lambda|espressioni lambda]] e [[MDP11 - Espressioni lambda e riferimenti a metodo#Riferimenti a metodi|riferimenti a metodi]]**. Infatti, essendo dotate di un solo metodo astratto, è possibile istanziare delle interfacce funzionali con compiti personalizzati in maniera comoda e veloce, proprio sfruttando i due strumenti appena citati. Ad esempio, supponiamo di definire la seguente interfaccia funzionale:
+Si tratta di uno strumento più potente di quello che può sembrare, soprattutto per la possibilità del loro **utilizzo insieme a [[MDP_11 - Espressioni lambda e riferimenti a metodo#Espressioni lambda|espressioni lambda]] e [[MDP_11 - Espressioni lambda e riferimenti a metodo#Riferimenti a metodi|riferimenti a metodi]]**. Infatti, essendo dotate di un solo metodo astratto, è possibile istanziare delle interfacce funzionali con compiti personalizzati in maniera comoda e veloce, proprio sfruttando i due strumenti appena citati. Ad esempio, supponiamo di definire la seguente interfaccia funzionale:
 
 ```
 @FunctionalInterface
