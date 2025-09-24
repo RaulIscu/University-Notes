@@ -56,9 +56,18 @@ Oggetti = tuple, i campi o attributi sono le varie informazioni di una tupla, si
 ___
 ##### Valori nulli
 
-I valori nulli (null) rappresentano la mancanza di un informazione o il fatto che un'informazione non è attualmente valida. Non possiamo evitare di inserire tale informazione, dato che la tupla deve attenersi sempre a uno schema preciso, ma è possibile definire ad esempio un qualche valore di default da utilizzare in queste situazioni. È possibile, del resto, che per alcuni attributi non venga contemplata la possibilità di un valore null, rendendo così obbligatorio inserirli.
+È perfettamente possibile, all'interno di una tabella come quelle viste finora, che un'informazione sia **mancante** o **non valida**. Tuttavia, in situazioni del genere, non è possibile evitare di inserire tale informazione, dato che una tupla deve attenersi sempre al suo [[BD1_01 - Modello relazionale#Schemi e istanze di relazioni|schema]] ben definito: per ovviare a questo problema, si utilizzano dei "valori di default", chiamati "**valori nulli**", o **`NULL`**. È possibile, del resto, che per alcuni attributi **non venga contemplata la possibilità di un valore `NULL`**, rendendo così **obbligatorio inserirli**.
 
-[02 - slide 26/30]
+Il valore `NULL` è un **valore polimorfico**, nel senso che non appartiene concretamente a nessun dominio, ma può rimpiazzare un qualsiasi valore appartenente a un qualsiasi dominio. 
+
+Per comprendere meglio come si utilizzano i valori nulli, vediamo l'esempio di una tabella `Courses`, come la seguente:
+
+| Course | Title     | Lecturer |
+| ------ | --------- | -------- |
+| 01     | Math      | NULL     |
+| 02     | Chemistry | M. Rossi |
+
+In questo esempio, notiamo che nell'attributo `Lecturer` della prima tupla è stato inserito un `NULL`, il che ci indica che il professore che insegnerà in tale corso non è ancora noto.
 ___
 ##### Vincoli di integrità
 

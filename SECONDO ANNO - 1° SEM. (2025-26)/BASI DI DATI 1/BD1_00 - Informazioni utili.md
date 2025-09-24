@@ -28,7 +28,7 @@ ___
 #### Esame
 
 **Esame scritto** della durata di 2.5 ore. Strutturato in:
-- $10$ domande di sbarramento a risposta multipla sulla teoria; una risposta giusta vale $+1$ punti, una risposta non data vale $0$ punti, una risposta sbagliata vale $-0.5$ punti; per superare questa sezione, bisogna ottenere almeno $6$ punti sui $10$ disponibili;
+- $10$ domande di sbarramento a risposta multipla sulla teoria; una risposta giusta vale $+1$ punto, una risposta non data vale $0$ punti, una risposta sbagliata vale $-0.5$ punti; per superare questa sezione, bisogna ottenere almeno $6$ punti sui $10$ disponibili;
 - $3$ esercizi, di cui $1$ su algebra relazionale, $1$ su teoria relazionale e $1$ su organizzazione fisica; per superare questa sezione, bisogna ottenere una valutazione di almeno $6$ punti su $10$ in ognuno dei $3$ esercizi.
 
 Se superato l'esame scritto (voto $\ge 18$), si ottiene un voto finale che non corrisponde però al voto conseguito all'esame scritto, ma che viene ottenuto in base alla seguente tabella:
