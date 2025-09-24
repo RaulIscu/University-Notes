@@ -4,7 +4,7 @@
 
 La principale caratteristica che differenzia Java dagli altri linguaggi del genere è la sua possibilità di essere notevolmente ***cross-platform***: un programma Java, infatti, rispetta la politica "**WORA**", ossia "***write once, run anywhere***", ed è sostanzialmente **neutro rispetto all'architettura che lo esegue**. Ciò viene ottenuto soprattutto grazie agli strumenti contenuti nel **Java Development Kit**, o **JDK**, che contiene principalmente questi strumenti:
 - la **Java Virtual Machine**, la componente che più di tutte è responsabile dell'abilità di essere *cross-platform* di Java;
-- il **Java Runtime Envoirment**;
+- il **Java Runtime Environment**;
 - il compilatore **Java Compiler**, o **javac**;
 - varie **librerie** utili per la scrittura di codice e per la sua compilazione.
 

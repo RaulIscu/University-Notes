@@ -21,27 +21,34 @@ Ma **da cos'è composto** effettivamente un OS? Anche qui, non c'è una risposta
 ___
 ## Struttura di un calcolatore
 
-Per comprendere meglio il ruolo di un OS all'interno di un calcolatore, rivediamo sommariamente la **struttura interna di un calcolatore**, con una panoramica 
+Per comprendere meglio il ruolo di un OS all'interno di un calcolatore, rivediamo sommariamente la **struttura interna di un calcolatore**, con una panoramica sulle sue principali componenti. Facciamo riferimento al seguente schema:
 
-![[Pasted image 20250923134733.png]]
+![[struttura_calcolatore.png]]
 
-CPU: un processore che esegue concretamente la computazione (al giorno d'oggi, è diviso in vari "core" per permettere di svolgere dei processi in modo parallelo)
-Memoria: conserva i dati e le istruzioni utilizzate dalla CPU
-Dispositivi di I/O: dispotivi come monitor, tastiera, ecc, ciascuno associato a uno specifico controller
-System Bus: si occupa della comunicazione tra CPU, memoria e i vari dispositivi
+Elenchiamo le caratteristiche principali di ciascuna delle componenti principali che vediamo nello schema:
+- la **CPU**, l'unità centrale del calcolatore, che esegue concretamente le operazioni computazionali (al giorno d'oggi, la gran parte delle CPU è divisa in più "core" per permettere di eseguire più processi in parallelo);
+- la **memoria**, che si occupa di conservare dati e istruzioni necessari per qualsiasi operazione svolta dalla CPU;
+- i **dispositivi di I/O** (mouse, tastiera, stampante, monitor, ecc. ecc.), ognuno associato a uno specifico "**device controller**", che si occupano di gestire l'input e l'output del calcolatore;
+- un **system bus**, che in poche parole si occupa della comunicazione tra CPU, memoria e i vari dispositivi.
 
-Concettualmente, a livello di base, il modello architetturale di un calcolatore rimane sempre lo stesso indipendentemente dallo scopo finale o dall'implementazione specifica dello stesso. Questo modello generale è stato ideato da John von Neumann.
+A livello di base, il modello architetturale di un calcolatore rimane sempre lo stesso, indipendentemente dallo scopo finale o dall'implementazione specifica dello stesso. Questo modello generale è stato ideato da **John von Neumann**, e può essere riassunto nel seguente schema:
 
-![[Pasted image 20250923135315.png]]
+![[struttura_calcolatore1.png]]
 
-[slide 44/68: ripasso randomico]
+[Introduction.pdf, slide 44/68: ciclo di istruzione, pipeline, linguaggio macchina]
 
-All'interno di una CPU, i dati su cui opera sono conservati in "registri", delle piccole unità di memoria interne alla stessa, la cui grandezza tipicamente coincide con la grandezza di una word. In un'architettura come x86, ci sono vari registri di general-purpose, come eax, ebx e ecx, e altri con uno scopo specifico, come:
-- esp, che contiene lo stack pointer, ossia l'indirizzo corrispondente alla cima dello stack;
-- ebp, che contiene lo stack base pointer;
-- eip, che contiene l'instruction pointer, ossia il program counter.
+All'interno di una CPU, i dati su cui opera sono conservati in "**registri**", delle piccole unità di memoria interne alla stessa, la cui grandezza tipicamente coincide con la grandezza di una word. In un'architettura come **`x86`**, ci sono vari **registri "general-purpose"**, come `eax`, `ebx` e `ecx`, e altri con uno **scopo specifico**, come:
+- `esp`, che contiene lo "stack pointer", ossia l'indirizzo corrispondente alla cima dello stack;
+- `ebp`, che contiene lo "stack base pointer";
+- `eip`, che contiene lo "instruction pointer", ossia il Program Counter, o PC.
 
-[slide 72/75]
+In base al numero di CPU incluse in un calcolatore, questi ultimi possono essere divisi in due categorie:
+- sistemi **a singolo processore**, che contengono una sola CPU principale che si occupa dell'esecuzione dei programmi e altri processori secondari con compiti più specifici (controller del disco, GPU, ecc. ecc.);
+- sistemi **multi-processore**, che contengono più CPU per aumentare il throughput del calcolatore e consentono una maggiore resilienza di fronte a errori o malfunzionamenti.
+
+Per quanto riguarda la **memoria**, nei calcolatori moderni si implementa la cosiddetta "**[[AE_06 - La memoria#Gerarchia delle memorie|gerarchia delle memorie]]**": in un calcolatore, non è presente una sola memoria, ma piuttosto vari **livelli di memoria**, che concettualmente possono essere raccolti 
+
+
 
 ![[Pasted image 20250923143140.png]]
 
