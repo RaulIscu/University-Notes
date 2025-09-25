@@ -25,5 +25,13 @@ Invece, il prodotto logico $E_{1}\land E_{2}$ corrisponde all'evento:
 $$\{\text{si sono verificati entrambi gli eventi }E_{1}\text{ ed }E_{2}\}$$
 Infine, la negazione $\lnot E_{1}$ corrisponde all'evento:
 $$\{\text{non si è verificato l'evento }E_{1}\}$$
+##### Eventi elementari e composti
+
+> Un evento $E\in\mathcal{E}$ si dice "**composto**" se esistono almeno due eventi $E_{1},\,E_{2}\in\mathcal{E}$ tali per cui:
+> $$E = E_{1}\lor E_{2}\,\,\,\,\,\,\,\,\,\,\text{con }E\neq E_{1},\,E\neq E_{2}$$
+> Qualsiasi evento non sia composto viene detto "**semplice**", o "**elementare**".
+
+Ad esempio, supponendo di lanciare un dado a sei facce, l'evento $E=\{X_{1}>3\}$ è un evento composto, dato che in tale esperimento gli eventi elementari sono:
+$$\{X_{1}=1\}, \{X_{2}=2\},\,\dots,\,\{X_{6}=6\}$$
 
 ___
