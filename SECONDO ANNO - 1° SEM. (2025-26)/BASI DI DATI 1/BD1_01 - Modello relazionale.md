@@ -50,9 +50,24 @@ Avendo introdotto il concetto di attributo, è possibile fornire un'**interpreta
 ___
 ##### Schemi e istanze di relazioni
 
-[02 - slide 14/20]
+Ricapitolando, possiamo formalizzare una relazione come una **tabella**, dove **ogni riga rappresenta una singola tupla** e **ogni colonna corrisponde a un componente** della tupla; all'interno di una colonna, si troveranno valori "omogenei", ossia tutti provenienti dallo stesso dominio, quindi possiamo affermare, per certi versi, che una colonna corrisponde a un determinato dominio. La coppia nome-dominio va a creare l'**attributo**, e l'insieme degli attributi di una relazione è detto "**schema**" della relazione, da non confondere con la relazione effettiva che possiamo chiamare "**istanza**" della relazione.
 
-Oggetti = tuple, i campi o attributi sono le varie informazioni di una tupla, si dà anche un soggetto alla tabella in sé per chiarire che oggetti stanno venendo registrati nella stessa. Una tabella può essere semplicemente definita come un insieme di tuple "omogenee".
+Avendo una relazione $R$, dotata degli attributi $A_{1},\,A_{2},\,\dots,\,A_{k}$, lo schema della relazione viene spesso indicato come:
+$$R(A_{1},\,A_{2},\,\dots,\,A_{k})$$
+Ad esempio, supponiamo di avere uno schema di relazione `Info_City(City, Region, Population)`; una possibile istanza di relazione potrebbe essere la seguente:
+
+| City   | Region    | Population |
+| ------ | --------- | ---------- |
+| Roma   | Lazio     | 3 000 000  |
+| Milano | Lombardia | 1 500 000  |
+| Genova | Liguria   | 800 000    |
+| Pisa   | Toscana   | 150 000    |
+
+Lo schema di una relazione è **costante**, e descrive sostanzialmente la **struttura generale** che deve rispettare una tupla appartenente a tale relazione. L'istanza di relazione, invece, contiene dei **valori concreti**, che possono variare. A questo punto, possiamo definire il concetto di "**schema di database relazionale**", che consiste in un **insieme di schemi di relazione**; avendo uno schema di database formato dagli schemi di relazione $R_{1},\,R_{2},\,\dots,\,R_{k}$, definiamo "**database relazionale**" un **insieme di istanze di relazioni $r_{1},\,r_{2},\,\dots,\,r_{k}$**, dove l'istanza di relazione $r_{i}$ rispetta lo schema di relazione $R_{i}$.
+
+Nella definizione di un modello relazionale, le componenti di una relazione sono indicate dai nomi degli attributi, piuttosto che dalla loro posizione nello schema. Ad esempio, tornando alla tabella appena vista, chiamando $t$ la seconda tupla si ha che $t[\text{Region}] = \text{Lombardia}$.
+
+Chiamando $Y$ un sottoinsieme degli attributi di uno schema di relazione $X$ ($Y \subseteq X$), con $t[Y]$ si indica un sottoinsieme dei dati della tupla $t$ che corrisponde agli attributi inclusi in $Y$: questo sottoinsieme viene detto "**restrizione**" della tupla $t$.
 ___
 ##### Valori nulli
 
@@ -71,5 +86,49 @@ In questo esempio, notiamo che nell'attributo `Lecturer` della prima tupla è st
 ___
 ##### Vincoli di integrità
 
-[02 - slide 31/35]
+Nella compilazione di alcune tabelle, può capitare che ci siano dati che, seppur rientrino nel dominio dell'[[BD1_01 - Modello relazionale#Attributi|attributo]] a cui è associata la colonna in questione, assumano dei valori non plausibili o non compatibili con altri dati della tabella. Vediamo, ad esempio, la seguente tabella `Results`:
+
+| Student | Grade | Honor |
+| ------- | ----- | ----- |
+| 2178309 | 32    |       |
+| 2267768 | 30    | Yes   |
+| 2168863 | 27    | Yes   |
+| 2168863 | 24    |       |
+
+Possiamo notare che, seppur tutti i dati presenti appartengano ai domini giusti, sono presenti delle incongruenze: 
+- nella prima riga, il dato inserito nella colonna `Grade` è il valore $32$, tuttavia il voto massimo conseguibile in un esame è $30$;
+- nella terza riga, il voto conseguito dallo studente è $27$, dunque non dovrebbe essere applicabile il valore nella colonna `Honor`, in quanto è impossibile ottenere una lode su un voto inferiore a 30;
+- nella quarta riga, la matricola dello studente è identica a quella dello studente della riga precedente, il che dovrebbe essere impossibile.
+
+Per prevenire problematiche del genere, si possono introdurre dei "**vincoli di integrità**", ossia delle restrizioni su certi dati (e, quindi, su certi attributi) che devono essere rispettate da ogni istanza di relazione del database. In questo contesto, un'istanza di database relazionale si dice "**corretta**" se **soddisfa tutti i vincoli di integrità associati al suo schema**.
+
+Alcuni vincoli di integrità che si potrebbero inserire nell'esempio precedente, ad esempio, sono i seguenti:
+- i valori inseriti nella colonna `Grade` devono essere $\ge 18$ (un voto inferiore significherebbe non passare l'esame) e $\le 30$ (non è ottenibile un voto maggiore);
+- in ogni riga della tabella, deve essere vero o che il dato nella colonna `Grade` è uguale a $30$ o che il dato nella colonna `Honor` non sia $\text{Yes}$ (in parole povere, questo vincolo previene che si ottenga una lode senza aver preso $30$);
+- i valori inseriti nella colonna `Student` devono essere univoci, e non possono ripetersi.
+
+Questo tipo di vincoli, che valgono su **un dato specifico**, su **un insieme di dati della stessa riga**, o su **un insieme di righe nella stessa tabella**, vengono detti "**vincoli di integrità intra-relazionali**". Supponiamo, però, che abbinata alla tabella `Results` ci sia anche una tabella `Students` come la seguente:
+
+| Matricola | Surname | Name  |
+| --------- | ------- | ----- |
+| 2178309   | Rossi   | Mario |
+| 2168863   | Bianchi | Luca  |
+
+Considerando anche questa seconda tabella, risulta spontaneo introdurre un ulteriore vincolo, ossia che gli studenti che hanno sostenuto l'esame siano effettivamente degli studenti registrati, e dunque che la colonna `Student` della prima tabella contenga solo valori contenuti nella colonna `Matricola` della seconda. Questo tipo di vincoli, che valgono **su un insieme di tabelle**, o **relazioni**, vengono detti "**vincoli di integrità inter-relazionali**".
+
+È possibile individuare diverse categorie di vincoli di integrità, tra cui:
+- i **vincoli di dominio**, che impongono delle condizioni sul range di valori accettabili all'interno di un determinato dominio (ad esempio, $\text{Grade} \ge 18 \text{ AND Grade} \le 30$);
+- i **vincoli di tupla**, che impongono delle condizioni su più di un valore all'interno della stessa tupla, ad esempio stabilendo una certa correlazione tra alcuni valori (ad esempio, $\text{Grade} = 30\text{ \,OR NOT\, Honor} = \text{Yes}$);
+- i **vincoli di unicità**, che impongono che non ci siano duplicati tra valori della stessa colonna;
+- i **vincoli tra valori di tuple di relazioni diverse**, che impongono delle condizioni su valori appartenenti a tuple di relazioni diverse (ad esempio, che un valore di `Student` debba essere contenuto nella colonna `Matricola` della tabella `Students`);
+- i **vincoli sulle chiavi primarie**,
+- i **vincoli di esistenza del valore**,
+___
+##### Chiavi
+
+[02 - slide 36/46]
+___
+## Algebra relazionale
+
+
 ___

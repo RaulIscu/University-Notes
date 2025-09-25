@@ -35,6 +35,8 @@ A livello di base, il modello architetturale di un calcolatore rimane sempre lo 
 
 ![[struttura_calcolatore1.png]]
 
+##### CPU
+
 [Introduction.pdf, slide 44/68: ciclo di istruzione, pipeline, linguaggio macchina]
 
 All'interno di una CPU, i dati su cui opera sono conservati in "**registri**", delle piccole unità di memoria interne alla stessa, la cui grandezza tipicamente coincide con la grandezza di una word. In un'architettura come **`x86`**, ci sono vari **registri "general-purpose"**, come `eax`, `ebx` e `ecx`, e altri con uno **scopo specifico**, come:
@@ -45,32 +47,41 @@ All'interno di una CPU, i dati su cui opera sono conservati in "**registri**", d
 In base al numero di CPU incluse in un calcolatore, questi ultimi possono essere divisi in due categorie:
 - sistemi **a singolo processore**, che contengono una sola CPU principale che si occupa dell'esecuzione dei programmi e altri processori secondari con compiti più specifici (controller del disco, GPU, ecc. ecc.);
 - sistemi **multi-processore**, che contengono più CPU per aumentare il throughput del calcolatore e consentono una maggiore resilienza di fronte a errori o malfunzionamenti.
+___
+##### Memoria
 
-Per quanto riguarda la **memoria**, nei calcolatori moderni si implementa la cosiddetta "**[[AE_06 - La memoria#Gerarchia delle memorie|gerarchia delle memorie]]**": in un calcolatore, non è presente una sola memoria, ma piuttosto vari **livelli di memoria**, che concettualmente possono essere raccolti 
+Per quanto riguarda la **memoria**, nei calcolatori moderni si implementa la cosiddetta "**[[AE_06 - La memoria#Gerarchia delle memorie|gerarchia delle memorie]]**": in un calcolatore, non è presente una sola memoria, ma piuttosto vari **livelli di memoria**, che concettualmente possono essere raccolti in una piramide, dove i livelli di memoria più vicini alla base sono **più capienti ma meno veloci**, mentre i livelli di memoria più vicini alla cima sono **meno capienti ma più veloci**; in particolare, i livelli che vanno a comporre la cima della gerarchia (registri e cache), sono quelli a cui accede direttamente il processore. Questo bilanciamento avviene perché, logicamente, una memoria più veloce risulta anche essere più costosa. Lo schema seguente permette di visualizzare in maniera chiara una tipica gerarchia delle memorie: 
 
+![[gerarchia_memorie_schema.png]]
 
+Oltre alla cache e ai registri, uno dei livelli di memoria più importanti è la **memoria principale**, che generalmente corrisponde a quella che comunemente chiamiamo RAM. A livello teorico, la memoria principale può essere rappresentata come una sequenza di "**celle**", o "**blocchi**", logicamente organizzate come gruppi di byte (8 bit). Ogni cella dispone di un proprio indirizzo, mentre complessivamente nella memoria l'unità più piccola indirizzabile è solitamente pari a un byte.
+___
+##### Dispositivi di I/O
 
-![[Pasted image 20250923143140.png]]
+Come accennato, i **dispositivi di I/O** sono tutti quei componenti secondari del calcolatore che si occupano di accettare e processare gli **input** e di restituire degli **output**. Ogni dispositivo di I/O è principalmente composto da due parti:
+- il **dispositivo fisico**;
+- il "**controller**", cioè un chip (o un insieme di chip) che controlla il funzionamento del dispositivo.
 
-A livello astratto, la memoria principale può essere rappresentata come una sequenza di celle (blocchi), ciascuna organizzata. Ogni cella è organizzata in byte, ossia gruppi da 8 bit, o in multipli di questi gruppi (ad esempio, 4 byte o 32 bit). Ogni cella ha un proprio indirizzo, e la unità di memoria più piccola indirizzabile è un byte.
+I dispositivi di I/O possono essere categorizzati in base alla loro funzione: ce ne sono relativi alla **memoria**, alla **comunicazione**, all'**interfaccia utente**, ecc. ecc. Per far svolgere a ciascun dispositivo di I/O la propria mansione al momento giusto, l'OS comunica con il controller del dispositivo in questione tramite un cosiddetto "**device driver**". Possiamo schematizzare l'interazione dell'OS con i vari dispositivi di I/O con uno schema del genere:
 
-[slide 91]
+![[os_dispositivi_io.png]]
 
-![[Pasted image 20250923143848.png]]
+Ogni **controller** dispone di vari **registri dedicati**, che permettono di comunicare con il dispositivo di I/O a cui esso è associato, tra cui:
+- registri di **stato**, che forniscono informazioni sullo stato attuale del dispositivo alla CPU;
+- registri di **configurazione** e di **controllo**, utilizzati dalla CPU per configurare e controllare il dispositivo;
+- registri di **dati**, utilizzati per leggere o inviare dati.
+___
+##### System bus
 
-Ogni dispositivo di I/O è principalmente composto da due parti:
-- il dispositivo fisico;
-- il controller, ossia un chip o un insieme di chip che controlla il funzionamento del dispositivo.
+Il **system bus**, in realtà, rappresenta un raggruppamento di più bus, ognuno con una funzionalità ben specifica, tra cui:
+- un **data bus**, che si occupa di trasportare dati tra le varie componenti;
+- un **address bus**, che determina dove vengono trasportati i vari dati e informazioni;
+- un **control bus**, che indica alle varie componenti quali operazioni svolgere.
 
-I dispositivi di I/O possono essere categorizzati in base alla loro funzione: ce ne sono relativi alla memoria, alla comunicazione, all'interfaccia utente, ecc. ecc. L'OS comunica con il controller di uno di questi dispositivi, e dunque con il dispositivo stesso, tramite un cosiddetto "device driver".
+Oltre a questi bus, con l'evoluzione dei calcolatori ne sono stati aggiunti anche altri, per gestire varie mansioni come il trasporto di dati tra CPU e memoria o alcuni dispositivi di I/O.
+___
+## Multiprogrammazione
 
-![[Pasted image 20250923144110.png]]
-
-Ogni controller ha un numero di registri dedicati che permettono di comunicare con il dispositivo, tra cui:
-- registri di stato, che forniscono informazioni sullo stato attuale del dispositivo di I/O alla CPU;
-- registri di configurazione e di controllo, utilizzati dalla CPU per configurare e controllare il dispositivo;
-- registri di dati, utilizzati per leggere o inviare dati.
-
-[slide 105/111]
 [slide 112/117]
-[slide 118/134]
+[slide 119 - 122 - 125 - 128 - 129 - 130]
+___
