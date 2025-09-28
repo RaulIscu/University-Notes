@@ -299,3 +299,72 @@ Invece, effettuando la differenza $\text{Admins}-\text{Students}$ si ottiene una
 
 Similmente a come visto per l'unione e l'intersezione, anche per la differenza è possibile utilizzare una [[BD1_01 - Modello relazionale#Proiezione|proiezione]] per rendere le relazioni operande union-compatible, selezionando un determinato sottoinsieme di attributi.
 ___
+##### Prodotto cartesiano
+
+Spesso, è necessario recuperare delle informazioni che, all'interno di un database, si trovano divise in più relazioni diverse; per ottenere tali dati, occorrerà combinare il contenuto di più tuple provenienti da relazioni diverse in nuove tuple. Per poter ottenere tale risultato, si utilizza il prodotto cartesiano.
+
+L'operazione di "**prodotto cartesiano**" consiste nella **creazione di una nuova relazione con tuple ottenute combinando tutte le tuple della prima relazione con tutte le tuple della seconda**; funziona allo stesso modo del [[BD1_01 - Modello relazionale#Domini, tuple e relazioni|prodotto cartesiano]] introdotto nel capitolo precedente. Simbolicamente, è rappresentata dal simbolo $\times$; dunque, possiamo affermare che scrivere:
+$$R_{1}\times R_{2}$$
+indica l'operazione di prodotto cartesiano tra le relazioni $R_{1}$ e $R_{2}$, che genera una nuova relazione che contiene nuove tuple generate combinando quelle di $R_{1}$ con quelle di $R_{2}$.
+
+Per comprendere meglio, vediamo un esempio. Supponiamo di avere due istanze di relazione `Customer` e `Order`, corrispondenti alle seguenti tabelle:
+
+| Surname | C#  | Town   |
+| ------- | --- | ------ |
+| Rossi   | C1  | Roma   |
+| Rossi   | C2  | Milano |
+| Bianchi | C3  | Roma   |
+| Verdi   | C4  | Roma   |
+
+| O#  | C#  | A#  | N° pieces |
+| --- | --- | --- | --------- |
+| O1  | C1  | A1  | 100       |
+| O2  | C2  | A2  | 200       |
+| O3  | C3  | A2  | 150       |
+| O4  | C4  | A3  | 200       |
+| O1  | C1  | A2  | 200       |
+
+Se volessimo ottenere tutti i clienti con abbinati i loro ordini, dovremmo partire dal prodotto cartesiano $\text{Customer}\times \text{Order}$. Prima di tutto, però, conviene rinominare la colonna `C#` della tabella `Order` in modo da poterla distinguere dalla colonna `C#` della tabella `Customer`: per fare ciò, utilizziamo l'operatore di rinomina $\rho$, in modo da creare una copia della tabella `Order` dove `C#` è rinominato a `CC#`:
+$$\text{OrderNew}=\rho_{\text{CC\# <- C\#}}(\text{Order})$$
+A questo punto, sarà possibile effettuare il prodotto cartesiano $\text{Customer}\times \text{Order}$ generando una nuova tabella `CustomerAndOrder`:
+
+| Surname | C#  | Town   | O#  | CC# | A#  | N° pieces |
+| ------- | --- | ------ | --- | --- | --- | --------- |
+| Rossi   | C1  | Roma   | O1  | C1  | A1  | 100       |
+| Rossi   | C1  | Roma   | O2  | C2  | A2  | 200       |
+| Rossi   | C1  | Roma   | O3  | C3  | A2  | 150       |
+| Rossi   | C1  | Roma   | O4  | C4  | A3  | 200       |
+| Rossi   | C1  | Roma   | O1  | C1  | A2  | 200       |
+| Rossi   | C2  | Milano | O1  | C1  | A1  | 100       |
+| Rossi   | C2  | Milano | O2  | C2  | A2  | 200       |
+| ...     | ... | ...    | ... | ... | ... | ...       |
+| Bianchi | C3  | Roma   | O1  | C1  | A1  | 100       |
+| ...     | ... | ...    | ... | ... | ... | ...       |
+| Verdi   | C4  | Roma   | O1  | C1  | A1  | 100       |
+| ...     | ... | ...    | ... | ... | ... | ...       |
+
+Avendo questa nuova tabella, ricordiamo che il nostro obiettivo è quello di ottenere una lista dei clienti con abbinati i rispettivi ordini. Dunque, effettuiamo un'operazione di [[BD1_01 - Modello relazionale#Selezione|selezione]] che restituisca una nuova tabella, contenente solo le tuple in cui l'attributo `C#` coincide con l'attributo `CC#` ($\sigma_{\text{C\# }=\text{ CC\#}}(\text{Customer}\times \text{OrderNew})$); tale operazione restituisce la seguente relazione:
+
+| Surname | C#  | Town   | O#  | CC# | A#  | N° pieces |
+| ------- | --- | ------ | --- | --- | --- | --------- |
+| Rossi   | C1  | Roma   | O1  | C1  | A1  | 100       |
+| Rossi   | C1  | Roma   | O1  | C1  | A2  | 200       |
+| Rossi   | C2  | Milano | O2  | C2  | A2  | 200       |
+| Bianchi | C3  | Roma   | O3  | C3  | A2  | 150       |
+| Verdi   | C4  | Roma   | O4  | C4  | A3  | 200       |
+
+Possiamo eseguire, in seguito, un'operazione di [[BD1_01 - Modello relazionale#Proiezione|proiezione]] $\pi_{\text{Surname, C\#, Town, O\#, A\#, N° pieces}}(\sigma_{\text{C\# }=\text{ CC\#}}$ $(\text{Customer}\times \text{OrderNew}))$, in modo da eliminare l'attributo `CC#`, che risulta ora superfluo. Eseguire quest'ultima operazione risulta nella seguente relazione:
+
+| Surname | C#  | Town   | O#  | A#  | N° pieces |
+| ------- | --- | ------ | --- | --- | --------- |
+| Rossi   | C1  | Roma   | O1  | A1  | 100       |
+| Rossi   | C1  | Roma   | O1  | A2  | 200       |
+| Rossi   | C2  | Milano | O2  | A2  | 200       |
+| Bianchi | C3  | Roma   | O3  | A2  | 150       |
+| Verdi   | C4  | Roma   | O4  | A3  | 200       |
+
+___
+##### Join
+
+[04 - slide 13/40]
+___
