@@ -1,3 +1,4 @@
+https://elearning.uniroma1.it/pluginfile.php/1536989/mod_folder/content/0/APPUNTI-SN-settembre-2024.pdf?forcedownload=1
 ## Cos'è un evento?
 
 In questo corso, si approfondirà il **calcolo delle probabilità**, una branca della matematica che, come suggerisce il nome, studia la probabilità che avvenga un determinato "**evento**". La definizione di "evento" è particolarmente generica e permissiva: sostanzialmente, possiamo considerare come tale un qualcosa che ha una certa probabilità di avvenire, un possibile risultato di un'azione.
@@ -32,6 +33,16 @@ $$\{\text{non si è verificato l'evento }E_{1}\}$$
 > Qualsiasi evento non sia composto viene detto "**semplice**", o "**elementare**".
 
 Ad esempio, supponendo di lanciare un dado a sei facce, l'evento $E=\{X_{1}>3\}$ è un evento composto, dato che in tale esperimento gli eventi elementari sono:
-$$\{X_{1}=1\}, \{X_{2}=2\},\,\dots,\,\{X_{6}=6\}$$
+$$\{X_{1}=1\}, \{X_{1}=2\},\,\dots,\,\{X_{1}=6\}$$
+e l'evento $E$ può essere riscritto come:
+$$E=\{X_{1}>3\}=\{X_{1}=4\}\lor\{X_{1}=5\}\lor\{X_{1}=6\}$$
+Supponendo, in un altro esempio, di lanciare due dadi a sei facce, si ottiene stavolta che gli eventi elementari sono tutti gli eventi del tipo:
+$$\{X_{1}=n,\,X_{2}=m\}\,\,\,\,\,\,\,\,\,\,\text{con n} = 1,\,2,\,\dots,\,6\text{ \,e\, m}=1,\,2,\,\dots,\,6$$
+ossia eventi in cui entrambi i dadi assumono un valore ben preciso; in questo contesto, invece, un evento $E$ del tipo $\{X_{1}=n\}$ risulta essere un evento composto, dato che può essere riscritto come:
+$$E=\{X_{1}=n\}=\bigvee_{k\,=\,1}^{6}\,\{X_{1}=n,\,X_{2}=k\}$$
+> L'insieme $\Omega = \{\omega_{1},\,\omega_{2},\,\dots,\,\omega_{k}\}$, che contiene tutti gli eventi elementari di un esperimento, viene detto "**spazio campione**" per tale esperimento.
+___
+##### Famiglia delle parti
 
+Avendo uno spazio campione $\Omega$, indichiamo con il simbolo $\mathcal{P}(\Omega)$ la "**famiglia delle parti**" di $\Omega$, ossia la famiglia di **tutti i possibili sottoinsiemi** di $\Omega$, e per ogni $E\in \mathcal{P}(\Omega)$ si indica con il simbolo $|\,E\,|$ la "**cardinalità**" di $E$, ossia il numero di elementi contenuti al suo interno. 
 ___

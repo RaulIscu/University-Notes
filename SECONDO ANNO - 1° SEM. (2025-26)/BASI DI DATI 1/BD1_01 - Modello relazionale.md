@@ -121,8 +121,8 @@ Considerando anche questa seconda tabella, risulta spontaneo introdurre un ulter
 - i **vincoli di tupla**, che impongono delle condizioni su più di un valore all'interno della stessa tupla, ad esempio stabilendo una certa correlazione tra alcuni valori (ad esempio, $\text{Grade} = 30\text{ \,OR NOT\, Honor} = \text{Yes}$);
 - i **vincoli di unicità**, che impongono che non ci siano duplicati tra valori della stessa colonna;
 - i **vincoli tra valori di tuple di relazioni diverse**, che impongono delle condizioni su valori appartenenti a tuple di relazioni diverse (ad esempio, che un valore di `Student` debba essere contenuto nella colonna `Matricola` della tabella `Students`);
-- i **vincoli sulle chiavi primarie**,
-- i **vincoli di esistenza del valore**,
+- i **vincoli sulle chiavi primarie**;
+- i **vincoli di esistenza del valore**.
 ___
 ##### Chiavi
 
@@ -130,5 +130,172 @@ ___
 ___
 ## Algebra relazionale
 
+L'**algebra relazionale** fornisce notazioni per specificare "**query**", o "interrogazioni", che vengono usate per ricercare determinati dati tra i contenuti di una tabella. L'utilizzo dell'algebra relazionale facilita la creazione di queste query; del resto, il linguaggio $\text{SQL}$ viene tradotto in notazioni derivate dall'algebra funzionale per processare le query.
 
+Con l'algebra relazionale, possiamo dunque interrogare un qualsiasi database relazionale mediante un linguaggio formale costituito da vari **operatori unari e binari**, che se applicati su una o più istanze di relazione permette di generare una nuova istanza con i dati ricercati. Si tratta, del resto, di un "**linguaggio procedurale**", nel senso che gli operatori vanno applicati nell'esatto ordine descritto per ottenere il risultato desiderato.
+
+In generale, definiamo una forma di "algebra" come una struttura che dispone di **un dominio e di una lista di operatori**: ad esempio, l'algebra aritmetica ha come dominio un insieme di numeri e come operatori la somma, il prodotto, ecc. ecc.; per quanto riguarda l'algebra insiemistica, il dominio sono proprio gli insiemi e gli operatori sono unione, intersezione, e così via. Nell'algebra relazionale, il **dominio** è formato dalle **[[BD1_01 - Modello relazionale#Domini, tuple e relazioni|relazioni]]**, che sono sia gli operandi che i risultati delle varie operazioni; queste **operazioni**, in particolare, sono divisibili in **4 categorie**:
+- operazioni di **rimozione da una singola relazione**, come "**proiezione**" e "**selezione**";
+- operazioni di **insiemistica**, come **unione**, **intersezione** e **differenza**;
+- operazioni di **combinazione delle tuple di due relazioni**, come **prodotto cartesiano** o "**join**";
+- operazioni di **rinomina**.
+
+##### Proiezione
+
+L'operazione di "**proiezione**" consiste nella **scelta di un sottoinsieme degli attributi della relazione** considerata; possiamo vederla come una "sezione verticale" della relazione di partenza. Simbolicamente, è rappresentata dal simbolo $\pi$; dunque, possiamo affermare che scrivere:
+$$\pi_{A_{1},\,A_{2},\,\dots,\,A_{k}}(R)$$
+indica l'operazione di proiezione che estrae le colonne corrispondenti agli attributi $A_{1},\,A_{2},\,\dots,\,A_{k}$ della relazione $R$.
+
+Per comprendere meglio, vediamo un esempio. Supponiamo di avere un'istanza di relazione `Customer`, corrispondente alla seguente tabella:
+
+| Name  | Surname  | Code | Town   |
+| ----- | -------- | ---- | ------ |
+| Mario | Rossi    | C1   | Roma   |
+| Paolo | Bianchi  | C2   | Milano |
+| Mario | Esposito | C3   | Roma   |
+
+Eseguendo un'operazione di proiezione mirata ad estrarre le colonne `Name` e `Surname` della tabella ($\pi_{\text{Name,\,Surname}}(\text{Customer})$), si ottiene una lista dei nomi e cognomi dei clienti:
+
+| Name  | Surname  |
+| ----- | -------- |
+| Mario | Rossi    |
+| Paolo | Bianchi  |
+| Mario | Esposito |
+
+Si ricordi che il risultato dell'operazione è sempre una relazione, dunque un insieme di tuple distinte, e perciò si dovrà evitare di inserire eventuali tuple duplicate nella relazione risultante; ad esempio, se avessimo effettuato una proiezione solo sul `Name`, la tabella risultante avrebbe contenuto solo 2 righe, una per $\text{Mario}$ e una per $Paolo$.
+___
+##### Selezione
+
+L'operazione di "**selezione**" consiste nella **scelta di un sottoinsieme delle tuple della relazione** considerata; possiamo vederla come una "sezione orizzontale" della relazione di partenza. Simbolicamente, è rappresentata dal simbolo $\sigma$; dunque, possiamo affermare che scrivere:
+$$\sigma_{C}(R)$$
+indica l'operazione di selezione che estrae le tuple della relazione $R$ che rispettano la condizione $C$. Tale condizione può essere una qualsiasi espressione booleana composita, i cui termini si trovano in una delle due forme generiche seguenti:
+$$A\,\,\theta\,\,B\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,A\,\,\theta\,\,a$$
+dove $\theta$ è un qualsiasi operatore di confronto come $=,\,\le,\,>$ e altri, $A$ e $B$ sono attributi che dispongono dello stesso dominio, e $a$ è un elemento appartenente al dominio di $A$.
+
+Per comprendere meglio, vediamo un esempio. Torniamo alla stessa istanza di relazione `Customer` presentata nel [[BD1_01 - Modello relazionale#Proiezione|paragrafo precedente]], corrispondente alla seguente tabella:
+
+| Name  | Surname  | Code | Town   |
+| ----- | -------- | ---- | ------ |
+| Mario | Rossi    | C1   | Roma   |
+| Paolo | Bianchi  | C2   | Milano |
+| Mario | Esposito | C3   | Roma   |
+
+Eseguendo un'operazione di selezione mirata ad estrarre le tuple della tabella in cui il valore dell'attributo `Town` corrisponde a $\text{Roma}$ ($\sigma_{\text{Town = Roma}}(\text{Customer})$), si ottiene una relazione formata da due sole tuple:
+
+| Name  | Surname  | Code | Town |
+| ----- | -------- | ---- | ---- |
+| Mario | Rossi    | C1   | Roma |
+| Mario | Esposito | C3   | Roma |
+
+___
+##### Unione
+
+L'operazione di "**unione**" consiste nella **creazione di una nuova relazione contenente tutte le tuple contenute in almeno una delle relazioni operande**; funziona allo stesso modo dell'unione insiemistica. Simbolicamente, è rappresentata dal simbolo $\cup$; dunque, possiamo affermare che scrivere:
+$$R_{1}\cup R_{2}$$
+indica l'operazione di unione tra le relazioni $R_{1}$ e $R_{2}$, che genera una nuova relazione che contiene tutte le tuple contenute o in $R_{1}$, o in $R_{2}$, o in entrambe.
+
+L'unione tra relazioni può essere effettuata solo tra operandi "**union-compatible**": per essere union-compatible, due relazioni devono avere lo **stesso numero di attributi**, e gli **attributi corrispondenti devono derivare dallo stesso dominio**. Si noti, dunque, che non è essenziale che gli attributi delle relazioni abbiano gli stessi nomi, anche se eseguire un'unione su due relazioni che non rispettano quest'ultima condizione non avrebbe molto senso.
+
+Per comprendere meglio, vediamo un esempio. Supponiamo di avere due istanze di relazione `Teachers` e `Admins`, corrispondenti alle seguenti tabelle:
+
+| Surname | Code | Department |
+| ------- | ---- | ---------- |
+| Rossi   | T1   | Math       |
+| Rossi   | T2   | Italian    |
+| Bianchi | T3   | Math       |
+| Verdi   | T4   | English    |
+
+| Surname  | Code | Department |
+| -------- | ---- | ---------- |
+| Esposito | A1   | English    |
+| Riccio   | A2   | Math       |
+| Pierro   | A3   | Italian    |
+| Bianchi  | A4   | English    |
+
+Eseguendo un'operazione di unione tra le due tabelle `Teachers` e `Admins` ($\text{Teachers }\cup \text{ Admins}$), si ottiene una nuova tabella `AllStaff`, che contiene tutte le righe presenti in almeno una delle due relazioni operande:
+
+| Surname  | Code | Department |
+| -------- | ---- | ---------- |
+| Rossi    | T1   | Math       |
+| Rossi    | T2   | Italian    |
+| Bianchi  | T3   | Math       |
+| Verdi    | T4   | English    |
+| Esposito | A1   | English    |
+| Riccio   | A2   | Math       |
+| Pierro   | A3   | Italian    |
+| Bianchi  | A4   | English    |
+
+Supponiamo, ora, che nella tabella `Admins` fosse presente anche una colonna `Salary`: l'aggiunta di questo attributo renderebbe le due relazioni non più union-compatible. Dunque, per poter effettuare un'unione su di esse, si dovrà prima effettuare una [[BD1_01 - Modello relazionale#Proiezione|proiezione]] sulla tabella `Admins`, in modo da escludere la colonna `Salary`, e poi unire il risultato di tale operazione con la tabella `Teachers`:
+$$\text{Teachers }\cup \pi_{\text{Surname, Code, Department}}(\text{Admins})$$
+Un approccio simile dovrà essere utilizzato se le due relazioni da unire presentano lo stesso numero di attributi ma alcuni di essi sono definiti su domini diversi, o ancora se le due relazioni sono effettivamente union-compatible ma alcuni dei loro attributi hanno significati diversi.
+___
+##### Intersezione
+
+L'operazione di "**intersezione**" consiste nella **creazione di una nuova relazione contenente tutte le tuple contenute sia nella prima che nella seconda relazione operanda**; funziona allo stesso modo dell'intersezione insiemistica. Simbolicamente, è rappresentata dal simbolo $\cap$; dunque, possiamo affermare che scrivere:
+$$R_{1}\cap R_{2}$$
+indica l'operazione di intersezione tra le relazioni $R_{1}$ e $R_{2}$, che genera una nuova relazione che contiene tutte le tuple contenute sia in $R_{1}$ che in $R_{2}$. È possibile vedere tale operazione anche in funzione di [[BD1_01 - Modello relazionale#Differenza|differenze]], in quanto scrivere $R_{1}\cap R_{2}$ equivale a scrivere $R_{1}-(R_{1}-R_{2})$. Come l'[[BD1_01 - Modello relazionale#Unione|unione]], anche l'intersezione può essere effettuata solo tra operandi **union-compatible**, e anch'essa è un'operazione **commutativa**.
+
+Per comprendere meglio, vediamo une esempio. Supponiamo di avere due istanze di relazione `Students` e `Admins`, corrispondenti alle seguenti tabelle:
+
+| Surname | Code | Department |
+| ------- | ---- | ---------- |
+| Rossi   | C1   | Math       |
+| Rossi   | C2   | Italian    |
+| Bianchi | C3   | Math       |
+| Verdi   | C4   | English    |
+
+| Surname  | Code | Department |
+| -------- | ---- | ---------- |
+| Esposito | C5   | Italian    |
+| Riccio   | C6   | Math       |
+| Pierro   | C7   | English    |
+| Bianchi  | C3   | Math       |
+
+Eseguendo un'operazione di intersezione tra le due tabelle `Students` e `Admins` ($\text{Students }\cap \text{ Admins}$), si ottiene una nuova tabella che contiene tutti gli studenti che sono anche amministratori, ossia:
+
+| Surname | Code | Department |
+| ------- | ---- | ---------- |
+| Bianchi | C3   | Math       |
+
+Similmente a come visto per l'unione, anche per l'intersezione è possibile utilizzare una [[BD1_01 - Modello relazionale#Proiezione|proiezione]] per rendere le relazioni operande union-compatible, selezionando un determinato sottoinsieme di attributi.
+___
+##### Differenza
+
+L'operazione di "**differenza**" consiste nella **creazione di una nuova relazione contenente tutte le tuple contenute nella prima relazione operanda e non nella seconda**; funziona allo stesso modo della differenza insiemistica. Simbolicamente, è rappresentata dal simbolo $-$; dunque, possiamo affermare che scrivere:
+$$R_{1}- R_{2}$$
+indica l'operazione di differenza tra le relazioni $R_{1}$ e $R_{2}$, che genera una nuova relazione che contiene tutte le tuple contenute in $R_{1}$ e non in $R_{2}$. Come l'[[BD1_01 - Modello relazionale#Unione|unione]] e l'[[BD1_01 - Modello relazionale#Intersezione|intersezione]], anche la differenza può essere effettuata solo tra operandi **union-compatible**; invece, diversamente dall'unione, **la differenza non è commutativa**.
+
+Per comprendere meglio, vediamo un esempio. Supponiamo di avere le stesse due istanze di relazione `Students` e `Admins` utilizzate nel paragrafo precedente, corrispondenti alle seguenti tabelle:
+
+| Surname | Code | Department |
+| ------- | ---- | ---------- |
+| Rossi   | C1   | Math       |
+| Rossi   | C2   | Italian    |
+| Bianchi | C3   | Math       |
+| Verdi   | C4   | English    |
+
+| Surname  | Code | Department |
+| -------- | ---- | ---------- |
+| Esposito | C5   | Italian    |
+| Riccio   | C6   | Math       |
+| Pierro   | C7   | English    |
+| Bianchi  | C3   | Math       |
+
+Come detto poco fa, la differenza non è commutativa: dunque, in base all'ordine degli operandi si otterranno risultati diversi. Ad esempio, effettuare la differenza $\text{Students} - \text{Admins}$ si ottiene una nuova relazione che contiene tutti gli studenti che non sono amministratori, ossia:
+
+| Surname | Code | Department |
+| ------- | ---- | ---------- |
+| Rossi   | C1   | Math       |
+| Rossi   | C2   | Italian    |
+| Verdi   | C4   | English    |
+
+Invece, effettuando la differenza $\text{Admins}-\text{Students}$ si ottiene una nuova relazione che contiene tutti gli amministratori che non sono studenti, ossia:
+
+| Surname  | Code | Department |
+| -------- | ---- | ---------- |
+| Esposito | C5   | Italian    |
+| Riccio   | C6   | Math       |
+| Pierro   | C7   | English    |
+
+Similmente a come visto per l'unione e l'intersezione, anche per la differenza è possibile utilizzare una [[BD1_01 - Modello relazionale#Proiezione|proiezione]] per rendere le relazioni operande union-compatible, selezionando un determinato sottoinsieme di attributi.
 ___
