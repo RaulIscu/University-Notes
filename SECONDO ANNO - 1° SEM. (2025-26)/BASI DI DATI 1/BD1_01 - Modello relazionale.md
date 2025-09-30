@@ -135,7 +135,7 @@ L'**algebra relazionale** fornisce notazioni per specificare "**query**", o "int
 Con l'algebra relazionale, possiamo dunque interrogare un qualsiasi database relazionale mediante un linguaggio formale costituito da vari **operatori unari e binari**, che se applicati su una o più istanze di relazione permette di generare una nuova istanza con i dati ricercati. Si tratta, del resto, di un "**linguaggio procedurale**", nel senso che gli operatori vanno applicati nell'esatto ordine descritto per ottenere il risultato desiderato.
 
 In generale, definiamo una forma di "algebra" come una struttura che dispone di **un dominio e di una lista di operatori**: ad esempio, l'algebra aritmetica ha come dominio un insieme di numeri e come operatori la somma, il prodotto, ecc. ecc.; per quanto riguarda l'algebra insiemistica, il dominio sono proprio gli insiemi e gli operatori sono unione, intersezione, e così via. Nell'algebra relazionale, il **dominio** è formato dalle **[[BD1_01 - Modello relazionale#Domini, tuple e relazioni|relazioni]]**, che sono sia gli operandi che i risultati delle varie operazioni; queste **operazioni**, in particolare, sono divisibili in **4 categorie**:
-- operazioni di **rimozione da una singola relazione**, come "**proiezione**" e "**selezione**";
+- operazioni di **estrazione da una singola relazione**, come "**proiezione**" e "**selezione**";
 - operazioni di **insiemistica**, come **unione**, **intersezione** e **differenza**;
 - operazioni di **combinazione delle tuple di due relazioni**, come **prodotto cartesiano** o "**join**";
 - operazioni di **rinomina**.
@@ -281,7 +281,7 @@ Per comprendere meglio, vediamo un esempio. Supponiamo di avere le stesse due is
 | Pierro   | C7   | English    |
 | Bianchi  | C3   | Math       |
 
-Come detto poco fa, la differenza non è commutativa: dunque, in base all'ordine degli operandi si otterranno risultati diversi. Ad esempio, effettuare la differenza $\text{Students} - \text{Admins}$ si ottiene una nuova relazione che contiene tutti gli studenti che non sono amministratori, ossia:
+Come detto poco fa, la differenza non è commutativa: dunque, in base all'ordine degli operandi si otterranno risultati diversi. Ad esempio, effettuare la differenza $\text{Students} - \text{Admins}$ risulta in una nuova relazione che contiene tutti gli studenti che non sono amministratori, ossia:
 
 | Surname | Code | Department |
 | ------- | ---- | ---------- |
@@ -364,7 +364,108 @@ Possiamo eseguire, in seguito, un'operazione di [[BD1_01 - Modello relazionale#P
 | Verdi   | C4  | Roma   | O4  | A3  | 200       |
 
 ___
-##### Join
+##### Join naturale
 
-[04 - slide 13/40]
+L'operazione di "**join naturale**" permette sostanzialmente di ottenere lo stesso risultato ottenuto al termine dell'esempio del [[BD1_01 - Modello relazionale#Prodotto cartesiano|paragrafo precedente]] in un'unica operazione. Simbolicamente, è rappresentata dal simbolo $⋈$; dunque, possiamo affermare che scrivere:
+$$R_{1}⋈R_{2}$$
+equivale a scrivere: 
+$$\pi_{\text{XY}}(\sigma_{\text{C}}(R_{1}\times R_{2}))$$
+dove $\text{X}$ rappresenta l'insieme degli attributi di $R_{1}$, ,$\text{Y}$ rappresenta l'insieme degli attributi di $R_{2}$ che non si trovano in $R_{1}$, e $\text{C}$ è una determinata condizione booleana nella forma:
+$$R_{1}.A_{1}=R_{2}.A_{1}\,\land\, R_{1}.A_{2}=R_{2}.A_{2}\,\land\,\dots\,\land\,R_{1}.A_{k}=R_{2}.A_{k}$$
+Bisogna ricordare che gli attributi confrontati nella condizione $\text{C}$ devono disporre degli stessi nomi. Per comprendere meglio, vediamo un esempio. Per comprendere meglio, vediamo lo stesso esempio del paragrafo precedente, avendo le due tabelle `Customer` e `Order`:
+
+| Surname | C#  | Town   |
+| ------- | --- | ------ |
+| Rossi   | C1  | Roma   |
+| Rossi   | C2  | Milano |
+| Bianchi | C3  | Roma   |
+| Verdi   | C4  | Roma   |
+
+| O#  | C#  | A#  | N° pieces |
+| --- | --- | --- | --------- |
+| O1  | C1  | A1  | 100       |
+| O2  | C2  | A2  | 200       |
+| O3  | C3  | A2  | 150       |
+| O4  | C4  | A3  | 200       |
+| O1  | C1  | A2  | 200       |
+
+Eseguendo un'operazione di join naturale su queste due istanze ($\text{Customer}⋈\text{Order}$), si genererà una nuova relazione contenente tutti i clienti abbinati ai loro ordini, analoga a quella ottenuta al termine del paragrafo precedente: infatti, essendo `C#` l'unico attributo con lo stesso nome tra le due relazioni, esso sarà l'unico a essere confrontato nella condizione $C$, e ne verrà lasciata una sola istanza nella tabella risultante, eliminando colonne duplicate. Si ottiene, così, sempre la seguente tabella:
+
+| Surname | C#  | Town   | O#  | A#  | N° pieces |
+| ------- | --- | ------ | --- | --- | --------- |
+| Rossi   | C1  | Roma   | O1  | A1  | 100       |
+| Rossi   | C1  | Roma   | O1  | A2  | 200       |
+| Rossi   | C2  | Milano | O2  | A2  | 200       |
+| Bianchi | C3  | Roma   | O3  | A2  | 150       |
+| Verdi   | C4  | Roma   | O4  | A3  | 200       |
+
+Vediamo, ora, un esempio più complesso. Supponiamo di avere, oltre a `Customer` e `Order`, la seguente tabella `Article`:
+
+| A#  | Label | Price |
+| --- | ----- | ----- |
+| A1  | Plate | 3     |
+| A2  | Glass | 2     |
+| A3  | Mug   | 4     |
+
+e di voler ottenere, a partire da queste tre tabelle, il nome e la città di provenienza dei clienti che hanno ordinato più di 100 articoli che costino più di $2$€ al pezzo. Innanzitutto, partiamo abbinando ai clienti i loro relativi ordini con un join naturale; a questo punto, abbiniamo a ogni ordine le informazioni relative agli articoli con un altro join naturale. Considerate insieme, le operazioni da svolgere sono $(\text{Customer}⋈\text{Order})⋈\text{Article}$, e risultano nella seguente relazione:
+
+| Surname | C#  | Town   | O#  | A#  | N° pieces | Label | Price |
+| ------- | --- | ------ | --- | --- | --------- | ----- | ----- |
+| Rossi   | C1  | Roma   | O1  | A1  | 100       | Plate | 3     |
+| Rossi   | C1  | Roma   | O1  | A2  | 200       | Glass | 2     |
+| Rossi   | C2  | Milano | O2  | A2  | 200       | Glass | 2     |
+| Bianchi | C3  | Roma   | O3  | A2  | 150       | Glass | 2     |
+| Verdi   | C4  | Roma   | O4  | A3  | 200       | Mug   | 4     |
+
+A questo punto, selezioniamo gli ordini da più di 100 articoli e che costano più di $2$€ al pezzo, mediante un'operazione di [[BD1_01 - Modello relazionale#Selezione|selezione]]. Arriviamo dunque alla seguente tabella, generata dall'operazione $\sigma_{\text{N° pieces }>100\,\land\,\text{Price }>2}$$((\text{Customer}⋈\text{Order})⋈\text{Article})$:
+
+| Surname | C#  | Town | O#  | A#  | N° pieces | Label | Price |
+| ------- | --- | ---- | --- | --- | --------- | ----- | ----- |
+| Verdi   | C4  | Roma | O4  | A3  | 200       | Mug   | 4     |
+
+A questo punto, per ottenere il nome e la città del cliente che ha effettuato l'ordine desiderato, basterà effettuare una [[BD1_01 - Modello relazionale#Proiezione|proiezione]] per estrarre gli attributi `Surname` e `Town`. Sarebbe stato possibile anche utilizzare un approccio alternativo, per certi versi più efficiente dato che permetterebbe di processare meno dati inutili: invece di effettuare subito i vari join naturali, potremmo filtrare prima la tabella `Order` (selezione per considerare solo gli ordini da più di 100 articoli) e poi la tabella `Article` (proiezione per considerare solo le colonne `A#` e `Price`, seguita da selezione per considerare solo gli articoli con prezzo maggiore di $2$€), ed effettuare in seguito i join nello stesso ordine dell'approccio precedente; infine, si potranno selezionare `Name` e `Town` del cliente in maniera analoga.
+
+Il join naturale presenta alcuni **casi particolari**. Supponiamo, ad esempio, che nell'esempio precedente la tabella `Article` venisse sostituita con la seguente:
+
+| A#  | Label | Price |
+| --- | ----- | ----- |
+| A1  | Plate | 3     |
+| A2  | Glass | 2     |
+| A3  | Mug   | 4     |
+| A4  | Fork  | 1     |
+
+e che invece di ricercare gli ordini di articoli con prezzo maggiore di $2$€, si vogliano trovare quelli con prezzo minore di $2$€; l'unico articolo che rispetta questo criterio è quello indicato dall'ultima tupla, tuttavia tale articolo non viene mai ordinato, e quindi non esistono ordini che rispettano tale criterio. Generalmente, **un join naturale tra due relazioni che hanno attributi in comune, ma dove quest'ultimi non presentano alcun valore in comune, risultano in relazioni vuote**.
+
+Un altro caso particolare è il seguente: **un join naturale tra due relazioni che non hanno attributi in comune** (con lo stesso nome) **degenera in un [[BD1_01 - Modello relazionale#Prodotto cartesiano|prodotto cartesiano]]**. Naturalmente, la soluzione più immediata in questo contesto è effettuare una rinomina di certi attributi.
+___
+##### Join $\theta$
+
+Può succedere, in alcuni casi, che attributi con nomi diversi in due relazioni abbiano in realtà lo stesso significato: vediamo, ad esempio, le seguenti due tabelle `Artist` e `Painting`:
+
+| Surname | C#  | Town   |
+| ------- | --- | ------ |
+| Rossi   | C1  | Roma   |
+| Rossi   | C2  | Milano |
+| Bianchi | C3  | Roma   |
+| Verdi   | C4  | Roma   |
+
+| Title  | C#  | Artist |
+| ------ | --- | ------ |
+| Title1 | C1  | C1     |
+| Title2 | C2  | C3     |
+| Title3 | C3  | C1     |
+| Title4 | C4  | C2     |
+| Title5 | C5  | C4     |
+| Title6 | C6  | C2     |
+
+In questo caso, supponendo di voler creare una nuova relazione che abbini gli artisti ai loro rispettivi dipinti, effettuare un [[BD1_01 - Modello relazionale#Join naturale|join naturale]] non porterebbe al risultato sperato, dato che l'attributo con nome in comune tra le due tabelle (ossia `C#`) indica prima un determinato artista e poi un determinato dipinto, e ha dunque un significato diverso in base all'istanza di relazione. Per generare correttamente la nuova relazione, gli attributi da confrontare dovranno invece essere `Artist.C#` e `Painting.Artist`; mentre un'operazione di rinomina potrebbe predisporre il problema per essere risolto con un join naturale, in alternativa è possibile utilizzare il "join $\theta$".
+
+L'operazione di "**join $\theta$**" permette di **generare una nuova relazione contenente solo le tuple di un [[BD1_01 - Modello relazionale#Prodotto cartesiano|prodotto cartesiano]] tra due relazioni che rispettano una certa condizione**, che si presenta nella forma:
+$$A\,\theta\,B$$
+dove $A$ è un attributo della prima relazione operanda, $B$ è un attributo della seconda, e $\theta$ è un qualsiasi operatore di confronto (come $=$, $<$, $\ge$ o altri); si suppone, naturalmente, che $A$ e $B$ derivino dallo stesso dominio, altrimenti l'operazione di confronto risulterebbe impossibile.
+
+Simbolicamente, è possibile indicare il join $\theta$ con lo stesso simbolo del join naturale, ossia $⋈$, e in questo caso scrivere:
+$$R_{1}⋈R_{2}$$
+equivale a scrivere:
+$$\sigma_{A\,\theta\,B}(R_{1}\times R_{2})$$
 ___
