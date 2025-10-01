@@ -95,7 +95,9 @@ In altre parole, potremmo dire che in $\theta(g(n))$ troveremo **tutte le funzio
 
 Per comprendere meglio questo concetto, vediamo un esempio. Supponiamo di avere una funzione $f(n)=3n+3$; possiamo affermare che tale funzione si trovi in $\theta(n)$, dato che è possibile trovare tre valori $c_{1}$, $c_{2}$ e $n_{0}$ (ad esempio, $c_{1}=1$, $c_{2} = 4$ e $n_{0}=3$) tali per cui valga che $c_{1}\cdot n\le 3n+3\le c_{2}\cdot n$ per ogni $n\ge n_{0}$.
 
-[slide 12]
+##### Dimostrazione: un polinomio di grado $m$ è in $\theta(n^{m})$
+
+Dato che abbiamo già dimostrato che $n^{m}$ costituisce sia il [[IAA_02 - Notazione asintotica#Dimostrazione un polinomio di grado $m$ è in $O(n m)$|limite asintotico superiore]] che il [[IAA_02 - Notazione asintotica#Dimostrazione un polinomio di grado $m$ è in $ Omega(n {m})$|limite asintotico inferiore]] per un polinomio generico di grado $m$, possiamo affermare che tale polinomio si trovi anche in $\theta(n^{m})$.
 ___
 ## Calcolo della notazione asintotica tramite limiti
 
@@ -129,7 +131,11 @@ Per semplificare il calcolo del costo computazionale degli algoritmi, si possono
 
 Informalmente, queste tre regole esprimono il fatto che, nel calcolo della notazione asintotica, **le costanti moltiplicative possono essere ignorate**.
 
-[dimostrazione della prima regola: slide 17]
+Possiamo **dimostrare la prima regola** (e, di conseguenza, anche le altre due) abbastanza semplicemente:
+
+> Affermando che $f(n)$ è in $O(g(n))$, stiamo affermando che esistono due costanti $c$ e $n_{0}$ tali per cui vale che: $$f(n)\le c\cdot g(n)\,\,\,\,\,\,\,\,\,\,\text{per ogni }n\ge n_{0}$$
+> Di conseguenza, possiamo affermare che lo stesso vale anche moltiplicando entrambi i membri per una certa costante $k$: $$k\cdot f(n)\le k\cdot c \cdot g(n)$$
+> Prendendo $k\cdot c$ come nuova costante $c'$, e mantenendo lo stesso $n_{0}$, si ottiene che $k \cdot f(n)\le c'\cdot g(n)$ per ogni $n\ge n_{0}$, il che vuol dire che anche $k\cdot f(n)$ è in $O(g(n))$, come volevasi dimostrare.
 
 Vediamo un esempio per comprendere meglio come applicare queste regole. Supponiamo di voler trovare il limite asintotico stretto per $f(n)=3n^{2}$: applicando la terza delle tre regole appena esposte, sappiamo che essa avrà lo stesso limite asintotico stretto della funzione $n^{2}$, e mediante un [[IAA_02 - Notazione asintotica#Calcolo della notazione asintotica tramite limiti|limite]] banale possiamo verificare che $f(n)=\theta(n^{2})$.
 
@@ -145,7 +151,12 @@ ___
 
 Informalmente, queste tre regole esprimono il fatto che, nel calcolo della notazione asintotica, **le notazioni asintotiche commutano con l'operazione di somma**.
 
-[dimostrazione della prima regola: slide 17]
+Possiamo **dimostrare la prima regola** (e, di conseguenza, anche le altre due) abbastanza semplicemente:
+
+> Affermando che $f(n) = O(g(n))$ e che $d(n)=O(h(n))$, stiamo affermando che esistono quattro costanti $c$, $c^{'}$, $n_{0}$ e $n_{0}^{'}$ tali per cui vale che: $$f(n)\le c\cdot g(n)\,\,\,\,\,\,\,\,\,\,\text{per ogni }n\ge n_{0}$$
+> e che:$$d(n)\le c^{'}\cdot h(n)\,\,\,\,\,\,\,\,\,\,\text{per ogni }n\ge n_{0}^{'}$$
+> Di conseguenza, possiamo affermare che per ogni $n\ge max(n_{0},\,n_{0}^{'})$ la somma $f(n)+d(n)$ è necessariamente minore o uguale della somma $c\cdot g(n)+c^{'}\cdot h(n)$, e quest'ultima è a sua volta sicuramente minore o uguale di $max(c,\,c^{'})\cdot (g(n)+h(n))$:$$f(n)+d(n)\,\,\le\,\,c\cdot g(n)+c^{'}\cdot h(n)\,\,\le\,\,max(c,\,c^{'})\cdot(g(n)+h(n))$$
+> Abbiamo dunque dimostrato che $f(n)+d(n)=O(g(n)+h(n))$. [TODO: finire dimostrazione, slide 17]
 
 Vediamo un esempio per comprendere meglio come applicare queste regole. Supponiamo di voler trovare il limite asintotico stretto per $f(n)=3n+4n^{4}$: per quanto riguarda il primo monomio, applicando prima la regola delle [[IAA_02 - Notazione asintotica#Costanti moltiplicative|costanti moltiplicative]] e poi un [[IAA_02 - Notazione asintotica#Calcolo della notazione asintotica tramite limiti|limite]], troviamo che è in $\theta(n)$; per il secondo, seguendo lo stesso procedimento, si ottiene che è in $\theta(n^{4})$; a questo punto, abbiamo che $f(n)=\theta(n)+\theta(n^{4})$. Applicando la terza delle regole appena esposte, si ottiene che $\theta(n)+\theta(n^{4})=\theta(max(n,\,n^{4}))=\theta(n^{4})$.
 ___
@@ -159,11 +170,48 @@ ___
 
 Informalmente, queste tre regole esprimono il fatto che, nel calcolo della notazione asintotica, **le notazioni asintotiche commutano con l'operazione di prodotto**.
 
-[dimostrazione della prima regola: slide 18]
+Possiamo **dimostrare la prima regola** (e, di conseguenza, anche le altre due) abbastanza semplicemente:
+
+> Affermando che $f(n) = O(g(n))$ e che $d(n)=O(h(n))$, stiamo affermando che esistono quattro costanti $c$, $c^{'}$, $n_{0}$ e $n_{0}^{'}$ tali per cui vale che: $$f(n)\le c\cdot g(n)\,\,\,\,\,\,\,\,\,\,\text{per ogni }n\ge n_{0}$$
+> e che: $$d(n)\le c^{'}\cdot h(n)\,\,\,\,\,\,\,\,\,\,\text{per ogni }n\ge n_{0}^{'}$$
+> Di conseguenza, possiamo effettuare una moltiplicazione membro a membro, e garantire che per ogni $n\ge max(n_{0},\,n_{0}^{'})$ vale che: $$f(n)\cdot d(n)\,\,\le\,\,c\cdot c^{'}\cdot g(n)\cdot h(n)$$
+> Prendendo $c\cdot c^{'}$ come nuova costante $c^{''}$, e mantenendo lo stesso $n_{0}$, si ottiene che $f(n) \cdot d(n)\le c^{''}\cdot g(n)\cdot h(n)$ per ogni $n\ge n_{0}$, il che vuol dire che $f(n)\cdot d(n)$ è in $O(g(n)\cdot h(n))$, come volevasi dimostrare.
 
 Vediamo un esempio per comprendere meglio come applicare queste regole. Supponiamo di voler trovare il limite asintotico stretto per $f(n)=3n\cdot 2^{n}+4n^{4}$: per quanto riguarda il primo addendo, si ha che $3n=\theta (n)$ e che $2^{n}=\theta(2^{n})$, e applicando la terza delle regole appena esposte si ottiene che $\theta (n)\cdot \theta(2^{n})=\theta(n\cdot 2^{n})$; per il secondo, si trova subito che $4n^{4}=\theta(n^{4})$; a questo punto, abbiamo che $f(n)=\theta(n\cdot 2^{n})+\theta(n^{4})$. Sappiamo che un esponenziale domina sempre un polinomio, dunque applicando la terza delle regole sulla [[IAA_02 - Notazione asintotica#Commutatività della somma|commutatività della somma]] si ottiene che $\theta(n\cdot 2^{n})+\theta(n^{4})=\theta(n\cdot 2^{n})$.
 ___
 ##### Sommatorie notevoli
 
-[slide 18/21]
+> $$\sum_{i\,=\,0}^{n}i=\frac{n(n+1)}{2}=\theta(n^{2})$$
+
+Più in generale, vale che:
+
+> $$\sum_{i\,=\,0}^{n}i^{c}=\theta(n^{c+1})$$
+
+
+
+> $$\sum_{i\,=\,0}^{n}2^{i}=2^{n+1}-1=\theta(2^{n})$$
+
+Più in generale, vale che:
+
+> $$\sum_{i\,=\,0}^{n}c^{i}=\frac{c^{n+1}-1}{c-1}=\theta(c^{n})\,\,\,\,\,\,\,\,\,\,\text{per ogni }c>1$$
+
+
+
+> $$\sum_{i\,=\,0}^{n}(i\cdot 2^{i})=\theta(n\cdot 2^{n})$$
+
+Più in generale, vale che:
+
+> $$\sum_{i\,=\,0}^{n}(i\cdot c^{i})=\theta(n\cdot c^{n})\,\,\,\,\,\,\,\,\,\,\text{per ogni }c>1$$
+
+
+
+> $$\sum_{i\,=\,0}^{n}\log i=\log n! = \theta(n\cdot \log n)$$
+
+Più in generale, vale che:
+
+> $$\sum_{i\,=\,0}^{n}\log^{c}i=\theta(n\cdot \log^{c}i)\,\,\,\,\,\,\,\,\,\,\text{per ogni }c>1$$
+
+
+
+> $$\sum_{i\,=\,1}^{n} \frac{1}{i}=\theta(\log n)$$
 ___
