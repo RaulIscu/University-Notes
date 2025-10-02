@@ -91,7 +91,7 @@ Il limite asintotico più preciso possibile è una sorta di combinazione dei due
 > $$f(n)\text{ è in }\theta(g(n))$$
 > se esistono tre costanti $c_{1}$, $c_{2}$ e $n_{0}$ tali per cui vale che $c_{1}\cdot g(n)\le f(n)\le c_{2}\cdot g(n)$ per ogni $n\ge n_{0}$.
 
-In altre parole, potremmo dire che in $\theta(g(n))$ troveremo **tutte le funzioni che "si comportano" analogamente a $g(n)$**.
+In altre parole, potremmo dire che in $\theta(g(n))$ troveremo **tutte le funzioni che "si comportano" analogamente a $g(n)$**. In $\theta(g(n))$, si trovano **tutte le funzioni che appartengono sia a $O(g(n))$ che a $\Omega(g(n))$**.
 
 Per comprendere meglio questo concetto, vediamo un esempio. Supponiamo di avere una funzione $f(n)=3n+3$; possiamo affermare che tale funzione si trovi in $\theta(n)$, dato che è possibile trovare tre valori $c_{1}$, $c_{2}$ e $n_{0}$ (ad esempio, $c_{1}=1$, $c_{2} = 4$ e $n_{0}=3$) tali per cui valga che $c_{1}\cdot n\le 3n+3\le c_{2}\cdot n$ per ogni $n\ge n_{0}$.
 
@@ -129,7 +129,7 @@ Per semplificare il calcolo del costo computazionale degli algoritmi, si possono
 
 > Per ogni $k > 0$, se $f(n)$ è in $\theta(g(n))$ allora lo sarà anche $k\cdot f(n)$.
 
-Informalmente, queste tre regole esprimono il fatto che, nel calcolo della notazione asintotica, **le costanti moltiplicative possono essere ignorate**.
+Informalmente, queste tre regole esprimono il fatto che, nel calcolo della notazione asintotica, **le costanti moltiplicative possono essere ignorate** (solo, però, se non si trovano all'esponente).
 
 Possiamo **dimostrare la prima regola** (e, di conseguenza, anche le altre due) abbastanza semplicemente:
 
@@ -181,35 +181,35 @@ Vediamo un esempio per comprendere meglio come applicare queste regole. Supponia
 ___
 ##### Sommatorie notevoli
 
-> $$\sum_{i\,=\,0}^{n}i=\frac{n(n+1)}{2}=\theta(n^{2})$$
+> $$\sum_{i\,=\,0}^{n}i\,=\,\frac{n(n+1)}{2}\,=\,\theta(n^{2})$$
 
 Più in generale, vale che:
 
-> $$\sum_{i\,=\,0}^{n}i^{c}=\theta(n^{c+1})$$
+> $$\sum_{i\,=\,0}^{n}i^{c}\,=\,\theta(n^{c+1})\,\,\,\,\,\,\,\,\,\,\text{per ogni }c\ge 1$$
 
 
 
-> $$\sum_{i\,=\,0}^{n}2^{i}=2^{n+1}-1=\theta(2^{n})$$
-
-Più in generale, vale che:
-
-> $$\sum_{i\,=\,0}^{n}c^{i}=\frac{c^{n+1}-1}{c-1}=\theta(c^{n})\,\,\,\,\,\,\,\,\,\,\text{per ogni }c>1$$
-
-
-
-> $$\sum_{i\,=\,0}^{n}(i\cdot 2^{i})=\theta(n\cdot 2^{n})$$
+> $$\sum_{i\,=\,0}^{n}2^{i}\,=\,2^{n+1}-1\,=\,\theta(2^{n})$$
 
 Più in generale, vale che:
 
-> $$\sum_{i\,=\,0}^{n}(i\cdot c^{i})=\theta(n\cdot c^{n})\,\,\,\,\,\,\,\,\,\,\text{per ogni }c>1$$
+> $$\sum_{i\,=\,0}^{n}c^{i}\,=\,\frac{c^{n+1}-1}{c-1}\,=\,\theta(c^{n})\,\,\,\,\,\,\,\,\,\,\text{per ogni }c>1$$
 
 
 
-> $$\sum_{i\,=\,0}^{n}\log i=\log n! = \theta(n\cdot \log n)$$
+> $$\sum_{i\,=\,0}^{n}(i\cdot 2^{i})\,=\,(n-1)2^{n+1}+2\,=\,\theta(n\cdot 2^{n})$$
 
 Più in generale, vale che:
 
-> $$\sum_{i\,=\,0}^{n}\log^{c}i=\theta(n\cdot \log^{c}i)\,\,\,\,\,\,\,\,\,\,\text{per ogni }c>1$$
+> $$\sum_{i\,=\,0}^{n}(i\cdot c^{i})\,=\, \frac{n\cdot c^{n+1}}{c-1}-\frac{c^{n+1}-1}{(c-1)^2} \,=\,\theta(n\cdot c^{n})\,\,\,\,\,\,\,\,\,\,\text{per ogni }c>1$$
+
+
+
+> $$\sum_{i\,=\,0}^{n}\log i\,=\,\log n!\,=\,\theta(n\,\log n)$$
+
+Più in generale, vale che:
+
+> $$\sum_{i\,=\,0}^{n}\log^{c}i\,=\,\theta(n\,\log^{c}i)\,\,\,\,\,\,\,\,\,\,\text{per ogni }c>1$$
 
 
 
