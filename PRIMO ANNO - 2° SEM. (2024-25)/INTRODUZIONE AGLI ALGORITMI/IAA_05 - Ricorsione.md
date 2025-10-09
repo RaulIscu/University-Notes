@@ -222,10 +222,46 @@ ___
 
 Per risolvere un'equazione di ricorrenza utilizzando il **metodo dell'albero**, quello che si deve fare è **costruire un "albero di ricorrenza" dell'algoritmo considerato**, in modo da rappresentare graficamente lo sviluppo del suo costo computazionale e valutare, così, quest'ultimo con più facilità.
 
+Prima di procedere, è opportuno fare una piccola parentesi sul concetto di "**albero**", che verrà poi trattato più approfonditamente nel capitolo sulle [[IAA_07 - Strutture dati#Alberi|strutture dati]]. Informalmente, un cosiddetto "**albero binario**" è costituito da un insieme di **nodi**, all'interno del quale vi si trova un nodo particolare detto "**radice**", da cui si sviluppano gli altri; **ogni nodo è collegato al più ad altri due nodi**, con quest'ultimi che vengono definiti "**figli**", mentre il nodo da cui derivano è definito "**padre**"; **ogni nodo può essere figlio di un solo padre**, ossia può derivare solo da un nodo. In generale, se all'interno di un albero ogni nodo può avere al più $m$ figli, allora l'albero verrà detto "**albero $m$-ario**".
 
+Visivamente, si può organizzare un albero partendo dalla radice, e ponendo ciascun nodo più in basso di suo padre: in questo modo, tutti i nodi diventano naturalmente organizzati in **livelli**, numerati in ordine crescente a partire dalla radice (dunque, di norma, la radice si trova al livello $0$). Definiamo come **"altezza" di un albero** la **lunghezza del più lungo cammino dalla radice ad una foglia** (vengono detti "**foglie**" i nodi che non hanno figli); si noti, dunque, che un albero di altezza $h$ dispone di $h+1$ livelli, di norma numerati da $0$ ad $h$.
 
-[SLIDES: 06, slide 9/11]
-[DISPENSE: 05, pag. 11/14]
+Un albero nel quale tutti i livelli contengono il massimo numero possibile di nodi è detto "**albero completo**". Avendo un albero binario completo di altezza $h$, sono facilmente derivabili alcune considerazioni:
+- il **numero di nodi al livello $i$** è $2^{i}$, dunque **il numero delle foglie dell'albero** è $2^{h}$;
+- il **numero di nodi interni**, ossia di tutti i nodi dell'albero che non sono foglie, è pari a $\sum_{i=0}^{h-1}2^{i}=\frac{2^{h}-1}{2-1}=2^{h}-1$;
+- il **numero totale di nodi** dell'albero è pari alla somma del numero di foglie e di nodi interni, dunque $2^{h}+2^{h}-1=2^{h+1}-1$.
+
+Proviamo, con le informazioni fornite finora, a **stimare l'altezza di un albero binario completo contenente $n$ nodi**: poiché l'albero è completo, sappiamo che il numero di nodi $n$ è pari a:
+$$n\,=\,2^{h+1}-1$$
+dove $h$ è l'altezza dell'albero. Di conseguenza, possiamo affermare che:
+$$\log(n+1)\,=\,\log(2^{h+1})\,=\,h+1$$
+da cui si deriva che:
+$$h\,=\,\log(n+1)-1\,=\,\log\left( \frac{n+1}{2} \right)$$
+Possiamo facilmente generalizzare tutte le osservazioni e i calcoli visti finora, facendoli valere per qualsiasi albero $m$-ario completo con $m>2$, dunque:
+- il **numero di nodi al livello $i$** è $m^{i}$, dunque **il numero delle foglie dell'albero** è $m^{h}$;
+- il **numero di nodi interni**, ossia di tutti i nodi dell'albero che non sono foglie, è pari a $\sum_{i=0}^{h-1}m^{i}=\frac{m^{h}-1}{m-1}$;
+- il **numero totale di nodi** dell'albero è pari alla somma del numero di foglie e di nodi interni, dunque $m^{h}+\frac{m^{h}-1}{m-1}=\frac{m^{h+1}-1}{m-1}$;
+- avendo $n$ nodi, l'**altezza** dell'albero è pari a $\Theta(\log_{m}n)$.
+
+A questo punto, torniamo a parlare del metodo dell'albero. **Ogni nodo dell'albero di ricorrenza corrisponderà alla soluzione di un problema di una certa dimensione**; esso riporta il costo della ricombinazione delle soluzioni parziali, e **ha tanti figli quanti sono i sottoproblemi** in cui il problema relativo al nodo stesso è scomposto ricorsivamente.
+
+##### Esempio
+
+Per comprendere meglio il funzionamento di questo metodo, applichiamolo alla seguente equazione di ricorrenza:
+$$\begin{cases} T(1)=\Theta(1)\\T(n)=2T\left( \frac{n}{2} \right)+\Theta(n^{2}) \end{cases}$$
+Per iniziare a costruire l'albero di ricorrenza, partiamo dalla radice e dai suoi figli, che corrispondono sostanzialmente alla prima iterazione dell'algoritmo:
+
+![[metodo_albero_esempio.png]]
+
+In questo albero, sulla radice si trova il costo computazionale della prima iterazione della parte non ricorsiva dell'algoritmo (in questo caso, $\Theta(n^{2})$), e i due figli rappresentano le due chiamate ricorsive effettuate, che lavoreranno su un sottoproblema di dimensione minore (in questo caso, $\frac{n}{2}$ per entrambe le chiamate). In seguito, per proseguire con la creazione dell'albero, si ripeterà a oltranza lo stesso procedimento su ciascuno dei figli, fino ad arrivare alle foglie, che corrispondono ai casi base e, perciò, non hanno figli. L'albero di ricorrenza ottenuto dovrebbe svilupparsi in qualcosa del genere:
+
+![[metodo_albero_esempio1.png]]
+
+Una volta completato l'albero, **il costo computazionale è dato dalla somma dei costi di tutti i livelli** di cui è costituito. Si noti che, concretamente, **il metodo dell'albero necessita degli stessi identici calcoli algebrici utilizzati per il [[IAA_05 - Ricorsione#Metodo iterativo|metodo iterativo]]**. Nel nostro esempio:
+$$\begin{align} &\text{livello 0: } \Theta(n^{2})\\&\text{livello 1: }\, 2\cdot \begin{matrix} \Theta\left( \left( \frac{n}{2} \right)^{2} \right) \end{matrix}\,=\, \begin{matrix} \Theta\left( \frac{n^{2}}{4} + \frac{n^{2}}{4} \right) \end{matrix}\,=\, \begin{matrix} \Theta\left( \frac{n^{2}}{2} \right) \end{matrix}\\&\text{livello 2: }\, 4\cdot \begin{matrix} \Theta\left( \left( \frac{n}{4} \right)^{2} \right) \end{matrix}\,=\,\begin{matrix} \Theta\left( \frac{n^{2}}{16}+\frac{n^{2}}{16}+\frac{n^{2}}{16}+\frac{n^{2}}{16} \right) \end{matrix}\,=\,\begin{matrix} \Theta\left( \frac{n^{2}}{4} \right) \end{matrix}\\&\dots\\&\text{livello }i\text{: }\, \end{align}$$
+
+[SLIDES: 06, slide 10/11]
+[DISPENSE: 05, pag. 14]
 ___
 ## Metodo principale
 
