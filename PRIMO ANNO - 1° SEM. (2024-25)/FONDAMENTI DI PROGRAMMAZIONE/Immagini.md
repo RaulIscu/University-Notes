@@ -8,7 +8,7 @@ Ciascuno di questi valori viene, in genere, codificato in un *byte* (8 *bit*), e
 
 Nell'analisi del modello *RGB*, i casi particolari più lampanti sono il bianco, rappresentato dal massimo della luminosità per tutti e 3 i parametri (`255, 255, 255`), e il nero, rappresentato invece dal minimo della luminosità per tutti e 3 i parametri (`0, 0, 0`).
 ___
-Abbiamo stabilito che una qualsiasi immagine può essere interpretata come una griglia (o **matrice**) di *pixel*; per semplicità, dunque, in un programma un'immagine può essere rappresentata come una [[Generatori e contenitori|lista]] di liste di triple (tuple con 3 elementi). Ad esempio, se volessimo rappresentare la bandiera italiana, il programma corrispondente sarebbe il seguente:
+Abbiamo stabilito che una qualsiasi immagine può essere interpretata come una griglia (o **matrice**) di *pixel*; per semplicità, dunque, in un programma un'immagine può essere rappresentata come una [[FDP_06 - Generatori e strutture dati|lista]] di liste di triple (tuple con 3 elementi). Ad esempio, se volessimo rappresentare la bandiera italiana, il programma corrispondente sarebbe il seguente:
 ```
 import images
 img = [
@@ -180,7 +180,7 @@ Molte operazioni che si possono fare su qualsiasi *editor* di foto possono esser
 - sfocare l'immagine;
 - inserire del rumore.
 
-Per **ritagliare un'immagine**, si distinguono due passaggi principali: prima si elimina un determinato numero di righe di *pixel* da sopra e sotto l'immagine, poi si toglie un determinato numero di colonne di *pixel* dall'immagine risultante. Per fare queste due operazioni, risulta fondamentale applicare lo *[[Generatori e contenitori|slicing]]*:
+Per **ritagliare un'immagine**, si distinguono due passaggi principali: prima si elimina un determinato numero di righe di *pixel* da sopra e sotto l'immagine, poi si toglie un determinato numero di colonne di *pixel* dall'immagine risultante. Per fare queste due operazioni, risulta fondamentale applicare lo *[[FDP_06 - Generatori e strutture dati|slicing]]*:
 ```
 def crop_image(img, alto, basso, sx, dx):
 	L, A = len(img[0]), len(img)
@@ -194,7 +194,7 @@ def crop_image(img, alto, basso, sx, dx):
 		else:
 			return [riga[sx:] for riga in nuova]
 ```
-Per **copiare e incollare una parte dell'immagine su un'altra**, basterà effettuare un *crop* che isoli la parte di immagine che si vuole copiare, e sostituire la zona su cui si vuole copiare la parte considerata con quest'ultima con un [[Generatori e contenitori|assegnamento a slice]]:
+Per **copiare e incollare una parte dell'immagine su un'altra**, basterà effettuare un *crop* che isoli la parte di immagine che si vuole copiare, e sostituire la zona su cui si vuole copiare la parte considerata con quest'ultima con un [[FDP_06 - Generatori e strutture dati|assegnamento a slice]]:
 ```
 def cut_paste_img(imgS, imgD, xs1, ys1, xs2, ys2, XD, YD):
 	HS = len(imgS)

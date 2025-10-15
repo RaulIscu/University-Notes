@@ -16,7 +16,7 @@ In ogni caso, è possibile **"forzare" il tipo di una variabile**, o specificand
 x: int = 5
 ```
 
-oppure tramite un meccanismo chiamato "**casting**" [APPROFONDIMENTO SUL CASTING]. In generale, è possibile **ottenere il tipo attuale di una variabile** tramite la funzione **`type()`**, che prenderà come argomento il nome della variabile di cui si vuole sapere il tipo.
+oppure tramite un meccanismo chiamato "**casting**". In generale, è possibile **ottenere il tipo attuale di una variabile** tramite la funzione **`type()`**, che prenderà come argomento il nome della variabile di cui si vuole sapere il tipo.
 
 ## Assegnamenti multipli
 
