@@ -1,4 +1,4 @@
-Si possono distinguere principalmente tre tipi di **operatori** presenti in Java:
+Si possono distinguere principalmente quattro tipi di **operatori** presenti in Python:
 - operatori **logici**;
 - operatori **di confronto**;
 - operatori **aritmetici**;

@@ -126,7 +126,23 @@ Considerando anche questa seconda tabella, risulta spontaneo introdurre un ulter
 ___
 ##### Chiavi
 
-[02 - slide 36/46]
+Avendo una relazione $R$, possiamo definire "**chiave di $R$**" un **insieme $X$ di attributi della relazione** che soddisfa le seguenti condizioni:
+- per ogni istanza della relazione $R$, non esistono due tuple distinte $t_{1}$ e $t_{2}$ che abbiano gli stessi valori per tutti gli attributi compresi in $X$;
+- non esiste un sottoinsieme proprio di $X$ che soddisfi la condizione precedente.
+
+Per comprendere meglio questo nuovo concetto, vediamo un esempio concreto. Supponiamo di avere un'istanza di relazione `Staff`, rappresentata dalla seguente tabella:
+
+| ID   | Surname | Name  | Role    | Hiring |
+| ---- | ------- | ----- | ------- | ------ |
+| COD1 | Rossi   | Mario | Analyst | 1995   |
+| COD2 | Bianchi | Peter | Analyst | 1990   |
+| COD3 | Neri    | Paolo | Admin   | 1985   |
+
+A partire da questa istanza, e basandoci sulla definizione che abbiamo appena dato, potremmo affermare che ogni attributo della relazione, fatta eccezione per `Role`, potrebbe rappresentare una chiave di `Staff`, dato che presentano valori diversi in ogni tupla della relazione.
+
+
+
+[02 - slide 36, 38/46]
 ___
 ## Algebra relazionale
 
