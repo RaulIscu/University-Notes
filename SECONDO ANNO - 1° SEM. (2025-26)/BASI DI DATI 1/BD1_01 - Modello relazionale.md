@@ -100,7 +100,7 @@ Possiamo notare che, seppur tutti i dati presenti appartengano ai domini giusti,
 - nella terza riga, il voto conseguito dallo studente è $27$, dunque non dovrebbe essere applicabile il valore nella colonna `Honor`, in quanto è impossibile ottenere una lode su un voto inferiore a 30;
 - nella quarta riga, la matricola dello studente è identica a quella dello studente della riga precedente, il che dovrebbe essere impossibile.
 
-Per prevenire problematiche del genere, si possono introdurre dei "**vincoli di integrità**", ossia delle restrizioni su certi dati (e, quindi, su certi attributi) che devono essere rispettate da ogni istanza di relazione del database. In questo contesto, un'istanza di database relazionale si dice "**corretta**" se **soddisfa tutti i vincoli di integrità associati al suo schema**.
+Per prevenire problematiche del genere, si possono introdurre dei "**vincoli di integrità**", ossia delle restrizioni su certi dati (e, quindi, su certi attributi) che devono essere rispettate da ogni istanza di relazione del database. In questo contesto, un'istanza di database relazionale si dice "**corretta**", o "**legale**", se **soddisfa tutti i vincoli di integrità associati al suo schema**.
 
 Alcuni vincoli di integrità che si potrebbero inserire nell'esempio precedente, ad esempio, sono i seguenti:
 - i valori inseriti nella colonna `Grade` devono essere $\ge 18$ (un voto inferiore significherebbe non passare l'esame) e $\le 30$ (non è ottenibile un voto maggiore);
@@ -120,7 +120,7 @@ Considerando anche questa seconda tabella, risulta spontaneo introdurre un ulter
 - i **vincoli di dominio**, che impongono delle condizioni sul range di valori accettabili all'interno di un determinato dominio (ad esempio, $\text{Grade} \ge 18 \text{ AND Grade} \le 30$);
 - i **vincoli di tupla**, che impongono delle condizioni su più di un valore all'interno della stessa tupla, ad esempio stabilendo una certa correlazione tra alcuni valori (ad esempio, $\text{Grade} = 30\text{ \,OR NOT\, Honor} = \text{Yes}$);
 - i **vincoli di unicità**, che impongono che non ci siano duplicati tra valori della stessa colonna;
-- i **vincoli tra valori di tuple di relazioni diverse**, che impongono delle condizioni su valori appartenenti a tuple di relazioni diverse (ad esempio, che un valore di `Student` debba essere contenuto nella colonna `Matricola` della tabella `Students`);
+- i **vincoli di contenimento**, che impongono delle condizioni su valori appartenenti a tuple di relazioni diverse (ad esempio, che un valore di `Student` debba essere contenuto nella colonna `Matricola` della tabella `Students`);
 - i **vincoli sulle chiavi primarie**;
 - i **vincoli di esistenza del valore**.
 ___
@@ -140,9 +140,9 @@ Per comprendere meglio questo nuovo concetto, vediamo un esempio concreto. Suppo
 
 A partire da questa istanza, e basandoci sulla definizione che abbiamo appena dato, potremmo affermare che ogni attributo della relazione, fatta eccezione per `Role`, potrebbe rappresentare una chiave di `Staff`, dato che presentano valori diversi in ogni tupla della relazione.
 
+Come notiamo dall'esempio, **una relazione può avere più chiavi alternative**. Possiamo, inoltre, affermare che **ogni relazione possiede sempre almeno una chiave**: logicamente, ciò si evince dalla definizione che abbiamo dato di [[BD1_01 - Modello relazionale#Domini, tuple e relazioni|tupla]], dato che non possono esistere tuple identiche. Tra le varie chiavi, quella più "utilizzata" o quella comprendente il minor numero di attributi viene detta "**chiave primaria**".
 
-
-[02 - slide 36, 38/46]
+[02 - slide 36, 42/52]
 ___
 ## Algebra relazionale
 
@@ -484,4 +484,8 @@ Simbolicamente, è possibile indicare il join $\theta$ con lo stesso simbolo del
 $$R_{1}⋈R_{2}$$
 equivale a scrivere:
 $$\sigma_{A\,\theta\,B}(R_{1}\times R_{2})$$
+___
+#####
+
+[05]
 ___
