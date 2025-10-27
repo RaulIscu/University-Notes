@@ -489,3 +489,80 @@ ___
 
 [05]
 ___
+## Come formulare un "buon" schema di database?
+
+Supponiamo di voler creare un database contenente alcuni dati riguardo a degli studenti universitari. Più nello specifico, si vogliono memorizzare:
+- i dati identificativi di ogni studente (nome, cognome, data di nascita, città e provincia di nascita, matricola e "tax code");
+- i dati curriculari relativi a ogni esame effettuato dagli studenti (codice, titolo e professore del corso, voto dell'esame e data).
+
+Un primo approccio, forse il più semplice, può essere di formulare **un solo schema di relazione** che contempli l'interezza dei dati appena esposti. Nel nostro caso, ciò risulterebbe in uno schema di relazione del genere:
+$$\text{Curriculum(Matr, Name, Surname, TC, Birth, City, Prov, C\#, Title, Prof, Date, Grade)}$$
+Concretamente, tale schema potrebbe presentare un'istanza del genere:
+
+| Matr | Name  | Surname | TC  | Birth | City  | Prov | C#  | Title     | Prof     | Date | Grade |
+| ---- | ----- | ------- | --- | ----- | ----- | ---- | --- | --------- | -------- | ---- | ----- |
+| 01   | Mario | Rossi   | ... | ...   | Tolfa | Rome | 10  | Physics   | Aiello   | ...  | ...   |
+| 02   | Paolo | Bianchi | ... | ...   | Tolfa | Rome | 10  | Physics   | Aiello   | ...  | ...   |
+| 01   | Mario | Rossi   | ... | ...   | Tolfa | Rome | 20  | Chemistry | Carlucci | ...  | ...   |
+
+Apparentemente, sembra che lo scopo desiderato sia effettivamente raggiunto. Tuttavia, possiamo notare diversi **problemi**, soprattutto legati alla **ridondanza**: ad esempio, i dati biografici di ciascuno studente dovranno essere nuovamente registrati ogni volta che esso effettuerà un esame; lo stesso discorso può essere fatto per i dati del corso, che dovranno essere reinseriti per ogni esame. Si tratta di problemi importanti, dato che possono facilmente portare non solo a **spreco di spazio di memoria**, ma anche a varie **anomalie**, legate all'aggiornamento, all'inserimento e all'eliminazione di dati. In particolare:
+- l'**anomalia di aggiornamento dei dati** si palesa nel momento in cui, ad esempio, se il professore di un corso cambia l'informazione in questione dovrà essere aggiornata per ogni esame di tale corso che è stato effettuato;
+- l'**anomalia di inserimento dei dati** si trova nel fatto che non sarà possibile inserire i dati identificativi di uno studente finché questo non avrà effettuato almeno un esame (un discorso analogo vale per i dati curriculari dei vari corsi);
+- l'**anomalia di eliminazione dei dati** si verifica, ad esempio, nel momento in cui un esame è stato effettuato da un solo studente, e dunque l'eliminazione dei dati di tale studente comporterebbe anche l'eliminazione dei dati del corso relativo a tale esame.
+
+Cerchiamo, dunque, di trovare un nuovo approccio alla formulazione di questo database, dividendolo stavolta in **tre schemi di relazione**, come i seguenti:
+$$\begin{align} &\text{Student(Matr, Name, Surname, TC, Birth, City, Prov)} \\ &\text{Course(C\#, Title, Prof)} \\ &\text{Exam(Matr, C\#, Date, Grade)} \end{align}$$
+A questo punto, la stessa informazione contenuta nell'esempio di istanza precedente potrà essere contenuta nelle tre seguenti tabelle:
+
+| Matr | Name  | Surname | TC  | Birth | City  | Prov |
+| ---- | ----- | ------- | --- | ----- | ----- | ---- |
+| 01   | Mario | Rossi   | ... | ...   | Tolfa | Rome |
+| 02   | Paolo | Bianchi | ... | ...   | Tolfa | Rome |
+
+| C#  | Title     | Prof     |
+| --- | --------- | -------- |
+| 10  | Physics   | Aiello   |
+| 20  | Chemistry | Carlucci |
+
+| Matr | C#  | Date | Grade |
+| ---- | --- | ---- | ----- |
+| 01   | 10  | ...  | ...   |
+| 02   | 10  | ...  | ...   |
+| 01   | 20  | ...  | ...   |
+
+Con questa soluzione, abbiamo eliminato i problemi evidenziati prima, tuttavia se ne palesano ancora degli altri:
+- l'associazione tra una municipalità e la sua provincia viene ripetuta per ogni studente di tale municipalità (**ridondanza**);
+- nell'ipotesi, remota ma possibile, che una municipalità cambi provincia (ad esempio, come conseguenza della creazione di nuove province), si dovrebbero aggiornare molte tuple (**anomalia di aggiornamento**);
+- non è possibile memorizzare che una municipalità si trovi in una determinata provincia a meno che non sia registrato almeno uno studente appartenente a tale municipalità (**anomalia di inserimento**);
+- se è registrato un solo studente proveniente da una determinata municipalità, l'eliminazione dei suoi dati comporterebbe anche l'eliminazione dei dati relativi a tale municipalità (**anomalia di eliminazione**).
+
+Avendo chiari questi nuovi problemi, proviamo un ulteriore approccio, stavolta con uno schema di database composto da **quattro schemi di relazione**:
+$$\begin{align} &\text{Student(Matr, Name, Surname, TC, Birth, City)} \\ &\text{Course(C\#, Title, Prof)} \\ &\text{Exam(Matr, C\#, Date, Grade)} \\ &\text{Municipality(City, Prov)} \end{align}$$
+Vediamo, infine, le istanze che potrebbero conservare i dati visti finora considerando, stavolta, quest'ultimo schema di database:
+
+| Matr | Name  | Surname | TC  | Birth | City  |
+| ---- | ----- | ------- | --- | ----- | ----- |
+| 01   | Mario | Rossi   | ... | ...   | Tolfa |
+| 02   | Paolo | Bianchi | ... | ...   | Tolfa |
+
+| C#  | Title     | Prof     |
+| --- | --------- | -------- |
+| 10  | Physics   | Aiello   |
+| 20  | Chemistry | Carlucci |
+
+| Matr | C#  | Date | Grade |
+| ---- | --- | ---- | ----- |
+| 01   | 10  | ...  | ...   |
+| 02   | 10  | ...  | ...   |
+| 01   | 20  | ...  | ...   |
+
+| City  | Prov |
+| ----- | ---- |
+| Tolfa | Rome |
+
+Con questa soluzione, non si verifica più alcuna forma di ridondanza o di altre anomalie; possiamo affermare che lo schema di database formulato è un **"buon" schema di database**. In generale, dunque, **un buon schema di database**, per essere definito tale, **deve essere privo di ridondanze e di qualsiasi forma di anomalia**.
+
+Ma come possiamo progettare uno schema del genere? Per capirlo, torniamo ad analizzare l'esempio visto finora, e notiamo che **i problemi trovati derivano dal fatto che più concetti ben diversi e distinti venivano rappresentati in un'unica relazione**: nel primo approccio che abbiamo utilizzato, in un'unica istanza erano condensate le informazioni relative a studenti, corsi, esami e municipalità; nel secondo, in parte migliore, i problemi derivavano dall'associazione tra studenti e municipalità; infine, nel terzo e ultimo, tutti i concetti rappresentati nel database sono perfettamente isolati e indipendenti uno dall'altro, eliminando ridondanze e anomalie. Dunque, generalmente, la prima regola da seguire per la creazione di un buon schema di database è di **rappresentare entità diverse in relazioni diverse**.
+
+Stabilito ciò, è chiaro che il punto diventa l'identificazione di tali entità, in modo da permettere il loro isolamento. Per fare ciò, tornano utili le **[[BD1_01 - Modello relazionale#Chiavi|chiavi]]**, ossia un attributo o insieme di attributi che permette di determinare le cosiddette "**dipendenze funzionali**", un particolare tipo di **vincolo**. Approfondiremo meglio questo concetto nel paragrafo successivo. 
+___
