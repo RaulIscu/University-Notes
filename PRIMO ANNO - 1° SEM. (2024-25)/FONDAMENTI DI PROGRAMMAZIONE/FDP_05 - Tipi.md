@@ -80,7 +80,7 @@ Per individuare un carattere specifico della stringa, è possibile utilizzare an
 ```
 s = "Hello, World!"
 
-print(s[:5:1])               # verrà stampato "Hlo"
+print(s[:5:2])               # verrà stampato "Hlo"
 print(s[::-1])               # verrà stampato "!dlroW ,olleH"
 print(s[1:8])                # verrà stampato "ello, W"
 ```

@@ -59,7 +59,7 @@ Una **tupla** è una **sequenza indicizzata e immutabile di elementi eterogenei*
 
 Su una tupla è possibile effettuare l'ottenimento del **numero di elementi contenuti**, l'ottenimento di un **elemento a un particolare indice**, lo **slicing**, l'**iterazione sugli elementi contenuti**, la **verifica della presenza di un elemento nella tupla**, la **concatenazione di due tuple** o di **una tupla con sé stessa `n` volte**.
 
-Oltre a ciò, sono disponibili vari **metodi** per manipolare e modificare una tupla:
+Oltre a ciò, sono disponibili vari **metodi** per manipolare una tupla:
 - **`t.count(el)`**, che conta il numero di occorrenze dell’elemento `el` nella tupla `t`;
 - **`t.index(el)`**, che restituisce l'indice della prima occorrenza di `el` all'interno della tupla `l` (nel caso in cui tale elemento non sia presente, verrà sollevata un'eccezione).
 

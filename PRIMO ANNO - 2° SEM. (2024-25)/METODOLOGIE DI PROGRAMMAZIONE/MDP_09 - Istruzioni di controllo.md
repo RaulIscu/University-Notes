@@ -9,9 +9,9 @@ Di seguito, verrà analizzata nel dettaglio ciascuna di queste categorie.
 
 Le **istruzioni di selezione**, lavorando in Java, possono presentarsi principalmente in due forme: gli ***if statements*** e gli ***switch statements***. Come anticipato precedentemente, queste due istruzioni permettono di controllare il flusso di esecuzione del programma considerato, in base ad alcune condizioni che verranno controllate proprio al momento dell'esecuzione.
 
-##### L'*if statement*
+##### L'if statement
 
-L'***if statement*** viene usato, a livello basilare, per selezionare uno tra due possibili percorsi di esecuzione in base a una determinata condizione. Generalmente, un *if statement* si presenta nel modo seguente:
+L'**if statement** viene usato, a livello basilare, per selezionare uno tra due possibili percorsi di esecuzione in base a una determinata condizione. Generalmente, un if statement si presenta nel modo seguente:
 
 ```
 if (condizione) {
@@ -30,9 +30,9 @@ else istruzione2;
 
 La **condizione**, invece, è sostanzialmente una qualsiasi espressione che restituisce un valore [[MDP_07 - Tipi primitivi|booleano]], e va necessariamente racchiusa all'interno di parentesi tonde.
 
-Un *if statement* segue questo funzionamento: se la condizione stabilita è `true`, allora viene eseguito il codice contenuto nel corpo dell'`if`; altrimenti, se esiste (l'inserimento di un'istruzione `else` è, infatti, opzionale), viene eseguito il codice contenuto nel corpo dell'`else`. In un *if statement* del genere, non può mai succedere che vengano eseguiti entrambi i blocchi di istruzioni.
+Un if statement segue questo funzionamento: se la condizione stabilita è `true`, allora viene eseguito il codice contenuto nel corpo dell'`if`; altrimenti, se esiste (l'inserimento di un'istruzione `else` è, infatti, opzionale), viene eseguito il codice contenuto nel corpo dell'`else`. In un if statement del genere, non può mai succedere che vengano eseguiti entrambi i blocchi di istruzioni.
 
-È possibile inserire *if statements* all'interno di altri *if statements*: si parla, in questo caso, di ***if* annidati**. Ad esempio:
+È possibile inserire if statements all'interno di altri if statements: si parla, in questo caso, di **if annidati**. Ad esempio:
 
 ```
 if (i == 10) {
@@ -42,7 +42,7 @@ if (i == 10) {
 } else a = d;
 ```
 
-Inoltre, è anche possibile avere una **sequenza di *if* ed *else if***, chiamata anche "***if-else-if ladder***". Genericamente, essa assume la seguente struttura:
+Inoltre, è anche possibile avere una **sequenza di if ed else if**, chiamata anche "**if-else-if ladder**". Genericamente, essa assume la seguente struttura:
 
 ```
 if (condizione1) {
@@ -60,9 +60,9 @@ else {
 }
 ```
 
-In questo contesto, gli *if statement* sono eseguiti in ordine dal primo all'ultimo: se *condizione1* viene soddisfatta, verrà eseguito il blocco di codice contenuto nell'`if` e tutto il resto della *if-else-if ladder* viene bypassata; altrimenti, si passa a *condizione2*, e così via. Nel caso in cui nessuna delle condizioni degli `else if` viene soddisfatta, si passa all'`else` finale, che agisce quindi come condizione di default.
+In questo contesto, gli if statement sono eseguiti in ordine dal primo all'ultimo: se `condizione1` viene soddisfatta, verrà eseguito il blocco di codice contenuto nell'`if` e tutto il resto della if-else-if ladder viene bypassata; altrimenti, si passa a `condizione2`, e così via. Nel caso in cui nessuna delle condizioni degli `else if` viene soddisfatta, si passa all'`else` finale, che agisce quindi come condizione di default.
 
-Infine, è possibile definire un *if statement* in maniera compatta utilizzando il cosiddetto **operatore condizionale**, che segue il seguente formato:
+Infine, è possibile definire un if statement in maniera compatta utilizzando il cosiddetto **operatore condizionale**, che segue il seguente formato:
 
 ```
 condizione ? valoreSeVero : valoreSeFalso;

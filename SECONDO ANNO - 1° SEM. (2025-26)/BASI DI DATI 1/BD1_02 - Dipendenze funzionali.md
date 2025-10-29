@@ -85,6 +85,8 @@ ___
 
 In questo paragrafo, capiremo come **calcolare l'insieme $F^{+}$**, ossia la chiusura di $F$ o, in altre parole, l'insieme di tutte le dipendenze funzionali soddisfatte da ogni istanza legale di uno schema $R$ su cui è stato definito un insieme $F$ di dipendenze funzionali.
 
+##### Assiomi di Armstrong e regole corollarie
+
 Partiamo definendo un insieme $F^{A}$ di dipendenze funzionali su $R$, tale per cui:
 - se $X\rightarrow Y\,\in\,F$, allora $X\rightarrow Y\,\in\,F^{A}$;
 - se $Y\subseteq X$, allora $X\rightarrow Y\,\in\,F^{A}$ (definisce l'assioma della "**riflessività**");
@@ -96,23 +98,33 @@ Gli assiomi appena presentati vengono chiamati "**assiomi di Armstrong**". A par
 - se $X\rightarrow Y\,\in\,F^{A}$ e $Z\subseteq Y$, allora anche $X\rightarrow Z\,\in\,F^{A}$ (regola della **decomposizione**);
 - se $X\rightarrow Y\,\in\,F^{A}$ e $WY\rightarrow Z\,\in\,F^{A}$, allora anche $WX\rightarrow Z\,\in\,F^{A}$ (regola della **pseudo-transitività**).
 
-Di seguito, le dimostrazioni di ciascuna di queste tre regole, in ordine.
+Successivamente, vedremo le **dimostrazioni** di ciascuna di queste tre regole. 
 
-> Dimostriamo la **regola dell'unione**. 
-> 
-> Se si ha che $X\rightarrow Y\,\in\,F^{A}$, allora per l'assioma dell'aumento si ha che $XX\rightarrow XY\,\in\,F^{A}$, e dato che stiamo lavorando con insiemi sappiamo che l'unione di un insieme con sé stesso corrisponde all'insieme di partenza, dunque possiamo riformulare l'affermazione precedente come $X\rightarrow XY\,\in\,F^{A}$.
->
-> Analogamente, se si ha che $X\rightarrow Z\,\in\,F^{A}$, allora per l'assioma dell'aumento si ha anche che $XY\rightarrow YZ\,\in\,F^{A}$. A questo punto, applicando l'assioma della transitività, si può affermare che $X\rightarrow YZ\,\in\,F^{A}$.
-
-> Dimostriamo la **regola della decomposizione**.
->
-> Se si ha che $Z\subseteq Y$, allora per l'assioma della riflessività sappiamo che $Y\rightarrow Z\,\in\,F^{A}$; dato che abbiamo che $X\rightarrow Y\,\in\,F^{A}$ e che $Y\rightarrow Z\,\in\,F^{A}$, possiamo affermare che $X\rightarrow Z\,\in\,F^{A}$ per la proprietà della transitività.
-
-> Dimostriamo la **regola della pseudo-transitività**.
->
-> Se si ha che $X\rightarrow Y\,\in\,F^{A}$, allora per l'assioma dell'aumento si ha anche che $WX\rightarrow WY\,\in\,F^{A}$; dato che abbiamo che $WX\rightarrow WY\,\in\,F^{A}$ e che $WY\rightarrow Z\,\in\,F^{A}$, possiamo affermare che $WX\rightarrow Z\,\in\,F^{A}$ per la proprietà della transitività.
-
-
-
-[08 - slide 8]
+Ora, possiamo fare un'osservazione in relazione alle regole dell'unione e della decomposizione: per la regola dell'unione, possiamo affermare che se $X\rightarrow A_{i}\,\in\,F^{A}$ per un certo intervallo di numeri $i$ che va da $1$ a $n$, allora anche $X\rightarrow A_{1}A_{2}\dots A_{n}\,\in\,F^{A}$; allo stesso tempo, per la regola della decomposizione, possiamo affermare che se $X\rightarrow A_{1}A_{2}\dots A_{n}\,\in\,F^{A}$, allora anche $X\rightarrow A_{i}\,\in\,F^{A}$. Essendo entrambe queste proposizioni vere contemporaneamente, possiamo affermare che:
+$$X\rightarrow A_{1}A_{2}\dots A_{n}\,\in\,F^{A}\,\,\iff\,\,X\rightarrow A_{i}\,\in\,F^{A}\,\,\,\text{per }i=1,2,\dots,n$$
 ___
+##### Dimostrazione: regola dell'unione
+
+**Dimostriamo la regola dell'unione**, che afferma che:
+$$\text{se }\, X\rightarrow Y\,\in\,F^{A}\, \text{ e }\, X\rightarrow Z\,\in\,F^{A},\, \text{ allora anche }\, X\rightarrow YZ\,\in\,F^{A}$$
+
+Se si ha che $X\rightarrow Y\,\in\,F^{A}$, allora per l'assioma dell'aumento si ha che $XX\rightarrow XY\,\in\,F^{A}$, e dato che stiamo lavorando con insiemi sappiamo che l'unione di un insieme con sé stesso corrisponde all'insieme di partenza, dunque possiamo riformulare l'affermazione precedente come $X\rightarrow XY\,\in\,F^{A}$.
+
+Analogamente, se si ha che $X\rightarrow Z\,\in\,F^{A}$, allora per l'assioma dell'aumento si ha anche che $XY\rightarrow YZ\,\in\,F^{A}$. A questo punto, applicando l'assioma della transitività, si può affermare che $X\rightarrow YZ\,\in\,F^{A}$.
+___
+##### Dimostrazione: regola della decomposizione
+
+**Dimostriamo la regola della decomposizione**, che afferma che:
+$$\text{se }\, X\rightarrow Y\,\in\,F^{A}\, \text{ e }\, Z\subseteq Y,\, \text{ allora anche }\, X\rightarrow Z\,\in\,F^{A}$$
+
+Se si ha che $Z\subseteq Y$, allora per l'assioma della riflessività sappiamo che $Y\rightarrow Z\,\in\,F^{A}$; dato che abbiamo che $X\rightarrow Y\,\in\,F^{A}$ e che $Y\rightarrow Z\,\in\,F^{A}$, possiamo affermare che $X\rightarrow Z\,\in\,F^{A}$ per la proprietà della transitività.
+___
+##### Dimostrazione: regola della pseudo-transitività
+
+**Dimostriamo la regola della pseudo-transitività**, che afferma che:
+$$\text{se }\, X\rightarrow Y\,\in\,F^{A}\, \text{ e }\, WY\rightarrow Z\,\in\,F^{A},\, \text{ allora anche }\, WX\rightarrow Z\,\in\,F^{A}$$
+
+Se si ha che $X\rightarrow Y\,\in\,F^{A}$, allora per l'assioma dell'aumento si ha anche che $WX\rightarrow WY\,\in\,F^{A}$; dato che abbiamo che $WX\rightarrow WY\,\in\,F^{A}$ e che $WY\rightarrow Z\,\in\,F^{A}$, possiamo affermare che $WX\rightarrow Z\,\in\,F^{A}$ per la proprietà della transitività.
+___
+
+[08 - slide 9]
