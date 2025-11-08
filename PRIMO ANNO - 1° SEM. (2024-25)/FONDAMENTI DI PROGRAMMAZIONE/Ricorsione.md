@@ -1,14 +1,15 @@
-Una funzione viene definita "**ricorsiva**" se, nel suo codice, richiama sé stessa.
+Concretamente, una funzione viene definita "**ricorsiva**" se, nel suo corpo, richiama sé stessa. 
 
 Un problema ammette una soluzione con funzione ricorsiva se:
-- è possibile rimpicciolire la sua dimensione (riduzione);
-- esiste almeno un sotto-problema che ha una soluzione elementare (caso base);
-- è sempre possibile, applicando ripetutamente la riduzione, arrivare ad uno dei casi base (convergenza);
-- è possibile ottenere la soluzione del problema iniziale dalle soluzioni dei sotto-problemi (composizione).
+- è possibile rimpicciolire la sua dimensione (**riduzione**);
+- esiste almeno un sotto-problema che ha una soluzione elementare (**caso base**);
+- è sempre possibile, applicando ripetutamente la riduzione, arrivare ad uno dei casi base (**convergenza**);
+- è possibile ottenere la soluzione del problema iniziale dalle soluzioni dei sotto-problemi (**composizione**).
 
 Risolvere un problema ricorsivamente, dunque, richiede l'individuazione di un caso base, il confronto tra problemi di dimensioni diverse per capire come eseguire al meglio la riduzione, confrontarne le soluzioni per capire invece come calcolare al meglio la soluzione, e verificare che, eseguendo più volte la riduzione, si arrivi sempre al caso (o ai casi) base.
 
 In generale, una funzione ricorsiva rispetta solitamente uno schema del tipo:
+
 ```
 def risolvi_ricorsivamente(problema):
 	if is_caso_base(problema):
@@ -19,7 +20,7 @@ def risolvi_ricorsivamente(problema):
 		soluzione = composizione(sottosoluzione)
 		return soluzione
 ```
-___
+
 Un esempio classico per capire meglio il concetto di "funzione ricorsiva" è il **fattoriale**: il fattoriale di un numero intero positivo *N* è costituito dal prodotto dei numeri che vanno da 1 a *N*. Per affrontare il problema in maniera ricorsiva, bisogna farsi le seguenti domande: 
 - come ridurre il problema?
 - quale soluzione semplice si conosce?
