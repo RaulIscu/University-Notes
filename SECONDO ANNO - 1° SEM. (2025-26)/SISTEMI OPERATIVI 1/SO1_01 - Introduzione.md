@@ -1,5 +1,3 @@
-https://github.com/gtolomei/operating-systems/blob/master/lectures/slides/Introduction.pdf
-
 ## Cos'è un sistema operativo?
 
 In questo corso, come suggerisce il nome dello stesso, verrà approfondito il concetto, la struttura e l'implementazione di un "sistema operativo". Ma di cosa si tratta veramente? Nel concreto, un **sistema operativo**, spesso abbreviato in "**OS**" (Operating System), non ha una definizione univoca e ben precisa, ma in generale può essere visto come una **forma di Virtual Machine**, o "**VM**", che si inserisce come **intermediario tra software**, o **SW**, **e hardware**, o **HW**, e di conseguenza anche tra l'utilizzatore del calcolatore e l'hardware dello stesso. La presenza del sistema operativo facilita notevolmente l'interazione con la macchina su cui risiede, così come la sua programmazione, molto più approcciabile rispetto all'interfaccia diretta con l'hardware. Per visualizzare chiaramente il ruolo dell'OS, possiamo schematizzare a grandi linee l'architettura di un calcolatore generico nel modo seguente:
@@ -82,6 +80,12 @@ Oltre a questi bus, con l'evoluzione dei calcolatori ne sono stati aggiunti anch
 ___
 ## Multiprogrammazione
 
-[slide 112/117]
-[slide 119 - 122 - 125 - 128 - 129 - 130]
+Qualsiasi programma eseguito da un calcolatore deve essere caricato nella sua memoria principale. Nei sistemi moderni, del resto, è possibile **mantenere in esecuzione**, e dunque nella memoria principale, **più di un programma contemporaneamente**, grazie a quella che possiamo definire "**multiprogrammazione**". Per fare ciò, bisognerà "suddividere" il lavoro della CPU in più mansioni, e nel fare ciò l'OS avrà diverse responsabilità, tra cui:
+- **programmare le diverse mansioni** da far svolgere alla CPU;
+- **assicurare la protezione della memoria** ed evitare, di conseguenza, contaminazioni o eliminazioni di dati importanti;
+- **gestire**, nel mentre, **eventuali operazioni di I/O**.
+
+L'ultimo di questi aspetti risulta essere la principale problematica da risolvere, soprattutto per la necessità di fermare l'esecuzione di istruzioni nella CPU nel momento in cui avvengono operazioni di I/O, e se ne attende dunque il risultato per proseguire. Ci sono vari approcci possibili alla risoluzione (o perlomeno all'attenuazione) di questo problema: ad esempio, è possibile **non bloccare l'esecuzione del programma in corrispondenza di operazioni di I/O**, andando invece ad eseguire altre parti di codice indipendenti da quest'ultime.
+
+Nel dominio della multiprogrammazione, un altro meccanismo fondamentale è quello dello "**pseudo-parallelismo**", ossia dell'illusione di effettivo parallelismo nell'esecuzione dei programmi data da una rapida e costante variazione di mansione affidata alla CPU: sostanzialmente, a intervalli più o meno regolari e molto corti, si dà alla CPU una mansione diversa da eseguire, in modo che a poco a poco essa possa avanzare nelle esecuzioni di tutte le mansioni in modo più o meno regolare, e fornendo all'utente l'illusione che il tutto avvenga parallelamente.
 ___
