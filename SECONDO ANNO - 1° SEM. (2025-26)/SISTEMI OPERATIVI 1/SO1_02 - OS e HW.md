@@ -23,8 +23,6 @@ Un altro modo in cui viene garantita una maggiore sicurezza e protezione delle r
 
 **La distinzione tra modalità kernel e modalità utente è implementata direttamente nell'HW**: ciò avviene grazie a un **bit di stato** conservato in un registro protetto della CPU (tendenzialmente, se tale bit è settato a $0$ ci si trova in modalità kernel, mentre se è settato a $1$ ci si trova in modalità utente).
 
-[slide 19]
-
 In generale, in un qualsiasi calcolatore, l'HW deve supportare almeno la distinzione tra modalità kernel e modalità utente, ma spesso in calcolatori più moderni si sono adottate **soluzioni più complesse**, arrivando a progettare i cosiddetti "**anelli di protezione**". Infatti, aumentando i bit di stato da $1$ a $2$, diventa possibile contemplare un massimo di **4 livelli di "privilegio" diversi**, per una maggiore precisione nel controllo e nella protezione del sistema.
 
 Fino ad adesso si è parlato di protezione e sicurezza soprattutto in relazione all'esecuzione di istruzioni, ma è importante anche la **protezione della memoria**. L'architettura sottostante di un calcolatore, infatti, deve permettere all'OS di **proteggere i programmi dell'utente uno dall'altro**, ma anche di **proteggere sé stesso dai programmi dell'utente**. La tecnica più semplice per implementare queste esigenze è avere **due registri specifici**, un "**registro base**" destinato a contenere **l'indirizzo di memoria di partenza del programma** e un "**registro limite**" destinato, invece, a contenere **l'ultimo indirizzo di memoria valido del programma**: all'inizio dell'esecuzione di un programma, l'OS carica i registri di base e di limite relativi ad esso, e durante l'esecuzione la CPU controllerà ogni indirizzo di memoria per verificare che si trovi nell'intervallo di memoria valido definito dai due registri.
@@ -38,8 +36,6 @@ Queste "system calls" rientrano nella categoria di quelle che vengono definite "
 - le "**eccezioni**", dette anche "**faults**", che consistono in risposte sincrone a eventi eccezionali o inaspettati avvenuti durante l'esecuzione di un qualche SW (ad esempio istruzioni non definite, falle nella protezione, miss nella memoria, ecc. ecc.);
 - le "**interrupt**", che consistono in eventi asincroni e inizializzati dall'HW (ad esempio il completamento di un'operazione I/O, un timer, ecc. ecc.).
 
-[slide 39 - 43]
-
 ### Categorie di system call
 
 In genere, una qualsiasi system call appartiene a una delle seguenti categorie in base alla mansione che svolge o al servizio che richiede:
@@ -51,7 +47,11 @@ In genere, una qualsiasi system call appartiene a una delle seguenti categorie i
 
 ##### Controllo dei processi
 
-Nella prima categoria, quella del **controllo dei processi**, rientrano tutte le system call atte a creare, caricare, eseguire o terminare processi, a ottenere o modificare determinati attributi di un processo, ad aspettare per un determinato lasso di tempo o per l'avvenimento di un evento particolare, o anche ad allocare o liberare memoria. [slide 48]
+Nella prima categoria, quella del **controllo dei processi**, rientrano tutte le system call che:
+- creano, caricano, eseguono o terminano processi;
+- ottengono o modificano attributi relativi a un determinato processo;
+- impongono uno stallo per un determinato lasso di tempo o in vista dell'avvenimento di un certo evento; 
+- allocano o liberano memoria. 
 ___
 ##### Gestione dei file
 
@@ -95,11 +95,29 @@ Nel modello di scambio di messaggi, l'obiettivo è supportare system calls che p
 
 Nel modello di condivisione di memoria, invece, l'obiettivo è più che altro creare della memoria condivisa tra più processi e thread, accedere a tale memoria quando necessario, fornire meccanismi di protezione che limitino gli accessi simultanei a tale memoria ed effettuare un'allocazione dinamica della stessa in base alle esigenze. In questo caso, si ha un modello più complesso ma anche più veloce, appropriato soprattutto per quantità più grandi di dati, e ideali quando i processi considerati vanno a effettuare più letture che scritture.
 ___
-### Anatomia di una system call
+### Flusso di una system call
 
+Concretamente, quando un programma in esecuzione vuole richiedere un servizio all'OS tramite una system call, non va ad eseguire direttamente tale system call, ma utilizza una forma di **API come ponte tra programma e system call**, che provoca la transizione [[SO1_02 - OS e HW#Protezione e sicurezza|da modalità utente a modalità kernel]] e, attraverso una cosiddetta "**system call interface**" e sfruttando una tabella relativa alle varie system call possibili, va a richiedere all'OS il servizio desiderato.
 
+Di conseguenza, possiamo riassumere il **flusso** di una system call con il seguente schema, che mostra quello che succede chiamando la funzione `read()` in C:
 
-[slide 73 - 74 - 78 - 80/84 - 86 - 91 - 92 - 94 - 95] 
+![[syscall_anatomy_example.png]]
+
+Capiamo, dallo schema, che al chiamante non interessa l'implementazione interna della system call, e la maggior parte dei dettagli sono infatti occultati dall'API: il chiamante, per poter richiedere la system call con successo, deve sapere esclusivamente i **parametri di input** e l'**output previsto**. Per comprendere più nel dettaglio come viene richiesta la system call, facciamo riferimento alla seguente immagine in cui viene nuovamente schematizzato l'esempio precedente:
+
+![[syscall_anatomy_example1.png]]
+
+Per chiamare la funzione `read()`, bisogna richiedere una specifica system call all'OS identificata univocamente da un certo numero **`$sys_read`**, che perciò viene memorizzato nel **registro `%eax`**. A quel punto, viene eseguita una **[[SO1_02 - OS e HW#System calls, gestione delle eccezioni e operazioni di I/O|trap]]** che porta alla **transizione del sistema a modalità kernel**, e grazie al suo numero identificativo (`0x80`) andando nella **IVT** (Interrupt Vector Table) l'OS sa che si vuole eseguire una system call. Ora, la system call specifica che si vuole eseguire viene individuata andando a riprendere il valore contenuto nel registro `%eax` e recuperando, all'interno della **tabella delle system call**, quella corrispondente al servizio richiesto (in questo esempio, **`sys_read()`**).
+
+Come detto poco fa, l'esecuzione di una trap porta alla transizione da modalità utente a modalità kernel: per gestire questa transizione si dispone del cosiddetto "**system call handler**", le cui responsabilità sono le seguenti:
+- **salvare lo stato del sistema** prima della transizione in registri appositi;
+- **individuare ed eseguire la routine corretta** per la trap eseguita (nel nostro esempio, ciò corrisponde a cercare la system call appropriata nella tabella delle system call ed eseguirla);
+- **ripristinare lo stato del sistema in modalità utente** una volta che la routine ha terminato di essere eseguita.
+
+Spesso, quando viene richiesta una system call, per la sua esecuzione sono necessari più dati oltre al semplice identificatore: in questi contesti, è necessario avere un modo per **passare dei parametri all'OS**. Ci sono principalmente **3 modi** per farlo:
+- memorizzare i parametri in **registri dedicati** (tale soluzione può risultare problematica nel momento in cui il numero di parametri supera quello dei registri allocati);
+- memorizzare i parametri in un **blocco di dati** o in una **tabella** conservata in una zona specifica di memoria, passando quindi all'OS solo l'indirizzo di memoria dove si trovano tali parametri;
+- far inserire al programma i parametri nello **stack**, e in seguito farli rilasciare dall'OS (seppur funzionante, si tratta di una soluzione più complessa soprattutto per la diversità tra i vari indirizzi di memoria).
 ___
 ## Scheduling e sincronizzazione
 
@@ -111,7 +129,13 @@ Tali interrupt, tuttavia, potrebbero interferire con l'esecuzione di alcuni proc
 ___
 ## Memoria virtuale
 
+La **memoria virtuale** consiste in un'**astrazione della memoria principale** effettiva, concretamente contenuta nel calcolatore. Si tratta di un espediente per dare l'**illusione**, ai vari processi e dunque indirettamente anche all'utente, **che la memoria del calcolatore sia uno spazio contiguo**, o che sia più capiente di quello che effettivamente è. Permette, inoltre, di **eseguire programmi non completamente caricati nella memoria principale**, premettendo però che essi siano completamente "caricati" nella memoria virtuale.
 
+La memoria virtuale viene implementata sia a livello di **HW** che a livello di **SW**:
+- a livello di HW, si dispone di una **MMU** (**Memory Management Unit**), responsabile della traduzione di indirizzi di memoria virtuali in indirizzi fisici, e viceversa;
+- a livello di SW, l'OS è responsabile della gestione degli indirizzi di memoria virtuali.
 
-[slide 109/111 - 114]
+Tipicamente, la memoria virtuale è divisa in "**pagine**", o "**pages**", blocchi di memoria tutti della stessa grandezza (in maniera analoga alla memoria fisica); le pagine di memoria virtuale che non sono caricate nella memoria principale sono contenute nella memoria a disco.
+
+Vediamo più nel dettaglio la **MMU**. Quest'unità si occupa di abbinare indirizzi virtuali a indirizzi di memoria fisici basandosi su una "**page table**", gestita dall'OS. Al tempo stesso, per velocizzare gli accessi a blocchi di memoria frequentemente utilizzati o vicini tra loro, dispone di una forma di cache chiamata "**Translation Look-aside Buffer**", o **TLB** in breve.
 ___
