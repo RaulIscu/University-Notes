@@ -52,7 +52,49 @@ Sullo stack, dunque, sono definite **due operazioni**:
 
 Per il corretto utilizzo dello stack, generalmente il calcolatore possiede un **registro dedicato a conservare lo "stack pointer"** (ad esempio `esp` o `sp`), ossia l'**indirizzo di memoria della cima dello stack**. Convenzionalmente, uno stack cresce dall'alto verso il basso, ossia **da indirizzi di memoria più alti a indirizzi più bassi**.
 
-[slide 33 - 34 - 36 - 37 - 40 - 42/50]
+Ogni chiamata a funzione va ad utilizzare una porzione dello stack, che possiamo definire "**stack frame**". In un momento generico, potrebbero esistere anche più stack frames contemporaneamente (ad esempio, nel caso di chiamate a funzione annidate), tuttavia **solo uno stack frame sarà attivo alla volta**. Ciascun stack frame è diviso in **tre parti**, in base ai contenuti delle stesse:
+- i parametri della funzione e l'indirizzo di memoria del valore ritornato;
+- un puntatore allo stack frame precedente a quello corrente;
+- eventuali variabili locali.
+
+Di queste tre parti, **la prima è responsabilità del chiamante**, dato che è il programma che chiama una funzione a stabilire quali parametri darle, mentre **la seconda e la terza sono responsabilità del chiamato**.
+
+Per comprendere meglio il funzionamento dello stack frame, vediamo un esempio. Supponiamo che venga chiamata la funzione:
+
+```
+foo(a, b, c);
+```
+
+A livello di stack, chiamare questa funzione equivale a eseguire le seguenti operazioni:
+
+```
+push c
+push b
+push a
+call foo
+```
+
+Ogni parametro, uno alla volta, viene così inserito nello stack, che cresce verso il basso; per ogni parametro inserito, dunque, il valore dello stack pointer viene decrementato di un certo numero di byte (il numero specifico dipende dall'architettura). In seguito, la chiamata `call foo` inserirà implicitamente l'indirizzo di ritorno nello stack.
+
+Sorge, a questo punto, una problematica: essendo lo stack pointer un indirizzo dinamico, che varia ogni volta che viene inserito o rimosso un elemento dallo stack, ora come ora **non è presente un riferimento fisso allo stack**, e questa assenza rende più difficile alla funzione chiamata accedere ai vari parametri. Una soluzione potrebbe essere l'aggiunta di un "**base pointer**", un puntatore alla base dello stack frame relativo alla chiamata in cui ci si trova, conservato in un altro registro dedicato: in questo modo, si può lasciare lo stack pointer essere dinamico e avere, al tempo stesso, un riferimento fisso in modo da facilitare l'accesso ai singoli parametri. 
+
+In una chiamata a funzione, dunque, si susseguono i seguenti passi: prima di tutto, vengono inseriti nello stack i **parametri della funzione**, e la chiamata in sé porta poi all'inserimento anche dell'**indirizzo di ritorno**:
+
+![[stack_esempio1.png]]
+
+Essendo arrivati alla chiamata effettiva alla funzione `foo(a, b, c)`, **lo stack frame del programma chiamante viene sospeso**, e **inizia quello della funzione chiamata**. A questo punto, viene inserito nello stack anche il **base pointer** (`%ebp`, ossia il contenuto del registro `ebp`):
+
+![[stack_esempio2.png]]
+
+Ora, si va a **sostituire il base pointer con lo stack pointer attuale**. Per chiarire meglio a livello schematico quest'operazione, il base pointer considerato finora, dunque quello relativo allo stack frame chiamante, verrà rinominato da `%ebp` a `%old_ebp`, mentre le occorrenze di `%esp` viste finora nello schema diventeranno `%ebp`, essendo adesso il contenuto del registro `ebp` pari a `%esp`:
+
+![[stack_esempio3.png]]
+
+In questo modo, i parametri della chiamata potranno essere facilmente reperiti tramite il base pointer attuale (quello dello stack frame della funzione chiamata), mentre eventuali **variabili locali** potranno invece essere individuate sfruttando lo stack pointer:
+
+![[stack_esempio4.png]]
+
+Una volta terminata l'esecuzione, per tornare allo stack frame precedente, ossia quello chiamante, basterà **sostituire lo stack pointer con il base pointer dello stack frame chiamante** (`%old_ebp`) e **rimuovere quest'ultimo dallo stack**, in modo da eliminare concretamente lo stack frame della funzione chiamata e ripristinare il base pointer precedente. 
 ___
 ## Quali sono i possibili stati di un processo?
 
@@ -81,8 +123,28 @@ int main() {
 
 Appena il processo viene creato, esso si trova nello stato `new`, ed entrerà in seguito nello stato `ready` una volta che sarà pronto ad essere eseguito; quando lo scheduler assegnerà alla CPU il processo che stiamo considerando, esso comincerà effettivamente ad essere eseguito ed entrerà dunque nello stato `running`; tuttavia, una volta arrivato all'istruzione `printf("Hello World!)`, che richiede una [[SO1_02 - OS e HW#System calls, gestione delle eccezioni e operazioni di I/O|system call]] bloccante di I/O per essere eseguita, l'esecuzione del processo viene sospesa ed esso si trova dunque nello stato `waiting`, mentre l'OS procede ad assegnare un altro processo alla CPU; una volta terminata la system call, il processo che stiamo analizzando sarà nuovamente pronto per essere eseguito, rientrando così nello stato `ready`, e quando lo scheduler lo riassegnerà alla CPU entrerà nello stato `running`; infine, al termine della sua esecuzione, si troverà nello stato `terminated`.
 
-[slide 69 - 70]
 ##### Il PCB
 
-[slide 71 - 79 - 80] 
+In generale, lo stato complessivo di un processo consiste almeno nelle seguenti componenti:
+- il **codice del programma in esecuzione**;
+- i **dati statici del programma in esecuzione**;
+- il **program counter**, o **PC**, ossia l'indirizzo della prossima istruzione da eseguire;
+- i **registri della CPU**;
+- lo **stack frame** del processo in questione;
+- l'**heap**;
+- l'insieme delle **risorse in utilizzo**;
+- lo **stato effettivo del processo**.
+
+Per tenere traccia dello stato dei vari processi, l'OS sfrutta una struttura dati particolare chiamata "**Process Control Block**", o "**PCB**" in breve: all'interno del PCB, verranno conservate la maggior parte delle informazioni appena elencate. L'OS alloca un nuovo PCB alla creazione di un nuovo processo, e lo elimina non appena tale processo conclude la propria esecuzione. Come accennato, nel PCB sono contenute la **maggior parte delle informazioni importanti di un processo**, tra cui:
+- lo stato effettivo del processo (`new`, `running`, ecc. ecc.);
+- l'ID del processo;
+- il PC, lo stack pointer, e altri registri specifici utili;
+- l'informazione di scheduling in relazione alla CPU (serve soprattutto per tenere conto della priorità del processo);
+- informazioni relative alla gestione della memoria;
+- informazioni relative all'utente attuale;
+- lo stato dei dispositivi di I/O, nonché una lista di eventuali risorse (principalmente file) aperti o utilizzati dal processo.
+___
+## Come viene creato e terminato un processo?
+
+[04, slide 9/14 - 17/22 - 25 - 28 - 29 - 32 - 36 - 38/40 - 42 - 43 - 45 - 46 - 48 - 52 - 54 - 56 - 58 - 61 - 63]
 ___
