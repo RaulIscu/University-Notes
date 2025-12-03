@@ -146,5 +146,21 @@ Per tenere traccia dello stato dei vari processi, l'OS sfrutta una struttura dat
 ___
 ## Come viene creato e terminato un processo?
 
-[04, slide 9/14 - 17/22 - 25 - 28 - 29 - 32 - 36 - 38/40 - 42 - 43 - 45 - 46 - 48 - 52 - 54 - 56 - 58 - 61 - 63]
+##### Creazione di un processo: processo padre e processo figlio
+
+In generale, **un processo può essere creato da altri processi** mediante delle [[SO1_02 - OS e HW#Categorie di system call|system call]] particolari, ossia quelle inerenti al controllo dei processi. Il processo che ne va a creare un altro viene definito "**padre**" di quest'ultimo, mentre il processo creato prende il nome di "**figlio**"; generalmente, un processo padre condivide risorse e privilegi con il processo figlio, e in base al contesto può interrompere la propria esecuzione in attesa di quella del figlio oppure continuare la sua esecuzione in parallelo.
+
+Qualsiasi processo in un calcolatore possiede un **identificatore di processo**, o in breve **PID**, così come un **identificatore di processo padre**, o in breve **PPID**.
+
+Ma in che modo avviene questa catena di creazione di processi? Vediamo cosa succede tipicamente in **sistemi UNIX**. In questo contesto, il primo "processo" ad essere eseguito all'avvio del calcolatore è il "**process scheduler**", denominato "**`sched`**", a cui viene assegnato $0$ come **PID**. La prima mansione svolta dallo `sched` è la creazione di **`init`**, un nuovo processo che avrà $1$ come **PID** e $0$ come **PPID** (il PID del processo padre, ossia di `sched`); sarà poi `init` ad avviare l'esecuzione degli altri processi più importanti, e a diventare di conseguenza il padre di tali processi.
+
+In base al tipo di sistema, ci sono diverse **system call per creare un processo**: ad esempio, in sistemi UNIX/Linux si utilizza **`fork()`**, mentre su Windows la call utilizzata è **`spawn()`**. C'è anche un'altra differenza tra questi due sistemi, legata invece allo **spazio di indirizzamento dei processi figli**:
+- in sistemi UNIX/Linux, lo spazio di indirizzamento del figlio è un **duplicato dello spazio di indirizzamento del padre**, dunque i due processi condivideranno lo stesso programma e gli stessi blocchi di dati in memoria, nonostante ognuno abbia un proprio [[SO1_03 - I processi#Il PCB|PCB]];
+- in sistemi Windows, il processo figlio **deriva da un nuovo programma**, dunque avrà uno **spazio di indirizzamento diverso da quello del padre**, con altro codice e altri blocchi di dati (questa soluzione è parzialmente implementata anche nei sistemi UNIX/Linux in certi contesti, in corrispondenza della system call **`exec`**).
+
+Come abbiamo accennato in precedenza, il processo padre può assumere due comportamenti diversi alla creazione del processo figlio: può **attendere l'esecuzione del figlio per proseguire la propria**, oppure può **continuare l'esecuzione in parallelo**, senza bloccaggi. Nel primo caso, il processo padre effettua una system call di tipo **`wait()`**, che mette in pausa la sua esecuzione (si tratta del tipico comportamento di una shell UNIX che attende che termini l'esecuzione dei suoi processi figli per richiedere un nuovo prompt, comportamento che si denota dal simbolo **`>`**); nel secondo caso, invece, il processo padre esegue in parallelo con il processo figlio, magari per tutto il tempo o magari solo in parte (si tratta del tipico comportamento di una shell UNIX che esegue un processo figlio in background, comportamento che si denota dal simbolo **`&`**).
+
+[slide 19/22]
+
+[04, slide 25 - 28 - 29 - 32 - 36 - 38/40 - 42 - 43 - 45 - 46 - 48 - 52 - 54 - 56 - 58 - 61 - 63]
 ___
