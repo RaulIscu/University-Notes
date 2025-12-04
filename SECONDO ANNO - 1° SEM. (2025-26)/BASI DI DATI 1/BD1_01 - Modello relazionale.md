@@ -18,7 +18,7 @@ che ha come risultato il seguente insieme:
 $$\{(v_{1},\,v_{2},\,\dots,\,v_{k})\,\,|\,\,v_{1} \in D_{1},\,v_{2} \in D_{2},\,\dots,\,v_{k} \in D_{k}\}$$
 ossia un insieme di elementi detti "**tuple**", o anche "**$k$-uple**" (dove $k$ rappresenta il numero di elementi contenuti nella tupla). Come possiamo notare, concretamente una tupla consiste in un **insieme ordinato di $k$ elementi**, dove $k$ è pari al **numero di domini** su cui viene operato il prodotto cartesiano che l'ha generata, e per "ordinato" si intende che il primo valore della tupla proviene sempre dal primo dominio del prodotto cartesiano, il secondo valore dal secondo dominio, e così via. Per indicare un singolo dato all'interno di una tupla $t$, possiamo utilizzare la dicitura $t[i]$ oppure $t.i$, dove $i$ è l'indice di tale dato all'interno della sua tupla. L'insieme risultante da un prodotto cartesiano conterrà un **numero di tuple pari alla moltiplicazione tra le cardinalità dei domini considerati** da esso.
 
-A questo punto, introduciamo il concetto di "**relazione**", che consiste in un **qualsiasi sottoinsieme di un prodotto cartesiano**, dunque dell'insieme di tuple generato da esso. Una relazione in un prodotto cartesiano di $k$ domini è detto "**di grado $k$**", e il numero di tuple contenute in una determinata relazione rappresenta la sua **cardinalità**. Inoltre, **tutte le tuple contenute in una relazione sono necessariamente distinte**.
+A questo punto, introduciamo il concetto di "**relazione**", che consiste in un **qualsiasi sottoinsieme di un prodotto cartesiano**, dunque dell'insieme di tuple generato da esso. Una relazione in un prodotto cartesiano di $k$ domini è detta "**di grado $k$**", e il numero di tuple contenute in una determinata relazione rappresenta la sua **cardinalità**. Inoltre, **tutte le tuple contenute in una relazione sono necessariamente distinte**.
 
 Per comprendere meglio i concetti appena introdotti, e come essi vadano a intrecciarsi tra loro, analizziamo un semplice esempio concreto. Supponiamo di avere $2$ domini, ossia:
 $$D_{1} = \{A, B\}\,\,\,\,\,\,\,\,\,\,D_{2} = \{0, 1, 2\}$$
@@ -126,7 +126,7 @@ Considerando anche questa seconda tabella, risulta spontaneo introdurre un ulter
 ___
 ##### Chiavi
 
-Avendo una relazione $R$, possiamo definire "**chiave di $R$**" un **insieme $X$ di attributi della relazione** che soddisfa le seguenti condizioni:
+Avendo una relazione $R$, può essere utile avere un modo per **identificare univocamente ciascuna tupla** appartenente ad essa. Come soluzione a questo bisogno, possiamo definire "**chiave di $R$**" un **insieme $X$ di attributi della relazione** che soddisfa le seguenti condizioni:
 - per ogni istanza della relazione $R$, non esistono due tuple distinte $t_{1}$ e $t_{2}$ che abbiano gli stessi valori per tutti gli attributi compresi in $X$;
 - non esiste un sottoinsieme proprio di $X$ che soddisfi la condizione precedente.
 
@@ -141,8 +141,6 @@ Per comprendere meglio questo nuovo concetto, vediamo un esempio concreto. Suppo
 A partire da questa istanza, e basandoci sulla definizione che abbiamo appena dato, potremmo affermare che ogni attributo della relazione, fatta eccezione per `Role`, potrebbe rappresentare una chiave di `Staff`, dato che presentano valori diversi in ogni tupla della relazione.
 
 Come notiamo dall'esempio, **una relazione può avere più chiavi alternative**. Possiamo, inoltre, affermare che **ogni relazione possiede sempre almeno una chiave**: logicamente, ciò si evince dalla definizione che abbiamo dato di [[BD1_01 - Modello relazionale#Domini, tuple e relazioni|tupla]], dato che non possono esistere tuple identiche. Tra le varie chiavi, quella più "utilizzata" o quella comprendente il minor numero di attributi viene detta "**chiave primaria**".
-
-[02 - slide 36, 42/52]
 ___
 ## Algebra relazionale
 
@@ -151,9 +149,9 @@ L'**algebra relazionale** fornisce notazioni per specificare "**query**", o "int
 Con l'algebra relazionale, possiamo dunque interrogare un qualsiasi database relazionale mediante un linguaggio formale costituito da vari **operatori unari e binari**, che se applicati su una o più istanze di relazione permette di generare una nuova istanza con i dati ricercati. Si tratta, del resto, di un "**linguaggio procedurale**", nel senso che gli operatori vanno applicati nell'esatto ordine descritto per ottenere il risultato desiderato.
 
 In generale, definiamo una forma di "algebra" come una struttura che dispone di **un dominio e di una lista di operatori**: ad esempio, l'algebra aritmetica ha come dominio un insieme di numeri e come operatori la somma, il prodotto, ecc. ecc.; per quanto riguarda l'algebra insiemistica, il dominio sono proprio gli insiemi e gli operatori sono unione, intersezione, e così via. Nell'algebra relazionale, il **dominio** è formato dalle **[[BD1_01 - Modello relazionale#Domini, tuple e relazioni|relazioni]]**, che sono sia gli operandi che i risultati delle varie operazioni; queste **operazioni**, in particolare, sono divisibili in **4 categorie**:
-- operazioni di **estrazione da una singola relazione**, come "**proiezione**" e "**selezione**";
+- operazioni di **estrazione da una singola relazione**, come **proiezione** e **selezione**;
 - operazioni di **insiemistica**, come **unione**, **intersezione** e **differenza**;
-- operazioni di **combinazione delle tuple di due relazioni**, come **prodotto cartesiano** o "**join**";
+- operazioni di **combinazione delle tuple di due relazioni**, come **prodotto cartesiano** o **join**;
 - operazioni di **rinomina**.
 
 ##### Proiezione
