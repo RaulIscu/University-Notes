@@ -54,10 +54,10 @@ Avendo introdotto questo nuovo concetto, possiamo fornire anche una **nuova defi
 - non esiste un sottoinsieme proprio $K'\subseteq K$ tale per cui venga soddisfatta la dipendenza funzionale $K'\rightarrow R$.
 
 Vediamo un esempio. Supponiamo di avere il seguente schema di relazione:
-$$\text{Student = Matr, Name, Surname, BirthD}$$
+$$\text{Student(Matr, Name, Surname, BirthD)}$$
 Sappiamo che l'attributo $\text{Matr}$, ossia la matricola di uno studente, funge da suo numero identificativo, e dunque non possono esserci due studenti con la stessa matricola. Ciò vuol dire che una qualsiasi istanza legale di $\text{Student}$ dovrà rispettare la dipendenza funzionale $\text{Matr}\rightarrow \text{Name, Surname, BirthD}$, dato che due studenti con la stessa matricola dovranno necessariamente essere la stessa persona, e dunque avere gli stessi dati. Perciò, si può affermare che $\text{Matr}$ è una chiave di $\text{Student}$.
 
-[07 - slide 24]
+Seguendo questa nuova definizione, notiamo che spesso ci potranno essere **più chiavi in una relazione**; il più delle volte, in questo contesto, una di esse verrà scelta come "**chiave primaria**", più importante delle altre e a cui non potrà essere assegnato un [[BD1_01 - Modello relazionale#Valori nulli|valore nullo]].
 ___
 ##### Dipendenze funzionali triviali
 
@@ -126,5 +126,35 @@ $$\text{se }\, X\rightarrow Y\,\in\,F^{A}\, \text{ e }\, WY\rightarrow Z\,\in\,F
 
 Se si ha che $X\rightarrow Y\,\in\,F^{A}$, allora per l'assioma dell'aumento si ha anche che $WX\rightarrow WY\,\in\,F^{A}$; dato che abbiamo che $WX\rightarrow WY\,\in\,F^{A}$ e che $WY\rightarrow Z\,\in\,F^{A}$, possiamo affermare che $WX\rightarrow Z\,\in\,F^{A}$ per la proprietà della transitività.
 ___
+##### Chiusura di un insieme di attributi $X$
 
-[08 - slide 9]
+> Supponiamo di avere uno schema di relazione $R$, un insieme $F$ di dipendenze funzionali definito su di esso, e un sottoinsieme $X$ di attributi di $R$. Possiamo chiamare "**chiusura di $X$ rispetto a $F$**", simbolicamente indicato come **$X^{+}_{F}$**, l'insieme seguente:
+> $$X^{+}_{F}=\{A\,\,|\,\,X\rightarrow A\,\in\,F^{A}\}$$
+> ossia l'insieme degli attributi $A$ che sono determinati funzionalmente da $X$ applicando, ove possibile, gli [[BD1_02 - Dipendenze funzionali#Assiomi di Armstrong e regole corollarie|assiomi di Armstrong]].
+
+Ovviamente, si ha a prescindere per riflessività che $X\subseteq X^{+}_{F}$. A questo punto, possiamo affermare che, dato uno schema di relazione $R$ e un insieme $F$ di dipendenze funzionali definito su di esso, vale che:
+$$X\rightarrow Y\,\in\,F^{A}\,\,\,\iff\,\,\,Y\subseteq X^{+}$$
+L'osservazione appena fatta è dimostrabile riprendendo delle osservazioni fatte qualche paragrafo fa, relativamente alle regole di unione e di decomposizione. Per effettuare questa dimostrazione, scomponiamo la doppia implicazione nelle due implicazioni che la compongono, ossia:
+$$X\rightarrow Y\,\in\,F^{A}\,\,\,\Rightarrow\,\,\,Y\subseteq X^{+}$$
+$$Y\subseteq X^{+}\,\,\,\Rightarrow\,\,\,X\rightarrow Y\,\in\,F^{A}$$
+Per chiarezza, ricordiamo che $Y=A_{1},\,A_{2},\,\dots,\,A_{n}$ è un sottoinsieme di attributi dello schema $R$. La prima proposizione è dimostrata dal fatto che, se vale che $X\rightarrow Y\,\in\,F^{A}$, allora per la regola di decomposizione vale anche che $X\rightarrow A_{i}\,\in\,F^{A}$ per ogni $i$ che va da $1$ ad $n$: ciò comporta che ogni attributo $A_{i}$ appartiene all'insieme $X^{+}$, e dunque che $Y$ è un sottoinsieme di tale insieme. La seconda, invece, è dimostrata dal fatto che, se vale che $Y\subseteq X^{+}$, si ha di conseguenza che $X\rightarrow A_{i}\,\in\,F^{A}$ per ogni $i$ che va da $1$ a $n$, e dunque per la regola di unione vale anche che $X\rightarrow Y\,\in\,F^{A}$.
+___
+##### Teorema: $F^{+}=F^{A}$
+
+Arrivati a questo punto, siamo pronti a dimostrare un teorema fondamentale per capire come ottenere con successo l'insieme $F^{+}$. Molto semplicemente, il teorema in questione è il seguente:
+
+> Dato uno schema di relazione $R$ e un insieme $F$ di dipendenze funzionali definito su di esso, vale che:
+> $$F^{+}=F^{A}$$
+
+In altre parole, vogliamo dimostrare che **l'insieme di tutte le dipendenze funzionali soddisfatte da ogni istanza legale di $R$ coincide con l'insieme delle dipendenze funzionali generate a partire da $F$ applicando gli assiomi di Armstrong**.
+
+Si tratta di una dimostrazione relativamente complessa, e in quanto tale conviene dividerla in due parti: concretamente, dunque, quello che andremo a fare è dimostrare le due seguenti proposizioni:
+$$F^{+}\subseteq F^{A}\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,F^{A}\subseteq F^{+}$$
+dato che, **se due insiemi sono entrambi sottoinsiemi uno dell'altro**, vuol dire necessariamente che **tali insiemi sono uguali**.
+
+Partiamo dalla prima, ossia che **$F^{+}\subseteq F^{A}$**. Possiamo dimostrare tale proposizione **per assurdo**, supponendo che possa esistere una dipendenza funzionale $X\rightarrow Y$ tale che appartenga a $F^{+}$ ma non a $F^{A}$. [08 - slide 15/17]
+
+Passiamo ora alla seconda proposizione, ossia che $F^{A}\subseteq F^{+}$. [08 - slide 11/14]
+
+[08 - slide 18/20]
+___

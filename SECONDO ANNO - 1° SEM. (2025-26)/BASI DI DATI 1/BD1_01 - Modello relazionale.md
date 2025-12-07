@@ -384,9 +384,9 @@ L'operazione di "**join naturale**" permette sostanzialmente di ottenere lo stes
 $$R_{1}⋈R_{2}$$
 equivale a scrivere: 
 $$\pi_{\text{XY}}(\sigma_{\text{C}}(R_{1}\times R_{2}))$$
-dove $\text{X}$ rappresenta l'insieme degli attributi di $R_{1}$, ,$\text{Y}$ rappresenta l'insieme degli attributi di $R_{2}$ che non si trovano in $R_{1}$, e $\text{C}$ è una determinata condizione booleana nella forma:
+dove $\text{X}$ rappresenta l'insieme degli attributi di $R_{1}$, $\text{Y}$ rappresenta l'insieme degli attributi di $R_{2}$ che non si trovano in $R_{1}$, e $\text{C}$ è una determinata condizione booleana nella forma:
 $$R_{1}.A_{1}=R_{2}.A_{1}\,\land\, R_{1}.A_{2}=R_{2}.A_{2}\,\land\,\dots\,\land\,R_{1}.A_{k}=R_{2}.A_{k}$$
-Bisogna ricordare che gli attributi confrontati nella condizione $\text{C}$ devono disporre degli stessi nomi. Per comprendere meglio, vediamo un esempio. Per comprendere meglio, vediamo lo stesso esempio del paragrafo precedente, avendo le due tabelle `Customer` e `Order`:
+Bisogna ricordare che gli attributi confrontati nella condizione $\text{C}$ devono disporre degli stessi nomi. Per comprendere meglio, vediamo lo stesso esempio del paragrafo precedente, avendo le due tabelle `Customer` e `Order`:
 
 | Surname | C#  | Town   |
 | ------- | --- | ------ |
@@ -448,7 +448,7 @@ Il join naturale presenta alcuni **casi particolari**. Supponiamo, ad esempio, c
 | A3  | Mug   | 4     |
 | A4  | Fork  | 1     |
 
-e che invece di ricercare gli ordini di articoli con prezzo maggiore di $2$€, si vogliano trovare quelli con prezzo minore di $2$€; l'unico articolo che rispetta questo criterio è quello indicato dall'ultima tupla, tuttavia tale articolo non viene mai ordinato, e quindi non esistono ordini che rispettano tale criterio. Generalmente, **un join naturale tra due relazioni che hanno attributi in comune, ma dove quest'ultimi non presentano alcun valore in comune, risultano in relazioni vuote**.
+e che invece di ricercare gli ordini di articoli con prezzo maggiore di $2$€, si vogliano trovare quelli con prezzo minore di $2$€; l'unico articolo che rispetta questo criterio è quello indicato dall'ultima tupla, tuttavia tale articolo non viene mai ordinato, e quindi non esistono ordini che rispettano tale criterio. Generalmente, **un join naturale tra due relazioni che hanno attributi in comune, ma dove quest'ultimi non presentano alcun valore in comune, risulta in una relazione vuota**.
 
 Un altro caso particolare è il seguente: **un join naturale tra due relazioni che non hanno attributi in comune** (con lo stesso nome) **degenera in un [[BD1_01 - Modello relazionale#Prodotto cartesiano|prodotto cartesiano]]**. Naturalmente, la soluzione più immediata in questo contesto è effettuare una rinomina di certi attributi.
 ___
@@ -483,9 +483,100 @@ $$R_{1}⋈R_{2}$$
 equivale a scrivere:
 $$\sigma_{A\,\theta\,B}(R_{1}\times R_{2})$$
 ___
-#####
+##### Join nella medesima relazione
 
-[05]
+I join che abbiamo visto finora andavano a operare sempre tra due relazioni distinte, ma ci sono casi in cui è necessario **lavorare con il join tra una relazione e sé stessa**.
+
+Vediamo un esempio. Supponiamo di avere la seguente tabella `Employees`:
+
+| Name    | C#  | Section | Salary | Supervisor# |
+| ------- | --- | ------- | ------ | ----------- |
+| Rossi   | C1  | B       | 100    | C3          |
+| Pirlo   | C2  | A       | 200    | C3          |
+| Bianchi | C3  | A       | 500    | NULL        |
+| Verdi   | C4  | B       | 200    | C2          |
+| Neri    | C5  | B       | 150    | C1          |
+| Tosi    | C6  | B       | 100    | C1          |
+
+A questo punto, si vogliono ottenere i nomi e i codici degli impiegati che hanno un salario maggiore o uguale di quello dei loro supervisori: tutte le informazioni di cui abbiamo bisogno si trovano in  tuple diverse della stessa relazione appena vista (i supervisori sono semplicemente altri impiegati, quindi possiamo accedere ai salari sia degli impiegati che dei supervisori), ma per poterle confrontare dovremo fare in modo che si trovino in colonne diverse della stessa tupla. Per ottenere questo risultato, possiamo creare una copia `EmployeesC` della relazione `Employees` originale, andando a rinominare tutti gli attributi con la seguente operazione:
+$$\text{EmployeesC}=\rho_{\text{Name, C\#, Section, Salary, Supervisor\#\,\, -> \,\,CName, CC\#, CSection, CSalary, CSupervisor\#}}$$
+La relazione risultante `EmployeesC` sarà dunque:
+
+| CName   | CC# | CSection | CSalary | CSupervisor# |
+| ------- | --- | -------- | ------- | ------------ |
+| Rossi   | C1  | B        | 100     | C3           |
+| Pirlo   | C2  | A        | 200     | C3           |
+| Bianchi | C3  | A        | 500     | NULL         |
+| Verdi   | C4  | B        | 200     | C2           |
+| Neri    | C5  | B        | 150     | C1           |
+| Tosi    | C6  | B        | 100     | C1           |
+
+Ora, possiamo sfruttare il [[BD1_01 - Modello relazionale#Join $ theta$|join]] $\theta$, e andare dunque a selezionare le tuple del prodotto cartesiano $\text{Employees} \times \text{EmployeesC}$ che rispettano la condizione $\text{Supervisor\# = CC\#}$. In questo modo, otterremo un elenco di tuple contenenti ciascuna un impiegato abbinato al suo supervisore:
+
+| Name  | C#  | Section | Salary | Supervisor# | CName   | CC# | CSection | CSalary | CSupervisor# |
+| ----- | --- | ------- | ------ | ----------- | ------- | --- | -------- | ------- | ------------ |
+| Rossi | C1  | B       | 100    | C3          | Bianchi | C3  | A        | 500     | NULL         |
+| Pirlo | C2  | A       | 200    | C3          | Bianchi | C3  | A        | 500     | NULL         |
+| Verdi | C4  | B       | 200    | C2          | Pirlo   | C2  | A        | 200     | C3           |
+| Neri  | C5  | B       | 150    | C1          | Rossi   | C1  | B        | 100     | C3           |
+| Tosi  | C6  | B       | 100    | C1          | Rossi   | C1  | B        | 100     | C3           |
+
+Si noti che, dato che l'impiegato Bianchi non ha un supervisore (il valore `Supervisor#` nella sua tupla è un [[BD1_01 - Modello relazionale#Valori nulli|valore nullo]]), non è incluso nel risultato del join. A questo punto, ricordiamo che si volevano trovare gli impiegati che hanno un salario maggiore o uguale di quello dei loro supervisori: per ottenere le tuple desiderate, basterà effettuare una [[BD1_01 - Modello relazionale#Selezione|selezione]] sull'ultima relazione trovata, estraendo le tuple per cui vale la condizione $\text{Salary}\ge\text{CSalary}$. La relazione risultante è la seguente:
+
+| Name  | C#  | Section | Salary | Supervisor# | CName   | CC# | CSection | CSalary | CSupervisor# |
+| ----- | --- | ------- | ------ | ----------- | ------- | --- | -------- | ------- | ------------ |
+| Verdi | C4  | B       | 200    | C2          | Pirlo   | C2  | A        | 200     | C3           |
+| Neri  | C5  | B       | 150    | C1          | Rossi   | C1  | B        | 100     | C3           |
+| Tosi  | C6  | B       | 100    | C1          | Rossi   | C1  | B        | 100     | C3           |
+
+Infine, dato che l'intenzione era di ottenere esclusivamente nome e codice degli impiegati desiderati, come ultimo passaggio andremo a effettuare una [[BD1_01 - Modello relazionale#Proiezione|proiezione]], isolando gli attributi `Name` e `C#`:
+
+| Name  | C#  |
+| ----- | --- |
+| Verdi | C4  |
+| Neri  | C5  |
+| Tosi  | C6  |
+
+Ora, analizziamo un altro esempio. Supponiamo di avere un'altra relazione `Employees`:
+
+| Name    | C#  | Section | Salary |
+| ------- | --- | ------- | ------ |
+| Rossi   | C1  | B       | 100    |
+| Pirlo   | C2  | A       | 200    |
+| Bianchi | C3  | A       | 500    |
+| Verdi   | C4  | B       | 200    |
+| Neri    | C5  | B       | 150    |
+| Tosi    | C6  | B       | 100    |
+
+Si vogliono ottenere nome e codice dell'impiegato (o impiegati) che ha (o hanno) il salario maggiore. L'approccio migliore, in questo caso, è invertire la condizione di partenza, trovando così tutte le tuple che NON rispettano quest'ultima, e sottraendole alla relazione di partenza per trovare quelle che invece costituiranno la soluzione. Partiamo di nuovo sfruttando il principio del join $\theta$, copiando la tabella `Employee` in una nuova tabella `Employee2` (stavolta non saranno necessarie operazioni di rinomina), effettuando il prodotto cartesiano tra queste due relazioni e selezionando esclusivamente le tuple per cui vale la condizione $\text{Employee.Salary} < \text{Employee2.Salary}$:
+
+| Employee.Name | Employee.C# | Employee.Section | Employee.Salary | Employee2.Name | Employee2.C# | Employee2.Section | Employee2.Salary |
+| ------------- | ----------- | ---------------- | --------------- | -------------- | ------------ | ----------------- | ---------------- |
+| Rossi         | C1          | B                | 100             | Pirlo          | C2           | A                 | 200              |
+| Rossi         | C1          | B                | 100             | Bianchi        | C3           | A                 | 500              |
+| Rossi         | C1          | B                | 100             | Verdi          | C4           | B                 | 200              |
+| Rossi         | C1          | B                | 100             | Neri           | C5           | B                 | 150              |
+| Pirlo         | C2          | A                | 200             | Bianchi        | C3           | A                 | 500              |
+| Verdi         | C4          | B                | 200             | Bianchi        | C3           | A                 | 500              |
+| Neri          | C5          | B                | 150             | Pirlo          | C2           | A                 | 200              |
+| Neri          | C5          | B                | 150             | Bianchi        | C3           | A                 | 500              |
+| Neri          | C5          | B                | 150             | Verdi          | C4           | B                 | 200              |
+| Tosi          | C6          | B                | 100             | Pirlo          | C2           | A                 | 200              |
+| Tosi          | C6          | B                | 100             | Bianchi        | C3           | A                 | 500              |
+| Tosi          | C6          | B                | 100             | Verdi          | C4           | B                 | 200              |
+| Tosi          | C6          | B                | 100             | Neri           | C5           | B                 | 150              |
+
+Così facendo, abbiamo ottenuto una relazione contenente tutti gli impiegati che hanno un salario minore di almeno uno degli altri impiegati. A questo punto, dato che ci interessano solo nome e codice, possiamo effettuare una proiezione sugli attributi `Employee.Name` e `Employee.C#`:
+
+| Name  | C#  |
+| ----- | --- |
+| Rossi | C1  |
+| Pirlo | C2  |
+| Verdi | C4  |
+| Neri  | C5  |
+| Tosi  | C6  |
+
+Va da sé, a questo punto, che sottraendo questi impiegati a quelli della relazione di partenza, si otterranno gli impiegati che non hanno il salario minore di alcun altro impiegato, e di conseguenza gli impiegati che hanno il salario maggiore: in questo caso, l'unico impiegato che rispetta tale condizione è Bianchi, col codice $\text{C3}$.
 ___
 ## Come formulare un "buon" schema di database?
 
@@ -562,5 +653,5 @@ Con questa soluzione, non si verifica più alcuna forma di ridondanza o di altre
 
 Ma come possiamo progettare uno schema del genere? Per capirlo, torniamo ad analizzare l'esempio visto finora, e notiamo che **i problemi trovati derivano dal fatto che più concetti ben diversi e distinti venivano rappresentati in un'unica relazione**: nel primo approccio che abbiamo utilizzato, in un'unica istanza erano condensate le informazioni relative a studenti, corsi, esami e municipalità; nel secondo, in parte migliore, i problemi derivavano dall'associazione tra studenti e municipalità; infine, nel terzo e ultimo, tutti i concetti rappresentati nel database sono perfettamente isolati e indipendenti uno dall'altro, eliminando ridondanze e anomalie. Dunque, generalmente, la prima regola da seguire per la creazione di un buon schema di database è di **rappresentare entità diverse in relazioni diverse**.
 
-Stabilito ciò, è chiaro che il punto diventa l'identificazione di tali entità, in modo da permettere il loro isolamento. Per fare ciò, tornano utili le **[[BD1_01 - Modello relazionale#Chiavi|chiavi]]**, ossia un attributo o insieme di attributi che permette di determinare le cosiddette "**dipendenze funzionali**", un particolare tipo di **vincolo**. Approfondiremo meglio questo concetto nel paragrafo successivo. 
+Stabilito ciò, è chiaro che il punto diventa l'identificazione di tali entità, in modo da permettere il loro isolamento. Per fare ciò, tornano utili le **[[BD1_01 - Modello relazionale#Chiavi|chiavi]]**, ossia un attributo o insieme di attributi che permette di determinare le cosiddette "**dipendenze funzionali**", un particolare tipo di **vincolo**. Approfondiremo meglio questo concetto nel capitolo successivo. 
 ___
