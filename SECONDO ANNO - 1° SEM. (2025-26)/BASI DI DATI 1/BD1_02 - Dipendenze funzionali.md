@@ -154,7 +154,13 @@ dato che, **se due insiemi sono entrambi sottoinsiemi uno dell'altro**, vuol dir
 
 Partiamo dalla prima, ossia che **$F^{+}\subseteq F^{A}$**. Possiamo dimostrare tale proposizione **per assurdo**, supponendo che possa esistere una dipendenza funzionale $X\rightarrow Y$ tale che appartenga a $F^{+}$ ma non a $F^{A}$. [08 - slide 15/17]
 
-Passiamo ora alla seconda proposizione, ossia che $F^{A}\subseteq F^{+}$. [08 - slide 11/14]
+Passiamo ora alla seconda proposizione, ossia che $F^{A}\subseteq F^{+}$. Consideriamo una generica dipendenza funzionale $X\rightarrow Y\,\in\,F^{A}$; possiamo provare **per induzione** che tale dipendenza funzionale appartenga anche a $F^{+}$, considerando nella dimostrazione il numero $i$ di applicazioni degli assiomi di Armstrong. La **base** della nostra induzione è che $i=0$: in questo caso, la dipendenza funzionale $X\rightarrow Y$ appartiene ad $F$ (non sono stati applicati gli assiomi di Armstrong, quindi $F^{A}=F$), e dunque logicamente appartiene anche a $F^{+}$. A questo punto, procediamo a considerare il **passo induttivo**, ossia $i>0$: per ipotesi, qualsiasi dipendenza funzionale ottenuta da $F$ applicando gli assiomi di Armstrong un numero di volte minore o uguale di $i-1$ appartiene a $F^{+}$, si deve dunque dimostrare che ciò valga anche per $i$. [08 - slide 12/14]
+___
+##### Conclusioni
 
-[08 - slide 18/20]
+[08 - slide 18]
+
+Avendo dimostrato il teorema del paragrafo precedente, ora abbiamo un modo per **trovare tutte le dipendenze funzionali contenute in $F^+$**: infatti, per fare ciò basterà applicare ricorsivamente gli assiomi di Armstrong (e le regole derivate) sulle dipendenze già definite in $F$, e continuare finché se ne potranno ottenere di nuove. Ciononostante, computare l'insieme $F^{+}$ rimane un'operazione lunga e dispendiosa, richiedente un **costo esponenziale in termini di operazioni svolte**.
+
+Ma se è così inefficiente trovare l'insieme di dipendenze funzionali $F^{+}$, **perché dovremmo volerlo calcolare?** L'importanza maggiore di tale insieme sta nel suo ruolo nella **definizione della [[BD1_03 - La 3NF|3NF]]**, dato che, se si vuole ottenere uno schema in 3NF da uno schema che non lo è, l'approccio generalmente utilizzato sarà quello di scomporlo e, nel fare ciò, si dovrà cercare di **preservare l'insieme $F^{+}$ dello schema originale**.
 ___

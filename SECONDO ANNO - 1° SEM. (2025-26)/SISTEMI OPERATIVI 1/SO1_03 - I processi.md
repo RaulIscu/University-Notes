@@ -160,6 +160,8 @@ In base al tipo di sistema, ci sono diverse **system call per creare un processo
 
 Come abbiamo accennato in precedenza, il processo padre può assumere due comportamenti diversi alla creazione del processo figlio: può **attendere l'esecuzione del figlio per proseguire la propria**, oppure può **continuare l'esecuzione in parallelo**, senza bloccaggi. Nel primo caso, il processo padre effettua una system call di tipo **`wait()`**, che mette in pausa la sua esecuzione (si tratta del tipico comportamento di una shell UNIX che attende che termini l'esecuzione dei suoi processi figli per richiedere un nuovo prompt, comportamento che si denota dal simbolo **`>`**); nel secondo caso, invece, il processo padre esegue in parallelo con il processo figlio, magari per tutto il tempo o magari solo in parte (si tratta del tipico comportamento di una shell UNIX che esegue un processo figlio in background, comportamento che si denota dal simbolo **`&`**).
 
+
+
 [slide 19/22]
 
 [04, slide 25 - 28 - 29 - 32 - 36 - 38/40 - 42 - 43 - 45 - 46 - 48 - 52 - 54 - 56 - 58 - 61 - 63]
