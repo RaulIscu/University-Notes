@@ -142,6 +142,13 @@ $$\begin{align} F = \{&\text{Patient, Date}\rightarrow \text{Time, Surgeon, Room
 In questa situazione, abbiamo tre chiavi:
 $$\{\text{Patient, Date}\}\,\,\,\,\,\,\,\,\,\,\{\text{Surgeon, Date, Time}\}\,\,\,\,\,\,\,\,\,\,\{\text{Room, Date, Time}\}$$
 
+[10 - slide 22/26]
 
-[esempio: 10 - slide 22/26]
+Dall'esempio appena analizzato, deduciamo che **non è sempre possibile scomporre uno schema di relazione in più schemi in BCNF preservando tutte le dipendenze originali**. Tuttavia, tale operazione è sempre possibile con la 3NF, e dunque in seguito si preferirà quest'ultima alla prima, anche se in certi casi può portare a ridondanze.
+___
+## Come scomporre correttamente uno schema in più schemi in 3NF
+
+
+
+[11 - slide 2]
 ___

@@ -138,6 +138,8 @@ L'osservazione appena fatta è dimostrabile riprendendo delle osservazioni fatte
 $$X\rightarrow Y\,\in\,F^{A}\,\,\,\Rightarrow\,\,\,Y\subseteq X^{+}$$
 $$Y\subseteq X^{+}\,\,\,\Rightarrow\,\,\,X\rightarrow Y\,\in\,F^{A}$$
 Per chiarezza, ricordiamo che $Y=A_{1},\,A_{2},\,\dots,\,A_{n}$ è un sottoinsieme di attributi dello schema $R$. La prima proposizione è dimostrata dal fatto che, se vale che $X\rightarrow Y\,\in\,F^{A}$, allora per la regola di decomposizione vale anche che $X\rightarrow A_{i}\,\in\,F^{A}$ per ogni $i$ che va da $1$ ad $n$: ciò comporta che ogni attributo $A_{i}$ appartiene all'insieme $X^{+}$, e dunque che $Y$ è un sottoinsieme di tale insieme. La seconda, invece, è dimostrata dal fatto che, se vale che $Y\subseteq X^{+}$, si ha di conseguenza che $X\rightarrow A_{i}\,\in\,F^{A}$ per ogni $i$ che va da $1$ a $n$, e dunque per la regola di unione vale anche che $X\rightarrow Y\,\in\,F^{A}$.
+
+Il concetto di chiusura di $X$ tornerà particolarmente utile in futuro, quando lavoreremo con la [[BD1_03 - La 3NF e la BCNF|3NF]] e con le chiavi di uno schema di relazione.
 ___
 ##### Teorema: $F^{+}=F^{A}$
 
