@@ -141,14 +141,60 @@ e definire anche un insieme $F$ di dipendenze funzionali:
 $$\begin{align} F = \{&\text{Patient, Date}\rightarrow \text{Time, Surgeon, Room}\\ &\text{Surgeon, Date, Time}\rightarrow \text{Patient, Room}\\ &\text{Room, Date, Time}\rightarrow \text{Patient, Surgeon}\\ &\text{Surgeon, Date}\rightarrow \text{Room} \} \end{align}$$
 In questa situazione, abbiamo tre chiavi:
 $$\{\text{Patient, Date}\}\,\,\,\,\,\,\,\,\,\,\{\text{Surgeon, Date, Time}\}\,\,\,\,\,\,\,\,\,\,\{\text{Room, Date, Time}\}$$
+Notiamo che le prime 3 dipendenze funzionali dell'insieme $F$ rispettano la condizione della BCNF, dato che i 3 determinanti costituiscono ciascuno una delle chiavi dello schema; lo stesso non si può dire per la quarta dipendenza, dato che $\{\text{Surgeon, Date}\}$ non è una super-chiave, ma piuttosto è contenuto in una chiave. Si ha, dunque, che $\text{Interventions}$ non è in BCNF. 
 
-[10 - slide 22/26]
+Ciononostante, si ha che invece $\text{Interventions}$ rispetta tutte le condizioni per essere in 3NF, anche se potrebbe comunque essere ottimizzata per evitare delle ridondanze. Infatti, supponendo che ad esempio un chirurgo si sposti da una sala operatoria a un'altra, con lo schema attuale si dovrebbero modificare tutte le tuple in cui compare quel chirurgo. Per rendere il tutto più efficiente, possiamo scomporre lo schema nei due seguenti:
+$$\begin{align} &\text{Interventions}=\text{Patient, Date, Time, Surgeon} \\ &\text{Occupation}=\text{Surgeon, Date, Room} \end{align}$$
+Ora, vediamo un altro esempio. Supponiamo di voler tenere traccia dei pazienti che devono sottostare a più operazioni, anche in diversi dipartimenti; creiamo, a questo proposito, lo schema di relazione:
+$$\text{MultipleSurgery}=\text{Patient, Department, Surgeon}$$
+Ogni tupla di tale relazione rappresenta un'operazione che il paziente ha affrontato, associando tale paziente con il chirurgo che l'ha operato e con il dipartimento dove si è svolta l'operazione. Vale il seguente insieme di dipendenze funzionali:
+$$\begin{align} F=\{&\text{Surgeon}\rightarrow \text{Department}  \\ &\text{Patient, Department}\rightarrow \text{Surgeon} \} \end{align}$$
+con $\{\text{Patient, Department}\}$ che è l'unica chiave dello schema. In queste condizioni, si ha che la prima dipendenza viola la condizione della BCNF, dato che $\text{Surgeon}$ non è una super-chiave. Dunque, proviamo lo stesso approccio di prima e scomponiamo lo schema di partenza in due schemi $\text{Surgeons}$ e $\text{Patients}$:
+$$\begin{align} &\text{Surgeons}=\text{Surgeon, Department}\\ &\text{Patients}=\text{Patient, Surgeon} \end{align}$$
+Tuttavia, questa non rappresenta un'opzione valida, dato che non viene conservata la seconda dipendenza funzionale dell'insieme $F$ di partenza.
 
 Dall'esempio appena analizzato, deduciamo che **non è sempre possibile scomporre uno schema di relazione in più schemi in BCNF preservando tutte le dipendenze originali**. Tuttavia, tale operazione è sempre possibile con la 3NF, e dunque in seguito si preferirà quest'ultima alla prima, anche se in certi casi può portare a ridondanze.
 ___
 ## Come scomporre correttamente uno schema in più schemi in 3NF
 
+In questo paragrafo, approfondiremo nello specifico il modo corretto di **scomporre uno schema in più schemi posti in [[BD1_03 - La 3NF e la BCNF#La 3NF|3NF]]**. Dato uno schema di relazione $R$ e un insieme $F$ di dipendenze funzionali definite su di esso, se lo si vuole scomporre in più schemi in 3NF si dovrà prestare attenzione a:
+- **preservare tutte le dipendenze contenute nella [[BD1_02 - Dipendenze funzionali#Chiusura di $F$|chiusura di F]]**, ossia nell'insieme $F^{+}$;
+- mantenere la possibilità di **ricostruire tramite un [[BD1_01 - Modello relazionale#Join naturale|join]] tutte e sole le informazioni originali**.
 
+###### Preservare le dipendenze di $F^{+}$
 
-[11 - slide 2]
+Focalizziamoci, per ora, sul primo punto. Dovendo preservare tutte le dipendenze contenute in $F^{+}$, siamo naturalmente interessati a calcolare tale insieme, tuttavia come anticipato in precedenza tale operazione risulta molto dispendiosa e inefficiente. 
+
+In alternativa, quello che possiamo fare è **trovare un metodo per capire se una dipendenza funzionale $X\rightarrow Y$ appartiene a $F^{+}$**. Per fare ciò, possiamo usufruire del concetto di [[BD1_02 - Dipendenze funzionali#Chiusura di un insieme di attributi $X$|chiusura di un insieme di attributi]], ossia dell'insieme $X^{+}$. Infatti, in generale vale che:
+$$X\rightarrow Y\,\in\,F^{A}\,\,\,\iff\,\,\,Y\subseteq X^{+}$$
+e avendo [[BD1_02 - Dipendenze funzionali#Teorema $F {+}=F {A}$|dimostrato]] che $F^{A}=F^{+}$, possiamo utilizzare questo lemma per il nostro scopo.
+
+Ma come facciamo a **calcolare l'insieme $X^{+}$**? Per farlo, possiamo sfruttare un **algoritmo**, che ha i seguenti input e output:
+- come **input**, uno schema di relazione $R$, un insieme $F$ di dipendenze funzionali definite su di esso, e un sottoinsieme $X$ di attributi di $R$;
+- come **output**, la chiusura di $X$ rispetto a $F$, ossia l'insieme $X^{+}_{F}$, nella variabile $Z$.
+
+Di seguito, lo **pseudocodice dell'algoritmo**:
+
+```
+Z = X
+S = {A | Y → V ∈ F, A ∈ V ∧ Y ⊆ Z}
+	
+while S ⊄ Z:
+	Z = Z ∪ S
+	S = {A | Y → V ∈ F, A ∈ V ∧ Y ⊆ Z}		
+```
+
+Analizziamo l'operato dell'algoritmo passo per passo. Come abbiamo detto, la variabile $Z$ sarà quella dove troveremo la chiusura del sottoinsieme $X$; inizialmente, ci andiamo a mettere solo $X$ stesso. 
+
+Di seguito, inseriamo nell'insieme $S$ tutti i singoli attributi $A$ che compongono la parte destra (ossia, il fattore "dipendente") delle dipendenze contenute in $F$ le cui parti sinistre (ossia, i fattori "determinanti") siano contenute in $Z$.
+
+Essendo inizialmente $Z = X$, nel passaggio precedente si inseriscono in $S$ solo attributi determinati funzionalmente da $X$; una volta entrati nel ciclo, invece, si aggiungeranno tali attributi a $Z$ e si procederà a trovare altri attributi sfruttando la transitività. Generalmente, all'iterazione $i$ del ciclo, si aggiungeranno a $S$ i singoli attributi $A$ che comporranno la parte destra delle dipendenze contenute in $F$ le cui parti sinistre siano contenute in $Z^{i-1}$.
+
+L'algoritmo terminerà la sua esecuzione una volta che il nuovo insieme $S^{i}$ ottenuto sarà già contenuto nell'insieme $Z^{i}$, e dunque quando non si potranno più aggiungere nuovi attributi all'insieme $X^{+}$.
+
+Vediamo un esempio. Supponiamo di avere il seguente schema di relazione $R$ e insieme $F$ di dipendenze funzionali definite su di esso:
+$$\begin{align} &R=ABCDEHL \\ &F=\{AB\rightarrow C,\,B\rightarrow D,\,AD\rightarrow E,\,CE\rightarrow H\} \end{align}$$
+e di voler calcolare la chiusura di $AB$, ossia l'insieme $AB^{+}$, utilizzando l'algoritmo appena presentato. Partiamo con $Z=AB$, e aggiungiamo all'insieme $S$ gli attributi che compongono la parte destra delle dipendenze contenute in $F$ le cui parti sinistre si trovano in $Z$: la prima dipendenza di $F$ è $AB\rightarrow C$, quindi aggiungiamo subito $C$; la seconda dipendenza, invece, è $B\rightarrow D$, ed essendo $B$ contenuto in $Z$ possiamo aggiungere anche $D$. Dunque, 
+
+[11 - slide 7]
 ___
