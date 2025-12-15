@@ -161,7 +161,7 @@ In questo paragrafo, approfondiremo nello specifico il modo corretto di **scompo
 - **preservare tutte le dipendenze contenute nella [[BD1_02 - Dipendenze funzionali#Chiusura di $F$|chiusura di F]]**, ossia nell'insieme $F^{+}$;
 - mantenere la possibilità di **ricostruire tramite un [[BD1_01 - Modello relazionale#Join naturale|join]] tutte e sole le informazioni originali**.
 
-###### Preservare le dipendenze di $F^{+}$
+##### Trovare la chiusura di un sottoinsieme $X$ di attributi di $R$
 
 Focalizziamoci, per ora, sul primo punto. Dovendo preservare tutte le dipendenze contenute in $F^{+}$, siamo naturalmente interessati a calcolare tale insieme, tuttavia come anticipato in precedenza tale operazione risulta molto dispendiosa e inefficiente. 
 
@@ -184,17 +184,40 @@ while S ⊄ Z:
 	S = {A | Y → V ∈ F, A ∈ V ∧ Y ⊆ Z}		
 ```
 
-Analizziamo l'operato dell'algoritmo passo per passo. Come abbiamo detto, la variabile $Z$ sarà quella dove troveremo la chiusura del sottoinsieme $X$; inizialmente, ci andiamo a mettere solo $X$ stesso. 
+Analizziamo l'operato dell'algoritmo passo per passo. Come abbiamo detto, **la variabile $Z$ sarà quella dove troveremo la chiusura del sottoinsieme $X$**; inizialmente, ci andiamo a mettere **solo $X$ stesso**. 
 
-Di seguito, inseriamo nell'insieme $S$ tutti i singoli attributi $A$ che compongono la parte destra (ossia, il fattore "dipendente") delle dipendenze contenute in $F$ le cui parti sinistre (ossia, i fattori "determinanti") siano contenute in $Z$.
+Di seguito, **inseriamo nell'insieme $S$ tutti i singoli attributi $A$ che compongono la parte destra** (ossia, il fattore "dipendente") **delle dipendenze contenute in $F$ le cui parti sinistre** (ossia, i fattori "determinanti") **siano contenute in $Z$**.
 
-Essendo inizialmente $Z = X$, nel passaggio precedente si inseriscono in $S$ solo attributi determinati funzionalmente da $X$; una volta entrati nel ciclo, invece, si aggiungeranno tali attributi a $Z$ e si procederà a trovare altri attributi sfruttando la transitività. Generalmente, all'iterazione $i$ del ciclo, si aggiungeranno a $S$ i singoli attributi $A$ che comporranno la parte destra delle dipendenze contenute in $F$ le cui parti sinistre siano contenute in $Z^{i-1}$.
+Essendo inizialmente $Z = X$, nel passaggio precedente si inseriscono in $S$ solo attributi determinati funzionalmente da $X$; una volta entrati nel ciclo, invece, si aggiungeranno tali attributi a $Z$ e si procederà a **trovare altri attributi sfruttando la transitività**. Generalmente, all'iterazione $i$ del ciclo, si aggiungeranno a $S$ i singoli attributi $A$ che comporranno la parte destra delle dipendenze contenute in $F$ le cui parti sinistre siano contenute in $Z^{i-1}$.
 
-L'algoritmo terminerà la sua esecuzione una volta che il nuovo insieme $S^{i}$ ottenuto sarà già contenuto nell'insieme $Z^{i}$, e dunque quando non si potranno più aggiungere nuovi attributi all'insieme $X^{+}$.
+**L'algoritmo terminerà la sua esecuzione** una volta che il nuovo insieme $S^{i}$ ottenuto sarà già contenuto nell'insieme $Z^{i}$, e dunque **quando non si potranno più aggiungere nuovi attributi all'insieme $X^{+}$**.
 
 Vediamo un esempio. Supponiamo di avere il seguente schema di relazione $R$ e insieme $F$ di dipendenze funzionali definite su di esso:
 $$\begin{align} &R=ABCDEHL \\ &F=\{AB\rightarrow C,\,B\rightarrow D,\,AD\rightarrow E,\,CE\rightarrow H\} \end{align}$$
-e di voler calcolare la chiusura di $AB$, ossia l'insieme $AB^{+}$, utilizzando l'algoritmo appena presentato. Partiamo con $Z=AB$, e aggiungiamo all'insieme $S$ gli attributi che compongono la parte destra delle dipendenze contenute in $F$ le cui parti sinistre si trovano in $Z$: la prima dipendenza di $F$ è $AB\rightarrow C$, quindi aggiungiamo subito $C$; la seconda dipendenza, invece, è $B\rightarrow D$, ed essendo $B$ contenuto in $Z$ possiamo aggiungere anche $D$. Dunque, 
+e di voler calcolare la chiusura di $AB$, ossia l'insieme $AB^{+}$, utilizzando l'algoritmo appena presentato. Partiamo con $Z=AB$, e aggiungiamo all'insieme $S$ gli attributi che compongono la parte destra delle dipendenze contenute in $F$ le cui parti sinistre si trovano in $Z$: la prima dipendenza di $F$ è $AB\rightarrow C$, quindi aggiungiamo subito $C$; la seconda dipendenza, invece, è $B\rightarrow D$, ed essendo $B$ contenuto in $Z$ possiamo aggiungere anche $D$. Dunque, all'entrata del ciclo, si ha la seguente situazione:
+$$\begin{align} &Z=AB\\ &S=CD \end{align}$$
+A questo punto, si valuta la condizione del ciclo, ossia se $S$ non è un sottoinsieme di $Z$ (in altre parole, la condizione è rispettata se l'insieme $S$ ha elementi che non sono contenuti in $Z$): la condizione è vera, quindi si entra nel ciclo. Procediamo a fare l'unione tra $Z$ e $S$ e memorizzarla in $Z$, e a questo punto ricontrolliamo se possiamo aggiungere altri attributi in $S$: notiamo la terza dipendenza funzionale di $F$, ossia $AD\rightarrow E$, e aggiungiamo $E$ ad $S$ avendo sia $A$ che $D$ all'interno di $Z$. Dunque, al termine della prima iterazione del ciclo, si ha la seguente situazione:
+$$\begin{align} &Z=ABCD\\ &S=CDE \end{align}$$
+Rivalutiamo la condizione del ciclo: anche in questo caso, la condizione viene rispettata (l'attributo $E$ non è contenuto in $Z$), dunque procediamo con la seconda iterazione del ciclo. Facciamo l'unione tra $Z$ e $S$ e memorizziamola in $Z$, e ricontrolliamo se possiamo aggiungere altro a $S$: in questo caso, utilizziamo l'ultima dipendenza contenuta in $F$, ossia $CE\rightarrow H$, e aggiungiamo $H$ ad $S$ avendo sia $C$ che $E$ all'interno di $Z$. Dunque al termine della seconda iterazione del ciclo, si ha la seguente situazione:
+$$\begin{align} &Z=ABCDE\\ &S=CDEH \end{align}$$
+Valutiamo ancora una volta la condizione del ciclo: di nuovo, la condizione viene rispettata (l'attributo $H$ non è contenuto in $Z$), dunque procediamo con la terza iterazione del ciclo. Facciamo l'unione tra $Z$ e $S$ e vediamo se è possibile aggiungere altro a $S$: stavolta, non troviamo dipendenze di $F$ che fanno al nostro caso, dunque $S$ rimarrà così com'è. Non avendo aggiunto altri attributi a $S$, quando andremo a rivalutare nuovamente la condizione del ciclo, essa non verrà rispettata, dato che tutti gli elementi di $S$ saranno contenuti anche in $Z$: a questo punto, l'algoritmo termina la sua esecuzione. Rimaniamo con i seguenti insiemi di attributi:
+$$\begin{align} &Z=ABCDEH\\ &S=CDEH \end{align}$$
+e, dunque, si ha che la chiusura di $AB$ corrisponde all'insieme $AB^{+}=ABCDEH$.
 
-[11 - slide 7]
+Notiamo una particolarità: anche se non è ciò che viene concretamente fatto dall'algoritmo, **estendere la variabile $S$ implica l'applicazione degli [[BD1_02 - Dipendenze funzionali#Assiomi di Armstrong e regole corollarie|assiomi di Armstrong]] sulle dipendenze di $F$**. Ad esempio, per aggiungere l'attributo $D$, e quindi per dimostrare che $D$ è determinato funzionalmente da $AB$, avremmo potuto lavorare nel modo seguente:
+1. per l'assioma della riflessività, si ha che $AB\rightarrow B$;
+2. all'interno di $F$ troviamo la dipendenza $B\rightarrow D$;
+3. di conseguenza, per l'assioma della transitività, possiamo affermare che $AB\rightarrow D$.
+
+Ragionamenti analoghi possono essere fatti per tutti gli altri attributi inseriti man mano in $Z$.
+___
+##### Dimostrazione dell'algoritmo di calcolo di $X^{+}$
+
+È possibile **dimostrare che l'algoritmo** presentato nel [[BD1_03 - La 3NF e la BCNF#Trovare la chiusura di un sottoinsieme $X$ di attributi di $R$|paragrafo precedente]] **computa correttamente l'insieme $X^{+}$**, ossia la chiusura di un sottoinsieme $X$ di attributi di $R$ rispetto a un insieme $F$ di dipendenze funzionali definite su quest'ultimo.
+
+Indichiamo con $Z^{(0)}$ il valore iniziale di $Z$ (ossia $X$) e con $Z^{(i)}$ e $S^{(i)}$ i valori di $Z$ e di $S$ dopo la $i$-esima iterazione del ciclo presente all'interno dell'algoritmo; è banale notare che vale che $Z^{(i)}\subseteq Z^{(i+1)}$ per ogni $i$. A questo punto, consideriamo un'iterazione $j$ tale per cui si ha che $S^{(j)}\subseteq Z^{(j)}$ (dunque, l'iterazione $j$ dopo la quale l'algoritmo termina la sua esecuzione); si vuole dimostrare che:
+$$A\,\in\,Z^{(j)}\,\,\,\iff\,\,\,A\,\in\,X^{+}$$
+Dividiamo questa dimostrazione in **due parti**: innanzitutto, dimostriamo per **induzione** su $i$ che, per ogni $i$, vale che $Z^{(i)}\subseteq X^{+}$, e dunque in particolare che $Z^{(j)}\subseteq X^{+}$. Partiamo con la **base dell'induzione**, ossia con $i=0$: come abbiamo anticipato, $Z^{(0)}=X$, e valendo banalmente che $X\subseteq X^{+}$ abbiamo anche che $Z^{(0)}\subseteq X^{+}$. Arriviamo dunque al **passo dell'induzione**, ossia a considerare valori $i>0$: 
+
+[11 - slide 9/13]
 ___
