@@ -266,7 +266,13 @@ Vediamo un esempio di applicazione di questo metodo: supponiamo di avere il segu
 $$\begin{align} &R=ABCDE\\ &F=\{AB\rightarrow C,\,AC\rightarrow B,\,D\rightarrow E\} \end{align}$$
 Basandoci sulle dipendenze contenute in $F$, andremo ad analizzare i sottoinsiemi $ABDE$ ($R - C$), $ACDE$ ($R-B$) e $ABCD$ ($R-E$). Le chiusure di tutti questi sottoinsiemi comprendono tutti gli attributi di $R$, dunque tutti e 3 sono super-chiavi di $R$. A questo punto, andiamo ad analizzare i loro sottoinsiemi: partiamo analizzando $AB$, e notiamo che $AB^{+}=ABC\neq R$, tuttavia aggiungendo $D$ andremo a determinare anche $E$, trovando dunque che $ABD^{+}=R$; ciò ci indica non solo che **$ABD$ è una chiave di $R$**, ma anche che $ABDE$ e $ABCD$ sicuramente non lo sono. Analizziamo, ora, $AC$, e notiamo che $AC^{+}=ABC\neq R$, tuttavia anche in questo caso aggiungendo $D$ andremo a determinare anche $E$, trovando dunque che $ACD^{+}=R$; ciò ci indica che $ACDE$ sicuramente non è una chiave, e verificando che non lo siano neanche $D$ ($D^{+}=DE$) o $E$ ($E^{+}=E$) possiamo affermare che **$ACD$ è una chiave di $R$**. Dunque, le due chiavi di $R$ sono $ABD$ e $ACD$.
 
+In alcuni casi, può essere utile applicare la seguente regola, chiamata "**test dell'unicità**":
 
+> Dato uno schema di relazione $R$ e un insieme $F$ di dipendenze funzionali definite su di esso, se per ogni dipendenza $V\rightarrow W\,\in\,F$ si trovano i vari sottoinsiemi di attributi $X=R-(W-V)$, e l'intersezione dei vari insiemi $X$ trovati determina tutto $R$, allora tale intersezione sarà l'unica chiave di $R$.
 
-[12 - slide 19]
+Invece, se l'intersezione dei sottoinsiemi $X$ trovati non determina tutto $R$, vorrà dire che ci sono più chiavi per tale schema.
+___
+##### Preservare le dipendenze contenute in $F^{+}$
+
+[13 - slide 2]
 ___
