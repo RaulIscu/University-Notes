@@ -221,3 +221,52 @@ Dividiamo questa dimostrazione in **due parti**: innanzitutto, dimostriamo per *
 
 [11 - slide 9/13]
 ___
+##### Trovare le chiavi di uno schema di relazione $R$
+
+Possiamo sfruttare l'insieme $X^{+}$ anche per trovare le **chiavi di uno schema $R$**. Ricordiamo la definizione di [[BD1_02 - Dipendenze funzionali#Una nuova definizione di chiave|chiave]]:
+
+> Un sottoinsieme $K$ di attributi di $R$ è una chiave di $R$ se sono rispettate due condizioni:
+> - $K\rightarrow R\,\in\,F^{+}$;
+> - non esiste un sottoinsieme $K^{'}\subseteq K$ tale per cui valga la condizione precedente.
+
+La prima delle due condizioni, ossia che $K\rightarrow R\,\in\,F^{+}$, equivale a dire che **la chiusura di $K$ comprenda tutti gli attributi di $R$**: dunque, per decretare che un sottoinsieme di attributi $K$ sia effettivamente una chiave, si potrà calcolare la sua chiusura, verificare che essa comprenda tutto $R$, e assicurarsi che non esiste un sottoinsieme di $K$ per cui valga la stessa condizione.
+
+Vediamo un esempio. Supponiamo di avere il seguente schema $R$ e insieme $F$ di dipendenze funzionali definite su di esso:
+$$\begin{align} &R=ABCDEH\\ &F=\{AB\rightarrow CD,\,C\rightarrow E,\,AB\rightarrow E,\,ABC\rightarrow D\} \end{align}$$
+Supponiamo, come prima ipotesi, che $ABH$ sia una chiave (definiamo i sottoinsiemi di attributi che potrebbero essere chiavi "**chiavi candidate**"). Il primo passaggio per verificare questa ipotesi è calcolare l'insieme $ABH^{+}$, per verificare che contenga tutto $R$. Applichiamo quindi l'[[BD1_03 - La 3NF e la BCNF#Trovare la chiusura di un sottoinsieme $X$ di attributi di $R$|algoritmo per il calcolo della chiusura di un insieme di attributi]]: inizializziamo $Z=ABH$, e aggiungiamo $C$, $D$ ed $E$ alla prima iterazione del ciclo ($C$ e $D$ per la dipendenza $AB\rightarrow CD$, $E$ per la dipendenza $AB\rightarrow E$), e notiamo che in realtà abbiamo già incluso nella chiusura di $ABH$ tutti gli attributi di $R$. Si ha, dunque, che:
+$$ABH^{+}=ABCDEH$$
+A questo punto, per assicurarci che si tratti di una chiave, dovremo assicurarci che non ci sia un sottoinsieme di $ABH$ che determina funzionalmente tutto $R$, dunque si dovrà riapplicare l'algoritmo appena utilizzato sui vari sottoinsiemi di $ABH$. Per eseguire questa operazione, è importante tenere a mente alcune **regole e consigli utili**:
+- conviene sempre **cominciare con i sottoinsiemi di cardinalità maggiore**, dato che se la loro chiusura non include tutti gli attributi di $R$ allora lo stesso varrà anche per i loro sottoinsiemi;
+- **gli attributi che non compaiono mai nella parte destra delle dipendenze in $F$**, cioè gli attributi che non sono determinati funzionalmente da nessun altro attributo, **devono necessariamente essere inclusi in tutte le chiavi dello schema**.
+
+Tenendo a mente questi due precetti, notiamo che $H$ non è funzionalmente determinato da nessun altro attributo, dunque $H$ dovrà far parte di tutte le chiavi di $R$: ciò ci indica che gli unici sottoinsiemi di $ABH$ che ci conviene considerare sono $AH$ e $BH$. Applicando l'algoritmo su $AH$, si ottiene che la sua chiusura corrisponde sempre a $AH$; lo stesso vale per $BH$, la cui chiusura è proprio $BH$: dunque, abbiamo verificato che non esistono sottoinsiemi di $ABH$ che determinano tutti gli attributi di $R$, e perciò possiamo affermare che **$ABH$ è una delle chiavi di $R$**.
+
+Naturalmente, però, possono esserci **più chiavi in uno schema $R$**, dunque proseguiamo la nostra ricerca. Abbiamo stabilito che $H$ è un attributo che deve necessariamente fare parte di tutte le chiavi di $R$: dunque, vediamo se i sottoinsiemi $CH$, $DH$ ed $EH$ sono anch'essi chiavi di $R$. Applicando l'algoritmo per il calcolo della chiusura, otteniamo i seguenti risultati:
+- $CH^{+}=CEH$;
+- $DH^{+}=DH$;
+- $EH^{+}=EH$.
+
+Dunque, nessuno di questi sottoinsiemi può essere una chiave di $R$. A questo punto, dovremmo procedere ad analizzare sottoinsiemi di $R$ di cardinalità $3$ che contengono $H$. Notiamo, tuttavia, alcune particolarità dello schema che ci permetteranno di arrivare subito a una conclusione: aggiungere l'attributo $A$ a una chiave candidata senza l'attributo $B$ (o viceversa) non può portare a un insieme di attributi con una chiusura soddisfacente, dato che l'attributo $D$ dipende da sottoinsiemi di $R$ dove appaiono entrambi questi attributi; al tempo stesso, né $A$ né $B$ dipendono da altri attributi di $R$, dunque devono necessariamente essere contenuti in ogni chiave di $R$. Queste considerazioni ci fanno capire che, in realtà, $ABH$ è l'unica chiave di $R$.
+
+Vediamo un altro esempio. Supponiamo di avere il seguente schema $R$ e insieme $F$ di dipendenze funzionali determinate su di esso:
+$$\begin{align} &R=ABCDEGH\\ &F=\{AB\rightarrow D,\,G\rightarrow A,\,G\rightarrow B,\,H\rightarrow E,\,H\rightarrow E,\,D\rightarrow H\} \end{align}$$
+Vogliamo determinare le **4 chiavi** di $R$. Innanzitutto, individuiamo gli **attributi che ne  determinano funzionalmente altri**, così come quelli che **non sono determinati da altri attributi**. Abbiamo che **$AB$, $G$, $D$ e $H$ sono gli attributi che ne determinano altri**, mentre $C$ è l'unico attributo che non viene determinato da nessun'altro, dunque **$C$ dovrà essere contenuto in tutte le chiavi di $R$**.
+
+Procediamo, dunque, a **verificare se le chiavi candidate $ABC$, $GC$, $DC$ e $HC$ sono effettivamente chiavi di $R$**:
+- la chiusura di $ABC$, ossia $ABC^{+}$, risulta comprendere tutti gli attributi di $R$, dunque se lo stesso non vale per i suoi sottoinsiemi (dovendo $C$ essere contenuto in tutte le chiavi di $R$, basterà controllare solo $AC$ e $BC$) allora $ABC$ è una chiave di $R$; le chiusure di $AC$ e di $BC$ sono rispettivamente $AC$ e $BC$, dunque la condizione è rispettata e **$ABC$ è una chiave di $R$**;
+- la chiusura di $GC$, ossia $GC^{+}$, risulta comprendere tutti gli attributi di $R$, e dato che né $G$ (non include $C$) né $C$ (da solo non determina altri attributi oltre a sé stesso) possono essere chiavi, abbiamo che **$GC$ è una chiave di $R$**;
+- la chiusura di $DC$, ossia $DC^{+}$, risulta comprendere tutti gli attributi di $R$, e dato che né $D$ né $C$ possono essere chiavi, abbiamo che **$DC$ è una chiave di $R$**;
+- la chiusura di $HC$, ossia $HC^{+}$, risulta comprendere tutti gli attributi di $R$, e dato che né $H$ né $C$ possono essere chiavi, abbiamo che **$HC$ è una chiave di $R$**.
+
+Dunque, si ottiene che **le 4 chiavi di $R$ sono $ABC$, $GC$, $DC$ e $HC$**.
+
+In generale, per decidere da dove iniziare a cercare le chiavi di uno schema, possiamo cominciare considerando certi insiemi di attributi identificati sfruttando le dipendenze funzionali dell'insieme $F$. Data una dipendenza $V\rightarrow W\,\in\,F$, possiamo partire calcolando la chiusura degli insiemi di attributi $X=R-(W-V)$: se la chiusura di $X$ contiene $R$, allora abbiamo identificato una super-chiave di $R$ (si dovranno comunque controllare i suoi sottoinsiemi per trovare le chiavi effettive).
+
+Vediamo un esempio di applicazione di questo metodo: supponiamo di avere il seguente schema $R$ e insieme $F$ di dipendenze funzionali definite su di esso:
+$$\begin{align} &R=ABCDE\\ &F=\{AB\rightarrow C,\,AC\rightarrow B,\,D\rightarrow E\} \end{align}$$
+Basandoci sulle dipendenze contenute in $F$, andremo ad analizzare i sottoinsiemi $ABDE$ ($R - C$), $ACDE$ ($R-B$) e $ABCD$ ($R-E$). Le chiusure di tutti questi sottoinsiemi comprendono tutti gli attributi di $R$, dunque tutti e 3 sono super-chiavi di $R$. A questo punto, andiamo ad analizzare i loro sottoinsiemi: partiamo analizzando $AB$, e notiamo che $AB^{+}=ABC\neq R$, tuttavia aggiungendo $D$ andremo a determinare anche $E$, trovando dunque che $ABD^{+}=R$; ciò ci indica non solo che **$ABD$ è una chiave di $R$**, ma anche che $ABDE$ e $ABCD$ sicuramente non lo sono. Analizziamo, ora, $AC$, e notiamo che $AC^{+}=ABC\neq R$, tuttavia anche in questo caso aggiungendo $D$ andremo a determinare anche $E$, trovando dunque che $ACD^{+}=R$; ciò ci indica che $ACDE$ sicuramente non è una chiave, e verificando che non lo siano neanche $D$ ($D^{+}=DE$) o $E$ ($E^{+}=E$) possiamo affermare che **$ACD$ è una chiave di $R$**. Dunque, le due chiavi di $R$ sono $ABD$ e $ACD$.
+
+
+
+[12 - slide 19]
+___
