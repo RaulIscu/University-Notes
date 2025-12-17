@@ -298,7 +298,46 @@ Il lemma è il seguente:
 
 [dimostrazione: 13 - slide 14]
 
-
-
 [13 - slide 15]
+
+Supponiamo di avere già una scomposizione, e di voler **verificare che preservi tutte le dipendenze dell'insieme $F$ di partenza**. Verificare che una scomposizione rispetti questa condizione richiede di verificare l'equivalenza tra i due insiemi di dipendenze funzionali $F$ e $G=\bigcup_{i\,=\,1}^{k}\pi_{R_{i}}(F)$: notiamo che, per la definizione di $G$, è garantito che $G\subseteq F^{+}$, e si ha che ogni proiezione di $F$ che è inclusa in $G$ è inclusa anche in $F^{+}$, dunque deduciamo che $G^{+}\subseteq\,F^{+}$; dunque, l'unica condizione che si dovrà verificare è che **$F\subseteq G^{+}$**. 
+
+È qui che entra in gioco un nuovo **algoritmo**, utilizzato per **verificare che $F$ sia contenuto in $G^{+}$**. L'algoritmo in questione ha i seguenti input e output:
+- come **input**, abbiamo due insiemi $F$ e $G$ di dipendenze funzionali definite su $R$;
+- come **output**, una variabile booleana che è `true` se $F\subseteq G^{+}$, e `false` altrimenti.
+
+Di seguito, lo **pseudocodice** dell'algoritmo:
+
+```
+success = true
+
+for each X → Y ∈ F:
+	compute Z = closure of X with respect to G
+	if (Y ⊄ Z) then success = false
+```
+
+Infatti, se vale che $Y\subseteq X^{+}_{G}$, allora si ha che $X\rightarrow Y\,\in\,G^{A}$ e di conseguenza che $X\rightarrow Y\,\in\,G^{+}$. Sarà sufficiente trovare anche una singola dipendenza per cui non vale questa condizione per dimostrare che l'equivalenza tra $F$ e $G$ non sussista.
+
+Ma come facciamo a **calcolare $X^{+}_{G}$**? Per usare l'[[BD1_03 - La 3NF e la BCNF#Trovare la chiusura di un sottoinsieme $X$ di attributi di $R$|algoritmo per il calcolo della chiusura di un insieme di attributi]] dovremmo calcolare prima $G$; al tempo stesso, per definizione di $G$, esso dipende da $F^{+}$, e calcolare tale insieme sappiamo essere un'operazione tediosa e inefficiente. Per fortuna, possiamo sfruttare un **algoritmo per calcolare $X^{+}_{G}$ a partire da $F$**. Tale algoritmo ha i seguenti input e output:
+- come **input**, abbiamo uno schema di relazione $R$, un insieme $F$ di dipendenze funzionali definite su $R$, una scomposizione $\rho=R_{1},\,R_{2},\,\dots,\,R_{k}$ e un sottoinsieme $X$ di attributi di $R$;
+- come **output**, una variabile $Z$ contenente la chiusura $X^{+}_{G}$.
+
+Di seguito, lo **pseudocodice** dell'algoritmo:
+
+```
+Z = X
+S = ∅
+
+for i = 1 to k:
+	S = S ∪ (closure of (Z ∩ Ri) w.r.t. F) ∩ Ri
+
+while S ⊄ Z:
+	Z = Z ∪ S
+	for i = 1 to k:
+		S = S ∪ (closure of (Z ∩ Ri) w.r.t. F) ∩ Ri
+```
+
+
+
+[13 - slide 20]
 ___
