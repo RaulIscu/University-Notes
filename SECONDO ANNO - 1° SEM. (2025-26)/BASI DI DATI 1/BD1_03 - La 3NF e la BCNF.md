@@ -274,5 +274,31 @@ Invece, se l'intersezione dei sottoinsiemi $X$ trovati non determina tutto $R$, 
 ___
 ##### Preservare le dipendenze contenute in $F^{+}$
 
-[13 - slide 2]
+Ora che abbiamo capito come sfruttare la [[BD1_03 - La 3NF e la BCNF#Trovare la chiusura di un sottoinsieme $X$ di attributi di $R$|chiusura di un sottoinsieme di attributi]] per trovare le [[BD1_03 - La 3NF e la BCNF#Trovare le chiavi di uno schema di relazione $R$|chiavi]] di uno schema $R$, possiamo pensare concretamente a come **scomporre uno schema $R$ in più schemi in 3NF**.
+
+Innanzitutto, definiamo formalmente la scomposizione di $R$:
+
+> Dato uno schema di relazione $R$, definiamo una **"scomposizione" di $R$** una famiglia $R_{1},\,R_{2},\,\dots,\,R_{k}$ di sottoinsiemi di $R$ tali per cui:
+> $$R=\bigcup_{i\,=\,1}^{k}R_{i}$$
+> In altre parole, scomporre uno schema $R$ significa definire vari "sotto-schemi", ognuno dei quali contenente una parte degli attributi di $R$ e la cui unione dovrà restituire proprio $R$.
+
+Come abbiamo già detto varie volte, però, per scomporre correttamente uno schema $R$ si dovrà fare attenzione a diversi fattori, tra cui **preservare le dipendenze funzionali contenute in $F^{+}$**, ossia nella chiusura dell'insieme $F$ di dipendenze definite inizialmente su $R$. Vogliamo, dunque, accertarci che l'insieme di dipendenze iniziale sia "**equivalente**" a quello che otterremo dopo la scomposizione: ma cosa vuol dire concretamente che due insiemi di dipendenze funzionali sono equivalenti?
+
+> Dati due insiemi $F$ e $G$ di dipendenze funzionali, si dice che "**$F$ e $G$ sono equivalenti**", simbolicamente scritto come $F\equiv G$, se vale che:
+> $$F^{+}=G^{+}$$
+
+Dunque, non è necessario che $F$ e $G$ contengano le stesse dipendenze, ma piuttosto che ciò valga per le loro chiusure. In altre parole, per fare in modo che $F$ e $G$ siano equivalenti devono valere le seguenti due condizioni:
+$$F^{+}\subseteq\, G^{+}\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,G^{+}\subseteq\, F^{+}$$
+Come già visto in precedenza, calcolare la chiusura di un insieme di dipendenze funzionali è un'operazione molto inefficiente, che preferiremmo evitare. In alternativa, possiamo basarci su un **lemma** e su un nuovo **algoritmo per verificare l'equivalenza tra due insiemi di dipendenze funzionali** in **tempo polinomiale**. 
+
+Il lemma è il seguente:
+
+> Siano $F$ e $G$ due insiemi di dipendenze funzionali. Si ha che:
+> $$\text{se }F\subseteq G^{+},\,\text{allora }F^{+}\subseteq\,G^{+}$$
+
+[dimostrazione: 13 - slide 14]
+
+
+
+[13 - slide 15]
 ___
