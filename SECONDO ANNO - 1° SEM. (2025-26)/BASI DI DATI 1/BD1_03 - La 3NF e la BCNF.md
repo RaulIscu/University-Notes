@@ -341,3 +341,86 @@ while S ⊄ Z:
 
 [13 - slide 20]
 ___
+##### Ricostruire le informazioni originali con un join
+
+La seconda condizione principale che si vuole rispettare per effettuare una "buona" scomposizione di uno schema in più schemi posti in 3NF è quella di poter **ricostruire tutte e sole le informazioni originali con un join** sui sotto-schemi creati. 
+
+In altre parole, se scomponiamo uno schema di relazione $R$ in una scomposizione $\rho=R_{1},\,R_{2},\,\dots,\,R_{k}$, si vuole che essa sia tale per cui **qualsiasi istanza legale $r$ di $R$ può essere ricostruita tramite [[BD1_01 - Modello relazionale#Join naturale|join naturale]] sulle corrispondenti istanze legali $r_{1},\,r_{2},\,\dots,\,r_{k}$ dei sotto-schemi $R_{1},\,R_{2},\,\dots,\,R_{k}$**. Una scomposizione che rispetta questa proprietà si dice dotata di un "lossless join".
+
+> Dato uno schema di relazione $R$, una scomposizione $\rho=R_{1},\,R_{2},\,\dots,\,R_{k}$ di tale schema si dice dotata di "**lossless join**" se, per ogni istanza legale $r$ di $R$, vale che:
+> $$r\,=\,\pi_{R_{1}}(r)\,\Join\,\pi_{R_{2}}(r)\,\Join\,\dots\,\Join\pi_{R_{k}}(r)$$
+
+A questo punto, con un approccio analogo ad altri visti finora, il nostro obiettivo diventa trovare un modo di **verificare che una scomposizione rispetti la definizione appena fornita**. Per fare ciò, possiamo utilizzare un **algoritmo**, che presenta i seguenti input e output:
+- come **input**, abbiamo uno schema di relazione $R$, un insieme $F$ di dipendenze funzionali definite su $R$ e una scomposizione $\rho=R_{1},\,R_{2},\,\dots,\,R_{k}$;
+- come **output**, una variabile booleana che è `true` se $\rho$ ha un lossless join, e `false` altrimenti.
+
+Di seguito, lo **pseudocodice** (molto verboso e approssimativo) dell'algoritmo:
+
+```
+construct a table r as follows:
+	r has R columns and k rows
+	at the intersection of the i-th row and the j-th column put:
+		the symbol aj if the attribute A ∈ Rij
+		the symbol bij otherwise
+		
+for each X → Y ∈ F:
+	if there are two tuples t1 and t2 in r such that t1[X] = t2[X] and t1[Y] ≠ t2[Y]:
+		for each attribute Aj in Y:
+			if t1[Aj] = aj:
+				t2[Aj] = t1[Aj]
+			else:
+				t1[Aj] = t2[Aj]
+
+repeat until r has a line with all "a" or r has not changed
+
+if r has a row with all "a":
+	it has a lossless join
+else:
+	it doesn't have a lossless join
+```
+
+Cerchiamo di analizzare questo algoritmo più nel dettaglio, in modo da chiarire meglio il suo funzionamento. La prima cosa che ci chiede di fare l'algoritmo è di **costruire una tabella $r$** che rispetti i seguenti requisiti:
+- abbia **$R$ colonne**, dunque una colonna per ogni attributo di $R$;
+- abbia **$k$ righe**, dunque una riga per ogni sottoschema della scomposizione $\rho$.
+
+Ora, si chiede di **riempire la tabella** $r$ in modo tale che, nella cella rappresentante l'intersezione tra la $i$-esima riga e la $j$-esima colonna, sia presente un valore $a_{j}$ se vale che $A\in R_{i,\,j}$, ossia in altre parole se l'attributo $A_{j}$ è contenuto nel sottoschema $R_{i}$, e un valore $b_{i,\,j}$ altrimenti. Per chiarezza, specifichiamo che $a_{j}$ e $b_{i,\,j}$ rappresentano valori particolari appartenenti al dominio di $A_{j}$, e consideriamo tutti i valori $a_{j}$ uguali tra loro, mentre un particolare valore $b_{i,\,j}$ diverso da $a_{j}$ e da un altro valore $b_{k,\,j}$. Come conseguenza di queste condizioni, **la tabella $r$ iniziale corrisponde a una generica istanza dello schema $R$**.
+
+A questo punto, l'algoritmo intima di ripetere un'operazione **per ogni dipendenza funzionale $X\rightarrow Y$ contenuta in $F$**: l'operazione in questione consiste nel verificare se esistono in $r$ due tuple $t_{1}$ e $t_{2}$ tali per cui si ha che $t_{1}[X]=t_{2}[X]$ e che $t_{1}[Y]\neq t_{2}[Y]$, e se tale condizione è vera allora si controllerà un'ulteriore condizione per ogni attributo $A_{j}$ contenuto in $Y$. Stavolta, si controlla che $t_{1}[A_{j}]=a_{j}$: se ciò è vero, allora si assegna a $t_{2}[A_{j}]$ il valore di $t_{1}[A_{j}]$, altrimenti viceversa, dunque si assegna a $t_{1}[A_{j}]$ il valore di $t_{2}[A_{j}]$. In altre parole, questa parte dell'algoritmo va a **modificare $r$ portandola a soddisfare tutte le dipendenze contenute in $F$**; infatti, se trova due tuple che non rispettano una determinata dipendenza $X\rightarrow Y$, va ad effettuare una modifica per "legalizzare" le tuple, e nel fare ciò l'algoritmo dà priorità a $a_{j}$ piuttosto che a $b_{i,\,j}$ (infatti, notiamo che $a_{j}$ non verrà mai trasformato in $b_{i,\,j}$, ma quest'ultimo può tranquillamente essere sostituito col primo). Più nel dettaglio, se si trovano due tuple che hanno gli stessi valori come [[BD1_02 - Dipendenze funzionali#Cos'è una dipendenza funzionale?|determinanti]] e valori diversi come [[BD1_02 - Dipendenze funzionali#Cos'è una dipendenza funzionale?|dipendenti]], e solo una delle due tuple presenta un valore $a_{j}$ in quest'ultimo, allora il valore dipendente dell'altra diventerà anch'esso $a_{j}$. Invece, se si trovano due tuple che hanno gli stessi valori come determinanti e valori diversi come dipendenti, e nessuna delle due presenta un valore $a_{j}$ in questi ultimi, allora faremo in modo che entrambe le tuple presentino lo stesso valore $b_{i,\,j}$ (come abbiamo detto in precedenza, abbiamo posto che i valori $b_{i,\,j}$ sono diversi sia da $a_{j}$ che da altri valori $b_{k,\,j}$). 
+
+L'operazione svolta nel ciclo che abbiamo appena analizzato **si ripete finché non viene rispettata una delle due seguenti condizioni**:
+- $r$ presenta una riga con solo valori $a$;
+- $r$ non cambia più.
+
+In particolare, l'algoritmo termina quando **tutte le tuple di $r$ soddisfano le dipendenze contenute in $F$**, dunque quando **$r$ diventa un'istanza legale di $R$**. A questo punto, l'ultimissimo passaggio è quello di determinare se $\rho$ ha un lossless join o meno, e per farlo si verifica se **$r$ presenta una riga con solo valori $a$**.
+
+Ma perché è sufficiente tale condizione per determinare che $\rho$ ha un lossless join? Vediamo una **dimostrazione** di tale regola, e dunque formalmente del seguente teorema:
+
+> Dato uno schema di relazione $R$, un insieme $F$ di dipendenze funzionali definite su di esso, e una scomposizione $\rho=R_{1},\,R_{2},\,\dots,\,R_{k}$ di $R$, si può verificare che $\rho$ ha un lossless join applicando l'algoritmo; in particolare, **$\rho$ ha un lossless join se e solo se, quando termina l'esecuzione dell'algoritmo, $r$ presenta una tupla con solo valori $a$**.
+
+Supponiamo, **per assurdo**, che $\rho$ abbia un lossless join ma che, quando termina l'esecuzione dell'algoritmo, $r$ non presenti una tupla con solo valori $a$. Poco fa abbiamo specificato che, al termine dell'algoritmo, $r$ è a tutti gli effetti un'istanza legale di $R$, dato che a quel punto non ci sono più violazioni delle dipendenze contenute in $F$. 
+
+[15 - slide 20]
+___
+##### Scomporre correttamente uno schema $R$ in più sottoschemi
+
+Finora, abbiamo stabilito quali fossero i requisiti per una corretta scomposizione di uno schema di relazione $R$ in più sottoschemi, abbiamo approfondito vari passaggi importanti come [[BD1_03 - La 3NF e la BCNF#Trovare le chiavi di uno schema di relazione $R$|trovare le chiavi di uno schema]], [[BD1_03 - La 3NF e la BCNF#Preservare le dipendenze contenute in $F {+}$|preservare le dipendenze]] dello stesso e come verificare che una scomposizione disponga di un [[BD1_03 - La 3NF e la BCNF#Ricostruire le informazioni originali con un join|lossless join]]. Soffermandoci su quest'ultimo aspetto, seppur sappiamo ora verificare ciò, dobbiamo ancora capire **come ottenere una "buona" scomposizione di uno schema $R$**.
+
+Chiariamo subito che **è sempre possibile ottenere una "buona" scomposizione di uno schema**, ossia una scomposizione tale per cui:
+- ogni sottoschema ottenuto si trova in [[BD1_03 - La 3NF e la BCNF#La 3NF|3NF]];
+- la scomposizione preserva le dipendenze contenute in $F$;
+- è possibile ricostruire qualsiasi istanza legale dello schema originale tramite un join naturale delle istanze della scomposizione.
+
+Anche in questo caso, per ottenere tale scomposizione si può utilizzare un **algoritmo**, che vedremo tra poco. È importante ricordare che **la scomposizione che si ottiene applicando l'algoritmo non è necessariamente l'unica buona scomposizione possibile** per quello schema, dato che possono esistere più scomposizioni di uno stesso schema. Dunque, è da escludere la possibilità di controllare se una scomposizione già data è buona applicando l'algoritmo e confrontando la scomposizione risultante con la prima, dato che potrebbero essere due scomposizioni diverse ma entrambe valide.
+
+Prima di continuare, sarà necessario introdurre un concetto fondamentale, ossia quello della "copertura minimale", dato che costituirà l'input dell'algoritmo di calcolo della scomposizione di uno schema $R$.
+
+> Dato un insieme $F$ di dipendenze funzionali, definiamo "**copertura minimale**" di $F$ un insieme $G$, equivalente a $F$, di dipendenze funzionali, tale per cui:
+> - per ogni dipendenza in $G$, il dipendente è un singoletto (in altre parole, **ogni dipendente è "non-ridondante"**);
+> - per ogni dipendenza $X\rightarrow A\,\in\,G$, non esiste un sottoinsieme $X'\subset X$ tale per cui vale che $G\equiv G-\{X\rightarrow A\}\cup\{X'\rightarrow A\}$ (in altre parole, **ogni determinante è non-ridondante**);
+> - non esiste alcuna dipendenza $X\rightarrow A\,\in\,G$ tale per cui vale che $G\equiv G-\{X\rightarrow A\}$ (in altre parole, **ogni dipendenza è non-ridondante**).
+
+Ricordiamo che due insiemi di dipendenze funzionali si dicono "equivalenti" se dispongono della **stessa chiusura**. Chiariamo cosa implica ciascuno dei tre punti visti nella definizione:
+- 
+
+[17 - slide 6]
+___

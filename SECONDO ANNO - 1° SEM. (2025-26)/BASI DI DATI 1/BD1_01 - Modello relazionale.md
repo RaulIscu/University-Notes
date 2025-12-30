@@ -144,9 +144,9 @@ Come notiamo dall'esempio, **una relazione può avere più chiavi alternative**.
 ___
 ## Algebra relazionale
 
-L'**algebra relazionale** fornisce notazioni per specificare "**query**", o "interrogazioni", che vengono usate per ricercare determinati dati tra i contenuti di una tabella. L'utilizzo dell'algebra relazionale facilita la creazione di queste query; del resto, il linguaggio $\text{SQL}$ viene tradotto in notazioni derivate dall'algebra funzionale per processare le query.
+L'**algebra relazionale** fornisce notazioni per specificare "**query**", o "interrogazioni", che vengono usate per ricercare determinati dati tra i contenuti di una tabella. L'utilizzo dell'algebra relazionale facilita la creazione di queste query; del resto, il linguaggio $\text{SQL}$ viene tradotto in notazioni derivate dall'algebra relazionale per processare le query.
 
-Con l'algebra relazionale, possiamo dunque interrogare un qualsiasi database relazionale mediante un linguaggio formale costituito da vari **operatori unari e binari**, che se applicati su una o più istanze di relazione permette di generare una nuova istanza con i dati ricercati. Si tratta, del resto, di un "**linguaggio procedurale**", nel senso che gli operatori vanno applicati nell'esatto ordine descritto per ottenere il risultato desiderato.
+Con l'algebra relazionale, possiamo dunque interrogare un qualsiasi database relazionale mediante un linguaggio formale costituito da vari **operatori unari e binari**, che se applicati su una o più istanze di relazione permette di generare una nuova istanza con i dati ricercati. Si tratta, inoltre, di un "**linguaggio procedurale**", nel senso che gli operatori vanno applicati nell'esatto ordine descritto per ottenere il risultato desiderato.
 
 In generale, definiamo una forma di "algebra" come una struttura che dispone di **un dominio e di una lista di operatori**: ad esempio, l'algebra aritmetica ha come dominio un insieme di numeri e come operatori la somma, il prodotto, ecc. ecc.; per quanto riguarda l'algebra insiemistica, il dominio sono proprio gli insiemi e gli operatori sono unione, intersezione, e così via. Nell'algebra relazionale, il **dominio** è formato dalle **[[BD1_01 - Modello relazionale#Domini, tuple e relazioni|relazioni]]**, che sono sia gli operandi che i risultati delle varie operazioni; queste **operazioni**, in particolare, sono divisibili in **4 categorie**:
 - operazioni di **estrazione da una singola relazione**, come **proiezione** e **selezione**;
@@ -176,7 +176,7 @@ Eseguendo un'operazione di proiezione mirata ad estrarre le colonne `Name` e `Su
 | Paolo | Bianchi  |
 | Mario | Esposito |
 
-Si ricordi che il risultato dell'operazione è sempre una relazione, dunque un insieme di tuple distinte, e perciò si dovrà evitare di inserire eventuali tuple duplicate nella relazione risultante; ad esempio, se avessimo effettuato una proiezione solo sul `Name`, la tabella risultante avrebbe contenuto solo 2 righe, una per $\text{Mario}$ e una per $Paolo$.
+Si ricordi che il risultato dell'operazione è sempre una relazione, dunque un insieme di tuple distinte, e perciò si dovrà evitare di inserire eventuali tuple duplicate nella relazione risultante; ad esempio, se avessimo effettuato una proiezione solo sul `Name`, la tabella risultante avrebbe contenuto solo 2 righe, una per $\text{Mario}$ e una per $\text{Paolo}$.
 ___
 ##### Selezione
 
@@ -317,7 +317,7 @@ ___
 
 Spesso, è necessario recuperare delle informazioni che, all'interno di un database, si trovano divise in più relazioni diverse; per ottenere tali dati, occorrerà combinare il contenuto di più tuple provenienti da relazioni diverse in nuove tuple. Per poter ottenere tale risultato, si utilizza il prodotto cartesiano.
 
-L'operazione di "**prodotto cartesiano**" consiste nella **creazione di una nuova relazione con tuple ottenute combinando tutte le tuple della prima relazione con tutte le tuple della seconda**; funziona allo stesso modo del [[BD1_01 - Modello relazionale#Domini, tuple e relazioni|prodotto cartesiano]] introdotto nel capitolo precedente. Simbolicamente, è rappresentata dal simbolo $\times$; dunque, possiamo affermare che scrivere:
+L'operazione di "**prodotto cartesiano**" consiste nella **creazione di una nuova relazione con tuple ottenute combinando tutte le tuple della prima relazione con tutte le tuple della seconda**; funziona allo stesso modo del [[BD1_01 - Modello relazionale#Domini, tuple e relazioni|prodotto cartesiano]] introdotto nel paragrafo precedente. Simbolicamente, è rappresentata dal simbolo $\times$; dunque, possiamo affermare che scrivere:
 $$R_{1}\times R_{2}$$
 indica l'operazione di prodotto cartesiano tra le relazioni $R_{1}$ e $R_{2}$, che genera una nuova relazione che contiene nuove tuple generate combinando quelle di $R_{1}$ con quelle di $R_{2}$.
 
@@ -340,7 +340,7 @@ Per comprendere meglio, vediamo un esempio. Supponiamo di avere due istanze di r
 
 Se volessimo ottenere tutti i clienti con abbinati i loro ordini, dovremmo partire dal prodotto cartesiano $\text{Customer}\times \text{Order}$. Prima di tutto, però, conviene rinominare la colonna `C#` della tabella `Order` in modo da poterla distinguere dalla colonna `C#` della tabella `Customer`: per fare ciò, utilizziamo l'operatore di rinomina $\rho$, in modo da creare una copia della tabella `Order` dove `C#` è rinominato a `CC#`:
 $$\text{OrderNew}=\rho_{\text{CC\# <- C\#}}(\text{Order})$$
-A questo punto, sarà possibile effettuare il prodotto cartesiano $\text{Customer}\times \text{Order}$ generando una nuova tabella `CustomerAndOrder`:
+A questo punto, sarà possibile effettuare il prodotto cartesiano $\text{Customer}\times \text{OrderNew}$ generando una nuova tabella `CustomerAndOrder`:
 
 | Surname | C#  | Town   | O#  | CC# | A#  | N° pieces |
 | ------- | --- | ------ | --- | --- | --- | --------- |
@@ -380,8 +380,8 @@ Possiamo eseguire, in seguito, un'operazione di [[BD1_01 - Modello relazionale#P
 ___
 ##### Join naturale
 
-L'operazione di "**join naturale**" permette sostanzialmente di ottenere lo stesso risultato ottenuto al termine dell'esempio del [[BD1_01 - Modello relazionale#Prodotto cartesiano|paragrafo precedente]] in un'unica operazione. Simbolicamente, è rappresentata dal simbolo $⋈$; dunque, possiamo affermare che scrivere:
-$$R_{1}⋈R_{2}$$
+L'operazione di "**join naturale**" permette sostanzialmente di ottenere lo stesso risultato ottenuto al termine dell'esempio del [[BD1_01 - Modello relazionale#Prodotto cartesiano|paragrafo precedente]] in un'unica operazione. Simbolicamente, è rappresentata dal simbolo $\Join$; dunque, possiamo affermare che scrivere:
+$$R_{1}\Join R_{2}$$
 equivale a scrivere: 
 $$\pi_{\text{XY}}(\sigma_{\text{C}}(R_{1}\times R_{2}))$$
 dove $\text{X}$ rappresenta l'insieme degli attributi di $R_{1}$, $\text{Y}$ rappresenta l'insieme degli attributi di $R_{2}$ che non si trovano in $R_{1}$, e $\text{C}$ è una determinata condizione booleana nella forma:
