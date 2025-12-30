@@ -401,7 +401,7 @@ Supponiamo, **per assurdo**, che $\rho$ abbia un lossless join ma che, quando te
 
 [15 - slide 20]
 ___
-##### Scomporre correttamente uno schema $R$ in più sottoschemi
+##### Trovare la copertura minimale di un insieme di dipendenze funzionali
 
 Finora, abbiamo stabilito quali fossero i requisiti per una corretta scomposizione di uno schema di relazione $R$ in più sottoschemi, abbiamo approfondito vari passaggi importanti come [[BD1_03 - La 3NF e la BCNF#Trovare le chiavi di uno schema di relazione $R$|trovare le chiavi di uno schema]], [[BD1_03 - La 3NF e la BCNF#Preservare le dipendenze contenute in $F {+}$|preservare le dipendenze]] dello stesso e come verificare che una scomposizione disponga di un [[BD1_03 - La 3NF e la BCNF#Ricostruire le informazioni originali con un join|lossless join]]. Soffermandoci su quest'ultimo aspetto, seppur sappiamo ora verificare ciò, dobbiamo ancora capire **come ottenere una "buona" scomposizione di uno schema $R$**.
 
@@ -420,7 +420,80 @@ Prima di continuare, sarà necessario introdurre un concetto fondamentale, ossia
 > - non esiste alcuna dipendenza $X\rightarrow A\,\in\,G$ tale per cui vale che $G\equiv G-\{X\rightarrow A\}$ (in altre parole, **ogni dipendenza è non-ridondante**).
 
 Ricordiamo che due insiemi di dipendenze funzionali si dicono "equivalenti" se dispongono della **stessa chiusura**. Chiariamo cosa implica ciascuno dei tre punti visti nella definizione:
-- 
+- la prima condizione è che ogni dipendente sia non-ridondante, e per fare ciò richiede che ciascun dipendente sia un singoletto (ciò è sempre possibile sfruttando la [[BD1_02 - Dipendenze funzionali#Assiomi di Armstrong e regole corollarie|regola della decomposizione]]);
+- la seconda condizione è che ogni determinante sia non ridondante, e in parole povere ciò implica che per ogni dipendenza $X\rightarrow A$ non sia possibile determinare $A$ con un sottoinsieme di $X$;
+- la terza e ultima condizione è che ogni dipendenza sia non ridondante, e dunque che per ogni dipendenza $X\rightarrow A$ non sia possibile determinare $A$ attraverso altre dipendenze.
 
-[17 - slide 6]
+Dato un insieme $F$ di dipendenze funzionali, possono esistere **diverse coperture minimali dello stesso insieme $F$**: è proprio questo il motivo per cui l'algoritmo di calcolo della scomposizione di uno schema $R$ può produrre diversi risultati plausibili.
+
+Per **ottenere una copertura minimale di $F$**, si segue una serie di passaggi che permette di trovare un risultato in **tempo polinomiale**, ossia:
+1. utilizzando la regola di decomposizione, **ridurre i dipendenti in singoletti**;
+2. **ogni dipendenza funzionale $A_{1}A_{2}\dots A_{i-1}A_{i}A_{i+1}\dots A_{n}\rightarrow A$ di $F$ tale per cui $F\equiv F-\{A_{1}A_{2}\dots A_{i-1}A_{i}A_{i+1}\dots A_{n}\rightarrow A\}\cup\{A_{1}A_{2}\dots A_{i-1}A_{i+1}\dots A_{n}\rightarrow A\}$ va rimpiazzata dalla dipendenza $A_{1}A_{2}\dots A_{i-1}A_{i+1}\dots A_{n}\rightarrow A$**, e se quest'ultima appartiene già a $F$ allora la prima viene semplicemente eliminata; questo procedimento dovrà essere ripetuto ricorsivamente sulla dipendenza ottenuta, e **terminerà quando non ci saranno più dipendenze riducibili**;
+3. **rimuovere ogni dipendenza funzionale ridondante**, dunque ogni dipendenza $X\rightarrow A\,\in\,F$ tale per cui $F\equiv F-\{X\rightarrow A\}$.
+
+Notiamo che gli ultimi due passaggi richiedono di verificare l'equivalenza tra due insiemi di dipendenze funzionali: per poter fare ciò, ricordiamo alcune definizioni e conclusioni rilevanti:
+- due insiemi $F$ e $G$ di dipendenze funzionali si dicono equivalenti se le loro chiusure coincidono, dunque $F\equiv G\iff F^{+}=G^{+}$, dunque se e solo se vale sia che $F^{+}\subseteq G^{+}$ sia che $G^{+}\subseteq F^{+}$;
+- se si ha che $F\subseteq G$, allora banalmente vale anche che $F\subseteq G^{+}$;
+- se si ha che $F\subseteq G^{+}$, allora vale anche che $F^{+}\subseteq G^{+}$.
+
+Per verificare che $F\subseteq G^{+}$ basterà verificare che per ogni $X\rightarrow Y\,\in\,F$ si ha anche $X\rightarrow Y\,\in\,G^{+}$, o in altre parole che $Y\subseteq X^{+}_{G}$. 
+
+Analizziamo più da vicino il **secondo passaggio dell'algoritmo**: ogni volta che vogliamo verificare la ridondanza di un attributo nel determinante di una dipendenza, considereremo come $F$ l'insieme di dipendenze che contiene la dipendenza originale $A_{1}A_{2}\dots A_{i-1}A_{i}A_{i+1}\dots A_{n}\rightarrow A$, e come $G$ l'insieme che contiene la dipendenza $A_{1}A_{2}\dots A_{i-1}A_{i+1}\dots A_{n}\rightarrow A$. I due insiemi $F$ e $G$, dunque, sono diverse per un'unica dipendenza, mentre tutte le altre rimangono invariate: ciò ci dice, naturalmente, che quest'ultime appartengono sicuramente alle chiusure dei loro rispettivi insiemi. Dunque, per verificare che $F$ e $G$ siano equivalenti, dovremo verificare solo queste due appartenenze:
+$$A_{1}A_{2}\dots A_{i-1}A_{i}A_{i+1}\dots A_{n}\rightarrow A\,\in\,G^{+}\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,A_{1}A_{2}\dots A_{i-1}A_{i+1}\dots A_{n}\rightarrow A\,\in\,F^{+}$$
+
+Per verificare che $A_{1}A_{2}\dots A_{i-1}A_{i}A_{i+1}\dots A_{n}\rightarrow A\,\in\,G^{+}$, sarà sufficiente verificare che $A\,\in\,(A_{1}A_{2}\dots A_{i-1}A_{i}A_{i+1}\dots A_{n})^{+}_{G}$, dunque andiamo a ripescare l'[[BD1_03 - La 3NF e la BCNF#Trovare la chiusura di un sottoinsieme $X$ di attributi di $R$|algoritmo di calcolo della chiusura di un sottoinsieme di attributi]]. Notiamo che l'algoritmo in questione inizializza $Z$ come un insieme che è concretamente più grande rispetto a quello corrispondente presente nell'insieme $G$: infatti, per definizione in $G$ è presente la dipendenza $A_{1}A_{2}\dots A_{i-1}A_{i+1}\dots A_{n}\rightarrow A$, mentre noi stiamo verificando la chiusura dell'insieme di attributi $A_{1}A_{2}\dots A_{i-1}A_{i}A_{i+1}\dots A_{n}$. Di conseguenza, all'interno dell'insieme $S$ verrà automaticamente inserito $A$, data la presenza in $G$ della dipendenza appena vista.
+
+Rimane, ora, il problema di verificare che $A_{1}A_{2}\dots A_{i-1}A_{i+1}\dots A_{n}\rightarrow A\,\in\,F^{+}$; seguendo lo stesso approccio appena visto, vogliamo di conseguenza dimostrare che $A\,\in\,(A_{1}A_{2}\dots A_{i-1}A_{i+1}\dots A_{n})^{+}_{F}$. Stavolta non ci sono scappatoie, e si dovrà eseguire l'algoritmo per verificare la verità di questa proposizione. Potrebbe esserci, ciononostante, il caso particolare in cui la dipendenza $A_{1}A_{2}\dots A_{i-1}A_{i+1}\dots A_{n}\rightarrow A$ appartiene già a $F$, e dunque anche a $F^{+}$: in tal caso, basterà eliminare la dipendenza originale (ad esempio, se $F$ contiene sia $AB\rightarrow C$ che $A\rightarrow C$, allora $AB\rightarrow C$ potrà essere eliminata). In qualsiasi altro caso, si esegue l'algoritmo e, se si verifica l'equivalenza dei due insiemi $F$ e $G$, allora si procede considerando l'insieme $G$ ottenuto come il nuovo insieme $F$.
+
+Un consiglio da tenere a mente per svolgere questo passaggio dell'algoritmo più efficientemente è il seguente: se abbiamo una dipendenza $A_{1}A_{2}\dots A_{n}\rightarrow A\,\in\,F$ e anche una dipendenza di tipo $Y\rightarrow A\,\in\,F$ con $Y\subset A_{1}A_{2}\dots A_{n}$, allora andremo subito ad eliminare la prima senza bisogno di ulteriori controlli.
+
+Passiamo ora al **terzo passaggio dell'algoritmo**. Denotiamo con $F$ l'insieme di dipendenze contenente la dipendenza $X\rightarrow A$, e $G$ l'insieme dove quest'ultima è stata eliminata. Anche in questo caso, i due insiemi $F$ e $G$ sono diversi per un'unica dipendenza, e naturalmente si ha che $G\subseteq F$, dunque possiamo affermare senza problemi che $G^{+}\subseteq F^{+}$. Per verificare l'altro verso dell'equivalenza, dunque che $F^{+}\subseteq G^{+}$, basterà verificare che la dipendenza da eliminare $X\rightarrow A$ appartenga a $G^{+}$, ossia che $A\,\in\,X^{+}_{G}$. 
+
+Un consiglio da tenere a mente per svolgere questo passaggio dell'algoritmo più efficientemente è il seguente: se abbiamo una dipendenza $X\rightarrow A\,\in\,F$, ma non esiste alcuna dipendenza $Y\rightarrow A\,\in\,F$ con $Y\neq X$, allora non avrà senso cercare di eliminare la dipendenza $X\rightarrow A$, dato che in sua assenza non saremmo più in grado di determinare funzionalmente $A$.
+
+Dunque, ricapitolando:
+- per eseguire il primo passaggio, basterà applicare ricorsivamente la regola della decomposizione;
+- per eseguire il secondo passaggio, ossia per eliminare attributi ridondanti da dipendenze di tipo $A_{1}A_{2}\dots A_{i-1}A_{i}A_{i+1}\dots A_{n}\rightarrow A\,\in\,F$, si dovrà verificare l'equivalenza tra $F$ e $G$, dove $G$ è l'insieme di dipendenze uguale a $F$ ma con la dipendenza considerata sostituita da $A_{1}A_{2}\dots A_{i-1}A_{i+1}\dots A_{n}\rightarrow A$, e per fare ciò basterà verificare che $A\,\in\,(A_{1}A_{2}\dots A_{i-1}A_{i+1}\dots A_{n})^{+}_{F}$; se ciò è vero, allora possiamo eliminare la dipendenza originale e sostituirla con quella trovata;
+- per eseguire il terzo passaggio, ossia per eliminare dipendenze ridondanti, si dovrà verificare l'equivalenza tra $F$ e $G$, dove $G$ è l'insieme di dipendenze uguale a $F$ ma con la dipendenza considerata eliminata, e per fare ciò basterà verificare che $A\,\in\,X^{+}_{G}$; se ciò è vero, allora possiamo eliminare la dipendenza originale.
+
+Applicando questo algoritmo, sarà possibile trovare almeno una copertura minimale per qualsiasi insieme $F$ di dipendenze funzionali, e dunque sarà possibile applicare l'[[BD1_03 - La 3NF e la BCNF#Scomporre correttamente uno schema $R$ in più sottoschemi|algoritmo di scomposizione]] che vedremo nel prossimo paragrafo.
+___
+##### Scomporre correttamente uno schema $R$ in più sottoschemi
+
+Arriviamo, a questo punto, a capire **come scomporre uno schema di relazione $R$ e un insieme $F$ di dipendenze definite su di esso in più sottoschemi**. Tale operazione non solo è sempre possibile, ma è sempre possibile risultare in una **"buona" scomposizione**, ossia una scomposizione $\rho=R_{1},\,R_{2},\,\dots,\,R_{k}$ che presenta le seguenti caratteristiche:
+- **tutti i sottoschemi sono in [[BD1_03 - La 3NF e la BCNF#La 3NF|3NF]]**;
+- **$\rho$ [[BD1_03 - La 3NF e la BCNF#Preservare le dipendenze contenute in $F {+}$|preserva le dipendenze]] di $F$**;
+- **$\rho$ ha un [[BD1_03 - La 3NF e la BCNF#Ricostruire le informazioni originali con un join|lossless join]]**.
+
+Tale scomposizione può essere ottenuta in **tempo polinomiale** attraverso un **algoritmo**, che presenta i seguenti input e output:
+- come **input**, uno schema di relazione $R$ e una [[BD1_03 - La 3NF e la BCNF#Trovare la copertura minimale di un insieme di dipendenze funzionali|copertura minimale]] dell'insieme $F$ di dipendenze funzionali definite su di esso;
+- come **output**, una scomposizione $\rho$ di $R$.
+
+Di seguito, lo **pseudocodice** dell'algoritmo:
+
+```
+S = ∅
+ρ = ∅
+
+for each A ∈ R, such that A is not involved in any dependency in F:
+	S = S U A
+
+if S ≠ ∅:
+	R = R - S
+	ρ = ρ U {S}
+
+if there is a dependency in F that involves all the attributes in R:
+	ρ = ρ ∪ {R}
+else:
+	for each X → A ∈ F:
+		ρ = ρ U {XA}
+```
+
+È possibile, a questo punto, **dimostrare che l'algoritmo restituisce una scomposizione che rispetta tutte le tre condizioni** stabilite poco fa.
+
+Partiamo dimostrando che **$\rho$ preserva le dipendenze contenute in $F$**. Consideriamo l'insieme $G=\bigcup_{i\,=\,1}^{k}\pi_{R_{i}}(F)$: dato che per ogni dipendenza funzionale $X\rightarrow A\,\in\,F$ si ha che $XA\,\in\,\rho$ (nel senso che $XA$ è uno dei sottoschemi di $\rho$), allora abbiamo che tale dipendenza di $F$ sarà contenuta anche in $G$, dunque possiamo dedurre che $F\subseteq G$ e che $F^{+}\subseteq G^{+}$. Invece, l'inclusione $G^{+}\subseteq F^{+}$ è vera a prescindere dato che, per definizione, $G\subseteq F^{+}$. Avendo dimostrato questa doppia inclusione, abbiamo dimostrato che $F\equiv G$, e dunque che $\rho$ preserva le dipendenze di $F$.
+
+Passiamo, ora, al dimostrare che **tutti i sottoschemi di $\rho$ sono in 3NF**. [19 - slide 6]
+
+Infine, per quanto riguarda la dimostrazione che **$\rho$ ha un lossless join**, si può dimostrare che, per avere questa caratteristica, è sufficiente aggiungere a $\rho$ un sottoschema contenente una delle chiavi di $R$.
 ___
