@@ -305,9 +305,15 @@ Il lemma è il seguente:
 > Siano $F$ e $G$ due insiemi di dipendenze funzionali. Si ha che:
 > $$\text{se }F\subseteq G^{+},\,\text{allora }F^{+}\subseteq\,G^{+}$$
 
-[dimostrazione: 13 - slide 14]
+Dimostriamo questo lemma: consideriamo una generica dipendenza $f\,\in\,F^{+}-F$, dunque una dipendenza contenuta in $F^{+}$ ma non in $F$. Essendo $F$ un sottoinsieme di $G^{+}$ per ipotesi, possiamo affermare che qualsiasi dipendenza funzionale trovata in $F$ può essere derivata da $G$ applicando ricorsivamente gli [[BD1_02 - Dipendenze funzionali#Assiomi di Armstrong e regole corollarie|assiomi di Armstrong]], e naturalmente sapendo che $F^{+}=F^{A}$, la dipendenza $f\,\in\,F^{+}$ può essere derivata da $F$ con le stesse modalità. Ciò, dunque, implica che qualsiasi dipendenza $f\,\in\,F^{+}$ può essere derivata da $G$ applicando gli assiomi di Armstrong, e dunque che l'insieme di dipendenze $F^{+}$ è un sottoinsieme di $G^{+}$, come volevasi dimostrare.
 
-[13 - slide 15]
+A questo punto, torniamo al problema principale, ossia il verificare che una scomposizione preservi tutte le dipendenze di $F$. Concretamente, vale la seguente definizione:
+
+> Dato uno schema di relazione $R$, un insieme $F$ di dipendenze funzionali definite su di esso, e una scomposizione $\rho=R_{1},\,R_{2},\,\dots,\,R_{k}$ di $R$, si può affermare che "**$\rho$ preserva $F$**" se vale che:
+> $$F\equiv G=\bigcup_{i\,=\,1}^{k}\pi_{R_{i}}(F)$$
+> dove $\pi_{R_{i}}(F)=\{X\rightarrow Y\,\in\,F^{+}\,\,|\,\,XY\subseteq R_{i}\}$.
+
+Per chiarezza, $G$ naturalmente è un insieme di dipendenze funzionali, e ciascun insieme $\pi_{R_{i}}(F)$ è un insieme di dipendenze ottenuto proiettando $F$ sul sottoschema $R_{i}$, ossia considerando tutte le dipendenze derivabili da $F$ applicando gli assiomi di Armstrong (dunque, le dipendenze di $F^{+}$) che contengono solo attributi di $R_{i}$.
 
 Supponiamo di avere già una scomposizione, e di voler **verificare che preservi tutte le dipendenze dell'insieme $F$ di partenza**. Verificare che una scomposizione rispetti questa condizione richiede di verificare l'equivalenza tra i due insiemi di dipendenze funzionali $F$ e $G=\bigcup_{i\,=\,1}^{k}\pi_{R_{i}}(F)$: notiamo che, per la definizione di $G$, è garantito che $G\subseteq F^{+}$, e si ha che ogni proiezione di $F$ che è inclusa in $G$ è inclusa anche in $F^{+}$, dunque deduciamo che $G^{+}\subseteq\,F^{+}$; dunque, l'unica condizione che si dovrà verificare è che **$F\subseteq G^{+}$**. 
 
@@ -346,9 +352,17 @@ while S ⊄ Z:
 		S = S ∪ (closure of (Z ∩ Ri) w.r.t. F) ∩ Ri
 ```
 
+Più nel dettaglio, quello che andiamo a fare nel primo ciclo è raccogliere in $S$ gli attributi determinati funzionalmente dall'intersezione tra $Z$ e $R_{i}$ secondo le dipendenze contenute in $F^{+}$, e tra questi selezioniamo solo quelli contenuti nel rispettivo sottoschema $R_{i}$. Dunque, partendo da un insieme di attributi $X$, stiamo costruendo la sua chiusura a partire dalle proiezioni di $F$ che andranno a comporre $G$, e poi da lì a partire da $G^{+}$ per transitività. L'intersezione con $R_{i}$, del resto, è molto importante perché ci assicura che la dipendenza che stiamo considerando è valida nel sottoschema corrente.
 
+Dimostriamo che l'algoritmo appena presentato computa correttamente la chiusura $X^{+}_{G}$. Indichiamo con $Z^{(0)},\,Z^{(1)},\,\dots,\,Z^{(j)}$ la sequenza di valori assunti dalla variabile $Z$ a ogni iterazione del ciclo `while` dell'algoritmo, con $Z^{(j)}$ che rappresenta il valore ritornato (dunque, $j$ è l'iterazione con cui termina l'algoritmo). Vogliamo dimostrare che:
+$$Z^{(j)}=X^{+}_{G}$$
+Scomponiamo tale dimostrazione in due parti, andando invece a dimostrare le due seguenti inclusioni:
+$$Z^{(j)}\subseteq Z^{+}_{G}\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,X^{+}_{G}\subseteq Z^{(j)}$$
+Partiamo dalla prima, ossia che $Z^{(j)}\subseteq X^{+}_{G}$, che andremo a dimostrare per induzione proprio sul numero $i$ di iterazioni dell'algoritmo. Il caso base è $i=0$: in questo caso, abbiamo che $Z^{(0)}=X$, e per definizione $X\subseteq X^{+}_{G}$, dunque il caso base è verificato. Passiamo dunque all'ipotesi induttiva: 
 
-[13 - slide 20]
+[dim 05 - pag. 4]
+
+Si noti che l'algoritmo termina sempre la sua esecuzione, ma che ciò non indica necessariamente che una determinata dipendenza $X\rightarrow Y$ è preservata: infatti, questo algoritmo computa solo ed esclusivamente le chiusure $X^{+}_{G}$, e si dovrà poi fare nuovamente riferimento all'algoritmo precedente per verificare ciò.
 ___
 ##### Ricostruire le informazioni originali con un join
 
