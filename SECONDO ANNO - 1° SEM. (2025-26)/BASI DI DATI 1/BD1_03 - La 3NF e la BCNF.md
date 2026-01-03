@@ -357,10 +357,12 @@ Più nel dettaglio, quello che andiamo a fare nel primo ciclo è raccogliere in 
 Dimostriamo che l'algoritmo appena presentato computa correttamente la chiusura $X^{+}_{G}$. Indichiamo con $Z^{(0)},\,Z^{(1)},\,\dots,\,Z^{(j)}$ la sequenza di valori assunti dalla variabile $Z$ a ogni iterazione del ciclo `while` dell'algoritmo, con $Z^{(j)}$ che rappresenta il valore ritornato (dunque, $j$ è l'iterazione con cui termina l'algoritmo). Vogliamo dimostrare che:
 $$Z^{(j)}=X^{+}_{G}$$
 Scomponiamo tale dimostrazione in due parti, andando invece a dimostrare le due seguenti inclusioni:
-$$Z^{(j)}\subseteq Z^{+}_{G}\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,X^{+}_{G}\subseteq Z^{(j)}$$
-Partiamo dalla prima, ossia che $Z^{(j)}\subseteq X^{+}_{G}$, che andremo a dimostrare per induzione proprio sul numero $i$ di iterazioni dell'algoritmo. Il caso base è $i=0$: in questo caso, abbiamo che $Z^{(0)}=X$, e per definizione $X\subseteq X^{+}_{G}$, dunque il caso base è verificato. Passiamo dunque all'ipotesi induttiva: 
+$$Z^{(j)}\subseteq X^{+}_{G}\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,X^{+}_{G}\subseteq Z^{(j)}$$
+Partiamo dalla prima, ossia che $Z^{(j)}\subseteq X^{+}_{G}$, che andremo a dimostrare per induzione proprio sul numero $i$ di iterazioni dell'algoritmo. Il caso base è $i=0$: in questo caso, abbiamo che $Z^{(0)}=X$, e per definizione $X\subseteq X^{+}_{G}$, dunque il caso base è verificato. Passiamo dunque all'ipotesi induttiva: assumiamo che valga che $Z^{(i)}\subseteq X^{+}_{G}$, e dimostriamo che di conseguenza vale anche $Z^{(i+1)}\subseteq X^{+}_{G}$. Consideriamo un attributo $A$ appartenente a $Z^{(i+1)}$, che sappiamo essere uguale a $Z^{(i)}\cup S^{(i)}$: ciò vuol dire che $A$, originariamente, apparteneva o a $Z^{(i)}$ o a $S^{(i)}$. Nel primo caso, abbiamo che se $A$ apparteneva a $Z^{(i)}$ allora per ipotesi induttiva apparteneva anche a $X^{+}_{G}$; nel secondo caso, se $A$ apparteneva a $S^{(i)}$ allora [dim 05 - pag. 4]
 
-[dim 05 - pag. 4]
+Passiamo alla seconda proposizione, ossia che $X^{+}_{G}\subseteq Z^{(j)}$. Prima di tutto, teniamo a mente che se $X\subseteq Y$, allora sicuramente $X^{+}_{F}\subseteq Y^{+}_{F}$. Ora, dato che $X=Z^{(0)}\subseteq Z^{(j)}$, sappiamo che sicuramente $X^{+}_{G}\subseteq (Z^{(j)})^{+}_{G}$: a questo punto, se riusciamo a dimostrare che $(Z^{(j)})^{+}_{G}=Z^{(j)}$, dimostreremo anche la proposizione iniziale. Per tale dimostrazione, andiamo nuovamente a scomporre l'uguaglianza in due inclusioni, ossia:
+$$Z^{(j)}\subseteq(Z^{(j)})^{+}_{G}\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,(Z^{(j)})^{+}_{G}\subseteq Z^{(j)}$$
+La prima inclusione è banale, dato che un insieme di attributi è sempre incluso nella propria chiusura: dunque, pensiamo a dimostrare la seconda. Consideriamo l'insieme $S' =\{A\,\,|\,\,Y\rightarrow V\,\in\,G,\,Y\subseteq Z^{(j)},\,A\,\in\,V\}$, ottenuto dopo l'esecuzione del primo passo dell'algoritmo di calcolo della chiusura di $Z^{(j)}$ rispetto a $G$, e dimostriamo che $S'\subseteq Z^{(j)}$. Consideriamo un attributo $A\,\in\,S'$: tale appartenenza implica [dim 05 - pag. 6]
 
 Si noti che l'algoritmo termina sempre la sua esecuzione, ma che ciò non indica necessariamente che una determinata dipendenza $X\rightarrow Y$ è preservata: infatti, questo algoritmo computa solo ed esclusivamente le chiusure $X^{+}_{G}$, e si dovrà poi fare nuovamente riferimento all'algoritmo precedente per verificare ciò.
 ___
@@ -373,11 +375,22 @@ In altre parole, se scomponiamo uno schema di relazione $R$ in una scomposizione
 > Dato uno schema di relazione $R$, una scomposizione $\rho=R_{1},\,R_{2},\,\dots,\,R_{k}$ di tale schema si dice dotata di "**lossless join**" se, per ogni istanza legale $r$ di $R$, vale che:
 > $$r\,=\,\pi_{R_{1}}(r)\,\Join\,\pi_{R_{2}}(r)\,\Join\,\dots\,\Join\pi_{R_{k}}(r)$$
 
-A questo punto, con un approccio analogo ad altri visti finora, il nostro obiettivo diventa trovare un modo di **verificare che una scomposizione rispetti la definizione appena fornita**. Per fare ciò, possiamo utilizzare un **algoritmo**, che presenta i seguenti input e output:
+Possiamo indicare la catena di join con $m_{\rho}(r)$, e dunque la scomposizione rispetta tale condizione se si ha che $r=m_{\rho}(r)$. Per fare in modo che si verifichi tale condizione, si può dimostrare che devono verificarsi anche le tre seguenti proposizioni:
+- $r\subseteq m_{\rho}(r)$;
+- $\pi_{R_{i}}(m_{\rho}(r))=\pi_{R_{i}}(r)$;
+- $m_{\rho}(m_{\rho}(r))=m_{\rho}(r)$.
+
+Dimostriamo ciascuna di queste tre proposizioni. Per la prima, ossia che $r\subseteq m_{\rho}(r)$,  partiamo considerando una tupla $t\,\in\,r$, e la sotto-tupla $t[R_{i}]$ per ogni $R_{i}\,\in\,\rho$. Sappiamo che $t$ appartiene naturalmente alla catena di join $t[R_{1}]\Join t[R_{2}]\Join \dots \Join t[R_{k}]$, e quest'ultima è un sottoinsieme di $\pi_{R_{1}}(r)\Join \pi_{R_{2}}(r)\Join \dots \Join \pi_{R_{k}}(r)$, che è uguale a $m_{\rho}(r)$, come volevasi dimostrare. Per la seconda, ossia che $\pi_{R_{i}}(m_{\rho}(r))=\pi_{R_{i}}(r)$, scomponiamo questa uguaglianza nelle seguenti due inclusioni:
+$$\pi_{R_{i}}(r)\subseteq \pi_{R_{i}}(m_{\rho}(r))\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\pi_{R_{i}}(m_{\rho}(r))\subseteq \pi_{R_{i}}(r)$$
+La prima è una diretta conseguenza della prima proposizione, dunque non ci sarà bisogno di dimostrarla; per quanto riguarda la seconda, invece, partiamo considerando una tupla 
+
+[dim 06 - pag. 4]
+
+A questo punto, con un approccio analogo ad altri visti finora, il nostro obiettivo diventa trovare un modo di **verificare che una scomposizione rispetti la definizione di lossless join fornita in precedenza**. Per fare ciò, possiamo utilizzare un **algoritmo**, che presenta i seguenti input e output:
 - come **input**, abbiamo uno schema di relazione $R$, un insieme $F$ di dipendenze funzionali definite su $R$ e una scomposizione $\rho=R_{1},\,R_{2},\,\dots,\,R_{k}$;
 - come **output**, una variabile booleana che è `true` se $\rho$ ha un lossless join, e `false` altrimenti.
 
-Di seguito, lo **pseudocodice** (molto verboso e approssimativo) dell'algoritmo:
+Di seguito, lo **pseudocodice** (molto verboso) dell'algoritmo:
 
 ```
 construct a table r as follows:
@@ -420,9 +433,7 @@ Ma perché è sufficiente tale condizione per determinare che $\rho$ ha un lossl
 
 > Dato uno schema di relazione $R$, un insieme $F$ di dipendenze funzionali definite su di esso, e una scomposizione $\rho=R_{1},\,R_{2},\,\dots,\,R_{k}$ di $R$, si può verificare che $\rho$ ha un lossless join applicando l'algoritmo; in particolare, **$\rho$ ha un lossless join se e solo se, quando termina l'esecuzione dell'algoritmo, $r$ presenta una tupla con solo valori $a$**.
 
-Supponiamo, **per assurdo**, che $\rho$ abbia un lossless join ma che, quando termina l'esecuzione dell'algoritmo, $r$ non presenti una tupla con solo valori $a$. Poco fa abbiamo specificato che, al termine dell'algoritmo, $r$ è a tutti gli effetti un'istanza legale di $R$, dato che a quel punto non ci sono più violazioni delle dipendenze contenute in $F$. 
-
-[15 - slide 20]
+Supponiamo, **per assurdo**, che $\rho$ abbia un lossless join (dunque, che $m_{\rho}(r)=r$) ma che, quando termina l'esecuzione dell'algoritmo, $r$ non presenti una tupla con solo valori $a$. Poco fa abbiamo specificato che, al termine dell'algoritmo, $r$ è a tutti gli effetti un'istanza legale di $R$, dato che a quel punto non ci sono più violazioni delle dipendenze contenute in $F$. Ora, dato che nessun valore $a$ contenuto tra i valori iniziali di $r$ viene trasformato in un valore $b$ dall'algoritmo, ciò vuol dire che per ogni $i$ che vada da $1$ a $k$ la proiezione $\pi_{R_{i}}(r)$ contiene necessariamente, dall'inizio, una tupla con tutte $a$, ossia quella ottenuta proiettando l'istanza $r$ sugli attributi di $R_{i}$, e più precisamente questa tupla si troverà nella riga corrispondente al sottoschema $R_{i}$. Conseguentemente, $m_{\rho}(r)$ conterrà una tupla con tutte $a$, e per questo motivo si ha che $m_{\rho}(r)$, che contraddice l'ipotesi iniziale. Dunque, abbiamo dimostrato che se $\rho$ ha un lossless join allora, al termine dell'algoritmo, $r$ presenterà una tupla con solo valori $a$.
 ___
 ##### Trovare la copertura minimale di un insieme di dipendenze funzionali
 
@@ -498,8 +509,9 @@ Di seguito, lo **pseudocodice** dell'algoritmo:
 S = ∅
 ρ = ∅
 
-for each A ∈ R, such that A is not involved in any dependency in F:
-	S = S U A
+for each A ∈ R:
+	if A is not involved in any dependency in F:
+		S = S U A
 
 if S ≠ ∅:
 	R = R - S
@@ -516,7 +528,12 @@ else:
 
 Partiamo dimostrando che **$\rho$ preserva le dipendenze contenute in $F$**. Consideriamo l'insieme $G=\bigcup_{i\,=\,1}^{k}\pi_{R_{i}}(F)$: dato che per ogni dipendenza funzionale $X\rightarrow A\,\in\,F$ si ha che $XA\,\in\,\rho$ (nel senso che $XA$ è uno dei sottoschemi di $\rho$), allora abbiamo che tale dipendenza di $F$ sarà contenuta anche in $G$, dunque possiamo dedurre che $F\subseteq G$ e che $F^{+}\subseteq G^{+}$. Invece, l'inclusione $G^{+}\subseteq F^{+}$ è vera a prescindere dato che, per definizione, $G\subseteq F^{+}$. Avendo dimostrato questa doppia inclusione, abbiamo dimostrato che $F\equiv G$, e dunque che $\rho$ preserva le dipendenze di $F$.
 
-Passiamo, ora, al dimostrare che **tutti i sottoschemi di $\rho$ sono in 3NF**. [19 - slide 6]
+Passiamo, ora, al dimostrare che **tutti i sottoschemi di $\rho$ sono in 3NF**. Analizzando l'algoritmo, notiamo che a $\rho$ possono venire aggiunti solo tre "tipi" di sottoschemi:
+- $S$;
+- $R$;
+- $XA$.
+
+Vediamo cosa implica l'aggiunta di ciascuno di essi a $\rho$. Se $S\,\in\,\rho$, per natura di $S$ sappiamo che ogni attributo di $S$ è parte di chiave, e dunque $S$ è sicuramente posta in 3NF. Invece, se $R\,\in\,\rho$, vuol dire che è presente una dipendenza funzionale in $F$ che coinvolge tutti gli attributi di $R$: essendo $F$ una [[BD1_03 - La 3NF e la BCNF#Trovare la copertura minimale di un insieme di dipendenze funzionali|copertura minimale]], tale dipendenza avrà la forma $R-A\rightarrow A$, e sempre per lo stesso motivo sappiamo anche che non può esistere una dipendenza $X\rightarrow A\,\in\,F$ tale che $X\subseteq R-A$, dunque $R-A$ è sicuramente una chiave di $R$; considerando, a questo punto, un'altra dipendenza $Y\rightarrow B\,\in\,F$, se $B=A$ allora necessariamente $Y=R-A$, e dunque $Y$ è una super-chiave, mentre se $B\neq A$ allora $B\,\in\,R-A$ e dunque $B$ è primo, e in entrambi questi scenari $R$ rimane posta in 3NF. Infine, se $XA\,\in\,\rho$, essendo $F$ una copertura minimale non può esistere una dipendenza funzionale $X'\rightarrow A\,\in\,F$ con $X'\subset X$ e, perciò, $X$ è una chiave di $XA$; considerando, a questo punto, un'altra dipendenza $Y\rightarrow B\,\in\,F$, tale per cui $YB\subseteq XA$, se $B=A$ allora necessariamente $Y=X$, e dunque $Y$ è una super-chiave, mentre se $B\neq A$ allora $B\,\in\,X$ e dunque $B$ è primo, e in entrambi questi scenari $XA$ rimane posta in 3NF.
 
 Infine, per quanto riguarda la dimostrazione che **$\rho$ ha un lossless join**, si può dimostrare che, per avere questa caratteristica, è sufficiente aggiungere a $\rho$ un sottoschema contenente una delle chiavi di $R$.
 ___
