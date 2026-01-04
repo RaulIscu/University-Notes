@@ -25,5 +25,7 @@ Le memorie più veloci vanno a comporre quella che possiamo definire "**memoria 
 
 ##### Hard Disk Drives
 
+
+
 [21 - slide 8/12]
 ___
