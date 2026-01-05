@@ -144,7 +144,7 @@ $$X\rightarrow Y\,\in\,F^{A}\,\,\,\Rightarrow\,\,\,Y\subseteq X^{+}$$
 $$Y\subseteq X^{+}\,\,\,\Rightarrow\,\,\,X\rightarrow Y\,\in\,F^{A}$$
 Per chiarezza, ricordiamo che $Y=A_{1},\,A_{2},\,\dots,\,A_{n}$ è un sottoinsieme di attributi dello schema $R$. La prima proposizione è dimostrata dal fatto che, se vale che $X\rightarrow Y\,\in\,F^{A}$, allora per la regola di decomposizione vale anche che $X\rightarrow A_{i}\,\in\,F^{A}$ per ogni $i$ che va da $1$ ad $n$: ciò comporta che ogni attributo $A_{i}$ appartiene all'insieme $X^{+}$, e dunque che $Y$ è un sottoinsieme di tale insieme. La seconda, invece, è dimostrata dal fatto che, se vale che $Y\subseteq X^{+}$, si ha di conseguenza che $X\rightarrow A_{i}\,\in\,F^{A}$ per ogni $i$ che va da $1$ a $n$, e dunque per la regola di unione vale anche che $X\rightarrow Y\,\in\,F^{A}$.
 
-Il concetto di chiusura di $X$ tornerà particolarmente utile in futuro, quando lavoreremo con la [[BD1_03 - La 3NF e la BCNF|3NF]] e con le chiavi di uno schema di relazione.
+Il concetto di chiusura di $X$ tornerà particolarmente utile in futuro, quando lavoreremo con la [[BD1_03 - La 3NF|3NF]] e con le chiavi di uno schema di relazione.
 ___
 ##### Teorema: $F^{+}=F^{A}$
 
@@ -184,5 +184,5 @@ ___
 
 Avendo dimostrato il teorema del [[BD1_02 - Dipendenze funzionali#Teorema $F {+}=F {A}$|paragrafo precedente]], ora abbiamo un modo per **trovare tutte le dipendenze funzionali contenute in $F^+$**: infatti, per fare ciò basterà applicare ricorsivamente gli assiomi di Armstrong (e le regole derivate) sulle dipendenze già definite in $F$, e continuare finché se ne potranno ottenere di nuove. Ciononostante, computare l'insieme $F^{+}$ rimane un'operazione lunga e dispendiosa, richiedente un **costo esponenziale in termini di operazioni svolte**.
 
-Ma se è così inefficiente trovare l'insieme di dipendenze funzionali $F^{+}$, **perché dovremmo volerlo calcolare?** L'importanza maggiore di tale insieme sta nel suo ruolo nella **definizione della [[BD1_03 - La 3NF e la BCNF|3NF]]**, dato che, se si vuole ottenere uno schema in 3NF da uno schema che non lo è, l'approccio generalmente utilizzato sarà quello di scomporlo e, nel fare ciò, si dovrà cercare di **preservare l'insieme $F^{+}$ dello schema originale**.
+Ma se è così inefficiente trovare l'insieme di dipendenze funzionali $F^{+}$, **perché dovremmo volerlo calcolare?** L'importanza maggiore di tale insieme sta nel suo ruolo nella **definizione della [[BD1_03 - La 3NF|3NF]]**, dato che, se si vuole ottenere uno schema in 3NF da uno schema che non lo è, l'approccio generalmente utilizzato sarà quello di scomporlo e, nel fare ciò, si dovrà cercare di **preservare l'insieme $F^{+}$ dello schema originale**.
 ___

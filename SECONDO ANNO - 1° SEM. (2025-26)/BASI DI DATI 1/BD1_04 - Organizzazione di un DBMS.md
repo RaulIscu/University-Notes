@@ -64,8 +64,7 @@ Ma **come sono organizzati internamente i file**? Ci sono varie modalità altern
 - **heap file**;
 - **sequential file**;
 - **random file**;
-- **indexed sequential file**;
-- **list data**.
+- **indexed sequential file**.
 
 Analizziamo ciascuna di queste strutture più nel dettaglio. 
 
@@ -84,7 +83,9 @@ Tuttavia, il sequential file è **meno efficiente** dell'heap file su un aspetto
 ___
 ##### Random file
 
+[21 - slide 24/31]
+___
+##### Indexed sequential file
 
-
-[21 - slide 24]
+[21 - slide 32/37]
 ___
