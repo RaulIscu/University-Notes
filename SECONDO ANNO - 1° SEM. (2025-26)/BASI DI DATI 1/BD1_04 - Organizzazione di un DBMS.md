@@ -13,7 +13,7 @@ Momentaneamente, andremo a focalizzarci soprattutto sul funzionamento delle prim
 
 ## Strato fisico
 
-Nello strato fisico, dunque, si trovano tutti quegli strumenti e componenti che si occupano della **gestione della memoria** concreta, dunque dei dati contenuti nel database (qui troviamo il gestore di memoria, vari buffer, metodi di accesso, ecc. ecc.). Possiamo schematizzare la struttura di questo blocco del DBMS nel modo seguente:
+Nello strato fisico si trovano tutti quegli strumenti e componenti che si occupano della **gestione della memoria** concreta, dunque dei dati contenuti nel database (qui troviamo il gestore di memoria, vari buffer, metodi di accesso, ecc. ecc.). Possiamo schematizzare la struttura di questo blocco del DBMS nel modo seguente:
 
 ![[stratofisico_struttura.png]]
 
@@ -43,7 +43,48 @@ dove con $ROT$ si intende il **tempo di rotazione** di un disco, con $BS$ la **g
 ___
 ##### Da concetti logici a blocchi di dati fisici
 
+Naturalmente, lavorando con [[BD1_04 - Organizzazione di un DBMS#Hard Disk Drives|HDD]] o, in generale, con qualsiasi dispositivo di memoria, l'obiettivo è di **organizzare i dati e l'hardware in modo da minimizzare il più possibile qualsiasi ritardo nella lettura o scrittura**, e per quanto riguarda i dispositivi di memoria analizzati nel paragrafo precedente queste minimizzazioni possono essere effettuate soprattutto sul **seek time** e, parzialmente, sul **rotation delay**; oltre a ciò, si desidera anche **minimizzare il numero di RBA**, dato che naturalmente impiegano più tempo ad essere effettuati rispetto agli SBA.
+
+Per poter pensare a queste problematiche, un creatore di basi di dati fisiche deve pensare ai modi più ottimali per **trasformare concetti e modelli logici di dato in strutture dati fisiche**, in modo da ottenere il miglior bilancio possibile tra una **lettura e scrittura efficiente** in termini di tempo e un **utilizzo intelligente dello spazio di memoria**. Per questo obiettivo, un'organizzazione adiacente al [[BD1_01 - Modello relazionale|modello relazionale]] su cui ci siamo soffermati finora nel corso risulta molto utile. Per capire come questi concetti possano essere collegati, vediamo la seguente tabella, dove ogni colonna rappresenta uno dei "passaggi" di questa trasformazione, e ciascuna riga un certo tipo di dato:
+
+| Modello astratto                       | Modello logico-relazionale          | Modello fisico                                                      |
+| -------------------------------------- | ----------------------------------- | ------------------------------------------------------------------- |
+| Attributo e tipo di attributo          | Valore (cella) e nome della colonna | Dato (bit o caratteri rappresentanti un determinato valore)         |
+| Singola entità                         | Riga o tupla                        | Collezione di dati, che rappresenta tutti gli attributi dell'entità |
+| Insieme delle entità dello stesso tipo | Tabella o relazione                 | File o blocco di dati                                               |
+| Insieme di tipi di entità              | Insieme di tabelle o relazioni      | Database                                                            |
+
+A livello fisico, come anticipato dalla tabella, **un database consiste in un insieme di file**; ogni file, a sua volta, può essere visto come una **collezione di "pagine" di dimensione fissa**; ogni pagina, al suo interno, conterrà **diverse entità**, ciascuna corrispondente a una [[BD1_01 - Modello relazionale#Domini, tuple e relazioni|tupla]] per intenderci; infine, ciascuna tupla sarà composta da **un certo numero di campi**, di dimensione fissa o variabile, che rappresentano gli [[BD1_01 - Modello relazionale#Attributi|attributi]] della tupla.
+___
+## File
+
+È chiaro, dunque, che il fulcro di un database sono i **file**, che costituiscono la sovrastruttura principale in cui sono organizzati i dati contenuti al suo interno.
+
+Ma **come sono organizzati internamente i file**? Ci sono varie modalità alternative per distribuire i dati all'interno di un file, e di conseguenza in base ad esse ci sono diversi **tipi di file**, tra cui:
+- **heap file**;
+- **sequential file**;
+- **random file**;
+- **indexed sequential file**;
+- **list data**.
+
+Analizziamo ciascuna di queste strutture più nel dettaglio. 
+
+##### Heap file
+
+Si tratta di un'**organizzazione basilare e comune**, dove **nuove entità sono aggiunte al termine del file**, e dove **non è presente una relazione tra attributi dell'entità e la loro posizione in memoria**. Evidentemente, basandoci su queste caratteristiche, l'unico modo per trovare un'entità ben precisa all'interno di un heap file è la **ricerca lineare**, ossia scorrere ciascuna delle entità del file una dopo l'altra finché non verrà trovata quella che corrisponde alla chiave di ricerca; quest'ultima, del resto, diventa ancora più inefficiente nel momento in cui tale chiave non è univoca all'interno del file, dato che ciò richiede che tutto il file venga interrogato in modo da assicurarsi di trovare tutte le entità al suo interno che corrispondono alla chiave di ricerca. Data la natura del file, per un file con $NBLK$ blocchi si dovranno controllare una media di $\frac{NBLK}{2}$ entità per trovare quella desiderata.
+___
+##### Sequential file
+
+Passiamo, ora, al **sequential file**. Pur rimanendo molto semplice, è un passo avanti rispetto all'[[BD1_04 - Organizzazione di un DBMS#Heap file|heap file]]: in questo caso, **le entità vengono memorizzate in ordine crescente o decrescente rispetto alla loro chiave di ricerca**. Si tratta di un piccolo cambiamento, ma che permette di aumentare l'efficienza in vari contesti: innanzitutto, supponendo che si vogliano recuperare **più entità contigue in ordine**, la struttura del sequential file permetterebbe di **effettuare una ricerca lineare esclusivamente con degli [[BD1_04 - Organizzazione di un DBMS#Hard Disk Drives|SBA]]**, che sappiamo essere più efficienti degli RBA; al tempo stesso, pur rimanendo la ricerca lineare una scelta possibile, per trovare una determinata entità sarà possibile effettuare una **ricerca binaria**, che porterà inevitabilmente a un'esecuzione di un numero molto minore di accessi, in media $\log_{2}NBLK$ (ciononostante, precisiamo che gli accessi in questione sarebbero prevalentemente degli RBA, dato che l'algoritmo di ricerca binaria prevede di spostarsi da un punto all'altro dell'insieme di entità).
+
+Per comprendere quanto quest'ultimo approccio risulti essere più efficiente, vediamo un esempio: supponiamo di avere un sequential file contenente $NR=30\,000$ entità, dove una singola entità avrà dimensione $RS=100$ byte, e con la dimensione di un singolo blocco di memoria pari a $BS=2048$ byte; possiamo ottenere il numero $BF$ di entità contenute in un blocco dividendo la dimensione di un blocco di memoria per la dimensione di un'entità ($BF=\frac{BS}{RS}=\frac{2048}{100}\approx 20$), e in seguito il numero $NBLK$ di blocchi del file dividendo il numero di entità per il valore appena trovato ($NBLK=\frac{NR}{BF}=\frac{30\,000}{20}=1500$). A questo punto, possiamo stimare il numero di accessi a blocchi di memoria che ci si aspetta debbano essere eseguiti per trovare un'entità generica all'interno del file. Come abbiamo detto, la ricerca lineare necessita in media $\frac{NBLK}{2}$ accessi e, in un sequential file, sarebbero tutti accessi a blocchi di memoria contigui, dunque ci si aspettano: $$\frac{1500}{2}\text{ SBA} = 750 \text{ SBA}$$Se utilizzassimo, invece, la ricerca binaria, allora impiegheremmo in media:
+$$\log_{2}1500\text{ RBA}\approx 11\text{ RBA}$$
+
+Tuttavia, il sequential file è **meno efficiente** dell'heap file su un aspetto, ossia l'**aggiornamento dei dati contenuti al suo interno**: per ovviare a questa inefficienza, spesso si preferisce aggiungere, rimuovere o modificare entità in gruppi.
+___
+##### Random file
 
 
-[21 - slide 13]
+
+[21 - slide 24]
 ___
