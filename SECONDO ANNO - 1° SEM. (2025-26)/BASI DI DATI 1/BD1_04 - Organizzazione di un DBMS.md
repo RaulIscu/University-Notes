@@ -150,13 +150,78 @@ Applicando questi passaggi ricorsivamente sugli eventuali sottoalberi, si trover
 
 ![[alberobinario_esempio.png]]
 
-Possiamo generalizzare i concetti esposti finora introducendo i cosiddetti "**alberi $m$-ari di ricerca**", dove ogni nodo ha al massimo $m$ figli.
+Possiamo generalizzare i concetti esposti finora introducendo i cosiddetti "**alberi $m$-ari di ricerca**", dove ogni nodo ha al massimo $m$ figli. In questo tipo di struttura, ogni nodo assume una forma del genere:
 
-[21 - slide 49/54]
+![[alberom-ario_strutturanodo.png]]
+
+dove $P_{0},\,P_{1},\,\dots,\,P_{n}$ sono **puntatori ai figli del nodo**, mentre $K_{0},\,K_{1},\,\dots,\,K_{n-1}$ sono le **chiavi di ricerca contenute nel nodo**. Le chiavi sono sempre contenute in **ordine crescente**, e valgono le seguenti proprietà:
+- un singolo nodo contiene $n$ chiavi e $n+1$ puntatori, con $n+1\leq m$;
+- tutte le chiavi contenute nel sotto-albero indicato dal puntatore $P_{i}$ sono minori di $K_{i}$;
+- tutte le chiavi contenute nel sotto-albero indicato dal puntatore $P_{i+1}$ sono maggiori di $K_{i}$.
+
+Come possiamo notare, dunque, in un albero $m$-ario **un singolo nodo può contenere più chiavi di ricerca**, in particolare può contenere **tra $1$ e $m-1$ chiavi**; al tempo stesso, il **numero di figli** può variare **tra $0$ e $i+1$**, dove $i$ è il numero di chiavi contenute nel nodo. In questo contesto, dunque, $m$ rappresenta un **limite superiore al numero di chiavi che un nodo può contenere**. Un esempio concreto di albero $m$-ario può essere il seguente:
+
+![[alberom-ario_esempio.png]]
+
+Gli alberi $m$-ari tornano molto utili anche nel contesto degli **[[BD1_04 - Organizzazione di un DBMS#Indexed sequential file|indexed sequential file]]**: è possibile, infatti, costruire tale struttura come un albero $m$-ario i cui nodi, oltre a chiavi e puntatori ai figli, contengono anche dei puntatori $P_{r}$ alle entità effettive (convenzionalmente, questi puntatori ad entità vengono inseriti dopo ogni chiave). Di seguito, una schematizzazione di questo utilizzo:
+
+![[alberom-ario_indice.png]]
+
+Nonostante la loro grande versatilità, gli alberi $m$-ari presentano un grande **limite**: **non abbiamo controllo su come vengano inserite le chiavi al loro interno**. Ad esempio, considerando un ipotetico albero $10$-ario, dunque in cui ogni nodo contiene al massimo $9$ chiavi, inizialmente vuoto, e volendo inserire al suo interno le chiavi $10$, $20$ e $30$, potrebbe benissimo crearsi una situazione del genere:
+
+![[alberom-ario_inserimentoerrato_esempio.png]]
+
+Come si può facilmente dedurre, un assetto del genere risulterebbe profondamente inefficace, e in generale con $m$ chiavi potremmo finire ad avere un albero di altezza $m$, con un costo di navigazione simile a quello della ricerca binaria. L'approccio migliore sarebbe **cercare di riempire prima il primo nodo**, e poi passare a eventuali figli in seguito. Per venire incontro a questa esigenza, si introducono i **[[BD1_04 - Organizzazione di un DBMS#$B$-trees|B-trees]]**, che verranno approfonditi nel prossimo paragrafo.
 ___
 ##### $B$-trees
 
-[21 - slide 55/95]
+Un **$B$-tree di ordine $m$** è definito come un **[[BD1_04 - Organizzazione di un DBMS#Alberi di ricerca binari e non|albero di ricerca]] $m$-ario "auto-bilanciato"**, che rispetta le seguenti proprietà:
+1. ogni nodo ha **al massimo $m$ figli**;
+2. ogni nodo, eccetto la radice e le foglie, ha **almeno $\frac{m}{2}$ figli**;
+3. **la radice ha almeno due figli**;
+4. **tutte le foglie sono sullo stesso livello**;
+5. la creazione dell'albero avviene "al contrario".
+
+La seconda proprietà, in particolare, provvede direttamente alla problematica sollevata alla fine del paragrafo precedente, dato che in un $B$-tree si dovrà necessariamente riempire un nodo almeno fino a metà prima di creare nuovi figli, e così facendo si controlla l'altezza dell'albero.
+
+I $B$-tree, dunque, risultano essere un ottimo **indice strutturato ad albero**, dove **ogni nodo rappresenta un blocco del disco** e dove **i nodi sono mantenuti tra mezzi pieni e pieni**, in modo da favorire una distribuzione uniforme. Ogni nodo conterrà:
+- un insieme di **chiavi di ricerca**;
+- un insieme di **puntatori ai figli del nodo**;
+- un insieme di **puntatori a entità o a gruppi di entità**, corrispondenti alle chiavi di ricerca.
+
+Si precisa che, naturalmente, le entità effettive non fanno in alcun modo parte del $B$-tree, e sono conservate separatamente.
+
+Per comprendere meglio il funzionamento dei $B$-tree, vediamo un esempio. Supponiamo di avere un $B$-tree di ordine $4$ inizialmente vuoto, e di voler inserire al suo interno le chiavi $10$, $20$, $40$ e $50$. Un singolo nodo può contenere al massimo $m-1$ chiavi, dunque non abbiamo problemi nell'aggiungere $10$, $20$ e $40$, ma arrivati a $50$ finiamo lo spazio, trovandoci nella seguente situazione:
+
+![[btree_esempio.png]]
+
+È a questo punto che possiamo "dividere" il nodo e creare dei figli. Dunque, generiamo due figli e dividiamo le chiavi tra di essi, nel modo seguente:
+
+![[btree_esempio1.png]]
+
+Supponiamo, a questo punto, di voler aggiungere altre chiavi, come $60$, $70$ e $80$. Come abbiamo detto, il $B$-tree cresce dalle foglie, dunque andiamo innanzitutto ad aggiungere $60$ al figlio di destra, essendo $60$ maggiore di $40$; facciamo lo stesso per $70$ senza intoppi, ma notiamo che quando dobbiamo aggiungere $80$, e ci troviamo dunque in questa situazione:
+
+![[btree_esempio2.png]]
+
+incappiamo di nuovo nello stesso problema. Perciò, andiamo nuovamente a dividere il nodo in questione, e dato che l'albero deve crescere verso l'alto quello che andiamo a fare è spostare $70$ nel genitore e creare un nuovo figlio dove inseriamo la chiave $80$, nel modo seguente:
+
+![[btree_esempio3.png]]
+
+Ancora, supponiamo di voler aggiungere anche le chiavi $30$ e $35$. La chiave $30$ è minore di $40$, dunque possiamo inserirla nel primo dei figli senza problemi. Tuttavia, lo stesso non si può dire per la chiave $35$, che dovrebbe andare nello stesso nodo ma che non ha spazio libero per farlo: occorrerà dividere nuovamente il nodo, trasferendo $30$ al nodo superiore e creando un nuovo figlio dove inserire $35$, nel modo seguente:
+
+![[btree_esempio4.png]]
+
+A questo punto, notiamo che abbiamo riempito completamente il nodo al livello superiore, sia di figli che di chiavi. Ciò andrà a complicare le cose se vogliamo continuare ad aggiungere chiavi: ad esempio, se volessimo inserire le chiavi $5$ e $15$, non avremmo problemi a inserire $5$ nel primo dei figli, ma avremo problemi nell'inserire $15$, che dovrebbe essere inserito sempre nello stesso nodo di $5$. Dunque, a partire da questa situazione:
+
+![[btree_esempio5.png]]
+
+per aggiungere $15$ dovremo andare a dividere sia il primo figlio che il genitore. Quello che facciamo, dunque, è dividere il genitore creando un nodo a un livello superiore contenente solo la chiave $40$ e avente due figli, il primo contenente $15$ e $30$ e il secondo $70$; di conseguenza, andiamo a ricollegare gli ultimi due figli della serie al secondo nodo del livello intermedio, e poi a dividere il primo nodo del livello inferiore in due nodi, il primo contenente $5$ e $10$ e il secondo contenente $20$; i nodi del livello inferiore contenenti $5$ e $10$, $20$ e $35$ verranno ricollegati al nodo contenente $15$ e $30$, portandoci ad avere una struttura del genere:
+
+![[btree_esempio6.png]]
+
+
+
+[21 - slide 71/95]
 ___
 ##### $B^{+}$-trees
 
