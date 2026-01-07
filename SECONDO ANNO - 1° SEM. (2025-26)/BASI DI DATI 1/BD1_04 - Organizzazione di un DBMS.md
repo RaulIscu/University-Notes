@@ -7,9 +7,7 @@ Un DBMS completo e ben strutturato è, in realtà, un connubio di **più parti c
 - un **gestore dei processi**;
 - vari **strumenti di utilità**.
 
-Momentaneamente, andremo a focalizzarci soprattutto sul funzionamento delle prime due componenti elencate, ossia quelle che vengono anche definite rispettivamente "**strato fisico**" e "**strato logico**". 
-
-[nello strato logico, invece, ci si concentra sulla **lettura**, **elaborazione**, **ottimizzazione** ed **esecuzione delle query**. ]
+Momentaneamente, andremo a focalizzarci soprattutto sul funzionamento della prima delle componenti elencate, ossia quella che viene anche definita "**strato fisico**".
 
 ## Strato fisico
 
@@ -74,7 +72,7 @@ Si tratta di un'**organizzazione basilare e comune**, dove **nuove entità sono 
 ___
 ##### Sequential file
 
-Passiamo, ora, al **sequential file**. Pur rimanendo molto semplice, è un passo avanti rispetto all'[[BD1_04 - Organizzazione di un DBMS#Heap file|heap file]]: in questo caso, **le entità vengono memorizzate in ordine crescente o decrescente rispetto alla loro chiave di ricerca**. Si tratta di un piccolo cambiamento, ma che permette di aumentare l'efficienza in vari contesti: innanzitutto, supponendo che si vogliano recuperare **più entità contigue in ordine**, la struttura del sequential file permetterebbe di **effettuare una ricerca lineare esclusivamente con degli [[BD1_04 - Organizzazione di un DBMS#Hard Disk Drives|SBA]]**, che sappiamo essere più efficienti degli RBA; al tempo stesso, pur rimanendo la ricerca lineare una scelta possibile, per trovare una determinata entità sarà possibile effettuare una **ricerca binaria**, che porterà inevitabilmente a un'esecuzione di un numero molto minore di accessi, in media $\log_{2}NBLK$ (ciononostante, precisiamo che gli accessi in questione sarebbero prevalentemente degli RBA, dato che l'algoritmo di ricerca binaria prevede di spostarsi da un punto all'altro dell'insieme di entità).
+Pur rimanendo molto semplice, è un passo avanti rispetto all'[[BD1_04 - Organizzazione di un DBMS#Heap file|heap file]]: in questo caso, **le entità vengono memorizzate in ordine crescente o decrescente rispetto alla loro chiave di ricerca**. Si tratta di un piccolo cambiamento, ma che permette di aumentare l'efficienza in vari contesti: innanzitutto, supponendo che si vogliano recuperare **più entità contigue in ordine**, la struttura del sequential file permetterebbe di **effettuare una ricerca lineare esclusivamente con degli [[BD1_04 - Organizzazione di un DBMS#Hard Disk Drives|SBA]]**, che sappiamo essere più efficienti degli RBA; al tempo stesso, pur rimanendo la ricerca lineare una scelta possibile, per trovare una determinata entità sarà possibile effettuare una **ricerca binaria**, che porterà inevitabilmente a un'esecuzione di un numero molto minore di accessi, in media $\log_{2}NBLK$ (ciononostante, precisiamo che gli accessi in questione sarebbero prevalentemente degli RBA, dato che l'algoritmo di ricerca binaria prevede di spostarsi da un punto all'altro dell'insieme di entità).
 
 Per comprendere quanto quest'ultimo approccio risulti essere più efficiente, vediamo un esempio: supponiamo di avere un sequential file contenente $NR=30\,000$ entità, dove una singola entità avrà dimensione $RS=100$ byte, e con la dimensione di un singolo blocco di memoria pari a $BS=2048$ byte; possiamo ottenere il numero $BF$ di entità contenute in un blocco dividendo la dimensione di un blocco di memoria per la dimensione di un'entità ($BF=\frac{BS}{RS}=\frac{2048}{100}\approx 20$), e in seguito il numero $NBLK$ di blocchi del file dividendo il numero di entità per il valore appena trovato ($NBLK=\frac{NR}{BF}=\frac{30\,000}{20}=1500$). A questo punto, possiamo stimare il numero di accessi a blocchi di memoria che ci si aspetta debbano essere eseguiti per trovare un'entità generica all'interno del file. Come abbiamo detto, la ricerca lineare necessita in media $\frac{NBLK}{2}$ accessi e, in un sequential file, sarebbero tutti accessi a blocchi di memoria contigui, dunque ci si aspettano: $$\frac{1500}{2}\text{ SBA} = 750 \text{ SBA}$$Se utilizzassimo, invece, la ricerca binaria, allora impiegheremmo in media:
 $$\log_{2}1500\text{ RBA}\approx 11\text{ RBA}$$
@@ -83,9 +81,84 @@ Tuttavia, il sequential file è **meno efficiente** dell'heap file su un aspetto
 ___
 ##### Random file
 
-[21 - slide 24/31]
+Stavolta, troviamo un'organizzazione che si basa sull'**hashing**: in questa struttura, **si assegna a un'entità una posizione in memoria in base alla sua chiave di ricerca**. Ciò implica una diretta relazione tra chiave di ricerca di un'entità e la sua posizione fisica, che permette di **trovare un'entità specifica con uno o pochi accessi**. 
+
+Come è facile dedurre, l'hashing non può garantire che tutte le chiavi siano mappate a indirizzi diversi di memoria, di conseguenza ci sono quelle che vengono chiamate "**bucket addresses**", ossia indirizzi che indicano blocchi di memoria destinati a contenere più entità. È, dunque, perfettamente possibile che **più entità vengano mappate allo stesso indirizzo**: le entità che sono contenute nella stessa bucket address vengono dette "**sinonimi**". Nel caso in cui si cerca di inserire più sinonimi di quanti la bucket address sia capace di contenere, si ha un "**overflow**", e ciò comporta la necessità di accessi aggiuntivi per ottenere eventuali entità in overflow; generalmente, per evitare il più possibile quest'evenienza, **un algoritmo di hashing dovrebbe cercare di distribuire le chiavi di ricerca nel modo più uniforme possibile** tra le varie bucket addresses.
+
+Possono essere utilizzati svariati **algoritmi di hashing** per assegnare un indirizzo di memoria a una determinata chiave di ricerca, più o meno complessi. Uno dei più semplici e comuni è il seguente:
+$$\text{address(key)}=\text{key mod M}$$
+dove per $\text{mod}$ si intende l'operazione di "modulo", ossia il resto della divisione tra i due operandi (in questo caso, $\text{key}$ e $\text{M}$), mentre $\text{M}$ è, tendenzialmente, un numero primo, pari o leggermente più grande del numero di indirizzi disponibili. 
+
+L'**efficienza di un algoritmo di hashing** si misura in base al **numero previsto di [[BD1_04 - Organizzazione di un DBMS#Hard Disk Drives|RBA]] e di [[BD1_04 - Organizzazione di un DBMS#Hard Disk Drives|SBA]]**: ad esempio, per l'algoritmo di hashing che abbiamo appena visto, ottenere un'entità che non si trova in overflow dovrebbe richiedere $1$ RBA per entrare nella bucket address prevista, e in seguito $1$ o più SBA per ottenere l'entità cercata. Per quanto riguarda il numero di accessi aggiuntivi richiesti per accedere ad entità in overflow, ciò dipende dalla percentuale media di entità in overflow e dalla tecnica di gestione degli stessi.
+
+Ma **come capire quante bucket addresses conviene avere?** Per ottenere il numero $NB$ di bucket addresses necessarie per contenere un certo numero $NR$ di entità, è possibile utilizzare la seguente formula:
+$$NB=\frac{NR}{BS\times LF}$$
+dove $BS$ è la **dimensione del bucket**, mentre $LF$ rappresenta il cosiddetto "**loading factor**". Nel decidere il valore di $BS$, è importante tenere a mente che una dimensione maggiore del bucket porta a una minore possibilità di overflow, ma anche a un ulteriore lavoro necessario per ottenere le entità non in overflow: è dunque importante optare per un valore che bilancia questi due fattori. Per quanto riguarda $LF$, esso indica all'incirca quanto si vuole riempire ciascun bucket in media, ed è solitamente impostato con un valore tra $0.7$ e $0.9$.
+
+Come abbiamo detto, ci sono diversi **modi per gestire un overflow**. Uno dei più basilari è il cosiddetto "**open addressing**": sostanzialmente, nel momento in cui un bucket va in overflow, l'entità che ha causato l'overflow viene memorizzata nel primo spazio libero trovato dopo il bucket in questione. In questo modo, per ottenere un'eventuale entità in overflow, saranno necessari $1$ RBA e tanti SBA quanti serviranno per arrivare al blocco dove è stata memorizzata l'entità.
 ___
 ##### Indexed sequential file
 
-[21 - slide 32/37]
+Mentre l'organizzazione di un [[BD1_04 - Organizzazione di un DBMS#Random file|random file]] risulta essere particolarmente efficiente per ottenere singole entità in base alla loro chiave di ricerca, e quella del [[BD1_04 - Organizzazione di un DBMS#Sequential file|sequential file]] per ottenere più entità in ordine, la struttura dell'**indexed sequential file** risulta essere una sorta di via di mezzo tra le due, combinando l'organizzazione sequenziale del secondo con l'utilizzo di uno o più "**indici**", similmente alle bucket addresses del primo.
+
+Un indexed sequential file è diviso in **intervalli**, detti anche "**partizioni**", e ciascuna partizione è indicata da un **indice** contenente la **chiave di ricerca della prima entità della partizione** e un **puntatore alla posizione fisica di tale entità**. In particolare, quest'ultimo può essere:
+- un **puntatore a un blocco**, dunque all'indirizzo di memoria di tale blocco;
+- un **puntatore all'entità**, dunque una combinazione dell'indirizzo del blocco e di un ID, oppure di un valore di offset all'interno del blocco.
+
+Le posizioni fisiche effettive, dunque il luogo dove sono conservate le entità, è concretamente un sequential file, ordinato in base alla chiave di ricerca.
+
+A seconda di **quanti indici si vogliono utilizzare**, si può avere un'organizzazione di tipo "**dense index**", dove si ha un indice per ogni valore possibile della chiave di ricerca, o di tipo "**sparse index**", dove si ha un indice solo per alcuni dei valori possibili, e dunque dove ogni indice si riferisce in realtà a un gruppo di entità. Anche qui, entrambe le strategie hanno i loro pro e contro: infatti, **il dense index è generalmente più veloce**, ma **occupa anche più memoria ed è più complesso da mantenere**, e viceversa per lo sparse index.
+
+[21 - slide 34/37]
+___
+## Alberi
+
+Gli **alberi** rappresentano una delle strutture dati più importanti e versatili nel mondo dell'informatica. Ma cosa sono concretamente?
+
+A livello base, **un albero è un insieme di "nodi"**, che **derivano uno dall'altro** in modo simile a come un albero cresce dalle sue radici (con l'eccezione che, mentre un albero reale cresce dal basso verso l'alto, gli alberi dell'informatica tendenzialmente si sviluppano dall'alto verso il basso). Nel nostro caso, abbiamo **un nodo "radice"**, che sarà il punto di partenza dell'albero; **ogni nodo** dello stesso, ad eccezione della radice, **ha esattamente un nodo "genitore"** e **può avere nessuno, uno o più nodi "figli"**. Dei nodi che hanno lo stesso genitore sono detti anche "**fratelli**", e tutti i figli, figli di figli, e così via di un nodo sono i suoi "**discendenti**". Come abbiamo detto, un nodo può anche non avere figli: **un nodo privo di figli è detto "foglia" dell'albero**. Infine, per chiudere questo elenco di vocabolario relativo agli alberi, **un albero costituito da un nodo che non è radice e da tutti i suoi discendenti** è detto un "**sotto-albero**".
+
+I nodi di un albero sono distribuiti in più **livelli**, che rappresentano la distanza dei loro nodi dalla radice. Un albero dove **tutte le foglie si trovano sullo stesso livello** si dice "**bilanciato**", mentre un albero che non ha questa caratteristica è di conseguenza "**non bilanciato**".
+
+Gli alberi possono essere utilizzati, nel nostro contesto, per fornire:
+- una **rappresentazione concreta di una gerarchia**, come ad esempio una gerarchia di impiegati di un'azienda;
+- una **struttura fisica di indici**, che può essere utilizzata (ad esempio in un [[BD1_04 - Organizzazione di un DBMS#Indexed sequential file|indexed sequential file]]) per velocizzare la ricerca e l'ottenimento delle entità.
+
+##### Implementazione di un albero
+
+Ci si chiede, a questo punto, **come possiamo implementare concretamente un albero** in modo da utilizzarlo come struttura dati?
+
+Un modo semplice ma comunque efficace è la **contiguità dei nodi in memoria**: in una sequenza che va **dall'alto verso il basso** e **da sinistra verso destra**, si memorizza prima la radice, poi il primo figlio della radice, poi se quest'ultimo ha a sua volta figli si passa al primo figlio dello stesso, e così via. Dunque, **se un nodo non ha più figli, si passa al suo prossimo fratello da sinistra a destra**, e **se un nodo non ha più fratelli, si passa al prossimo fratello del suo genitore**. Ogni nodo contiene, oltre a un certo dato, anche il **livello dove si trova**. Vediamo un esempio di questo tipo di implementazione:
+
+![[albero_implementazione_esempio.png]]
+
+Le lettere rappresentano le ipotetiche chiavi di ricerca delle entità rappresentate dai nodi, mentre i numeri rappresentano il livello occupato dal nodo in questione nell'albero. Questo tipo di implementazione può essere navigato solo ed esclusivamente in modo **sequenziale**, nell'ordine esposto nello schema.
+
+È possibile implementare un albero anche in un altro modo, un po' più complesso: le **linked lists**. In questo caso, alla contiguità fisica propria dell'approccio precedente si aggiungono anche dei **puntatori**: in particolare, **ogni nodo avrà un puntatore al suo prossimo fratello**, se esiste. In questo modo, sarà possibile navigare l'albero sia nell'**ordine genitore-figlio** (considerando i nodi nell'ordine in cui compaiono in memoria) sia nell'**ordine fratello-fratello** (considerando i puntatori contenuti nei nodi). In questo tipo di implementazione, viene spesso aggiunto a ogni nodo anche un **bit di controllo** che indica se il nodo in questione è una foglia (`0`) o no (`1`). Vediamo un esempio di questo tipo di implementazione:
+
+![[albero_implementazione_esempio1.png]]
+___
+##### Alberi di ricerca binari e non
+
+Un **albero binario di ricerca** è, sostanzialmente, un albero dove **ogni nodo ha al massimo due figli**. Dunque, contestualizzando, ogni nodo contiene una **chiave di ricerca** e **un massimo di due puntatori a nodi figli**; entrambi questi ipotetici figli potranno essere visti come radici di **due sottoalberi**, uno contenente esclusivamente **chiavi di ricerca minori di quella contenuta nel nodo originale** e l'altro contenente esclusivamente **chiavi di ricerca maggiori**.
+
+Come si può intuire, questa struttura favorisce notevolmente l'**efficienza nella ricerca di entità specifiche** sfruttando la **ricerca binaria**: infatti, a ogni iterazione di tale algoritmo, andremmo attivamente a saltare circa metà dei nodi a nostra disposizione. Vediamo più nel dettaglio come funzionerebbe la ricerca binaria su un albero del genere: supponiamo di avere un albero binario di ricerca contenente nodi con varie chiavi di ricerca $K_{i}$, e di voler cercare il nodo con chiave $K_{\mu}$; il primo nodo che andiamo a controllare è la radice dell'albero, e a questo punto possono verificarsi tre scenari:
+- se $K_{i}=K_{\mu}$, allora abbiamo trovato il nodo che cercavamo;
+- se $K_{i}>K_{\mu}$, allora seguiamo il puntatore per il sottoalbero sinistro, ossia quello contenente le chiavi di ricerca minori di $K_{i}$;
+- se $K_{i}<K_{\mu}$, allora seguiamo il puntatore per il sottoalbero destro, ossia quello contenente le chiavi di ricerca maggiori di $K_{i}$.
+
+Applicando questi passaggi ricorsivamente sugli eventuali sottoalberi, si troverà il nodo cercato. Vediamo, ad esempio, l'applicazione di questo algoritmo nel seguente albero, ipotizzando di star cercando il nodo con chiave $K_{\mu}=24$:
+
+![[alberobinario_esempio.png]]
+
+Possiamo generalizzare i concetti esposti finora introducendo i cosiddetti "**alberi $m$-ari di ricerca**", dove ogni nodo ha al massimo $m$ figli.
+
+[21 - slide 49/54]
+___
+##### $B$-trees
+
+[21 - slide 55/95]
+___
+##### $B^{+}$-trees
+
+[21 - slide 96/99]
 ___
