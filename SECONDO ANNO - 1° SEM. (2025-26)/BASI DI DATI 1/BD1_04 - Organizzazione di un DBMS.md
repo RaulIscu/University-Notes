@@ -243,9 +243,23 @@ E se volessimo rimuovere anche $11$? In questo caso, per preservare la radice ma
 
 ![[btree_esempio12.png]]
 
+Come ultima rimozione, andiamo ora ad eliminare $2$ dall'albero. Notiamo che semplicemente eliminare tale chiave porterebbe a un numero insufficiente di figli all'interno del nodo; tuttavia, per natura del $B$-tree con cui stiamo lavorando non è possibile "prestare" a tale nodo una chiave proveniente da altri nodi. Dunque come procediamo? Osserviamo che, se eliminiamo la chiave $2$ dall'albero, in totale quest'ultimo conterrà 4 chiavi, che è precisamente il numero massimo di chiavi ospitabili in un singolo nodo: dunque, sarà sufficiente eliminare $2$ e condensare tutte le chiavi rimanenti in un singolo nodo. Il risultato sarà il seguente:
 
+![[btree_esempio13.png]]
+___
+##### Ricerca di una chiave in un $B$-tree
 
-[21 - slide 81/95]
+Per **cercare una chiave all'interno di un [[BD1_04 - Organizzazione di un DBMS#$B$-trees|B-tree]]**, si opera una ricerca **ricorsiva** partendo dalla radice. Indicando la chiave di ricerca desiderata con $X$, abbiamo due scenari possibili:
+- se la chiave si trova nel nodo considerato ($K_{i}=X$), allora si può accedere direttamente all'entità (o gruppo di entità) desiderata attraverso il puntatore a entità immediatamente successivo;
+- se la chiave non si trova nel nodo considerato, allora si entrerà nel sotto-albero indicato dal puntatore $P_{i}$ corrispondente al più piccolo valore di $i$ tale per cui $X<K_{i+1}$; se si ha, invece, che $X>K_{i}$ per ogni $i$, allora si entrerà nel sotto-albero indicato da $P_{i+1}$.
+
+Seguendo questo algoritmo, possiamo affermare che il caso peggiore è quello in cui si raggiunge una foglia, e dunque il costo in termini di accessi è:
+$$\text{costo}\leq \text{altezza dell'albero}-1+1$$
+dove $-1$ è dato dal fatto che, generalmente, la radice viene conservata nella memoria principale ed è dunque immediatamente accessibile, mentre il $+1$ rappresenta l'accesso all'entità effettiva attraverso la chiave di ricerca, e dunque l'indice, trovato.
+
+Va da sé, dunque, che per avere ben chiara l'efficienza di un $B$-tree di ordine $m$, dobbiamo essere in grado di farci un'idea della sua **altezza**. Indicati con $N$ il numero di nodi di un albero, con $m$ l'ordine di tale albero (dunque il massimo numero di figli che può avere un nodo dell'albero) e con $d$ il minimo numero di figli che un nodo dell'albero deve avere (generalmente, $d=\frac{m}{2}$). Un $B$-tree avente altezza $h$
+
+[21 - slide 89/95]
 ___
 ##### $B^{+}$-trees
 
