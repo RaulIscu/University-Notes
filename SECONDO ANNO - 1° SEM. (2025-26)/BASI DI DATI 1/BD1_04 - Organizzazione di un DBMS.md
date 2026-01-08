@@ -219,9 +219,33 @@ per aggiungere $15$ dovremo andare a dividere sia il primo figlio che il genitor
 
 ![[btree_esempio6.png]]
 
+Vediamo un altro esempio, stavolta con un $B$-tree di ordine $5$, ossia in cui ciascun nodo può contenere al massimo $4$ chiavi. Stavolta, non partiamo da un albero vuoto, ma cominciamo la nostra analisi dalla situazione seguente:
+
+![[btree_esempio7.png]]
+
+ Notiamo subito che, per adesso, il $B$-tree rispetta le proprietà necessarie (la radice ha un numero di figli compreso tra $2$ ed $m$, tutte le foglie sono sullo stesso livello, ecc. ecc.); inoltre, per chiarezza, specifichiamo che i quadratini nello schema rappresentano i puntatori ai figli dei rispettivi nodi, che in una situazione del genere sono in realtà dei puntatori `NULL`. Supponiamo di voler aggiungere $10$ all'albero: tale operazione può essere fatta senza problemi, essendoci ancora spazio nel primo figlio della radice, portando alla seguente situazione:
+
+![[btree_esempio8.png]]
+
+Se volessimo aggiungere anche $11$, però, notiamo che finiamo lo spazio nel primo figlio della radice, dunque sarà necessario dividere il nodo in questione. Andiamo dunque a spostare $8$ (è il valore centrale dei 5, dunque quello che favorirà la maggiore uniformità di riempimento tra i nodi) nella radice, e a dividere il primo figlio della stessa in due nodi, il primo contenente le chiavi minori di $8$ (ossia $2$ e $3$) e il secondo contenente le chiavi maggiori (ossia $10$ e $11$):
+
+![[btree_esempio9.png]]
+
+Finora, in entrambi gli esempi, abbiamo sempre visto cosa succede quando si vogliono aggiungere dei valori ai nostri $B$-tree; ma come facciamo invece a rimuoverli? Supponiamo, ad esempio, di voler rimuovere dall'albero appena ottenuto la chiave $8$, situata nella radice: si potrebbe pensare di spostare nella radice una delle chiavi contenute in uno dei primi due figli, per preservare la struttura esistente; tuttavia, ciò porterebbe il figlio in questione ad avere troppi pochi figli (rimuovendo una chiave, si rimuoverebbe anche un figlio, e sappiamo che i nodi interni devono avere tra $\frac{m}{2}$ e $m$ figli). Perciò, l'unica soluzione possibile è fondere i primi due figli della radice, e semplicemente rimuovere $8$ da quest'ultima:
+
+![[btree_esempio10.png]]
+
+Ora, vogliamo rimuovere anche $13$ dal $B$-tree. Semplicemente rimuovere $13$ dal suo nodo senza ulteriori aggiustamenti porterebbe il nodo in questione ad avere troppi pochi figli, dunque quello che possiamo fare è una serie di spostamenti di chiavi tra i tre nodi dell'albero: dopo aver rimosso $13$ dal secondo figlio, spostiamo $12$ dalla radice al secondo figlio, e di conseguenza spostiamo $11$ dal primo figlio alla radice. In questo modo, finiamo in una situazione del genere:
+
+![[btree_esempio11.png]]
+
+E se volessimo rimuovere anche $11$? In questo caso, per preservare la radice mantenendo, al tempo stesso, il numero minimo di chiavi negli altri nodi, possiamo eliminare $11$ dalla radice e rimpiazzarlo spostandoci $10$ dal primo figlio:
+
+![[btree_esempio12.png]]
 
 
-[21 - slide 71/95]
+
+[21 - slide 81/95]
 ___
 ##### $B^{+}$-trees
 
