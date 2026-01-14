@@ -217,12 +217,12 @@ Un **$B$-tree di ordine $m$** è definito come un **[[BD1_04 - Organizzazione di
 
 La seconda proprietà, in particolare, provvede direttamente alla problematica sollevata alla fine del paragrafo precedente, dato che in un $B$-tree si dovrà necessariamente riempire un nodo almeno fino a metà prima di creare nuovi figli, e così facendo si controlla l'altezza dell'albero.
 
-I $B$-tree, dunque, risultano essere un ottimo **indice strutturato ad albero**, dove **ogni nodo rappresenta un blocco del disco** e dove **i nodi sono mantenuti tra mezzi pieni e pieni**, in modo da favorire una distribuzione uniforme. Ogni nodo conterrà:
+I $B$-tree, dunque, risultano essere un ottimo **indice strutturato ad albero**, dove **ogni nodo rappresenta un blocco di memoria** e dove **i nodi sono mantenuti tra mezzi pieni e pieni**, in modo da favorire una distribuzione uniforme. Ogni nodo conterrà:
 - un insieme di **chiavi di ricerca**;
 - un insieme di **puntatori ai figli del nodo**;
-- un insieme di **puntatori a entità o a gruppi di entità**, corrispondenti alle chiavi di ricerca.
+- un insieme di **puntatori a entità o a gruppi di entità**, che faranno riferimento ai dati effettivi contenuti nel file principale.
 
-Si precisa che, naturalmente, le entità effettive non fanno in alcun modo parte del $B$-tree, e sono conservate separatamente.
+Si precisa che le entità effettive, solitamente, non fanno parte del $B$-tree e sono conservate separatamente, ma è anche possibile utilizzare direttamente il $B$-tree per organizzare il file, e dunque fare in modo che invece dei puntatori a entità ci siano le entità effettive, corrispondenti naturalmente alle chiavi di ricerca associate.
 
 Per comprendere meglio il funzionamento dei $B$-tree, vediamo un esempio. Supponiamo di avere un $B$-tree di ordine $4$ inizialmente vuoto, e di voler inserire al suo interno le chiavi $10$, $20$, $40$ e $50$. Un singolo nodo può contenere al massimo $m-1$ chiavi, dunque non abbiamo problemi nell'aggiungere $10$, $20$ e $40$, ma arrivati a $50$ finiamo lo spazio, trovandoci nella seguente situazione:
 
@@ -290,11 +290,54 @@ Seguendo questo algoritmo, possiamo affermare che il caso peggiore è quello in 
 $$\text{costo}\leq \text{altezza dell'albero}-1+1$$
 dove $-1$ è dato dal fatto che, generalmente, la radice viene conservata nella memoria principale ed è dunque immediatamente accessibile, mentre il $+1$ rappresenta l'accesso all'entità effettiva attraverso la chiave di ricerca, e dunque l'indice, trovato.
 
-Va da sé, dunque, che per avere ben chiara l'efficienza di un $B$-tree di ordine $m$, dobbiamo essere in grado di farci un'idea della sua **altezza**. Indicati con $N$ il numero di nodi di un albero, con $m$ l'ordine di tale albero (dunque il massimo numero di figli che può avere un nodo dell'albero) e con $d$ il minimo numero di figli che un nodo dell'albero deve avere (generalmente, $d=\frac{m}{2}$). Un $B$-tree avente altezza $h$
+Va da sé, dunque, che per avere ben chiara l'efficienza di un $B$-tree di ordine $m$, dobbiamo essere in grado di farci un'idea della sua **altezza**. In generale, vale la seguente proposizione:
 
-[21 - slide 89/95]
+> Dato un $B$-tree di ordine $m$, dunque in cui un nodo può avere al massimo $m$ figli, avente $N$ chiavi, e indicato con $d=\frac{m}{2}$ il numero minimo di figli che un nodo può avere, abbiamo che l'altezza $h$ del $B$-tree è compresa nel seguente intervallo: $$\log_{m}(N+1)\,\leq\, h\,\leq\,\log_{d}\left( \frac{N+1}{2} \right)+1$$
+
+Di seguito, riportiamo la dimostrazione di questa proposizione. Prima di tutto, osserviamo che per definizione stessa del $B$-tree ogni nodo possiede un numero di figli compreso tra $d$ e $m$, e un numero di chiavi compreso tra $d-1$ e $m-1$. Inoltre, per questa dimostrazione, indichiamo con $N$ il numero totale di chiavi contenute nel $B$-tree e con $b$ il numero di nodi presenti nello stesso.
+
+Possiamo affermare che il numero massimo di nodi dell'albero viene raggiunto quando tutti i nodi hanno capienza massima, e se ciò avviene vuol dire che ognuno di essi possiederà $m$ figli (eccetto le foglie, naturalmente) e $m-1$ chiavi. Perciò, possiamo dedurre che il numero massimo $b_{max}$ di nodi contenuti in un determinato $B$-tree è dato dalla seguente formula:
+$$b_{max}=\sum_{i\,=\,0}^{h\,-\,1}m^{i}=\frac{m^{h}-1}{m-1}$$
+Dunque, dato che questo numero di nodi vale per quando i nodi dell'albero si trovano tutti a capienza massima, possiamo affermare che il numero massimo $N_{max}$ di chiavi contenute in un determinato $B$-tree è:
+$$N_{max}=(m-1)\cdot b_{max}=(m-1)\cdot \frac{m^{h}-1}{m-1}=m^{h}-1$$
+Viceversa, il numero minimo di nodi dell'albero viene raggiunto quando tutti i nodi hanno capienza minima, e se ciò avviene vuol dire che la radice avrà $2$ soli figli (e una singola chiave), mentre ogni nodo interno possiederà $d$ figli e $d-1$ chiavi. Perciò, possiamo dedurre che il numero minimo $b_{min}$ di nodi contenuti in un determinato $B$-tree è dato dalla seguente formula:
+$$b_{min}=1+2\sum_{i\,=\,0}^{h\,-\,2}d^{i}=1+2 \frac{d^{h-1}-1}{d-1}$$
+Dunque, dato che questo numero di nodi vale per quando i nodi dell'albero si trovano tutti a capienza minima, possiamo affermare che il numero minimo $N_{min}$ di chiavi contenute in un determinato $B$-tree è:
+$$N_{min}=1+(d-1)(b_{min}-1)=1+(d-1)\left( 1+2 \frac{d^{h-1}-1}{d-1}-1 \right)=2d^{h-1}-1$$
+In definitiva, avendo calcolato sia $N_{min}$ che $N_{max}$, possiamo concludere che il numero $N$ di chiavi di un $B$-tree è compreso tra:
+$$2d^{h-1}-1\,\leq\,N\,\leq\,m^{h}-1$$
+e da questa diseguaglianza possiamo ricavare quella che volevamo dimostrare, ossia:
+$$\log_{m}(N+1)\,\leq\, h\,\leq\,\log_{d}\left( \frac{N+1}{2} \right)+1$$
+A questo punto, avendo l'altezza $h$ di un $B$-tree, si ha che:
+- l'operazione **`get(k)`** impiega al massimo $h$ accessi al disco;
+- l'operazione **`put(k)`** impiega al massimo $3h+1$ accessi al disco;
+- l'operazione **`remove(k)`** impiega al massimo $3h$ accessi al disco.
+
+Per comprendere meglio il funzionamento del $B$-tree in un contesto concreto, vediamo un esempio. Supponiamo di avere un numero $NR=1\,700\,000$ di entità, ciascuna delle quali occupa $RS=250\text{ byte}$, di cui $KS=45\text{ byte}$ sono occupati dalla chiave di ricerca. Si considerano blocchi di memoria di dimensione $BS=2048\text{ byte}$, e un puntatore a un singolo blocco occupa $PS=4\text{ byte}$. Supponendo di voler organizzare i dati con una struttura a $B$-tree, si vuole sapere il numero minimo di accessi necessari per effettuare una ricerca. Per natura della ricerca su $B$-tree, il numero minimo di accessi si ha quando è minima anche l'altezza $h$ dell'albero, e dunque quando ogni nodo possiede il massimo numero di figli: ciò implica che ogni blocco (dunque ogni nodo) dovrà essere carico al $100\%$. Indichiamo con $d$ il numero minimo di figli di un nodo, con $k_{min}=d-1$ il numero minimo di chiavi di un nodo, con $m$ il numero massimo di figli di un nodo e con $k_{max}=m-1$ il numero massimo di chiavi di un nodo. Abbiamo che il numero massimo di chiavi per nodo, dunque $k_{max}$, corrisponde al rapporto tra la dimensione di un blocco e la memoria occupata da una chiave insieme al suo relativo puntatore a blocco:
+$$k_{max}=\frac{BS-PS}{KS+PS}=\frac{2048-4}{45+4}\approx41\text{ chiavi}$$
+Di conseguenza, valendo $k_{max}=m-1$, otteniamo che:
+$$m=k_{max}+1=41+1=42\text{ figli}$$
+A questo punto, per quantificare il numero di blocchi (e dunque, di nodi) dell'albero, partiamo quantificando il numero di blocchi necessari per il file principale, ossia quello dove verranno contenute effettivamente le entità: il numero di entità contenibili in un singolo blocco è:
+$$RpB=\frac{BS}{RS}=\frac{2048}{250}\approx 8\text{ entita'}$$
+dunque, il numero di blocchi necessari per il file principale sarà:
+$$NBpFP=\frac{NR}{RpB}=\frac{1\,700\,000}{8}=212\,500\text{ blocchi}$$
+Ora avendo il numero di blocchi necessari per il file principale così come il massimo numero di figli di un nodo, possiamo ottenere il numero di nodi del livello più basso dell'albero (che chiameremo $L_{0}$):
+$$NBpL_{0}=\frac{NBpFP}{m}=\frac{212\,500}{42}\approx 5060\text{ blocchi}$$
+Proseguendo, il numero di nodi del livello $L_{1}$ sarà dato dal rapporto tra i nodi del livello inferiore ed $m$:
+$$NBpL_{1}=\frac{NBpL_{0}}{m}=\frac{5060}{42}\approx 121\text{ blocchi}$$
+Arriviamo, poi, al livello $L_{2}$:
+$$NBpL_{2}=\frac{NBpL_{1}}{m}=\frac{121}{42}\approx 3\text{ blocchi}$$
+E infine al livello $L_{3}$, che corrisponderà alla radice dell'albero:
+$$NBpL_{3}=\frac{NBpL_{2}}{m}=\frac{3}{42}\approx 1\text{ blocco}$$
+Essendo la radice situata sul livello $L_{3}$ abbiamo trovato che nel contesto in cui ci siamo posti l'albero ha un'altezza $h=4$, e dunque che il numero minimo di accessi per una ricerca sarà proprio $4$.
 ___
 ##### $B^{+}$-trees
 
-[21 - slide 96/99]
+Un **$B^{+}$-tree** è una variazione del [[BD1_04 - Organizzazione di un DBMS#$B$-trees|B-tree]], in cui valgono le seguenti proprietà:
+- i puntatori a entità sono contenuti **solo nei nodi foglia**;
+- **tutte le chiavi contenute in nodi non-foglia sono contenuti anche nelle foglie**, in modo tale che le foglie contengano tutte le chiavi presenti nell'albero insieme ai corrispondenti puntatori;
+- ogni nodo "superiore", di conseguenza, contiene un certo sottoinsieme delle chiavi contenute nelle foglie;
+- ogni foglia del $B^{+}$-tree contiene anche un **puntatore al suo prossimo nodo fratello**.
+
+Tipicamente, un $B^{+}$-tree risulta essere più efficiente di un semplice $B$-tree, poiché la sua altezza sarà generalmente inferiore, e dunque una ricerca al suo interno richiederà meno accessi.
 ___
