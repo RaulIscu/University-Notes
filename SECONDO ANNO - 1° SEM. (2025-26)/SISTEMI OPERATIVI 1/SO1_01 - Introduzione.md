@@ -23,7 +23,7 @@ Per comprendere meglio il ruolo di un OS all'interno di un calcolatore, rivediam
 
 ![[struttura_calcolatore.png]]
 
-Elenchiamo le caratteristiche principali di ciascuna delle componenti principali che vediamo nello schema:
+Elenchiamo le caratteristiche principali di ciascuna delle componenti che vediamo nello schema:
 - la **CPU**, l'unità centrale del calcolatore, che esegue concretamente le operazioni computazionali (al giorno d'oggi, la gran parte delle CPU è divisa in più "core" per permettere di eseguire più processi in parallelo);
 - la **memoria**, che si occupa di conservare dati e istruzioni necessari per qualsiasi operazione svolta dalla CPU;
 - i **dispositivi di I/O** (mouse, tastiera, stampante, monitor, ecc. ecc.), ognuno associato a uno specifico "**device controller**", che si occupano di gestire l'input e l'output del calcolatore;
@@ -42,7 +42,7 @@ All'interno di una CPU, i dati su cui opera sono conservati in "**registri**", d
 - `ebp`, che contiene lo "stack base pointer";
 - `eip`, che contiene lo "instruction pointer", ossia il Program Counter, o PC.
 
-In base al numero di CPU incluse in un calcolatore, questi ultimi possono essere divisi in due categorie:
+In base al numero di CPU incluse in un calcolatore, quest'ultimi possono essere divisi in due categorie:
 - sistemi **a singolo processore**, che contengono una sola CPU principale che si occupa dell'esecuzione dei programmi e altri processori secondari con compiti più specifici (controller del disco, GPU, ecc. ecc.);
 - sistemi **multi-processore**, che contengono più CPU per aumentare il throughput del calcolatore e consentono una maggiore resilienza di fronte a errori o malfunzionamenti.
 ___

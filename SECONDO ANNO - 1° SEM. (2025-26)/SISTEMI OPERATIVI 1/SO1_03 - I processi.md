@@ -4,7 +4,7 @@ Possiamo definire i processi mettendoli a paragone con i **programmi**:
 - un **programma** è definito come un **file eseguibile contenuto nella memoria**, che contiene generalmente l'insieme delle istruzioni necessarie per conseguire uno scopo specifico;
 - un **processo**, invece, è definito come **un'istanza particolare di un programma in esecuzione, quando viene caricato nella memoria principale**.
 
-Possiamo, dunque, differenziare queste due entità vedendo il programma come un qualcosa di **statico e "passivo"**, mentre il processo come più **dinamico e "attivo"**. Naturalmente, possono esistere contemporaneamente **più processi che eseguono lo stesso programma contemporaneamente** (ad esempio, potrebbero essere attive più istanze di un browser sul calcolatore allo stesso tempo), ma **ognuno di questi processi possiede un proprio stato**, distinto dagli altri. 
+Possiamo, dunque, differenziare queste due entità vedendo il programma come un qualcosa di **statico e "passivo"**, mentre il processo come più **dinamico e "attivo"**. Naturalmente, possono esistere **più processi che eseguono lo stesso programma contemporaneamente** (ad esempio, potrebbero essere attive più istanze di un browser sul calcolatore allo stesso tempo), ma **ognuno di questi processi possiede un proprio stato**, distinto dagli altri. 
 
 In questo capitolo, risponderemo a varie domande importanti sui processi. Come vengono rappresentati nell'OS? Quali sono i possibili stati in cui si può trovare un processo, e come viene gestita la transizione tra uno stato e un altro? Come vengono creati concretamente i processi? Come comunicano tra di loro due o più processi?
 
@@ -40,7 +40,7 @@ int main() {
 }
 ```
 
-Seguendo passo passo l'esecuzione del programma, vediamo come si comportano le varie sezioni della memoria. Innanzitutto, vengono dichiarate tre variabili globali `w`, `x` e `y`: di queste, `w` viene inizializzata a $42$, `x` a $0$ e `y` non viene inizializzata affatto; di conseguenza, `w` verrà conservata nella sezione Data, mentre `x` e `y` nella sezione BSS. Nella sezione Text, invece, rientreranno le istruzioni concretamente da eseguire (naturalmente non scritte in C come nel programma, ma compilato in linguaggio assembly e, di conseguenza, in binario). A questo punto, si entra nella funzione `main()`, in cui viene eseguita prima di tutto l'istruzione `char* c = malloc(128)`, che porta all'allocazione di memoria nello Stack per la variabile `c`, poi l'istruzione `int k = 12`, che porta alla memorizzazione di `k` nello Stack, dopo `c`. La chiamata alla funzione `doSomething(k)`, infine, provoca l'entrata in gioco dell'Heap, e così via.
+Seguendo passo passo l'esecuzione del programma, vediamo come si comportano le varie sezioni della memoria. Innanzitutto, vengono dichiarate tre variabili globali `w`, `x` e `y`: di queste, `w` viene inizializzata a $42$, `x` a $0$ e `y` non viene inizializzata affatto; di conseguenza, `w` verrà conservata nella sezione Data, mentre `x` e `y` nella sezione BSS. Nella sezione Text, invece, rientreranno le istruzioni concretamente da eseguire (naturalmente non scritte in C come nel programma, ma compilate in linguaggio assembly e, di conseguenza, in binario). A questo punto, si entra nella funzione `main()`, in cui viene eseguita prima di tutto l'istruzione `char* c = malloc(128)`, che porta all'allocazione di memoria nello Stack per la variabile `c`, poi l'istruzione `int k = 12`, che porta alla memorizzazione di `k` nello Stack, dopo `c`. La chiamata alla funzione `doSomething(k)`, infine, provoca l'entrata in gioco dell'Heap, e così via.
 
 ##### Un approfondimento sullo Stack
 
@@ -160,9 +160,46 @@ In base al tipo di sistema, ci sono diverse **system call per creare un processo
 
 Come abbiamo accennato in precedenza, il processo padre può assumere due comportamenti diversi alla creazione del processo figlio: può **attendere l'esecuzione del figlio per proseguire la propria**, oppure può **continuare l'esecuzione in parallelo**, senza bloccaggi. Nel primo caso, il processo padre effettua una system call di tipo **`wait()`**, che mette in pausa la sua esecuzione (si tratta del tipico comportamento di una shell UNIX che attende che termini l'esecuzione dei suoi processi figli per richiedere un nuovo prompt, comportamento che si denota dal simbolo **`>`**); nel secondo caso, invece, il processo padre esegue in parallelo con il processo figlio, magari per tutto il tempo o magari solo in parte (si tratta del tipico comportamento di una shell UNIX che esegue un processo figlio in background, comportamento che si denota dal simbolo **`&`**).
 
+[04 - slide 19/22]
+
+[04 - slide 25 - 28 - 29]
+
+Finora, abbiamo considerato casi in cui la chiamata `fork()` crea sostanzialmente delle copie di processi esistenti. Seppur interessante, tale funzionalità non risulta però particolarmente utile tutto sommato: infatti, ciò che ci interessa maggiormente è **creare processi nuovi ma differenti**. Per comprendere come sia possibile fare ciò, partiamo da un esempio concreto, considerando il seguente programma:
+
+```
+int main() {
+	
+	string progStr;
+	getline(cin, progStr);
+	const char *prog = progStr.c_str();
+	
+	int pid = fork();
+	
+	if (pid == 0) {
+		execlp(prog, prog, 0);
+		printf("Can't load the program %s", prog);
+	} else {
+		sleep(1);
+		waitpid(pid, 0, 0);
+		printf("Program %s finished", prog);
+	}
+	
+	return 0;
+}
+```
+
+Analizziamo riga per riga il blocco di codice appena presentato. Le prime tre righe servono a richiedere all'utente il nome di un programma che si desidera eseguire: si dichiara una variabile `progStr` e le si assegna come valore una stringa di testo presa in input dall'utente. In seguito, viene eseguita la riga `int pid = fork()`: con questa riga di codice, andiamo sostanzialmente a creare una copia del processo padre, e dunque da questo momento in poi entrambi i processi (padre e figlio) eseguiranno indipendentemente il codice rimasto nel programma; nella variabile `pid`, dopo l'esecuzione di `fork()`, verrà memorizzato appunto il PID del processo in esecuzione. 
+
+A questo punto, si verifica il valore di `pid`, e in base al processo tale variabile conterrà al suo interno un valore diverso: nel processo padre, `fork()` restituirà il PID del processo figlio, che sarà sicuramente un numero $> 0$; nel processo figlio, `fork()` restituirà $0$; invece, se si è verificato un errore nella creazione del processo figlio, si restituirà $-1$. È proprio in base al valore ritornato da `fork()` che distinguiamo il flusso di esecuzione delle prossime istruzioni. Come abbiamo detto, i due processi attualmente in esecuzione andranno ad eseguire le istruzioni indipendentemente, e dunque l'`if` in cui stiamo entrando imporrà ai processi un comportamento diverso in base alla loro natura. 
+
+Se `pid == 0`, vorrà dire che il processo in questione è il processo figlio, e in tal caso quello che vogliamo fare è eseguire il programma richiesto dall'utente, il cui nome è ora memorizzato in `prog`: per questo scopo utilizziamo l'istruzione `execlp`, che carica il programma il cui nome viene letto da `prog`, e sostanzialmente va a sostituire il programma che stava venendo eseguito dal processo figlio (dunque, seppur il PID del processo rimane lo stesso, il codice e i dati vengono sovrascritti dal nuovo programma, ossia quello indicato da `prog`). È proprio per dimostrare questo funzionamento che viene inserita anche la riga `printf("Can't load the program %s", prog)`: infatti, se il programma `prog` viene caricato con successo, il codice viene sostituito con il suo, e dunque questa riga non dovrebbe essere eseguita dal processo figlio; ciò implica che, se ciò accade, c'è stato un errore nel caricamento del nuovo programma.
+
+Supponendo che non avvengano errori nell'esecuzione di `fork()`, se `pid` non è uguale a $0$ vorrà dire che il processo in questione è invece il processo padre, e in tal caso quello che vogliamo fare è:
+- mettere forzatamente in pausa il processo per un breve lasso di tempo con `sleep(1)` (dando un minimo di tempo al processo figlio di iniziare la sua esecuzione);
+- far sospendere la propria esecuzione al processo padre in attesa che il processo figlio, ossia il processo con PID pari a `pid`, termini la sua con `waitpid(pid, 0, 0)`;
+- eseguire l'istruzione di stampa una volta che il processo figlio ha terminato la sua esecuzione, indicando all'utente che l'esecuzione del programma `prog` è terminata.
 
 
-[slide 19/22]
 
-[04, slide 25 - 28 - 29 - 32 - 36 - 38/40 - 42 - 43 - 45 - 46 - 48 - 52 - 54 - 56 - 58 - 61 - 63]
+[04, slide 42 - 43 - 45 - 46 - 48 - 52 - 54 - 56 - 58 - 61 - 63]
 ___

@@ -51,7 +51,7 @@ Capita spesso, dato uno schema $R$ e un insieme $F$ di [[BD1_02 - Dipendenze fun
 
 Avendo introdotto questo nuovo concetto, possiamo fornire anche una **nuova definizione di [[BD1_01 - Modello relazionale#Chiavi|chiave]]**: infatti, dato uno schema $R$ e un insieme $F$ di dipendenze funzionali, possiamo affermare che un sottoinsieme $K$ di attributi di $R$ è una chiave di $R$ se sono rispettate due condizioni:
 - $K\rightarrow R\,\in\,F^{+}$;
-- non esiste un sottoinsieme proprio $K'\subseteq K$ tale per cui venga soddisfatta la dipendenza funzionale $K'\rightarrow R$.
+- non esiste un sottoinsieme proprio $K'\subseteq K$ tale per cui $K'\rightarrow R\,\in\,F^{+}$.
 
 Vediamo un esempio. Supponiamo di avere il seguente schema di relazione:
 $$\text{Student(Matr, Name, Surname, BirthD)}$$

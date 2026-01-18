@@ -500,7 +500,7 @@ Arriviamo, a questo punto, a capire **come scomporre uno schema di relazione $R$
 - **$\rho$ ha un [[BD1_03 - La 3NF#Ricostruire le informazioni originali con un join|lossless join]]**.
 
 Tale scomposizione può essere ottenuta in **tempo polinomiale** attraverso un **algoritmo**, che presenta i seguenti input e output:
-- come **input**, uno schema di relazione $R$ e una [[BD1_03 - La 3NF#Trovare la copertura minimale di un insieme di dipendenze funzionali|copertura minimale]] dell'insieme $F$ di dipendenze funzionali definite su di esso;
+- come **input**, uno schema di relazione $R$ e una [[BD1_03 - La 3NF#Trovare la copertura minimale di un insieme di dipendenze funzionali|copertura minimale]] $F$ dell'insieme iniziale di dipendenze funzionali definite su di esso;
 - come **output**, una scomposizione $\rho$ di $R$.
 
 Di seguito, lo **pseudocodice** dell'algoritmo:
