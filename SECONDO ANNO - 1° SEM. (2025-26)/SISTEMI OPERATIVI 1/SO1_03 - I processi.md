@@ -146,7 +146,7 @@ Per tenere traccia dello stato dei vari processi, l'OS sfrutta una struttura dat
 ___
 ## Come viene creato e terminato un processo?
 
-##### Creazione di un processo: processo padre e processo figlio
+##### Creazione di un processo
 
 In generale, **un processo può essere creato da altri processi** mediante delle [[SO1_02 - OS e HW#Categorie di system call|system call]] particolari, ossia quelle inerenti al controllo dei processi. Il processo che ne va a creare un altro viene definito "**padre**" di quest'ultimo, mentre il processo creato prende il nome di "**figlio**"; generalmente, un processo padre condivide risorse e privilegi con il processo figlio, e in base al contesto può interrompere la propria esecuzione in attesa di quella del figlio oppure continuare la sua esecuzione in parallelo.
 
@@ -160,11 +160,7 @@ In base al tipo di sistema, ci sono diverse **system call per creare un processo
 
 Come abbiamo accennato in precedenza, il processo padre può assumere due comportamenti diversi alla creazione del processo figlio: può **attendere l'esecuzione del figlio per proseguire la propria**, oppure può **continuare l'esecuzione in parallelo**, senza bloccaggi. Nel primo caso, il processo padre effettua una system call di tipo **`wait()`**, che mette in pausa la sua esecuzione (si tratta del tipico comportamento di una shell UNIX che attende che termini l'esecuzione dei suoi processi figli per richiedere un nuovo prompt, comportamento che si denota dal simbolo **`>`**); nel secondo caso, invece, il processo padre esegue in parallelo con il processo figlio, magari per tutto il tempo o magari solo in parte (si tratta del tipico comportamento di una shell UNIX che esegue un processo figlio in background, comportamento che si denota dal simbolo **`&`**).
 
-[04 - slide 19/22]
-
-[04 - slide 25 - 28 - 29]
-
-Finora, abbiamo considerato casi in cui la chiamata `fork()` crea sostanzialmente delle copie di processi esistenti. Seppur interessante, tale funzionalità non risulta però particolarmente utile tutto sommato: infatti, ciò che ci interessa maggiormente è **creare processi nuovi ma differenti**. Per comprendere come sia possibile fare ciò, partiamo da un esempio concreto, considerando il seguente programma:
+Senza ulteriori accorgimenti, **la chiamata a `fork()` crea sostanzialmente delle copie di processi esistenti**. Seppur interessante, tale funzionalità non risulta però particolarmente utile tutto sommato: infatti, ciò che ci interessa maggiormente è **creare processi nuovi ma differenti**. Per comprendere come sia possibile fare ciò, partiamo da un esempio concreto, considerando il seguente programma:
 
 ```
 int main() {
@@ -199,7 +195,128 @@ Supponendo che non avvengano errori nell'esecuzione di `fork()`, se `pid` non è
 - far sospendere la propria esecuzione al processo padre in attesa che il processo figlio, ossia il processo con PID pari a `pid`, termini la sua con `waitpid(pid, 0, 0)`;
 - eseguire l'istruzione di stampa una volta che il processo figlio ha terminato la sua esecuzione, indicando all'utente che l'esecuzione del programma `prog` è terminata.
 
+Avendo chiaro il modo in cui i processi si sviluppano uno dall'altro, possiamo capire facilmente come ottenere determinate gerarchie di processi ben precise. Ad esempio, se volessimo creare la seguente gerarchia:
 
+![[gerarchia_processi_esempio.png]]
 
-[04, slide 42 - 43 - 45 - 46 - 48 - 52 - 54 - 56 - 58 - 61 - 63]
+avremmo bisogno di un blocco di codice del genere:
+
+```
+int pid = fork();
+
+if (pid == 0) { 
+
+	pid = fork();
+	
+	if (pid == 0) {
+		execlp(...);
+	} else {
+		...
+	}
+
+} else {
+	...
+}
+```
+
+Più in generale, se volessimo creare una sequenza di questo tipo di $n$ processi, avremmo bisogno di una catena di $n-1$ `fork()` che seguano tale struttura. E se invece volessimo creare una struttura come la seguente?
+
+![[gerarchia_processi_esempio1.png]]
+
+In tal caso, quello che dobbiamo fare partendo dal processo $A$ è prima di tutto eseguire una `fork()`, generando il processo $B$, e distinguendo con un `if` se ci si trova nel processo $A$ (padre) o nel processo $B$ (figlio), eseguire un'ulteriore `fork()` nel primo scenario; in questo modo, si avrà che il processo $A$ avrà generato due processi figli distinti. Il blocco di codice corrispondente a ciò è il seguente:
+
+```
+int pid = fork();
+
+if (pid == 0) {        // figlio di A (B)
+	execlp(...)
+} else {               // A
+	
+	pid = fork();
+	
+	if (pid == 0) {    // figlio di A (C)
+		execlp(...);
+	}
+}
+```
+
+Possiamo generalizzare anche quest'ultima struttura di processi. Supponendo, infatti, di voler creare $n$ processi figli tutti derivanti dallo stesso processo padre, potremmo utilizzare il seguente codice:
+
+```
+for (int i = 0; i < n; i++) {
+	if (fork() == 0) {
+		execlp(...);
+	}
+}
+
+// far attendere al processo padre il termine dell'esecuzione dei figli
+for (int i = 0; i < n; i++) {
+	wait(NULL);
+}
+```
+
+Ricapitolando, vediamo un elenco delle **system call relative alla gestione dei processi** viste finora:
+- **`fork()`** viene utilizzata per generare un nuovo processo che rappresenta un esatto duplicato del processo padre;
+- **`execlp()`** viene utilizzata per rimpiazzare il programma del processo corrente con un nuovo programma preso in input;
+- **`sleep()`** viene utilizzata per sospendere l'esecuzione del processo corrente per un certo periodo di tempo;
+- **`wait()`** o **`waitpid()`** vengono utilizzate per sospendere l'esecuzione del processo corrente, aspettando o che un qualsiasi processo o che un processo identificato da un certo PID terminino la propria esecuzione.
+___
+##### Terminazione di un processo
+
+**Un processo può terminare la propria esecuzione** autonomamente, eseguendo una chiamata alla [[SO1_02 - OS e HW#Controllo dei processi|system call]] **`exit()`**. Tipicamente, questa system call ritorna un valore intero, che verrà poi eventualmente passato al processo padre se quest'ultimo si trovava in attesa dopo una chiamata `wait()`: di norma se il valore intero ritornato è pari a $0$, allora l'esecuzione del processo è terminata con successo, mentre se viene ritornato un valore diverso da $0$ allora potrebbe essersi verificato qualche problema.
+
+I processi possono essere **terminati anche dall'OS** per vari motivi, tra cui:
+- l'incapacità dell'OS di fornire determinate risorse al processo;
+- l'esecuzione di una chiamata di tipo `kill()`.
+
+È possibile, poi, anche che **un processo padre termini un suo processo figlio**, nell'eventualità in cui il compito ad esso assegnato non sia più necessario. Ma cosa succede se **un processo padre viene terminato prima dei suoi processi figli?** Le precise dinamiche con cui l'OS gestisce questa situazione potrebbero variare da sistema a sistema: ad esempio, in sistemi di tipo UNIX, i cosiddetti **processi "orfani"** sono generalmente ereditati dal processo `init`, e verranno poi terminati da quest'ultimo. 
+
+Quando viene terminata l'esecuzione di un processo, **tutte le risorse di sistema utilizzate dallo stesso vengono rilasciate**, così come eventuali file aperti vengono chiusi, e così via; inoltre, se il processo padre stava attendendo il termine dell'esecuzione del figlio, lo status di terminazione del processo figlio, così come il tempo di esecuzione ed altri dati, vengono ritornati al processo padre (se si tratta di un processo orfano, tali dati vengono ritornati a `init`).
+
+Infine, vi è un caso particolare nelle varie possibilità di terminazione di un processo, ossia il cosiddetto **processo "zombie"**: un processo zombie è **un processo che prova a terminare la propria esecuzione prima che il processo padre cominci ad attendere per tale evento**. Ciò avviene perché, seppur tale processo abbia virtualmente terminato la propria esecuzione, esso occuperà comunque dello spazio e delle risorse dato che non potrà ancora ritornare lo status di terminazione e le altre informazioni al suo processo padre. Di solito, analogamente a ciò che avviene per i processi orfani, anche i processi zombie vengono ereditati da `init` e terminati.
+___
+## Come vengono programmati i processi nella CPU?
+
+Nel progettare un buon **sistema di scheduling dei processi**, si vogliono conseguire principalmente due obiettivi:
+- **mantenere occupata la CPU** il più costantemente possibile;
+- **permettere dei tempi di risposta accettabili per qualsiasi programma**, soprattutto per quelli più interattivi.
+
+Per poter rispettare queste aspettative, il "**process scheduler**" dovrà implementare delle strategie opportune per **assegnare e rimuovere processi dalla CPU**. Ciò non è particolarmente immediato, soprattutto se si considera che questi due obiettivi possono essere in conflitto tra di loro: infatti, ogni volta che l'OS deve entrare in gioco per sospendere l'esecuzione di un processo e favorire quella di un altro, verrà utilizzato del tempo in cui la CPU concretamente non lavorerà.
+
+Un metodo abbastanza efficiente per risolvere questa problematica è quello delle cosiddette "**process state queues**". Concretamente, **l'OS mantiene i [[SO1_03 - I processi#Il PCB|PCB]] di tutti i processi esistenti in delle code**: vi è una coda per ognuno dei [[SO1_03 - I processi#Quali sono i possibili stati di un processo?|5 stati]] in cui può trovarsi un processo, e anche una coda per ogni [[SO1_01 - Introduzione#Dispositivi di I/O|dispositivo di I/O]] del calcolatore (si tratta di code dove i processi attendono di ricevere o inviare dati); **quando lo stato di un processo cambia, il PCB del processo viene spostato** dalla coda in cui si trovava a quella relativa al nuovo stato assunto dallo stesso. Di seguito, un esempio delle varie process state queues che l'OS potrebbe dover mantenere:
+
+![[pcb_queues_esempio.png]]
+
+Delle varie code gestite dall'OS, quella che potremmo considerare più importante delle altre è quella relativa allo **stato `running`**, ossia quella contenente i processi attivamente eseguiti dalla CPU. Naturalmente, **la lunghezza di tale coda è limitata dal numero di core del sistema considerato**, dato che un solo processo alla volta può essere eseguito da una CPU. Per quanto riguarda, invece, le altre code, esse hanno potenzialmente una lunghezza pressoché illimitata, dato che non viene posto un limite al numero di processi che possono essere creati (`new`), che possono essere pronti per essere eseguiti (`ready`), che stanno attendendo un qualche evento o dato (`waiting`) o che vengono terminati (`terminated`). 
+
+In base alla frequenza con cui riprogrammano i processi, possiamo dividere i possibili approcci di un process scheduler in tre macro-categorie:
+- un "**long-term scheduler**" si attiva a intervalli relativamente lunghi, ed è tipico di un sistema a batch o particolarmente carico;
+- un "**short-term scheduler**" si attiva molto frequentemente (in media ogni $100$ millisecondi) e scambia velocemente i processi all'interno della CPU;
+- un "**medium-term scheduler**" rappresenta una sorta di via di mezzo, che prioritizza solitamente processi più piccoli e veloci, in modo da liberare il sistema.
+
+Ma come avviene, concretamente, lo scambio di processi in esecuzione all'interno della CPU? La chiave è una procedura chiamata "**context switch**", utilizzata proprio per sospendere l'esecuzione del processo corrente e per permettere alla CPU di eseguirne uno nuovo. Si tratta di un'operazione con **costo alto**, dato che sospendere l'esecuzione del processo corrente implica il salvataggio dell'interezza del suo stato (PC, SP, altri registri, ecc. ecc.) nel relativo PCB, mentre avviare l'esecuzione di un nuovo processo implica il caricamento di quello stesso gruppo di informazioni dal relativo PCB alla CPU. Un context switch **avviene in corrispondenza di una qualsiasi [[SO1_02 - OS e HW#System calls, gestione delle eccezioni e operazioni di I/O|trap]]**: all'occorrenza di una trap, dunque, la CPU dovrà eseguire le seguenti operazioni:
+- salvare lo stato del processo corrente;
+- passare alla [[SO1_02 - OS e HW#Protezione e sicurezza|modalità kernel]] per gestire la trap;
+- restaurare lo stato del processo che si vuole eseguire in seguito.
+
+Un buon sistema di scheduling tiene anche alla cosiddetta "**equità**", ossia al fornire possibilità il più possibile eque a ogni processo di occupare la CPU ed essere eseguito. In questo contesto, possiamo fare una distinzione tra due tipi principali di processo: i **processi vincolati all'I/O** e i **processi vincolati alla CPU**. Mentre i primi sono processi la cui esecuzione necessita di eventi o dati relativi all'I/O, i secondi eseguono perlopiù operazioni computazionali relative alla CPU; dunque, mentre è praticamente inevitabile che i primi sospendano la loro esecuzione almeno una volta, i secondi potrebbero potenzialmente occupare costantemente la CPU, e bloccare così il corretto funzionamento del sistema. Dunque, per evitare che ciò accada, e garantire così la massima equità, **i context switch possono essere attivati anche utilizzando dei timer a livello di HW**, che provocano delle interrupt a intervalli regolari. Tale intervallo corrisponde al cosiddetto "**quanto di tempo**", o "**time slice**", e corrisponde dunque al **tempo massimo che può intercorrere tra due context switch**, in modo da garantire una suddivisione uniforme nell'esecuzione dei processi. Si tratta di un'opzione ampiamente utilizzata, soprattutto nei sistemi moderni, anche per favorire lo [[SO1_01 - Introduzione#Multiprogrammazione|pseudo-parallelismo]] a cui si accennava nell'introduzione di questo corso.
+
+Ma **qual è il quanto di tempo ottimale da porre tra due context switch?** Per poterlo trovare, dobbiamo tenere in conto l'importanza di mantenere un **bilancio tra reattività del sistema e utilizzo della CPU**: infatti, bisogna ricordare che il context switch è un'operazione costosa e che lascia la CPU inutilizzata, dunque diminuire il quanto di tempo e aumentare di conseguenza il numero di context switch porterebbe a una maggiore reattività ma anche a un minore utilizzo della CPU; al tempo stesso, aumentare il quanto di tempo e diminuire di conseguenza il numero di context switch massimizzerebbe l'utilizzo della CPU ma porterebbe a una minore reattività del sistema. Tipicamente, la dimensione scelta per un quanto di tempo si aggira **tra i $10$ e i $100$ millisecondi**.
+___
+## Come comunicano i processi tra di loro?
+
+I processi possono essere o **indipendenti**, e dunque operare indipendentemente senza influenzare o essere influenzati da altri processi, o **cooperanti**, e dunque operare "insieme" ad altri processi per conseguire un obiettivo comune. Quest'ultima opzione può essere utile per vari motivi, tra cui:
+- la **condivisione di informazioni**, che può essere necessaria ad esempio nel momento in cui più processi accedono allo stesso file;
+- l'**aumento di velocità nella computazione**, dato che un singolo problema può spesso essere risolto più velocemente se diviso in più sotto-problemi risolti parallelamente da più processi;
+- la **modularità**, in contesti in cui dividere un sistema in più "moduli" porta a un aumento dell'efficienza;
+- la **convenienza**, dato che un singolo utente potrebbe modificare, compilare o eseguire lo stesso codice in finestre diverse.
+
+La **comunicazione tra due processi cooperanti** può avvenire principalmente in **due modi**: la **memoria condivisa** e il **passaggio di messaggi**.
+
+La **memoria condivisa** risulta essere l'opzione concretamente più veloce, dato che non necessita ulteriori [[SO1_02 - OS e HW#System calls, gestione delle eccezioni e operazioni di I/O|system call]] per funzionare, tuttavia risulta essere più complessa da impostare, e non funziona al meglio se si condivide la memoria tra più calcolatori. È, perciò, preferibile quando si lavora con un grande ammontare di informazioni su un singolo calcolatore. La memoria che viene condivisa in questo contesto è inizialmente contenuta nello spazio di indirizzamento di uno dei processi coinvolti: serviranno dunque specifiche system call per rendere quella memoria disponibile "pubblicamente", e quindi accessibile ad altri processi; quest'ultimi, poi, dovranno eseguire a loro volta altre system call per abbinare la memoria condivisa al loro spazio di indirizzamento. 
+
+Il **passaggio di messaggi**, invece, seppur più lento a causa del bisogno di system call per ogni messaggio trasmesso, è molto più semplice da impostare e si presta bene al lavoro condiviso tra più calcolatori. Per questi motivi, è preferibile quando si lavora con poche informazioni o con trasmissioni poco frequenti, o in generale quando sono coinvolti più calcolatori nella comunicazione. Un sistema di passaggio di messaggi dovrà supportare, come minimo, delle system call per l'invio e per la ricezione di tali messaggi, ma prima ancora si deve assicurare un collegamento tra i processi cooperanti. Nell'implementazione di un sistema del genere, si dovrà pensare a varie problematiche, come ad esempio:
+- il mittente comunicherà direttamente col destinatario, o indirettamente attraverso una coda o qualche altra struttura?
+- l'invio e la ricezione bloccheranno l'esecuzione dei processi o no?
+- come verrà gestita la memoria relativa ai messaggi?
 ___
