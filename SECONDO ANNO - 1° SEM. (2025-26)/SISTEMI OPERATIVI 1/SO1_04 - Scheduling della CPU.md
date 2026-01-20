@@ -1,8 +1,8 @@
-In questo capitolo, si approfondirà un aspetto trattato in parte nel [[SO1_03 - I processi#Come vengono programmati i processi nella CPU?|capitolo precedente]]: lo **scheduling dei processi all'interno della CPU**. In particolare, partiremo con un'introduzione generale, soffermandoci sulle definizioni e i concetti di base, e passeremo in seguito a vari algoritmi e concetti più avanzati applicabili a tale argomento.
+In questo capitolo, si approfondirà un aspetto trattato in parte nel [[SO1_03 - Processi#Come vengono programmati i processi nella CPU?|capitolo precedente]]: lo **scheduling dei processi all'interno della CPU**. In particolare, partiremo con un'introduzione generale, soffermandoci sulle definizioni e i concetti di base, e passeremo in seguito a vari algoritmi e concetti più avanzati applicabili a tale argomento.
 
 ## Introduzione allo scheduling
 
-Sappiamo bene che pressoché qualsiasi programma alterna, in qualche modo, fasi incentrate sulla **computazione nella CPU** a fasi che dipendono dall'**I/O**. Assumendo di avere un sistema in grado di eseguire un solo processo alla volta, il tempo passato ad attendere un dato o un evento di I/O è sostanzialmente sprecato, dato che è un lasso di tempo in cui la CPU non lavora e non contribuisce all'esecuzione del [[SO1_03 - I processi|processo]]. Questa rappresenta una delle problematiche principali a cui deve provvedere lo **scheduling**: l'obiettivo, dunque, è sostanzialmente **ottimizzare l'esecuzione dei processi, massimizzando la produttività della CPU e garantendo un'equità di esecuzione tra i vari processi**.
+Sappiamo bene che pressoché qualsiasi programma alterna, in qualche modo, fasi incentrate sulla **computazione nella CPU** a fasi che dipendono dall'**I/O**. Assumendo di avere un sistema in grado di eseguire un solo processo alla volta, il tempo passato ad attendere un dato o un evento di I/O è sostanzialmente sprecato, dato che è un lasso di tempo in cui la CPU non lavora e non contribuisce all'esecuzione del [[SO1_03 - Processi|processo]]. Questa rappresenta una delle problematiche principali a cui deve provvedere lo **scheduling**: l'obiettivo, dunque, è sostanzialmente **ottimizzare l'esecuzione dei processi, massimizzando la produttività della CPU e garantendo un'equità di esecuzione tra i vari processi**.
 
 Come abbiamo già anticipato, tutti i processi gestiti dall'OS risiedono in esattamente una delle varie **process state queues**; inoltre, possiamo affermare che tutti i processi si alternano tra **due stati possibili** in un ciclo continuo:
 - uno "**slancio di CPU**";
@@ -22,9 +22,9 @@ In particolare, nel primo e nell'ultimo caso generalmente lo scheduler è **forz
 - il "**non-preemptive scheduling**", ossia lo scheduling che avviene solo quando non si ha altra scelta, come nelle condizioni $1$ e $4$ (in questo tipo di sistema, una volta che un processo inizia la sua esecuzione nella CPU esso non potrà essere sospeso dallo scheduler, a meno che il processo stesso non sospenda da solo la sua esecuzione o la termini);
 - il "**preemptive scheduling**", ossia lo scheduling che avviene non solo quando non si ha altra scelta, ma anche in condizioni come la $2$ e la $3$ (in questo tipo di sistema, lo scheduler ha il pieno controllo sui processi che vengono eseguiti nella CPU).
 
-Come si può immaginare, il non-preemptive scheduling è un approccio ormai antiquato e che presenta vari limiti, mentre il preemptive scheduling è diventato lo standard per gli OS moderni. Ciononostante, l'implementazione del preemptive scheduling può presentare delle **problematiche**: ad esempio, potrebbe causare comportamenti imprevisti se avviene durante l'esecuzione di una system call, oppure contestualmente a [[SO1_03 - I processi#Come comunicano i processi tra di loro?|processi cooperanti]]. Per ovviare a questi problemi, possiamo implementare soluzioni come fare in modo che **lo scheduling attenda il completamento o il blocco di una system call** prima di attivarsi (benché funzionante, tale soluzione può interferire con eventuali sistemi real-time, dove naturalmente ritardare lo scheduling porterebbe a un ritardo anche nella reattività del sistema).
+Come si può immaginare, il non-preemptive scheduling è un approccio ormai antiquato e che presenta vari limiti, mentre il preemptive scheduling è diventato lo standard per gli OS moderni. Ciononostante, l'implementazione del preemptive scheduling può presentare delle **problematiche**: ad esempio, potrebbe causare comportamenti imprevisti se avviene durante l'esecuzione di una system call, oppure contestualmente a [[SO1_03 - Processi#Come comunicano i processi tra di loro?|processi cooperanti]]. Per ovviare a questi problemi, possiamo implementare soluzioni come fare in modo che **lo scheduling attenda il completamento o il blocco di una system call** prima di attivarsi (benché funzionante, tale soluzione può interferire con eventuali sistemi real-time, dove naturalmente ritardare lo scheduling porterebbe a un ritardo anche nella reattività del sistema).
 
-Nel momento in cui lo scheduler ha scelto il processo da inviare alla CPU, entra in gioco il "**dispatcher**", ossia il modulo che concretamente si occupa di **dare il controllo della CPU a tale processo**. Tra le sue mansioni, dunque, troviamo quella di eseguire il [[SO1_03 - I processi#Come vengono programmati i processi nella CPU?|context switch]], di effettuare la transizione alla modalità utente, e di saltare alla posizione opportuna del programma da far eseguire alla CPU. Per sua natura, **il dispatcher viene eseguito con ogni context switch**, e avendo già stabilito che quest'ultimo rappresenta un'operazione relativamente costosa a livello di tempo e di trasferimento di dati, è cruciale che il dispatcher sia il più veloce possibile, diminuendo la cosiddetta "**dispatcher latency**".
+Nel momento in cui lo scheduler ha scelto il processo da inviare alla CPU, entra in gioco il "**dispatcher**", ossia il modulo che concretamente si occupa di **dare il controllo della CPU a tale processo**. Tra le sue mansioni, dunque, troviamo quella di eseguire il [[SO1_03 - Processi#Come vengono programmati i processi nella CPU?|context switch]], di effettuare la transizione alla modalità utente, e di saltare alla posizione opportuna del programma da far eseguire alla CPU. Per sua natura, **il dispatcher viene eseguito con ogni context switch**, e avendo già stabilito che quest'ultimo rappresenta un'operazione relativamente costosa a livello di tempo e di trasferimento di dati, è cruciale che il dispatcher sia il più veloce possibile, diminuendo la cosiddetta "**dispatcher latency**".
 
 Parlando di **tempistiche**, prima di continuare soffermiamoci su alcune **definizioni utili** per comprendere i vari intervalli di tempo a cui si deve prestare attenzione quando si tratta lo scheduling:
 - l'**arrival time** ($T_{arrival}$) consiste nel momento in cui un processo entra nella coda `ready`;
@@ -50,9 +50,10 @@ In questo paragrafo, andremo ad approfondire vari **algoritmi di scheduling**, a
 - **First Come First Serve** (**FCFS**);
 - **Round Robin** (**RR**);
 - **Shortest Job First** (**SJF**);
-- **Priority Scheduling** (**PS**);
+- **Priority Scheduling**;
 - **Multilevel Queue** (**MQ**);
-- **Multilevel Feedback Queue** (**MFQ**).
+- **Multilevel Feedback Queue** (**MFQ**);
+- **Lottery Scheduling**.
 
 ##### First Come First Serve
 
@@ -115,7 +116,7 @@ Si nota, in base a questa proprietà, che lo scheduler ha il pieno controllo su 
 
 Il nome dell'algoritmo deriva dal fatto che possiamo vedere la coda `ready` come un cerchio: lo scheduler assegnerà un "turno" di esecuzione a ogni processo in ordine, e una volta terminati i processi ricomincerà da capo nello stesso ordine. Si tratta di un algoritmo che favorisce **maggiore equità**, distribuendo in modo più uniforme l'esecuzione dei processi che gestisce; al tempo stesso, però, **il waiting time medio può risultare maggiore** rispetto ad altri algoritmi di scheduling.
 
-Come si può facilmente intuire, l'efficienza di questo algoritmo dipende fortemente dal **quanto di tempo** utilizzato: dei quanti di tempo troppo lunghi portano l'algoritmo quasi a degenerare in un FCFS, dato che i processi termineranno quasi sicuramente la loro esecuzione prima dello scadere del quanto; al tempo stesso, dei quanti di tempo troppo corti implicano un maggior numero di [[SO1_03 - I processi#Come vengono programmati i processi nella CPU?|context switch]], e di conseguenza a un throughput minore. Si dovrà dunque mantenere un **equilibrio**, facendo in modo che **il ritardo dovuto a un context switch sia relativamente piccolo rispetto al quanto di tempo** (ad esempio, spesso un quanto di tempo si aggira tra i $10$ e i $100$ millisecondi in contesti in cui un context switch occupa tra i $0.01$ e i $0.1$ millisecondi).
+Come si può facilmente intuire, l'efficienza di questo algoritmo dipende fortemente dal **quanto di tempo** utilizzato: dei quanti di tempo troppo lunghi portano l'algoritmo quasi a degenerare in un FCFS, dato che i processi termineranno quasi sicuramente la loro esecuzione prima dello scadere del quanto; al tempo stesso, dei quanti di tempo troppo corti implicano un maggior numero di [[SO1_03 - Processi#Come vengono programmati i processi nella CPU?|context switch]], e di conseguenza a un throughput minore. Si dovrà dunque mantenere un **equilibrio**, facendo in modo che **il ritardo dovuto a un context switch sia relativamente piccolo rispetto al quanto di tempo** (ad esempio, spesso un quanto di tempo si aggira tra i $10$ e i $100$ millisecondi in contesti in cui un context switch occupa tra i $0.01$ e i $0.1$ millisecondi).
 
 Vediamo un esempio concreto di **applicazione dell'algoritmo RR**. Supponiamo di avere i seguenti tre processi da eseguire:
 
@@ -193,18 +194,88 @@ Naturalmente, all'inizio c'è solo $A$ nella coda `ready`, dunque lo scheduler a
 ![[srtf_esempio.png]]
 
 con un waiting time medio pari a $\frac{(17-0-8)\,+\,(5-1-4)\,+\,(26-2-9)\,+\,(10-3-5)}{4}=\frac{26}{4}=6.5$ unità di tempo. Notiamo che, **se non si presentano nuovi processi da eseguire, l'algoritmo SRTF si comporta in modo esattamente analogo all'SJF**.
-
-[06, slide 118]
 ___
 ##### Priority Scheduling
 
-[06, slide 122 - 126 - 129]
+Gli algoritmi di **Priority Scheduling** consistono, alla base, nell'**assegnare una certa priorità ai vari processi da eseguire**, in modo che lo scheduler mandi in esecuzione i processi nel loro ordine di priorità (dal più importante al meno importante). Si tratta, in realtà, più di una categoria generale di algoritmi che di un algoritmo ben preciso: ad esempio, l'[[SO1_04 - Scheduling della CPU#Shortest Job First|SJF]] è un algoritmo di Priority Scheduling, dove concretamente tale priorità è data dalla durata degli slanci di CPU.
+
+In pratica, le priorità dei processi sono solitamente implementate utilizzando **valori interi compresi in un determinato intervallo**, e spesso valori piccoli corrispondono a priorità alte, con il valore $0$ che corrisponde alla priorità massima. Le priorità dei processi possono essere determinate **internamente** o **esternamente**:
+- le priorità determinate internamente sono assegnate dall'OS utilizzando vari criteri, come la durata media di uno slancio di CPU, il rapporto tra slanci di CPU e slanci di I/O, l'ammontare di utilizzo delle risorse di sistema, ecc. ecc.;
+- le priorità determinate esternamente sono assegnate dagli utenti, in base all'importanza effettiva del processo.
+
+Inoltre, abbiamo già visto che **gli algoritmi di Priority Scheduling possono essere sia non-preemptive** (come l'SFJ) **che preemptive** (come l'SRTF).
+
+Come tutti gli algoritmi visti e che vedremo, anche gli algoritmi di Priority Scheduling presentano dei **limiti**: ad esempio, una problematica ricorrente è quella della "**starvation**" di determinati processi, che avviene nell'eventualità in cui un processo di bassa priorità non viene mai eseguito a causa del continuo prevaricare di altri processi con priorità più alta; una soluzione parziale a questo problema può essere l'**invecchiamento** di un processo, ossia l'aumento graduale della sua priorità in proporzione al tempo che ha passato in attesa di essere eseguito (ciò garantisce che il processo venga selezionato dallo scheduler in tempi più ragionevoli).
 ___
 ##### Multilevel Queue
 
+L'algoritmo **Multilevel Queue**, spesso abbreviato in **MLQ**, può essere riassunto fondamentalmente nell'**utilizzare diverse code distinte, ciascuna destinata a una categoria di processo**. In questo contesto, **ognuna di queste code implementa indipendentemente qualsiasi algoritmo di scheduling sia più consono per la relativa categoria**, e oltre allo scheduling interno alle singole code deve avvenire anche uno **scheduling tra le varie code**. Per quest'ultima caratteristica, due degli approcci più comuni sono:
+- mantenere un **ordine di priorità**, assegnando dunque priorità basse o alte alle code stesse, e facendo in modo che nessun processo di una coda con bassa priorità possa essere eseguito finché tutte le code con priorità più alta hanno terminato di eseguire i loro processi;
+- adottare un approccio simile al **[[SO1_04 - Scheduling della CPU#Round Robin|Round Robin]]**, in cui ogni coda riceve a turno un certo periodo di tempo per eseguire i propri processi (i periodi di tempo possono variare nella loro durata).
 
+Un esempio di implementazione dell'MLQ può essere il seguente gruppo di code:
+
+![[mlq_esempio.png]]
 ___
 ##### Multilevel Feedback Queue
 
+L'algoritmo **Multilevel Feedback Queue**, spesso abbreviato in **MLFQ**, è **molto simile all'[[SO1_04 - Scheduling della CPU#Multilevel Queue|MLQ]]** visto nel paragrafo precedente, con la differenza che, in questo caso, **i processi possono spostarsi da una coda a un'altra**. Ciò può tornare utile in vari contesti, come quando:
+- le caratteristiche di un processo passano dall'essere più legate alla CPU rispetto che all'I/O, o viceversa;
+- un processo che ha atteso per un lungo periodo di tempo potrebbe essere spostato in una coda con priorità maggiore per favorire la sua esecuzione.
 
+Per garantire una buona efficienza e una certa uniformità di esecuzione tra processi vincolati alla CPU e all'I/O, l'MFLQ implementa il seguente meccanismo:
+1. un processo parte sempre, inizialmente, dalla coda con priorità maggiore;
+2. se il quanto di tempo destinato al processo in questione termina, il processo viene spostato in una coda di un livello di priorità più bassa;
+3. invece, se il quanto di tempo non viene sorpassato (ad esempio, se avviene un context switch a causa di una richiesta di I/O effettuata dal processo stesso), il processo viene spostato in una coda di un livello di priorità più alta (se possibile).
+
+In questo modo, quello che succederà è che **la priorità dei processi vincolati alla CPU tenderà a diminuire**, mentre **i processi vincolati all'I/O tenderanno a rimanere a livelli alti di priorità**.
+
+Sebbene l'MLFQ risulti essere **uno degli algoritmi più flessibili e versatili** visti finora, è anche **il più complesso da implementare**. Si deve pensare, infatti, a un numero sostanzioso di parametri nella progettazione di un sistema MLFQ, ad esempio al **numero di code** da implementare, all'**algoritmo di scheduling utilizzato per ogni coda**, a **come spostare i processi da una coda all'altra**, o in certi casi a **come determinare la coda iniziale di un processo**.
+
+Vediamo un esempio concreto di **applicazione dell'algoritmo MLFQ**. Supponiamo di avere i seguenti tre processi da eseguire:
+
+| Ordine di arrivo | Processo | Slancio di CPU (in unità di tempo) |
+| ---------------- | -------- | ---------------------------------- |
+| 1                | A        | 30                                 |
+| 2                | B        | 20                                 |
+| 3                | C        | 10                                 |
+
+Si suppone che nessuno dei processi considerati presenti uno slancio di I/O, che il context switch abbia durata trascurabile, e che si vogliono utilizzare $3$ code con un sistema di priorità tra di esse. A questo punto, indicheremo con:
+$$\text{PROCESSO}^{\text{tempoDiEsecuzione}}_{\text{tempoTotalePassato}}$$
+il processo $\text{PROCESSO}$ che è stato eseguito per $\text{tempoDiEsecuzione}$ unità di tempo dopo $\text{tempoTotalePassato}$ unità di tempo (ad esempio, $A^{2}_{7}$ indica che il processo $A$ è stato eseguito per $2$ unità di tempo dopo $7$ unità di tempo totali). Ora, impostiamo le 3 code: esse verranno nominate $1$, $2$ e $3$, e come accennato in precedenza più piccolo sarà il numero della coda e più priorità avrà quest'ultima; inoltre, vogliamo assegnare quanti di tempo di durata crescente al decrescere della priorità, dunque considereremo un quanto di $1$ unità di tempo per la coda $1$, $2$ unità di tempo per la coda $2$ e $4$ unità di tempo per la coda $3$. Applicando l'algoritmo, si avrà una situazione del genere:
+
+![[mlfq_esempio.png]]
+
+Proviamo con un altro approccio: supponiamo stavolta di voler utilizzare solo due code, e consideriamo che il processo $C$ alterni la sua esecuzione tra $1$ unità di tempo di slancio di CPU e $1$ unità di tempo di slancio di I/O. Si può verificare che, in questo caso, l'andamento dell'esecuzione assume il seguente aspetto:
+
+![[mlfq_esempio1.png]]
+
+Per certi versi, l'MLFQ cerca di rifarsi al **comportamento ottimale** dell'[[SO1_04 - Scheduling della CPU#Shortest Job First|SJF]] **relativamente al waiting time medio**, e fa così dando per natura più importanza ai processi "corti", che concretamente corrisponderanno spesso a quelli vincolati all'I/O. Tuttavia, così come l'SJF, anche l'MLFQ rischia di essere **poco equo**, a differenza di altri algoritmi come l'[[SO1_04 - Scheduling della CPU#Round Robin|RR]].
+___
+##### Lottery Scheduling
+
+Il **Lottery Scheduling** è un algoritmo di scheduling diverso da tutti gli altri visti finora, principalmente per una differenza sostanziale: mentre tutti gli altri algoritmi implementavano uno scheduler deterministico, con scelte chiare e priorità ben definite, uno scheduler che implementa il Lottery Scheduling è quasi uno **scheduler "casuale"**. Vediamo perché.
+
+L'idea alla base dell'algoritmo di Lottery Scheduling è quella di **dare a ogni processo un certo numero di "biglietti della lotteria"**, e di **scegliere un "biglietto vincente" ogni quanto di tempo**: in questo modo, l'ordine di esecuzione dei processi sarà determinato dalla distribuzione originale dei biglietti, e per la legge dei grandi numeri ciò dovrebbe **favorire l'equità di esecuzione** tra i vari processi. Va precisato, comunque, che **i biglietti non sono distribuiti proprio in maniera casuale**: infatti, rifacendosi per certi versi all'[[SO1_04 - Scheduling della CPU#Shortest Job First|SJF]], l'algoritmo di Lottery Scheduling impone di assegnare **più biglietti a processi di durata minore**, e viceversa **meno biglietti a processi di durata maggiore**, facendo comunque attenzione ad assegnare almeno un biglietto a ogni processo in modo da evitare la [[SO1_04 - Scheduling della CPU#Priority Scheduling|starvation]] di un processo.
+
+Vediamo un esempio concreto di **applicazione dell'algoritmo di Lottery Scheduling**. Supponiamo, per adesso, di distinguere puramente tra "processi corti" e "processi lunghi", senza entrare troppo nei dettagli; in questo contesto, consideriamo un'implementazione dell'algoritmo che assegna $10$ biglietti a ciascun processo corto e $1$ biglietto a ciascun processo lungo. Possiamo, dunque, ipotizzare vari rapporti tra processi lunghi e corti, e stilare una tabella per verificare quanta probabilità avrà ciascun processo di essere scelto in un quanto di tempo generico:
+
+| Processi corti / Processi lunghi | Prob. di esecuzione per ogni processo corto | Prob. di esecuzione per ogni processo lungo |
+| -------------------------------- | ------------------------------------------- | ------------------------------------------- |
+| 1/1                              | 91% cca.                                    | 9% cca.                                     |
+| 0/2                              |                                             | 50%                                         |
+| 2/0                              | 50%                                         |                                             |
+| 10/1                             | 9.9% cca.                                   | 0.99% cca.                                  |
+| 1/10                             | 50%                                         | 5%                                          |
+
+Come possiamo osservare, se abbiamo precisamente un processo corto e un processo lungo, il primo avrà una probabilità molto maggiore di essere scelto dallo scheduler dato che dispone di più biglietti; anche nel caso in cui si ha un solo processo corto e $10$ processi lunghi, il processo corto disporrà della metà dei biglietti totali, e avrà dunque una probabilità del $50\%$ di essere eseguito per primo; gli stessi principi possono essere osservati anche negli altri esempi.
+___
+##### Riassunto dei vari algoritmi
+
+Avendo trattato molti degli algoritmi di scheduling principali, in quest'ultimo paragrafo cerchiamo di **ricapitolare le caratteristiche principali di ciascun algoritmo**:
+- l'algoritmo First Come First Serve, o **FCFS**, è un algoritmo di **non-preemptive scheduling**, e rappresenta un'opzione **molto semplice** ma anche **poco equa** e con **grande varianza nel waiting time dei processi**;
+- l'algoritmo Round Robin, o **RR**, è un algoritmo di **preemptive scheduling**, **molto più equo** e **più o meno efficiente**, ma che può portare a un **waiting time medio maggiore**;
+- l'algoritmo Shortest Job First, o **SJF**, è un algoritmo che, in base alla variazione, può funzionare **sia come non-preemptive scheduling che come preemptive scheduling**, è generalmente **non equo** e presenta la possibilità di **starvation di un processo**, ma è **ottimale in termini di waiting time medio**;
+- gli algoritmi **MLQ** e **MLFQ** rappresentano una sorta di **perfezionamento dell'SJF**, partendo dagli stessi principi e aggiungendo delle sovrastrutture per rendere il tutto più "flessibile";
+- l'algoritmo Lottery Scheduling è un algoritmo **relativamente equo** e con un **waiting time medio moderato**, ma per natura è anche **poco prevedibile**.
 ___
