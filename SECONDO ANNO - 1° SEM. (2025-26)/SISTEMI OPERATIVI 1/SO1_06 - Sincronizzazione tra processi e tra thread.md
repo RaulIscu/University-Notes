@@ -171,8 +171,266 @@ Al momento della chiamata `test&set(this.flag)`, se `this.flag` è pari a `0` (d
 
 Ciononostante, troviamo ancora dei difetti: ad esempio, continua a presentarsi un qualche **ciclo in cui la CPU viene occupata senza svolgere alcuna mansione**; inoltre, non è chiaramente specificato come ci si comporterà nel momento in cui ci saranno **più thread, magari con diverse priorità, ad attendere il rilascio del lock**.
 
-Per risolvere il primo problema, possiamo utilizzare una primitiva dell'OS che porta il thread chiamante a rilasciare la CPU, ossia **`yield()`**: basterà inserire una chiamata a `yield()` all'interno del corpo del ciclo contenuto in `acquire()`, in modo da rilasciare subito la CPU se il thread vuole eseguire una sezione critica e il lock è già occupato. 
+Per risolvere il primo problema, possiamo utilizzare una primitiva dell'OS che porta il thread chiamante a rilasciare la CPU, ossia **`yield()`**: basterà inserire una chiamata a `yield()` all'interno del corpo del ciclo contenuto in `acquire()`, in modo da rilasciare subito la CPU se il thread vuole eseguire una sezione critica e il lock è già occupato. E per quanto riguarda l'attesa di più thread per il rilascio del lock? Quest'ultimo problema viene in realtà ignorato dalla soluzione appena ipotizzata, ma possiamo trovarne un'altra che li risolve entrambi contemporaneamente, con un'implementazione di lock che presenta le seguenti caratteristiche principali:
+- aggiungiamo come attributo una **coda `q`**, destinata ad ospitare i thread in attesa di acquisire il lock;
+- utilizziamo le system calls **`park()`** e **`unpark(t)`**, con la prima che quando eseguita sospende l'esecuzione del thread chiamante e lo mette in attesa, e la seconda che quando eseguita risveglia il thread `t`, reinserendolo nella coda `ready`.
 
-[10, slide 64/68]
+Vediamo il codice:
+
+```
+class Lock {
+	private int flag, guard;
+	private Queue q;
+	
+	Lock() {
+		this.flag = 0;
+		this.guard = 0;
+		this.q = new Queue();
+	}
+	
+	public void acquire(Thread t) {
+		while (test&set(this.guard) == 1) {
+			// do nothing
+		}
+		
+		if (this.flag == 0) {
+			this.flag = 1;
+			this.guard = 0;
+		} else {
+			this.q.push(t);
+			this.guard = 0;
+			park();
+		}
+	}
+	
+	public void release() {
+		while (test&set(this.guard) == 1) {
+			// do nothing
+		}
+		
+		if (q.is_empty()) {
+			this.flag = 0;
+		} else {
+			t = q.pop();
+			unpark(t);
+		}
+		
+		this.guard = 0;
+	}
+}
+```
+
+A questo punto, cerchiamo di spiegare in parole povere cosa succede. Dall'implementazione precedente, manteniamo l'attributo `flag`, indicatore dell'occupazione o meno del lock; oltre ad esso, però, troviamo anche `q`, ossia la coda dove saranno ospitati i thread in attesa di acquisire il lock, e `guard`, un attributo che, per certi versi, può essere visto come un lock a sua volta: all'interno del codice, in particolare quello relativo ad `acquire(t)` e `release()`, notiamo che se il thread rileva che `guard == 1`, esso verrà messo in attesa e non eseguirà nulla dato che ciò implica che un altro thread sta già acquisendo o rilasciando il lock, e tale operazione non permette interferenze (in poche parole, dunque, `guard` contribuisce a garantire la mutua esclusione). Il lock viene inizializzato come libero in tutti i sensi, e la sua coda di thread è inizialmente vuota. Ora, nel momento in cui **un thread cerca di acquisire il lock** (dunque chiama `acquire(t)`), la prima cosa che succede è il **controllo di `guard`**: se `guard` è settato a `0`, il thread in questione può procedere e l'attributo viene settato a `1` per prevenire interferenze da parte di altri thread; se `guard` è settato a `1`, il thread in questione viene messo in attesa. Ora, supponendo che si possa effettivamente procedere con il tentativo di acquisizione, il prossimo passo è **controllare `flag`**: se `flag == 0`, vuol dire che il lock è libero e dunque disponibile ad essere acquisito, quindi `flag` viene settato a `1` e, essendo terminata l'operazione di acquisizione, `guard` viene settato nuovamente a `0`; invece, se `flag == 1`, vuol dire che il lock è già occupato da qualche altro thread, dunque in questo caso il thread in questione viene aggiunto alla coda `q` e messo in attesa, mentre `guard` anche in questo caso viene nuovamente settato a `0`. Vediamo, adesso, che succede quando **un thread rilascia il lock** (dunque chiama `release()`): anche stavolta, la prima cosa che avviene è il **controllo di `guard`**, con lo stesso identico funzionamento valido per `acquire(t)`; a questo punto, si va a **controllare se la coda `q` è vuota o meno**, e se `q` è vuota allora non ci sono thread in attesa di acquisire il lock, dunque lo si può semplicemente liberare settando `flag` a `0` e, in seguito, anche `guard` a `0`, mentre se `q` contiene almeno un thread allora si estrae il primo (la coda è di tipo FIFO) thread dalla coda e lo si "sveglia". Si noti che, nel momento in cui viene svegliato un altro thread, dunque in corrispondenza della chiamata a `unpark(t)`, `flag` non viene settato a `0`, dunque è come se il lock venisse direttamente passato da un thread a un altro, rimanendo occupato tutto il tempo.
+
+Purtroppo, non siamo comunque in grado di eliminare completamente eventuali momenti in cui la CPU è occupata senza eseguire nulla, ma con questo approccio si minimizzano tali frangenti di tempo il più possibile. Un problema che può sorgere e che è invece riparabile è l'eventualità che avvenga un context switch precisamente prima che venga chiamata `park()`: per evitare che ciò accada, si può utilizzare un'altra primitiva dell'OS, **`setpark()`**, che sostanzialmente dà un preavviso del fatto che il thread chiamante sta per essere messo in attesa; inserendo una chiamata a `setpark()` prima dell'istruzione `this.guard = 0` nel corpo di `acquire(t)` risolviamo il problema.
+___
+##### Semafori
+
+Un'altra alternativa per garantire la mutua esclusione in presenza di sezioni critiche è il cosiddetto "**semaforo**". Si tratta di una sorta di **generalizzazione dei [[SO1_06 - Sincronizzazione tra processi e tra thread#Locks|locks]]**, inventata da Dijkstra nel 1965, e oltre al suo scopo principale può anche essere utilizzata come una forma di "**contatore atomico**".
+
+Un semaforo può essere definito come un **tipo speciale di valore intero**, che supporta principalmente **$2$ istruzioni atomiche**:
+- **`wait()`**, o **`P()`**, un decremento che nel nostro contesto indica un blocco, in vigore finché il semaforo non viene aperto;
+- **`signal()`**, o **`V()`**, un incremento che nel nostro contesto permette a un thread di "passare".
+
+Associata a ogni semaforo troviamo una **coda di processi o thread in attesa**, e nel momento in cui un thread effettua una **chiamata a `wait()`**, **l'esecuzione del thread continua solo se il semaforo è "aperto"**, altrimenti **il thread viene bloccato e aggiunto alla coda**. Invece, una **chiamata a `signal()` apre il semaforo**, e se è presente un thread nella coda allora **il thread in questione viene sbloccato**, mentre se non ci sono thread nella coda allora questa "apertura" viene memorizzata per l'eventuale arrivo di un prossimo thread. Dunque, indicando con `S` un semaforo, idealmente un flusso di esecuzione di una sezione critica sfruttando questo strumento dovrebbe rispecchiare il seguente:
+
+```
+S.wait();     // attendi finché S non è "aperto"
+
+<sezione critica dell'esecuzione>
+
+S.signal();   // aprire il semaforo e notificare eventuali thread
+```
+
+Nel momento in cui un processo o thread effettua una chiamata `S.wait()`, se il semaforo è aperto la sua esecuzione continua indisturbata nella sezione critica, mentre se è chiuso allora l'OS metterà in attesa tale processo o thread, inserendolo nella coda; con la chiamata a `S.signal()`, invece, viene sbloccato un processo o thread dalla coda in attesa, e si apre il semaforo.
+
+In questo paragrafo, approfondiremo principalmente **due tipi di semafori**:
+- i "**semafori binari**";
+- i "**semafori di conteggio**".
+
+Partiamo dai primi. I **semafori binari** hanno come obiettivo principale il **garantire la mutua esclusione tra sezioni critiche**, e dunque sono sostanzialmente **analoghi ai locks**; la variabile intera associata ad essi (ricordiamo che i semafori sono una sorta di "sovrastruttura" costruita su un valore intero) può assumere solo due valori, `0` o `1`, dove generalmente `0` indica un semaforo chiuso e `1` ne indica uno aperto, e sono inizializzati come aperti.
+
+Essendo sostanzialmente analoghi ai lock, i semafori binari sono un'alternativa perfettamente viabile per risolvere il problema del latte che abbiamo utilizzato come esempio dall'[[SO1_06 - Sincronizzazione tra processi e tra thread#Sezioni critiche e la "buona" sincronizzazione|inizio del capitolo]]. Basterà sostituire alle chiamate `lock.acquire()` e `lock.release()` delle chiamate `S.wait()` e `S.signal()`, nel modo seguente:
+
+```
+S.wait();
+
+if (!milk) {
+	buy_milk();
+}
+
+S.signal();
+```
+
+Un **semaforo di conteggio**, invece, rappresenta sostanzialmente una generalizzazione dei semafori binari. In questo caso, il valore intero di riferimento non indica più semplicemente uno stato di apertura o di chiusura del semaforo, ma **il numero di thread che possono passare**, e dunque tecnicamente il **numero di risorse disponibili**: 
+- se il valore è $> 0$, allora potranno "passare" tanti thread quanto è il valore;
+- se il valore è $\leq 0$, nessun thread potrà passare, e il valore assoluto di tale numero indicherà quanti thread si trovano già in attesa nella coda.
+
+Per comprendere meglio il **funzionamento interno di un semaforo di conteggio**, diamo un'occhiata a una sua possibile implementazione:
+
+```
+class Semaphore {
+	private int value, guard;
+	private Queue q;
+	
+	Semaphore(int val) {
+		this.value = val;
+		this.q = new Queue();
+	}
+	
+	public void wait(Thread t) {
+		while (test&set(this.guard) == 1) {
+			// do nothing
+		}
+		
+		this.value -= 1;
+		
+		if (this.value < 0) {
+			q.push(t);
+			this.guard = 0;
+			park();
+		} else {
+			this.guard = 0;
+		}
+	}
+	
+	public void signal() {
+		while (test&set(this.guard) == 1) {
+			// do nothing
+		}
+		
+		this.value += 1;
+		
+		if (!q.is_empty()) {
+			t = q.pop();
+			unpark(t);
+		}
+		
+		this.guard = 0;
+	}
+}
+```
+
+Un semaforo di conteggio non viene necessariamente inizializzato con `1` come valore `value`, ma dipende dal contesto; invece, la sua coda `q` partirà sempre come vuota.
+
+Ora, diamo un'occhiata all'implementazione del metodo **`wait(Thread t)`**. Notiamo che inizialmente esso è perfettamente analogo al metodo `acquire(t)` dei locks: infatti, anche in questo caso, la prima cosa che andiamo a fare è controllare e settare il valore di `guard`, ed eventualmente obbligare il processo o thread a non fare nulla. In seguito, andiamo a **diminuire di $1$ il valore di `value`**, sostanzialmente dichiarando l'intenzione del thread di accedere a una risorsa, e dunque di eseguire una sezione critica. Dopo tale decremento, **se `value` è diventato negativo, ciò indica che non ci sono risorse libere al momento**, e dunque che il thread non potrà eseguire in sicurezza la sua sezione critica: perciò, in questo caso il processo o thread viene messo in attesa nella coda FIFO `q`, si setta `guard` a `0` e si sospende la sua esecuzione con `park()`; invece, **se `value` non è diventato negativo, ciò vuol dire che il thread potrà procedere con l'esecuzione della sua sezione critica**, dunque l'unica istruzione che viene eseguita è il settare `guard` a `0` per permettere ad altri thread di eseguire le loro rispettive chiamate a `wait()` o a `signal()`.
+
+Passiamo, ora, al metodo **`signal()`**. Anche in questo caso, il ciclo iniziale rimane perfettamente analogo a quelli già visti finora. In seguito, si va ad **aumentare di $1$ il valore di `value`**, sostanzialmente indicando che una risorsa sta venendo liberata, e poi si va a **verificare se ci sono dei processi o thread in attesa**: se ciò è vero, dunque se la coda `q` non è vuota (in altre parole, se `value <= 0`), si estrae un processo dalla coda e lo si "risveglia". A questo punto, l'ultima cosa che rimane da fare è settare `guard` a `0`.
+
+Oltre all'obiettivo già esplicitato del garantire la mutua esclusione, i semafori possono essere utili anche per **mantenere in attesa dei thread in contesti specifici**. Ad esempio, supponendo che ci siano due thread $A$ e $B$, con $B$ che attende il termine dell'esecuzione di $A$ tramite una chiamata di tipo `waitpid()` per fare qualcosa, è possibile abilitare questo meccanismo inizializzando un semaforo con `value = 0`, inserendo una chiamata `S.wait()` nel codice di $B$ prima di tale blocco di esecuzione, e una chiamata `S.signal()` al termine dell'esecuzione di $A$.
+
+Seppur siano uno strumento molto potente, **i semafori non sono perfetti** e presentano alcuni difetti e limiti, tra cui:
+- il fatto che sono, sostanzialmente, delle semplici variabili globali può portare a problemi di sicurezza;
+- non vi è una diretta connessione tra un semaforo e le risorse verso le quali tale semaforo controlla l'accesso;
+- la loro implementazione specifica in base al contesto può dover variare, e in base all'abilità del programmatore il semaforo può funzionare più o meno bene.
+
+Tali difetti sono in parte evitati con lo strumento che vedremo nel prossimo paragrafo: i **[[SO1_06 - Sincronizzazione tra processi e tra thread#Monitors|monitors]]**.
+___
+##### Monitors
+
+Un **monitor** è un costrutto tipico dei linguaggi di programmazione, il cui scopo principale è **controllare l'accesso a risorse condivise**. Può essere visto, a grandi linee, come **una classe che incorpora dati, operazioni e sincronizzazione** in un unico posto; tuttavia, le differenze principali da una classe normale sono che:
+- viene garantita la **mutua esclusione**, e dunque un qualsiasi metodo del monitor può essere eseguito da un solo processo o thread alla volta;
+- viene imposto che **tutti i dati siano privati**, ossia accessibili solo dall'interno della classe stessa.
+
+Formalmente, possiamo definire un monitor come un costrutto avente le seguenti proprietà:
+- definisce un **[[SO1_06 - Sincronizzazione tra processi e tra thread#Locks|lock]]** e **$0$ o più "variabili di condizione"** per gestire accessi concorrenti alle risorse condivise;
+- utilizza il lock per **garantire che al massimo un thread sia attivo nel monitor** in un qualsiasi momento.
+
+È molto semplice, ad esempio, **trasformare una qualsiasi classe Java in un monitor**, infatti per fare ciò basterebbe:
+- rendere privati tutti i dati;
+- assicurare una buona sincronizzazione tra tutti i metodi non privati.
+
+Fortunatamente, il nostro lavoro viene ancora semplificato proprio dal fatto di star utilizzando Java, in quanto ci viene fornita dal linguaggio la **keyword `synchronized`**, che se abbinata a un metodo ci assicura che tale metodo sia soggetto a mutua esclusione. Se volessimo, ad esempio, implementare un monitor relativo a una coda FIFO `Queue`, un esempio di possibile implementazione è il seguente:
+
+```
+class Queue {
+	...
+	private ArrayList<Item> data;
+	...
+	
+	public void synchronized add(Item i) {
+		data.add(i);
+	}
+	
+	public Item synchronized remove() {
+		if (!data.isEmpty()) {
+			Item i = data.remove(0);
+			return i;
+		}
+	}
+}
+```
+
+In questo esempio, notiamo però una particolarità che può causare problemi: per natura del metodo `remove()`, che ricordiamo essere sincronizzato, tecnicamente esso dovrebbe attendere che ci sia effettivamente qualcosa da rimuovere nella coda prima di poter procedere nella sua esecuzione; ciò vorrebbe dire che **il thread in questione dovrebbe "dormire" all'interno della sua sezione critica**, ma se avviene ciò, e dunque il thread rimane inattivo mentre detiene il lock, allora nessun altro thread potrà accedere alla coda, aggiungere un elemento ed eventualmente risvegliarlo, portando a una situazione di stallo. 
+
+È in questo contesto che tornano utili le "**variabili di condizione**", che possiamo vedere come **code di thread, ciascuna associata a un lock, dove i thread possono "dormire" in attesa che una certa condizione si verifichi**: la presenza di una variabile di condizione permetterebbe a un thread di attendere all'interno di una sezione critica, mentre **un qualsiasi lock detenuto dal thread verrebbe rilasciato atomicamente prima che quest'ultimo diventi inattivo**. Ogni variabile di condizione deve supportare **$3$ operazioni**:
+- **`wait`**, che impone al thread chiamante di rilasciare il lock e di unirsi alla coda di thread in attesa (il tutto atomicamente);
+- **`signal`**, che "risveglia" un thread in attesa se esiste, altrimenti la chiamata non risulterà in nulla;
+- **`broadcast`**, che "risveglia" tutti i thread eventualmente in attesa.
+
+In Java, tornando al nostro esempio precedente, queste tre operazioni corrispondono rispettivamente alle chiamate **`wait()`**, **`notify()`** e **`notifyAll()`**. Dunque, un'implementazione più corretta della classe `Queue` sarebbe la seguente:
+
+```
+class Queue {
+	...
+	private ArrayList<Item> data;
+	...
+	
+	public void synchronized add(Item i) {
+		data.add(i);
+		notify();
+	}
+	
+	public Item synchronized remove() {
+		while (data.isEmpty()) {
+			wait();
+		}
+		
+		Item i = data.remove(0);
+		return i;
+	}
+}
+```
+
+Si potrebbe notare una certa **somiglianza tra [[SO1_06 - Sincronizzazione tra processi e tra thread#Semafori|semafori]] e monitors**, dato che entrambi a primo impatto sembrano svolgere le stesse operazioni e anche con nomi pressoché identici. In realtà, ci sono alcune differenze sottili ma sostanziali:
+- la chiamata a **`wait()`**, in un semaforo, porta semplicemente il semaforo ad essere messo in attesa nella coda, mentre in un monitor il thread che fa tale chiamata deve per definizione disporre di un lock, dunque in questo caso il thread deve anche rilasciare tale lock prima di finire in attesa;
+- la chiamata a **`signal()`**, in un semaforo, incrementa il contatore associato ad esso, contatore che viene effettivamente "ricordato" dal semaforo anche se non vi è alcun thread in attesa in quel momento, e utilizzato poi all'arrivo di un nuovo thread, mentre in un monitor se non c'è alcun thread in attesa la chiamata viene sostanzialmente ignorata.
+
+[10, slide 153 - 154 - 157 - 158]
+___
+## Problemi di sincronizzazione tipici
+
+Spesso, quando si evince un bisogno di sincronizzazione per risolvere un determinato problema, tali problemi assumono delle **strutture più o meno ricorrenti**. Vediamone un paio.
+##### Producer-Consumer
+
+[10, slide 109 - 111 - 112 - 114]
+___
+##### Readers-Writers
+
+Il problema **Readers-Writers** suppone la presenza di una certa **risorsa condivisa**, e di **due tipi di utenti**:
+- i "**readers**", che non modificano mai la risorsa e accedono ad essa solo in lettura;
+- i "**writers**", che accedono alla risorsa sia in lettura che in scrittura, andandola nel secondo caso a modificare.
+
+Come possiamo sincronizzare le varie operazioni dei due tipi di utenti in modo da non avere comportamenti imprevisti? La soluzione più semplice sarebbe **porre un singolo [[SO1_06 - Sincronizzazione tra processi e tra thread#Locks|lock]] sulla risorsa**, in modo che non possano avvenire due operazioni nello stesso momento e dunque vengano prevenite letture di dati non validi o scritture contemporanee. Tuttavia, è facilmente intuibile che si tratta di una soluzione "pigra" e troppo restrittiva: infatti, seppur abbia senso sul fronte dei writers (è giusto volere una sola scrittura alla volta), non dovrebbero esserci problemi nel permettere che più readers accedano alla risorsa nello stesso momento, dato che nessuno di essi la va a modificare.
+
+[10, slide 167 - 170/172]
+___
+## Deadlock
+
+##### Cos'è un deadlock?
+
+[11, slide 8/16 - 20 - 24]
+___
+##### Quando può avvenire un deadlock?
+
+[11, slide 30]
+___
+##### Come prevenire o evitare un deadlock?
+
+[11, slide 32/35 - 40 - 43 - 48 - 49 - 53 - 54 - 56/60 - 62 - 65/100]
+___
+##### Come individuare e risolvere un deadlock?
+
+[11, slide 107/108 - 110 - 114 - 117/120 - 126 - 129 - 133]
 ___
 
