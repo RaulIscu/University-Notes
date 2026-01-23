@@ -417,20 +417,84 @@ Come possiamo sincronizzare le varie operazioni dei due tipi di utenti in modo d
 ___
 ## Deadlock
 
-##### Cos'è un deadlock?
+Supponiamo di avere la seguente situazione: ci sono due thread $A$ e $B$ incaricati entrambi di scrivere un testo su un foglio; per fare ciò, entrambi hanno bisogno di utilizzare due risorse condivise, una penna e un foglio. Supponiamo che $A$ acquisisca come prima cosa il foglio, e in seguito avvenga un context switch che manda in esecuzione $B$; a questo punto, $B$ acquisisce la penna, e avviene un altro context switch; una volta che il controllo torna ad $A$, esso vorrà ottenere la penna che però è attualmente detenuta da $B$, dunque si metterà in attesa aspettando che tale risorsa si liberi; lo stesso, però, farà $B$, che attenderà che si liberi il foglio. Dunque, entrambi thread aspettano che si liberi una risorsa occupata dall'altro, e ciò vuol dire che nessuno dei due rilascerà mai l'altra risorsa, portando a uno stallo nell'esecuzione. L'essenza del deadlock è proprio questa.
 
-[11, slide 8/16 - 20 - 24]
-___
+Possiamo definire un "**deadlock**" come una **condizione di stallo, in cui due o più thread sono bloccati in attesa di un evento che dipende proprio da quegli stessi thread**. Generalmente, il deadlock avviene quando **più thread competono per utilizzare un numero finito di risorse**.
+
+Per certi versi, **il deadlock può ricordare la starvation** vista in precedenza quando si parlava di [[SO1_04 - Scheduling della CPU|scheduling di processi nella CPU]]. Nonostante ci sia una certa somiglianza, questi due eventi non vanno assolutamente confusi: la starvation di un processo o di un thread avviene quando quest'ultimo attende per un tempo indefinito di essere eseguito senza successo, ma la differenza principale è che **nel mentre altri processi o thread continuano a fare progressi nelle loro esecuzioni**, magari anche sfruttando risorse che il thread bloccato sta aspettando, mentre quando si verifica un deadlock l'intero sistema (inteso come gruppo di processi o di thread) si blocca, e non viene compiuto alcun progresso nella mansione da svolgere.
+
+In questo paragrafo, andremo ad approfondire **quando può avvenire un deadlock**, così come diversi modi per **prevenire** (prima dell'esecuzione, seguendo determinate regole e restrizioni nella scrittura del programma) **o evitare** (durante l'esecuzione, grazie a un attento scheduling) **dei deadlock**, oltre che per poterli **individuare e risolvere** (sapendo distinguere, durante l'esecuzione, quando si verifica un deadlock e come poter far riprendere il sistema).
+
 ##### Quando può avvenire un deadlock?
 
-[11, slide 30]
+Per fortuna, le **condizioni per la possibilità che avvenga un deadlock** sono precise e quantificabili. Un deadlock può verificarsi se si verificano **tutte e $4$ le seguenti condizioni**:
+1. la **[[SO1_06 - Sincronizzazione tra processi e tra thread#Sezioni critiche e la "buona" sincronizzazione|mutua esclusione]]**, dunque che almeno un thread acquisisca una risorsa condivisa che non può essere utilizzata in contemporanea con altri thread;
+2. la "**hold-and-wait**", dunque che almeno un thread stia detenendo una risorsa condivisa (in altre parole, un [[SO1_06 - Sincronizzazione tra processi e tra thread#Locks|lock]]) e stia al tempo stesso aspettando di acquisire altre risorse condivise (dunque, altri locks);
+3. l'**assenza di [[SO1_04 - Scheduling della CPU#Introduzione allo scheduling|preemption]]**, dunque il fatto che un thread possa rilasciare una risorsa solo volontariamente, e che né un altro thread né l'OS possa imporre ad esso di rilasciarla;
+4. l'**attesa circolare**, dunque la presenza di una catena circolare di thread $t_{1},\,t_{2},\,\dots,\,t_{n}$ dove $t_{i}$ attende il rilascio di una risorsa acquisita da $t_{(i\,+\,1)\,\%\,n}$.
 ___
 ##### Come prevenire o evitare un deadlock?
 
-[11, slide 32/35 - 40 - 43 - 48 - 49 - 53 - 54 - 56/60 - 62 - 65/100]
+Per **prevenire la possibilità di un deadlock**, è sufficiente che **almeno una delle [[SO1_06 - Sincronizzazione tra processi e tra thread#Quando può avvenire un deadlock?|4 condizioni]] esposte poco fa non si verifichi**. Vediamo, nel seguente elenco, come assicurarsi che non venga rispettata ciascuna di tali condizioni:
+1. per prevenire la **mutua esclusione**, si dovrà trovare un modo per **rendere tutte le risorse condivisibili**, ossia fare in modo che possano essere utilizzate da più di un thread contemporaneamente senza problemi (non è sempre possibile);
+2. per prevenire la **hold-and-wait**, si dovrà **eliminare la possibilità che un thread possa detenere un lock quando ne richiede un altro** (alcune possibilità per ottenere questo risultato sono far acquisire tutti i lock necessari in un colpo solo atomicamente, oppure utilizzare una sorta di "lock globale" che incorpori in sé l'acquisizione di tutti gli altri lock, ma si tratta comunque di soluzioni relativamente inefficienti e difficili da prevedere con accuratezza);
+3. per prevenire l'**assenza di preemption**, sarà sufficiente fare in modo che, **se un thread richiede una risorsa che non può essergli assegnata, l'OS andrà a rilasciare tutte le risorse eventualmente già detenute dal thread in questione**, ma questa operazione non è sempre facile da eseguire, soprattutto per alcuni tipi di risorse;
+4. per prevenire la **circular wait**, si dovrà cercare di **imporre un ordinamento delle risorse**, e portare eventuali processi o thread richiedenti di accedere a tali risorse sempre in quell'ordine (spesso, non è facile stabilire un ordinamento del genere che possa anche avere senso in vista dell'esecuzione).
+
+Si nota dunque che, seppur sembri facile logicamente prevenire un deadlock, ogni soluzione presenta degli svantaggi o delle difficoltà, e non sempre risultano in un approccio conveniente. Un'alternativa al prevenire staticamente i deadlock è quello di **evitarli attivamente tramite lo [[SO1_04 - Scheduling della CPU|scheduling]]**: per poter fare ciò, sarà necessario avere **almeno una conoscenza generale dei locks che i vari thread potranno acquisire**, e sulla base di questa conoscenza l'OS sarà in grado di gestire l'esecuzione dei thread in modo da evitare il più possibile il verificarsi di deadlock. È pur sempre vero, però, che questa soluzione può essere utilizzata solamente in **ambienti di esecuzione relativamente limitati**, e all'aumentare della complessità del sistema non è sempre possibile avere un'idea chiara dei locks e delle mansioni relative a ciascun processo o thread.
+
+Vediamo un semplice esempio concreto per capire come l'OS possa evitare i deadlocks attraverso lo scheduling. Supponiamo di avere $4$ threads $T_{1},\,T_{2},\,T_{3}$ e $T_{4}$, in un sistema a due CPU ($CPU_{1}$ e $CPU_{2}$), e sapendo che:
+- $T_{1}$ richiederà in un qualche ordine i locks $L_{1}$ e $L_{2}$;
+- $T_{2}$ richiederà in un qualche ordine i locks $L_{1}$ e $L_{2}$;
+- $T_{3}$ richiederà il lock $L_{2}$;
+- $T_{4}$ non richiederà locks.
+
+A questo punto, notiamo banalmente che abbiamo una possibilità di deadlock nell'esecuzione in parallelo di $T_{1}$ e $T_{2}$, dato che entrambi andranno a richiedere le risorse gestite da $L_{1}$ ed $L_{2}$ in un ordine non meglio specificato. In questo contesto, uno scheduler intelligente potrà dunque evitare un deadlock assicurandosi di non eseguire i thread $T_{1}$ e $T_{2}$ in parallelo.
+
+In generale, **dovrebbe esistere almeno una sequenza di esecuzione valida**, ossia una cosiddetta "**safe sequence**", in cui ogni thread ottiene tutte le risorse che gli servono, completa la sua esecuzione e rilascia tali risorse senza problemi. C'è comunque da dire che **una sequenza non sicura non garantisce necessariamente l'avvenimento di un deadlock**, ma solo la sua possibilità. 
+
+Per poter garantire una safe sequence di esecuzione, si dovrebbe creare una sequenza che **consegna a un thread la risorsa desiderata solo se lo stato risultante è sicuro**, e in caso contrario faccia attendere il thread anche se la risorsa in questione è già disponibile. Un approccio naif alla ricerca di questa sequenza implica il calcolo di tutte le possibili permutazioni degli $n$ thread considerati, approccio che richiederebbe un tempo di esecuzione in $O(n!)$, e dunque particolarmente inefficiente; un approccio migliore è invece costituito dal cosiddetto **algoritmo di Banker**. Tale algoritmo gestisce un certo numero di istanze della stessa risorsa, impone ai thread di fornire a priori informazioni su quale risorsa/e hanno intenzione di utilizzare, si assicura che le risorse richieste non eccedano il numero totale di risorse disponibili nel sistema, e alloca una risorsa a un thread solo se tale allocazione lascia il sistema in uno stato sicuro, altrimenti mette il thread in attesa.
+
+L'idea alla base dell'algoritmo di Banker sta nel **tenere traccia di quali thread possono terminare la propria esecuzione con le risorse attualmente disponibili**, e quando viene trovato un thread che rispetta tale proprietà, **si suppone che il thread termini la sua esecuzione e rilasci le risorse utilizzate**, e si ripete tale processo con il nuovo stato del sistema; questo insieme di passaggi viene **ripetuto finché non si verifica una delle seguenti condizioni**:
+- **tutti i processi possono terminare la propria esecuzione** (dunque, ogni passaggio risulta in un safe state e la sequenza finale di esecuzione **è una safe sequence**);
+- **non si trovano altri processi che possono terminare la propria esecuzione** (dunque, la sequenza di esecuzione considerata **non è una safe sequence**).
+
+Questa soluzione garantisce che, se esiste, venga trovata una safe sequence di esecuzione, e che venga trovata senza dover analizzare tutte le possibili permutazioni.
+
+Per l'**implementazione dell'algoritmo**, avremo bisogno dei seguenti dati e strutture dati:
+- il numero $n$ di **threads**;
+- il numero $m$ di **tipi di risorse disponibili**;
+- un **array di lunghezza $m$ `available[]`**, dove `available[j]` è il valore $k$ corrispondente al numero di risorse del $j$-esimo tipo disponibili;
+- una **matrice $n\times m$ `max[][]`**, dove `max[i][j]` è il valore massimo $k$ di risorse di tipo $j$ che può richiedere il thread $i$;
+- una **matrice $n\times m$ `allocation[][]`**, dove `allocation[i][j]` è il valore $k$ di risorse di tipo $j$ che vengono allocate al thread $i$;
+- una **matrice $n\times m$ `need[][]`**, dove `need[i][j]` è il valore $k=\text{max}[i][j]-\text{allocation}[i][j]$, ossia il numero $k$ di risorse di tipo $j$ che il thread $i$ potrebbe dover richiedere per completare la sua esecuzione.
+
+
+
+[11, slide 56/60 - 62 - 65/100]
 ___
 ##### Come individuare e risolvere un deadlock?
 
-[11, slide 107/108 - 110 - 114 - 117/120 - 126 - 129 - 133]
+Per **individuare una possibilità di deadlock**, si può utilizzare il cosiddetto "**Resource Allocation Graph**", un **grafo direzionato $G=(V,\,E)$**, dove:
+- $V$ è un **insieme di vertici** rappresentanti sia le **risorse** ($r_{1},\,r_{2},\,\dots,\,r_{m}$) che i **thread** ($t_{1},\,t_{2},\,\dots,\,t_{n}$);
+- $E$ è un **insieme di collegamenti** tra i thread e le risorse (questi collegamenti possono essere di due tipi: i "**collegamenti di richiesta**" sono collegamenti di tipo $(t_{i},\,r_{j})$ che indicano che il thread $t_{i}$ ha richiesto ma non ancora acquisito la risorsa $r_{j}$; i "**collegamenti di assegnamento**" sono collegamenti di tipo $(r_{j},\,t_{i})$ che indicano che l'OS ha allocato la risorsa $r_{j}$ al thread $t_{i}$).
+
+Di seguito, un esempio di un grafo del genere contenente $4$ threads e $4$ risorse:
+
+ ![[rag_esempio.png]]
+
+Questo grafo è utile per rilevare la possibilità di un deadlock per un semplice motivo: **se non ci sono cicli nel grafo, allora non potrà mai verificarsi un deadlock**. In questo caso, possiamo notare che c'è un ciclo che coinvolge, in ordine, $r_{3}-t_{2}-r_{1}-t_{3}-r_{2}-t_{4}-r_{3}$: di conseguenza, tra quei thread c'è una possibilità di deadlock. E se rimuovessimo il collegamento di richiesta tra $t_{4}$ e $r_{3}$? Otterremmo un grafo del genere:
+
+![[rag_esempio1.png]]
+
+Possiamo notare che, in questa versione del grafo, non ci sono cicli, dunque è prevenuta qualsiasi possibilità di deadlock. 
+
+Ora, in questo esempio abbiamo ipotizzato che ci sia una sola istanza di ciascuna risorsa, ma spesso nel concreto ci sono **più istanze della stessa risorsa o tipo di risorsa**. Vediamo un altro esempio:
+
+![[rag_esempio2.png]]
+
+
+
+[11, slide 119 - 120 - 126 - 129 - 133 - 138]
 ___
 
