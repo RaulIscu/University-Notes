@@ -174,5 +174,33 @@ vogliamo tradurre l'indirizzo virtuale $x=7$ in un indirizzo fisico. Per fare ci
 ___
 ##### Il Translation Look-aside Buffer (TLB)
 
+Un processo utente, mentre si trova in esecuzione nella CPU, genera indirizzi virtuali di memoria quasi costantemente, e ogni volta che si fa riferimento a un qualsiasi indirizzo virtuale esso va tradotto in un indirizzo fisico, operazione per cui la MMU deve necessariamente accedere alla page table. Si può intuire che, tutto sommato, si tratta di una serie di operazioni abbastanza dispendiosa e inefficiente.
 
+Un punto importante che potrebbe migliorare l'efficienza di queste operazioni è il **dove conservare la page table**. Le opzioni principali sono due, ossia:
+- dei **registri**, che consentirebbero una grande rapidità di accesso ma, al tempo stesso, sono molto costosi e hanno una capienza limitatissima;
+- la **memoria principale**, che dispone di una maggiore capienza ma, in compenso, non permette accessi particolarmente rapidi.
+
+Avendo entrambe le opzioni dei pregi e dei difetti, un'opzione relativamente ottimale è rappresentata da una sorta di **combinazione delle due**: è possibile **conservare la page table effettiva in memoria principale**, e **memorizzare in una cache un sottoinsieme della stessa** in quello che viene chiamato "**Translation Look-aside Buffer**", o **TLB** in breve. La cache, infatti, rappresenta un ottimo compromesso tra registri e memoria principale, essendo una memoria accessibile direttamente dalla CPU, e dunque particolarmente veloce, ma al tempo stesso di dimensione più ingente rispetto ai registri.
+
+Sostanzialmente, il TLB consiste in una **memoria cache di tipo L1 particolarmente veloce**, destinata a conservare coppie chiave-valore dove la chiave è un **numero di page**, mentre il valore è il **corrispondente numero di frame** dove la page è fisicamente memorizzata (tipicamente, la dimensione di un TLB si aggira tra le $8$ e le $2048$ coppie del genere). Dunque, il TLB viene utilizzato per conservare a tutti gli effetti una parte della page table, e ciò è utile perché gli accessi alla memoria seguono il **principio di località**: tendenzialmente, se si fa un accesso a una zona di memoria, è probabile che i prossimi accessi avvengano approssimativamente nella stessa zona.
+
+[funzionamento del TLB: 14, slide 26 - 28/30]
+
+[costo di un accesso in memoria con o senza TLB: 14, slide 42]
+
+Il TLB è un componente che è **condiviso tra tutti i processi**: ciò vuol dire che, **in base al processo in esecuzione, uno stesso numero di page può essere mappato a diversi numeri di frame**. Per gestire questa eventualità, dobbiamo assicurarci che il contenuto del TLB sia aggiornato ed effettivamente corretto per il processo attualmente in esecuzione. Possiamo fare ciò in due modi ben diversi:
+- con un approccio **più semplice ma meno efficiente**, potremmo eliminare l'intero contenuto del TLB ad ogni context switch, in modo da non avere alcun dato precedente e dunque prevenire qualsiasi possibilità di accessi non accurati (naturalmente, con questo approccio, tutti i primi accessi effettuati dal processo risulteranno in miss nel TLB);
+- con un approccio **più complesso ma anche più efficiente**, potremmo conservare determinate coppie del TLB nel [[SO1_03 - Processi#Il PCB|PCB]] del rispettivo processo, o in alternativa aggiungere un "process context ID", o PCID in breve, a ogni coppia del TLB in modo da utilizzare una certa coppia solo se il PCID corrisponde con l'ID del processo attualmente in esecuzione.
+
+Per comprendere più nel dettaglio come gestire il TLB in base a tali approcci, può essere utile approfondire la **struttura di una entry della page table**, o **PTE**. Oltre ai numeri di page (detti anche **VPN**) e ai numeri di frame (detti anche **PFN**), possiamo trovare dei **bit aggiuntivi**, che ci permettono di avere più informazioni relativamente alla entry considerata, tra cui:
+- un **bit di validità**, che indica se la mappatura è accurata e utilizzabile o meno;
+- dei **bit di protezione**, che specificano il livello di accesso al blocco di memoria indicato;
+- un **bit di presenza**, che indica se la page è presente in RAM o se è stata "swappata" nella memoria a disco;
+- un **bit di riferimento**, che indica se è stato effettuato un accesso alla page recentemente.
+
+[14, slide 52 - 54 - 56 - 59 - 62 - 64/66]
+___
+##### Segmentazione e paging
+
+[14, slide 71 - 72 - 76 - 78 - 80 - 84 - 88 - 93 - 97 - 101/105 - 108 - 111 - 113 - 114 - 119 - 122 - 125 - 130 - 132 - 137 - 139/147 - 149 - 152]
 ___
