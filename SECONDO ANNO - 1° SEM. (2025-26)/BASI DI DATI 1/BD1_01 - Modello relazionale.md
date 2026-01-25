@@ -46,7 +46,7 @@ A questo punto, possiamo riproporre la tabella di esempio che ha chiuso il [[BD1
 
 In questo modo, è facile capire che ogni riga della tabella (e quindi ogni entità) rappresenta un singolo studente, e che le colonne della stessa rappresentano rispettivamente il nome e il cognome dello studente, il numero di esami che ha sostenuto e la media dei voti ottenuti da tali esami.
 
-Avendo introdotto il concetto di attributo, è possibile fornire un'**interpretazione alternativa delle tuple**: esse, infatti, possono essere viste come delle **funzioni definite in $R$**, dove $R$ è un insieme di attributi, che associa ad ogni attributo $A$ un elemento del dominio $dom(A)$. Di conseguenza, data una tupla $t$, possiamo indicare con $t(A)$ l'elemento attribuito all'attributo $A$ dalla tupla-funzione $t$.
+Avendo introdotto il concetto di attributo, è possibile fornire un'**interpretazione alternativa delle tuple**: esse, infatti, possono essere viste come delle **funzioni definite in $R$**, dove $R$ è un insieme di attributi, che associa ad ogni attributo $A$ un elemento del dominio $dom(A)$. Di conseguenza, data una tupla $t$, possiamo indicare con $t(A)$ l'elemento abbinato all'attributo $A$ dalla tupla-funzione $t$.
 ___
 ##### Schemi e istanze di relazioni
 
