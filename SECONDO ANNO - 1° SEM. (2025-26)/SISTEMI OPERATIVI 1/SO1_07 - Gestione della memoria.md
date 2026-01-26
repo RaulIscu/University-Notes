@@ -202,5 +202,7 @@ Per comprendere più nel dettaglio come gestire il TLB in base a tali approcci, 
 ___
 ##### Segmentazione e paging
 
+
+
 [14, slide 71 - 72 - 76 - 78 - 80 - 84 - 88 - 93 - 97 - 101/105 - 108 - 111 - 113 - 114 - 119 - 122 - 125 - 130 - 132 - 137 - 139/147 - 149 - 152]
 ___
