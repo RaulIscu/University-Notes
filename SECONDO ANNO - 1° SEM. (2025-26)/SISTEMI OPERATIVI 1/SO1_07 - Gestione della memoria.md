@@ -202,7 +202,15 @@ Per comprendere più nel dettaglio come gestire il TLB in base a tali approcci, 
 ___
 ##### Segmentazione e paging
 
+La maggior parte dei sistemi moderni supportano spazi di indirizzamento logico molto vasti, e all'aumentare della dimensione di tale spazio **aumenta necessariamente anche il numero di PTE nella page table**: anche solo, ad esempio, considerando indirizzi logici a $32$ bit e una page di dimensione $2^{12}\text{ byte}$, o di $4\text{ KiB}$, ci dovrebbero essere circa un milione di PTE nella page table per poter mappare l'interezza dello spazio di indirizzamento. È chiaro, dunque, che **la dimensione della page table può diventare un problema**. 
 
+Una soluzione per compensare a ciò può essere il concetto di "**segmentazione**"
 
-[14, slide 71 - 72 - 76 - 78 - 80 - 84 - 88 - 93 - 97 - 101/105 - 108 - 111 - 113 - 114 - 119 - 122 - 125 - 130 - 132 - 137 - 139/147 - 149 - 152]
+[14, slide 76 - 78 - 80 - 84 - 88 - 93 - 97 - 101/105 - 108 - 111 - 113 - 114 - 119 - 122 - 125 - 130 - 132 - 137 - 139/147 - 149 - 152]
+___
+## Memoria virtuale
+
+[15, slide 3 - 8 - 12 - 16 - 18 - 21 - 23 - 26 - 28 - 32 - 38 - 41 - 45 - 47 - 49 - 52 - 54 - 55 - 59 - 61 - 63 - 66 - 67 - 69 - 70 - 75 - 76 - 80 - 84 - 87 - 89]
+
+[16, slide 2 - 6 - 10 - ]
 ___
