@@ -1,6 +1,7 @@
+Il corso di Calcolo delle Probabilità può essere visto, romanzandone un po' l'essenza, come la "**matematica dell'incertezza**". In questo capitolo iniziale, si approfondirà il concetto di base su cui si poggia l'intero corso, e che rappresenta il diretto interessato di tale incertezza: l'**evento**.
 ## Cos'è un evento?
 
-In questo corso, si approfondirà il **calcolo delle probabilità**, una branca della matematica che, come suggerisce il nome, studia la probabilità che avvenga un determinato "**evento**". La definizione di "evento" è particolarmente generica e permissiva: sostanzialmente, possiamo considerare come tale un **qualcosa che ha una certa probabilità di avvenire**, un possibile risultato di un'azione.
+La definizione di "**evento**" è particolarmente generica e permissiva: sostanzialmente, possiamo considerare come tale un **qualcosa che ha una certa probabilità di avvenire**, un possibile risultato di un'azione.
 
 Pensiamo, ad esempio, di osservare il lancio di due dadi, e di indicare con $X_{1}$ il punteggio ottenuto dal primo dado e con $X_{2}$ quello ottenuto dal secondo. Eseguendo questo "esperimento", si potranno ottenere diversi risultati, come ad esempio:
 - $A$, in cui il punteggio del primo dado è minore o uguale al punteggio del secondo ($X_{1} \le X_{2}$);
@@ -42,14 +43,17 @@ $$E=\{X_{1}=n\}=\bigvee_{k\,=\,1}^{6}\,\{X_{1}=n,\,X_{2}=k\}$$
 > L'insieme $\Omega = \{\omega_{1},\,\omega_{2},\,\dots,\,\omega_{k}\}$, che contiene tutti gli eventi elementari di un esperimento, viene detto "**spazio campione**" per tale esperimento.
 
 Avendo uno spazio campione $\Omega$, indichiamo con il simbolo $\mathcal{P}(\Omega)$ la "**famiglia delle parti**" di $\Omega$, ossia la famiglia di **tutti i possibili sottoinsiemi** di $\Omega$, e per ogni $E\in \mathcal{P}(\Omega)$ si indica con il simbolo $|\,E\,|$ la "**cardinalità**" di $E$, ossia il numero di elementi contenuti al suo interno.
+
+Nello studio della probabilità, come si può intuire, si è interessati alle varie casistiche in cui è presente una "situazione di incertezza" circa il risultato di un certo esperimento, e dunque casistiche in cui non si potrà prevedere con accuratezza quale tra i diversi risultati elementari possibili si verificherà. Gli esperimenti che rientrano in questa categoria sono detti "**esperimenti aleatori**", o anche "**fenomeni aleatori**". In tale ambito, affermiamo che **un evento composto $E$ si è verificato se e solo se si è verificato un evento elementare $\omega_{i}$ della decomposizione di $E$**, anche se non si sa esattamente quale di essi si è verificato. Con questa nuova sfumatura, possiamo rivisitare le operazioni logiche viste poco fa nel modo seguente:
+- **$E_{1}\lor E_{2}$** si verifica se e solo se si verifica un evento elementare $\omega_{i}$ che fa parte della decomposizione di $E_{1}$ o di quella di $E_{2}$;
+- **$E_{1}\land E_{2}$** si verifica se e solo se si verifica un evento elementare $\omega_{i}$ che fa parte sia della decomposizione di $E_{1}$ che di quella di $E_{2}$;
+- $\lnot E_{1}$ si verifica se e solo se si verifica un evento elementare $\omega_{i}$ che non fa parte della decomposizione di $E_{1}$.
 ___
 ##### Da operazioni logiche a operazioni insiemistiche
 
 Per definizione, gli elementi di uno spazio campione $\Omega$ sono gli eventi elementari di un esperimento. Notiamo, a questo punto, che esiste una **corrispondenza biunivoca tra i sottoinsiemi di $\Omega$ e gli eventi composti**: infatti, è possibile associare a ciascun evento composto il sottoinsieme di $\Omega$ che contiene gli eventi elementari che lo compongono; viceversa, è possibile associare a ciascun sottoinsieme di $\Omega$ l'evento composto definito dalla somma logica dei suoi elementi.
 
-Ad un qualsiasi evento elementare $\omega_{i} \in \Omega$, facciamo corrispondere l'insieme $\{\omega_{i}\}\in\mathcal{P}(\Omega)$ (si ricorda che un insieme contenente un unico elemento viene definito "**singoletto**" o "**singleton**"); più in generale, dato un evento $E\in\mathcal{E}$, possiamo indicare con **$\mathcal{H}(E)$** il **corrispondente sottoinsieme di $\Omega$** ottenuto mediante la stessa operazione.
-
-Ci si rende facilmente conto che, nella corrispondenza univoca appena definita, **le operazioni logiche $\lor$, $\land$ e $\lnot$ definite su $\mathcal{E}$ corrispondono rispettivamente alle operazioni insiemistiche $\cup$, $\cap$ e $\complement$ definite su $\mathcal{P}(\Omega)$**. Infatti, si possono affermare le seguenti uguaglianze:
+Ad un qualsiasi evento elementare $\omega_{i} \in \Omega$, facciamo corrispondere l'insieme $\{\omega_{i}\}\in\mathcal{P}(\Omega)$ (si ricorda che un insieme contenente un unico elemento viene definito "**singoletto**" o "**singleton**"); più in generale, dato un evento $E\in\mathcal{E}$, possiamo indicare con **$\mathcal{H}(E)$** il **corrispondente sottoinsieme di $\Omega$** ottenuto mediante la stessa operazione. Ci si rende facilmente conto che, nella corrispondenza biunivoca appena definita, **le [[CDP_01 - Eventi#Eventi dal punto di vista logico e insiemistico|operazioni logiche]] $\lor$, $\land$ e $\lnot$ definite su $\mathcal{E}$ corrispondono rispettivamente alle operazioni insiemistiche $\cup$, $\cap$ e $\complement$ definite su $\mathcal{P}(\Omega)$**. Infatti, si possono affermare le seguenti uguaglianze:
 $$\begin{align} &\mathcal{H}(E_{1}\lor E_{2}) = \mathcal{H}(E_{1})\cup\mathcal{H}(E_{2})\\&\mathcal{H}(E_{1}\land E_{2}) = \mathcal{H}(E_{1})\cap\mathcal{H}(E_{2})\\&\mathcal{H}(\lnot E) = \complement(\mathcal{H}(E)) \end{align}$$
 Dunque, per semplicità, da questo momento in poi ci si riferirà in maniera univoca a eventi e a sottoinsiemi di $\Omega$, si tralasceranno i simboli $\mathcal{E}$,  $\lor$, $\land$, $\lnot$ e $\mathcal{H}(E)$ e si continuerà la trattazione utilizzando solamente le nozioni relative ai sottoinsiemi di $\Omega$ e alle operazioni tra sottoinsiemi.
 
@@ -70,7 +74,7 @@ Interpretando $H_{1},\,H_{2},\,\dots,\,H_{m}$ come eventi, si può dire che due 
 
 Per comprendere meglio questo concetto, vediamo un esempio. Supponiamo di avere 4 palline numerate da $1$ a $4$ in una teca, e di volerle estrarre una alla volta da quest'ultima senza reinserirle al suo interno: tutti i possibili ordini di estrazione si possono ottenere con le varie permutazioni della sequenza $\{1, 2, 3, 4\}$, e vanno a comporre lo spazio campione $\Omega$. A questo punto, possiamo definire la famiglia $\mathcal{H} = \{H_{1},\,H_{2},\,H_{3},\,H_{4}\}$, dove abbiamo che:
 $$\begin{align} &H_{1}=\{\text{Il primo numero estratto è l'1}\}\\&H_{2}=\{\text{Il primo numero estratto è il 2}\}\\&H_{3}=\{\text{Il primo numero estratto è il 3}\}\\&H_{4}=\{\text{Il primo numero estratto è il 4}\} \end{align}$$
-Ciascuno di questi 4 insiemi rappresenta un [[CDP_01 - Eventi#Eventi elementari e composti|evento composto]], ciascuno definito dall'unione di 6 eventi; si ha, inoltre, che la famiglia $\mathcal{H}$ rappresenta a tutti gli effetti una partizione di $\Omega$, in quanto gli elementi della partizione ($H_{1},\,H_{2},\,H_{3}$ e $H_{4}$) sono esaustivi, ossia la loro unione coincide con $\Omega$, e sono incompatibili a due a due.
+Ciascuno di questi $4$ insiemi rappresenta un [[CDP_01 - Eventi#Eventi elementari e composti|evento composto]], ciascuno definito dall'unione di $6$ eventi (le $6$ permutazioni della sequenza $\{1,\,2,\,3,\,4\}$ dove il primo numero è quello indicato in $H_{i}$); si ha, inoltre, che la famiglia $\mathcal{H}$ rappresenta a tutti gli effetti una partizione di $\Omega$, in quanto gli elementi della partizione ($H_{1},\,H_{2},\,H_{3}$ e $H_{4}$) sono esaustivi, ossia la loro unione coincide con $\Omega$, e sono incompatibili a due a due.
 ___
 ## Proprietà relative alle operazioni insiemistiche
 
@@ -86,6 +90,5 @@ Per brevità, possiamo scrivere $\overline{A}$ al posto di $\complement(A)$, e r
 $$\overline{A\cap B}=\overline{A}\cup\overline{B}\,\,\,\,\,\text{che equivale a dire che}\,\,\,\,\,A\cap B=\overline{(\overline{A}\cup\overline{B})}$$
 Le proprietà appena esposte si estendono per induzione a famiglie finite di $l$ insiemi (ma valgono anche per famiglie infinite):
 $$\begin{align} &(\bigcup_{i\,\subset\,l}A_{i}) \cap C\,\,=\,\,\bigcup_{i\,\subset\,l} (A_{i}\cap C)\\&(\bigcap_{i\,\subset\,l}A_{i})\cup C\,\,=\,\,\bigcap_{i\,\subset\,l}(A_{i}\cup C)\\&\overline{(\bigcap_{i\,\subset\,l}A_{i})}=\bigcup_{i\,\subset\,l}\overline{A_{i}} \end{align}$$
-[esercizi: pag. 14/16]
 ___
 

@@ -2,7 +2,7 @@ Avendo introdotto gli [[CDP_01 - Eventi|eventi]] e le loro varie proprietà, sia
 
 ## Misure di probabilità
 
-> Dato uno spazio campione $\Omega$, e sia $\mathcal{P}(\Omega)$ la famiglia delle sue parti, definiamo "**misura di probabilità**" o, più semplicemente, "**probabilità su $(\Omega, \mathcal{P}(\Omega))$**", una funzione $\mathbb{P}$ che rispetta i seguenti assiomi:
+> Dato uno spazio campione $\Omega$, e sia $\mathcal{P}(\Omega)$ la famiglia delle sue parti, definiamo "**misura di probabilità**" o, più semplicemente, "**probabilità su $(\Omega, \mathcal{P}(\Omega))$**", una funzione $\mathbb{P}$ che soddisfa i seguenti assiomi:
 > - la funzione è definita come $\mathbb{P}:\mathcal{P}(\Omega)\rightarrow[0, 1]$;
 > - vale che $\mathbb{P}(\Omega)=1$ (questa proprietà viene detta "**condizione di normalizzazione**");
 > - se si ha che $E_{1}\cap E_{2}=\emptyset$, allora deve valere anche che $\mathbb{P}(E_{1}\cup E_{2})=\mathbb{P}(E_{1})+\mathbb{P}(E_{2})$ (questa proprietà viene detta "**proprietà di additività**").
@@ -25,24 +25,31 @@ ___
 
 C'è un modo più semplice per dimostrare che una funzione $\mathbb{P}$ è una probabilità, e per ottenerlo cominciamo da alcune affermazioni. Per le prossime considerazioni, ricordiamo che si definirà con $\Omega$ un generico spazio campione finito e, ponendo $N$ come la cardinalità di $\Omega$, possiamo scrivere $\Omega$ come:
 $$\Omega=\{\omega_{1},\,\omega_{2},\,\dots,\,\omega_{N}\}$$
-A questo punto, procediamo ad elencare alcune **proprietà della probabilità**, che risultano in buona parte conseguenze immediate degli assiomi esposti nella [[CDP_02 - La probabilità#Misure di probabilità|definizione di misure di probabilità]]. Prima di tutto, notiamo che il terzo e ultimo assioma, ossia la proprietà dell'additività, può essere generalizzato considerando $n$ eventi disgiunti a due a due.
+Prima di tutto, notiamo che il terzo e ultimo assioma, ossia la proprietà dell'additività, può essere generalizzato considerando $n$ eventi disgiunti a due a due.
 
 > La **proprietà di additività finita**, in generale, afferma che siano $E_{1},\,E_{2},\,\dots,\,E_{n}\,\in\,\mathcal{P}(\Omega)$ una serie di eventi incompatibili a due a due, allora si ha che:
 > $$\mathbb{P}\left( \bigcup_{i\,=\,1}^{n}E_{i} \right)\,\,=\,\,\sum_{i\,=\,1}^{n}\mathbb{P}(E_{i})$$
 
-[proprietà (a): pag. 19]
+A questo punto, procediamo ad elencare alcune **proprietà della probabilità**, che risultano in buona parte conseguenze immediate degli assiomi esposti nella [[CDP_02 - La probabilità#Misure di probabilità|definizione di misure di probabilità]]. Partiamo con la prima $(a)$, che riguarda la **probabilità di un evento composto $E$**:
 
-La prossima proprietà che analizzeremo riguarda la relazione tra **probabilità di un evento e del suo complementare**.
+> Ponendo $p(\omega_{i})=\mathbb{P}(\{\omega_{i}\})$, con $i$ che va da $1$ a $N$, si ha che per ogni $E\,\in\,\mathcal{P}(\Omega)$:
+> $$\mathbb{P}(E)\,=\,\sum_{i\,=\,1}^{N}p(\omega_{i})\,=\,\sum_{\omega\,\in\,E}p(\omega)$$
+
+In altre parole, tale proprietà afferma che **la probabilità di un evento composto $E$ è dato dalla somma delle probabilità degli eventi elementari $\omega_{i}$ che lo compongono**. Tale proprietà è facilmente dimostrabile: per definizione di evento composto, abbiamo che $E=\bigcup_{\omega\,\in\,E}(\{\omega\})$, e naturalmente i vari eventi $\omega$ sono incompatibili a due a due (trattandosi di eventi elementari); di conseguenza, per la proprietà di additività finita, possiamo affermare che:
+$$\mathbb{P}(E)=\mathbb{P}\left(\bigcup_{i\,=\,1}^{N}\omega_{i}\right)=\sum_{i\,=\,1}^{N}\mathbb{P}(\omega_{i})$$
+come volevasi dimostrare.
+
+La prossima proprietà che analizzeremo $(b)$ riguarda la relazione tra **probabilità di un evento e del suo complementare**.
 
 > Per ogni $E\,\in\,\mathcal{P}(\Omega)$, si ha che:
 > $$\mathbb{P}(\overline{E})\,=\,1-\mathbb{P}(E)$$
 
-In sostanza, ciò che afferma questa proprietà è che, dato un qualsiasi evento $E$, o accadrà tale evento $E$ o non accadrà, dato che riformulando la proprietà si ha che $\mathbb{P}(E)+\mathbb{P}(\overline{E})=1$, con $1$ che rappresenta una probabilità certa. Una conseguenza, per certi versi, di quanto appena detto è la seguente proprietà sull'**evento impossibile**:
+In sostanza, ciò che afferma questa proprietà è che, dato un qualsiasi evento $E$, o accadrà tale evento $E$ o non accadrà, dato che riformulando la proprietà si ha che $\mathbb{P}(E)+\mathbb{P}(\overline{E})=1$, con $1$ che rappresenta una probabilità certa. Una conseguenza, per certi versi, di quanto appena detto è la seguente proprietà $(c)$ sull'**evento impossibile**:
 
-> L'evento impossibile ha probabilità nulla, ovvero:
+> **L'evento impossibile ha probabilità nulla**, ovvero:
 > $$\mathbb{P}(\emptyset)=0$$
 
-Passiamo, ora, a definire la cosiddetta "**proprietà di monotonia**":
+Passiamo, ora, a definire la cosiddetta "**proprietà di monotonia**" $(d)$:
 
 > Siano $A,\,B\,\in\,\mathcal{P}(\Omega)$ due eventi tali che $A\subseteq B$, allora si ha che:
 > $$\mathbb{P}(A)\leq\mathbb{P}(B)$$
@@ -51,22 +58,56 @@ Passiamo, ora, a definire la cosiddetta "**proprietà di monotonia**":
 
 Ciò vale perché, come accennato nel [[CDP_01 - Eventi#Eventi dal punto di vista logico e insiemistico|capitolo precedente]], affermare che $A\subseteq B$ equivale a dire che ogni evento elementare che soddisfa $A$ soddisfa anche $B$, ed essendo $A$ un sottoinsieme proprio di $B$ ci sarà un numero maggiore di eventi elementari che soddisfano quest'ultimo (ossia quelli che soddisfano $A$ più altri ancora): ciò porta la probabilità $\mathbb{P}(B)$ ad essere maggiore o uguale della probabilità $\mathbb{P}(A)$.
 
-Di seguito, esponiamo la **formula di inclusione-esclusione** nella sua forma più semplice, ossia considerando **due eventi**.
+Di seguito, esponiamo la **formula di inclusione-esclusione** nella sua forma più semplice, ossia considerando **due eventi** $(e)$.
 
 > Per due eventi arbitrari $A,\,B\,\in\,\mathcal{P}(\Omega)$, si ha che:
 > $$\mathbb{P}(A\cup B)\,=\,\mathbb{P}(A)+\mathbb{P}(B)-\mathbb{P}(A\cap B)$$
 
-Tale formula è facilmente dimostrabile riflettendo sui significati concreti di unione e intersezione: fare l'unione di due eventi $A$ e $B$ significa considerare sia tutti gli eventi di $A$ che tutti gli eventi di $B$, tuttavia nel fare ciò verranno considerati due volte gli elementi che si trovano sia in $A$ che in $B$, ossia $A\cap B$, dunque per eliminare questo eccesso basterà sottrarre tali elementi una volta. Naturalmente, nel caso in cui gli eventi considerati siano incompatibili, la loro intersezione sarà $A\cap B=\emptyset$, dunque tale operazione non sarà necessaria.
+Tale formula è facilmente dimostrabile riflettendo sui significati concreti di unione e intersezione: fare l'unione di due eventi $A$ e $B$ significa considerare sia tutti gli eventi di $A$ che tutti gli eventi di $B$, tuttavia nel fare ciò verranno considerati due volte gli elementi che eventualmente si trovano sia in $A$ che in $B$, ossia $A\cap B$, dunque per eliminare questo eccesso basterà sottrarre tali elementi una volta. Naturalmente, nel caso in cui gli eventi considerati siano incompatibili, la loro intersezione sarà $A\cap B=\emptyset$, dunque tale operazione non sarà necessaria.
 
-Arriviamo, infine, a un'ultima proprietà facilmente deducibile dalla definizione di **partizione dell'evento certo**.
+Arriviamo, infine, a un'ultima proprietà $(f)$ facilmente deducibile dalla definizione di **partizione dell'evento certo**.
 
 > Siano $H_{1},\,H_{2},\,\dots,\,H_{n}\,\in\,\mathcal{P}(\Omega)$ eventi tali che vale che:
 > $$\bigcup_{i\,=\,1}^{n}H_{i}=\Omega\,\,\,\,\,\bigwedge\,\,\,\,\,H_{i}\cap H_{j}=\emptyset\,\,\,\text{per }i\neq j$$
 > ossia costituiscano gli eventi $H_{1},\,H_{2},\,\dots,\,H_{n}$ una [[CDP_01 - Eventi#Partizione dell'evento certo|partizione dell'evento certo]], allora si può affermare che:
 > $$\sum_{i\,=\,1}^{n}\,\mathbb{P}(H_{i})=1$$
 
-[dimostrazioni varie: pag. 21 - 22]
+Tutte queste proprietà, ad eccezione della prima che è già stata dimostrata, sono dimostrabili sfruttando la seguente relazione:
+$$\text{per ogni }A\text{ e }B\text{, vale che }\mathbb{P}(A)=\mathbb{P}(A\cap B)+\mathbb{P}(A\cap\overline{B})$$
+che a sua volta è facilmente dimostrabile nel modo seguente: $A$ può essere definita come $(A\cap B)\cup(A\cap\overline{B})$ per un qualsiasi $B$, dato che
+$$A=A\cap \Omega=A\cap(B\cup\overline{B})=(A\cap B)\cup(A\cap\overline{B})$$
+Inoltre, è immediato verificare che $A\cap B$ e $A\cap\overline{B}$ siano eventi disgiunti, dato che
+$$(A\cap B)\cap(A\cap\overline{B})=A\cap B\cap\overline{B}=A\cap\emptyset=\emptyset$$
+Dunque, essendo $A\cap B$ e $A\cap\overline{B}$ due eventi disgiunti, ed essendo $A$ un evento composto dall'unione di essi, per la proprietà di additività possiamo affermare che:
+$$\mathbb{P}(A)=\mathbb{P}(A\cap B)+\mathbb{P}(A\cap\overline{B})$$
 
+Ora, avendo dimostrato tale relazione, possiamo sfruttarla per dimostrare le proprietà dalla $(b)$ alla $(f)$ elencate in precedenza. Partiamo dalla proprietà $(b)$: affermare che $\mathbb{P}(\overline{E}) = 1-\mathbb{P}(E)$ si deriva dalla relazione appena dimostrata prendendo $A=\Omega$ e $B=E$, per cui $A\cap B=\Omega\cap E=E$, mentre $A\cap\overline{B}=\Omega\cap\overline{E}=\overline{E}$; di conseguenza, possiamo affermare che:
+$$\mathbb{P}(\Omega)=\mathbb{P}(\Omega\cap E)+P(\Omega\cap\overline{E})=\mathbb{P}(E)+\mathbb{P}(\overline{E})$$
+Sapendo che $\mathbb{P}(\Omega)=1$, abbiamo dunque che $\mathbb{P}(E)+\mathbb{P}(\overline{E})=1$, e di conseguenza come formula inversa che $\mathbb{P}(\overline{E})=1-\mathbb{P}(E)$, come volevasi dimostrare.
 
+Vediamo, ora, la proprietà $(c)$: banalmente, essa può essere dimostrata osservando che $\emptyset$, ossia l'evento impossibile, è il complementare di $\Omega$, ossia dell'evento certo ($\emptyset=\overline{\Omega}$), dunque se abbiamo che $\mathbb{P}(\Omega)=1$ per la [[CDP_02 - La probabilità#Misure di probabilità|condizione di normalizzazione]], allora abbiamo che $\mathbb{P}(\emptyset)=1-\mathbb{P}(\Omega)=1-1=0$.
 
-[pag. 23]
+A questo punto, passiamo alla proprietà $(d)$: per dimostrarla, osserviamo che se $A\subseteq B$ allora necessariamente $A\cap B=A$, e quindi $\mathbb{P}(A)=\mathbb{P}(A\cap B)$; dunque, scambiando i ruoli di $A$ e $B$ nella relazione mostrata in precedenza (il risultato non cambia nonostante questo scambio), abbiamo che:
+$$\mathbb{P}(B)=\mathbb{P}(B\cap A)+\mathbb{P}(B\cap\overline{A})=\mathbb{P}(A)+\mathbb{P}(B\cap\overline{A})$$
+Dunque, abbiamo che la probabilità $\mathbb{P}(B)$ è data dalla probabilità di $A$ ($\mathbb{P}(A)$) sommata alla probabilità di eventuali eventi che rientrano in $B$ e non in $A$ ($\mathbb{P}(B\cap\overline{A})$): di conseguenza, si ottiene che $\mathbb{P}(B)\ge\mathbb{P}(A)$. Inoltre, ricordando che $B/A=B\cap\overline{A}$, e presupponendo sempre che $A\subseteq B$, possiamo affermare in base all'equivalenza appena ottenuta che:
+$$\mathbb{P}(B/A)=\mathbb{P}(B)-\mathbb{P}(A)$$
+
+Arriviamo, così, alla proprietà $(e)$, ossia alla formula di inclusione-esclusione a due eventi: partiamo osservando che l'unione tra due eventi $A$ e $B$ è equivalente all'unione tra $3$ eventi incompatibili tra loro, ossia l'intersezione tra $A$ e $B$, gli elementi contenuti in $A$ e non in $B$, e gli elementi contenuti in $B$ e non in $A$:
+$$A\cup B=(A\cap B)\cup(A\cap\overline{B})\cup(\overline{A}\cap B)$$
+di conseguenza, possiamo affermare che:
+$$\mathbb{P}(A\cup B)=\mathbb{P}(A\cap B)+\mathbb{P}(A\cap \overline{B})+\mathbb{P}(\overline{A}\cap B)$$
+Applicando la solita relazione, possiamo ridurre $\mathbb{P}(A\cap B)+\mathbb{P}(A\cap\overline{B})$ a $\mathbb{P}(A)$, e dalla dimostrazione della proprietà $(d)$ sappiamo che $\mathbb{P}(\overline{A}\cap B)=\mathbb{P}(B)-\mathbb{P}(A\cap B)$, dunque l'equivalenza precedente può essere riscritta come:
+$$\mathbb{P}(A\cup B)=\mathbb{P}(A)+\mathbb{P}(B)-\mathbb{P}(A\cap B)$$
+
+Infine, dimostriamo la proprietà $(f)$: essa è un'immediata conseguenza degli assiomi utilizzati nella definizione di misura di probabilità, in particolare della condizione di normalizzazione e della proprietà di additività finita. Infatti, da una parte $H_{1},\,H_{2},\,\dots,\,H_{m}$ sono per definizione eventi incompatibili a due a due, dunque per la proprietà di additività finita si ha che:
+$$\mathbb{P}\left(\bigcup_{l\,=\,1}^{m}H_{l}\right)=\sum_{l\,=\,1}^{m}\mathbb{P}(H_{l})$$
+Al tempo stesso, sapendo che $H_{1},\,H_{2},\,\dots,\,H_{m}$ rappresentano una partizione dell'evento certo $\Omega$, sappiamo che:
+$$\mathbb{P}\left(\bigcup_{l\,=\,1}^{m}H_{l}\right)=\mathbb{P}(\Omega)=1$$
+e perciò, unendo queste due deduzioni, si ottiene che:
+$$\sum_{l\,=\,1}^{m}\mathbb{P}(H_{l})=1$$
+come volevasi dimostrare.
+___
+##### Due modi diversi di vedere la probabilità
+
+[pag. 24]
+___
