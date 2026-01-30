@@ -192,16 +192,59 @@ Una "**disposizione senza ripetizione di classe $k$ di $n$ elementi**" si defini
 
 L'insieme delle disposizioni senza ripetizione è in realtà un sottoinsieme di $A^{k}$, ossia dell'insieme delle disposizioni con ripetizione, e ha cardinalità pari a:
 $$n\cdot(n-1)\cdot(n-2)\cdot\,\dots \,\cdot(n-(k-1))=\frac{n!}{(n-k)!}$$
+Possiamo indicare il numero delle possibili disposizioni senza ripetizione di classe $k$ di $n$ elementi con la dicitura $D^{n}_{k}$.
 ___
 ##### Permutazioni
 
 Le "**permutazioni**" rappresentano una sorta di **caso particolare di [[CDP_02 - La probabilità#Disposizioni senza ripetizione|disposizione senza ripetizione]]**, e consistono sostanzialmente in un **riordinamento di $n$ elementi**; la relazione con le disposizioni senza ripetizione è data dalla cardinalità dell'insieme delle possibili permutazioni di $n$ elementi, dato che essa si ottiene come la cardinalità delle prime, ma ponendo $k=n$, e dunque:
 $$\frac{n!}{(n-n)!}=\frac{n!}{1}=n!$$
 Dunque, dati $n$ elementi, ci saranno $n!$ modi possibili di riordinare quegli stessi $n$ elementi.
+
+Possiamo indicare il numero delle possibili permutazioni di $k$ elementi con la dicitura $P_{k}$.
 ___
 ##### Combinazioni
 
-Le "**combinazioni di classe $k$ di $n$ elementi**" sono **$k$-uple non ordinate**, dunque in cui non conta l'ordine degli elementi ma solo gli elementi effettivamente presenti, formate a partire da tali $n$ elementi.
+Le "**combinazioni di classe $k$ di $n$ elementi**" sono **$k$-uple non ordinate**, dunque in cui non conta l'ordine degli elementi ma solo gli elementi effettivamente presenti, formate a partire da tali $n$ elementi, dove **non è possibile che un elemento si ripeta**, o in altri termini che **gli elementi della disposizione sono tutti diversi tra loro**. Ciò, come per le [[CDP_02 - La probabilità#Disposizioni senza ripetizione|disposizioni senza ripetizione]], implica che debba necessariamente valere che $k\le n$.
+
+Un modo alternativo, più semplice, di definire una combinazione di classe $k$ di $n$ elementi è come **un sottoinsieme di cardinalità $k$ degli elementi di un insieme di cardinalità $n$**.
+
+Ad esempio, considerato l'insieme $A=\{a,\,b,\,c,\,d,\,e,\,f,\,g\}$, che ha $n=7$ elementi, e considerato $k=3$, una possibile disposizione senza ripetizioni di classe $k$ può essere la terna ordinata $(a,\,d,\,f)$, e per sua natura tale terna sarà concretamente diversa dalla terna $(d,\,f,\,a)$, proprio perché pur contenendo gli stessi elementi essi sono posti in ordine diverso. Invece, se a partire dallo stesso insieme $A$ estrapoliamo la combinazione di classe $k$ $\{a,\,d,\,f\}$, essa sarà perfettamente coincidente con la combinazione $\{d,\,f,\,a\}$, dato che nelle combinazioni non è rilevante l'ordine in cui sono posti gli elementi. 
+
+Possiamo indicare il numero delle possibili combinazioni di classe $k$ di $n$ elementi con la dicitura $C_{k}^{n}$. Ora, risulta banale che $C_{0}^{n}$ equivale al numero di modi in cui si possono estrarre $0$ elementi da un insieme di $n$ elementi, e ciò si può fare in un unico modo: non prendendo alcun elemento (l'insieme vuoto $\emptyset$); dunque $C_{0}^{n}=1$. Allo stesso modo, sappiamo che $C_{n}^{n}=1$ perché, analogamente, c'è un unico modo di estrarre $n$ elementi da un insieme di $n$ elementi, ossia prendendoli tutti. Inoltre, è facile convincersi che $C_{k}^{n}=C_{n-k}^{n}$. Infine, un'ultima equivalenza mette in relazione le combinazioni con le disposizioni senza ripetizione e con le [[CDP_02 - La probabilità#Permutazioni|permutazioni]], ed è la seguente:
+$$D_{k}^{n}=C_{k}^{n}\cdot P_{k}$$
+È possibile dimostrare questa affermazione ragionando sulle caratteristiche di ciascuna di queste entità: innanzitutto, le disposizioni senza ripetizione di classe $k$ di $n$ elementi possono essere "raggruppate" in modo da avere, all'interno di ciascuno di questi gruppi, solo disposizioni che contengono gli stessi elementi, e che dunque differiscono tra loro solo per l'ordinamento degli stessi; sostanzialmente, ognuno dei gruppi ottenuti identifica una singola combinazione di classe $k$ degli $n$ elementi iniziali, e dunque possiamo affermare che il nostro raggruppamento ha generato $C_{k}^{n}$ gruppi. Ora, come abbiamo detto, ogni gruppo contiene disposizioni che differiscono tra loro solo per l'ordinamento, dunque che rappresentano la serie di permutazioni possibili dei $k$ elementi che ogni disposizione del gruppo contiene: si deduce, da ciò, che ogni gruppo contiene $P_{k}$ disposizioni. Avendo stabilito che le $D_{k}^{n}$ disposizioni possono essere raggruppate in $C_{k}^{n}$ gruppi, dove ogni gruppo contiene $P_{k}$ disposizioni, si è dimostrato proprio che $D_{k}^{n}=C_{k}^{n}\cdot P_{k}$.
+
+A partire dall'equivalenza appena dimostrata possiamo ricavare una **formula per calcolare il numero di combinazioni possibili di classe $k$ di $n$ elementi**, ossia $C_{k}^{n}$. Infatti, sapendo che $D_{k}^{n}=\frac{n!}{(n-k)!}$, e che $P_{k}=k!$, si ottiene che:
+$$\frac{n!}{(n-k)!}=C_{k}^{n}\cdot k!\,\,\,\Rightarrow\,\,\,C_{k}^{n}=\frac{n!}{k!\cdot(n-k)!}$$
+Per brevità, la formula appena ottenuta si indica anche con il cosiddetto "**coefficiente binomiale $n$ sopra $k$**", letto anche come "**$n$ su $k$**" o come "**scegli $k$ tra $n$**":
+$$\frac{n!}{k!\cdot(n-k)!}:=\binom{n}{k}$$
+
+
+[proprietà dei coefficienti binomiali: pag. 32/35]
+___
+##### Alcuni esempi di applicazione del calcolo combinatorio
+
+In questo paragrafo, andiamo a vedere alcuni **esempi classici** di applicazione del calcolo combinatorio nel calcolo delle probabilità.
+
+Partiamo con il cosiddetto "**problema del compleanno**": si vuole sapere qual è la probabilità che, tra $M$ persone scelte a caso, ve ne siano almeno due che festeggiano il compleanno nello stesso giorno (supponendo che l'anno sia sempre di $365$ giorni, e che tutte le date siano equiprobabili). Per ottenere la nostra soluzione, pensiamo "al contrario": per trovare la probabilità che almeno due persone festeggino il compleanno nello stesso giorno, possiamo trovare invece quella per cui nessuno festeggi il compleanno nello stesso giorno, e sottrarla alla probabilità totale. Dunque, concentriamoci sul calcolare la probabilità del seguente evento:
+$$\overline{E}=\{\text{Le M persone festeggiano tutte il compleanno in giorni diversi}\}$$
+Lo spazio campione $\Omega$, dunque l'insieme degli eventi elementari possibili di questo esperimento, è costituito dalle [[CDP_02 - La probabilità#Disposizioni con ripetizione|disposizioni con ripetizione]] di classe $M$ di $365$ elementi (i giorni dell'anno); dunque, lo spazio $\Omega$ ha cardinalità $365^{M}$. Al tempo stesso, si deduce subito che $\overline{E}$ è un [[CDP_01 - Eventi#Eventi elementari e composti|evento composto]], costituito da tutte le disposizioni senza ripetizione di classe $M$ di $365$ elementi; dunque, $\overline{E}$ ha cardinalità $\frac{365!}{(365-M)!}$. Avendo preposto che tutte le date hanno uguale probabilità di essere il compleanno di uno degli individui considerati, sappiamo di trovarci in una [[CDP_02 - La probabilità#Probabilità "uniformi" e calcolo combinatorio|distribuzione di probabilità uniforme]], e dunque possiamo affermare che:
+$$\mathbb{P}(\overline{E})=\frac{|\overline{E}|}{|\Omega|}=\frac{\frac{365!}{(365-M)!}}{365^{M}}=\frac{365\cdot 364\cdot\,\dots\,\cdot(365-M+1)}{365^{M}}$$
+A questo punto, avendo trovato la probabilità $\mathbb{P}(\overline{E})$ dell'evento complementare a quello $E$ che ci viene chiesto dal problema, avremo che $\mathbb{P}(E)=1-\mathbb{P}(\overline{E})$. Indichiamo, da questo momento in poi, tale probabilità come $\mathbb{P}_{M}(E)$, per evidenziare la sua dipendenza dal valore di $M$, e osserviamo un fenomeno interessante: già per $M\ge 23$, dunque considerando almeno $23$ persone nell'esperimento, troviamo che $\mathbb{P}_{M}(E)>0.5$, dunque basta considerare $23$ persone casuali per avere una possibilità di più del $50\%$ che almeno $2$ di esse facciano il compleanno nello stesso giorno. 
+
+Vediamo, ora, un ulteriore esempio, che viene chiamato "**paradosso del Cavalier De Méré**". La domanda alla base del paradosso è la seguente: è più probabile ottenere almeno un $1$ in $4$ lanci consecutivi di un dado o ottenere un doppio $1$ in $24$ lanci consecutivi di una coppia di dadi? Anche in questo caso, per ottenere la risposta converrà agire calcolando prima la probabilità degli eventi complementari a quelli cercati:
+$$\mathbb{P}(\{\text{almeno un 1 in 4 lanci di un dado}\})=1-\mathbb{P}(\{\text{nessun 1 in 4 lanci di un dado}\})$$
+$$\mathbb{P}(\{\text{almeno un doppio 1 in 24 lanci di una coppia di dadi}\})=1-\mathbb{P}(\{\text{nessun doppio 1 in 24 lanci di una coppia di dadi}\})$$
+Partiamo con il calcolo della prima probabilità complementare, dunque della probabilità di non ottenere nemmeno un $1$ in $4$ lanci di un singolo dado a $6$ facce. Lo spazio $\Omega$ dei $4$ lanci del dado consiste nell'insieme delle disposizioni con ripetizione di classe $4$ di $6$ elementi, ossia l'insieme delle quaterne ordinate $(x_{1},\,x_{2},\,x_{3},\,x_{4})$ con $x_{i}\in\{1,\,2,\,3,\,4,\,5,\,6\}$: dunque, abbiamo che $|\Omega|=6^{4}$. Gli eventi elementari che costituiscono l'evento composto che stiamo considerando, invece, corrispondono alle disposizioni con ripetizione di classe $4$ di $5$ elementi, dato che si rimuove l'opzione di ottenere $1$: dunque, abbiamo che la cardinalità di tale evento composto è di $5^{4}$. A questo punto, essendo il dado bilanciato a meno di altre indicazioni, possiamo affermare che:
+$$\mathbb{P}(\{\text{almeno un 1 in 4 lanci di un dado}\})=1-\frac{6^{4}}{5^{4}}\approx 0.52$$
+Un procedimento analogo può essere utilizzato per la seconda sotto-soluzione cercata: l'unico accorgimento da fare è che il numero di lanci aumenta da $4$ a $24$, e che il numero di "elementi" non è più $6$, ossia i possibili risultati del lancio di un singolo dado, ma $36$, ossia i possibili risultati (ordinati) del lancio di una coppia di dadi. Applicando questi accorgimenti al medesimo procedimento, arriviamo a:
+$$\mathbb{P}(\{\text{almeno un doppio 1 in 24 lanci di una coppia di dadi}\})=1-\frac{35^{24}}{36^{24}}\approx 0.49$$
+Dunque, abbiamo ottenuto che è più probabile ottenere almeno un $1$ in $4$ lanci consecutivi di un singolo dado piuttosto che ottenere un doppio $1$ in $24$ lanci consecutivi di una coppia di dadi.
+
+Vediamo un ultimo esempio. Supponiamo di avere un gruppo di $4n$ persone, che comprende $2n$ ragazzi e $2n$ ragazze, e di voler formare casualmente $2$ squadre formate ciascuna da $2n$ persone. Si vuole sapere la probabilità che tutte le ragazze vengano messe in una squadra e tutti i ragazzi nell'altra, così come la probabilità che ciascuna squadra sia perfettamente divisa tra $n$ ragazzi e $n$ ragazze. Lo spazio $\Omega$ di questo esperimento sarà dato dal numero di modi di scegliere $2n$ individui tra le $4n$ persone totali, e dunque abbiamo che $|\Omega|=\binom{4n}{2n}$. Stabilito ciò, pensiamo alla prima incognita: per sapere la probabilità che le $2$ squadre siano perfettamente divise in base al genere, possiamo intuire che le uniche scelte (gli unici eventi elementari, insomma) che permettono ciò sono quella in cui si scelgono solo ragazzi e quella in cui si scelgono solo ragazze; dunque, abbiamo $2$ casi favorevoli tra gli $|\Omega|$ casi possibili, per cui:
+$$\mathbb{P}(\{\text{tutte le ragazze in una squadra e tutti i ragazzi nell'altra}\})=\frac{2}{\binom{4n}{2n}}$$
+Passiamo, ora, alla seconda incognita: scegliere una squadra composta perfettamente da $n$ ragazzi e $n$ ragazze significa scegliere precisamente $n$ ragazzi tra i $2n$ ragazzi totali e $n$ ragazze tra le $2n$ ragazze totali, dunque questa scelta può essere eseguita in $\binom{2n}{n}\binom{2n}{n}$ modi, che corrispondono di conseguenza agli eventi favorevoli. Perciò, si ottiene che:
+$$\mathbb{P}(\{\text{squadra composta da n ragazzi e n ragazze}\})=\frac{\binom{2n}{n}\binom{2n}{n}}{\binom{4n}{2n}}$$
 ___
 
-[pag. 25/42]
+[pag. 36/42]
