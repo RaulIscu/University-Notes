@@ -39,7 +39,7 @@ In altre parole, tale proprietà afferma che **la probabilità di un evento comp
 $$\mathbb{P}(E)=\mathbb{P}\left(\bigcup_{i\,=\,1}^{N}\omega_{i}\right)=\sum_{i\,=\,1}^{N}\mathbb{P}(\omega_{i})$$
 come volevasi dimostrare.
 
-La prossima proprietà che analizzeremo $(b)$ riguarda la relazione tra **probabilità di un evento e del suo complementare**.
+La prossima proprietà che analizzeremo $(b)$ è la cosiddetta "**probabilità del complementare**", e riguarda proprio la relazione tra **probabilità di un evento e del suo complementare**.
 
 > Per ogni $E\,\in\,\mathcal{P}(\Omega)$, si ha che:
 > $$\mathbb{P}(\overline{E})\,=\,1-\mathbb{P}(E)$$
@@ -65,6 +65,8 @@ Di seguito, esponiamo la **formula di inclusione-esclusione** nella sua forma pi
 
 Tale formula è facilmente dimostrabile riflettendo sui significati concreti di unione e intersezione: fare l'unione di due eventi $A$ e $B$ significa considerare sia tutti gli eventi di $A$ che tutti gli eventi di $B$, tuttavia nel fare ciò verranno considerati due volte gli elementi che eventualmente si trovano sia in $A$ che in $B$, ossia $A\cap B$, dunque per eliminare questo eccesso basterà sottrarre tali elementi una volta. Naturalmente, nel caso in cui gli eventi considerati siano incompatibili, la loro intersezione sarà $A\cap B=\emptyset$, dunque tale operazione non sarà necessaria.
 
+[approfondimento su formula di inclusione-esclusione: pag. 28]
+
 Arriviamo, infine, a un'ultima proprietà $(f)$ facilmente deducibile dalla definizione di **partizione dell'evento certo**.
 
 > Siano $H_{1},\,H_{2},\,\dots,\,H_{n}\,\in\,\mathcal{P}(\Omega)$ eventi tali che vale che:
@@ -72,7 +74,7 @@ Arriviamo, infine, a un'ultima proprietà $(f)$ facilmente deducibile dalla defi
 > ossia costituiscano gli eventi $H_{1},\,H_{2},\,\dots,\,H_{n}$ una [[CDP_01 - Eventi#Partizione dell'evento certo|partizione dell'evento certo]], allora si può affermare che:
 > $$\sum_{i\,=\,1}^{n}\,\mathbb{P}(H_{i})=1$$
 
-Tutte queste proprietà, ad eccezione della prima che è già stata dimostrata, sono dimostrabili sfruttando la seguente relazione:
+Tutte queste proprietà, ad eccezione della prima che è già stata dimostrata, sono dimostrabili sfruttando la seguente relazione detta "**proprietà di base**":
 $$\text{per ogni }A\text{ e }B\text{, vale che }\mathbb{P}(A)=\mathbb{P}(A\cap B)+\mathbb{P}(A\cap\overline{B})$$
 che a sua volta è facilmente dimostrabile nel modo seguente: $A$ può essere definita come $(A\cap B)\cup(A\cap\overline{B})$ per un qualsiasi $B$, dato che
 $$A=A\cap \Omega=A\cap(B\cup\overline{B})=(A\cap B)\cup(A\cap\overline{B})$$
@@ -107,7 +109,99 @@ e perciò, unendo queste due deduzioni, si ottiene che:
 $$\sum_{l\,=\,1}^{m}\mathbb{P}(H_{l})=1$$
 come volevasi dimostrare.
 ___
-##### Due modi diversi di vedere la probabilità
+##### Due modi di vedere la probabilità
 
-[pag. 24]
+Considerando $\Omega$ come un insieme finito, possiamo guardare la probabilità in **due modi**, apparentemente diversi ma in realtà **equivalenti**. Vediamoli in questo paragrafo.
+
+Il **primo modo** consiste nel partire da una "**funzione di insieme**" (ossia una funzione che prende come "input" un insieme di elementi, in questo caso un evento composto $E$) $\mathbb{P}$, definita come:
+$$\mathbb{P}:\mathcal{P}(\Omega)\rightarrow[0,\,1];\,\,\,\,\,\,\,\,\,\,E\mapsto\mathbb{P}(E)$$
+e che soddisfi i [[CDP_02 - La probabilità#Misure di probabilità|tre assiomi]] visti a inizio capitolo; di seguito, in base a tale funzione di insieme, definiamo la seguente "**funzione di punto**" (ossia una funzione che prende come "input" un singolo elemento, in questo caso un evento elementare $\omega_{i}$):
+$$p:\Omega\rightarrow[0,1];\,\,\,\,\,\,\,\,\,\,\omega_{i}\mapsto p(\omega_{i}):=\mathbb{P}(\{\omega_{i}\})$$
+che dovrò soddisfare, a sua volta, le due seguenti condizioni:
+$$p(\omega_{i})\ge 0\,\,\,\,\,\bigwedge\,\,\,\,\,\sum_{i\,=\,1}^{N}p(\omega_{i})=1$$
+
+Il **secondo modo** consiste invece nel partire da una funzione di punto $p$, definita come:
+$$p:\Omega\to[0,\,1];\,\,\,\,\,\,\,\,\,\,\omega_{i}\mapsto p(\omega_{i})$$
+e che soddisfi le condizioni appena viste; in seguito, si vorrà definire una funzione di insieme basata su tale funzione di punto, tale per cui:
+$$E\mapsto\mathbb{P}(E):=\sum_{\omega\,\in\,E}p(\omega)$$
 ___
+##### Probabilità definita a meno di un fattore di proporzionalità
+
+Per definizione, una misura di probabilità sullo spazio $\Omega=\{\omega_{1},\,\omega_{2},\,\dots,\,\omega_{N}\}$ è individuata quando vengono assegnati i numeri $p(\omega_{i})=\mathbb{P}(\{\omega_{i}\})$ per ogni $i$ che va da $1$ a $N$, assegnati in modo che ogni valore $p(\omega_{i})$ sia maggiore o uguale a $0$ e che la loro somma, per la [[CDP_02 - La probabilità#Misure di probabilità|condizione di normalizzazione]], sia pari a $1$. Supponiamo, ora, che **ci sia una qualche proporzionalità tra i valori $p(\omega_{i})$**, e dunque che i valori $p(\omega_{i})$ vengano assegnati "**a meno di una costante di proporzionalità**": ciò vuol dire che esiste una costante positiva $K$, così come dei numeri $g_{i}$, tali per cui:
+$$\text{per ogni }i=1,\,2,\,\dots,\,N\text{ vale }\,\,\,p(\omega_{i})=K\cdot g_{i}$$
+o, in breve, che:
+$$p(\omega_{i})\propto g_{i}$$
+Sommando su $i$, si ottiene che:
+$$\sum_{i\,=\,1}^{N}p(\omega_{i})\,=\,\sum_{i\,=\,1}^{N}K\cdot g_{i}\,=\,K\sum_{i\,=\,1}^{N}g_{i}$$
+e sapendo che tale sommatoria deve risultare in $1$ per la condizione di normalizzazione, ci è possibile **ricavare il valore di $K$**, che possiamo chiamare "**fattore di proporzionalità**":
+$$K\sum_{i\,=\,1}^{N}g_{i}=1\,\,\,\Rightarrow\,\,\,K=\frac{1}{\sum_{i\,=\,1}^{N}g_{i}}$$
+Come diretta conseguenza, avendo definito $p(\omega_{i})=K\cdot g_{i}$ in questo contesto, possiamo ottenere una formula per calcolare un determinato valore $p(\omega_{i})$:
+$$p(\omega_{i})=\frac{g_{i}}{\sum_{j\,=\,1}^{N}g_{j}}$$
+
+Questi concetti e queste formule tornano utili nel momento in cui si lavora con **fenomeni dove ogni evento elementare ha una certa probabilità di verificarsi rispetto a un altro**: infatti, possiamo vedere i vari numeri $g_{i}$ come una sorta di **"pesi" relativi**, che ci fanno capire, in base al tipo di proporzionalità che si verifica, quale evento dovrebbe essere più probabile rispetto ad altri. Naturalmente, i valori $g_{i}$ sono solo pesi relativi, e non possono valere come probabilità effettive: è qui che entra in gioco la **costante di proporzionalità $K$**, che formalizza la relazione tra i vari pesi relativi e contribuisce a "normalizzarli" in modo da ottenere le probabilità effettive ($p(\omega_{i})=K\cdot g_{i}$), assicurando che venga rispettata la condizione di normalizzazione.
+
+Per comprendere meglio questo concetto, vediamo un paio di **esempi**. Supponiamo di avere un dado a $6$ facce, numerate da $1$ a $6$, ma pesato in modo tale che ciascuna faccia abbia una probabilità di presentarsi, in un singolo lancio, direttamente proporzionale al suo valore (dunque, $2$ è più probabile di $1$, $3$ è più probabile di $2$, e così via). Considerato l'evento $A$ definito nel modo seguente:
+$$A=\{\text{si presenta un numero pari}\}$$
+vogliamo trovare $\mathbb{P}(A)$. Dato che stiamo lavorando con un dado a $6$ facce, sappiamo che lo spazio campione sarà $\Omega=\{\omega_{1},\,\omega_{2},\,\dots,\,\omega_{6}\}$, ed essendoci una relazione tra le probabilità delle varie facce, vogliamo imporre:
+$$p(\omega_{i})=K\cdot g_{i},\,\,\,\text{per }i=1,\,2,\,\dots,\,6$$
+Essendo la probabilità del presentarsi di ciascuna faccia del dado direttamente proporzionale al suo valore, possiamo assumere direttamente che $g_{i}=i$, e dunque otteniamo che:
+$$\begin{align} 1&=p(\omega_{1})+p(\omega_{2})+p(\omega_{3})+p(\omega_{4})+p(\omega_{5})+p(\omega_{6})\\&=K\cdot 1 + K\cdot 2 + K\cdot 3+K\cdot 4+K\cdot 5+K\cdot 6\\&=21K\end{align}$$
+Da ciò, si ricava che $K=\frac{1}{21}$, di conseguenza abbiamo che:
+$$p(\omega_{i})=\frac{i}{21}$$
+Ora, avendo trovato un modo per calcolare concretamente la probabilità di ciascun evento elementare del nostro esperimento, possiamo tranquillamente rispondere alla domanda iniziale. L'evento $A$, ossia che si presenti un numero pari, è un [[CDP_01 - Eventi#Eventi elementari e composti|evento composto]] definito dall'unione tra gli eventi $\omega_{2}$, $\omega_{4}$ e $\omega_{6}$, dunque la probabilità $\mathbb{P}(A)$, per la [[CDP_02 - La probabilità#Proprietà delle probabilità|proprietà di additività finita]], è pari a:
+$$\mathbb{P}(A)=p(\omega_{2})+p(\omega_{4})+p(\omega_{6})=\frac{2}{21}+\frac{4}{21}+\frac{6}{21}=\frac{12}{21}=\frac{4}{7}$$
+
+Vediamo un altro esempio abbastanza simile. Supponiamo di avere un dado a $6$ facce, numerate da $1$ a $6$, ma pesato in modo tale che una faccia con valore pari abbia il doppio della probabilità di presentarsi di una faccia con valore dispari. Considerato l'evento $A$ definito nel modo seguente:
+$$A=\{\text{si presenta un numero pari}\}$$
+vogliamo trovare $\mathbb{P}(A)$. Dato che stiamo lavorando con un dado a $6$ facce, sappiamo che lo spazio campione sarà $\Omega=\{\omega_{1},\,\omega_{2},\,\dots,\,\omega_{6}\}$, ed essendoci una relazione tra le probabilità delle varie facce, vogliamo imporre:
+$$p(\omega_{i})=K\cdot g_{i},\,\,\,\text{per }i=1,\,2,\,\dots,\,6$$
+Essendo la probabilità che si presenti una faccia con valore pari doppia rispetto a quella che si presenti una faccia con valore dispari, possiamo affermare ad esempio che $g_{i} = 2$ per $i$ pari, e allo stesso tempo che $g_{i}=1$ per $i$ dispari. Dunque, otteniamo che:
+$$\begin{align} 1&=p(\omega_{1})+p(\omega_{2})+p(\omega_{3})+p(\omega_{4})+p(\omega_{5})+p(\omega_{6})\\&=K\cdot 1+K\cdot 2+K\cdot 1 + K\cdot 2+K \cdot 1 +K\cdot 2\\&=9K\end{align}$$
+Da ciò, si ricava che $K=\frac{1}{9}$, di conseguenza abbiamo che:
+$$p(\omega_{i})=\frac{g_{i}}{9}$$
+Ora, avendo trovato un modo per calcolare concretamente la probabilità di ciascun evento elementare del nostro esperimento, rispondiamo alla domanda iniziale. L'evento $A$, ossia che si presenti un numero pari, è un evento composto definito dall'unione tra gli eventi $\omega_{2}$, $\omega_{4}$ e $\omega_{6}$, dunque la probabilità $\mathbb{P}(A)$, per la proprietà di additività finita, è pari a:
+$$\mathbb{P}(A)=p(\omega_{2})+p(\omega_{4})+p(\omega_{6})=\frac{2}{9}\cdot 3= \frac{6}{9}=\frac{2}{3}$$
+___
+## Probabilità "uniformi" e calcolo combinatorio
+
+Sia $\Omega=\{\omega_{1},\,\omega_{2},\,\dots,\,\omega_{N}\}$, e supponiamo che si voglia porre:
+$$p(\omega_{i})=K,\,\,\,\,\,\forall \omega_{i}\in \Omega$$
+dove $K$ corrisponde a una certa costante positiva. Imponendo questa condizione, affermiamo che **tutti gli eventi elementari relativi al fenomeno considerato sono "equiprobabili"**, cioè hanno tutti la stessa probabilità di avvenire in una singola osservazione del fenomeno. Formalmente, una casistica del genere viene definita come una "**distribuzione di probabilità uniforme sugli eventi elementari**".
+
+Lavorando con tale distribuzione di probabilità, e tenendo a mente la **[[CDP_02 - La probabilità#Misure di probabilità|condizione di normalizzazione]]**, possiamo affermare che:
+$$p(\omega_{i})=\frac{1}{|\Omega|}=\frac{1}{N},\,\,\,\,\,\text{per ogni }i=1,\,2,\,\dots,\,N$$
+Di conseguenza, ricordando la **[[CDP_02 - La probabilità#Proprietà delle probabilità|proprietà di additività finita]]**, si ottiene che:
+$$\mathbb{P}(E)=\frac{|E|}{|\Omega|}=\frac{|E|}{N},\,\,\,\,\,\text{per ogni }E\in\mathcal{P}(\Omega)$$
+Tale formula può essere letta, in parole povere, come l'affermazione del fatto che, nel caso in cui tutti gli eventi elementari di uno spazio finito $\Omega$ siano equiprobabili, la probabilità di un generico [[CDP_01 - Eventi#|evento composto]] $E$ è pari al **rapporto tra eventi favorevoli e eventi possibili**. Dunque, in questo tipo di situazioni, il problema del calcolare la probabilità di $E$ si riduce ai **problemi di calcolo combinatorio** dati dall'individuare i due valori $N=|\Omega|$ e $|E|$.
+
+Passiamo, dunque, ad approfondire alcuni **concetti di calcolo combinatorio**, che ci saranno utili per affrontare vari problemi di calcolo delle probabilità. Innanzitutto, partiamo ricordando due fatti fondamentali:
+- due insiemi finiti hanno la **stessa cardinalità** se e solo se fra di essi è possibile stabilire una **corrispondenza biunivoca**;
+- dati due insiemi arbitrari $A$ e $B$, si definisce "**prodotto cartesiano** tra $A$ e $B$" l'insieme costituito dalle coppie ordinate $(a, b)$ dove $a\in A$ e $b\in B$, indicato con la notazione $A\times B$; nel caso in cui $A$ e $B$ siano insiemi finiti, la cardinalità del prodotto cartesiano $A\times B$ sarà pari al prodotto tra le cardinalità di $A$ e $B$.
+
+##### Disposizioni con ripetizione
+
+Una "**disposizione con ripetizione di classe $k$ di $n$ elementi**" non è altro che una **$k$-upla ordinata** formata a partire da tali $n$ elementi, dove **è possibile che un elemento si ripeta**.
+
+Dunque, a partire da un insieme $A=\{a_{1},\,a_{2},\,\dots,\,a_{n}\}$, tali disposizioni costituiscono l'insieme:
+$$A^{k}=\{A\times A\times\dots \times A\}$$
+dove il prodotto cartesiano viene ripetuto $k$ volte, e la cardinalità $|A^{k}|$ di tale insieme è pari a $n^{k}$. 
+___
+##### Disposizioni senza ripetizione
+
+Una "**disposizione senza ripetizione di classe $k$ di $n$ elementi**" si definisce sostanzialmente allo stesso modo delle [[CDP_02 - La probabilità#Disposizioni con ripetizione|disposizioni con ripetizione]], ma con la sostanziale differenza che **non è possibile che un elemento si ripeta**, o in altri termini che **gli elementi della disposizione sono tutti diversi tra loro**. Ciò pone un vincolo implicito ai valori che può assumere $k$, dato che **deve necessariamente valere che $k\le n$**.
+
+L'insieme delle disposizioni senza ripetizione è in realtà un sottoinsieme di $A^{k}$, ossia dell'insieme delle disposizioni con ripetizione, e ha cardinalità pari a:
+$$n\cdot(n-1)\cdot(n-2)\cdot\,\dots \,\cdot(n-(k-1))=\frac{n!}{(n-k)!}$$
+___
+##### Permutazioni
+
+Le "**permutazioni**" rappresentano una sorta di **caso particolare di [[CDP_02 - La probabilità#Disposizioni senza ripetizione|disposizione senza ripetizione]]**, e consistono sostanzialmente in un **riordinamento di $n$ elementi**; la relazione con le disposizioni senza ripetizione è data dalla cardinalità dell'insieme delle possibili permutazioni di $n$ elementi, dato che essa si ottiene come la cardinalità delle prime, ma ponendo $k=n$, e dunque:
+$$\frac{n!}{(n-n)!}=\frac{n!}{1}=n!$$
+Dunque, dati $n$ elementi, ci saranno $n!$ modi possibili di riordinare quegli stessi $n$ elementi.
+___
+##### Combinazioni
+
+Le "**combinazioni di classe $k$ di $n$ elementi**" sono **$k$-uple non ordinate**, dunque in cui non conta l'ordine degli elementi ma solo gli elementi effettivamente presenti, formate a partire da tali $n$ elementi.
+___
+
+[pag. 25/42]
