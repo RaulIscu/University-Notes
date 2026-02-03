@@ -295,8 +295,61 @@ $$\begin{align} p(n) &= 1 - q(n) \\ &= 1 - \frac{1}{1!}-\frac{1}{2!}+\frac{1}{3!
 ___
 ## Probabilità condizionate
 
+> Siano $E$ ed $H$ due eventi, con $\mathbb{P}(H)>0$. Viene detta "**probabilità condizionata di $E$ dato $H$**", e indicata con il simbolo $\mathbb{P}(E\,|\,H)$ la seguente quantità:
+> $$\mathbb{P}(E\,|\,H)= \frac{\mathbb{P}(E\cap H)}{\mathbb{P}(H)}$$
+
+Ma cosa si intende, esattamente, con "probabilità condizionata"? Per comprendere meglio questo concetto, vediamo un esempio. Considerando il lancio di un dado a sei facce, si vuole sapere la probabilità dell'evento $A=\{\text{è uscita una faccia X con valore dispari}\}$, sapendo però che si è verificato l'[[CDP_01 - Eventi#Eventi elementari e composti|evento composto]] $B=\{X\ge 2\}$, e dunque sapendo che è uscita una faccia con valore maggiore o uguale a $2$. Inizialmente, tutti gli eventi elementari $\{X=1\}$, $\{X=2\}$, e così via, sono ritenuti equiprobabili; sapere, inoltre, che si è verificato l'evento $B$ equivale a sapere che si è verificato uno dei seguenti eventi elementari:
+$$\{X=2\}\,\,\,\,\,\{X=3\}\,\,\,\,\,\{X=4\}\,\,\,\,\,\{X=5\}\,\,\,\,\,\{X=6\}$$
+ma senza sapere precisamente quale di questi si sia verificato. È naturale, a questo punto, assumere che l'informazione che si sia verificato $B$ non modifica l'equiprobabilità tra i vari eventi elementari che compongono $B$, ossia quelli appena elencati. Capendo ciò, osserviamo che la probabilità di osservare l'evento $A$ deve essere valutata come la probabilità del verificarsi di uno tra $2$ eventi favorevoli ($\{X=3\}$ e $\{X=5\}$) su un totale di $5$ eventi possibili ed equiprobabili, dunque tale probabilità condizionata corrisponderà a $\frac{2}{5}$. 
+
+Rianalizzando l'esempio sotto un'altra prospettiva, notiamo che avendo un numero finito di eventi elementari equiprobabili, **la probabilità di un evento $A$, sapendo che avviene un evento $B$, è sostanzialmente data dal rapporto del numero di casi favorevoli ad $A$ e a $B$ considerando uno "spazio campione ridotto"**, che corrisponde pressoché agli eventi elementari possibili che rispettano la condizione imposta da $B$. Dunque:
+$$\mathbb{P}(A\,|\,B)= \frac{|A\cap B|}{|B|}=\frac{\mathbb{P}(A\cap B)}{\mathbb{P}(B)}$$
+In parole povere, la probabilità che avvenga un determinato evento $A$ sapendo che ne è avvenuto un altro $B$ equivale alla probabilità che avvenga un evento $A$ che rispetta anche $B$, tra un totale di eventi possibili che analogamente viene ristretto a quelli che rispettano $B$.
+
+Vediamo un altro esempio. Si consideri il lancio di un dado a sei facce, pesato in modo tale che ciascuna faccia abbia una probabilità di presentarsi proporzionale al suo valore; siano $A=\{\text{si presenta un valore pari}\}$ e $B=\{\text{si presenta un numero primo}\}$, vogliamo calcolare la probabilità condizionata $\mathbb{P}(A\,|\,B)$. Ci troviamo in un contesto di [[CDP_02 - La probabilità#Probabilità definita a meno di un fattore di proporzionalità|probabilità definita a meno di un fattore di proporzionalità]], dunque pensiamo prima a tale aspetto: sappiamo che lo spazio campione sarà $\Omega=\{\omega_{1},\,\omega_{2},\,\dots,\,\omega_{6}\}$, ed essendoci una relazione tra le probabilità delle varie facce, vogliamo imporre:
+$$p(\omega_{i})=K\cdot g_{i},\,\,\,\text{per }i=1,\,2,\,\dots,\,6$$
+Essendo la probabilità del presentarsi di ciascuna faccia del dado direttamente proporzionale al suo valore, possiamo assumere direttamente che $g_{i}=i$, e dunque otteniamo che:
+$$\begin{align} 1&=p(\omega_{1})+p(\omega_{2})+p(\omega_{3})+p(\omega_{4})+p(\omega_{5})+p(\omega_{6})\\&=K\cdot 1 + K\cdot 2 + K\cdot 3+K\cdot 4+K\cdot 5+K\cdot 6\\&=21K\end{align}$$
+Da ciò, si ricava che $K=\frac{1}{21}$, di conseguenza abbiamo che:
+$$p(\omega_{i})=\frac{i}{21}$$
+A questo punto, avendo trovato la probabilità effettiva di un generico evento elementare $\omega_{i}$ dell'esperimento, possiamo procedere a calcolare le probabilità condizionate. La probabilità $\mathbb{P}(A\,|\,B)$ equivale alla probabilità che si presenti un valore pari, sapendo che si è presentato un numero primo: sappiamo che da $1$ a $6$ i numeri pari sono $\{2,\,4,\,6\}$, mentre i numeri primi sono $\{2,\,3,\,5\}$, dunque l'unico numero pari che è anche primo è $2$, e perciò:
+$$\mathbb{P}(A\cap B)=p(\omega_{2})=\frac{2}{21}$$
+Invece, per quanto riguarda la probabilità $\mathbb{P}(B)$, per calcolarla basterà applicare la [[CDP_02 - La probabilità#Proprietà delle probabilità|proprietà dell'additività finita]], ottenendo:
+$$\mathbb{P}(B)=p(\omega_{2})+p(\omega_{3})+p(\omega_{5})=\frac{2}{21}+\frac{3}{21}+\frac{5}{21}=\frac{10}{21}$$
+A questo punto, per ottenere la probabilità condizionata $\mathbb{P}(A\,|\,B)$ basterà calcolare il rapporto tra queste due quantità:
+$$\mathbb{P}(A\,|\,B)=\frac{\mathbb{P}(A\cap B)}{\mathbb{P}(B)}=\frac{2}{21}\cdot \frac{21}{10}=\frac{1}{5}$$
+
+Nei prossimi paragrafi, andremo a definire e analizzare alcune **conseguenze immediate del concetto di probabilità condizionata**.
+
+##### Formula delle probabilità composte
+
+Dalla definizione di [[CDP_02 - La probabilità#Probabilità condizionate|probabilità condizionata]], si ottiene immediatamente che:
+$$\mathbb{P}(E_{2}\,|\,E_{1})=\frac{\mathbb{P}(E_{1}\cap E_{2})}{\mathbb{P}(E_{1})}\,\,\,\Rightarrow\,\,\,\mathbb{P}(E_{1}\cap E_{2})\,=\,\mathbb{P}(E_{2}\,|\,E_{1})\cdot\mathbb{P}(E_{1}) $$
+È possibile generalizzare questa "formula inversa", andando a creare quella che viene chiamata "**formula delle probabilità composte**".
+
+> Considerando $n$ eventi $E_{1},\,E_{2},\,\dots,\,E_{n}$, tali per cui $\mathbb{P}(E_{1}\cap E_{2}\cap\,\dots\,\cap E_{n-1})>0$, si ha che:
+> $$\mathbb{P}(E_{1}\cap E_{2}\cap\,\dots\,\cap E_{n})\,=\,\mathbb{P}(E_{1})\cdot\mathbb{P}(E_{2}\,|\,E_{1})\cdot\mathbb{P}(E_{3}\,|\,E_{1}\cap E_{2})\cdot\,\dots\,\cdot\mathbb{P}(E_{n}\,|\,E_{1}\cap E_{2}\cap\,\dots\,\cap E_{n-1})$$
+
+**Dimostriamo questa formula**, partendo con l'osservare che banalmente $E_{1}\supseteq E_{1}\cap E_{2}\supseteq\,\dots\,\supseteq E_{1}\cap E_{2}\cap\,\dots\,\cap E_{n-1}$, e di conseguenza per la proprietà di monotonia della probabilità possiamo affermare che $\mathbb{P}(E_{1})\ge\mathbb{P}(E_{1}\cap E_{2})\ge\,\dots\,\ge\mathbb{P}(E_{1}\cap E_{2}\cap\,\dots\,\cap E_{n-1})$. Per ipotesi, abbiamo stabilito già che quest'ultima probabilità è $>0$, e ciò implica che lo stesso vale per tutte le altre probabilità coinvolte in tale disuguaglianza; dunque, abbiamo dimostrato che il prodotto trovato al secondo membro della formula delle probabilità composte ha effettivamente senso e non degenera in $0$. Ora, per convincersi della veridicità dell'uguaglianza, basterà applicare ricorsivamente la definizione di probabilità condizionata. Infatti, si ha che:
+$$\mathbb{P}(E_{1}\cap E_{2}\cap\,\dots\,\cap E_{n})\,=\,\mathbb{P}(E_{n}\,|\,E_{1}\cap E_{2}\cap\,\dots\,\cap E_{n-1})\cdot\mathbb{P}(E_{1}\cap E_{2}\cap\,\dots\,\cap E_{n-1})$$
+A sua volta, il termine $\mathbb{P}(E_{1}\cap E_{2}\cap\,\dots\,\cap E_{n-1})$ può essere scomposto nello stesso modo, e lo stesso si potrà fare fino ad arrivare al termine $\mathbb{P}(E_{1}\cap E_{2})$, che sarà uguale proprio a $\mathbb{P}(E_{2}\,|\,E_{1})\cdot\mathbb{P}(E_{1})$.
+
+La formula delle probabilità composte viene spesso utilizzata per **trovare la probabilità dell'intersezione di un numero finito di eventi**, specialmente quando è più facile valutare le varie probabilità condizionate rispetto alla probabilità dell'intersezione. Vediamo un esempio concreto in cui tale formula si rivela molto utile: supponiamo di avere un'urna contenente $4$ palline arancioni, $2$ palline bianche e $3$ palline azzurre, e di fare $3$ estrazioni senza reinserimento. Indicando con $A_{i}$, $B_{i}$ e $C_{i}$ i seguenti eventi:
+$$\begin{align}&A_{i}=\{\text{esce una pallina arancione all'}i\text{-esima estrazione}\}\\&B_{i}=\{\text{esce una pallina bianca all'}i\text{-esima estrazione}\}\\&C_{i}=\{\text{esce una pallina azzurra all'}i\text{-esima estrazione}\}\end{align}$$
+si vuole calcolare la probabilità che la prima pallina estratta sia arancione, che la seconda sia bianca e che la terza sia azzurra, o in altre parole la probabilità $\mathbb{P}(A_{1}\cap B_{2}\cap C_{3})$. Per trovare una risposta, basterà applicare la formula delle probabilità composte, e dunque:
+$$\mathbb{P}(A_{1}\cap B_{2}\cap C_{3})\,=\,\mathbb{P}(A_{1})\cdot\mathbb{P}(B_{2}\,|\,A_{1})\cdot\mathbb{P}(C_{3}\,|\,A_{1}\cap B_{2})$$
+Le tre probabilità generate sono tutte calcolabili molto più facilmente: la probabilità $\mathbb{P}(A_{1})$ è la probabilità che la prima pallina estratta sia arancione, e dato che inizialmente ci sono $9$ palline, di cui $4$ arancioni, si avrà $\mathbb{P}(A_{1})=\frac{4}{9}$; similmente la probabilità $\mathbb{P}(B_{2}\,|\,A_{1})$ è la probabilità che la seconda pallina estratta sia bianca, sapendo che la prima estratta era arancione, e dato che a questo punto ci sono $8$ palline, di cui $2$ bianche, si avrà $\mathbb{P}(B_{2}\,|\,A_{1})=\frac{1}{4}$; infine, la probabilità $\mathbb{P}(C_{3}\,|\,A_{1}\cap B_{2})$ è la probabilità che la terza pallina estratta sia azzurra, sapendo che la prima estratta era arancione e che la seconda era bianca, e dato che attualmente ci sono $7$ palline, di cui $3$ azzurre, si avrà $\mathbb{P}(C_{3}\,|\,A_{1}\cap B_{2})=\frac{3}{7}$. Di conseguenza:
+$$\mathbb{P}(A_{1}\cap B_{2}\cap C_{3})\,=\,\mathbb{P}(A_{1})\cdot\mathbb{P}(B_{2}\,|\,A_{1})\cdot\mathbb{P}(C_{3}\,|\,A_{1}\cap B_{2})=\frac{4}{9}\cdot \frac{1}{4}\cdot \frac{3}{7}=\frac{1}{21}$$
+[altro esempio: pag. 48]
+___
+##### Formula delle probabilità totali
 
 
-[pag. 44/54]
+
+[pag. 49 - 50]
+___
+##### Formula di Bayes
+
+[pag. 50/54]
 ___
 
