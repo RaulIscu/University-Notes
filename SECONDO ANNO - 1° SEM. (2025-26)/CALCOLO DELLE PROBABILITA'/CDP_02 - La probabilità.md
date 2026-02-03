@@ -65,7 +65,10 @@ Di seguito, esponiamo la **formula di inclusione-esclusione** nella sua forma pi
 
 Tale formula è facilmente dimostrabile riflettendo sui significati concreti di unione e intersezione: fare l'unione di due eventi $A$ e $B$ significa considerare sia tutti gli eventi di $A$ che tutti gli eventi di $B$, tuttavia nel fare ciò verranno considerati due volte gli elementi che eventualmente si trovano sia in $A$ che in $B$, ossia $A\cap B$, dunque per eliminare questo eccesso basterà sottrarre tali elementi una volta. Naturalmente, nel caso in cui gli eventi considerati siano incompatibili, la loro intersezione sarà $A\cap B=\emptyset$, dunque tale operazione non sarà necessaria.
 
-[approfondimento su formula di inclusione-esclusione: pag. 28]
+Possiamo generalizzare la formula di inclusione-esclusione in modo da poter considerare un numero $n$ di eventi. Dunque, dati $n$ eventi $A_{1},\,A_{2},\,\dots,\,A_{n}$, la probabilità che almeno uno tra tali eventi si verifichi è pari a:
+$$\begin{align} \mathbb{P}(A_{1}\cup A_{2}\cup\,\dots\,\cup A_{n})&=\mathbb{P}(A_{1})+\mathbb{P}(A_{2})+\,\dots\,+\mathbb{P}(A_{n})\\ &-\mathbb{P}(A_{1}\cap A_{2})-\mathbb{P}(A_{1}\cap A_{3})-\,\dots\,-\mathbb{P}(A_{i}\cap A_{j})-\,\dots\,\mathbb{P}(A_{n-1}\cap A_{n}) \\ &+\, \dots \\ &+(-1)^{k-1}\sum_{\{i_{1},\,i_{2},\,\dots,\,i_{k}\}}\mathbb{P}(A_{i_{1}}\cap A_{i_{2}}\cap\,\dots\,\cap A_{i_{k}}) \\ &+\,\dots\\ &+(-1)^{n-1}\,\,\,\mathbb{P}(A_{1}\cap A_{2}\cap\,\dots\,\cap A_{n}) \end{align}$$
+Possiamo riassumere tale formula utilizzando la seguente notazione:
+$$\mathbb{P}(A_{1}\cup A_{2}\cup\,\dots\,\cup A_{n})=\sum_{k\,=\,1}^{n}\left( (-1)^{k-1}\sum_{\{i_{1},\,i_{2},\,\dots,\,i_{k}\}}\mathbb{P}(A_{i_{1}}\cap A_{i_{2}}\cap\,\dots\,\cap A_{i_{k}})\right)$$
 
 Arriviamo, infine, a un'ultima proprietà $(f)$ facilmente deducibile dalla definizione di **partizione dell'evento certo**.
 
@@ -210,7 +213,7 @@ Un modo alternativo, più semplice, di definire una combinazione di classe $k$ d
 
 Ad esempio, considerato l'insieme $A=\{a,\,b,\,c,\,d,\,e,\,f,\,g\}$, che ha $n=7$ elementi, e considerato $k=3$, una possibile disposizione senza ripetizioni di classe $k$ può essere la terna ordinata $(a,\,d,\,f)$, e per sua natura tale terna sarà concretamente diversa dalla terna $(d,\,f,\,a)$, proprio perché pur contenendo gli stessi elementi essi sono posti in ordine diverso. Invece, se a partire dallo stesso insieme $A$ estrapoliamo la combinazione di classe $k$ $\{a,\,d,\,f\}$, essa sarà perfettamente coincidente con la combinazione $\{d,\,f,\,a\}$, dato che nelle combinazioni non è rilevante l'ordine in cui sono posti gli elementi. 
 
-Possiamo indicare il numero delle possibili combinazioni di classe $k$ di $n$ elementi con la dicitura $C_{k}^{n}$. Ora, risulta banale che $C_{0}^{n}$ equivale al numero di modi in cui si possono estrarre $0$ elementi da un insieme di $n$ elementi, e ciò si può fare in un unico modo: non prendendo alcun elemento (l'insieme vuoto $\emptyset$); dunque $C_{0}^{n}=1$. Allo stesso modo, sappiamo che $C_{n}^{n}=1$ perché, analogamente, c'è un unico modo di estrarre $n$ elementi da un insieme di $n$ elementi, ossia prendendoli tutti. Inoltre, è facile convincersi che $C_{k}^{n}=C_{n-k}^{n}$. Infine, un'ultima equivalenza mette in relazione le combinazioni con le disposizioni senza ripetizione e con le [[CDP_02 - La probabilità#Permutazioni|permutazioni]], ed è la seguente:
+Possiamo indicare il numero delle possibili combinazioni di classe $k$ di $n$ elementi con la dicitura $C_{k}^{n}$. Ora, risulta banale che $C_{0}^{n}$ equivale al numero di modi in cui si possono estrarre $0$ elementi da un insieme di $n$ elementi, e ciò si può fare in un unico modo: non prendendo alcun elemento (l'insieme vuoto $\emptyset$); dunque $C_{0}^{n}=1$. Allo stesso modo, sappiamo che $C_{n}^{n}=1$ perché, analogamente, c'è un unico modo di estrarre $n$ elementi da un insieme di $n$ elementi, ossia prendendoli tutti. Inoltre, è facile convincersi che $C_{k}^{n}=C_{n-k}^{n}$: per dimostrare questa affermazione, basta pensare che una combinazione di classe $k$ non è altro che un sottoinsieme di $k$ elementi dell'insieme di partenza, e dunque estrarre tale sottoinsieme lascerà necessariamente un altro sottoinsieme di $n-k$ elementi; dunque, è possibile trovare una corrispondenza biunivoca tra la famiglia dei sottoinsiemi di cardinalità $k$ (ossia $C_{k}^{n}$ e quella dei sottoinsiemi di cardinalità $n-k$ (ossia $C_{n-k}^{n}$). Infine, un'ultima equivalenza mette in relazione le combinazioni con le disposizioni senza ripetizione e con le [[CDP_02 - La probabilità#Permutazioni|permutazioni]], ed è la seguente:
 $$D_{k}^{n}=C_{k}^{n}\cdot P_{k}$$
 È possibile dimostrare questa affermazione ragionando sulle caratteristiche di ciascuna di queste entità: innanzitutto, le disposizioni senza ripetizione di classe $k$ di $n$ elementi possono essere "raggruppate" in modo da avere, all'interno di ciascuno di questi gruppi, solo disposizioni che contengono gli stessi elementi, e che dunque differiscono tra loro solo per l'ordinamento degli stessi; sostanzialmente, ognuno dei gruppi ottenuti identifica una singola combinazione di classe $k$ degli $n$ elementi iniziali, e dunque possiamo affermare che il nostro raggruppamento ha generato $C_{k}^{n}$ gruppi. Ora, come abbiamo detto, ogni gruppo contiene disposizioni che differiscono tra loro solo per l'ordinamento, dunque che rappresentano la serie di permutazioni possibili dei $k$ elementi che ogni disposizione del gruppo contiene: si deduce, da ciò, che ogni gruppo contiene $P_{k}$ disposizioni. Avendo stabilito che le $D_{k}^{n}$ disposizioni possono essere raggruppate in $C_{k}^{n}$ gruppi, dove ogni gruppo contiene $P_{k}$ disposizioni, si è dimostrato proprio che $D_{k}^{n}=C_{k}^{n}\cdot P_{k}$.
 
@@ -219,8 +222,33 @@ $$\frac{n!}{(n-k)!}=C_{k}^{n}\cdot k!\,\,\,\Rightarrow\,\,\,C_{k}^{n}=\frac{n!}{
 Per brevità, la formula appena ottenuta si indica anche con il cosiddetto "**coefficiente binomiale $n$ sopra $k$**", letto anche come "**$n$ su $k$**" o come "**scegli $k$ tra $n$**":
 $$\frac{n!}{k!\cdot(n-k)!}:=\binom{n}{k}$$
 
+Nello studio del calcolo combinatorio, è utile tenere presente anche alcune **proprietà dei coefficienti binomiali**. Innanzitutto, come anticipato, possiamo affermare che $C_{0}^{n}=\binom{n}{0}=1$, e anche che $C_{n}^{n}=\binom{n}{n}=1$; allo stesso modo, si ha anche che $\binom{n}{k}=\binom{n}{n\,-\,k}$. Un'altra identità meno immediata di quelle appena viste è la cosiddetta "**formula di Stiefel**", che afferma che:
+$$\binom{n}{k}=\binom{n-1}{k-1}+\binom{n-1}{k}$$
+che vale purché si abbia che $1\le k\le n-1$. Possiamo dimostrare tale formula ricordando che $\binom{n}{k}=C_{k}^{n}$, ossia il numero dei sottoinsiemi di cardinalità $k$ di un insieme $A=\{a_{1},\,a_{2},\,\dots,\,a_{n-1},\,a_{n}\}$; di conseguenza, la formula di Stiefel può essere riformulata nel modo seguente:
+$$C_{k}^{n}=C_{k-1}^{n-1}+C_{k}^{n-1}$$
+I sottoinsiemi di cardinalità $k$ di $A$ possono essere divisi in due classi: i sottoinsiemi $C$ che contengono l'elemento $a_{n}$, e i sottoinsiemi $D$ che non contengono tale elemento; di conseguenza, il numero $C_{k}^{n}$ di sottoinsiemi di cardinalità $k$ di $A$ può essere espresso come somma delle cardinalità di queste due classi. Sappiamo che gli insiemi di tipo $C$ si possono esprimere come $C=C'\cup\{a_{n}\}$, dove $C'$ è un sottoinsieme di $A-\{a_{n}\}$ che ha cardinalità $k-1$, dunque sappiamo che il numero di sottoinsiemi di tipo $C$ è pari al numero di sottoinsiemi di cardinalità $k-1$ di $n-1$ elementi, ossia $C_{k-1}^{n-1}$; invece, gli insiemi di tipo $D$ sono semplicemente sottoinsiemi di cardinalità $k$ dell'insieme $A-\{{a_{n}}\}$, che a sua volta ha cardinalità $n-1$, dunque ci saranno $C_{k}^{n-1}$ sottoinsiemi di tipo $D$. Abbiamo stabilito che $C_{k}^{n}$ è pari alla somma tra numero di insiemi $C$ e di insiemi $D$, e abbiamo così dimostrato che $C_{k}^{n}=C_{k-1}^{n-1}+C_{k}^{n-1}$. 
 
-[proprietà dei coefficienti binomiali: pag. 32/35]
+Tramite la formula appena esplicitata, si può anche ottenere la seguente equivalenza:
+$$\sum_{r\,=\,k}^{n}\binom{r}{k}=\binom{n+1}{k+1}$$
+purché si abbia che $0\le k\le n$. Inoltre, possiamo anche affermare che:
+$$(a+b)^{n}=\sum_{k\,=\,0}^{n}\binom{n}{k}a^{k}b^{n-k}$$
+che, ponendo $a=b=1$, ci porta alla seguente proprietà:
+$$\sum_{k\,=\,0}^{n}\binom{n}{k}=2^{n}$$
+Tenendo presente che $\binom{n}{k}$ coincide con il numero di combinazioni di classe $k$ di $n$ elementi, e dunque con il numero di sottoinsiemi di cardinalità $k$ ottenibili da un insieme di $n$ elementi, si deduce che **la cardinalità della [[CDP_01 - Eventi#Eventi elementari e composti|famiglia delle parti]] di un insieme di $n$ elementi è pari a $2^{n}$**, e dunque che in un esperimento aleatorio che presenta $n$ eventi elementari ci saranno un totale di $2^{n}$ tra eventi elementari e composti, inclusi anche l'evento certo e l'evento impossibile.
+
+Un'altra identità utile è la cosiddetta "**identità di Vandermonde**", ossia:
+
+> Per una qualunque terna di numeri naturali $r$, $s$ e $n$, con $n\le r+s$, si ha che:
+> $$\sum_{k\,=\,0\,\lor\,(n-s)}^{n\,\land\,r}\binom{r}{k}\binom{s}{n-k}=\binom{r+s}{n}$$
+> dove con $k=0\lor(n-s)$ si intende che la sommatoria parte dal valore $k$ più grande tra $0$ e $n-s$, mentre con $n\land r$ si intende che la sommatoria arriva al valore più piccolo tra $n$ e $r$.
+
+[dimostrazione: pag. 33 - 34]
+
+[proprietà dei coefficienti binomiali: pag. 35]
+___
+##### Principio fondamentale del calcolo combinatorio
+
+[pag. 42]
 ___
 ##### Alcuni esempi di applicazione del calcolo combinatorio
 
@@ -246,5 +274,29 @@ $$\mathbb{P}(\{\text{tutte le ragazze in una squadra e tutti i ragazzi nell'altr
 Passiamo, ora, alla seconda incognita: scegliere una squadra composta perfettamente da $n$ ragazzi e $n$ ragazze significa scegliere precisamente $n$ ragazzi tra i $2n$ ragazzi totali e $n$ ragazze tra le $2n$ ragazze totali, dunque questa scelta può essere eseguita in $\binom{2n}{n}\binom{2n}{n}$ modi, che corrispondono di conseguenza agli eventi favorevoli. Perciò, si ottiene che:
 $$\mathbb{P}(\{\text{squadra composta da n ragazzi e n ragazze}\})=\frac{\binom{2n}{n}\binom{2n}{n}}{\binom{4n}{2n}}$$
 ___
+## Il problema delle concordanze
 
-[pag. 36/42]
+Supponiamo di avere la seguente situazione: una segretaria ha $n$ lettere indirizzate a $n$ persone distinte, e $n$ buste con già scritti gli indirizzi di tali persone in cui dovrà inserire le lettere. Se l'inserimento delle lettere nelle buste avvenisse in modo casuale, quale sarebbe la probabilità $p(n)$ che nessuna lettera finisca nella busta corrispondente? E quanto varrebbe, invece, la probabilità che $q(n)$ che almeno una lettera venga inserita nella busta giusta?
+
+Nel contesto del nostro esempio, affermiamo che c'è una "**concordanza**" nel momento in cui una lettera viene messa nella busta corrispondente: dunque, la probabilità $p(n)$ è quella che non si verifichino concordanze, mentre $q(n)$ è la probabilità che ci sia almeno una concordanza. Va da sé che le due probabilità sono una il complemento dell'altra, e dunque vale che:
+$$p(n)=1-q(n)$$
+Si tratta di un problema classico e ricorrente, che può avere anche altre interpretazioni, ma che può sempre essere ricondotto alla seguente riformulazione: data un'urna contenente $n$ palline numerate da $1$ a $n$, si estraggono le palline una alla volta, e se per un $h\in\{1,\,2,\,\dots,\,n\}$ si estrae la pallina col numero $h$ proprio all'estrazione $h$-esima, allora avviene una concordanza. Si precisa che stiamo assumendo che lo spazio $\Omega$ sia l'insieme di tutte le permutazioni $(j_{1},\,j_{2},\,\dots,\,j_{n})$, dunque dei possibili ordini di estrazione delle palline, e si ha almeno una concordanza se $j_{h}=h$ per almeno un $h\in\{1,\,2,\,\dots,\,n\}$; inoltre, stiamo assumendo che tutte le permutazioni siano equiprobabili. Tornando all'esempio iniziale, la probabilità $q(n)$ diventa dunque la probabilità che si verifichi uno degli eventi del seguente tipo:
+$$A_{h}=\{\text{la lettera }h\text{-esima viene inserita nella }h\text{-esima busta}\}$$
+I vari eventi $A_{h}$ consistono negli eventi $\{A_{1},\,A_{2},\,\dots,\,A_{n}\}$, dunque possiamo affermare che:
+$$\begin{align} q(n)&=\mathbb{P}(A_{1}\cup A_{2}\cup\,\dots\,\cup A_{n})\\&= \sum_{k\,=\,1}^{n}\left( (-1)^{k-1}\sum_{\{i_{1},\,i_{2},\,\dots,\,i_{k}\}}\mathbb{P}(A_{i_{1}}\cap A_{i_{2}}\cap\,\dots\,\cap A_{i_{k}}) \right) \end{align}$$
+Ora, qualunque sia la combinazione $\{i_{1},\,i_{2},\,\dots,\,i_{k}\}$, possiamo dimostrare che $\mathbb{P}(A_{i_{1}}\cap A_{i_{2}}\cap\,\dots\,\cap A_{i_{k}})=\frac{(n-k)!}{n!}$: [pag. 36]. Di conseguenza, si ha che:
+$$\sum_{\{i_{1},\,i_{2},\,\dots,\,i_{k}\}}\mathbb{P}(A_{i_{1}}\cap A_{i_{2}}\cap\,\dots\,\cap A_{i_{k}})=\frac{1}{k!}$$
+dato che la sommatoria $\sum_{\{i_{1},\,i_{2},\,\dots,\,i_{k}\}}$ corrisponde alla somma fatta su tutte le $\binom{n}{k}=\frac{n!}{k!(n-k)!}$ combinazioni $\{i_{1},\,i_{2},\,\dots,\,i_{k}\}$ degli $n$ elementi $\{1,\,2,\,\dots,\,n\}$, e perciò abbiamo che:
+$$\sum_{\{i_{1},\,i_{2},\,\dots,\,i_{k}\}}\mathbb{P}(A_{i_{1}}\cap A_{i_{2}}\cap\,\dots\,\cap A_{i_{k}})=\frac{n!}{k!(n-k)!}\cdot \frac{(n-k)!}{n!}= \frac{1}{k!}$$
+Avendo ottenuto tale equivalenza, possiamo tornare al problema principale. La probabilità $q(n)$ che avvenga almeno una concordanza è pari a:
+$$\begin{align} q(n)&=\frac{1}{1!}-\frac{1}{2!}+\frac{1}{3!}-\frac{1}{4!}+\,\dots\,+(-1)^{n-1}\frac{1}{n!} \\ &= \sum_{k\,=\,1}^{n}\left( (-1)^{k-1} \frac{1}{k!} \right)\end{align}$$
+e, naturalmente, la probabilità di $p(n)$, evento complementare a $q(n)$ è uguale alla probabilità che non avvenga alcuna concordanza, è pari a:
+$$\begin{align} p(n) &= 1 - q(n) \\ &= 1 - \frac{1}{1!}-\frac{1}{2!}+\frac{1}{3!}-\frac{1}{4!}+\,\dots\,+(-1)^{n-1}\frac{1}{n!} \\ &=\sum_{k\,=\,0}^{n}\left( (-1)^{k} \frac{1}{k!} \right) \end{align}$$
+___
+## Probabilità condizionate
+
+
+
+[pag. 44/54]
+___
+
