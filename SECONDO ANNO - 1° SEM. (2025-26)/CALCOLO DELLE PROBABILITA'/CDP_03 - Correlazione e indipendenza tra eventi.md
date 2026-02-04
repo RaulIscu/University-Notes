@@ -95,12 +95,29 @@ Valendo che $\mathbb{P}(E\cap F)=\mathbb{P}(E)\cdot\mathbb{P}(F)$, abbiamo dimos
 
 Dalle tre proprietà appena enunciate deriva anche che $\emptyset\in\mathcal{G}$ (per dimostrare ciò, sfruttare le proprietà $1.$ e $2.$ considerando $E=\Omega$), così come $E_{1},\,E_{2}\in\mathcal{G}\,\Rightarrow\,E_{1}\cap E_{2}\in\mathcal{G}$ (per dimostrare ciò, sfruttare la [[CDP_01 - Eventi#Proprietà relative alle operazioni insiemistiche|legge di De Morgan]] e le proprietà $2.$ e $3.$).
 
-Le algebre non devono essere necessariamente generate direttamente da spazi campione, ma possono derivare anche da **famiglie di eventi** contenute in uno spazio campione.   
+Le algebre non devono essere necessariamente generate direttamente da spazi campione, ma possono derivare anche da **famiglie di eventi** contenute in uno spazio campione.
 
-[pag. 63 - 64]
+> Sia $\mathcal{A}=\{A_{1},\,A_{2},\,\dots,\,A_{n}\}$ una famiglia di eventi in uno spazio campione $\Omega$; definiamo "**algebra generata da $\mathcal{A}$**" la famiglia $\mathcal{G}(\mathcal{A})$ di eventi di $\Omega$ caratterizzata dalle seguenti proprietà:
+> 1. $\mathcal{G}(\mathcal{A})$ è un'algebra;
+> 2. $\mathcal{A}\subseteq\mathcal{G}(\mathcal{A})$;
+> 3. se $\mathcal{C}\subseteq\mathcal{P}(\Omega)$ è un'algebra e $\mathcal{A}\subseteq\mathcal{C}$, allora $\mathcal{G}(\mathcal{A})\subseteq\mathcal{C}$.
+
+In parole povere, possiamo affermare che $\mathcal{G}(\mathcal{A})$ è **la più piccola famiglia di sottoinsiemi di $\Omega$** che abbia contemporaneamente le due proprietà di **essere un'algebra** e di **contenere al suo interno tutti i sottoinsiemi di $\mathcal{A}$**. 
+
+> Siano $\mathcal{A}$ e $\mathcal{B}$ due partizioni finite e indipendenti di $\Omega$. Scelti due eventi qualsiasi $E\in\mathcal{G}(\mathcal{A})$ e $F\in\mathcal{G}(\mathcal{B})$, risulta sempre che $E\,\bot\,F$.
 ___
 ## Indipendenza completa e prove bernoulliane
 
-[pag. 64/68]
+A questo punto della trattazione, dovrebbe ormai essere chiaro il significato "logico" della condizione di **[[CDP_03 - Correlazione e indipendenza tra eventi#Correlazione e indipendenza tra 2 eventi|indipendenza stocastica]]** tra due eventi $A$ e $B$: $A$ e $B$ si dicono indipendenti se **sapere con certezza se $B$ si è verificato o meno non modifica le aspettative circa il verificarsi o meno di $A$**. Tale nozione è fondamentale nella costruzione di modelli probabilistici: infatti, nella pratica, nell'assegnare una [[CDP_02 - Probabilità#Misure di probabilità|misura di probabilità]] su uno spazio campione si parte molto spesso dall'individuazione di famiglie di eventi a ciascuno dei quali si impone uguale probabilità, e di coppie di eventi tra i quali si impone l'indipendenza stocastica. Comunque, vedremo presto che ci sono delle situazioni naturali in cui la condizione di indipendenza viene contraddetta.
+
+Ora, seppur l'indipendenza stocastica sia un concetto così importante e cruciale nel calcolo della probabilità, c'è da dire che la definizione che ne abbiamo dato finora risulta in realtà non completa, perlomeno quando si considerano **più di $2$ eventi distinti**. Riprendiamo, ad esempio, l'esempio del lancio di due dadi, e consideriamo i $3$ eventi $A=\{X_{1}\text{ è pari}\}$, $B=\{X_{2}\text{ è pari}\}$ e $C=\{X_{1}+X_{2}\text{ è dispari}\}$: imponendo la condizione di equiprobabilità tra gli eventi elementari dello spazio campione dell'esperimento, è facile convincersi delle seguenti relazioni:
+$$A\,\bot\,B\,\,\,\,\,\,\,\,\,\,A\,\bot\,C\,\,\,\,\,\,\,\,\,\,B\,\bot\,C$$
+Tuttavia, seppur valga questa sorta di "triangolo" di indipendenze tra le varie coppie di eventi possibili, notiamo anche che, naturalmente, si ha:
+$$\mathbb{P}(C\,|\,A\cap B)=0$$
+dato che se due numeri sono pari è impossibile che la loro somma sia dispari; tale conclusione contrasta, però, con il significato di indipendenza. Cerchiamo di fornire, dunque, una **nuova definizione di indipendenza**, più generale e che possa considerare più di $2$ eventi contemporaneamente.
+
+> 
+
+[pag. 65/68]
 ___
 
