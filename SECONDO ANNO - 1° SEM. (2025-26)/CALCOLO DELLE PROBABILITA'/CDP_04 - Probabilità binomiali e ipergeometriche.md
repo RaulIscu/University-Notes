@@ -18,9 +18,9 @@ sono incompatibili nel caso in cui $x'=(x'_{1},\,x'_{2},\,\dots,\,x'_{n})\neq x'
 $$\sum_{i\,=\,1}^{n}x'_{i}=\sum_{i\,=\,1}^{n}x''_{i}=k$$
 sappiamo che quegli stessi eventi risultano anche equiprobabili, ed entrambi di probabilità $\theta^{k}(1-\theta)^{n-k}$. Perciò, dal momento che la cardinalità dell'insieme $\left\{ x\in\{0,\,1\}^{n}:\sum_{i\,=\,1}^{n}x_{i}=k \right\}$ è uguale a $\binom{n}{k}$, potremmo scrivere per $k=0,\,1,\,\dots,\,n$:
 $$\mathbb{P}(\{S_{n}=k\})\,=\,\sum_{x\,\in\,\{0,\,1\}^{n}\,:\,\sum_{i\,=\,1}^{n}x_{i}\,=\,k}\mathbb{P}(\{X_{1}=x_{1},\,X_{2}=x_{2},\,\dots,\,X_{n}=x_{n}\})\,=\,\binom{n}{k}\,\theta^{k}(1-\theta)^{n-k}$$
-Una probabilità del genere definita sull'insieme $\{0,\,1,\,\dots,\,n\}$ prende il nome di "**probabilità binomiale** di parametri $n$ e $\theta$", e rappresenta una **[[CDP_02 - Probabilità#Misure di probabilità|misura di probabilità]] $\mathbf{P}$ definita sull'insieme delle parti di $\{0,\,1,\,\dots,\,n\}$** come segue:
-$$\mathbf{P}:\mathcal{P}(\{0,\,1,\,\dots,\,n\})\rightarrow[0,\,1],\,\,\,I \mapsto \mathbf{P}(I):=\sum_{k\,\in\,I}p(k)$$
-dove $p(k)=\binom{n}{k}\theta^{k}(1-\theta)^{n-k}$ e $k\,\in\,\{0,\,1,\,\dots,\,n\}$.
+> Una probabilità del genere definita sull'insieme $\{0,\,1,\,\dots,\,n\}$ prende il nome di "**probabilità binomiale** di parametri $n$ e $\theta$", e rappresenta una **[[CDP_02 - Probabilità#Misure di probabilità|misura di probabilità]] $\mathbf{P}$ definita sull'insieme delle parti di $\{0,\,1,\,\dots,\,n\}$** come segue:
+ $$\mathbf{P}:\mathcal{P}(\{0,\,1,\,\dots,\,n\})\rightarrow[0,\,1],\,\,\,I \mapsto \mathbf{P}(I):=\sum_{k\,\in\,I}p(k)$$
+  dove $p(k)=\binom{n}{k}\theta^{k}(1-\theta)^{n-k}$ e $k\,\in\,\{0,\,1,\,\dots,\,n\}$.
 
 ##### Esempi di probabilità binomiali
 
@@ -66,7 +66,37 @@ $$\mathbb{P}(\{S_{n}=k\})=\binom{n}{k}\left( \frac{m_{1}}{M} \right)^{k}\left( \
 ___
 ## Probabilità ipergeometriche
 
+Consideriamo nuovamente la stessa situazione descritta nel [[CDP_04 - Probabilità binomiali e ipergeometriche#Estrazioni casuali da un'urna con reinserimento|paragrafo precedente]]: una popolazione di $M$ oggetti, numerati da $1$ a $M$, dove i primi $m_{1}$ oggetti sono di tipo $A$ e dove i rimanenti $m_{2}=M-m_{1}$ oggetti sono di tipo $B$. Supponiamo nuovamente di voler estrarre casualmente $n$ oggetti da questa popolazione, ma stavolta vogliamo effettuare delle **estrazioni senza reinserimento**. Per capire cosa implica ciò, poniamo nuovamente:
+$$A_{i}=\{\text{l'oggetto estratto nell'}i\text{-esima estrazione è di tipo }A\}$$
+per $i=1,\,2,\,\dots,\,n$, e consideriamo il valore $X_{i}$ tale per cui:
+$$X_{i}=\begin{cases} 1&\text{se si verifica }A_{i}\\0&\text{se si verifica }\overline{A_{i}} \end{cases}$$
+con $S_{n}=\sum_{i\,=\,1}^{n}X_{i}$. In questo contesto, possiamo considerare come spazio campione $\Omega$ dell'esperimento l'insieme delle $n$-uple ordinate di elementi di $\{1,\,2,\,\dots,\,M\}$ senza ripetizione:
+$$\Omega=\{(j_{1},\,j_{2},\,\dots,\,j_{n})\,:\,1\le j_{i}\le M,\,\,j_{1}\neq j_{2}\neq\,\dots\,\neq j_{n}\}$$
+Osserviamo, a questo punto, che tale insieme corrisponde all'insieme delle **[[CDP_02 - Probabilità#Disposizioni senza ripetizione|disposizioni senza ripetizione]] di classe $n$ di $M$ elementi**, e dunque la cardinalità dello spazio campione sarà pari a:
+$$|\Omega|=\frac{M!}{(M-n)!}$$
+Il fatto che le estrazioni vengono fatte in maniera casuale si traduce nella condizione che tutti gli eventi elementari appartenenti a $\Omega$ sono equiprobabili, e hanno probabilità pari a $\frac{(M-n)!}{M!}$. Ora, un qualunque evento composto della forma $\{X_{1}=x_{1},\,X_{2}=x_{2},\,\dots,\,X_{n}=x_{n}\}$ ha una cardinalità che dipende esclusivamente dal valore $k=\sum_{i\,=\,1}^{n}x_{i}$, e in generale essa è pari a:
+$$\begin{align}&\,\,\,\,\,\,\,\,\overbrace{m_{1}\cdot(m_{1}-1)\cdot(m_{1}-2)\cdot\,\dots\,\cdot(m_{1}-(k-1))}^{k\,\text{fattori}}\cdot\overbrace{m_{2}\cdot(m_{2}-1)\cdot(m_{2}-2)\cdot\,\dots\,\cdot(m_{2}-(n-k-1))}^{n-k\,\text{fattori}}\\&=m_{1}\cdot(m_{1}-1)\cdot(m_{1}-2)\cdot\,\dots\,(m_{1}-k+1)\cdot m_{2}\cdot(m_{2}-1)\cdot(m_{2}-2)\cdot\,\dots\,(m_{2}-(n-k)+1)\\&= \frac{m_{1}!}{(m_{1}-k)!}\cdot \frac{m_{2}!}{(m_{2}-(n-k))!}\end{align}$$
+Perciò, possiamo affermare che la probabilità di un qualunque evento composto è pari a:
+$$\mathbb{P}(\{X_{1}=x_{1},\,X_{2}=x_{2},\,\dots,\,X_{n}=x_{n}\})=\frac{m_{1}!}{(m_{1}-k)!}\cdot \frac{m_{2}!}{(m_{2}-(n-k))!}\cdot \frac{(M-n)!}{M!}$$
+Da quest'ultima deduzione, possiamo ricavare che:
+$$\mathbb{P}(\{S_{n}=k\})=\binom{n}{k}\frac{m_{1}!}{(m_{1}-k)!} \frac{m_{2}!}{(m_{2}-(n-k))!}\frac{(M-n)!}{M!}$$
+Possiamo riscrivere tale risultato in forma più compatta, sfruttando le notazioni dei [[CDP_02 - Probabilità#Combinazioni|coefficienti binomiali]], e possiamo quindi concludere che per $k\in\{0,\,1,\,\dots,\,n\}$:
+$$\mathbb{P}(\{S_{n}=k\})=\begin{cases} \frac{\binom{m_{1}}{k}\binom{m_{2}}{n\,-\,k}}{\binom{M}{n}}&\text{per }max(0,\,n+m_{1}-M)\le k\le min(n,\,m_{1}) \\0&\text{altrimenti}\end{cases}$$
+**I vincoli su $k$ servono a prevenire situazioni concretamente impossibili**, infatti rapportandoci all'esempio che stiamo considerando:
+- $k$ deve essere minore o uguale del minimo tra $n$ e $m_{1}$ perché non possiamo estrarre più oggetti di tipo $A$ di quanti oggetti abbiamo in totale, e neppure di quanti oggetti di tipo $A$ sono presenti nella popolazione considerata;
+- $k$ deve essere maggiore o uguale al massimo tra $0$ e $n+m_{1}-M$ perché non possiamo estrarre un numero minore di $0$ di oggetti di tipo $A$, e neppure minore del numero di oggetti di tipo $A$ che saremmo costretti ad estrarre nell'eventualità in cui, a un certo punto della nostra serie di estrazioni, abbiamo già estratto tutti gli oggetti di tipo $B$ presenti nella popolazione.
 
+> Una probabilità del genere definita sull'insieme $\{0,\,1,\,\dots,\,n\}$ prende il nome di "**probabilità ipergeometrica**", e rappresenta una **[[CDP_02 - Probabilità#Misure di probabilità|misura di probabilità]] $\mathbf{P}$ definita sull'insieme delle parti di $\{0,\,1,\,\dots,\,n\}$** come segue:
+> $$\mathbf{P}:\mathcal{P}(\{0,\,1,\,\dots,\,n\})\rightarrow[0,\,1];\,\,\,\,\,I\mapsto \mathbf{P}(I):=\sum_{k\,\in\,I}p(k)$$
+> dove $p(k)=\frac{\binom{m_{1}}{k}\binom{m_{2}}{n\,-\,k}}{\binom{M}{n}}$ se vale che $0\le k \le m_{1}$ e che $0\le n-k \le m_{2}$, mentre $p(k)=0$ per eventuali altri valori di $k$.
 
-[pag. 74/78]
+Dal momento che, per $m_{1}$, $n$ e $M$ fissati, la famiglia degli eventi $\{S_{n}=k\}$, per valori validi di $k$, costituisce una partizione dello spazio campione, deve necessariamente risultare che:
+$$\sum_{k\,=\,0\,\lor\,(n\,+\,m_{1}\,-\,M)}^{n\,\land\,m_{1}} \frac{\binom{m_{1}}{k}\binom{m_{2}}{n-k}}{\binom{M}{n}}=1$$
+e notiamo un fatto interessante: **tale conclusione corrisponde esattamente all'[[CDP_02 - Probabilità#Combinazioni|identità di Vandermonde]]**.
+
+È importante osservare che anche nel caso delle estrazioni senza reinserimento, per ogni $i=1,\,2,\,\dots,\,n$ e per ciascuno degli eventi $A_{i}=\{X_{i}=1\}$, ossia degli eventi $\{\text{all'}i\text{-esima estrazione viene estratto un oggetto di tipo A}\}$, si ha che:
+$$\mathbb{P}(A_{i})=\frac{m_{1}}{M}$$
+ossia, in parole povere, **nel caso delle estrazioni senza reinserimento le probabilità di estrarre un oggetto di tipo $A$ all'$i$-esima estrazione sono tutte pari alla probabilità di estrarre un oggetto di tipo $A$ alla prima estrazione**, e dunque hanno lo stesso valore delle analoghe probabilità calcolate nel caso delle [[CDP_04 - Probabilità binomiali e ipergeometriche#Estrazioni casuali da un'urna con reinserimento|estrazioni con reinserimento]].
+
+Infine, è possibile dimostrare che, se si mantiene fissato il numero $n$ di estrazioni ma si aumentano notevolmente $M$ e $m_{1}$, con $\frac{m_{1}}{M}$ molto vicino a $\theta$, allora si avrà che le probabilità binomiali con probabilità $\theta$ e le probabilità ipergeometriche corrispondenti saranno molto vicine. [dimostrazione: pag. 78]
 ___
