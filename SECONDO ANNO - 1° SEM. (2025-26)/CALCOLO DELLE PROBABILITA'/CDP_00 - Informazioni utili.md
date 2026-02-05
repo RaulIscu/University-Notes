@@ -30,3 +30,5 @@ pag. 7/9
 pag. 20
 pag. 43
 pag. 56
+pag. 69
+pag. 79

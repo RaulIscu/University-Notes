@@ -116,8 +116,52 @@ Tuttavia, seppur valga questa sorta di "triangolo" di indipendenze tra le varie 
 $$\mathbb{P}(C\,|\,A\cap B)=0$$
 dato che se due numeri sono pari è impossibile che la loro somma sia dispari; tale conclusione contrasta, però, con il significato di indipendenza. Cerchiamo di fornire, dunque, una **nuova definizione di indipendenza**, più generale e che possa considerare più di $2$ eventi contemporaneamente.
 
-> 
+> Sia $\{E_{1},\,E_{2},\,\dots,\,E_{n}\}$ una famiglia di eventi in uno stesso spazio di probabilità, e consideriamo le varie partizioni $\mathcal{P}_{1}=\{E_{1},\,\overline{E_{1}}\},\,\mathcal{P}_{2}=\{E_{2},\,\overline{E_{2}}\},\,\dots,\,\mathcal{P}_{n}=\{E_{n},\,\overline{E_{n}}\}$ di tale spazio. Gli eventi $E_{1},\,E_{2},\,\dots,\,E_{n}$ si dicono una famiglia di eventi "**completamente indipendenti**", o "**globalmente indipendenti**", se per ogni $m$ tale che $2\le m\le n$, comunque siano presi degli indici $\{j_{1},\,j_{2},\,\dots,\,j_{m}\}$ dall'insieme $\{1,\,2,\,\dots,\,n\}$ e comunque siano scelti degli eventi $\tilde{E_{j_{i}}}\in\mathcal{P}_{j_{i}}$ (dove $\tilde{E_{j_{i}}}=E_{j_{i}}\lor\overline{E_{j_{i}}}$), si ha che:
+> $$\mathbb{P}(\tilde{E_{j_{1}}}\cap\tilde{E_{j_{2}}}\cap\,\dots\,\cap\tilde{E_{j_{m}}})\,=\,\mathbb{P}(\tilde{E_{j_{1}}})\cdot\mathbb{P}(\tilde{E_{j_{2}}})\cdot\,\dots\,\cdot\mathbb{P}(\tilde{E_{j_{m}}})$$
 
-[pag. 65/68]
+La definizione appena mostrata implica, banalmente, le due seguenti **condizioni equivalenti**: innanzitutto, se consideriamo solo casi in cui $\tilde{E_{j_{i}}}=E_{j_{i}}$, dunque in cui si lavora solo con gli eventi effettivi e non con i loro complementari, allora abbiamo che:
+$$\mathbb{P}(E_{j_{1}}\cap E_{j_{2}}\cap\,\dots\,\cap E_{j_{m}})\,=\,\mathbb{P}(E_{j_{1}})\cdot\mathbb{P}(E_{j_{2}})\cdot\,\dots\,\cdot\mathbb{P}(E_{j_{m}})$$
+per ogni sottoinsieme $\{j_{1},\,j_{2},\,\dots,\,j_{m}\}$ di $\{1,\,2,\,\dots,\,n\}$ e considerando $2\le m\le n$ (si tratterà di valutare $2^{n} -n-1$ condizioni, dato che si hanno $2^{n}$ sottoinsiemi totali di $\{1,\,2,\,\dots,\,n\}$ a cui vanno sottratti gli $n$ singoletti, dato che $m$ deve essere almeno pari a $2$, e l'insieme vuoto $\emptyset$, per lo stesso ragionamento). Il secondo caso particolare emerge considerando il caso in cui $m=n$, ma lasciando comunque che $\tilde{E_{j_{i}}}$ possa rappresentare sia l'evento $E_{j_{i}}$ che il suo complementare:
+$$\mathbb{P}(\tilde{E_{1}}\cap \tilde{E_{2}}\cap\,\dots\,\cap \tilde{E_{n}})\,=\,\mathbb{P}(\tilde{E_{1}})\cdot\mathbb{P}(\tilde{E_{2}})\cdot\,\dots\,\cdot\mathbb{P}(\tilde{E_{n}})$$
+In questo caso, si tratterà di valutare $2^{n}$ condizioni.
+
+Vediamo, ad esempio, cosa succede se si considerano $n=3$ eventi $A$, $B$ e $C$. Se volessimo verificare la prima delle due condizioni equivalenti, si dovrebbero verificare le seguenti 4 sotto-condizioni:
+$$\begin{align} &\mathbb{P}(A\cap B)\,=\,\mathbb{P}(A)\cdot\mathbb{P}(B)\\ &\mathbb{P}(A\cap C)\,=\,\mathbb{P}(A)\cdot\mathbb{P}(C)\\&\mathbb{P}(B\cap C)\,=\,\mathbb{P}(B)\cdot\mathbb{P}(C)\\&\mathbb{P}(A\cap B\cap C)\,=\,\mathbb{P}(A)\cdot\mathbb{P}(B)\cdot\mathbb{P}(C)\end{align}$$
+Invece, per poter verificare la seconda condizione equivalente, si dovrebbero verificare le $8$ sotto-condizioni corrispondenti a tutte le possibili combinazioni di intersezioni tra i $3$ eventi $A$, $B$ e $C$ e i loro complementari $\overline{A}$, $\overline{B}$ e $\overline{C}$. Infine, se volessimo verificare la condizione principale, quella che effettivamente definisce l'indipendenza completa tra i $3$ eventi, si dovrebbero verificare sia le $8$ sotto-condizioni appena indicate, sia le altre $12$ sotto-condizioni corrispondenti a tutte le possibili combinazioni di classe $2$ di intersezioni tra i $3$ eventi e i loro complementari.
+
+Va specificato, del resto, che ad esempio nel verificare la prima condizione equivalente **verificare le prime $3$ sotto-condizioni delle $4$ totali non implica che anche la quarta sia verificata**: in altre parole, è perfettamente possibile che siano rispettate le sotto-condizioni relative alle diverse intersezioni tra $2$ dei $3$ eventi considerati, ma che non venga rispettata quella relativa all'intersezione che comprende tutti e $3$ tali eventi (un esempio concreto in cui osserviamo ciò è proprio l'esempio del lancio di due dadi ricordato a inizio paragrafo, dove gli eventi $A$, $B$ e $C$ sono indipendenti tra loro se presi a $2$ a $2$ ma non se presi tutti insieme).
+
+##### Prove bernoulliane
+
+Un caso interessante e particolare di eventi indipendenti è identificato dal cosiddetto "**schema di Bernoulli**", o dalle cosiddette "**prove bernoulliane**", chiamate anche "**prove ripetute**", di cui andiamo a dare una definizione ora.
+
+> Gli eventi $E_{1},\,E_{2},\,\dots,\,E_{n}$ costituiscono delle "**prove bernoulliane**" se sussiste un'[[CDP_03 - Correlazione e indipendenza tra eventi#Indipendenza completa e prove bernoulliane|indipendenza completa]] tra di loro e se tutti hanno una stessa probabilità $\theta$, con $0<\theta<1$.
+
+In altre parole, se $E_{1},\,E_{2},\,\dots,\,E_{n}$ costituiscono un insieme di prove bernoulliane, si ha che per $m\le n$ e per qualunque sottoinsieme di indici $J=\{j_{1},\,j_{2},\,\dots,\,j_{m}\}\subseteq\{1,\,2,\,\dots,\,n\}$:
+$$\mathbb{P}(E_{j_{1}}\cap E_{j_{2}}\cap\,\dots\,\cap E_{j_{m}})=\theta^{m}$$
+Come conseguenza di ciò, se consideriamo un sottoinsieme $\{i_{1},\,i_{2},\,\dots,\,i_{k}\}\subseteq\overline{J}=\{1,\,2,\,\dots,\,n\}/\{j_{1},\,j_{2},\,\dots,\,j_{m}\}$, allora vale che:
+$$\mathbb{P}(E_{j_{1}}\cap E_{j_{2}}\cap\,\dots\,\cap E_{j_{m}}\cap\overline{E_{i_{1}}}\cap\overline{E_{i_{2}}}\cap\,\dots\,\cap\overline{E_{i_{k}}})=\theta^{m}(1-\theta)^{k}$$
+___
+##### Indipendenza completa di partizioni
+
+Abbiamo già osservato che la definizione di [[CDP_03 - Correlazione e indipendenza tra eventi#Indipendenza completa e prove bernoulliane|indipendenza completa tra più eventi]] $E_{i}$ viene espressa attraverso le partizioni $\mathcal{P}_{i}=\{E_{i},\,\overline{E_{i}}\}$. Ciò gioca in nostro vantaggio se vogliamo fornire una definizione di **indipendenza completa tra partizioni**.
+
+> Le partizioni $\mathcal{P}_{1},\,\mathcal{P}_{2},\,\dots,\,\mathcal{P}(n)$ sono una famiglia di **partizioni completamente indipendenti** se, comunque venga scelto $m$, con $2\le m\le n$, comunque vengano estratti di conseguenza degli indici $\{j_{1},\,j_{2},\,\dots,\,j_{m}\}$ dall'insieme $\{1,\,2,\,\dots,\,n\}$, e comunque siano quindi scelti degli eventi $F_{j_{i}}\in\mathcal{P}_{j_{i}}$ per $i=1,\,2,\,\dots,\,m$, risulta che:
+> $$\mathbb{P}(F_{j_{1}}\cap F_{j_{2}}\cap\,\dots\,\cap F_{j_{m}})\,=\,\mathbb{P}(F_{j_{1}})\cdot\mathbb{P}(F_{j_{2}})\cdot\,\dots\,\cdot\mathbb{P}(F_{j_{m}})$$
+
+Chiaramente, in modo analogo a come abbiamo visto in precedenza, tale definizione implica la seguente **condizione equivalente**, ottenuta considerando il caso in cui $m=n$:
+$$\mathbb{P}(F_{1}\cap F_{2}\cap\,\dots\,\cap F_{n})\,=\,\mathbb{P}(F_{1})\cdot\mathbb{P}(F_{2})\cdot\,\dots\,\cdot\mathbb{P}(F_{n})$$
+Si potrebbe dimostrare che quest'ultima condizione vale anche **sostituendo gli elementi $F_{i}$ delle partizioni $\mathcal{P}_{i}$ con gli eventi $G_{i}$ delle [[CDP_03 - Correlazione e indipendenza tra eventi#Algebre generate da famiglie di eventi|algebre]] $\mathcal{G}(\mathcal{P}_{i})$ generate dalle partizioni $\mathcal{P}_{i}$**. In particolare, vale la seguente generalizzazione:
+
+> Sia $\mathcal{P}_{1},\,\mathcal{P}_{2},\,\dots,\,\mathcal{P}_{n}$ una famiglia di partizioni completamente indipendenti. Allora, comunque vengano scelti $n$ eventi $G_{i}\in\mathcal{G}(\mathcal{P}_{i})$ per $i=1,\,2,\,\dots,\,n$ si ha che:
+> $$\mathbb{P}(G_{1}\cap G_{2}\cap\,\dots\,\cap G_{n})\,=\,\mathbb{P}(G_{1})\cdot\mathbb{P}(G_{2})\cdot\,\dots\,\cdot\mathbb{P}(G_{n})$$
+
+Questa definizione, del resto, vale in maniera del tutto analoga anche considerando un valore $m$ tale per cui $2\le m\le n$, estraendo degli indici $\{j_{1},\,j_{2},\,\dots,\,j_{m}\}$ dall'insieme $\{1,\,2,\,\dots,\,n\}$ e considerando eventi $G_{j_{i}}\in\mathcal{G}(\mathcal{P}_{j_{i}})$ per $i=1,\,2,\,\dots,\,m$.
+
+Vediamo un esempio di applicazione concreta del concetto di indipendenza completa di partizioni. Supponiamo di osservare il lancio di tre dadi, e sia $X_{i}$ il risultato dato dall'$i$-esimo dado; si considerino, a questo punto, le partizioni $\mathcal{P}_{i}$ del tipo:
+$$\mathcal{P}_{i}=\{\{X_{i}=1\},\,\{X_{i}=2\},\,\{X_{i}=3\},\,\{X_{i}=4\},\,\{X_{i}=5\},\,\{X_{i}=6\}\}$$
+per $i=1,\,2,\,3$. Chiaramente, comunque scelti tre numeri $j_{1}$, $j_{2}$ e $j_{3}$ si ha che:
+$$\mathbb{P}(\{X_{1}=j_{1},\,X_{2}=j_{2},\,X_{3}=j_{3}\})\,=\,\frac{1}{216}\,=\,\mathbb{P}(\{X_{1}=j_{1}\})\cdot\mathbb{P}(\{X_{2}=j_{2}\})\cdot\mathbb{P}(\{X_{3}=j_{3}\})$$
+e quindi, osservando che ciascuno degli eventi $\{X_{1}=j_{1},\,X_{2}=j_{2},\,X_{3}=j_{3}\}$ coincide con l'evento $\{X_{1}=j_{1}\}\cap\{X_{2}=j_{2}\}\cap\{X_{3}=j_{3}\}$, abbiamo che le tre partizioni $\mathcal{P}_{i}$ sono completamente indipendenti.
 ___
 
