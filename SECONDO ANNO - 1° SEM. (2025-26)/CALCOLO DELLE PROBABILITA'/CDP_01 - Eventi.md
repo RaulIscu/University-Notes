@@ -66,7 +66,7 @@ Ciononostante, rimane importante e conveniente avere ben presente il "**signific
 _____
 ##### Partizione dell'evento certo
 
-> Data una collezione di sottoinsiemi $\mathcal{H}=\{H_{1},\,H_{2},\,\dots,\,H_{m}\}$ dello spazio campione $\Omega$, tale collezione costituisce una "**partizione di $\Omega$**" se e solo se **gli insiemi $H_{1},\,H_{2},\,\dots,\,H_{m}$ sono disgiunti** (non hanno elementi comuni) **a due a due** e se **la loro unione coincide con $\Omega$**, ossia vale che:
+> Data una collezione di sottoinsiemi $\mathcal{H}=\{H_{1},\,H_{2},\,\dots,\,H_{m}\}$ dello spazio campione $\Omega$, tale collezione costituisce una "**partizione di $\Omega$**" se e solo se **gli insiemi $H_{1},\,H_{2},\,\dots,\,H_{m}$ sono disgiunti** (non hanno elementi comuni) **a due a due** e se **la loro unione coincide con $\Omega$**, ossia se vale che:
 > $$H_{l_{1}}\cap H_{l_{2}}=\emptyset\,\,\,\text{per }l_{1}\neq l_{2}\,\,\,\,\,\bigwedge\,\,\,\,\,\bigcup_{l\,=\,1}^{m}H_{l}=\Omega$$
 > Gli insiemi $H_{l}$ vengono anche detti **elementi** della partizione $\mathcal{H}$.
 

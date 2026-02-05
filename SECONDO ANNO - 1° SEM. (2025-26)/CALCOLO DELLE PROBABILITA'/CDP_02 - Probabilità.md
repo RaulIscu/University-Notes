@@ -63,7 +63,7 @@ Di seguito, esponiamo la **formula di inclusione-esclusione** nella sua forma pi
 > Per due eventi arbitrari $A,\,B\,\in\,\mathcal{P}(\Omega)$, si ha che:
 > $$\mathbb{P}(A\cup B)\,=\,\mathbb{P}(A)+\mathbb{P}(B)-\mathbb{P}(A\cap B)$$
 
-Tale formula è facilmente dimostrabile riflettendo sui significati concreti di unione e intersezione: fare l'unione di due eventi $A$ e $B$ significa considerare sia tutti gli eventi di $A$ che tutti gli eventi di $B$, tuttavia nel fare ciò verranno considerati due volte gli elementi che eventualmente si trovano sia in $A$ che in $B$, ossia $A\cap B$, dunque per eliminare questo eccesso basterà sottrarre tali elementi una volta. Naturalmente, nel caso in cui gli eventi considerati siano incompatibili, la loro intersezione sarà $A\cap B=\emptyset$, dunque tale operazione non sarà necessaria.
+Tale formula è facilmente dimostrabile riflettendo sui significati concreti di unione e intersezione: fare l'unione di due eventi $A$ e $B$ significa considerare sia tutti gli eventi di $A$ che tutti gli eventi di $B$, tuttavia nel fare ciò verranno considerati due volte gli elementi che eventualmente si trovano sia in $A$ che in $B$, ossia $A\cap B$, dunque per eliminare questo eccesso basterà sottrarre tali elementi una volta. Naturalmente, nel caso in cui gli eventi considerati siano incompatibili la loro intersezione sarà $A\cap B=\emptyset$, dunque tale operazione non sarà necessaria e per calcolare $\mathbb{P}(A \cup B)$ basterà applicare la proprietà di additività.
 
 Possiamo generalizzare la formula di inclusione-esclusione in modo da poter considerare un numero $n$ di eventi. Dunque, dati $n$ eventi $A_{1},\,A_{2},\,\dots,\,A_{n}$, la probabilità che almeno uno tra tali eventi si verifichi è pari a:
 $$\begin{align} \mathbb{P}(A_{1}\cup A_{2}\cup\,\dots\,\cup A_{n})&=\mathbb{P}(A_{1})+\mathbb{P}(A_{2})+\,\dots\,+\mathbb{P}(A_{n})\\ &-\mathbb{P}(A_{1}\cap A_{2})-\mathbb{P}(A_{1}\cap A_{3})-\,\dots\,-\mathbb{P}(A_{i}\cap A_{j})-\,\dots\,\mathbb{P}(A_{n-1}\cap A_{n}) \\ &+\, \dots \\ &+(-1)^{k-1}\sum_{\{i_{1},\,i_{2},\,\dots,\,i_{k}\}}\mathbb{P}(A_{i_{1}}\cap A_{i_{2}}\cap\,\dots\,\cap A_{i_{k}}) \\ &+\,\dots\\ &+(-1)^{n-1}\,\,\,\mathbb{P}(A_{1}\cap A_{2}\cap\,\dots\,\cap A_{n}) \end{align}$$
@@ -77,7 +77,7 @@ Arriviamo, infine, a un'ultima proprietà $(f)$ facilmente deducibile dalla defi
 > ossia costituiscano gli eventi $H_{1},\,H_{2},\,\dots,\,H_{n}$ una [[CDP_01 - Eventi#Partizione dell'evento certo|partizione dell'evento certo]], allora si può affermare che:
 > $$\sum_{i\,=\,1}^{n}\,\mathbb{P}(H_{i})=1$$
 
-Tutte queste proprietà, ad eccezione della prima che è già stata dimostrata, sono dimostrabili sfruttando la seguente relazione detta "**proprietà di base**":
+Tutte queste proprietà, ad eccezione della prima che è già stata dimostrata, sono dimostrabili sfruttando la seguente relazione detta "**formula di scomposizione**":
 $$\text{per ogni }A\text{ e }B\text{, vale che }\mathbb{P}(A)=\mathbb{P}(A\cap B)+\mathbb{P}(A\cap\overline{B})$$
 che a sua volta è facilmente dimostrabile nel modo seguente: $A$ può essere definita come $(A\cap B)\cup(A\cap\overline{B})$ per un qualsiasi $B$, dato che
 $$A=A\cap \Omega=A\cap(B\cup\overline{B})=(A\cap B)\cup(A\cap\overline{B})$$
