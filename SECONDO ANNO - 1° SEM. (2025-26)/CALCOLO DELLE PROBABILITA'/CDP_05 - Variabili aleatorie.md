@@ -143,7 +143,93 @@ $$\begin{align} \mathbb{P}(Z=k)&=\,\mathbb{P}(Z\le k)-\mathbb{P}(Z\le k-1)\\&=\,
 
 Vediamo un altro esempio, molto simile: consideriamo di nuovo il lancio di due dadi, indicando sempre con $X_{1}$ e $X_{2}$ i punteggi ottenuti, ma stavolta concentriamoci sulla variabile aleatoria $W$ definita come il **minimo dei due punteggi**. Anche in questo caso, è banale che $W(\Omega)=\{1,\,2,\,\dots,\,6\}$, e tenendo conto che le medesime famiglie $\mathcal{A}=\{\{X_{1}=1\},\,\{X_{1}=2\},\,\dots,\,\{X_{1}=6\}\}$ e $\mathcal{B}=\{\{X_{2}=1\},\,\{X_{2}=2\},\,\dots,\,\{X_{2}=6\}\}$ sono indipendenti, si arriva a:
 $$\begin{align} \mathbb{P}(W=k)&=\,\mathbb{P}(W\ge k)-\mathbb{P}(W\ge k+1)\\&=\,\mathbb{P}(\{X_{1}\ge k\}\cap\{X_{2}\ge k\})-\mathbb{P}(\{X_{1}\ge k+1\}\cap\{X_{2}\ge k+1\})\\&=\,\mathbb{P}(X_{1}\ge k)\cdot\mathbb{P}(X_{2}\ge k)\,-\,\mathbb{P}(X_{1}\ge k+1)\cdot\mathbb{P}(X_{2}\ge k+1)\\&=\mathbb{P}(X_{1}>k-1)\cdot\mathbb{P}(X_{2}>k-1)\,-\,\mathbb{P}(X_{1}>k)\cdot\mathbb{P}(X_{2}>k)\\&= (1-\mathbb{P}(X_{1}\le k-1))\cdot(1-\mathbb{P}(X_{2}\le k-1))\,-\,(1-\mathbb{P}(X_{1}\le k))\cdot(1-\mathbb{P}(X_{2}\le k)) \\&=\,\left(1- \frac{k-1}{6} \right)^{2}-\left(1- \frac{k}{6} \right)^{2}\\&=\frac{49-14k+k^{2}-(36-12k+k^{2})}{36}=\frac{13-2k}{36} \end{align}$$
+___
+## Trasformazioni di una variabile aleatoria in spazi finiti
 
+[pag. 92]
+___
+## Distribuzioni congiunte di più variabili aleatorie
 
-[pag. 91]
+In questo paragrafo, andremo ad esaminare alcune definizioni e proprietà relative ai casi in cui **si considerano**, contemporaneamente e su uno stesso spazio di probabilità, **due variabili aleatorie**; in seguito, i concetti esposti potranno facilmente essere estesi anche a casi in cui sono coinvolte più di due variabili.
+
+Consideriamo uno spazio di probabilità $(\Omega,\,\mathcal{P}(\Omega),\,\mathbb{P})$, e una coppia di variabili aleatorie $X$ e $Y$ definite su tale spazio, con:
+$$\begin{align} &X:\Omega\rightarrow X(\Omega):=\{x_{1},\,x_{2},\,\dots,\,x_{n}\}\\&Y:\Omega\rightarrow Y(\Omega):=\{y_{1},\,y_{2},\,\dots,\,y_{m}\} \end{align}$$
+A questo punto, possiamo considerare su $\Omega$ la partizione costituita dagli eventi del tipo:
+$$\{X=x_{i}\}\cap\{Y=y_{j}\}\,:=\,\{\omega\in \Omega\,:\,X(\omega)=x_{i},\,Y(\omega)=y_{j}\}$$
+D'ora in poi, per comodità la notazione $\{X=x_{i}\}\cap\{Y=y_{j}\}$ potrebbe essere sostituita con $\{X=X_{i},\,Y=y_{j}\}$. Ora, in analogia con il caso di una sola variabile aleatoria, per riferirci alla probabilità che le variabili $X$ e $Y$ assumano una certa coppia di valori scriviamo che:
+$$p_{X,\,Y}(x_{i},\,y_{j})=\mathbb{P}(\{X=x_{i},\,Y=y_{j}\})$$
+per mettere in evidenza le variabili coinvolte e i valori che possono assumere.
+
+> La funzione:
+> $$X(\Omega)\times Y(\Omega)\rightarrow[0,\,1];\,\,\,\,\,(x_{i},\,y_{j})\mapsto p_{X,\,Y}(x_{i},\,y_{j})$$
+> prende il nome di "**densità discreta congiunta di $X$ e $Y$**".
+
+Ovviamente, avendo stabilito che i vari eventi $\{X=x_{1},\,Y=y_{j}\}$ formano una partizione, possiamo anche affermare che:
+$$p_{X,\,Y}(x_{i},\,y_{j})\ge 0,\,\,\,\,\,\,\,\,\,\,\sum_{i\,=\,1}^{n}\sum_{j\,=\,1}^{m}p_{X,\,Y}(x_{i},\,y_{j})=1$$
+A questo punto, possiamo considerare il nuovo spazio di probabilità definito tramite $X$ e $Y$, ossia:
+$$(X(\Omega)\times Y(\Omega),\,\mathcal{P}(X(\Omega)\times Y(\Omega)),\,\mathbf{P}_{X,\,Y})$$
+dove, per un qualsiasi $E\subseteq X(\Omega)\times Y(\Omega)$, si pone:
+$$\mathbf{P}_{X,\,Y}(E)=\sum_{(i,\,j)\,:\,(x_{i},\,y_{j})\,\in\,E}p_{X,\,Y}(x_{i},\,y_{j})=\mathbb{P}(\{(X,\,Y)\in E\})$$
+> La misura di probabilità:
+> $$\mathbf{P}_{X,\,Y}:(X(\Omega)\times Y(\Omega),\,\mathcal{P}(X(\Omega)\times Y(\Omega)));\,\,\,\,\,E\mapsto \mathbf{P}_{X,\,Y}(E)=\mathbb{P}(\{(X,\,Y)\in E\})=\sum_{(i,\,j)\,:\,(x_{i},\,y_{j})\,\in\,E}p_{X,\,Y}(x_{i},\,y_{j})$$
+> prende il nome di "**distribuzione di probabilità congiunta di $X$ e $Y$**".
+
+Considerate due variabili aleatorie $X$ e $Y$, i cui insiemi di valori possibili siano rispettivamente $\{x_{1},\,x_{2},\,\dots,\,x_{n}\}$ e $\{y_{1},\,y_{2},\,\dots,\,y_{m}\}$, e sia la loro distribuzione di probabilità congiunta individuata dalla densità discreta congiunta, ossia dalle probabilità:
+$$p_{X,\,Y}(x_{i},\,y_{j})=\mathbb{P}(\{X=x_{i},\,Y=y_{j}\})$$
+nel momento in cui tale distribuzione di probabilità congiunta è nota, è possibile ottenere la distribuzione relativa a una sola delle due variabili considerate: tali distribuzioni vengono dette "**distribuzioni marginali**", e attribuiscono ai valori possibili di ciascuna delle due variabili aleatorie le seguenti probabilità:
+$$\begin{align} &p_{X}(x_{i})=\mathbb{P}(X=x_{i})=\sum_{j\,=\,1}^{m}\mathbb{P}(\{X=x_{i},\,Y=y_{j}\})=\sum_{j\,=\,1}^{m}p_{X,\,Y}(x_{i},\,y_{j}) \\& p_{Y}(y_{j})=\mathbb{P}(Y=y_{j})=\sum_{i\,=\,1}^{n}\mathbb{P}(\{X=x_{i},\,Y=y_{j}\})=\sum_{i\,=\,1}^{n}p_{X,\,Y}(x_{i},\,y_{j})\end{align}$$
+In questo contesto, la funzione $x_{i}\mapsto p_{X}(x_{i})$ viene detta "**densità discreta marginale di $X$**", mentre $y_{j}\mapsto p_{Y}(y_{j})$ viene detta "**densità discreta marginale di $Y$**".
+
+Vediamo un esempio. Siano $X$ e $Y$ due variabili aleatorie che possono rispettivamente assumere i valori $\{-1,\,0,\,1\}$ e $\left\{ \frac{1}{4},\, \frac{1}{2},\, \frac{3}{4},\, 1 \right\}$, con le seguenti probabilità congiunte:
+
+![[prob_congiunte_esempio.png]]
+
+che possiamo indicare sinteticamente nella seguente tabella:
+
+![[prob_congiunte_esempio1.png]]
+
+A questo punto, potremmo applicare le formule appena viste per ottenere, ad esempio, la distribuzione di probabilità marginale della variabile $X$. La probabilità che, ad esempio, si ottenga $X=0$ è la seguente:
+$$\begin{align} \mathbb{P}(X=0)&=\mathbb{P}\left( X=0,\,Y= \frac{1}{4} \right)+\mathbb{P}\left( X=0,\,Y= \frac{1}{2} \right)+\mathbb{P}\left( X=0,\,Y= \frac{3}{4} \right)+\mathbb{P}( X=0,\,Y=1)\\&=0.2+0.12+0.1+0.04\\&=0.46 \end{align}$$
+In modo analogo, possiamo ottenere la totalità della distribuzione di probabilità marginale della variabile $X$, e lo stesso vale per quella della variabile $Y$; volendo aggiungere tali distribuzioni alla tabella vista poco fa, si otterrebbe:
+
+![[prob_congiunte_esempio2.png]]
+
+Ora, questo tipo di tabella può essere generalizzato considerando una coppia generica di variabili aleatorie, che per comodità chiameremo sempre $X$ e $Y$, in quella che viene detta "**tabella a doppia entrata**", che assume la forma seguente:
+
+![[prob_congiunte_esempio3.png]]
+
+È interessante osservare che, in generale, dati due insiemi $\{x_{1},\,x_{2},\,\dots,\,x_{n}\}$ e $\{y_{1},\,y_{2},\,\dots,\,y_{m}\}$ e considerata una tabella a doppia entrata riempita dei valori $p_{i,\,j}$ per $i=1,\,2,\,\dots,\,n$ e $j=1,\,2,\,\dots,\,m$, se i valori $p_{i,\,j}$ soddisfano le seguenti condizioni:
+$$p_{i\,j}\ge 0;\,\,\,\,\,\,\,\,\,\,\sum_{i\,=\,1}^{n}\sum_{j\,=\,1}^{m}p_{i,\,j}=1$$
+allora è possibile costruire uno spazio di probabilità a partire dall'insieme $\{x_{1},\,x_{2},\,\dots,\,x_{n}\}\times\{y_{1},\,y_{2},\,\dots,\,y_{m}\}$, dove la probabilità è definita a partire dalla seguente densità:
+$$p:\{x_{1},\,x_{2},\,\dots,\,x_{n}\}\times\{y_{1},\,y_{2},\,\dots,\,y_{m}\}\rightarrow[0,\,1];\,\,\,\,\,(x_{i},\,y_{j})\mapsto p(x_{i},\,y_{j}):=p_{i,\,j}$$
+Inoltre, definendo $p'_{i}$ come:
+$$p'_{i}=\sum_{j\,=\,1}^{m}p_{i,\,j}$$
+allora naturalmente $p'_{i}$ è una densità su $\{x_{1},\,x_{2},\,\dots,\,x_{n}\}$, in quanto risulta che:
+$$p'_{i}\ge 0;\,\,\,\,\,\,\,\,\,\,\sum_{i\,=\,1}^{n}p_{i}'=\sum_{i\,=\,1}^{n}\left( \sum_{j\,=\,1}^{m}p_{i,\,j} \right)=1$$
+Ovviamente, una considerazione analoga vale per $p''_{j}=\sum_{i\,=\,1}^{n}p_{i,\,j}$.
+
+##### Distribuzioni condizionate
+
+In una situazione come quella descritta finora in questo paragrafo, ossia due variabili aleatorie $X$ e $Y$ definite su uno stesso spazio $\Omega$, consideriamo che venga osservato l'evento $\{Y=y_{j}\}$ per un $j=1,\,2,\,\dots,\,m$, e ci si domanda quale sia la **distribuzione di probabilità che esprime lo stato di informazione parziale circa $X$ sapendo l'esito di $Y$**. Leggendo questa richiesta, dovrebbe venire alla mente un argomento affrontato in precedenza, che possiamo riapplicare nel nuovo contesto in cui ci troviamo in questo capitolo: le **[[CDP_02 - Probabilità#Probabilità condizionate|probabilità condizionate]]**. Infatti, possiamo fornire la seguente definizione:
+
+> Fissato $y_{j}\in Y(\Omega)$, con $\mathbb{P}(Y=y_{j})>0$, definiamo come "**distribuzione di probabilità condizionata della variabile $X$ dato l'evento $\{Y=y_{j}\}$**" la distribuzione che concentra, sui vari valori $x_{i}$, le probabilità condizionate di tipo:
+> $$\mathbb{P}(X=x_{i}\,|\,Y=y_{j})=\frac{\mathbb{P}(X=x_{i},\,Y=y_{j})}{\mathbb{P}(Y=y_{j})}$$
+
+Useremo, contestualmente a questo tipo di probabilità, anche la notazione:
+$$p_{X\,|\,Y}(x_{i}\,|\,y_{j})=\mathbb{P}(X=x_{i}\,|\,Y=y_{j})$$
+e il termine "**densità discreta di $X$ condizionata a $Y=y_{j}$**" per denotare la seguente funzione:
+$$p_{X\,|\,Y}(\cdot\,|\,y_{j}):\,X(\Omega)\rightarrow[0,\,1];\,\,\,\,\,\,\,\,\,\,x_{i}\mapsto p_{X\,|\,Y}(x_{i}\,|\,y_{j})$$
+Possiamo facilmente ricavare i valori di $p_{X\,|\,Y}(x_{i}\,|\,y_{j})$ sfruttando le probabilità congiunte, infatti:
+$$p_{X\,|\,Y}(x_{i}\,|\,y_{j})=\frac{\mathbb{P}(X=x_{i},\,Y=y_{j})}{\mathbb{P}(Y=y_{j})}=\frac{p_{X,\,Y}(x_{i},\,y_{j})}{p_{Y}(y_{j})}=\frac{p_{X,\,Y}(x_{i},\,y_{j})}{\sum_{i\,=\,1}^{n}p_{X,\,Y}(x_{i},\,y_{j})}$$
+Va da sé che tutto ciò che abbiamo detto finora sulle distribuzioni condizionate vale anche invertendo il ruolo delle variabili aleatorie. 
+
+[pag. 99/103]
+___
+##### Trasformazioni di coppie di variabili aleatorie in spazi finiti
+
+[pag. 103/106]
+___
+##### Indipendenza stocastica tra variabili aleatorie
+
+[pag. 106/111]
 ___
