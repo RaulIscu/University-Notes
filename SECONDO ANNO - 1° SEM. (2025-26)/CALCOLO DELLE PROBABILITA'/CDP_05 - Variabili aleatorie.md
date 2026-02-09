@@ -146,7 +146,17 @@ $$\begin{align} \mathbb{P}(W=k)&=\,\mathbb{P}(W\ge k)-\mathbb{P}(W\ge k+1)\\&=\,
 ___
 ## Trasformazioni di una variabile aleatoria in spazi finiti
 
-[pag. 92]
+Data una variabile aleatoria $X$ e una funzione $h$, si può definire una seconda variabile aleatoria come la "**trasformata di $X$ tramite la funzione $h$**", ossia:
+$$Z:\Omega\rightarrow\mathbb{R},\,\,\,\omega\mapsto Z(\omega):=h(X(\omega))$$
+Supponendo nota la distribuzione di $X$, ovvero l'insieme $X(\Omega)=\{x_{1},\,x_{2},\,\dots,\,x_{n}\}$ dei valori che può assumere $X$ e la sua densità discreta $p_{X}(x_{k})=\mathbb{P}(X=x_{k})$ con $k=1,\,2,\,\dots,\,n$, ci chiediamo come **ottenere la distribuzione di $Z$**, ovvero l'insieme $Z(\Omega)=\{z_{1},\,z_{2},\,\dots,\,z_{m}\}$ dei valori che può assumere $Z$ e la sua densità discreta $p_{Z}(z_{h})=\mathbb{P}(Z=z_{h})$ con $h=1,\,2,\,\dots,\,m$.
+
+Per capire come procedere, vediamo un esempio: supponiamo di avere una variabile $X$ che può assumere i valori $\pm\, 2$, $\pm\, 1$ e $0$ (quindi $X(\Omega)=\{-2,\,-1,\,0,\,1,\,2\}$), con $p_{X}(x)=\frac{1}{5}$ per ogni $x\in X(\Omega)$; a questo punto, definiamo la funzione $h(x)=x^2$, e otteniamo di conseguenza che l'ipotetica variabile $Z=X^{2}$ determinata da $h(X)$ potrà assumere i valori $0$, $1$ e $4$. Inoltre, valendo le seguenti relazioni:
+$$\begin{align} &\{Z=0\}=\{X=0\}\\&\{Z=1\}=\{X=-1\}\cup\{X=1\}\\&\{Z=4\}=\{X=-2\}\cup\{X=2\} \end{align}$$
+si ottiene che:
+$$\begin{align} &\mathbb{P}(Z=0)\,=\,\mathbb{P}(X=0)=\frac{1}{5}\\&\mathbb{P}(Z=1)\,=\,\mathbb{P}(X=1)+\mathbb{P}(X=-1)=\frac{2}{5} \\&\mathbb{P}(Z=4)\,=\,\mathbb{P}(X=2)+\mathbb{P}(X=-2)=\frac{2}{5}\end{align}$$
+Generalizzando, abbiamo ovviamente che $Z(\Omega)=h(X(\Omega))$, e possiamo affermare che $\{Z=z_{j}\}=\bigcup_{l\,:\,h(x_{l})\,=\,z_{l}}\{X=x_{l}\}$, da cui deriva che:
+$$p_{Z}(z_{j})=\mathbb{P}(Z=z_{j})=\sum_{l\,:\,h(x_{l})\,=\,z_{j}}\mathbb{P}(X=x_{l})$$
+per ogni $z_{j}\in h(X(\Omega))$.
 ___
 ## Distribuzioni congiunte di più variabili aleatorie
 
@@ -221,15 +231,110 @@ e il termine "**densità discreta di $X$ condizionata a $Y=y_{j}$**" per denotar
 $$p_{X\,|\,Y}(\cdot\,|\,y_{j}):\,X(\Omega)\rightarrow[0,\,1];\,\,\,\,\,\,\,\,\,\,x_{i}\mapsto p_{X\,|\,Y}(x_{i}\,|\,y_{j})$$
 Possiamo facilmente ricavare i valori di $p_{X\,|\,Y}(x_{i}\,|\,y_{j})$ sfruttando le probabilità congiunte, infatti:
 $$p_{X\,|\,Y}(x_{i}\,|\,y_{j})=\frac{\mathbb{P}(X=x_{i},\,Y=y_{j})}{\mathbb{P}(Y=y_{j})}=\frac{p_{X,\,Y}(x_{i},\,y_{j})}{p_{Y}(y_{j})}=\frac{p_{X,\,Y}(x_{i},\,y_{j})}{\sum_{i\,=\,1}^{n}p_{X,\,Y}(x_{i},\,y_{j})}$$
-Va da sé che tutto ciò che abbiamo detto finora sulle distribuzioni condizionate vale anche invertendo il ruolo delle variabili aleatorie. 
+Va da sé che tutto ciò che abbiamo detto finora sulle distribuzioni condizionate vale anche invertendo il ruolo delle variabili aleatorie. Dunque, ricapitolando, considerando una coppia di variabili aleatorie $X$ e $Y$, per le quali gli insiemi di valori possibili sono $X(\Omega)=\{x_{1},\,x_{2},\,\dots,\,x_{n}\}$ e $Y(\Omega)=\{y_{1},\,y_{2},\,\dots,\,y_{m}\}$, la distribuzione di probabilità congiunta è individuata dall'insieme delle probabilità congiunte identificato come:
+$$\{p_{i,\,j}=p_{X,\,Y}(x_{i},\,y_{j})\},\,\,\,\,\,\text{con }i=1,\,2,\,\dots,\,n\text{ e }y=1,\,2,\,\dots,\,m$$
+In base a tali probabilità congiunte, possiamo determinare univocamente le probabilità marginali $p_{i}'$ e $p''_{j}$, così come le probabilità condizionate $p_{i\,|\,j}'=p_{X\,|\,Y}(x_{i}\,|\,y_{j})$ e $p_{j\,|\,i}''=p_{Y\,|\,X}(y_{j}\,|\,x_{i})$. Ora, supponiamo di assegnare la coppia delle densità discrete marginali $p_{i}'$ e $p''_{j}$; si ricorda che vanno rispettati i seguenti vincoli, dati dalla [[CDP_02 - Probabilità#Misure di probabilità|condizione di normalizzazione]]:
+$$\sum_{i\,=\,1}^{n}p_{i}'=1\,\,\,\,\,\,\,\,\,\,\sum_{j\,=\,1}^{m}p_{j}''=1$$
+Considerando una generica tabella a doppia entrata riempita dai valori $p_{i,\,j}$, che ammette come probabilità marginali $p_{i}'$ e $p_{j}''$, deve allora necessariamente valere che:
+$$\begin{cases} \sum_{j\,=\,1}^{m}p_{i,\,j}=p_{i}'&\text{con }i=1,\,2,\,\dots,\,n \\\sum_{i\,=\,1}^{n}p_{i,\,j}=p_{j}''&\text{con }j=1,\,2,\,\dots,\,m\\\sum_{i\,=\,1}^{n}\sum_{j\,=\,1}^{m}p_{i,\,j}=1\end{cases}$$
 
-[pag. 99/103]
+Siano date due variabili aleatorie $X$ e $Y$. La loro densità discreta congiunta, e dunque la loro distribuzione di probabilità congiunta, è determinata dagli insiemi $X(\Omega)$ e $Y(\Omega)$, così come dalla tabella a doppia entrata contenente i valori $p_{i,\,j}=p_{X,\,Y}(x_{i},\,y_{j})$ per $i=1,\,2,\,\dots,\,n$ e $j=1,\,2,\,\dots,\,m$. Tale tabella risulta univocamente determinata quando si impongono, ad esempio, sia le probabilità marginali di tipo $\{p_{i}'=p_{X}(x_{i})\}$ che le probabilità condizionate di tipo $\{p_{j\,|\,i}''=p_{Y\,|\,X}(y_{j}\,|\,x_{i})\}$, infatti si ha che:
+$$\mathbb{P}(X=x_{i},\,Y=y_{j})=\mathbb{P}(X=x_{i})\cdot\mathbb{P}(Y=y_{j}\,|\,X=x_{i})\,\,\,\iff\,\,\,p_{i,\,j}=p_{i}'\cdot p_{j\,|\,i}''$$
+Naturalmente, scambiare il ruolo di $X$ e $Y$ nelle considerazioni appena fatte non intacca la loro validità. Notiamo anche che la relazione che lega le probabilità appena viste coincide, sostanzialmente, con la [[CDP_02 - Probabilità#Formula di Bayes|formula di Bayes]]; infatti:
+$$\mathbb{P}(X=x_{i}\,|\,Y=y_{j})=\frac{\mathbb{P}(X=x_{i})\cdot\mathbb{P}(Y=y_{j}\,|\,X=x_{i})}{\mathbb{P}(Y=y_{j})}=\frac{\mathbb{P}(X=x_{i})\cdot\mathbb{P}(Y=y_{j}\,|\,X=x_{i})}{\sum_{l}\mathbb{P}(X=x_{l})\mathbb{P}(Y=y_{j}\,|\,X=x_{l})}$$
+oppure, riadattando la formula al simbolismo breve introdotto:
+$$p'_{i\,|\,j}=\frac{p_{i}'\cdot p''_{j\,|\,i}}{p_{j}''}=\frac{p_{i}'\cdot p_{j\,|\,i}''}{\sum_{l}p_{l}'\cdot p_{j\,|\,l}''}$$
+
+[esempio: pag. 101/103]
 ___
 ##### Trasformazioni di coppie di variabili aleatorie in spazi finiti
 
-[pag. 103/106]
+Supponiamo di avere due variabili aleatorie $X$ e $Y$, e di fissare una funzione $g(x,\,y)$ di due variabili a valori reali. Possiamo considerare una terza variabile aleatoria $U$, definita come:
+$$U=g(X,\,Y)$$
+il cui funzionamento è sostanzialmente analogo alla [[CDP_05 - Variabili aleatorie#Trasformazioni di una variabile aleatoria in spazi finiti|trasformata di una singola variabile aleatoria]]. Di conseguenza, allo stesso modo, possiamo ottenere la distribuzione della variabile $U$ ottenendo i vari valori:
+$$p_{U}(u)=\mathbb{P}(U=u)=\sum_{(x_{i},\,y_{j})\,\in\,X(\Omega)\,\times\,Y(\Omega)\,:\,g(x_{i},\,y_{j})\,=\,u}p_{X,\,Y}(x_{i},\,y_{j})$$
+In casi specifici, il calcolo della densità discreta di $U$ può essere effettuato utilizzando la tabella della densità discreta congiunta di $X$ e $Y$. Consideriamo nuovamente l'[[CDP_05 - Variabili aleatorie#Distribuzioni congiunte di più variabili aleatorie|esempio]] visto un paio di paragrafi fa, dove siamo arrivati a definire la seguente tabella a doppia entrata:
+
+![[prob_congiunte_esempio1.png]]
+
+A questo punto, consideriamo la funzione $g(x,\,y)=|xy|$, e la variabile aleatoria $U=g(X,\,Y)$. Alla tabella appena ripresa, possiamo dunque accostare una tabella in cui, relativamente a ogni coppia $(x_{i},\,y_{j})$, inseriamo il valore assunto dalla funzione $g(x_{i},\,y_{j})$:
+
+![[prob_congiunte_esempio4.png]]
+
+Analizzando la seconda tabella, notiamo immediatamente che $U(\Omega)=\left\{ 0,\, \frac{1}{4},\, \frac{1}{2},\, \frac{3}{4},\, 1 \right\}$. Ora, per calcolare la distribuzione della variabile $U$, basterà sommare le probabilità $p_{X,\,Y}$ corrispondenti; ad esempio, la probabilità che $U=0$ è la seguente:
+$$\begin{align} \mathbb{P}(U=0)\,&=\,\mathbb{P}\left( X=0,\,Y=\frac{1}{4} \right)+\mathbb{P}\left( X=0,\,Y= \frac{1}{2} \right)+\mathbb{P}\left( X=0,\,Y= \frac{3}{4} \right)+\mathbb{P}(X=0,\,Y=1)\\&=\,0.2+0.12+0.1+0.04\\&=\,0.46 \end{align}$$
+In modo del tutto analogo si potranno calcolare anche le altre probabilità. Possiamo procedere, alternativamente, anche senza l'aiuto della tabella: ad esempio, sfruttando il fatto che la famiglia $H_{i}^{X}=\{X=x_{i}\}$ è una partizione, scrivendo dunque:
+$$\{U=u\}\,=\,\{U=u\}\cap \,\Omega\,=\,\{U=u\}\cap\bigcup_{i\,=\,1}^{n}H_{i}^{X}\,=\,\bigcup_{i\,=\,1}^{n}(\{U=u\}\cap H_{i}^{X})$$
+e osservando che, per ogni $i=1,\,2,\,\dots,\,n$:
+$$\{U=u\}\cap H_{i}^{X}\,=\,\{g(X,\,Y)=u\}\cap\{X=x_{i}\}\,=\,\{g(x_{i},\,Y)=u\}\cap\{X=x_{i}\}$$
+otteniamo che:
+$$\begin{align} p_{U}(u)=\mathbb{P}(U=u)&=\sum_{x_{i}\,\in\,X(\Omega)}\mathbb{P}(H_{i}^{X}\cap\{g(X,\,Y)=u\})\\&=\sum_{x_{i}\,\in\,X(\Omega)}\mathbb{P}(X=x_{i},\,g(X,\,Y)=u)\\&=\sum_{x_{i}\,\in\,X(\Omega)}\mathbb{P}(X=x_{i},\,g(x_{i},\,Y)=u) \end{align}$$
+con la quale riusciamo a ricondurci alla formula generale esplicitata in precedenza.
+
+Si procede in modo analogo anche se si ha una **coppia di funzioni del tipo $(x,\,y)\mapsto g_{1}(x,\,y)$ e $(x,\,y)\mapsto g_{2}(x,\,y)$**, che definiscano rispettivamente le variabili aleatorie:
+$$U=g_{1}(X,\,Y)\,\,\,\,\,\,\,\,\,\,V=g_{2}(X,\,Y)$$
+In questo caso, possiamo scrivere:
+$$p_{U,\,V}(u,\,v)=\mathbb{P}(U=u,\,V=v)=\sum_{(x_{i},\,y_{j})\,:\,g_{1}(x_{i},\,y_{j})\,=\,u,\,g_{2}(x_{i},\,y_{j})\,=\,v}p_{X,\,Y}(x_{i},\,y_{j})$$
 ___
 ##### Indipendenza stocastica tra variabili aleatorie
 
-[pag. 106/111]
+Ricordando quanto detto nel caso dell'[[CDP_03 - Correlazione e indipendenza tra eventi#Correlazione e indipendenza tra 2 eventi|indipendenza tra 2 eventi]], possiamo definire l'**indipendenza stocastica tra $2$ variabili aleatorie** nel modo seguente: due variabili $X$ e $Y$ sono indipendenti se qualunque informazione raccolta su una delle due variabili non porta a modificare lo stato di informazione sull'altra. A partire da tale considerazione, arriveremo a fornire una definizione più formale di tale concetto.
+
+Per arrivare a quest'ultima, partiamo analizzando un esercizio semplice ma fondamentale. Siano $X$ e $Y$ due variabili aleatorie, vogliamo verificare che le seguenti condizioni siano tra di loro equivalenti:
+- le [[CDP_05 - Variabili aleatorie#Distribuzioni condizionate|probabilità condizionate]] $y_{j}\mapsto p_{j\,|\,i}''=p_{Y\,|\,X}(y_{j}\,|\,x_{i})=\mathbb{P}(Y=y_{j}\,|\,X=x_{i})$ non dipendono dall'indice $i$, bensì dal valore $x_{i}$;
+- per ogni $1\le i\le n$ e $1\le j\le m$, risulta:
+$$p_{j\,|\,i}''=p_{j}''\,\,\iff\,\,p_{Y\,|\,X}(y_{j}\,|\,x_{i})=p_{Y(y_{j})}\,\,\iff\,\,\mathbb{P}(Y=y_{j}\,|\,X=x_{i})=\mathbb{P}(Y=y_{j})$$
+- per ogni $1\le i\le n$ e $1\le j\le m$, risulta:
+$$p_{i,\,j}=p_{i}'\cdot p_{j}''\,\,\iff\,\,p_{X,\,Y}(x_{i},\,y_{j})=p_{X}(x_{i})\,p_{Y}(y_{j})\,\,\iff\,\,\mathbb{P}(X=x_{i},\,Y=y_{j})=\mathbb{P}(X=x_{i})\,\mathbb{P}(Y=y_{j})$$
+
+[dimostrazione: pag. 106]
+
+Avendo dimostrato l'equivalenza delle tre condizioni precedenti, possiamo affermare che $X$ e $Y$ sono due variabili stocasticamente indipendenti qualora si verifichi una (e quindi tutte) di esse. A partire, in particolare, dalla terza e ricordando la definizione di [[CDP_03 - Correlazione e indipendenza tra eventi#Indipendenza completa di partizioni|indipendenza tra partizioni]], arriviamo a formulare una definizione formale.
+
+> Le variabili $X$ e $Y$ si dicono **stocasticamente indipendenti** se
+> $$\mathbb{P}(X\in I,\,Y\in J)\,=\,\mathbb{P}(X\in I)\cdot\mathbb{P}(Y\in J)$$
+> per un qualsiasi $I\subseteq X(\Omega)$ e $J\subseteq Y(\Omega)$ o, equivalentemente, se le due partizioni:
+> $$\mathcal{A}=\{\{X=x_{1}\},\,\{X=x_{2}\},\,\dots,\,\{X=x_{n}\}\}\,\,\,\,\,\,\,\,\,\,\mathcal{B}=\{\{Y=y_{1}\},\,\{Y=y_{2}\},\,\dots,\,\{Y=y_{m}\}\}$$
+> sono indipendenti tra loro.
+
+In altre parole, le variabili aleatorie $X$ e $Y$ sono stocasticamente indipendenti se e solo se la densità discreta congiunta è il prodotto delle densità discrete marginali.
+
+Vediamo di applicare i concetti appena esplicitati nel seguente esercizio. Siano $X$ e $Y$ due variabili aleatorie stocasticamente indipendenti, con $X(\Omega)=\{x_{1},\,x_{2},\,\dots,\,x_{n}\}$ e $Y(\Omega)=\{y_{1},\,y_{2},\,\dots,\,y_{m}\}$, e siano note le relative densità discrete marginali; vogliamo trovare l'espressione della distribuzione di probabilità della variabile $Z=X+Y$, e in seguito l'espressione della [[CDP_05 - Variabili aleatorie#Distribuzioni condizionate|distribuzione condizionata]] di probabilità di $X$ dato $\{Z=z\}$. Pensiamo al primo punto: possiamo affermare subito che:
+$$Z(\Omega)=\{z\in\mathbb{R}: \exists x_{k}\in X(\Omega),\,y_{h}\in Y(\Omega):x_{k}+y_{h}=z\}$$
+Allo stesso modo, applicando i principi ottenuti parlando di [[CDP_05 - Variabili aleatorie#Trasformazioni di coppie di variabili aleatorie in spazi finiti|trasformazioni di coppie di variabili aleatorie]], possiamo arrivare a scrivere che:
+$$\begin{align} \{Z=z\}=\{X+Y=z\}&=\,\bigcup_{(x_{k},\,y_{h})\,:\,x_{k}\,+\,y_{h}\,=\,z}\{X=x_{k},\,Y=y_{j}\}\\&=\,\bigcup_{k}\{X=x_{k},\,Y=z-x_{k}\}\\&=\,\bigcup_{h}\{X=z-y_{h},\,Y=y_{h}\} \end{align}$$
+dove gli eventi $\{X=x_{k},\,Y=y_{h}\}$ sono disgiunti a due a due, così come gli eventi $\{X=x_{k},\,Y=z-x_{k}\}$ e gli eventi $\{X=z-y_{h},\,Y=y_{h}\}$. Dunque, ricordando che le variabili $X$ e $Y$ sono stocasticamente indipendenti, si ottiene che:
+$$\begin{align} \mathbb{P}(\{Z=z\})&=\mathbb{P}(X+Y=z)\\&=\sum_{(x_{k},\,y_{h})\,:\,x_{k}\,+\,y_{h}\,=\,z}\mathbb{P}(X=x_{k})\,\mathbb{P}(Y=y_{h})\\&=\sum_{k}\mathbb{P}(X=x_{k})\,\mathbb{P}(Y=z-x_{k})\\&=\sum_{h}\mathbb{P}(X=z-y_{h})\,\mathbb{P}(Y=y_{h}) \end{align}$$
+Risolviamo, ora, il secondo punto. Si tratta, sostanzialmente, di trovare l'espressione di:
+$$\mathbb{P}(X=x_{k}\,|\,\{Z=z\})=\frac{\mathbb{P}(\{X=x_{k}\}\cap\{Z=z\})}{\mathbb{P}(Z=z)}$$
+per i valori di $z$ tali per cui $\mathbb{P}(Z=z)\neq 0$. Basterà osservare che $\{X=x_{k}\}\cap\{Z=z\}=\{X=x_{k},\,Z=z\}$ coincide con l'evento $\{X=x_{k},\,X+Y=z\}=\{X=x_{k},\,Y=z-x_{k}\}$, e dunque sfruttando quanto ottenuto nel punto precedente possiamo scrivere:
+$$\mathbb{P}(\{X=x_{k}\}\,|\,\{X+Y=z\})=\frac{\mathbb{P}(X=x_{k},\,Y=z-x_{k})}{\sum_{k'}\mathbb{P}(X=x_{k'},\,Y=z-x_{k'})}$$
+
+Consideriamo, ora, un altro esempio. Siano $X$ e $Y$ due variabili aleatorie stocasticamente indipendenti, con distribuzioni binomiali rispettivamente di parametri $(r,\,\theta)$ e $(s,\,\theta)$: vogliamo determinare, in questo contesto, la distribuzione di probabilità della variabile $Z=X+Y$, e la distribuzione di probabilità condizionata di $X$ dato $\{Z=k\}$, con $0\le k\le r+s$. Per il primo punto, ricordiamo che $X\sim Bin(r,\,\theta)$ e $Y\sim Bin(s,\,\theta)$ sono due variabili indipendenti, e che $Z=X+Y$; da ciò, otteniamo che:
+$$Z=X+Y\sim Bin(r+s,\,\theta)$$
+[soluzione esercizio: pag. 110]
+
+[pag. 111]
+___
+## Valore atteso di una variabile aleatoria
+
+In questo paragrafo, si introdurrà il concetto di "**valore atteso di una variabile aleatoria**", spiegandone il significato e alcune proprietà fondamentali.
+
+In molti problemi di tipo probabilistico, considerata una variabile aleatoria $X$ sorge la necessità di individuare una quantità deterministica che, in certi versi, sia "equivalente" a $X$. Cominciamo, per capire meglio cosa si intende, a vedere la definizione di tale concetto:
+
+> Sia $X:\Omega\rightarrow X(\Omega)$, con $\Omega=\{\omega_{1},\,\omega_{2},\,\dots,\,\omega_{N}\}$ una variabile aleatoria definita su $(\Omega,\,\mathcal{P}(\Omega))$; se su tale tupla è definita una probabilità $\mathbb{P}$, si può definire "**valore atteso di $X$ rispetto a $\mathbb{P}$**" il valore:
+> $$\mathbb{E}(X):=\sum_{i\,=\,1}^{N}p(\omega_{i})\,X(\omega_{i})$$
+
+Potremmo vedere, in modo forse inaccurato ma più comprensibile, il valore atteso di una variabile aleatoria come una sorta di "**media pesata**" dei valori che tale variabile può assumere, dove i pesi in questione sono determinati dalla distribuzione di probabilità della variabile considerata. Del resto, oltre a "valore atteso" si utilizzano anche i termini "**valore medio**", "**aspettazione**" e "**speranza matematica**" per riferirsi a questo concetto.
+
+##### Proprietà del valore atteso
+
+Prima di passare ad alcuni esempi illustrativi, elenchiamo alcune **proprietà** che derivano immediatamente dalla definizione appena data, in cui considereremo variabili aleatorie $X$, $Y$ e $Z$ tutte definite sullo stesso spazio $\Omega=\{\omega_{1},\,\omega_{2},\,\dots,\,\omega_{N}\}$. La prima proprietà che andremo a vedere è abbastanza banale:
+
+> Se $X$ è una [[CDP_05 - Variabili aleatorie#Variabili aleatorie degeneri e binarie|variabile aleatoria degenere]], dunque tale per cui $X(\omega_{i})=\hat{x}$ per ogni $i=1,\,2,\,\dots,\,N$, allora si ha che:
+> $$\mathbb{E}(X)=\hat{x}$$
+
+
+
+[pag. 114/132]
 ___
