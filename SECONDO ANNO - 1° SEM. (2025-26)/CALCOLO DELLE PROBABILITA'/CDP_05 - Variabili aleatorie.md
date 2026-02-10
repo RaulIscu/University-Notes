@@ -334,7 +334,152 @@ Prima di passare ad alcuni esempi illustrativi, elenchiamo alcune **proprietà**
 > Se $X$ è una [[CDP_05 - Variabili aleatorie#Variabili aleatorie degeneri e binarie|variabile aleatoria degenere]], dunque tale per cui $X(\omega_{i})=\hat{x}$ per ogni $i=1,\,2,\,\dots,\,N$, allora si ha che:
 > $$\mathbb{E}(X)=\hat{x}$$
 
+Passiamo, ora, a una proprietà relativa alle [[CDP_05 - Variabili aleatorie#Variabili aleatorie degeneri e binarie|variabili aleatorie binarie]].
+
+> Sia $E\subseteq \Omega$ un evento, e $X=1_{E}$ la variabile aleatoria indicatrice di $E$, si ha che:
+> $$\mathbb{E}(X)=\mathbb{E}(1_{E})=\mathbb{P}(E)$$
+
+Ciò è facilmente dimostrabile ricordando la definizione di "variabile aleatoria indicatore": una variabile $1_{E}(\omega)$ del genere può assumere solo i valori $0$ e $1$, e in particolare assume il valore $0$ se e solo se $\omega\in\overline{E}$, mentre assume il valore $1$ se e solo se $\omega\in E$, dunque si ottiene che:
+$$\begin{align} \mathbb{E}(X)=\mathbb{E}(1_{E})&=\sum_{i\,=\,1}^{N}1_{E}(\omega_{i})\,p(\omega_{i})\\&=\sum_{i\,:\,\omega_{i}\,\in\,E}\overbrace{1_{E}(\omega_{i})}^{=\,1}\,p(\omega_{i})\,+\,\sum_{i\,:\,\omega_{i}\,\in\,\overline{E}}\overbrace{1_{E}(\omega_{i})}^{=\,0}\,p(\omega_{i})\\&=\sum_{i\,:\,\omega_{i}\,\in\,E}p(\omega_{i})=\mathbb{P}(E) \end{align}$$
+
+> Siano $a\le b$ due numeri reali tali che $a\le X(\omega_{i})\le b$ per ogni $i$ compreso tra $1$ e $N$, allora si ha sicuramente che:
+> $$a\le\mathbb{E}(X)\le b$$
+
+Più in generale vale la cosiddetta "**proprietà di monotonia**":
+
+> Siano $X$ e $Y$ due variabili aleatorie, e sia $X(\omega)\le Y(\omega)$ per ogni $\omega\in \Omega$, allora si ha sicuramente che:
+> $$\mathbb{E}(X)\le\mathbb{E}(Y)$$
+
+Verificare la proprietà di monotonia è molto semplice: essendo $p(\omega)\ge 0$ per ogni $\omega\in \Omega$, si ha che se $X(\omega)\le Y(\omega)$ allora anche $X(\omega)\,p(\omega)\le Y(\omega)\,p(\omega)$ per ogni $\omega$; di conseguenza, si può affermare che:
+$$\overbrace{\sum_{i\,=\,1}^{N}X(\omega_{i})\,p(\omega_{i})}^{=\,\mathbb{E}(X)}\,\le\,\overbrace{\sum_{i\,=\,1}^{N}Y(\omega_{i})\,p(\omega_{i})}^{=\,\mathbb{E}(Y)}$$
+
+Un'altra proprietà, assolutamente fondamentale per la comprensione e l'utilizzo del valore atteso, è la "**proprietà di linearità**".
+
+> Siano $a$ e $b$ due numeri reali arbitrari, e $X$ e $Y$ due variabili aleatorie definite su $\Omega$. Ora, consideriamo la variabile aleatoria $Z$ definita come la **combinazione lineare di $X$ e $Y$ con coefficienti $a$ e $b$**, ossia:
+> $$Z(\omega_{i})=aX(\omega_{i})+bY(\omega_{i})\,\,\,\,\,\,\,\,\,\,\text{per ogni }1\le i\le N$$
+> Si ha che:
+> $$\mathbb{E}(Z)=a\mathbb{E}(X)+b\mathbb{E}(Y)$$
+
+Per dimostrare questa proprietà, basterà sviluppare l'espressione di $\mathbb{E}(Z)$:
+$$\begin{align} \mathbb{E}(Z)=\mathbb{E}(aX+bY)&=\sum_{i\,=\,1}^{N}p(\omega_{i})\,[aX(\omega_{i})+bY(\omega_{i})]\\&=\sum_{i\,=\,1}^{N}[aX(\omega_{i})\,p(\omega_{i})+bY(\omega_{i})\,p(\omega_{i})]\\&= a\sum_{i\,=\,1}^{N}p(\omega_{i})\,X(\omega_{i})+b\sum_{i\,=\,1}^{N}p(\omega_{i})\,Y(\omega_{i})\\&=a\mathbb{E}(X)+b\mathbb{E}(Y)\end{align}$$
+
+Come immediati corollari della proprietà appena dimostrata, otteniamo le due seguenti proprietà.
+
+> Sia $a$ un numero reale, e considerata una variabile aleatoria $X$ poniamo un'altra variabile $Z=aX$; risulta che:
+> $$\mathbb{E}(Z)=a\mathbb{E}(X)$$
+
+> Sia $b$ un numero reale, e considerata una variabile aleatoria $X$ poniamo un'altra variabile $Z=X+b$; risulta che:
+> $$\mathbb{E}(Z)=\mathbb{E}(X)+b$$
+
+Inoltre, si specifica che la proprietà di linearità può essere facilmente estesa al caso generico in cui si stanno considerando $l$ variabili aleatorie.
+
+> Date $l$ variabili aleatorie $X_{1},\,X_{2},\,\dots,\,X_{l}$ e $l$ numeri reali $a_{1},\,a_{2},\,\dots,\,a_{l}$, si ha che:
+> $$\mathbb{E}\left( \sum_{k\,=\,1}^{l}a_{k}X_{k} \right)=\sum_{k\,=\,1}^{l}a_{k}\,\mathbb{E}(X_{k})$$
+
+Di fatto, per calcolare il valore atteso $\mathbb{E}(X)$ di una variabile aleatoria $X$, occorre naturalmente conoscere la distribuzione di probabilità di $X$, ossia i vari valori $p(\omega_{i})$ per $i=1,\,2,\,\dots,\,N$, ma non è necessariamente richiesto conoscere quale sia l'intero spazio di probabilità $\Omega$ su cui $X$ è definita, né quale sia la misura di probabilità su $(\Omega,\,\mathcal{P}(\Omega))$. **Il valore atteso**, infatti, **dipende solo dalla distribuzione di $X$ e dai valori che $X$ può assumere**, come viene esplicitato chiaramente nella seguente proposizione.
+
+> Sia $X$ una variabile aleatoria definita su un arbitrario spazio finito $\Omega$, e tale per cui $X(\Omega)=\{x_{1},\,x_{2},\,\dots,\,x_{n}\}$. Risulta, allora, che:
+> $$\mathbb{E}(X)\,=\,\sum_{j\,=\,1}^{n}x_{j}\cdot\mathbb{P}(\{X=x_{j}\})\,=\,\sum_{j\,=\,1}^{n}x_{j}\cdot p_{X}(x_{j})$$
+
+Dimostriamo questa proposizione. Dal momento che $\{\{X=x_{1}\},\,\{X=x_{2}\},\,\dots,\,\{X=x_{n}\}\}$ rappresenta una partizione dello spazio $\Omega$, possiamo scrivere:
+$$\mathbb{E}(X)=\sum_{i\,=\,1}^{N}p(\omega_{i})\,X(\omega_{i})=\sum_{j\,=\,1}^{n}\left[ \sum_{i\,:\,X(\omega_{i})\,=\,x_{j}}p(\omega_{i})\,X(\omega_{i}) \right]$$
+ossia la somma prima di tutti i prodotti $p(\omega_{i})\,X(\omega_{i})$ tali per cui $\omega_{i}$ appartiene a $\{X=x_{1}\}$, poi dei prodotti tali per cui $\omega_{i}$ appartiene a $\{X=x_{2}\}$, e a seguire fino ad arrivare a $\{X=x_{n}\}$. D'altra parte, per ogni $j\in\{1,\,2,\,\dots,\,n\}$ fissato, si ha naturalmente che:
+$$\sum_{i\,:\,X(\omega_{i})\,=\,x_{j}}p(\omega_{i})\,X(\omega_{i})\,=\,\sum_{i\,:\,X(\omega_{i})\,=\,x_{j}}p(\omega_{i})\,x_{j}\,=\,x_{j}\sum_{i\,:\,X(\omega_{i})\,=\,x_{j}}p(\omega _{i})\,=\,x_{j}\cdot\mathbb{P}(\{X=x_{j}\})$$
+come volevasi dimostrare.
+___
+##### Valore atteso di una variabile aleatoria a valori interi non negativi
+
+Nel caso specifico in cui si sta considerando una **variabile aleatoria $X$ con valori in $\{0,\,1,\,\dots,\,n\}$**, il calcolo del valore atteso può convenientemente essere eseguito considerando la funzione $j\mapsto\mathbb{P}(\{X>j\})$. Vale, infatti, la seguente equivalenza:
+
+> Sia $X(\Omega)\subseteq\{0,\,1,\,\dots,\,n\}$; allora si ha:
+> $$\mathbb{E}(X)=\sum_{j\,=\,0}^{n\,-\,1}\mathbb{P}(\{X>j\})$$
+> In particolare, se $X(\Omega)=\{1,\,2,\,\dots,\,n\}$, allora si ha:
+> $$\mathbb{E}(X)=1+\sum_{j\,=\,1}^{n\,-\,1}\mathbb{P}(\{X>j\})$$
+
+Per dimostrare le proposizioni appena ottenute, ricordiamo innanzitutto la principale conclusione che abbiamo ottenuto parlando, in precedenza, di [[CDP_05 - Variabili aleatorie#Variabili aleatorie a valori interi|variabili aleatorie a valori interi]]:
+$$\mathbb{P}(\{X=j\})\,=\,\mathbb{P}(\{X>j-1\})-\mathbb{P}(\{X>j\})$$
+Possiamo utilizzare questa relazione nello sviluppo dell'espressione di $\mathbb{E}(X)$:
+$$\begin{align} \mathbb{E}(X)&=\sum_{j\,=\,0}^{n}j\cdot\mathbb{P}(\{X=j\})\\&=\sum_{j\,=\,1}^{n}j\cdot\mathbb{P}(\{X=j\})\\&= \sum_{j\,=\,1}^{n}j\cdot[\mathbb{P}(\{X>j-1\})-\mathbb{P}(\{X>j\})]\\&=\sum_{j\,=\,1}^{n}[j\cdot\mathbb{P}(\{X>j-1\})-j\cdot\mathbb{P}(\{X>j\})]\\&=\sum_{j\,=\,1}^{n}j\cdot\mathbb{P}(\{X>j-1\})-\sum_{j\,=\,1}^{n}j\cdot\mathbb{P}(\{X>j\}) \end{align}$$
+Ora, ponendo $h=j-1$, e ricordando che stiamo considerando $X(\Omega)\subseteq\{0,\,1,\,\dots,\,n\}$, per cui $\mathbb{P}(\{X>n\})=0$, possiamo scrivere:
+$$\begin{align} \mathbb{E}(X)&=\sum_{j\,=\,1}^{n}j\cdot\mathbb{P}(\{X>j-1\})-\sum_{j\,=\,1}^{n}j\cdot\mathbb{P}(\{X>j\})\\&=\sum_{h\,=\,0}^{n\,-\,1}(h+1)\,\mathbb{P}(\{X>h\})-\sum_{j\,=\,1}^{n\,-\,1}j\cdot\mathbb{P}(X>j)\\&= 1\cdot\mathbb{P}(\{X>0\})+2\cdot\mathbb{P}(\{X>1\})+\,\dots\,+n\cdot\mathbb{P}(\{X>n-1\})-1\cdot\mathbb{P}(\{X>1\})-2\cdot\mathbb{P}(\{X>2\})-\,\dots\,-(n-1)\,\mathbb{P}(\{X>n-1\})\\&=\mathbb{P}(\{X>0\})+(2-1)\,\mathbb{P}(\{X>1\})+\,\dots\,+(n-(n-1))\,\mathbb{P}(\{X>n-1\})\\&=\mathbb{P}(\{X>0\})+\sum_{h\,=\,1}^{n\,-\,1}((h-1)-h)\,\mathbb{P}(\{X>h\})\\&=\sum_{h\,=\,0}^{n\,-\,1}\mathbb{P}(\{X>h\}) \end{align}$$
+il che dimostra la prima forma della proposizione presentata. Per quanto riguarda la seconda, la sua dimostrazione deriva direttamente da quella della prima, con l'unica differenza che, ponendo $X(\Omega)=\{1,\,2,\,\dots,\,n\}$, si ha che $\mathbb{P}(\{X>0\})=1$.
+
+Applichiamo, ora, questo modo di calcolare il valore atteso a un esempio concreto. Consideriamo il lancio di due dadi, con le due variabili $X$ e $Y$ che rappresentano i punteggi ottenuti dagli stessi, e consideriamo anche la variabile $Z=max(X,\,Y)$, ossia la variabile aleatoria definita come il punteggio massimo ottenuto tra i due dadi lanciati; vogliamo calcolare $\mathbb{E}(Z)$. Innanzitutto, chiariamo che per natura di $Z$ si ha $Z(\Omega)=\{1,\,2,\,\dots,\,6\}$; inoltre, ricordando dei calcoli fatti in un [[CDP_05 - Variabili aleatorie#Variabili aleatorie a valori interi|esempio simile]] qualche paragrafo fa, sappiamo che:
+$$\mathbb{P}(\{Z\le x\})=\left( \frac{x}{6} \right)^{2}$$
+per qualsiasi $x\in Z(\Omega)$, dunque si può affermare di conseguenza che:
+$$\mathbb{P}(\{Z>x\})=1-\mathbb{P}(\{Z\le x\})=1-\left( \frac{x}{6} \right)^{2}$$
+Da ciò, possiamo applicare la formula che abbiamo dimostrato poco fa per ottenere il valore atteso $\mathbb{E}(Z)$:
+$$\begin{align} \mathbb{E}(Z)&=1+\sum_{j\,=\,1}^{6\,-\,1}\mathbb{P}(\{Z>j\})\\&=1+\sum_{j\,=\,1}^{5}(1-\mathbb{P}(\{Z\le j\}))\\&=1+\sum_{j\,=\,1}^{5}1-\sum_{j\,=\,1}^{5}\mathbb{P}(\{Z\le j\})\\&= 1 + 5 - \frac{1+4+9+16+25}{36}\\&=1+5- \frac{55}{36}\\&\approx 4.472 \end{align}$$
+___
+##### Valori attesi notevoli
+
+In questo paragrafo, espliciteremo alcuni "**valori attesi notevoli**", ossia valori attesi di tipi di variabili aleatorie noti, che abbiamo già visto in precedenza.
+
+Vediamo un primo caso, ossia quello delle **[[CDP_05 - Variabili aleatorie#Variabili aleatorie binomiali|variabili aleatorie con distribuzione binomiale]]**: considerata una variabile $X$ con distribuzione binomiale di parametri $n$ e $\theta$, abbiamo che:
+$$\mathbb{E}(X)=\sum_{k\,=\,0}^{n}k\cdot p_{X}(k)=\sum_{k\,=\,0}^{n}k\binom{n}{k}\theta^{k}(1-\theta)^{n-k}$$
+In realtà, possiamo ottenere il valore di $\mathbb{E}(X)$ anche senza tutti questi calcoli. Consideriamo $n$ [[CDP_05 - Variabili aleatorie#Variabili aleatorie degeneri e binarie|variabili aleatorie binarie]] $X_{1},\,X_{2},\,\dots,\,X_{n}$, con $\mathbb{P}(\{X_{j}=1\})=\theta$ per ogni $j=1,\,2,\,\dots,\,n$; è immediato il calcolo del valore atteso di ciascuna delle variabili $X_{j}$, ossia:
+$$\mathbb{E}(X_{j})=0\cdot\mathbb{P}(X_{j}=0)+1\cdot\mathbb{P}(X_{j}=1)=\theta$$
+di conseguenza, per la [[CDP_05 - Variabili aleatorie#Proprietà del valore atteso|proprietà di linearità]] del valore atteso, si ha che:
+$$\mathbb{E}\left( \sum_{j\,=\,1}^{n}X_{j} \right)=\sum_{j\,=\,1}^{n}\mathbb{E}(X_{j})=n\theta$$
+Sappiamo, d'altra parte, che nel caso particolare in cui $X_{1},\,X_{2},\,\dots,\,X_{n}$ sono indicatori di eventi completamente indipendenti, la variabile aleatoria $S=\sum_{j\,=\,1}^{n}X_{j}$ segue una distribuzione binomiale di parametri $n$ e $\theta$, la stessa di $X$; dunque, visto che il valore atteso di una variabile aleatoria dipende soltanto dalla sua distribuzione di probabilità, abbiamo che, per la nostra variabile aleatoria $X$:
+$$\mathbb{E}(X)=\mathbb{E}(S)=n\theta$$
+[pag. 121 - 122]
+
+Consideriamo, stavolta, una **distribuzione ipergeometrica di parametri $M$, $m_{1}$ e $n$**, che sappiamo essere ad esempio la distribuzione di probabilità di una variabile aleatoria $S$ che conta il numero di successi su $n$ eventi non indipendenti, ciascuno di probabilità $\frac{m_{1}}{M}$. Possiamo scrivere:
+$$S=\sum_{i\,=\,1}^{n}1_{A_{i}}$$
+con $A_{i}=\{\text{l'}i\text{-esimo evento risulta in un successo}\}$. Riconducendoci al problema delle [[CDP_04 - Probabilità binomiali e ipergeometriche#Probabilità ipergeometriche|estrazioni casuali senza reinserimento]], problema perfettamente equivalente, sappiamo che $\mathbb{P}(A_{i})=\mathbb{P}(A_{1})=\frac{m_{1}}{M}$, e quindi:
+$$\mathbb{E}(S)=\mathbb{E}\left( \sum_{i\,=\,1}^{n}1_{A_{i}} \right)=\sum_{i\,=\,1}^{n}\mathbb{E}(1_{A_{i}})=n\cdot\mathbb{P}(A_{1})=n\cdot \frac{m_{1}}{M}$$
+
+Ora, spostiamoci nel considerare il **valore atteso di una media aritmetica**. In particolare, consideriamo $n$ variabili aleatorie $X_{1},\,X_{2},\,\dots,\,X_{n}$, definite su uno stesso spazio $(\Omega,\,\mathcal{P}(\Omega))$ e che abbiano tutte lo stesso valore atteso, il che vuol dire che usando il simbolo $\mu:=\mathbb{E}(X_{j})$ vale che:
+$$\mathbb{E}(X_{1})=\mathbb{E}(X_{2})=\,\dots\,=\mathbb{E}(X_{n})=\mu$$
+Consideriamo, ora, sullo stesso spazio la variabile aleatoria $Y_{n}$, definita come media aritmetica delle variabili $X_{1},\,X_{2},\,\dots,\,X_{n}$:
+$$Y_{n}(\omega_{i})=\frac{\sum_{j\,=\,1}^{n}X_{j}(\omega_{i})}{n}$$
+Si ha che:
+$$\mathbb{E}(Y_{n})=\mu$$
+La dimostrazione di quest'equivalenza è banale: basta osservare che, per la proprietà di linearità, si ottiene che:
+$$\mathbb{E}(Y_{n})=\frac{1}{n}\sum_{j\,=\,1}^{n}\mathbb{E}(X_{j})=\frac{n\mu}{n}=\mu$$
+A parità di valore atteso, però, possono sussistere anche situazioni ben diverse per quanto riguarda la probabilità di $Y_{n}$, a seconda delle correlazioni tra le variabili $X_{1},\,X_{2},\,\dots,\,X_{n}$; si approfondirà questo aspetto quando parleremo di [[CDP_05 - Variabili aleatorie#Varianza e covarianza di variabili aleatorie|varianza e covarianza]]. Per ora, consideriamo un esempio concreto e, in un certo senso, estremo di quanto detto finora. Consideriamo una lotteria in cui vengono venduti $n$ biglietti, numerati progressivamente, e supponiamo che tale lotteria distribuisca un totale di $r$ premi (naturalmente, $r<n$), di cui:
+- $r_{1}$ "primi premi", di entità $c_{1}$;
+- $r_{2}$ "secondi premi", di entità $c_{2}$;
+- $r_{3}$ "terzi premi", di entità $c_{3}$;
+
+con $r=r_{1}+r_{2}+r_{3}$ e con $c_{1}>c_{2}>c_{3}>0$. Indichiamo con $X_{1},\,X_{2},\,\dots,\,X_{n}$ le vincite rispettivamente associate ai biglietti $1,\,2,\,\dots,\,n$: esse rappresentano delle variabili aleatorie, i cui valori possibili costituiscono l'insieme $\{0,\,c_{1},\,c_{2},\,c_{3}\}$. Le variabili $X_{1},\,X_{2},\,\dots,\,X_{n}$ hanno tutte la stessa distribuzione di probabilità, definita da:
+$$\mathbb{P}(\{X_{j}=c_{1}\})=\frac{r_{1}}{n}\,\,\,\,\,\,\,\,\,\,\mathbb{P}(\{X_{j}=c_{2}\})=\frac{r_{2}}{n}\,\,\,\,\,\,\,\,\,\,\mathbb{P}(\{X_{j}=c_{3}\})=\frac{r_{3}}{n}$$
+mentre, per quanto riguarda $X_{j}=0$ si ha che:
+$$\mathbb{P}(\{X_{j}=0\})=\frac{n-r}{n}\,\,\,\,\,\text{oppure}\,\,\,\,\,1-\mathbb{P}(\{X_{j}=c_{1}\})-\mathbb{P}(\{X_{j}=c_{2}\})-\mathbb{P}(\{X_{j}=c_{3}\})$$
+Si ha, dunque, che il valore atteso della variabile aleatoria generica $X_{j}$ è:
+$$\mathbb{E}(X_{j})=\frac{r_{1}c_{1}+r_{2}c_{2}+r_{3}c_{3}}{n}$$
+Volendo, avremmo potuto procedere anche in un altro modo, sfruttando il concetto di valore atteso della media aritmetica. Logicamente, è ovvio che $X_{1},\,X_{2},\,\dots,\,X_{n}$ abbiano tutte lo stesso valore atteso $\mathbb{E}(X_{j})=\mu$; a questo punto, andiamo a considerare la variabile aleatoria
+$$S_{n}=\sum_{j\,=\,1}^{n}X_{j}$$
+Osserviamo che $S_{n}$ assume il significato di ammontare complessivo dei premi distribuiti dalla lotteria, e perciò risulta essere una variabile aleatoria degenere di valore $r_{1}c_{1}+r_{2}c_{2}+r_{3}c_{3}$, ovvero:
+$$S_{n}(\omega)=r_{1}c_{1}+r_{2}c_{2}+r_{3}c_{3}\,\,\,\,\,\text{per ogni }\omega\in \Omega$$
+Come abbiamo visto [[CDP_05 - Variabili aleatorie#Proprietà del valore atteso|in precedenza]], il valore atteso di una variabile aleatoria degenere coincide con il valore assunto dalla stessa, dunque abbiamo che:
+$$\mathbb{E}(S_{n})=r_{1}c_{1}+r_{2}c_{2}+r_{3}c_{3}$$
+e per la proprietà di linearità si deve avere:
+$$\mathbb{E}(S_{n})=\mathbb{E}\left( \sum_{j\,=\,1}^{n}X_{j} \right)=n\mu$$
+Dunque, si ottiene facilmente che:
+$$\mu=\frac{\mathbb{E}(S_{n})}{n}=\frac{r_{1}c_{1}+r_{2}c_{2}+r_{3}c_{3}}{n}$$
+
+Vediamo un altro esempio, in cui supponiamo di avere un biglietto di una lotteria $A$  e un biglietto di un'altra lotteria $B$, dove $A$ distribuisce $r_{1}'$ premi di entità $c_{1}'$ e $r_{2}'$ premi di entità $c_{2}'$ su un totale di $n'$ biglietti, mentre $B$ distribuisce $r_{1}''$ premi di entità $c_{1}''$ e $r_{2}''$ premi di entità $c_{2}''$ su un totale di $n''$ biglietti. Indichiamo, a questo punto, con $X$ la variabile aleatoria che indica la vincita complessivamente derivante dai due biglietti, e vogliamo calcolare il valore atteso $\mathbb{E}(X)$. Per comodità, indichiamo con $X'$ e $X''$ rispettivamente le vincite relative ai due singoli biglietti, in modo che $X=X'+X''$; in questo contesto, abbiamo che $X'$ può assumere i valori $\{0,\,c_{1}',\,c_{2}'\}$, mentre $X''$ può assumere i valori $\{0,\,c_{1}'',\,c_{2}''\}$, e risulta:
+$$\mathbb{E}(X')=\frac{c_{1}'r_{1}'+c_{2}'r_{2}'}{n'}\,\,\,\,\,\,\,\,\,\,\mathbb{E}(X'')=\frac{c_{1}''r_{1}''+c_{2}''r_{2}''}{n''}$$
+Sempre grazie alla proprietà di linearità, sottolineiamo che per calcolare il valore atteso $\mathbb{E}(X)$ non sarà necessario calcolare interamente la distribuzione di probabilità di $X$; infatti, possiamo ottenere immediatamente che:
+$$\mathbb{E}(X)=\mathbb{E}(X')+\mathbb{E}(X'')$$
+
+Torniamo all'esempio precedente, quello relativo a una singola lotteria, e introduciamo stavolta anche il costo $c$ di un singolo biglietto. L'acquirente del biglietto $j$, dunque, pagherà sicuramente un prezzo $c$ per avere una possibilità di vincita di un guadagno aleatorio $X_{j}$, il cui valore atteso è $\mu=\frac{r_{1}c_{1}\,+\,r_{2}c_{2}\,+\,r_{3}c_{3}}{n}$; per quanto riguarda, invece, l'organizzatore della lotteria, nell'ipotesi che esso venda tutti gli $n$ biglietti ottiene un ricavo $R$ pari a:
+$$R=n\cdot(c-\mu)$$
+che sarà positivo, negativo o nullo a seconda che $\mu$ sia rispettivamente minore, maggiore o uguale a $c$; ciononostante, $R$ è un ricavo certo, nel senso che non dipende dal risultato aleatorio della lotteria, a differenza del guadagno $X_{j}$ di chi compra un biglietto. Su tale base, si può interpretare il valore atteso $\mathbb{E}(X_{j})=\mu$ come il "**prezzo equo**" per l'acquisto di un singolo biglietto, ossia quello per cui nessuna delle due parti coinvolte si trova sicuramente in perdita rispetto all'altra; più in generale, si parla di "**gioco equo**" quando, a lungo termine, le probabilità di guadagno e di perdita sono uguali per tutti i giocatori.
+___
+##### Valori attesi di trasformazioni di variabili aleatorie
 
 
-[pag. 114/132]
+
+[pag. 127/130]
+___
+##### Valore atteso condizionato e formula del valore atteso totale
+
+[pag. 131 - 132]
+___
+## Varianza e covarianza di variabili aleatorie
+
+[pag. 136]
 ___
