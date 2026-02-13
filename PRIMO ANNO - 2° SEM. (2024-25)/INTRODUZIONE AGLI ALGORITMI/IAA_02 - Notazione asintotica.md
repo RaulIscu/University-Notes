@@ -14,7 +14,7 @@ ___
 ## Notazione $O$
 
 > Date due funzioni $f(n)$ e $g(n)$, entrambe non negative, si dice che:
-> $$f(n) \text{ è in } O(g(n))$$
+> $$f(n) \text{ è in } O(g(n))\,\,\,\,\,\,\,\,\,\,\text{oppure}\,\,\,\,\,\,\,\,\,\,f(n)=O(g(n))$$
 > se esistono due costanti $c$ e $n_{0}$ tali per cui vale che:
 > $$0\le f(n)\le c\cdot g(n)\,\,\,\,\,\,\,\,\,\,\text{per ogni }n\ge n_{0}$$
 
@@ -69,7 +69,7 @@ ___
 ## Notazione $\Omega$
 
 > Date due funzioni $f(n)$ e $g(n)$, entrambe non negative, si dice che:
-> $$f(n)\text{ è in }\Omega(g(n))$$
+> $$f(n)\text{ è in }\Omega(g(n))\,\,\,\,\,\,\,\,\,\,\text{oppure}\,\,\,\,\,\,\,\,\,\,f(n)=\Omega(g(n))$$
 > se esistono due costanti $c$ e $n_{0}$ tali per cui vale che:
 > $$f(n)\ge c\cdot g(n)\,\,\,\,\,\,\,\,\,\,\text{per ogni }n\ge n_{0}$$
 
@@ -110,7 +110,7 @@ Poiché i limiti asintotici servono per stimare con la maggiore precisione possi
 Il limite asintotico più preciso possibile è una sorta di combinazione dei due precedentemente visti, e prende il nome di "**limite asintotico stretto**", indicato con la **notazione $\Theta$**.
 
 >Date due funzioni $f(n)$ e $g(n)$, entrambe non negative, si dice che:
-> $$f(n)\text{ è in }\Theta(g(n))$$
+> $$f(n)\text{ è in }\Theta(g(n))\,\,\,\,\,\,\,\,\,\,\text{oppure}\,\,\,\,\,\,\,\,\,\,f(n)=\Theta(g(n))$$
 > se esistono tre costanti $c_{1}$, $c_{2}$ e $n_{0}$ tali per cui vale che:
 > $$c_{1}\cdot g(n)\le f(n)\le c_{2}\cdot g(n)\,\,\,\,\,\,\,\,\,\,\text{per ogni }n\ge n_{0}$$
 
