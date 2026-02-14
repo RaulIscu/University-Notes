@@ -2,9 +2,9 @@
 
 Nel capitolo precedente si è approfondito il problema della [[IAA_04 - Ricerca|ricerca]], e in particolare uno degli algoritmi analizzati è quello della [[IAA_04 - Ricerca#Ricerca binaria|ricerca binaria]]: l'implementazione proposta in precedenza è perfettamente iterativa, ma è possibile implementare lo stesso algoritmo anche utilizzando la "**ricorsione**". Avendo un array $A$ e l'elemento cercato $v$, in parole povere possiamo effettuare la ricerca binaria anche seguendo i seguenti passaggi:
 - se $A$ è vuoto, l'elemento $v$ non è sicuramente contenuto al suo interno, quindi restituire subito $-1$;
-- ispezionare l'elemento centrale dell'array $A$, e se corrisponde a $v$ restituirlo;
+- ispezionare l'elemento centrale dell'array $A$, e se corrisponde a $v$ restituire il suo indice;
 - se l'elemento considerato non è quello cercato, confrontarlo con quest'ultimo per vedere se è minore o maggiore;
-- se $v$ è più piccolo dell'elemento considerato, eseguire nuovamente questo algoritmo sulla metà inferiore di $A$; invece, se $v$ è più grande dell'elemento considerato, farlo sulla metà superiore.
+- se $v$ è minore dell'elemento considerato, eseguire nuovamente lo stesso algoritmo sulla metà inferiore di $A$; invece, se $v$ è più grande dell'elemento considerato, farlo sulla metà superiore.
 
 L'aspetto fondamentale di questo approccio, che lo differenzia dalla soluzione precedente, è il concetto di **un algoritmo che "riapplica" sé stesso su un sottoproblema**, ossia una versione più semplice del problema iniziale: è questa, sostanzialmente, la definizione di "**algoritmo ricorsivo**".
 
@@ -18,7 +18,7 @@ La presenza di un caso base risulta essere fondamentale per il buon funzionament
 
 In generale, **qualsiasi problema risolvibile con un algoritmo ricorsivo può essere risolto anche con un algoritmo iterativo**. È dunque legittimo chiedersi: quando conviene utilizzare l'una o l'altra soluzione? In linea di massima, si possono seguire queste regole:
 - si preferisce un **algoritmo ricorsivo** quando la formulazione del problema è prettamente ricorsiva, o quando la soluzione iterativa risulta molto più complessa o non evidente da implementare;
-- si preferisce un **algoritmo iterativo** quando la soluzione iterativa risulta essere semplice e chiara quanto (o più di) quella ricorsiva, o quando si pone prima di tutto importanza all'efficienza.
+- si preferisce un **algoritmo iterativo** quando la soluzione iterativa risulta essere semplice e chiara quanto (o più di) quella ricorsiva, o quando si attribuisce maggiore importanza all'efficienza dell'algoritmo.
 
 Soffermiamoci in particolare su quest'ultimo punto: **generalmente, un algoritmo ricorsivo ha maggiori esigenze in termini di memoria rispetto a quelli iterativi**. Infatti, ad ogni chiamata ricorsiva servirà della memoria aggiuntiva per ricaricare il codice, per i vari parametri e per le variabili locali. Un algoritmo ricorsivo mal progettato esaurisce con estrema rapidità la memoria disponibile, e può addirittura risultare in una sua terminazione forzata.
 
@@ -91,7 +91,7 @@ def ricerca_sequenziale_ric(A, v, n):
 		return ricerca_sequenziale_ric(A, v, n - 1)
 ```
 
-Anche in questo caso, possiamo trovare un caso base (se l'elemento considerato corrisponde a $v$, restituire tale elemento). Nel caso in cui l'iterazione attuale non rientri in nessuno dei due casi base, si riapplica lo stesso algoritmo andando ad analizzare l'elemento precedente nell'array $A$.
+Anche in questo caso, possiamo trovare un caso base (se l'elemento considerato corrisponde a $v$, restituire tale elemento). Nel caso in cui l'iterazione attuale non rientri nel caso base, si riapplica lo stesso algoritmo andando ad analizzare l'elemento precedente nell'array $A$, finché non si esauriranno gli elementi dello stesso.
 ___
 ##### Esempio n°3: ricerca binaria ricorsiva di un elemento $v$
 
@@ -132,21 +132,18 @@ Proviamo a farlo utilizzando la metodologia che abbiamo usato per gli [[IAA_03 -
 
 Ciò è possibile utilizzando le cosiddette "**equazioni di ricorrenza**", delle funzioni matematiche che esprimono chiaramente il costo di un algoritmo ricorsivo. Un'equazione di ricorrenza ben formulata contiene, tra le sue parti, il costo dell'algoritmo in corrispondenza dei suoi **casi base**, insieme al costo dell'algoritmo nel **caso generale**. In particolare, la parte generale dell'equazione di ricorrenza, quindi quella che definisce $T(n)$, **deve essere costituita dalla somma di almeno due addendi, di cui almeno uno contiene la parte ricorsiva mentre l'altro rappresenta il costo di tutto ciò che viene eseguito fuori dalla chiamata ricorsiva**.
 
-Per comprendere al meglio come utilizzare le equazioni di ricorrenza, vediamo un esempio. Consideriamo nuovamente la versione ricorsiva dell'algoritmo di [[IAA_04 - Ricerca#Ricerca sequenziale|ricerca sequenziale]], ponendo `n = len(A) - 1`:
+Per comprendere al meglio come utilizzare le equazioni di ricorrenza, vediamo un esempio. Consideriamo nuovamente la versione ricorsiva dell'algoritmo di calcolo di un fattoriale:
 
 ```
-def ricerca_sequenziale_ric(A, v, n):
-	if A[n] == v:
-		return n
-	
+def fattoriale(n):
 	if n == 0:
-		return -1
-	else:
-		return ricerca_sequenziale_ric(A, v, n - 1)
+		return 1
+	
+	return n * fattoriale(n - 1)
 ```
 
-Come sappiamo, questo algoritmo presenta un caso base, che corrisponde al caso in cui l'array $A$ considerato ha lunghezza $1$: in quel caso il costo computazionale è pari a $\Theta(1)$. In generale, invece, viene eseguito l'algoritmo nella sua interezza, che vediamo avere costo $\Theta(1) + T(n - 1)$. Dunque, possiamo formalizzare l'equazione di ricorrenza dell'algoritmo considerato nel modo seguente:
-$$\begin{cases} T(1) = \Theta(1) \\ T(n) = \Theta(1) + T(n - 1) \end{cases}$$
+Come sappiamo, questo algoritmo presenta un caso base, che corrisponde al caso in cui il numero $n$ è pari a $0$: in quel caso il costo computazionale è pari a $\Theta(1)$. In generale, invece, viene eseguito l'algoritmo nella sua interezza, che vediamo avere costo $\Theta(1) + T(n - 1)$. Dunque, possiamo formalizzare l'equazione di ricorrenza dell'algoritmo considerato nel modo seguente:
+$$\begin{cases} T(0) = \Theta(1) \\ T(n) = \Theta(1) + T(n - 1) \end{cases}$$
 Tuttavia, nel concreto questa formalizzazione chiarifica solo la situazione in cui ci si trova, ma non fornisce uno strumento per calcolare effettivamente il costo computazionale. Per fare ciò, si dovrà **"risolvere" l'equazione di ricorrenza ottenuta**, e questo può essere fatto utilizzando uno di **4 metodi**:
 - il **[[IAA_05 - Ricorsione#Metodo iterativo|metodo iterativo]]**;
 - il **[[IAA_05 - Ricorsione#Metodo di sostituzione|metodo di sostituzione]]**;
@@ -155,16 +152,18 @@ Tuttavia, nel concreto questa formalizzazione chiarifica solo la situazione in c
 ___
 ## Metodo iterativo
 
-Per risolvere un'equazione di ricorrenza utilizzando il **metodo iterativo**, quello che si deve fare è **sviluppare l'equazione di ricorrenza ed esprimerla come somma di termini dipendenti da $n$ e dal caso base**. Si tratta di un metodo basato soprattutto sui calcoli algebrici, più meccanico di altri.
+Per risolvere un'equazione di ricorrenza utilizzando il **metodo iterativo**, quello che si deve fare è **sviluppare l'[[IAA_05 - Ricorsione#Equazioni di ricorrenza|equazione di ricorrenza]] ed esprimerla come somma di termini dipendenti da $n$ e dal caso base**. Si tratta di un metodo basato soprattutto sui calcoli algebrici, più meccanico e dispendioso di altri.
 
-##### Esempio n°1: ricerca sequenziale ricorsiva
+##### Esempio n°1
 
-Per comprendere meglio il funzionamento di questo metodo, applichiamolo all'esempio della ricerca sequenziale ricorsiva:
+Per comprendere meglio il funzionamento di questo metodo, consideriamo la seguente equazione di ricorrenza:
 $$\begin{cases} T(1)=\Theta(1)\\T(n)=\Theta(1)+T(n-1) \end{cases}$$
 Sviluppando ripetutamente l'addendo rappresentante la parte ricorsiva dell'algoritmo nel secondo membro dell'equazione, si ottiene:
-$$\begin{align} T(n)&=\Theta(1)+\underline{T(n-1)}\\&=\Theta(1)+\Theta(1)+\underline{T(n-2)}\\&=\Theta(1)+\Theta(1)+\Theta(1)+\underline{T(n-3)}\\&\dots \end{align}$$
-Ipotizzando di sviluppare questo calcolo a oltranza, abbiamo che:
-$$T(n)=n\cdot \Theta(1)=\Theta(n)$$
+$$\begin{align} T(n)&=\Theta(1)+\underline{T(n-1)}\\&=\Theta(1)+\Theta(1)+\underline{T(n-2)}\\&=\Theta(1)+\Theta(1)+\Theta(1)+\underline{T(n-3)}\\&\dots \\&= k\cdot \Theta(1)\,+\,T(n-k)\end{align}$$
+Abbiamo dunque generalizzato il costo computazionale $T(n)$ ipotizzando un numero $k$ di chiamate ricorsive; come sappiamo, però, dopo un determinato numero di ricorsioni l'equazione di ricorrenza convergerà al suo caso base, che nel nostro esempio è $T(1)$, dunque possiamo affermare che la catena di ricorsione continua finché $n-k=1$, da cui segue che:
+$$n-k=1\,\,\,\Rightarrow\,\,\,k=n-1$$
+Trovato, dunque, il numero $k$ di chiamate ricorsive che vengono eseguite in funzione di $n$, ci basterà sostituire $k$ nella generalizzazione trovata poco fa per trovare il costo computazionale generico dell'algoritmo:
+$$\begin{align} T(n)&=k\cdot \Theta(1)+T(n-k)\\&=(n-1)\,\Theta(1) +T(n-(n-1))\\&=\Theta(n)+T(1)\\&=\Theta(n)+\Theta(1)\\&=\Theta(n)\end{align}$$
 ___
 ##### Esempio n°2: ricerca binaria ricorsiva
 
@@ -174,7 +173,8 @@ Sviluppando ripetutamente l'addendo rappresentante la parte ricorsiva dell'algor
 $$\begin{align} T(n)&=\Theta(1)+\underline{T\left( \frac{n}{2} \right)}\\&=\Theta(1)+\Theta(1)+\underline{T\left( \frac{n}{4} \right)}\\&=\Theta(1)+\Theta(1)+\Theta(1)+T\left( \frac{n}{8} \right)\\&\dots \end{align}$$
 Generalizzando, abbiamo che il costo computazionale dell'algoritmo è esprimibile come:
 $$T(n)=k\cdot \Theta(1)+T\left( \frac{n}{2^{k}} \right)$$
-dove $k$ è il numero di chiamate ricorsive effettuate. Ora, dato che i casi base si trovano quando $n = 0$ e quando $n=1$, sappiamo che la ricorsione terminerà quando $\frac{n}{2^{k}}=1$, e ciò avviene quando il numero di chiamate ricorsive è $k=\log n$. Dunque, possiamo riscrivere il costo computazionale complessivo $T(n)$ come:
+dove $k$ è il numero di chiamate ricorsive effettuate. Ora, dato che i casi base si trovano quando $n = 0$ e quando $n=1$, sappiamo che la ricorsione terminerà quando $\frac{n}{2^{k}}=1$, e ciò avviene quando il numero di chiamate ricorsive è:
+$$\frac{n}{2^{k}}=1\,\,\,\Rightarrow\,\,\,n=2^{k}\,\,\,\Rightarrow\,\,\,k=\log_{2}(n)$$Dunque, possiamo riscrivere il costo computazionale complessivo $T(n)$ come:
 $$T(n) = \log n \cdot \Theta(1)+\Theta(1)=\Theta(\log n)$$
 ___
 ##### Esempio n°3: calcolo dei numeri di Fibonacci
@@ -188,35 +188,36 @@ In questo caso, sviluppare l'addendo rappresentante la parte ricorsiva dell'algo
 Partiamo dalla prima delle due considerazioni. Applicando il metodo iterativo su di essa, si ha che:
 $$\begin{align} T(n)&\le\Theta(1)+\underline{2T(n-1)}\\&\le\Theta(1)+2\cdot\Theta(1)+\underline{4T(n-2)}\\&\le\Theta(1)+2\cdot\Theta(1)+4\cdot\Theta(1)+\underline{8T(n-3)}\\&\dots \end{align}$$
 Generalizzando:
-$$T(n)\le\sum_{i\,=\,0}^{k-1}(2^{i}\cdot \Theta(1))+2^{k}\cdot T(n-k)$$
+$$T(n)\le\sum_{i\,=\,0}^{k\,-\,1}(2^{i}\cdot \Theta(1))+2^{k}\cdot T(n-k)$$
 dove $k$ è il numero di chiamate ricorsive effettuate. Ora, dato che i casi base si trovano quando $n = 0$ e quando $n=1$, sappiamo che la ricorsione terminerà quando $n-k=1$, e ciò avviene quando il numero di chiamate ricorsive è $k = n-1$. Dunque, possiamo riscrivere la disuguaglianza appena ottenuta come:
-$$\begin{align} T(n)&\le\sum_{i\,=\,0}^{n-2}(2^{i}\cdot \Theta(1))+2^{n-1}\cdot \Theta(1)\\&\le(2^{n-1}-1)\Theta(1)+2^{n-1}\cdot \Theta(1)\\&\le (2^{n}-1)\cdot \Theta(1)\end{align}$$
+$$\begin{align} T(n)&\le\sum_{i\,=\,0}^{n\,-\,2}(2^{i}\cdot \Theta(1))+2^{n-1}\cdot \Theta(1)\\&\le(2^{n-1}-1)\cdot\Theta(1)+2^{n-1}\cdot \Theta(1)\\&\le (2^{n}-1)\cdot \Theta(1)\end{align}$$
 Da questa disuguaglianza, ricaviamo infine che:
 $$T(n)=O(2^{n})$$
 Passiamo, ora, alla seconda delle due considerazioni. Applicando il metodo iterativo su di essa, si ha che:
 $$\begin{align} T(n)&\ge \Theta(1)+\underline{2T(n-2)}\\&\ge \Theta(1)+2\cdot \Theta(1)+\underline{4T(n-4)}\\&\ge \Theta(1)+2\cdot \Theta(1)+4\cdot \Theta(1)+\underline{8T(n-6)}\\&\dots \end{align}$$
 Generalizzando:
-$$T(n)\ge\sum_{i\,=\,0}^{k-1}(2^{i}\cdot \Theta(1)) + 2^{k}\cdot T(n-2k)$$
+$$T(n)\ge\sum_{i\,=\,0}^{k\,-\,1}(2^{i}\cdot \Theta(1)) + 2^{k}\cdot T(n-2k)$$
 dove $k$ è il numero di chiamate ricorsive effettuate. Ora, dato che i casi base si trovano quando $n = 0$ e quando $n = 1$, sappiamo che la ricorsione terminerà quando $n - 2k = 0$ se $n$ è pari o quando $n - 2k = 1$ se $n$ è dispari; per semplicità, assumiamo che in generale valga il primo caso (il comportamento asintotico resta invariato nei due casi), e quindi che la ricorsione termini quando il numero di chiamate ricorsive è $k=\frac{n}{2}$. Dunque, possiamo riscrivere la disuguaglianza appena ottenuta come:
-$$\begin{align} T(n)&\ge\sum_{i\,=\,0}^{\frac{n}{2}-1}(2^{i}\cdot \Theta(1))+2^{\frac{n}{2}}\cdot \Theta(1)\\&\ge (2^{\frac{n}{2}}-1)\Theta(1)+2^{\frac{n}{2}}\cdot \Theta(1)\\&\ge (2\cdot 2^{\frac{n}{2}}-1)\cdot\Theta(1) \end{align}$$
+$$\begin{align} T(n)&\ge\sum_{i\,=\,0}^{\frac{n}{2}\,-\,1}(2^{i}\cdot \Theta(1))+2^{\frac{n}{2}}\cdot \Theta(1)\\&\ge (2^{\frac{n}{2}}-1)\cdot\Theta(1)+2^{\frac{n}{2}}\cdot \Theta(1)\\&\ge (2\cdot 2^{\frac{n}{2}}-1)\cdot\Theta(1) \end{align}$$
 Da questa disuguaglianza, ricaviamo infine che:
-$$T(n)=\Omega (2^{\frac{n}{2}})$$
-Pur non essendo riusciti a trovare un limite asintotico stretto ben preciso per l'algoritmo considerato, possiamo comunque concludere con sicurezza che il calcolo dei numeri di Fibonacci mediante al ricorsione richiede un tempo esponenziale in funzione di $n$.
+$$T(n)=\Omega (2^{\frac{n}{2}})=\Omega(\sqrt{ 2^{n} })$$
+Pur non essendo riusciti a trovare un limite asintotico stretto ben preciso per l'algoritmo considerato, possiamo comunque concludere con sicurezza che il calcolo dei numeri di Fibonacci mediante la ricorsione richiede un tempo esponenziale in funzione di $n$.
 ___
 ## Metodo di sostituzione
 
 Per risolvere un'equazione di ricorrenza utilizzando il **metodo di sostituzione**, quello che si deve fare è sostanzialmente **ipotizzare una soluzione** e **verificare la sua correttezza per induzione**. Si tratta di un metodo spesso ostico da utilizzare, la cui difficoltà maggiore risiede proprio nel dover trovare la funzione più vicina alla vera soluzione; in effetti, questo metodo è sconsigliato nella pratica e viene utilizzato soprattutto nelle dimostrazioni.
 
-Per comprendere meglio il funzionamento di questo metodo, applichiamolo all'esempio della ricerca sequenziale ricorsiva:
+Per comprendere meglio il funzionamento di questo metodo, applichiamolo nuovamente alla seguente equazione di ricorrenza:
 $$\begin{cases} T(1)=\Theta(1)\\T(n)=\Theta(1)+T(n-1) \end{cases}$$
 Per risolvere l'equazione, ipotizziamo la soluzione $T(n) = cn$, dove $c$ è una certa costante moltiplicativa. Sostituendo questa ipotesi nella parte generale dell'equazione si ottiene $T(n)=c(n-1)+\Theta(1)$, che risulta effettivamente essere equivalente a $cn$; la stessa equivalenza vale, naturalmente, anche per il caso base.
 
 Un problema che sorge, però, è che non è detto che le due costanti "nascoste" dalla notazione asintotica $\Theta(1)$ siano le stesse, mentre noi vogliamo verificare una soluzione esatta e non asintotica: è necessario, dunque, **eliminare le notazioni asintotiche dall'equazione**. È possibile trasformare l'equazione di ricorrenza, senza cambiarne il significato, nella seguente:
 $$\begin{cases} T(1) = d\\T(n)=c+T(n-1) \end{cases}$$
-dove $c$ e $d$ sono due costanti positive fissate. 
+dove $c$ e $d$ sono due costanti positive fissate. A questo punto, ipotizziamo che $T(n)=O(n)$, ossia che valga che $T(n)\le kn$ per una certa costante $k$ ancora da determinare. Per verificare la nostra affermazione, procediamo per induzione su $n$: innanzitutto, nel caso base si ha che $T(1)\le k\cdot 1$, e dunque che $T(1)\le k$, disuguaglianza che è verificata se e solo se $d\le k$;
 
-[SLIDES: 06, slide 12/16]
+[SLIDES: 06, slide 13/16]
 [DISPENSE: 05, pag. 4/7]
+[EXYSS: pag. 58 - 59]
 ___
 ## Metodo dell'albero
 
@@ -262,6 +263,7 @@ $$\begin{align} &\text{livello 0: } \Theta(n^{2})\\&\text{livello 1: }\, 2\cdot 
 
 [SLIDES: 06, slide 10/11]
 [DISPENSE: 05, pag. 14]
+[EXYSS: pag. 60/62]
 ___
 ## Metodo principale
 
@@ -304,4 +306,6 @@ $$T(n)=2T\left( \frac{n}{2} \right)+\Theta(n\,\log n)$$
 Abbiamo $a=2$ e $b=2$, il che porta a ottenere $n^{\log_{b}a}=n^{\log_{2}2}=n$; oltre a ciò, si ha che $f(n)=\Theta(n\,\log n)$. Ora, mentre $f(n)$ è asintoticamente più grande di $n$, non si può dire che sia polinomialmente maggiore, dunque non riusciamo a inquadrarci in nessuno dei tre casi, e ciò rende impossibile l'applicazione del metodo principale.
 
 [SLIDES: 06, slide 17/21]
+[DISPENSE: ]
+[EXYSS: pag. 63/66]
 ___
