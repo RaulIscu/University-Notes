@@ -213,11 +213,23 @@ Per risolvere l'equazione, ipotizziamo la soluzione $T(n) = cn$, dove $c$ è una
 
 Un problema che sorge, però, è che non è detto che le due costanti "nascoste" dalla notazione asintotica $\Theta(1)$ siano le stesse, mentre noi vogliamo verificare una soluzione esatta e non asintotica: è necessario, dunque, **eliminare le notazioni asintotiche dall'equazione**. È possibile trasformare l'equazione di ricorrenza, senza cambiarne il significato, nella seguente:
 $$\begin{cases} T(1) = d\\T(n)=c+T(n-1) \end{cases}$$
-dove $c$ e $d$ sono due costanti positive fissate. A questo punto, ipotizziamo che $T(n)=O(n)$, ossia che valga che $T(n)\le kn$ per una certa costante $k$ ancora da determinare. Per verificare la nostra affermazione, procediamo per induzione su $n$: innanzitutto, nel caso base si ha che $T(1)\le k\cdot 1$, e dunque che $T(1)\le k$, disuguaglianza che è verificata se e solo se $d\le k$;
+dove $c$ e $d$ sono due costanti positive fissate. A questo punto, ipotizziamo che $T(n)=O(n)$, ossia che valga che $T(n)\le kn$ per una certa costante $k$ non meglio determinata. Per verificare la nostra affermazione, procediamo per induzione su $n$: innanzitutto, nel caso base si ha che $T(1)\le k\cdot 1$, e dunque che $T(1)\le k$, disuguaglianza che è verificata se e solo se $d\le k$; ora, passiamo a formulare la nostra ipotesi induttiva e affermiamo che:
+$$T(r)\le kr$$
+per ogni $r<n$, volendo dimostrare con il passo induttivo che ciò valga anche per $n$. Sappiamo che $T(n)=T(n-1)+c$, dunque sostituendo nella nostra ipotesi iniziale si ha che:
+$$T(n-1)+c\le kn$$
+e per la nostra ipotesi induttiva sappiamo anche che $T(r)\le kr$ per ogni $r<n$, dunque anche per $r=n-1$, il che ci porta a riscrivere la disuguaglianza come:
+$$k(n-1)+c\le kn\,\,\,\Rightarrow\,\,\,kn-k+c\le kn\,\,\,\Rightarrow\,\,\,-k+c\le 0\,\,\,\Rightarrow\,\,\,c\le k$$
+Siamo arrivati, così, alla conclusione che la nostra ipotesi è vera se e solo se viene rispettata anche la disuguaglianza $c\le k$. Dato che, banalmente, esiste sicuramente un valore $k$ tale che $c\le k$ e che $d\le k$, possiamo concludere che abbiamo verificato la nostra ipotesi iniziale, ossia che $T(n)=O(n)$.
 
-[SLIDES: 06, slide 13/16]
-[DISPENSE: 05, pag. 4/7]
-[EXYSS: pag. 58 - 59]
+In modo del tutto analogo, proviamo a dimostrare che $T(n)=\Omega(n)$, ossia che $T(n)\ge hn$ per una certa costante $h$ non meglio determinata. Procedendo nuovamente per induzione su $n$, pensiamo prima al caso base: si ha $T(1)\ge h$, e poiché sappiamo dall'equazione di ricorrenza che $T(1)=d$, tale disuguaglianza è verificata se e solo se vale anche che $d\ge h$. Ora, passiamo a formulare l'ipotesi induttiva, affermando che:
+$$T(r)\ge hr$$
+per ogni $r<n$, volendo dimostrare con il passo induttivo che ciò valga anche per $n$. Sappiamo che $T(n)=T(n-1)+c$, dunque sostituendo nella nostra ipotesi iniziale si ha che:
+$$T(n-1)+c\ge hn$$
+e per l'ipotesi induttiva:
+$$h(n-1)+c\ge hn\,\,\,\Rightarrow\,\,\,hn-h+c\ge hn\,\,\,\Rightarrow\,\,\,-h+c\ge 0\,\,\,\Rightarrow\,\,\,c\ge h$$
+Dunque la nostra ipotesi iniziale è vera se e solo se vale sia che $d\ge h$ sia che $c \ge h$. Dato che, banalmente, esiste sicuramente un valore $h$ che rispetta queste condizioni, possiamo concludere che abbiamo verificato che $T(n)=\Omega(n)$. Inoltre, avendo verificato sia che $T(n)=O(n)$, sia che $T(n)=\Omega(n)$, di conseguenza si è dimostrato che $T(n)=\Theta(n)$.
+
+È importante sottolineare che questo metodo va utilizzato con cautela, dato che si sarebbero potute formulare ipotesi meno accurate che avrebbero portato a risultati poco utili o fuorvianti: ad esempio, per l'equazione di ricorrenza appena analizzata, avremmo potuto dimostrare che $T(n)=O(n^{2})$ o che $T(n)=O(2^{n})$, e parallelamente che $T(n)=\Omega(\sqrt{ n })$ o che $T(n)=\Omega(\log n)$.
 ___
 ## Metodo dell'albero
 
@@ -229,7 +241,7 @@ Visivamente, si può organizzare un albero partendo dalla radice, e ponendo cias
 
 Un albero nel quale tutti i livelli contengono il massimo numero possibile di nodi è detto "**albero completo**". Avendo un albero binario completo di altezza $h$, sono facilmente derivabili alcune considerazioni:
 - il **numero di nodi al livello $i$** è $2^{i}$, dunque **il numero delle foglie dell'albero** è $2^{h}$;
-- il **numero di nodi interni**, ossia di tutti i nodi dell'albero che non sono foglie, è pari a $\sum_{i=0}^{h-1}2^{i}=\frac{2^{h}-1}{2-1}=2^{h}-1$;
+- il **numero di nodi interni**, ossia di tutti i nodi dell'albero che non sono foglie, è pari a $\sum_{i\,=\,0}^{h\,-\,1}2^{i}=\frac{2^{h}\,-\,1}{2\,-\,1}=2^{h}-1$;
 - il **numero totale di nodi** dell'albero è pari alla somma del numero di foglie e di nodi interni, dunque $2^{h}+2^{h}-1=2^{h+1}-1$.
 
 Proviamo, con le informazioni fornite finora, a **stimare l'altezza di un albero binario completo contenente $n$ nodi**: poiché l'albero è completo, sappiamo che il numero di nodi $n$ è pari a:
@@ -237,11 +249,11 @@ $$n\,=\,2^{h+1}-1$$
 dove $h$ è l'altezza dell'albero. Di conseguenza, possiamo affermare che:
 $$\log(n+1)\,=\,\log(2^{h+1})\,=\,h+1$$
 da cui si deriva che:
-$$h\,=\,\log(n+1)-1\,=\,\log\left( \frac{n+1}{2} \right)$$
+$$h\,=\,\log(n+1)-1\,=\,\log(n+1)-\log(2)\,=\,\log\left( \frac{n+1}{2} \right)$$
 Possiamo facilmente generalizzare tutte le osservazioni e i calcoli visti finora, facendoli valere per qualsiasi albero $m$-ario completo con $m>2$, dunque:
 - il **numero di nodi al livello $i$** è $m^{i}$, dunque **il numero delle foglie dell'albero** è $m^{h}$;
-- il **numero di nodi interni**, ossia di tutti i nodi dell'albero che non sono foglie, è pari a $\sum_{i=0}^{h-1}m^{i}=\frac{m^{h}-1}{m-1}$;
-- il **numero totale di nodi** dell'albero è pari alla somma del numero di foglie e di nodi interni, dunque $m^{h}+\frac{m^{h}-1}{m-1}=\frac{m^{h+1}-1}{m-1}$;
+- il **numero di nodi interni**, ossia di tutti i nodi dell'albero che non sono foglie, è pari a $\sum_{i\,=\,0}^{h\,-\,1}m^{i}=\frac{m^{h}\,-1}{m\,-\,1}$;
+- il **numero totale di nodi** dell'albero è pari alla somma del numero di foglie e di nodi interni, dunque $m^{h}+\frac{m^{h}\,-\,1}{m\,-\,1}=\frac{m^{h+1}\,-\,1}{m\,-\,1}$;
 - avendo $n$ nodi, l'**altezza** dell'albero è pari a $\Theta(\log_{m}n)$.
 
 A questo punto, torniamo a parlare del metodo dell'albero. **Ogni nodo dell'albero di ricorrenza corrisponderà alla soluzione di un problema di una certa dimensione**; esso riporta il costo della ricombinazione delle soluzioni parziali, e **ha tanti figli quanti sono i sottoproblemi** in cui il problema relativo al nodo stesso è scomposto ricorsivamente.
@@ -259,11 +271,11 @@ In questo albero, sulla radice si trova il costo computazionale della prima iter
 ![[metodo_albero_esempio1.png]]
 
 Una volta completato l'albero, **il costo computazionale è dato dalla somma dei costi di tutti i livelli** di cui è costituito. Si noti che, concretamente, **il metodo dell'albero necessita degli stessi identici calcoli algebrici utilizzati per il [[IAA_05 - Ricorsione#Metodo iterativo|metodo iterativo]]**. Nel nostro esempio:
-$$\begin{align} &\text{livello 0: } \Theta(n^{2})\\&\text{livello 1: }\, 2\cdot \begin{matrix} \Theta\left( \left( \frac{n}{2} \right)^{2} \right) \end{matrix}\,=\, \begin{matrix} \Theta\left( \frac{n^{2}}{4} + \frac{n^{2}}{4} \right) \end{matrix}\,=\, \begin{matrix} \Theta\left( \frac{n^{2}}{2} \right) \end{matrix}\\&\text{livello 2: }\, 4\cdot \begin{matrix} \Theta\left( \left( \frac{n}{4} \right)^{2} \right) \end{matrix}\,=\,\begin{matrix} \Theta\left( \frac{n^{2}}{16}+\frac{n^{2}}{16}+\frac{n^{2}}{16}+\frac{n^{2}}{16} \right) \end{matrix}\,=\,\begin{matrix} \Theta\left( \frac{n^{2}}{4} \right) \end{matrix}\\&\dots\\&\text{livello }i\text{: }\, \end{align}$$
-
-[SLIDES: 06, slide 10/11]
-[DISPENSE: 05, pag. 14]
-[EXYSS: pag. 60/62]
+$$\begin{align} &\text{livello 0: } \Theta(n^{2})\\&\text{livello 1: }\, 2\cdot \Theta\left( \left( \frac{n}{2} \right)^{2} \right) \,=\, \Theta\left( \frac{n^{2}}{4} + \frac{n^{2}}{4} \right)\,=\, \Theta\left( \frac{n^{2}}{2} \right) \\&\text{livello 2: }\, 4\cdot \Theta\left( \left( \frac{n}{4} \right)^{2} \right) \,=\, \Theta\left( \frac{n^{2}}{16}+\frac{n^{2}}{16}+\frac{n^{2}}{16}+\frac{n^{2}}{16} \right) \,=\, \Theta\left( \frac{n^{2}}{4} \right) \\&\dots\\&\text{livello }i\text{: }\,2^{i}\cdot \Theta\left( \left( \frac{n}{2^{i}} \right)^{2} \right)\,=\,\Theta\left( \frac{n^{2}}{2^{i}} \right) \end{align}$$
+e la catena di chiamate ricorsive continuerà finché $\frac{n}{2^{k}}=1$, che corrisponde al caso base dell'equazione di ricorrenza. Sfruttando questa condizione, possiamo esplicitare il numero massimo $k$ di livelli per l'albero di ricorrenza:
+$$\frac{n}{2^{k}}=1\,\,\,\Rightarrow\,\,\,n = 2^{k}\,\,\,\Rightarrow\,\,\,k=\log n$$
+Dunque, ricordando il modo per calcolare il numero di nodi di un albero $m$-ario completo, otteniamo che il costo totale è dato da:
+$$\sum_{i\,=\,0}^{\log n}\Theta\left( \frac{n^{2}}{2^{i}} \right)=n^{2}\,\sum_{i\,=\,0}^{\log n}\Theta\left( \frac{1}{2^{i}} \right)=n^{2}\cdot \Theta(1)=\Theta(n^{2})$$
 ___
 ## Metodo principale
 
@@ -301,11 +313,9 @@ Di seguito, consideriamo la seguente equazione di ricorrenza:
 $$T(n)=3T\left( \frac{n}{4} \right)+\Theta(n\,\log n)$$
 Abbiamo $a=3$ e $b=4$, il che porta a ottenere $n^{\log_{b}a}=n^{\log_{4}3}\approx n^{0.7}$; oltre a ciò, si ha che $f(n)=\Theta(n\,\log n)$. Scegliendo ad esempio $\epsilon=0.2$, otteniamo che $f(n)=\Omega(n^{\log_{b}a+\epsilon})$, perciò riconosciamo che ci troviamo nel terzo caso. Per poter confermare la validità della soluzione, dimostriamo anche che $a\cdot f\left( \frac{n}{b} \right)\le c \cdot f(n)$, ossia che $3\cdot \frac{n}{4}\,\log\left( \frac{n}{4} \right)\le c\cdot n\,\log n$, per qualche $c<1$. Ponendo, ad esempio, $n=\frac{3}{4}$, si verifica la disuguaglianza: dunque $T(n)=\Theta(n\,\log n)$.
 
-Concludiamo con un ultima equazione di ricorrenza:
+Concludiamo con un'ultima equazione di ricorrenza:
 $$T(n)=2T\left( \frac{n}{2} \right)+\Theta(n\,\log n)$$
 Abbiamo $a=2$ e $b=2$, il che porta a ottenere $n^{\log_{b}a}=n^{\log_{2}2}=n$; oltre a ciò, si ha che $f(n)=\Theta(n\,\log n)$. Ora, mentre $f(n)$ è asintoticamente più grande di $n$, non si può dire che sia polinomialmente maggiore, dunque non riusciamo a inquadrarci in nessuno dei tre casi, e ciò rende impossibile l'applicazione del metodo principale.
 
-[SLIDES: 06, slide 17/21]
-[DISPENSE: ]
-[EXYSS: pag. 63/66]
+[Dimostrazione del Master Theorem: DISPENSE, pag. 22/26]
 ___
