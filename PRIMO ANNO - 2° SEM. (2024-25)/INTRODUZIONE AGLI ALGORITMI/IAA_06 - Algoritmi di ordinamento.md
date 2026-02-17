@@ -61,27 +61,130 @@ Chiariamo un punto: dato che i costi asintotici dell'algoritmo nel caso migliore
 ___
 ##### Selection Sort
 
+L'algoritmo "**Selection Sort**", o di "**ordinamento per selezione**", funziona nel modo seguente: alla prima iterazione, si cerca l'elemento minimo dell'intero array e lo si scambia con quello che si trova alla prima posizione dell'array; alla seconda iterazione, si cerca il minimo nelle posizioni dalla seconda all'ultima (incluse), e lo si scambia con l'elemento che si trovava nella seconda posizione; e così via. Dunque, possiamo formulare il medesimo invariante individuato per l'[[IAA_06 - Algoritmi di ordinamento#Insertion Sort|Insertion Sort]]:
 
+> Ad ogni iterazione $i$, gli elementi con indice minore di $i$ (ossia a sinistra dell'elemento considerato) sono già ordinati, mentre gli elementi con indice maggiore di $i$ (ossia a destra dell'elemento considerato) sono ancora da ordinare.
 
-[SLIDES: pag. 8/11]
-[DISPENSE: pag. 6 - 7]
-[EXYSS: pag. 70 - 71]
+Le differenze principali tra Selection Sort e Insertion Sort sono due:
+- nell'Insertion Sort, si prendono gli elementi dell'array nell'ordine in cui si trovano inizialmente, e si sposta ciascuno di essi nella posizione corretta, mentre nel Selection Sort **ad essere spostato è sempre il minimo del sotto-array non ancora ordinato**, che verrà scambiato con la posizione $i$ corrispondente all'iterazione in cui ci si trova;
+- nell'Insertion Sort avviene un numero relativamente elevato di scambi, mentre nel Selection Sort si esegue **un unico scambio per elemento**, anche se ciò prevede che venga sempre "scansionato" tutto il sotto-array non ancora ordinato per ogni elemento da scambiare (dunque, il Selection Sort risulta essere più conveniente dell'Insertion Sort principalmente quando l'operazione di scambio risulta molto costosa).
+
+Per comprendere meglio il funzionamento di questo algoritmo, vediamo un **esempio**. Supponiamo di avere l'array $[5,\,2,\,1,\,4,\,3]$, e di volerlo ordinare seguendo i ragionamenti appena spiegati. Nella prima iterazione (si considera $i=0$), si considera l'intero array e dunque si cerca l'elemento più piccolo tra tutti quelli contenuti nello stesso: nel nostro esempio, tale elemento è $1$, che viene dunque scambiato con l'elemento nella posizione $i=0$, ossia $5$, portando l'array ad assumere la seguente forma:
+$$[1,\,2,\,5,\,4,\,3]$$
+Ora, per la seconda iterazione, consideriamo $i=1$, e cerchiamo dunque il minimo del sotto-array che va dalla seconda all'ultima posizione: in questo caso, il minimo è $2$, che si trova già nella posizione desiderata, quindi non saranno necessari altri scambi. Passiamo così alla terza iterazione, in cui consideriamo $i=2$: il minimo del sotto-array che va dalla terza all'ultima posizione è $3$, dunque si scambia tale numero con quello presente nella posizione $i=2$, ossia $5$, portando l'array nella forma:
+$$[1,\,2,\,3,\,4,\,5]$$
+Notiamo che, a questo punto, l'array risulta già essere completamente ordinato, dunque le ultime due iterazioni non porteranno ad alcun risultato visibile (pur venendo comunque eseguite).
+
+Di seguito, lo **pseudocodice** dell'algoritmo di Selection Sort:
+
+```
+def Selection_Sort(A):
+	n = len(A)
+	
+	for i in range(n - 1):
+		m = i
+		
+		for j in range(i + 1, n):
+			if (A[j] < A[m]):
+				m = j
+			
+		A[i], A[m] = A[m], A[i]
+```
+
+Notiamo, analizzando lo pseudocodice di questo algoritmo, che a differenza dell'Insertion Sort **il [[IAA_03 - Costo computazionale#Come calcolare il costo computazionale di un algoritmo?|costo computazionale]] non dipende in alcun modo dalla distribuzione iniziale degli elementi nell'array**, dato che comunque si dovrà scansionare a ogni iterazione tutto il sotto-array non ancora ordinato, anche se l'array $A$ risulta ordinato in partenza e dunque il minimo si troverà sempre già nella posizione corretta. Possiamo, di conseguenza, trovare un costo computazionale generale e complessivo per l'algoritmo:
+$$\begin{align} T(n)\,&=\,\Theta(1)+\sum_{i\,=\,0}^{n\,-\,2}(\Theta(1)+(n-i)\Theta(1)+\Theta(1))\\&=\,\Theta(1)+\sum_{i\,=\,0}^{n\,-\,2}(\Theta(1)+(n-i)\Theta(1))\\&=\,\Theta(1)+\Theta(n)+\Theta(n^{2})\\&=\,\Theta(n^{2}) \end{align}$$
+Si deduce che **il Selection Sort non è un algoritmo input-sensitive**.
 ___
 ##### Bubble Sort
 
-[SLIDES: pag. 11/13]
-[DISPENSE: pag. 8]
-[EXYSS: pag. 71 - 72]
+L'algoritmo "**Bubble Sort**", o di "**ordinamento a bolle**", ha un funzionamento molto semplice, ma sostanzialmente diverso da [[IAA_06 - Algoritmi di ordinamento#Insertion Sort|Insertion Sort]] e [[IAA_06 - Algoritmi di ordinamento#Selection Sort|Selection Sort]]: in parole povere, l'algoritmo **ispeziona, una dopo l'altra, ogni coppia di elementi adiacenti dell'array $A$, e se l'ordine interno alla coppia è sbagliato scambia i due elementi considerati**; tale procedimento viene, sostanzialmente, ripetuto finché non si garantisce che non ci sono più coppie di elementi adiacenti nell'ordine sbagliato. Si precisa che tale procedimento **scorre l'array da destra verso sinistra**, e dunque possiamo dedurre, logicamente, che anche per il Bubble Sort vale lo stesso invariante visto in precedenza:
+
+> Ad ogni iterazione $i$, gli elementi con indice minore di $i$ (ossia a sinistra dell'elemento considerato) sono già ordinati, mentre gli elementi con indice maggiore di $i$ (ossia a destra dell'elemento considerato) sono ancora da ordinare.
+
+Per comprendere meglio il funzionamento di questo algoritmo, vediamo un **esempio**. Supponiamo di avere l'array $[5,\,2,\,1,\,4,\,3]$, e di volerlo ordinare seguendo i ragionamenti appena spiegati. Si parte considerando l'ultima coppia di elementi, dunque $(4,\,3)$: si trovano nell'ordine sbagliato, dunque procediamo a scambiarli, portando l'array nella seguente forma:
+$$[5,\,2,\,1,\,3,\,4]$$
+Ora, si considera la penultima coppia, ossia $(1,\,3)$, e notiamo che questa coppia rispetta, invece, l'ordine crescente, dunque rimarrà invariata. Lo stesso non si può dire della coppia $(2,\,1)$, che dovrà essere "ribaltata" portando l'array ad assumere la seguente forma:
+$$[5,\,1,\,2,\,3,\,4]$$
+Possiamo a questo punto terminare il primo "giro" dell'array analizzando la coppia $(5,\,1)$, che naturalmente si trova in ordine sbagliato e che perciò dovrà essere scambiata, risultando nella seguente situazione:
+$$[1,\,5,\,2,\,3,\,4]$$
+A questo punto, notiamo che è finita la prima iterazione ($i=1$) dell'algoritmo e che, come previsto dall'invariante, si ha che il sotto-array di lunghezza $i$ nella parte sinistra dell'array $A$, ossia $[1]$, è ordinato; procediamo dunque alla seconda iterazione ($i=2$), in seguito alla quale l'array si presenterà così:
+$$[1,\,2,\,5,\,3,\,4]$$
+Ora la parte ordinata ha lunghezza $i=2$, e corrisponde al sotto-array $[1,\,2]$. Procedendo in modo analogo, si ha che dopo la terza iterazione l'array diventa:
+$$[1,\,2,\,3,\,5,\,4]$$
+mentre dopo la quarta iterazione arriviamo finalmente all'array ordinato:
+$$[1,\,2,\,3,\,4,\,5]$$
+Di seguito, lo **pseudocodice** dell'algoritmo di Bubble Sort:
+
+```
+def Bubble_Sort(A):
+	n = len(A)
+
+	for i in range(n):
+		for j in range(n - 1, i, -1):     # scorre gli indici dall'ultimo al primo
+			if (A[j] < A[j - 1]):
+				A[j], A[j - 1] = A[j - 1], A[j]			
+```
+
+Anche in questo caso, notiamo subito che si tratta di un **algoritmo non input-sensitive**, dunque potremo stimare un [[IAA_03 - Costo computazionale#Come calcolare il costo computazionale di un algoritmo?|costo computazionale]] che non dipenda da un caso migliore e un caso peggiore. In particolare, il costo $T(n)$ dell'algoritmo di Bubble Sort risulta essere il seguente:
+$$\begin{align} T(n)\,&=\,\Theta(1)+\sum_{i\,=\,0}^{n\,-\,1}(n-1-i)\,\Theta(1)\\&=\,\Theta(1)+\Theta(n^{2})\\&=\,\Theta(n^{2}) \end{align}$$
 ___
-## Merge Sort
+## Complessità minima di un ordinamento
+
+Dopo aver analizzato i tre [[IAA_06 - Algoritmi di ordinamento#Algoritmi di ordinamento naif|algoritmi di ordinamento naif]] più comuni, si può notare che **tutti hanno un [[IAA_03 - Costo computazionale|costo computazionale]] che tende a crescere come il quadrato del numero di elementi da ordinare**, e dunque che hanno un costo in $\Theta(n^{2})$ (in realtà, sarebbe più preciso dire che per l'algoritmo di [[IAA_06 - Algoritmi di ordinamento#Insertion Sort|Insertion Sort]] ciò vale solo nel caso peggiore, ma come già anticipato nel calcolo del costo di un algoritmo si dà sempre priorità ad esso, dunque la proposizione precedente rimane valida). Sorge spontanea una domanda: **è possibile ordinare in modo più efficiente?** E se sì, **c'è un limite all'efficienza di un algoritmo di ordinamento?** La seconda domanda, più complessa e interessante della prima, chiede sostanzialmente di **stabilire un limite di costo computazionale al di sotto del quale nessun algoritmo di ordinamento possa scendere**.
+
+Prima di continuare, chiariamo un aspetto che può sembrare banale ma risulta in realtà fondamentale nella nostra trattazione: gli algoritmi di ordinamento che abbiamo considerato finora, così come quelli a cui rivolgiamo la nostra curiosità nel rispondere al quesito, sono **algoritmi di ordinamento basati su confronti tra coppie di elementi**.
+
+Per poter rispondere alla domanda che ci siamo posti, possiamo utilizzare il cosiddetto "**albero di decisione**". Si tratta di un modo per **rappresentare tutte le "strade" che la computazione di un algoritmo può intraprendere**, sulla base dei possibili esiti dei confronti previsti dall'algoritmo stesso. Ora, ricordandoci che si stanno trattando algoritmi di ordinamento basati su confronti tra coppie di elementi, sappiamo che **ogni confronto ha due esiti possibili**: o il confronto è verificato, o il confronto non è verificato. Da questa osservazione, possiamo identificare l'albero di decisione come un **[[IAA_05 - Ricorsione#Metodo dell'albero|albero binario]]**, che ha le seguenti proprietà:
+- l'albero rappresenta tutti i possibili confronti che vengono effettuati dall'algoritmo, ed essendo un albero binario **ogni nodo interno ha esattamente due figli**;
+- **ogni nodo interno rappresenta un singolo confronto**, e di conseguenza **i due figli di ogni nodo interno rappresentano i due possibili esiti del confronto** ad esso associato;
+- **ogni foglia rappresenta una possibile soluzione del problema**, ossia nel nostro contesto una specifica permutazione della sequenza di elementi ricevuta in input inizialmente.
+
+Supponiamo, ad esempio, di avere un array $A$ di $3$ elementi $a$, $b$ e $c$, e di voler rappresentare l'albero di decisione relativo all'applicazione dell'algoritmo di [[IAA_06 - Algoritmi di ordinamento#Insertion Sort|Insertion Sort]] su un array del genere. Si potrebbe costruire il seguente albero:
+
+![[alberodidecisione_esempio.png]]
+
+Naturalmente, indifferentemente dall'ordine in cui si presentano i tre elementi, l'applicazione di un algoritmo di ordinamento ben progettato porterà sempre alla soluzione corretta (in questo esempio, $abc$); infatti, si precisa che l'albero di decisione non rappresenta interamente un "diagramma di flusso" dell'algoritmo, ma piuttosto una rappresentazione grafica di tutti gli scenari possibili in base ai confronti previsti dall'algoritmo.
+
+**Eseguire l'algoritmo di ordinamento corrisponde a scendere lungo l'albero di decisione andando dalla radice alla foglia che contiene la permutazione corretta**, ossia quella in cui gli elementi considerati sono correttamente ordinati: per la natura dell'albero di decisione, **la lunghezza di tale cammino rappresenta il numero di confronti necessari per trovare la soluzione**. Va da sé, dunque, che la lunghezza del percorso più lungo dalla radice ad una foglia (ossia l'**altezza** dell'albero binario) rappresenta il numero di confronti che l'algoritmo deve effettuare nel caso peggiore. Da tutta questa catena di ragionamenti, si deduce infine che **trovare una limitazione al costo computazionale** (nel caso peggiore) **di un qualsiasi algoritmo di ordinamento basato su confronti equivale a determinare una limitazione inferiore all'altezza dell'albero di decisione**.
+
+Ora, dato che la soluzione del problema potrebbe corrispondere a una qualsiasi delle permutazioni degli $n$ elementi presi in input dall'algoritmo, sappiamo che ci sono $n!$ "soluzioni" possibili al problema. D'altra parte, un albero binario di altezza $h$ non può contenere più di $2^{h}$ foglie: dato che sono proprio le foglie dell'albero di decisione a corrispondere alle soluzioni possibili, deve necessariamente valere che:
+$$2^{h}\ge n!\,\,\,\Rightarrow\,\,\,h\ge \log n!$$
+Sfruttando una delle [[IAA_02 - Notazione asintotica#Sommatorie notevoli|sommatorie notevoli]] viste qualche capitolo fa, sappiamo che:
+$$\log n! = \sum_{i\,=\,1}^{n}\log i=\Theta(n\,\log n)$$
+Dunque, avendo che $h\ge \Theta(n\,\log n)$, si deduce che:
+
+> Il costo computazionale di qualunque algoritmo di ordinamento basato su confronti è in $\Omega(n\,\log n)$.
+
+Possiamo dimostrare quanto appena detto ragionando sul significato di $\log n!$:
+$$\log n!\,=\,\sum_{i\,=\,1}^{n}\log i\,=\,\sum_{i\,=\,1}^{\frac{n}{2}}\log i+\sum_{i\,=\,\frac{n}{2}\,+\,1}^{n}\log i$$
+e affermiamo che vale sicuramente la seguente disuguaglianza:
+$$\sum_{i\,=\,1}^{\frac{n}{2}}\log i+\sum_{i\,=\,\frac{n}{2}\,+\,1}^{n}\log i\,\ge\,\sum_{i\,=\,1}^{\frac{n}{2}}\log i+\sum_{i\,=\,\frac{n}{2}\,+\,1}^{n}\log \frac{n}{2}$$
+Concentrandoci sulle seconde sommatorie di entrambi i membri della disuguaglianza (le prime sono identiche), vale che:
+$$\sum_{i\,=\,\frac{n}{2}\,+\,1}^{n}\log i\,\ge\,\sum_{i\,=\,\frac{n}{2}\,+\,1}^{n}\log \frac{n}{2}$$
+disuguaglianza che è sicuramente vera dato che la sommatoria presente al secondo membro somma logaritmi il cui argomento non dipende da $i$, e coincide sempre con $\frac{n}{2}$, tuttavia notiamo che nella sommatoria al primo membro, che somma invece logaritmi dipendenti dal valore di $i$, quest'ultima parte da $\frac{n}{2}+1$, e dunque ogni valore di $\log i$ sarà sicuramente maggiore di $\log \frac{n}{2}$. Ora, la sommatoria al secondo membro può essere sviluppata come segue:
+$$\sum_{i\,=\,\frac{n}{2}\,+\,1}^{n}\log \frac{n}{2}\,=\,\left( n-\left( \frac{n}{2}+1 \right) +1\right)\cdot \log \frac{n}{2}\,=\, \frac{n}{2}\,\log \frac{n}{2}\,=\,\frac{n}{2}(\log n-\log 2)\,=\,\frac{n}{2}\,\log n-\frac{n}{2}$$
+A livello di notazione asintotica, si può trovare che $\frac{n}{2}\log n-\frac{n}{2}$ è in $\Theta(n\,\log n)$, ed essendo $\log n!\ge\Theta(n\,\log n)$ e $h\ge \log n!$, abbiamo dimostrato che $h=\Omega(n\,\log n)$.
+___
+## Algoritmi di ordinamento avanzati
+
+In questo paragrafo, studieremo tre algoritmi di ordinamento più avanzati di quelli visti [[IAA_06 - Algoritmi di ordinamento#Algoritmi di ordinamento naif|un paio di paragrafi fa]], e al tempo stesso anche più efficienti: essi, infatti, **raggiungono il costo computazionale [[IAA_06 - Algoritmi di ordinamento#Complessità minima di un ordinamento|minore possibile]] per un algoritmo di ordinamento basato su confronti** (in particolare, il Merge Sort e l'Heap Sort presentano questa proprietà anche nel loro caso peggiore, mentre il Quick Sort solo nel caso "medio"). I tre algoritmi che tratteremo in questo paragrafo sono:
+- il **[[IAA_06 - Algoritmi di ordinamento#Merge Sort|Merge Sort]]**;
+- il **[[IAA_06 - Algoritmi di ordinamento#Quick Sort|Quick Sort]]**;
+- l'**[[IAA_06 - Algoritmi di ordinamento#Heap Sort|Heap Sort]]**.
+
+##### Merge Sort
+
+
+
+[SLIDES: pag. 1/10]
+[DISPENSE: pag. 13/19]
+[EXYSS: pag. 74/79]
+___
+##### Quick Sort
 
 
 ___
-## Quick Sort
-
-
-___
-## Heap Sort
+##### Heap Sort
 
 
 ___

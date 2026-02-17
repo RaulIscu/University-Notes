@@ -216,11 +216,11 @@ Più in generale, vale che:
 
 
 
-> $$\sum_{i\,=\,0}^{n}\log i\,=\,\log n!\,=\,\Theta(n\,\log n)$$
+> $$\sum_{i\,=\,1}^{n}\log i\,=\,\log n!\,=\,\Theta(n\,\log n)$$
 
 Più in generale, vale che:
 
-> $$\sum_{i\,=\,0}^{n}\log^{c}i\,=\,\Theta(n\,\log^{c}i)\,\,\,\,\,\,\,\,\,\,\text{per ogni }c>1$$
+> $$\sum_{i\,=\,1}^{n}\log^{c}i\,=\,\Theta(n\,\log^{c}i)\,\,\,\,\,\,\,\,\,\,\text{per ogni }c>1$$
 
 
 
