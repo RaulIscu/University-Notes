@@ -174,15 +174,111 @@ In questo paragrafo, studieremo tre algoritmi di ordinamento più avanzati di qu
 
 ##### Merge Sort
 
+L'algoritmo "**Merge Sort**", o di "**ordinamento per fusione**", è un **[[IAA_05 - Ricorsione#Cos'è un algoritmo ricorsivo?|algoritmo ricorsivo]]** che adotta una strategia detta "**divide et impera**", che può essere descritta nei seguenti passaggi:
+- il problema complessivo viene suddiviso in sotto-problemi di dimensione inferiore;
+- i vari sotto-problemi vengono risolti individualmente;
+- le soluzioni dei sotto-problemi vengono ricomposte per ottenere la soluzione del problema complessivo.
 
+Nel contesto del nostro algoritmo, questa strategia si traduce nei seguenti passaggi principali:
+1. l'array $A$ di $n$ elementi viene diviso in due sotto-sequenze di $\frac{n}{2}$ elementi ciascuna;
+2. le due sotto-sequenze vengono, a loro volta, ordinate ricorsivamente richiamando l'algoritmo stesso su di esse;
+3. la ricorsione termina quando la sotto-sequenza risultante dalla chiamata ricorsiva è costituita da un unico elemento, per cui tale sequenza è naturalmente già ordinata;
+4. man mano, le varie sotto-sequenze vengono "fuse" in modo ordinato, tornando a formare una sequenza di $n$ elementi ordinata.
 
-[SLIDES: pag. 1/10]
-[DISPENSE: pag. 13/19]
-[EXYSS: pag. 74/79]
+Di seguito, lo **pseudocodice** dell'algoritmo di Bubble Sort:
+
+```
+def Merge_Sort(A, indice_primo, indice_ultimo):
+	if (indice_primo < indice_ultimo):
+		indice_medio = (indice_primo + indice_ultimo) // 2
+		Merge_Sort(A, indice_primo, indice_medio)
+		Merge_Sort(A, indice_medio + 1, indice_ultimo)
+		Fondi(A, indice_primo, indice_medio, indice_ultimo)
+```
+
+Per adesso, si ignori il funzionamento effettivo del sotto-algoritmo `Fondi`, che vedremo tra poco; si tenga presente solo che è il responsabile del passaggio $4$, ossia della "fusione" delle varie sotto-sequenze, e di conseguenza dell'ordinamento delle stesse. Vediamo una schematizzazione di un esempio di applicazione dell'algoritmo di Merge Sort:
+
+![[mergesort_esempio.png]]
+
+In questo schema, le caselle blu corrispondono alle **operazioni di suddivisione dell'array $A$** in più sotto-array, operazioni che avvengono grazie alle chiamate ricorsive dell'algoritmo; le caselle arancioni, invece, corrispondono ai **casi base**, ossia i sotto-array contenenti un unico elemento; infine, le caselle viola corrispondono alle **chiamate al sotto-algoritmo `Fondi`**, che restituiscono sotto-array ordinati sempre più grandi, fino ad arrivare a un array di dimensione $n$.
+
+Dall'analisi dello [[IAA_01 - Introduzione#Pseudocodice|pseudocodice]] visto poco fa, possiamo ottenere un'[[IAA_05 - Ricorsione#Equazioni di ricorrenza|equazione di ricorrenza]] che esprima il [[IAA_03 - Costo computazionale#Come calcolare il costo computazionale di un algoritmo?|costo computazionale]] complessivo $T(n)$ dell'algoritmo di Merge Sort (per adesso, non avendolo approfondito, indichiamo semplicemente con $S(n)$ il costo del sotto-algoritmo `Fondi`):
+$$\begin{cases} T(1)=\Theta(1) \\T(n)=\Theta(1)+2T\left( \frac{n}{2} \right) +S(n) \end{cases}$$
+
+Prima di approfondire il funzionamento dell'algoritmo `Fondi`, e di conseguenza il suo costo computazionale $S(n)$, è giusto fare un'osservazione: per come è progettato l'algoritmo di Merge Sort, risulta evidente che sarebbe possibile utilizzare un qualunque altro algoritmo, al posto di `Fondi`, purché sia in grado di restituire una sequenza ordinata partendo da due sotto-sequenze; l'utilizzo dell'algoritmo `Fondi` è tuttavia indicato per la natura estremamente ottimizzata dello stesso, che risulta in un costo computazionale minimo per lo scopo per cui viene utilizzato.
+
+Ora, illustriamo il **funzionamento di `Fondi`**. Esso si basa sul fatto che **le due sotto-sequenze che prende in input sono individualmente ordinate**, proprietà che è sempre rispettata per natura dell'algoritmo di Merge Sort e che permette di arrivare a un meccanismo semplice ma efficace: **il minimo della sequenza complessiva sarà necessariamente il minimo tra il primo elemento della prima sotto-sequenza e il primo elemento della seconda**; una volta trovato il minimo tra questi due elementi, **esso viene inserito nella sequenza complessiva**, rimosso dalla rispettiva sotto-sequenza, e **la stessa operazione viene ripetuta sulle due sotto-sequenze risultanti**; non appena una delle due sotto-sequenze termina i suoi elementi, tutti gli elementi rimasti nell'altra (che sono necessariamente, oltre che già ordinati, tutti maggiori o uguali degli elementi inseriti finora nella sequenza complessiva) vengono aggiunti uno ad uno in coda alla sequenza complessiva. Vediamo, ora, lo pseudocodice di una possibile implementazione di `Fondi`:
+
+```
+def Fondi(A, indice_primo, indice_medio, indice_ultimo):
+	i, j = indice_primo, indice_medio + 1
+	B = []
+	
+	while (i <= indice_medio and j <= indice_ultimo):
+		if (A[i] <= A[j]):
+			B.append(A[i])
+			i += 1
+		else:
+			B.append(A[j])
+			j += 1
+	
+	while (i <= indice_medio):
+		B.append(A[i])
+		i += 1
+	
+	while (j <= indice_ultimo):
+		B.append(A[j])
+		j += 1
+		
+	for i in range(len(B)):
+		A[indice_primo + i] = B[i]
+```
+
+L'algoritmo `Fondi`, dunque, prende in input l'array iniziale $A$, l'indice di inizio `indice_primo` della sotto-sequenza complessiva da considerare, l'indice medio `indice_medio` che divide quest'ultima nelle due sotto-sequenze ordinate da fondere in modo ordinato, e l'indice di fine `indice_ultimo` della sotto-sequenza complessiva. L'array `B`, inizializzato all'inizio dell'esecuzione di `Fondi`, andrà ad ospitare temporaneamente gli elementi ordinati, prima che essi vengano reinseriti nelle apposite posizioni dell'array $A$ su cui si sta lavorando.
+
+Il primo ciclo `while` controlla, nella sua condizione, che le due sotto-sequenze da fondere abbiano entrambe almeno un elemento rimasto al loro interno, ed esegue concretamente il confronto tra i primi elementi di ciascuna, trovando il minimo tra di essi e aggiungendolo in coda a `B` tramite l'istruzione `B.append`. Non appena una delle due sotto-sequenze esaurisce i propri elementi, l'esecuzione esce dal ciclo appena visto, e incontra i due cicli `while` successivi, andando ad eseguire solamente quello relativo alla sotto-sequenza non ancora esaurita, e aggiungendo in coda a `B`, uno alla volta e in ordine, tutti gli elementi rimasti in tale sotto-sequenza. Infine, viene eseguito l'ultimo ciclo `for`, che non fa altro che inserire gli elementi ordinati (ora contenuti tutti in `B`) nelle posizioni giuste all'interno dell'array $A$.
+
+Avendo ben chiaro il funzionamento di `Fondi`, parliamo ora del suo **costo computazionale $S(n)$**. Andando istruzione per istruzione, troviamo innanzitutto delle istruzioni elementari di costo $\Theta(1)$. Arriviamo così al primo ciclo `while`, che esegue un numero costante di istruzioni elementari per ogni iterazione, e che esegue un numero di iterazioni compreso tra $\frac{n}{2}$ e $n$, dato che scorre almeno una sotto-sequenza di dimensione $\frac{n}{2}$ (nel caso in cui una delle due sotto-sequenze contenga tutti elementi minori del primo elemento dell'altra) e al più due sotto-sequenze di dimensione $\frac{n}{2}$ (nel caso in cui gli elementi della prima e della seconda sotto-sequenza "si alternano" nell'ordinamento); da ciò, deduciamo che il costo computazionale di questo ciclo è in $\Theta(n)$. Passiamo ora ai due cicli `while` successivi, o più precisamente a uno dei due (si ricorda che verrà sempre eseguito al più uno di essi): anch'essi eseguono un numero costante di istruzioni elementari per ogni iterazione, e un numero di iterazioni compreso tra $1$ (se è rimasto un solo elemento nella sotto-sequenza) e $\frac{n}{2}$ (se tutti gli elementi della sotto-sequenza sono ancora presenti): possiamo, quindi, affermare che il suo costo sarà in $O(n)$. Infine, l'ultimo ciclo `for` ha un costo facilmente individuabile di $\Theta(n)$, dato che esegue una singola istruzione elementare per $n$ volte. Da tutte queste considerazioni, possiamo ottenere una formula per il costo complessivo $S(n)$:
+$$S(n)=\Theta(1)+\Theta(n)+O(n)+\Theta(n)=\Theta(n)$$
+il che porta il costo computazionale $T(n)$ dell'algoritmo di Merge Sort a corrispondere alla seguente equazione di ricorrenza:
+$$\begin{cases} T(1)=\Theta(1)\\T(n)=2T\left( \frac{n}{2} \right)+\Theta(n) \end{cases}$$
+Per ottenere il costo concreto, possiamo risolvere tale equazione di ricorrenza ad esempio utilizzando il [[IAA_05 - Ricorsione#Metodo principale|metodo principale]]: individuando $a=2$ e $b=2$, e di conseguenza $n^{\log_{b}a}=n^{\log_{2}2}=n$, si trova subito che $f(n)=\Theta(n)$ è in $\Theta(n^{\log_{b}a})=\Theta(n)$, e dunque troviamo che il costo computazionale dell'algoritmo di Merge Sort è:
+$$T(n)=\Theta(n\,\log n)$$
+
+Incontrando per la prima volta l'algoritmo di Merge Sort e la sua implementazione, ci si potrebbe fare una domanda: **non è possibile effettuare le operazioni di ordinamento e "fusione" eseguite da `Fondi` in loco**, ossia senza creare ogni volta dei nuovi array dove ospitare temporaneamente gli elementi ordinati? La risposta è **no, a meno che non si voglia aumentare il costo dell'algoritmo**: infatti, eseguire tali operazioni in loco, o "in-place", implicherebbe il dover spostare ogni volta parte della sotto-sequenza considerata per fare spazio al valore minimo (un funzionamento simile a quello dell'[[IAA_06 - Algoritmi di ordinamento#Insertion Sort|Insertion Sort]]), e ciò vorrebbe dire eseguire un'operazione di costo $\Theta(n)$ per ognuno degli $n$ elementi da riordinare, portando il costo della fusione ad aumentare da $\Theta(n)$ a $\Theta(n^{2})$. Dunque, al costo di mantenere contenuto il costo computazionale dell'algoritmo di Merge Sort, si preferisce utilizzare quantità relativamente elevate di memoria per ospitare i nuovi array che vengono creati ad ogni chiamata di `Fondi`.
+
+Notiamo un'altra particolarità del Merge Sort, che riguarda proprio l'algoritmo di Insertion Sort a cui abbiamo rimandato poco fa: complice, per certi versi, la somiglianza tra i funzionamenti di `Fondi` e dell'Insertion Sort, e nonostante l'Insertion Sort abbia un costo computazionale maggiore ($O(n^{2})$) del Merge Sort, si può affermare che **per valori $n$ sufficientemente piccoli, è più conveniente utilizzare l'Insertion Sort all'interno del Merge Sort**. Ipotizziamo, dunque, di avere il seguente algoritmo chiamato **`Merge_Insertion`**, un ibrido tra i due algoritmi che stiamo considerando, e chiamiamo $k$ il limite superato il quale torna a convenire il Merge Sort, dunque il limite che stabilisce se continuare con la solita catena di ricorsione prevista dall'algoritmo originale o se passare all'utilizzo dell'Insertion Sort:
+
+```
+def Merge_Insertion(A, k, primo, ultimo, dim):
+	if (dim > k):
+		medio = (primo + ultimo) // 2
+		Merge_Insertion(A, k, primo, medio, medio - primo + 1)
+		Merge_Insertion(A, k, medio + 1, ultimo, ultimo - primo)
+		Fondi(primo, medio, ultimo)
+	else:
+		Insertion_Sort(primo, ultimo)
+```
+
+L'equazione di ricorrenza di questa nuova variante dell'algoritmo è la seguente:
+$$\begin{cases} T(k)=\Theta(k^{2})\\T(n)=2T\left( \frac{n}{2} \right)+\Theta(n) \end{cases}$$
+dove il caso base coincide con la chiamata all'algoritmo di Insertion Sort, che avviene quando $n\le k$. Ma quali valori può assumere $k$ affinché l'algoritmo `Merge_Insertion` mantenga lo stesso tempo di esecuzione del Merge Sort, e sia dunque potenzialmente preferibile ad esso? Per rispondere a questa domanda, risolviamo l'equazione di ricorrenza attraverso il [[IAA_05 - Ricorsione#Metodo iterativo|metodo iterativo]], ottenendo:
+$$\begin{align}T(n)\,&=\,2T\left( \frac{n}{2} \right)+\Theta(n)\\&=\,2\left[ 2T\left( \frac{n}{4} \right)+\Theta\left( \frac{n}{2} \right) \right]+\Theta(n)\\&\dots\\&=\,2^{h}\, T\left( \frac{n}{2^{h}} \right)+\sum_{i\,=\,0}^{h\,-\,1}2^{i}\cdot \Theta\left( \frac{n}{2^{i}} \right)\\&=\,2^{h}\,T\left( \frac{n}{2^{h}} \right)+\sum_{i\,=\,0}^{h\,-\,1}\Theta(n)\end{align}$$
+Ora, sappiamo che la catena di chiamate ricorsive procede finché $\frac{n}{2^{h}}=k$, da cui possiamo ottenere:
+$$\frac{n}{2^{h}}=k\,\,\,\Rightarrow\,\,\,2^{h}=\frac{n}{k}\,\,\,\Rightarrow\,\,\,h=\log\left( \frac{n}{k} \right)$$
+Sostituendo $h$ all'interno dell'equazione ottenuta, abbiamo:
+$$\begin{align} T(n)\,&=\,2^{h}\,T\left( \frac{n}{2^{h}} \right)+\sum_{i\,=\,0}^{h\,-\,1}\Theta(n)\\&=\,2^{\log\left( \frac{n}{k} \right)}\cdot \Theta(k^{2})+\sum_{i\,=\,0}^{\log\left( \frac{n}{k} \right)\,-\,1}\Theta(n)\\&=\,\frac{n}{k}\,\Theta(k^{2})+\Theta\left( n\log\left( \frac{n}{k} \right) \right)\\&=\,\Theta(nk)+\Theta(n\,\log n)-\Theta(n\,\log k) \end{align}$$
+Ponendo $k=O(\log n)$, il che vuol dire che deve valere la disuguaglianza $k\le c\cdot \log n$, otteniamo che:
+$$T(n)=\Theta(n\,\log n)+\Theta(n\,\log n)-\Theta(n\,\log(\log n))=\Theta(n\,\log n)$$
+Concludiamo, così, che se per valori $n\le c\cdot \log n$ viene utilizzato l'Insertion Sort internamente al Merge Sort, si ottiene **un costo computazionale invariato ma una riduzione notevole di costo in termini di memoria**, dato che l'Insertion Sort è un algoritmo che lavora in-place.
+
+Una piccola curiosità: in Python, il comando `sort`, che può essere utilizzato per ordinare un oggetto di tipo `list`, viene implementato utilizzando la variante del Merge Sort integrata con l'Insertion Sort (variante che viene anche detta "**Timsort**"), e pertanto ha costo computazionale pari a $\Theta(n\,\log n)$.
 ___
 ##### Quick Sort
 
-
+[SLIDES: pag. 3/14]
+[DISPENSE: pag. 20/27]
+[EXYSS: pag. 80/83]
 ___
 ##### Heap Sort
 
