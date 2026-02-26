@@ -276,6 +276,8 @@ Una piccola curiosità: in Python, il comando `sort`, che può essere utilizzato
 ___
 ##### Quick Sort
 
+L'algoritmo **Quick Sort**, o di "**ordinamento veloce**", 
+
 [SLIDES: pag. 3/14]
 [DISPENSE: pag. 20/27]
 [EXYSS: pag. 80/83]
