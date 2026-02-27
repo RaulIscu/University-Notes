@@ -65,9 +65,15 @@ Ricordando quanto detto qualche paragrafo fa, questi dispositivi all'interno di 
 
 Informalmente, i dispositivi client sono spesso computer, smartphone, PC, e tutti quegli altri dispositivi che **"ricevono" dei servizi ed eseguono applicazioni utente**; invece, i dispositivi server sono generalmente macchine più potenti e ad elevate prestazioni, il cui scopo è **conservare e distribuire dati**, così come **eseguire programmi che forniscono servizi ad applicazioni utente** eseguite sui dispositivi client.
 
+Per poter comunicare tra di loro, i vari end systems di una rete devono essere collegati ad essa attraverso una "**rete di accesso**", ossia la sotto-rete che connette fisicamente un end system al primo router (detto anche "router periferico") sulla route verso un altro end system. In base al contesto, si distinguono **diversi tipi di reti di accesso**, tra cui:
+- reti di accesso **residenziali**;
+- reti di accesso **istituzionali** o **aziendali**;
+- reti di accesso **mobile**.
+
 [SLIDE: 02 - slide 9]
-[LIBRO: pag. 42]
+[LIBRO: pag. 43]
 ___
+## 
 
 [recuperare lezioni del 23 febbraio e del 24 febbraio]
 
