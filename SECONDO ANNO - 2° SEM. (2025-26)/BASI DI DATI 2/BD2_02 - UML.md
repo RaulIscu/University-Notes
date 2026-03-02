@@ -13,4 +13,4 @@ LE CLASSI DI PROGRAMMAZIONE NON SONO LE CLASSI DEGLI UML. [A.1: slide 4 - 5] Un 
 
 ha vita propria = ha una sua individualità, non si confonde con altro
 
-[fino a A.1: slide 30]
+[fino a A.1: slide 42]
