@@ -75,7 +75,7 @@ Per poter comunicare tra di loro, i vari end systems di una rete devono essere c
 ___
 ## 
 
-[recuperare lezioni del 23 febbraio e del 24 febbraio]
+[recuperare lezioni del 23 febbraio, del 24 febbraio e del 2 marzo]
 
 Ampiezza di banda: due concetti principali:
 - caratterizzazione del canale o del sistema trasmissivo, l'intervallo di frequenze che un mezzo fisico consente di trasmettere senza danneggiare il segnale; maggiore è l'ampiezza di banda, maggiore è la quantità di informazione che può essere veicolato;

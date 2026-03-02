@@ -1,4 +1,4 @@
-[recuperare lezione del lunedì 23 febbraio]
+Per poter progettare basi di dati e, conseguentemente, applicazioni concrete, il linguaggio **UML** (**Unified Modeling Language**) rappresenta uno strumento potente e universalmente riconosciuto.
 
 L'UML è uno standard molto più vasto di quello visto finora nella programmazione: è come un "dizionario".
 
