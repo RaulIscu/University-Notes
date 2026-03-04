@@ -70,8 +70,25 @@ Per poter comunicare tra di loro, i vari end systems di una rete devono essere c
 - reti di accesso **istituzionali** o **aziendali**;
 - reti di accesso **mobile**.
 
-[SLIDE: 02 - slide 9]
-[LIBRO: pag. 43]
+Nel 2020, uno studio ha mostrato che più dell'80% delle residenze europee e statunitensi avevano un accesso stabile a Internet. Al giorno d'oggi, le due principali forme di **reti di accesso residenziali** sono:
+- la "**digital subscriber line**", o **DSL** in breve;
+- l'**accesso via cavo**.
+
+Nel caso della prima, spesso la DSL di una residenza è gestita dallo stesso operatore che fornisce a tale residenza l'accesso alla linea telefonica: perciò, parlando di DSL, **spesso la compagnia telefonica del cliente è anche il suo [[RDE_01 - Introduzione#Come accedono a Internet i dispositivi?|ISP]]**. Per permettere al cliente l'accesso ad Internet, il modem della DSL sfrutta la linea telefonica esistente per trasmettere dati a un "**DSL access multiplexer**", o **DSLAM** in breve, tipicamente situato nella sede centrale della compagnia telefonica; per fare ciò, il modem riceve i dati digitali e li converte in segnali analogici ad alta frequenza, segnali che verranno poi trasmessi lungo la linea telefonica fino al DSLAM, che procederà a riconvertirli in segnali digitali e a inoltrarli lungo la rete. Ci si potrebbe chiedere, a questo punto, **come si fa a distinguere tra segnali telefonici e dati da trasmettere su Internet**, dato che entrambi sono mandati utilizzando la linea telefonica. Il segreto sta nella **frequenza** dei diversi tipi di segnale, dato che:
+- un **segnale telefonico ordinario** si trova solitamente in una banda di frequenza **tra 0 e 4 kHz**;
+- un **segnale di rete in upstream** (quando si manda qualcosa nella rete) si trova solitamente in una banda di frequenza **tra 4 e 50 kHz**;
+- un **segnale di rete in downstream** (quando si scarica qualcosa dalla rete) si trova solitamente in una banda di frequenza **tra 50 kHz e 1 MHz**.
+
+Dal lato del ricevente, per assicurare una corretta separazione dei segnali in arrivo al modem DSL, generalmente si dispone anche di uno "**splitter**", che gestisce proprio tale differenziazione e inoltra al modem solamente i dati di rete.
+
+Gli standard DSL definiscono molteplici "**transmission rates**", ossia in parole povere molteplici velocità massime a cui possono essere trasmessi dati: ad esempio, per la trasmissione di dati in **upstream** si usano spesso transmission rates di **3.5 Mbps** o di **16 Mbps**, mentre per la trasmissione di dati in **downstream** di **24 Mbps** o di **52 Mbps**. Dato che le transmission rates dei dati in upstream e in downstream sono diverse, si dice che **la rete di accesso è asimmetrica**.
+
+In generale, ci sono vari fattori possibili per cui una determinata transmission rate può non essere sempre raggiunta: ad esempio, la compagnia telefonica potrebbe offrire un servizio "a livelli" in cui avere una maggiore velocità richiede un pagamento maggiore; in molti casi, poi, la transmission rate è limitata anche dalla distanza tra la residenza e la sede centrale della compagnia, e dunque il DSLAM, dato che una rete di accesso di tipo DSL è solitamente progettata per funzionare bene nel raggio di 5-10 miglia dalla sede centrale della compagnia telefonica.
+
+Mentre la DSL sfrutta la linea telefonica, la **connessione via cavo** utilizza l'**infrastruttura della compagnia di televisione via cavo** per trasmettere dati. In questo caso, dunque, **la compagnia della TV via cavo del cliente sarà anche il suo ISP**.  
+
+[SLIDES: 02... slide 9 - 10, 16 - 17, 19]
+[LIBRO: pag. 44]
 ___
 ## 
 

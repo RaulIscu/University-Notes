@@ -18,5 +18,6 @@ ___
 ___
 #### Esame
 
-
+Esame scritto (no esonero) 4 o 5 problemi
+esercitazioni di solito mercoledì pomeriggio
 ___
