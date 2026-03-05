@@ -18,6 +18,5 @@ ___
 ___
 #### Esame
 
-Esame scritto (no esonero) 4 o 5 problemi
-esercitazioni di solito mercoledì pomeriggio
+L'esame prevede una **prova scritta** obbligatoria, composta a grosso modo da 4-5 problemi.
 ___
