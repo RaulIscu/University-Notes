@@ -71,7 +71,7 @@ Ora, un aspetto fondamentale delle associazioni che non abbiamo ancora toccato s
 
 Letteralmente, i numeri inseriti implicano che **ogni istanza di una determinata classe deve essere coinvolta in un numero di link dell'associazione considerata che rientra nell'intervallo specificato**. Nel nostro caso, i vincoli di molteplicità sono interpretabili nel modo seguente:
 - l'inserimento di **`0..*`** indica che ogni istanza di `Città` può essere legata a un numero qualsiasi (da 0 a infinito) di istanze di `Impiegato` tramite dei link dell'associazione `nascita`;
-- l'inserimento di **`1..1`** indica che ogni istanza di `Impiegato` può essere legata a una e una sola istanza di `Città` tramite un link dell'associazione `nascita`.
+- l'inserimento di **`1..1`** indica che ogni istanza di `Impiegato` deve essere legata a una e una sola istanza di `Città` tramite un link dell'associazione `nascita`.
 
 In questo modo, abbiamo ottenuto un sistema che rispecchia la realtà, dato che un impiegato può nascere in una sola città, ma una città può essere luogo di nascita di un numero indeterminato di impiegati.
 
@@ -79,7 +79,7 @@ Allo stesso modo, riprendendo l'esempio visto in precedenza del sistema progetta
 
 ![[dia_classioggetti_esempio6.png]]
 
-Vediamo nel dettaglio cosa implicano tali vincoli: nell'associazione `hotel_prenotato`, si specifica come una prenotazione specifica possa essere legata a uno e un solo hotel, mentre un hotel possa avere un numero qualsiasi di prenotazioni; allo stesso modo, nell'associazione `cliente_prenotazione`, si ha che una specifica prenotazione può essere fatta da una e una sola persona, mentre una persona può effettuare un numero qualsiasi di prenotazioni.
+Vediamo nel dettaglio cosa implicano tali vincoli: nell'associazione `hotel_prenotato`, si specifica come una prenotazione specifica debba essere legata a uno e un solo hotel, mentre un hotel possa avere un numero qualsiasi di prenotazioni; allo stesso modo, nell'associazione `cliente_prenotazione`, si ha che una specifica prenotazione può essere fatta da una e una sola persona, mentre una persona può effettuare un numero qualsiasi di prenotazioni.
 
 Introduciamo ora il concetto di **associazione che insiste più volte sulla stessa classe**. Per capire quando questo meccanismo possa essere utile, vediamo un esempio: supponiamo di voler modellare i sovrani di un regno, dove di ogni sovrano ci interessa il nome da regnante, il periodo in cui ha regnato e il predecessore. Sappiamo, banalmente, che avremo bisogno di una classe `Sovrano`, che presenterà come attributi `nome` (il nome da regnante), `inizio` (la data d'inizio del suo regno) e `fine` (la data di fine del suo regno). Ci manca da definire il concetto di "predecessore": per fare ciò, ragioniamo sul fatto che l'eventuale predecessore di un sovrano sarà sempre un sovrano, dunque apparterrà sempre alla classe `Sovrano`, e perciò possiamo definire un'associazione `successione` che insiste sulla stessa classe due volte, nel modo seguente:
 
@@ -127,4 +127,64 @@ Infine, **anche gli attributi di classe e di associazione possono presentare vin
 ![[dia_classioggetti_esempio11.png]]
 
 si specifica che ogni studente può avere un solo nome e un solo genere, ma una o più email e al massimo un indirizzo.
+___
+##### Vincoli di identificazione di classe
+
+Un altro tipo di vincolo di integrità che possiamo introdurre nella base di dati che stiamo progettando, oltre a quelli di [[BD2_02 - UML#Associazioni e link|molteplicità]] visti in precedenza, sono i cosiddetti "**vincoli di identificazione di classe**". Tali vincoli impongono che **non possano coesistere due [[BD2_02 - UML#Classi e oggetti|oggetti]] di una classe che coincidono nel valore di uno o più attributi**. Ad esempio, è possibile definire la seguente [[BD2_02 - UML#Classi e oggetti|classe]] `Persona`:
+
+![[dia_classioggetti_esempio12.png]]
+
+I due simboli `{id1}` e `{id2}` rappresentano due vincoli di identificazione di classe posti su `Persona`: in questo esempio, si impone che non possano esistere due persone con lo stesso codice fiscale, così come non possano esistere due persone che abbiano contemporaneamente lo stesso nome, cognome e data di nascita. Dunque, in generale possiamo dire che, **abbinando a un insieme di attributi il medesimo "indicatore", si impone che gli oggetti non possano essere uguali contemporaneamente su tutti gli attributi di quell'insieme**.
+
+I vincoli di identificazione di classe possono essere applicati anche sui **ruoli che svolge la classe** considerata. Supponiamo, ad esempio, di star costruendo una base di dati per delle università, e si vuole implementare il fatto che non possono esistere due studenti con la stessa matricola nella stessa università; tale vincolo può essere formalizzato in un UML nel modo seguente:
+
+![[dia_classioggetti_esempio13.png]]
+
+Spieghiamo nel dettaglio cosa si intende con questa notazione: innanzitutto, tra `Studente` e `Università` sussiste un vincolo di molteplicità che impone che a ogni studente possa essere iscritto a una e una sola università, ma che un'università possa ospitare un numero qualsiasi di studenti; più nel dettaglio, il vincolo di identificazione di classe è attinente all'associazione tra uno studente e un'università, e dunque impone che non possano esistere due studenti con la stessa matricola se essi sono iscritti alla stessa università (dunque, se si trovano in università diverse, ciò è perfettamente possibile).
+___
+##### Ereditarietà e generalizzazioni
+
+Finora, abbiamo implicitamente assunto che le classi fossero tutte entità indipendenti (anche se sussistono [[BD2_02 - UML#Associazioni e link|associazioni]] tra di loro, non sono mai associazioni di tipo "ontologico", non riguardano l'essenza vera e propria delle classi coinvolte) e che due classi diverse non avessero mai oggetti in comune. In molte situazioni, però, potrebbe fare comodo rappresentare il fatto che **una classe sia sottoinsieme di un'altra**: ciò è in realtà possibile nell'UML, implementando una relazione di "**ereditarietà**". La relazione di ereditarietà tra due classi assegna il ruolo di "**superclasse**" a una e di "**sottoclasse**" all'altra, implicando che la sottoclasse derivi in qualche modo dalla superclasse, che sia una sorta di specializzazione di quest'ultima. Nell'UML, la relazione di ereditarietà assume la seguente forma:
+
+![[dia_classioggetti_esempio14.png]]
+
+La relazione di ereditarietà viene anche chiamata **relazione "is-a"** (letteralmente "è un"), nel senso che **ogni istanza della sottoclasse è anche istanza della superclasse**: ad esempio, ogni studente è ovviamente anche una persona. Non vale, però, il contrario, e dunque non ogni persona è uno studente (per evitare confusioni, leggere la relazione is-a seguendo il verso della freccia nel diagramma, dato che la sottoclasse punta sempre alla superclasse).
+
+Nel contesto di relazioni is-a, vige il **meccanismo dell'ereditarietà**, secondo il quale **la sottoclasse "conserva" e amplia le caratteristiche della superclasse**. Si guardi, ad esempio, il seguente diagramma:
+
+![[dia_classioggetti_esempio15.png]]
+
+Si noti che la classe `Persona` (per adesso, ignoriamo `Studente` e l'associazione tra le due classi) presenta due attributi `nome` e `genere`, così come un'associazione `nascita` con la classe `Città`, e dunque informalmente che nella base di dati considerata una persona dispone di un nome, di un genere e di una e una sola città di nascita. A questo punto, notiamo che `Studente` è una sottoclasse di `Persona`: per il meccanismo dell'ereditarietà, ciò vuol dire che ogni studente disporrà di un nome, di un genere e di una città di nascita, e oltre a ciò di una `matricola` ed eventualmente di un `Tutor`. Insomma, la classe `Studente` eredita le caratteristiche di `Persona` (attributi e associazioni) e le amplia aggiungendo le proprie.
+
+L'ereditarietà funziona anche su più livelli, ed è infatti una **relazione transitiva**: ad esempio, potremmo ampliare il diagramma appena visto aggiungendo una classe `StudenteStraniero` come sottoclasse di `Studente`, e tale classe sarebbe sottoclasse sia di `Studente` che, per transitività, di `Persona`. 
+
+**Un oggetto può essere istanza di più di una classe**, e non ci sono vincoli sulle relazioni di ereditarietà che sussistono tra tali classi: dunque, in un contesto del genere, definiamo "**classi più specifiche**" dell'oggetto le **classi di cui esso è istanza che non sono a loro volta superclassi**. Ad esempio, nel seguente diagramma:
+
+![[dia_classioggetti_esempio16.png]]
+
+l'oggetto `anna` è istanza di `Persona`, di `Studente` e di `Lavoratore`, ma solo le ultime due rappresentano le classi più specifiche di `anna`.
+
+Specifichiamo, infine, che nell'UML vale l'**ereditarietà multipla**: dunque, **una classe può essere sottoclasse di più classi**, anche se quest'ultime non sono a loro volta legate da relazioni is-a.
+
+Oltre all'ereditarietà tipica che abbiamo visto finora, l'UML fornisce anche un tipo di relazione is-a più complesso: la **generalizzazione**. Sostanzialmente, la generalizzazione permette di **definire che le istanze di una classe possano essere istanze di più sottoclassi secondo uno stesso criterio concettuale**; in parole povere, le generalizzazioni permettono di definire gruppi di sottoclassi che "specializzano" la superclasse in base a uno stesso criterio. Ad esempio, si potrebbe costruire il seguente diagramma:
+
+![[dia_classioggetti_esempio17.png]]
+
+dove `Studente` e `Lavoratore` sono entrambe sottoclassi di `Persona`, e in cui il criterio secondo il quale le persone sono studenti o lavoratori è quello dell'`occupazione`, come specificato nel diagramma stesso. Chiariamo che, con una generalizzazione del genere, è perfettamente possibile che un oggetto sia istanza di `Studente` e di `Lavoratore` contemporaneamente. Non c'è un vincolo a quante generalizzazioni si possono implementare, dunque **una stessa classe può essere superclasse di generalizzazioni distinte e indipendenti**, cioè basate su criteri diversi, come nel seguente esempio:
+
+![[dia_classioggetti_esempio18.png]]
+
+In alcuni casi, vorremmo applicare delle condizioni più stringenti alle generalizzazioni: ad esempio, si potrebbe voler **evitare che un oggetto sia istanza di più di una sottoclasse della generalizzazione**; oppure, in altri casi potremmo voler fare in modo che **ogni oggetto della superclasse debba necessariamente essere istanza di almeno una delle sottoclassi della generalizzazione**. Queste due esigenze vengono rispettivamente soddisfatte da due vincoli che possiamo imporre alle generalizzazioni:
+- **`disjoint`**;
+- **`complete`**.
+
+Dunque, una generalizzazione `disjoint` fa in modo che ogni istanza di una delle sottoclassi della stessa non possa essere anche istanza di una qualche altra sottoclasse. Ad esempio, definendo come `disjoint` la generalizzazione di genere fatta nell'esempio precedente, evitiamo che un oggetto della classe `Uomo` possa essere anche istanza della classe `Donna`, e viceversa. Al tempo stesso, una generalizzazione `complete` fa in modo che ogni istanza della superclasse debba necessariamente essere anche istanza di almeno una delle sottoclassi della generalizzazione. Ad esempio, definendo come `complete` la generalizzazione di genere fatta nell'esempio precedente, facciamo in modo che un oggetto della classe `Persona` debba necessariamente essere anche istanza o di `Uomo` o di `Donna`.
+
+Questi due vincoli possono anche verificarsi contemporaneamente: **è possibile**, dunque, **che una generalizzazione sia disgiunta e completa contemporaneamente**, implicando che **ogni istanza della superclasse sia anche istanza di esattamente una sottoclasse della generalizzazione**. Ad esempio, trasformando nel modo seguente le generalizzazioni dell'esempio precedente:
+
+![[dia_classioggetti_esempio19.png]]
+
+ogni istanza di `Persona` deve essere anche istanza di esattamente una sottoclasse tra `Uomo` e `Donna`, così come deve essere anche istanza di esattamente una sottoclasse tra `Studente` e `Lavoratore`. Possiamo schematizzare le varie possibili combinazioni di vincoli sulle generalizzazioni nella seguente immagine:
+
+![[dia_classioggetti_esempio20.png]]
 ___

@@ -18,15 +18,47 @@ e ci si chiede se è possibile effettuare una passeggiata che attraversi tutti e
 
 ![[grafi_esempio_konigsberg1.png]]
 
+Formalizzando il problema in questo modo, risulta evidente una condizione necessaria per l'esistenza di una tale passeggiata: **un nodo che non è né l'inizio né la fine della passeggiata deve avere grado pari**, dato che naturalmente se si entra in uno di questi nodi si deve anche uscire da quest'ultimo; tale condizione non è rispettata dal grafo che abbiamo ottenuto, dato che tutti i nodi hanno grado dispari, e dunque si è dimostrato che non è possibile effettuare una passeggiata che rispetti le condizioni iniziali.
 
+Generalizzando il problema dei 7 ponti di Konigsberg, ci si sta sostanzialmente chiedendo **se esiste una sequenza di nodi adiacenti che attraversa tutti gli archi del grafo senza mai passare due volte per lo stesso arco**. In generale, una sequenza di nodi adiacenti è detta "**cammino**", e di conseguenza il cammino descritto da questo problema generalizzato è detto "**cammino euleriano**". In particolare, se un cammino inizia e finisce nello stesso nodo viene chiamato "**circuito**", o "**ciclo**"; se, invece, un cammino o un ciclo non passano mai due volte per lo stesso nodo, essi vengono chiamati "**cammino semplice**" o "**ciclo semplice**".
 
-[APPUNTI: 01, pag. 2 - 3]
+Se esistono cammini o circuiti euleriani in un grafo, esistono algoritmi efficienti per trovarli. Lo stesso, però, non si può dire per un problema apparentemente molto simile: se volessimo trovare un **cammino che passa per tutti i nodi senza mai passare due volte per uno stesso nodo**? Questo problema fu proposto nella metà dell'800 dal matematico William Rohan Hamilton, e venne inizialmente posto in relazione al grafo dei vertici e spigoli del dodecaedro, un grafo del genere:
+
+![[grafi_esempio_hamilton.png]]
+
+Hamilton chiedeva se fosse possibile, partendo da un vertice (un nodo del grafo), toccare tutti i vertici una e una sola volta spostandosi unicamente lungo gli spigoli del dodecaedro (gli archi del grafo). Nell'immagine appena inserita, in azzurro è evidenziata una delle possibili soluzioni al problema, che casualmente è anche un ciclo. In generale, il problema proposto da Hamilton prende il nome di "**cammino hamiltoniano**" o di "**ciclo hamiltoniano**".
+
+Insomma, è chiaro che i grafi hanno una grande varietà di casi di utilizzo, e in particolare nell'**informatica**: possono essere utilizzati per **modellare reti di computer**, per **visualizzare organizzazioni di dati**, **formalizzare flussi di computazione**, ecc. ecc. Ad esempio, in un sistema operativo, si può utilizzare un grafo per rappresentare il flusso di esecuzione di più processi e il modo in cui essi accedono a un certo numero di risorse (si tratta dei "Resource Allocation Graph" visti a Sistemi Operativi 1). Oltre all'informatica, i grafi sono molto utili in ambiti come l'economia, la fisica, la chimica, o anche la linguistica e la sociologia.
 ___
 ##### Rappresentazioni dei grafi
 
-[APPUNTI: 01, pag. 3 - 4]
+Naturalmente, la rappresentazione visiva che abbiamo visto finora dei grafi non può essere direttamente memorizzata all'interno di un computer. È evidente, dunque, la necessità di individuare altri **modi di rappresentare un grafo in memoria**. Vedremo principalmente due metodi, che sono tendenzialmente quelli più usati:
+- la **matrice di adiacenza**;
+- la **lista di adiacenza**.
+
+La **matrice di adiacenza** è una matrice $n\times n$, dove $n$ è il numero di nodi del grafo. Si tratta sostanzialmente di una **matrice di valori booleani** che formalizza la presenza o meno di archi tra tutte le possibili coppie di nodi del grafo: infatti, indicando con $M$ tale matrice, abbiamo che $M[u][v]=true$ se l'arco $(u,\,v)$ o $\{u,\,v\}$ appartiene all'insieme $E$ degli archi del grafo, e che $M[u][v]=false$ altrimenti. Chiaramente, **se il grafo è non diretto, la matrice di adiacenza $M$ è una matrice simmetrica** (ossia, $M[u][v]=M[v][u]$).
+
+La matrice di adiacenza risulta **molto efficiente se il massimo interesse è sapere se due nodi sono collegati o meno da un arco**, ma in generale è in realtà **abbastanza dispendiosa in termini di memoria**, richiedendo uno spazio in $O(n^{2})$ indipendentemente dal numero di archi (banalmente, ciò fa capire anche che se si lavora con un grafo sparso, cioè con relativamente pochi archi, la matrice di adiacenza spreca molta memoria); inoltre, sempre **avendo un grafo sparso, scandire tutti gli adiacenti di un dato nodo diventa un'operazione molto costosa**, dato che scorrere un'intera riga o colonna della matrice richiede un tempo in $O(n)$, e va fatto anche se il grado del nodo è molto minore di $n$.
+
+Un'alternativa alla matrice di adiacenza è la **lista di adiacenza**, che consiste sostanzialmente in una lista dei nodi del grafo, e a ciascun nodo $u$ viene abbinata una lista dei suoi adiacenti. Ad esempio, un grafo relativo alle amicizie tra un gruppo di persone può essere rappresentato tramite la seguente lista di adiacenza:
+
+```
+Luisa -> Rik, Fabio
+Marco -> Anna
+Luca -> Rik, Fabio, Angelo, Anna
+Ugo -> Anna
+Rik -> Luisa, Luca
+Fabio -> Luisa, Luca, Maria
+Anna -> Luca, Marco, Ugo, Angelo, Maria
+Angelo -> Luca, Anna
+Maria -> Anna, Fabio
+```
+
+Il **costo in termini di memoria** è in $O(n+m)$, dove $n$ è il numero di nodi del grafo e $m$ è il numero di archi; è chiaro, dunque, che (almeno per grafi sparsi) una lista di adiacenza è preferibile a una matrice di adiacenza. Inoltre, anche se non permette di capire se un arco esiste o meno in tempo costante ($O(1)$) come nella matrice, la lista di adiacenza permette di **scandire l'intera lista degli adiacenti di un nodo $u$ in tempo $O(d)$**, dove $d$ è il grado di $u$. Per queste ragioni, generalmente le liste di adiacenza sono di gran lunga più utilizzate rispetto alle matrici di adiacenza.
 ___
 ##### Connettività
+
+
 
 [APPUNTI: 01, pag. 4 - 5]
 ___

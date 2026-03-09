@@ -185,7 +185,7 @@ Nel contesto del nostro algoritmo, questa strategia si traduce nei seguenti pass
 3. la ricorsione termina quando la sotto-sequenza risultante dalla chiamata ricorsiva è costituita da un unico elemento, per cui tale sequenza è naturalmente già ordinata;
 4. man mano, le varie sotto-sequenze vengono "fuse" in modo ordinato, tornando a formare una sequenza di $n$ elementi ordinata.
 
-Di seguito, lo **pseudocodice** dell'algoritmo di Bubble Sort:
+Di seguito, lo **pseudocodice** dell'algoritmo di Merge Sort:
 
 ```
 def Merge_Sort(A, indice_primo, indice_ultimo):
@@ -273,14 +273,59 @@ $$T(n)=\Theta(n\,\log n)+\Theta(n\,\log n)-\Theta(n\,\log(\log n))=\Theta(n\,\lo
 Concludiamo, così, che se per valori $n\le c\cdot \log n$ viene utilizzato l'Insertion Sort internamente al Merge Sort, si ottiene **un costo computazionale invariato ma una riduzione notevole di costo in termini di memoria**, dato che l'Insertion Sort è un algoritmo che lavora in-place.
 
 Una piccola curiosità: in Python, il comando `sort`, che può essere utilizzato per ordinare un oggetto di tipo `list`, viene implementato utilizzando la variante del Merge Sort integrata con l'Insertion Sort (variante che viene anche detta "**Timsort**"), e pertanto ha costo computazionale pari a $\Theta(n\,\log n)$.
+
+[versione iterativa del Merge Sort: 09, slide 1 - 2]
 ___
 ##### Quick Sort
 
-L'algoritmo **Quick Sort**, o di "**ordinamento veloce**", 
+L'algoritmo **Quick Sort**, o di "**ordinamento veloce**", ha una caratteristica peculiare: nonostante abbia un **costo nel caso peggiore in $O(n^{2})$**, nel concreto per grandi valori di $n$ si rivela una soluzione vantaggiosa per alcuni fattori:
+- ha un **tempo di esecuzione atteso di $\Theta(n\,\log n)$**;
+- i **fattori costanti** inclusi nel suo costo sono **molto piccoli**;
+- permette un **ordinamento in-place**.
 
-[SLIDES: pag. 3/14]
-[DISPENSE: pag. 20/27]
-[EXYSS: pag. 80/83]
+Per certi versi, dunque, possiamo vedere il Quick Sort come un'unione dei vantaggi del [[IAA_06 - Algoritmi di ordinamento#Selection Sort|Selection Sort]] (principalmente l'ordinamento in-place) e del [[IAA_06 - Algoritmi di ordinamento#Merge Sort|Merge Sort]] (principalmente il ridotto tempo di esecuzione). Anche il Quick Sort, come il Merge Sort, sfrutta la strategia algoritmica del "**divide et impera**", che in questo caso può convenientemente essere espressa ricorsivamente tramite i seguenti punti:
+- il passaggio del "**divide**" avviene selezionando, tra gli $n$ elementi considerati, un singolo elemento detto "pivot" (spesso viene selezionato come pivot il primo elemento, l'ultimo o quello centrale); la sequenza di elementi viene quindi divisa in due sotto-sequenze, la prima contenente tutti gli elementi minori del pivot, la seconda contenente quelli maggiori o uguali al pivot;
+- il passaggio di "**impera**" avviene ordinando le due sotto-sequenze applicando ricorsivamente l'algoritmo su di esse, fino ad incontrare il caso base, che corrisponde a quando la sotto-sequenza considerata contiene un solo elemento, e dunque è sostanzialmente già ordinata.
+
+Seppur il funzionamento dell'algoritmo risulti molto simile a quello del Merge Sort, la principale differenza sta nel quando vengono ordinate le sotto-sequenze: infatti, se nel Merge Sort l'ordinamento avviene alla fine, durante la ricomposizione delle varie sotto-sequenze, **nel Quick Sort l'ordinamento avviene gradualmente durante le divisioni ricorsive della sequenza iniziale**, dato che da subito le sotto-sequenze risultanti contengono una gli elementi minori del pivot e l'altra quelli maggiori. Per comodità, chiameremo la fase di divisione ricorsiva della sequenza di elementi "**partizionamento**".
+
+Di seguito, lo **pseudocodice** dell'algoritmo di Quick Sort:
+
+```
+def Quick_Sort(A, ind_primo = 0, ind_ultimo = len(A) - 1):
+	if (ind_primo < ind_ultimo):
+		ind_medio = Partiziona(A, ind_primo, ind_ultimo)
+		Quick_Sort(A, ind_primo, ind_medio)
+		Quick_Sort(A, ind_medio + 1, ind_ultimo)
+```
+
+Per comprendere al meglio come funziona l'algoritmo, bisogna comprendere il funzionamento del sotto-algoritmo **`Partiziona`**, che si occupa proprio del partizionamento e che svolge gran parte del lavoro. Vediamo, quindi, lo **pseudocodice** di `Partiziona`:
+
+```
+def Partiziona(A, ind_primo, ind_ultimo):
+	i, j = ind_primo - 1, ind_ultimo + 1
+	pivot = A[ind_primo]
+	
+	while True:
+		i += 1
+		while A[i] < pivot:
+			i += 1
+		
+		j -= 1
+		while A[j] > pivot:
+			j -= 1
+		
+		if i < j:
+			A[i], A[j] = A[j], A[i]
+		else:
+			return j
+```
+
+
+
+[SLIDES: pag. 5/14]
+[DISPENSE: pag. 21/27]
+[EXYSS: pag. 81/83]
 ___
 ##### Heap Sort
 
