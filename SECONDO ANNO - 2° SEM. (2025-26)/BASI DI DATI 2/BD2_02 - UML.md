@@ -190,11 +190,35 @@ ogni istanza di `Persona` deve essere anche istanza di esattamente una sottoclas
 ___
 ##### Operazioni di classe
 
-Oltre agli attributi (proprietà statiche), una classe può avere operazioni, ossia la possibilità che la classe, o meglio gli oggetti della classe hanno, di "rispondere a domande", di fornire determinati output in base ai dati a sua disposizione. Divers dai metodi perché i metodi sono piuttosto l'implementazione concreta delle operazioni.
+Finora, parlando di [[BD2_02 - UML#Classi e oggetti|classi]], abbiamo parlato solo di **proprietà statiche** come attributi e [[BD2_02 - UML#Associazioni e link|associazioni]], ossia di proprietà i cui valori cambiano solo in seguito a un esplicita modifica da parte degli utenti o del sistema. Una classe UML, però, può definire anche delle **proprietà dinamiche**, che si presentano sottoforma di "**operazioni**". 
 
-[SLIDES: A.1, slide 62/65]
+Sostanzialmente, un'operazione è un modo per **calcolare dei valori ogni volta che servono, a partire dai valori di altre proprietà**. Dunque, un'operazione di una determinata classe indica che su ogni oggetto di tale classe si può eseguire un determinato calcolo, che può:
+- restituire un valore a partire da altri dati o operazioni;
+- modificare le proprietà dell'oggetto considerato, dei link in cui è coinvolto o eventualmente anche degli oggetti collegati ad essi.
+
+Va chiarito che le operazioni, così come definite nel contesto delle UML, sono diverse dai metodi visti nella programmazione a oggetti, anche se si tratta di due concetti collegati: si possono vedere i **metodi come implementazioni concrete delle operazioni**.
+
+Per segnare un'operazione all'interno di una classe UML, si segue una **sintassi** ben precisa:
+
+```
+nome_operazione(argomenti): tipo_ritorno
+```
+
+dove **`nome_operazione`** è, banalmente, il nome dell'operazione, che dovrà dunque essere utilizzato per riferirsi ad essa, **`argomenti`** è una lista di elementi nella forma `nome_argomento : tipo_argomento`, e **`tipo_ritorno`** è il tipo del valore restituito dall'esecuzione dell'operazione. Gli argomenti, in particolare, sono proprio i dati che l'operazione riceverà in input per restituire l'output. I tipi degli argomenti e del valore di ritorno possono essere tipi di dato concettuali oppure classi del diagramma. Nel diagramma seguente, si vede un esempio di classi al cui interno sono definite anche delle operazioni:
+
+![[dia_classioggetti_esempio21.png]]
+
+Per **invocare un'operazione**, sarà necessario un oggetto della classe (tecnicamente, quest'ultimo è un ulteriore argomento); una tipica invocazione di operazione assumerà infatti la seguente forma:
+
+```
+oggetto.nome_operazione(argomenti) --> valore_restituito
+```
+
+**Il meccanismo dell'[[BD2_02 - UML#Ereditarietà e generalizzazioni|ereditarietà]] si applica anche alle operazioni**: dunque, se un'operazione è definita in una classe, sarà accessibile anche da qualunque oggetto che sia istanza di una sua sottoclasse.
 ___
 ##### Specializzazioni di attributi, associazioni ed operazioni
+
+
 
 [SLIDES: A.1, slide 67/71]
 ___

@@ -247,9 +247,19 @@ Il comando **`mv`** permette di **spostare** e di **rinominare un file**. Consid
 mv {filesorgenti} filedestinazione
 ```
 
+La differenza di funzionalità dipende proprio dalla scelta dei `filesorgenti` e dei `filedestinazione`:
+- se si inserisce **un file come file sorgente** e **un altro file come file di destinazione**, verrà effettuata la rinomina del file sorgente seguendo il nome indicato come file di destinazione;
+- se si inserisce **un file come file sorgente** e **una directory già esistente come file di destinazione**, verrà effettuato lo spostamento del file sorgente all'interno della directory indicata (se, nel path della directory di destinazione, al termine si specifica anche un nome `nuovoNomeFile` il file sorgente non solo verrà spostato ma anche rinominato a `nuovoNomeFile`);
+- se si inseriscono **più file come file sorgente** (vanno inseriti separati da uno spazio) e **una directory già esistente come file di destinazione**, verrà effettuato lo spostamento di tutti quei file nella directory indicata (se si devono spostare tutti i file presenti che condividono una medesima estensione, si può utilizzare un trucco per spostarli tutti comodamente, ossia indicare come file sorgente solamente `*.estensione`).
 
+Sono previste anche varie opzioni facoltative, tra cui:
+- **`-f`**, o **`--force`**, che è attiva di default e che permette al comando di effettuare sovrascritture in automatico, senza chiedere conferma all'utente;
+- **`-i`**, o **`--interactive`**, che impone al comando di avvisare l'utente nell'eventualità in cui stia per avvenire una sovrascrittura;
+- **`-n`**, o **`--no-clobber`**, che proibisce al comando qualsiasi operazione di sovrascrittura;
+- **`-u`**, o **`--update=older`**, che impone, in caso di possibilità di sovrascrittura, di sovrascrivere il file solo se la sorgente è più recente della destinazione;
+- **`-v`**, o **`--verbose`**, che impone al comando di stampare nel terminale i dettagli di ogni operazione che effettua.
 
-[SLIDES: 03, slide 7]
+Si nota facilmente che `-f`, `-i` e `-n` impongono condizioni ben diverse sullo stesso aspetto: e se ne venissero specificate più di una? In quel caso, verrà considerata solo l'opzione che compare per ultima nella chiamata al comando.
 ___
 ##### `rm`
 
