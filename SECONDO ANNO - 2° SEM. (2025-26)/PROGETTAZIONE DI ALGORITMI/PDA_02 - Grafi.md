@@ -58,7 +58,17 @@ Il **costo in termini di memoria** è in $O(n+m)$, dove $n$ è il numero di nodi
 ___
 ##### Connettività
 
+Una delle proprietà fondamentali della struttura di un grafo è la "**connettività**".
 
+Due nodi $u$ e $v$ si dicono "**connessi**" se **esiste un cammino che li connette**. Di solito, tale relazione di connessione è pensata in modo simmetrico (ovviamente, ciò accade nei [[PDA_02 - Grafi#Cos'è un grafo?|grafi non diretti]], in cui se esiste un cammino da $u$ a $v$ esso equivale al cammino "rovesciato" da $v$ a $u$). Un grafo non diretto è detto **connesso** se, comunque presi due nodi $u$ e $v$, esiste un cammino che li connette.
 
-[APPUNTI: 01, pag. 4 - 5]
+Per grafi diretti il discorso è un po' più complesso, dato che l'esistenza di un cammino orientato da $u$ a $v$ non implica l'esistenza del cammino orientato opposto. Per questo, nel caso dei grafi diretti, si dice che un grafo è "**fortemente connesso**" se per ogni coppia di nodi $u$ e $v$ esiste sia un cammino orientato da $u$ a $v$ che un cammino orientato da $v$ a $u$.
+
+Nel caso in cui un grafo non sia connesso, lo si può vedere come **partizionato in sottoparti connesse**: dunque, in un grafo non diretto $G$, una "**componente connessa**" è un sotto-grafo di $G$ che è connesso e che non è estendibile senza distruggere la connessione. In altre parole, **se un grafo non diretto $G$ non è connesso, allora è sicuramente partizionato in due o più componenti connesse**, e non sono presenti archi che collegano nodi appartenenti a componenti connesse differenti. Considerando il concetto di connessione forte, si può fare una considerazione simile per i grafi diretti: in un grafo diretto $G$, una "**componente fortemente connessa**" è un sotto-grafo di $G$ che è fortemente connesso e che non è estendibile senza distruggere la connessione forte. In altre parole, **se un grafo diretto $G$ non è fortemente connesso, allora è sicuramente partizionato in due o più componenti fortemente connesse**, e gli archi tra queste non possono formare cicli, cioè non esistono cicli che contengono nodi appartenenti a componenti differenti. Ad esempio, nel grafo seguente ci sono 6 componenti fortemente connesse, evidenziate dai diversi colori dei nodi:
+
+![[grafi_esempio.png]]
+___
+## Visita di un grafo
+
+[APPUNTI: 02, pag. 1]
 ___

@@ -188,3 +188,13 @@ ogni istanza di `Persona` deve essere anche istanza di esattamente una sottoclas
 
 ![[dia_classioggetti_esempio20.png]]
 ___
+##### Operazioni di classe
+
+Oltre agli attributi (proprietà statiche), una classe può avere operazioni, ossia la possibilità che la classe, o meglio gli oggetti della classe hanno, di "rispondere a domande", di fornire determinati output in base ai dati a sua disposizione. Divers dai metodi perché i metodi sono piuttosto l'implementazione concreta delle operazioni.
+
+[SLIDES: A.1, slide 62/65]
+___
+##### Specializzazioni di attributi, associazioni ed operazioni
+
+[SLIDES: A.1, slide 67/71]
+___
