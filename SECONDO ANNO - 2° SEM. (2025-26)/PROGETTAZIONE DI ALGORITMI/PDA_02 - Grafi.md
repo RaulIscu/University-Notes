@@ -70,5 +70,19 @@ Nel caso in cui un grafo non sia connesso, lo si può vedere come **partizionato
 ___
 ## Visita di un grafo
 
-[APPUNTI: 02, pag. 1]
+Per "**visita di un grafo**" si intende una procedura che, **partendo da un nodo $u$, visita tutti i nodi e gli archi raggiungibili da $u$**, e dunque che a ogni nuovo passo visita nuovi nodi o archi solamente se direttamente connessi a nodi o archi già visitati. Per intenderci, un nodo o arco si dice **"raggiungibile" da $u$** se esiste un cammino che arriva da $u$ al nodo o arco considerato.
+
+Ovviamente, ci sono tantissimi modi per effettuare una visita di un grafo; tuttavia, due procedure in particolare sono specialmente importanti, sia per la loro semplicità che per le loro proprietà. Le due procedure in questione sono:
+- la **Depth First Search**, o **DFS** in breve;
+- la **Breadth First Search**, o **BFS** in breve.
+
+##### La DFS
+
+La **DFS** è una procedura simile a quella che si potrebbe seguire, intuitivamente, per esplorare un labirinto: 
+
+[APPUNTI: 02, pag. 2]
+___
+##### La BFS
+
+
 ___

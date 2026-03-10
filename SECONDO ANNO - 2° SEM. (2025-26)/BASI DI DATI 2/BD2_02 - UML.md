@@ -218,7 +218,23 @@ oggetto.nome_operazione(argomenti) --> valore_restituito
 ___
 ##### Specializzazioni di attributi, associazioni ed operazioni
 
+In generale, quando si lavora con [[BD2_02 - UML#Ereditarietà e generalizzazioni|generalizzazioni]], vale la seguente proprietà: **in una generalizzazione, una sottoclasse può "[[BD2_02 - UML#Tipi di dato concettuali|specializzare]]" le proprietà ereditate dalla superclasse**, restringendone il tipo. 
 
+Vediamo un esempio di questo tipo di specializzazione di attributi. Supponiamo di voler modellare un sistema per la gestione di articoli in vendita, di cui alcuni sono nuovi e alcuni no, e si vuole specificare in particolare che gli articoli nuovi hanno una garanzia di almeno due anni, mentre ciò non è garantito per gli altri articoli (possono comunque avere una garanzia). In questo contesto, si potrebbe creare un diagramma che implementa proprio il meccanismo di cui abbiamo appena parlato: si può creare una classe `ArticoloInVendita` che faccia da superclasse a una generalizzazione che include la sottoclasse `ArticoloNuovo`, e fare in modo che quest'ultima specializzi un attributo `anni_garanzia`, come si può vedere nella seguente immagine:
 
-[SLIDES: A.1, slide 67/71]
+![[dia_classioggetti_esempio22.png]]
+
+Si deve, però, tenere a mente una cosa: **il tipo dell'attributo specializzato deve essere sempre più ristretto del tipo di attributo iniziale**; ad esempio, se l'attributo `anni_garanzia` nella sottoclasse fosse stato di tipo Reale, si avrebbe avuto un diagramma UML non ammesso.
+
+È possibile anche **specializzare delle associazioni con attributi**: infatti, l'associazione con attributi viene detta anche "classe dell'associazione" (o "association class"), e in quanto classe essa può essere terminale di [[BD2_02 - UML#Associazioni e link|associazioni]] così come radice di [[BD2_02 - UML#Ereditarietà e generalizzazioni|relazioni is-a]] e generalizzazioni. Ad esempio, ampliando l'esempio precedente, supponiamo di voler aggiungere al modello il fatto che ogni articolo debba essere venduto da esattamente un utente, e che gli articoli nuovi possano essere venduti solo da venditori professionali: per affrontare il primo punto, potremmo semplicemente aggiungere una classe `Utente` e associarla alla classe `ArticoloInVendita`, magari tramite un'associazione con attributi per specificare anche quando è avvenuta la transazione; per affrontare il secondo punto, invece, si possono creare delle sottoclassi nel modo seguente:
+
+![[dia_classioggetti_esempio23.png]]
+
+Bisogna fare particolare attenzione, in questi contesti, ai **vincoli di molteplicità associati alle specializzazioni di associazioni**. Supponiamo, ad esempio, che nell'esempio appena visto si modifichino i vincoli di molteplicità nel modo seguente:
+
+![[dia_classioggetti_esempio24.png]]
+
+Tecnicamente, il diagramma in questa forma impone a ogni articolo in vendita di essere venduto da esattamente un utente, ma al tempo stesso permette agli articoli nuovi di essere venduti da "almeno" un venditore professionale: quest'ultimo vincolo risulta però fuorviante, dato che, essendo `ArticoloNuovo` una sottoclasse di `ArticoloInVendita`, e `VenditoreProfessionale` una sottoclasse di `Utente`, ogni articolo nuovo potrà in realtà essere venduto da solo venditore professionale. 
+
+[A.1, slide 72...]
 ___

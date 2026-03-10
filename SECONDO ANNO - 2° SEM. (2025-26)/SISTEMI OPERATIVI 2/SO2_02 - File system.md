@@ -221,6 +221,8 @@ In questo paragrafo, andremo ad analizzare nel dettaglio una **lista di altri co
 
 ##### `umask`
 
+Il comando **`umask`** permette di 
+
 [SLIDES: 03, slide 5]
 ___
 ##### `cp`
@@ -231,13 +233,17 @@ Il comando **`cp`** permette di **copiare file o directory**; in particolare, pe
 cp {filesorgenti} filedestinazione
 ```
 
-dove naturalmente **`filesorgenti`** rappresenta il (o i) file da copiare mentre **`filedestinazione`** rappresenta il file o directory di destinazione della copia.
+dove naturalmente **`filesorgenti`** rappresenta il (o i) file da copiare mentre **`filedestinazione`** rappresenta il file o directory di destinazione della copia. La differenza di funzionalità dipende proprio dalla scelta dei `filesorgenti` e dei `filedestinazione`:
+- se si inserisce **un file come file sorgente** e **un file come file di destinazione**, allora il comando andrà a copiare i contenuti del file sorgente in un nuovo file, nominato come il file indicato come destinazione;
+- se si inseriscono **più file o una directory come file sorgente** e **una directory come file di destinazione**, allora il comando andrà a copiare i file sorgente (sia i contenuti che i rispettivi nomi) all'interno della directory di destinazione (se si specifica una directory come file sorgente, si dovrà necessariamente inserire l'opzione `-r`, altrimenti verrà restituito un errore al momento dell'esecuzione del comando).
 
 Sono previste anche varie opzioni facoltative, tra cui:
 - **`-f`**, o **`--force`**, che, nell'eventualità in cui un file di destinazione da sovrascrivere non possa essere aperto, impone di cancellare tale file e di riprovare ad effettuare la copia;
 - **`-i`**, o **`--interactive`**, che impone al comando di avvisare l'utente nell'eventualità in cui stia per avvenire una sovrascrittura;
+- **`-p`**, o **`--preserve`**, che permette al comando di copiare i file specificati copiando anche metadati come i [[SO2_02 - File system#Permessi di accesso ai file|permessi di accesso]], l'utente e il gruppo di appartenenza e i timestamp;
 - **`-r`**, **`-R`** o **`--recursive`**, che permette di copiare ricorsivamente anche i contenuti dell'eventuale directory specificata come sorgente;
-- **`-u`**, o **`--update=older`**, che impone, in caso di possibilità di sovrascrittura, di sovrascrivere il file solo se la sorgente è più recente della destinazione.
+- **`-u`**, o **`--update=older`**, che impone, in caso di possibilità di sovrascrittura, di sovrascrivere il file solo se la sorgente è più recente della destinazione;
+- **`-v`**, o **`--verbose`**, che impone al comando di stampare nel terminale i dettagli di ogni operazione che effettua.
 ___
 ##### `mv`
 
@@ -263,11 +269,35 @@ Si nota facilmente che `-f`, `-i` e `-n` impongono condizioni ben diverse sullo 
 ___
 ##### `rm`
 
-[SLIDES: 03, slide 8]
+Il comando **`rm`** permette di **eliminare file e cartelle** dal file system. Si tratta di un comando in realtà molto potente, anche per una caratteristica da tenere a mente: in Linux, di base le operazioni effettuate nel terminale non dispongono del tipico "cestino", dunque se si elimina un file o una cartella utilizzando comandi come `rm` tali dati sono pressoché irrecuperabili. Considerando solo gli argomenti obbligatori, una chiamata al comando `mv` prende la seguente forma:
+
+```
+rm {file}
+```
+
+dove **`file`** può essere uno o più file o directory da eliminare. Sono previste anche varie opzioni facoltative, tra cui:
+- **`-f`**, o **`--force`**, che permette al comando di eliminare automaticamente qualsiasi file venga indicato, ignorando eventuali file non esistenti; 
+- **`-i`**, o **`--interactive`**, che impone al comando di chiedere conferma all'utente per ogni cancellazione che esso vuole effettuare;
+- **`-r`**, o **`--recursive`**, che permette di eliminare ricorsivamente anche i contenuti dell'eventuale directory specificata;
+- **`-v`**, o **`--verbose`**, che impone al comando di stampare nel terminale i dettagli di ogni operazione che effettua.
 ___
 ##### `ln`
 
-[SLIDES: 03, slide 9]
+Per parlare del comando **`ln`**, è opportuno approfondire i concetti di "**hard link**" e di "**soft link**" in Linux. Hard link e soft link sono due tipi di **collegamento**, in particolare di collegamento tra file; per semplicità, si può vedere l'hard link come un "collegamento fisico", mentre il soft link è piuttosto un "collegamento simbolico".
+
+Nel caso dell'**hard link**, esso è per certi versi **un secondo nome dato a un file sul disco rigido**: in altre parole, il file originale non viene copiato né modificato, ma viene creato un nuovo file che rappresenta semplicemente un nuovo collegamento a quello stesso link. Immaginando il disco rigido come una libreria, e un determinato file come un libro ben preciso, si può immaginare un hard link a tale file come una seconda scheda, all'interno del catalogo dei libri, che punta sempre allo stesso libro. Concretamente, ciò avviene facendo in modo che **il file creato come hard link abbia lo stesso inode del file originale**. Dunque, creando un ipotetico hard link `hard_link.txt` per un determinato file `file_originale.txt`, anche eliminando quest'ultimo i dati non verranno persi, dato che rimarrà ancora `hard_link.txt` come collegamento a quei dati; al tempo stesso, **qualsiasi verifica a uno dei due file verrà istantaneamente trasposta anche nell'altro**, dato che essi condividono letteralmente gli stessi dati in memoria. Gli hard link, rispetto ai soft link, presentano però un limite: **gli hard link non possono essere creati per directory, e neanche tra dischi o partizioni diverse**.
+
+I **soft link**, invece, sono esattamente equivalenti ai collegamenti di Windows, o agli alias di macOS: si tratta di **file speciali che contengono semplicemente il [[SO2_02 - File system#Il path|path]] che porta al file originale**. Dunque, creando un ipotetico soft link `soft_link.txt` per un determinato file `file_originale.txt`, si creerà un file che se aperto ricondurrà proprio a `file_originale.txt` seguendo il suo path. I soft link, rispetto agli hard link, presentano però un limite: **se il file originale viene spostato, rinominato o cancellato, il soft link smetterà di funzionare** e diventerà quello che viene definito un "dangling link", o "collegamento orfano" (spesso, in tal caso, se si visualizza il file da terminale esso verrà colorato di rosso proprio per indicare che il link non porta più a nulla).
+
+Ora, avendo chiarito i concetti di hard link e soft link, passiamo effettivamente a parlare del comando `ln`. Tale comando permette proprio di **creare hard link e soft link**. La sinossi del comando è la seguente:
+
+```
+ln [OPZIONI] sorgente [destinazione]
+```
+
+dove **`sorgente`** è il file a cui si riferisce il link creato. Come si può vedere, inserire un path e un nome per il link creato non è obbligatorio: se si omette **`destinazione`**, il sistema proverà a creare un link chiamato con lo stesso nome del file `sorgente`, nella stessa directory in cui ci si trova correntemente; ciò, però, non funzionerà nel momento in cui tale comando in tale forma verrà eseguito nella directory in cui si trova il file originale, dato che esisterà già un file con quel nome. In generale, è buona pratica specificare path e nome del link.
+
+Ci sono varie opzioni facoltative per il comando `ln`, ma la più comune e di gran lunga più importante è **`-s`**: se tale opzione non viene specificata, il comando creerà un hard link; al contrario, se essa viene specificata, il comando creerà un soft link.
 ___
 ##### `touch`
 
