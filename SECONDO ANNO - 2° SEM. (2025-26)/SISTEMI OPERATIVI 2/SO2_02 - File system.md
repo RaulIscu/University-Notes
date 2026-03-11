@@ -101,11 +101,55 @@ All'interno del file system, **utenti** e **gruppi di utenti** si trovano all'in
 - in **`/etc/passwd`** si trovano tutti gli utenti;
 - in **`/etc/group`** si trovano tutti i gruppi di utenti.
 
-[SLIDES: 02 - slide 29/32]
+I file in questione sono organizzati per righe, ciascuna contenente vari campi separati dal carattere `:`. Ad esempio, il file **`passwd`** ha la seguente struttura:
+
+```
+username:password:uid:gid:gecos:homedir:shell
+```
+
+anche se, generalmente, al posto della `password` si trova soltanto una `x`, dato che la password dell'utente è generalmente cifrata. Invece, il file **`group`** ha la seguente struttura:
+
+```
+groupname:password:groupID:listautenti
+```
+
+dove gli utenti contenuti nella `listautenti` sono separati da virgole, e dove anche in questo caso la password è cifrata.
 ___
 ## Struttura dei file
 
-[SLIDES: 02 - slide 34/42]
+All'interno del file system, ogni file è rappresentato da una **struttura dati** detta "**inode**", e ogni inode è univocamente identificato da un "**inode number**"; dunque, la cancellazione di un file implica la liberazione dell'inode number in questione, che potrà quindi essere riutilizzato quando necessario per un nuovo file. Si può visualizzare la **struttura dell'inode** nel modo seguente:
+
+![[inode_struttura.png]]
+
+Come si può vedere, si tratta di una struttura relativamente complessa, dotata di vari attributi e componenti. Vediamo i **principali attributi dell'inode** più nel dettaglio:
+- "**type**", che indica il **tipo di file** considerato (può essere regular, block, FIFO);
+- "**user ID**", che indica l'**ID dell'utente proprietario** del file considerato;
+- "**group ID**", che indica l'**ID del gruppo** a cui è associato il file considerato;
+- "**mode**", che indica i **[[SO2_02 - File system#Permessi di accesso ai file|permessi di accesso]]** al file considerato per il proprietario, per il gruppo associato e per gli altri utenti (si approfondiranno nel paragrafo successivo);
+- "**size**", che indica la **dimensione del file** considerato in byte;
+- "**timestamps**", che contiene alcuni tempi importanti per il file considerato, tra cui il **`ctime`**, o "**inode changing time**" (il momento in cui è avvenuto l'ultimo cambiamento di un attributo dell'inode), il **`mtime`**, o "**content modification time**" (il momento in cui è avvenuta l'ultima scrittura del file), e il **`atime`**, o "**content access time**" (il momento in cui è avvenuta l'ultima lettura del file);
+- "**link count**", che indica il numero di [[SO2_02 - File system#`ln`|hard links]] associati al file considerato (anche questo concetto verrà approfondito in seguito);
+- "**data pointers**", ossia puntatori alle varie liste di blocchi che compongono concretamente il file considerato.
+
+[SLIDES: 02 - slide 36 - 37]
+
+È possibile, attraverso il comando **`ls`**, **visualizzare le informazioni contenute nell'inode**. Ad esempio, eseguendo il comando nel modo seguente:
+
+```
+ls -i filename
+```
+
+verrà stampato l'inode number del file `filename`, seguito proprio dal nome del file. Invece, eseguendo il comando nel modo seguente:
+
+```
+ls -l filename
+```
+
+verranno stampate varie informazioni riguardo al file (in ordine, i permessi di accesso al file, il numero di directory contenute all'interno dell'eventuale directory, l'utente proprietario, il gruppo a cui è associato il file, l'`mtime`, e infine il nome del file stesso). Per visualizzare, invece del nome esteso di utente e gruppo, i rispettivi ID, si può aggiungere l'opzione **`-n`**. Invece, per vedere anche gli altri timestamps del file basterà aggiungere, oltre all'opzione `-l`, le seguenti opzioni:
+- **`-c`** per il `ctime`;
+- **`-u`** per l'`atime`.
+
+[SLIDES: 02 - slide 42]
 ___
 ## Permessi di accesso ai file
 
@@ -221,8 +265,6 @@ In questo paragrafo, andremo ad analizzare nel dettaglio una **lista di altri co
 
 ##### `umask`
 
-Il comando **`umask`** permette di 
-
 [SLIDES: 03, slide 5]
 ___
 ##### `cp`
@@ -285,7 +327,7 @@ ___
 
 Per parlare del comando **`ln`**, è opportuno approfondire i concetti di "**hard link**" e di "**soft link**" in Linux. Hard link e soft link sono due tipi di **collegamento**, in particolare di collegamento tra file; per semplicità, si può vedere l'hard link come un "collegamento fisico", mentre il soft link è piuttosto un "collegamento simbolico".
 
-Nel caso dell'**hard link**, esso è per certi versi **un secondo nome dato a un file sul disco rigido**: in altre parole, il file originale non viene copiato né modificato, ma viene creato un nuovo file che rappresenta semplicemente un nuovo collegamento a quello stesso link. Immaginando il disco rigido come una libreria, e un determinato file come un libro ben preciso, si può immaginare un hard link a tale file come una seconda scheda, all'interno del catalogo dei libri, che punta sempre allo stesso libro. Concretamente, ciò avviene facendo in modo che **il file creato come hard link abbia lo stesso inode del file originale**. Dunque, creando un ipotetico hard link `hard_link.txt` per un determinato file `file_originale.txt`, anche eliminando quest'ultimo i dati non verranno persi, dato che rimarrà ancora `hard_link.txt` come collegamento a quei dati; al tempo stesso, **qualsiasi verifica a uno dei due file verrà istantaneamente trasposta anche nell'altro**, dato che essi condividono letteralmente gli stessi dati in memoria. Gli hard link, rispetto ai soft link, presentano però un limite: **gli hard link non possono essere creati per directory, e neanche tra dischi o partizioni diverse**.
+Nel caso dell'**hard link**, esso è per certi versi **un secondo nome dato a un file sul disco rigido**: in altre parole, il file originale non viene copiato né modificato, ma viene creato un nuovo file che rappresenta semplicemente un nuovo collegamento a quello stesso link. Immaginando il disco rigido come una libreria, e un determinato file come un libro ben preciso, si può immaginare un hard link a tale file come una seconda scheda, all'interno del catalogo dei libri, che punta sempre allo stesso libro. Concretamente, ciò avviene facendo in modo che **il file creato come hard link abbia lo stesso inode number del file originale**. Dunque, creando un ipotetico hard link `hard_link.txt` per un determinato file `file_originale.txt`, anche eliminando quest'ultimo i dati non verranno persi, dato che rimarrà ancora `hard_link.txt` come collegamento a quei dati; al tempo stesso, **qualsiasi verifica a uno dei due file verrà istantaneamente trasposta anche nell'altro**, dato che essi condividono letteralmente gli stessi dati in memoria. Gli hard link, rispetto ai soft link, presentano però un limite: **gli hard link non possono essere creati per directory, e neanche tra dischi o partizioni diverse**.
 
 I **soft link**, invece, sono esattamente equivalenti ai collegamenti di Windows, o agli alias di macOS: si tratta di **file speciali che contengono semplicemente il [[SO2_02 - File system#Il path|path]] che porta al file originale**. Dunque, creando un ipotetico soft link `soft_link.txt` per un determinato file `file_originale.txt`, si creerà un file che se aperto ricondurrà proprio a `file_originale.txt` seguendo il suo path. I soft link, rispetto agli hard link, presentano però un limite: **se il file originale viene spostato, rinominato o cancellato, il soft link smetterà di funzionare** e diventerà quello che viene definito un "dangling link", o "collegamento orfano" (spesso, in tal caso, se si visualizza il file da terminale esso verrà colorato di rosso proprio per indicare che il link non porta più a nulla).
 
@@ -305,7 +347,21 @@ ___
 ___
 ##### `du`
 
-[SLIDES: 03, slide 15]
+Il comando **`du`** serve per **stimare lo spazio di memoria occupato dai file e/o directory specificate**. La sinossi del comando è la seguente:
+
+```
+du [OPZIONI] [files...]
+```
+
+dove **`files`** sono i file o directory da considerare. Si noti che l'argomento `files` è in realtà facoltativo: infatti, se omesso, il comando verrà eseguito sulla directory corrente.
+
+Sono previste anche varie opzioni facoltative, tra cui:
+- **`-a`**, o **`--all`**, che impone al comando di stampare le dimensioni occupate anche da ogni singolo file contenuto nell'eventuale directory indicata, e non solo quelle complessive delle varie sotto-directory;
+- **`-B=SIZE`**, o **`--block-size=SIZE`**, che impone al comando di stampare le dimensioni misurate in unità di grandezza `SIZE` (di default, l'unità considerata è il $KiB$, o $1024\,\,B$); 
+- **`-c`**, o **`--total`**, che impone al comando di stampare, dopo tutte le dimensioni che esso calcola normalmente, la dimensione totale in modo esplicito;
+- **`--exclude=PATTERN`**, che impone al comando di non stampare i file che rispecchiano la forma `PATTERN` (il carattere `?` coincide con qualsiasi singolo carattere, mentre il carattere `*` coincide con qualsiasi stringa; ad esempio, indicare `--exclude='*.txt'` evita che venga stampato qualsiasi file con estensione `.txt`);
+- **`-h`**, o **`--human-readable`**, che impone al comando di stampare le dimensioni in modo più "leggibile", tipicamente aggiungendo un simbolo che indichi l'unità di misura oppure essendo più preciso con certe misure;
+- **`-s`**, o **`--summarize`**, che impone al comando di stampare solamente la dimensione totale dell'argomento specificato (e non di eventuali sotto-directory o file contenuti).
 ___
 ##### `df`
 
