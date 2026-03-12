@@ -183,7 +183,9 @@ DFS(G: grafo, u: nodo di partenza):
 	return VIS                                                 # Ө(1)
 ```
 
-Rimane, a questo punto, da chiarire il costo complessivo del ciclo `while`. Ad ogni iterazione del ciclo, possono verificarsi due scenari: o viene visitato un nuovo nodo, o viene estratto un nodo dallo stack. 
+Rimane, a questo punto, da chiarire il **costo complessivo del ciclo `while`**. Ad ogni iterazione del ciclo, possono verificarsi due scenari: o viene visitato un nuovo nodo, o viene estratto un nodo dallo stack. Il primo di questi due scenari può succedere al massimo $n$ volte (dove $n$ è il numero totale di nodi del grafo), dato che ogni nodo può essere inserito in `VIS`e nello stack `S` una sola volta; lo stesso vale per il secondo, dato che un nodo può essere estratto dallo stack solo se vi era stato inserito in precedenza. Dunque, dato che ad ogni iterazione del ciclo `while` si verifica o il primo o il secondo scenario, il numero massimo di iterazioni che potrà eseguire il ciclo non è altro che la somma dei numeri massimi di volte che essi possono verificarsi, e perciò **il numero di iterazioni del ciclo `while` è al più $2n$**.
+
+In un'iterazione del ciclo `while`, l'unica operazione non costante è la scansione degli adiacenti (scorrere tutta la lista dei nodi collegati a un determinato nodo), o in altri termini l'**attraversamento degli archi**: avendo un grafo non diretto, ogni arco verrà attraversato al più 2 volte (una volta in un senso e una volta nell'altro), mentre in un grafo diretto ogni arco potrà essere attraversato al più una volta; ciò vuol dire 
 
 [APPUNTI: 02, pag. 5]
 ___
