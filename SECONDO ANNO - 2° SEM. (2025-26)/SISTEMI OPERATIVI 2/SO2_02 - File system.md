@@ -93,7 +93,26 @@ dove **`nomefile`** è il **nome da assegnare al file vuoto** che viene creato (
 ___
 ## Mounting, partizioni e tipi di file system
 
-[SLIDES: 02 - slide 20/27]
+In sistemi Linux, come abbiamo accennato in precedenza, tutto il file system è contenuto all'interno di un'unica directory radice, chiamata `/` o `root`. Quando diciamo "tutto", non intendiamo però solo i file effettivamente contenuti sulla memoria a disco del calcolatore, ma anche eventuali **elementi eterogenei**, come:
+- dischi magnetici;
+- chiavette USB;
+- file system di rete;
+- file system virtuali;
+- file system in memoria principale.
+
+Ciò è possibile grazie al meccanismo del "**mounting**", o **montaggio**. Sostanzialmente, supponendo ad esempio di voler leggere una chiavetta USB, quello che succede a livello di memoria è che **la directory radice della chiavetta viene "montata" su una directory specifica della memoria a disco del calcolatore**: nel concreto, ciò vuol dire che finché l'elemento considerato (in questo caso, la chiavetta USB) è montato la directory scelta fungerà da nuova directory radice di tale elemento. Ad esempio, avendo la seguente coppia di file system principale e di file system di una chiavetta USB:
+
+![[mounting_esempio.png]]
+
+e supponendo di voler montare la chiavetta sulla directory `/media` del file system principale, si otterrebbe una situazione del genere:
+
+![[mounting_esempio1.png]]
+
+in cui, concretamente, è come se la directory `/media` fosse diventata la nuova radice della chiavetta USB (naturalmente, una volta "smontata" la chiavetta, a meno di altre modifiche i due file system torneranno nella situazione iniziale). **Qualsiasi directory del sistema può diventare un "punto di mount" per un altro file system**. Va ricordata, però, una particolarità: nel caso in cui la directory scelta contenesse già dei file, questi ultimi **diventeranno invisibili finché il nuovo file system non verrà smontato**; essi non verranno dunque eliminati dalla directory, ma diventeranno momentaneamente inaccessibili.
+
+Una singola memoria a disco, eventualmente, può essere suddivisa in due o più "**partizioni**", che possiamo definire sostanzialmente come **sezioni virtuali di memoria indipendenti tra di loro**. Ad esempio, è possibile all'interno di un sistema Linux creare una partizione $A$ destinata esclusivamente al sistema operativo (e montarla, ad esempio, sulla radice `/`), e in seguito una partizione $B$ che contenga invece i dati personali degli utenti (e montarla sulla directory `/home`). Il concetto di partizione fornisce, come si può facilmente intuire, **maggiore flessibilità e sicurezza**: ad esempio, nell'eventualità in cui il sistema operativo venga corrotto in qualche modo, i dati personali non verrebbero sfiorati trovandosi in un'altra partizione; ancora, partizionare il disco in questo modo permette anche di installare diverse versioni di Linux senza dover copiare ogni volta i vecchi dati, ma smontando e rimontando la partizione dei dati personali come necessario. 
+
+[SLIDES: 02 - slide 25/27]
 ___
 ## Utenti e gruppi di utenti nel file system
 
@@ -115,7 +134,7 @@ groupname:password:groupID:listautenti
 
 dove gli utenti contenuti nella `listautenti` sono separati da virgole, e dove anche in questo caso la password è cifrata.
 ___
-## Struttura dei file
+## Struttura di file e directory
 
 All'interno del file system, ogni file è rappresentato da una **struttura dati** detta "**inode**", e ogni inode è univocamente identificato da un "**inode number**"; dunque, la cancellazione di un file implica la liberazione dell'inode number in questione, che potrà quindi essere riutilizzato quando necessario per un nuovo file. Si può visualizzare la **struttura dell'inode** nel modo seguente:
 
@@ -128,10 +147,17 @@ Come si può vedere, si tratta di una struttura relativamente complessa, dotata 
 - "**mode**", che indica i **[[SO2_02 - File system#Permessi di accesso ai file|permessi di accesso]]** al file considerato per il proprietario, per il gruppo associato e per gli altri utenti (si approfondiranno nel paragrafo successivo);
 - "**size**", che indica la **dimensione del file** considerato in byte;
 - "**timestamps**", che contiene alcuni tempi importanti per il file considerato, tra cui il **`ctime`**, o "**inode changing time**" (il momento in cui è avvenuto l'ultimo cambiamento di un attributo dell'inode), il **`mtime`**, o "**content modification time**" (il momento in cui è avvenuta l'ultima scrittura del file), e il **`atime`**, o "**content access time**" (il momento in cui è avvenuta l'ultima lettura del file);
-- "**link count**", che indica il numero di [[SO2_02 - File system#`ln`|hard links]] associati al file considerato (anche questo concetto verrà approfondito in seguito);
-- "**data pointers**", ossia puntatori alle varie liste di blocchi che compongono concretamente il file considerato.
+- "**link count**", che indica il **numero di [[SO2_02 - File system#`ln`|hard links]]** associati al file considerato (anche questo concetto verrà approfondito in seguito);
+- "**data pointers**", ossia **puntatori alle varie liste di blocchi** che compongono concretamente il file considerato.
 
-[SLIDES: 02 - slide 36 - 37]
+All'interno della memoria, che in sistemi Linux viene divisa in "Block Groups", gli inode si trovano in una sezione particolare di ciascun block group chiamata "**Inode Table**". Oltre all'inode table, un block group contiene anche le seguenti sezioni:
+- "**Super Block**" e "**Group Descriptors**", due sezioni che contengono informazioni globali sul file system (ad esempio quanto è grande, quanti blocchi liberi ci sono, ecc.);
+- "**Data Block Bitmap**" e "**Inode Bitmap**", due sezioni che contengono delle "bitmap", ossia sequenze lunghissime di bit che permettono al sistema di avere informazioni sulla situazione della memoria più velocemente (ad esempio, nella Data Block Bitmap, ogni bit corrisponde sostanzialmente a un preciso blocco di memoria fisica, e se il bit vale `0` allora tale blocco è libero e disponibile a essere scritto, mentre se vale `1` il blocco è occupato);
+- "**Data Blocks**", la sezione più grande del Block Group, dove vengono salvati i dati effettivi dei vari file.
+
+Abbiamo, quindi, ben capito come è strutturato internamente un file. Ma qual è, invece, la **struttura di una directory**? In realtà, **una directory non è altro che un "file speciale"**, il cui inode punta a un blocco di dati che funge da **tabella di associazione**: all'interno di tale tabella, si può trovare una lista dei nomi dei file e delle directory contenute all'interno della directory considerata, e a ciascuno di questi nomi è associato il rispettivo inode. Dunque, concretamente la directory funziona come una sorta di **"rubrica" per i suoi contenuti**: se, ad esempio, il sistema vuole accedere a un file contenuto in una certa directory, esso accederà prima all'inode della directory in questione, arrivando così al blocco di dati associato ad essa, poi cercherà il nome del file desiderato nella tabella di associazione e, una volta trovato, leggerà l'inode e procederà a cercare quest'ultimo nell'Inode Table, in modo da poter accedere ai blocchi di memoria in cui sono memorizzati i contenuti effettivi del file. Vediamo un esempio di questo procedimento nella seguente immagine, che ipotizza di star cercando un file `hello.txt` nella directory `/home/ealtieri`:
+
+![[inode_directory_esempio.png]]
 
 È possibile, attraverso il comando **`ls`**, **visualizzare le informazioni contenute nell'inode**. Ad esempio, eseguendo il comando nel modo seguente:
 
@@ -148,8 +174,6 @@ ls -l filename
 verranno stampate varie informazioni riguardo al file (in ordine, i permessi di accesso al file, il numero di directory contenute all'interno dell'eventuale directory, l'utente proprietario, il gruppo a cui è associato il file, l'`mtime`, e infine il nome del file stesso). Per visualizzare, invece del nome esteso di utente e gruppo, i rispettivi ID, si può aggiungere l'opzione **`-n`**. Invece, per vedere anche gli altri timestamps del file basterà aggiungere, oltre all'opzione `-l`, le seguenti opzioni:
 - **`-c`** per il `ctime`;
 - **`-u`** per l'`atime`.
-
-[SLIDES: 02 - slide 42]
 ___
 ## Permessi di accesso ai file
 
@@ -364,6 +388,8 @@ Sono previste anche varie opzioni facoltative, tra cui:
 - **`-s`**, o **`--summarize`**, che impone al comando di stampare solamente la dimensione totale dell'argomento specificato (e non di eventuali sotto-directory o file contenuti).
 ___
 ##### `df`
+
+
 
 [SLIDES: 03, slide 16]
 ___

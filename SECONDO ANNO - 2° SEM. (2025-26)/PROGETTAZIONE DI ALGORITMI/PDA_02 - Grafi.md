@@ -68,21 +68,138 @@ Nel caso in cui un grafo non sia connesso, lo si può vedere come **partizionato
 
 ![[grafi_esempio.png]]
 ___
-## Visita di un grafo
+##### Visita di un grafo
 
 Per "**visita di un grafo**" si intende una procedura che, **partendo da un nodo $u$, visita tutti i nodi e gli archi raggiungibili da $u$**, e dunque che a ogni nuovo passo visita nuovi nodi o archi solamente se direttamente connessi a nodi o archi già visitati. Per intenderci, un nodo o arco si dice **"raggiungibile" da $u$** se esiste un cammino che arriva da $u$ al nodo o arco considerato.
 
 Ovviamente, ci sono tantissimi modi per effettuare una visita di un grafo; tuttavia, due procedure in particolare sono specialmente importanti, sia per la loro semplicità che per le loro proprietà. Le due procedure in questione sono:
-- la **Depth First Search**, o **DFS** in breve;
-- la **Breadth First Search**, o **BFS** in breve.
-
-##### La DFS
-
-La **DFS** è una procedura simile a quella che si potrebbe seguire, intuitivamente, per esplorare un labirinto: 
-
-[APPUNTI: 02, pag. 2]
+- la **Depth First Search**, o **[[PDA_02 - Grafi#La DFS|DFS]]** in breve;
+- la **Breadth First Search**, o **[[PDA_02 - Grafi#La BFS|BFS]]** in breve.
 ___
-##### La BFS
+## La DFS
+
+La **DFS** è una procedura di **[[PDA_02 - Grafi#Visita di un grafo|visita di un grafo]]** simile a quella che si potrebbe seguire, intuitivamente, per esplorare un labirinto: 
+- **partendo dall'entrata del labirinto, avanzeremmo in uno dei corridoi** fino ad arrivare ad un bivio, e a quel punto **prenderemmo nuovamente uno dei corridoi disponibili**, e così via;
+- dovremmo, però, stare anche attenti a non girare in tondo, e cercheremmo quindi anche di **non percorrere corridoi già attraversati in precedenza**; 
+- oltre a ciò, sarebbe utile **ricordare anche quali corridoi ci hanno portato al punto in cui ci troviamo a partire dall'entrata**, dato che senza questa memoria tutti i bivi già visitati diventerebbero indistinguibili e non sapremmo quali potrebbero portare a corridoi inesplorati, introducendo il rischio di non esplorare l'intero labirinto.
+
+Generalizzando il ragionamento appena esposto nel contesto dei [[PDA_02 - Grafi#Cos'è un grafo?|grafi]], quello che vogliamo fare è:
+- **a partire da un nodo, avanzare nel grafo seguendo uno degli archi** uscenti dallo stesso;
+- **ricordare quali nodi sono già stati visitati**;
+- **ricordare il cammino dal nodo di partenza al nodo in cui ci troviamo**.
+
+In particolare, per memorizzare quest'ultima informazione possiamo utilizzare una struttura dati particolare ma notevolmente efficace in questo contesto: la **pila**, o "**stack**". Si tratta di una struttura dati lineare e ordinata di tipo **LIFO**, ossia "**Last In, First Out**": ciò implica che **l'ultimo elemento ad essere inserito nello stack sarà il primo ad essere eventualmente rimosso**. Sullo stack, dunque, sono definite **due operazioni**:
+- il "**push**", utilizzato per aggiungere un elemento nello stack;
+- il "**pop**", utilizzato per rimuovere un elemento dallo stack.
+
+Lo stack fa proprio al caso nostro dato che, **quando ci si troverà in un nodo in cui tutti gli archi incidenti sono già stati attraversati** (tornando all'esempio del labirinto, un bivio da cui partono tutti corridoi già esplorati), basterà tornare al nodo precedente del cammino, ossia **effettuare un'operazione di pop** sullo stack; invece, **quando si vorrà attraversare un arco per arrivare a un nuovo nodo** (avanzare in un corridoio non esplorato in precedenza), basterà aggiungere quest'ultimo al cammino, ossia **effettuare un'operazione di push** sullo stack.
+
+Sulla base delle conclusioni effettuate finora, possiamo già fornire dello **pseudocodice** per un algoritmo di visita di un grafo di tipo DFS:
+
+```
+DFS(G: grafo, u: nodo di partenza):
+	VIS <- insieme dei nodi visitati, inizialmente vuoto
+	S <- stack del cammino, inizialmente vuoto
+	
+	S.push(u)
+	VIS.add(u)
+	
+	while (S is not empty):
+		v <- S.top()               # legge il nodo in cima allo stack
+		if (esiste un adiacente w di v, con w non in VIS):
+			VIS.add(w)
+			S.push(w)              # aggiunge w in cima allo stack
+		else:
+			S.pop()                # rimuove il nodo in cima allo stack
+	
+	return VIS
+```
+
+Al termine della visita, e dunque dell'esecuzione dell'algoritmo, **`VIS` conterrà 
+l'insieme dei nodi visitati**. 
+##### Esempio di esecuzione dell'algoritmo DFS
+
+Per capire meglio come funziona l'algoritmo, vediamo un esempio concreto. Di seguito, vediamo i vari passaggi della visita di un grafo (ogni passaggio rappresenta una nuova iterazione del ciclo `while`) partendo dal nodo `a`, in cui il nodo azzurro è quello appena letto dalla cima dello stack, gli archi rossi sono quelli che hanno portato a scoprire nuovi nodi, l'eventuale nuovo nodo visitato è blu, i nodi e gli archi già visitati sono bianchi. Nei seguenti passaggi: 
+
+![[dfs_esempio.png]]
+
+si visita inizialmente il nodo `a`, che viene quindi aggiunto allo stack `S` e all'insieme `VIS` dei nodi visitati; in seguito, nella prima iterazione del ciclo while, si legge proprio il nodo `a` e si sceglie un suo adiacente, in questo caso `b`, che verrà visitato e aggiunto a `S` e `VIS`; nella seconda iterazione, viene letto il nodo `b` dallo stack e si visita l'adiacente `g`. In seguito: 
+
+![[dfs_esempio1.png]]
+
+viene letto il nodo `g` e si visita l'unico suo adiacente non ancora visitato, ossia `c`; a questo punto, lo stack `S` conterrà in ordine i nodi $[a,\,b,\,g,\,c]$, e gli stessi nodi saranno contenuti anche all'interno di `VIS`. Passando alla quarta iterazione del ciclo `while`, viene letto il nodo `c`, e notiamo però che non troviamo adiacenti di `c` che non si trovino in `VIS`: allora `c` verrà rimosso dallo stack. Nell'iterazione seguente, lo stesso accadrà per il nodo `g`, e in seguito:
+
+![[dfs_esempio2.png]]
+
+toccherà la stessa sorte a `b`. Siamo tornati, a questo punto, al nodo di partenza `a`, e siamo obbligati a prendere una strada diversa da quella precedente: l'unico adiacente di `a` che non è stato già visitato infatti è `d`, che verrà quindi aggiunto allo stack `S` (ora, lo stack assume la forma $[a,\,d]$) e all'insieme `VIS`. Da `d`, viene scelto (in modo casuale) il nodo `e` come prossima visita, e in seguito:
+
+![[dfs_esempio3.png]]
+
+il nodo `h`, che si rivela essere, come il nodo `c` poco fa, un vicolo cieco. A questo punto, torniamo al nodo `e` e poi:
+
+![[dfs_esempio4.png]]
+
+scegliamo un'altra strada, stavolta visitando il nodo `i`; da qui, l'unico nodo adiacente e non già visitato è il nodo `f`, che tra l'altro è anche l'ultimo nodo rimasto da visitare nell'intero grafo. Dunque, negli ultimi passaggi:
+
+![[dfs_esempio5.png]]
+![[dfs_esempio6.png]]
+
+andremo semplicemente a ripercorrere a ritroso i nodi contenuti in `S`, fino a tornare al nodo di partenza `a`. Infine, dato che abbiamo visitato tutti i nodi del grafo non avremo nodi da visitare partendo da `a` ma avremo svuotato lo stack `S`, l'esecuzione dell'algoritmo termina e viene ritornato `VIS`, che conterrà tutti i nodi del grafo.
+
+Nel caso in cui il grafo sia [[PDA_02 - Grafi#Cos'è un grafo?|diretto]], l'algoritmo non cambierà di implementazione: l'unica differenza starà nel modo in cui verrà eseguito, dato che naturalmente **potrà avanzare lungo gli archi solamente seguendo la loro orientazione**.
+___
+##### Dimostrazione della correttezza dell'algoritmo DFS
+
+Per poterci affidare all'[[PDA_02 - Grafi#La DFS|algoritmo]] mostrato poco fa, dobbiamo **dimostrare che esso, partendo da un nodo $u$, visiti sempre tutti i nodi raggiungibili da $u$**.
+
+Per fare ciò, supponiamo per assurdo che esista un nodo $z$ raggiungibile da $u$, ma che la DFS non lo visiti. Siccome $z$ è raggiungibile da $u$ sappiamo per certo che esiste un cammino $u_{0},\,u_{1},\,u_{2},\,\dots,\,u_{k}$, dove $u_{0}=u$ e $u_{k}=z$. A questo punto, indichiamo come $u_{i}$ il primo nodo del cammino che non viene visitato dall'algoritmo (banalmente, si ha che $0< i\le k$): per definizione di $u_{i}$, sappiamo che il nodo $u_{i\,-\,1}$ è stato visitato per certo; ora, per natura dell'algoritmo DFS, prima che il nodo $u_{i\,-\,1}$ venga rimosso dallo stack devono essere stati visitati tutti i suoi adiacenti, ed essendo banalmente $u_{i}$ uno di essi, anch'esso dovrà essere stato visitato. Siamo arrivati, così, a una contraddizione della nostra ipotesi per assurdo: dunque, abbiamo dimostrato che **se un nodo $z$ è raggiungibile da $u$, allora la DFS lo visiterà**.
+
+Quindi, se **il grafo non è diretto**, la DFS visita esattamente **tutti i nodi della [[PDA_02 - Grafi#Connettività|componente connessa]] del nodo di partenza**. Se **il grafo è diretto**, la DFS visita **tutti i nodi raggiungibili dal nodo di partenza tramite cammini orientati** che, in generale, sono un soprainsieme della componente fortemente connessa di $u$.
+___
+##### Efficienza della DFS
+
+Ma **quanto è efficiente l'algoritmo della DFS?** Per valutare la complessità della DFS, dobbiamo precisare alcuni dettagli implementativi:
+- per mantenere l'insieme dei nodi visitati, `VIS` può essere implementato come un **array di valori booleani**, con un valore per ogni nodo e con tutti i valori inizializzati a `false`, in modo che ogni volta che un nuovo nodo `w` viene visitato si ponga `VIS[w] = true` (tramite questa implementazione, **l'aggiornamento e il controllo relativo alla visita di un nodo hanno entrambi un costo costante**);
+- lo stack `S` può essere facilmente implementato in modo che **tutte le operazioni `push`, `pop` e `top` abbiano costo costante**.
+
+Dunque, riprendendo lo pseudocodice dell'algoritmo, possiamo cominciare ad associare a ciascuna istruzione il relativo costo computazionale:
+
+```
+DFS(G: grafo, u: nodo di partenza):
+	VIS <- insieme dei nodi visitati, inizialmente vuoto
+	S <- stack del cammino, inizialmente vuoto
+	
+	S.push(u)                                                  # Ө(1)
+	VIS.add(u)                                                 # Ө(1)
+	
+	while (S is not empty):
+		v <- S.top()                                           # Ө(1)
+		if (esiste un adiacente w di v, con w non in VIS):     
+			VIS.add(w)                                         # Ө(1)
+			S.push(w)                                          # Ө(1)
+		else:
+			S.pop()                                            # Ө(1)
+	
+	return VIS                                                 # Ө(1)
+```
+
+Rimane, a questo punto, da chiarire il costo complessivo del ciclo `while`. Ad ogni iterazione del ciclo, possono verificarsi due scenari: o viene visitato un nuovo nodo, o viene estratto un nodo dallo stack. 
+
+[APPUNTI: 02, pag. 5]
+___
+##### Versione ricorsiva della DFS
+
+[APPUNTI: 02, pag. 5]
+___
+##### Albero di visita
+
+[APPUNTI: 02, pag. 5 - 6]
+___
+##### Determinazione delle componenti connesse
+
+[APPUNTI: 02, pag. 6]
+___
+## La BFS
 
 
 ___
