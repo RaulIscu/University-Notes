@@ -234,7 +234,59 @@ Bisogna fare particolare attenzione, in questi contesti, ai **vincoli di moltepl
 
 ![[dia_classioggetti_esempio24.png]]
 
-Tecnicamente, il diagramma in questa forma impone a ogni articolo in vendita di essere venduto da esattamente un utente, ma al tempo stesso permette agli articoli nuovi di essere venduti da "almeno" un venditore professionale: quest'ultimo vincolo risulta però fuorviante, dato che, essendo `ArticoloNuovo` una sottoclasse di `ArticoloInVendita`, e `VenditoreProfessionale` una sottoclasse di `Utente`, ogni articolo nuovo potrà in realtà essere venduto da solo venditore professionale. 
+Tecnicamente, il diagramma in questa forma impone a ogni articolo in vendita di essere venduto da esattamente un utente, ma al tempo stesso permette agli articoli nuovi di essere venduti da "almeno" un venditore professionale: quest'ultimo vincolo risulta però fuorviante, dato che, essendo `ArticoloNuovo` una sottoclasse di `ArticoloInVendita`, e `VenditoreProfessionale` una sottoclasse di `Utente`, ogni articolo nuovo potrà in realtà essere venduto da solo venditore professionale. Allo stesso modo, il seguente diagramma:
 
-[A.1, slide 72...]
+![[dia_classioggetti_esempio25.png]]
+
+presenta un'incongruenza: seppur il vincolo sull'associazione tra `ArticoloInVendita` e `Utente` imponga che ogni articolo venga venduto da esattamente un utente, il vincolo sull'associazione tra `ArticoloNuovo` e `VenditoreProfessionale` impone che un articolo nuovo debba essere venduto da almeno 2 venditori professionali; ciò vuol dire che, concretamente, non potranno esistere articoli nuovi nella base di dati.
+
+**Anche le operazioni di classe possono essere oggetto di specializzazione nelle sottoclassi**. In questo caso, per capire al meglio il concetto, si può pensare alla specializzazione delle operazioni come al meccanismo di "**overriding**": nella sottoclasse, ci sarà un metodo con la stessa firma del metodo nella superclasse, ma con un funzionamento più o meno diverso che permetta di sfruttare le informazioni in più date nella sottoclasse. Ad esempio, nel seguente diagramma:
+
+![[dia_classioggetti_esempio26.png]]
+
+vogliamo che l'operazione `prezzo` nella classe `Articolo` calcoli il prezzo dell'articolo in questione, inteso come il prezzo unitario moltiplicato per il numero di pezzi richiesto e incrementato in base alle spese di spedizione relative alla nazione considerata; invece, l'operazione `prezzo` nella classe `ArticoloInOfferta` dovrà restituire il prezzo come calcolato nell'operazione equivalente nella superclasse ma scontato di un certo fattore.
+
+Come per la specializzazione degli attributi, anche la firma dell'operazione specializzata dovrà essere compatibile con quella dell'operazione equivalente nella superclasse: ciò vuol dire che ci dovrà essere lo **stesso numero e tipo di argomenti**, nonché **stesso tipo o sotto-tipo del valore restituito**.
+___
+## Diagrammi degli use-case
+
+I **diagrammi degli use-case**, a differenza di quelli visti nei [[BD2_02 - UML#Diagrammi delle classi e degli oggetti|paragrafi precedenti]]
+
+include è come una funzione che ne chiama un altra
+
+[SLIDES: A.1, slide 75/83]
+___
+## Documenti di specifica
+
+I diagrammi UML, seppur uno strumento utile per delineare le caratteristiche principali del sistema che si sta modellando, non permette da solo di avere tutte le informazioni necessarie: ad esempio, un [[BD2_02 - UML#Diagrammi delle classi e degli oggetti|diagramma delle classi]] non definisce nel dettaglio cosa calcolano le operazioni di classe, né come lo fanno, né se e come modificano gli oggetti considerati; allo stesso modo, un [[BD2_02 - UML#Diagrammi degli use-case|diagramma degli use-case]] non definisce quali sono le operazioni effettivamente svolte in corrispondenza di ciascun use-case, né analogamente cosa calcolano o se modificano gli oggetti considerati. Dunque, per precisare al meglio tali caratteristiche, lo standard UML adotta anche i cosiddetti "**documenti di specifica**".
+
+Si tratta, sostanzialmente, di **documenti separati, da abbinare allo schema concettuale, che spiegano meglio dei dettagli specifici**. Possono essere utilizzati in vari contesti, tra cui:
+- documenti di **specifica dei tipi di dato**, che definiscono i [[BD2_02 - UML#Tipi di dato concettuali|tipi di dato]] non standard eventualmente utilizzati nello schema concettuale;
+- documenti di **specifica di una classe**, che definiscono cosa calcola ogni [[BD2_02 - UML#Operazioni di classe|operazione di classe]], oltre che se e come modifica gli [[BD2_02 - UML#Classi e oggetti|oggetti]] e i [[BD2_02 - UML#Associazioni e link|link]] esistenti;
+- documenti di **specifica di uno use-case**, che definiscono l'insieme delle operazioni svolte in corrispondenza di uno use-case, e che per ogni operazione definisce cosa calcola e se e come modifica gli oggetti e link esistenti;
+- documenti di **specifica dei vincoli esterni**, che definiscono ulteriori vincoli non esprimibili nel diagramma delle classi che i vari oggetti e link dovranno rispettare.
+
+##### Documenti di specifica dei tipi di dato
+
+I **documenti di specifica dei tipi di dato** sono documenti in cui si forniscono maggiori informazioni sulle caratteristiche di [[BD2_02 - UML#Tipi di dato concettuali|tipi di dato]] non standard, che per un motivo o per un altro si può scegliere di adottare all'interno del sistema che si sta modellando. Ricordiamo, per chiarezza, che questa categoria di tipi comprende:
+- tipi di dato **specializzati**;
+- tipi di dato **enumerativi**;
+- tipi di dato **composti**;
+- tipi di dato rappresentati da **espressioni regolari**.
+
+Un esempio di documento di specifica dei tipi di dato potrebbe essere il seguente:
+
+![[specifica_tipidato_esempio.png]]
+___
+##### Documenti di specifica di una classe
+
+[SLIDES: A.2, slide 4/7]
+___
+##### Documenti di specifica di uno use-case
+
+[SLIDES: A.2, slide 8 - 9]
+___
+##### Documenti di specifica di vincoli esterni
+
+[SLIDES: A.2, slide 10/12]
 ___
