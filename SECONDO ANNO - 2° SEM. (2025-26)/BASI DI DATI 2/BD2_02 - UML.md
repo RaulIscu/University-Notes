@@ -280,7 +280,23 @@ Un esempio di documento di specifica dei tipi di dato potrebbe essere il seguent
 ___
 ##### Documenti di specifica di una classe
 
-[SLIDES: A.2, slide 4/7]
+I **documenti di specifica di una classe** sono documenti in cui si forniscono maggiori dettagli sul significato e sull'implementazione di una determinata classe, e in particolare sulle operazioni appartenenti a tale classe. Naturalmente, **la specifica di un'operazione di classe** non andrà a porre regole o vincoli diretti su come quest'ultima dovrà essere implementata concretamente (l'implementazione dell'operazione sarà interesse del programmatore), ma piuttosto si vorranno **stabilire alcune condizioni da rispettare**, divise in:
+- **pre-condizioni**;
+- **post-condizioni**.
+
+Le **pre-condizioni** sono costituite, sostanzialmente, da **condizioni che devono essere soddisfatte affinché l'operazione possa essere invocata con successo**: generalmente, esse includono condizioni sull'oggetto di invocazione, sul valore degli argomenti, e anche su altri oggetti del sistema eventualmente associati a quello considerato. Invece, le **post-condizioni** sono **condizioni che devono essere soddisfatte in seguito all'esecuzione dell'operazione**: ad esempio, in questa categoria rientrano la definizione del valore di ritorno, così come di eventuali modifiche agli oggetti esistenti, o ancora condizioni sulla creazione o eliminazione di oggetti o link.
+
+Un esempio di documento di specifica di una classe `Studente`, a cui è abbinato anche il relativo diagramma delle classi, potrebbe essere il seguente:
+
+![[specifica_classe_esempio.png]]
+
+Di seguito, invece, troviamo una possibile specifica della classe `Corso`:
+
+![[specifica_classe_esempio1.png]]
+
+In alcune situazioni, si potrebbe desiderare di **non rivelare completamente il funzionamento o le caratteristiche del sistema** che si sta modellando alle altre componenti del [[BD2_01 - Introduzione#Ciclo di vita di un software|ciclo di vita]] dello stesso (ad esempio, per qualche motivo, potremmo non voler far sapere al programmatore che dovrà implementare un sistema che gestisca studenti e corsi): in questi casi, si potrebbe scegliere di **"offuscare" gli identificatori di classi, attributi, associazioni e operazioni**, concentrandosi unicamente sul funzionamento concreto nello stilare diagrammi e documenti di specifica. Ad esempio, di seguito troviamo una specifica della classe `Studente` perfettamente equivalente a quella precedentemente mostrata, ma che non rivela apertamente cosa la classe rappresenti nel concreto:
+
+![[specifica_classe_esempio2.png]]
 ___
 ##### Documenti di specifica di uno use-case
 
@@ -288,5 +304,27 @@ ___
 ___
 ##### Documenti di specifica di vincoli esterni
 
-[SLIDES: A.2, slide 10/12]
+I **documenti di specifica di vincoli esterni** precisano delle condizioni su dati, oggetti o link che non sarebbero altrimenti esprimibili all'interno del diagramma delle classi. Si consideri, ad esempio, il seguente diagramma delle classi:
+
+![[specifica_vincoliesterni_esempio.png]]
+
+Nel sistema che esso modella, si vogliono stabilire due vincoli sui direttori di dipartimento:
+1. il direttore deve afferire al dipartimento che dirige;
+2. tale afferenza deve esistere da almeno 5 anni.
+
+Mentre la condizione 1. è facilmente modellata grazie alla [[BD2_02 - UML#Ereditarietà e generalizzazioni|generalizzazione]] tra `afferenza` e `dirige`, la condizione 2. non può essere facilmente visualizzata all'interno del diagramma. È in contesti del genere, dunque, che torna comodo il documento di specifica dei vincoli esterni (in generale, spesso vincoli del genere provengono dall'osservazione di regole nel sistema reale che si sta modellando).
+
+Nella specifica di vincoli esterni, un singolo vincolo per essere definito deve disporre almeno di:
+- un **identificatore univoco**, che permetta di riferirsi al vincolo anche da altre parti dello schema concettuale, da altra documentazione o anche dal codice (a seconda dell'azienda, si possono utilizzare diversi standard per gli identificatori di un vincolo esterno, ma in questo corso utilizzeremo `V.classi_a_cui_il_vincolo_si_applica.nome_vincolo`);
+- una **asserzione logico-matematica**, preferibilmente espressa in termini appartenenti a tali ambiti (per iniziare, le esprimeremo direttamente a parole), che definisca quali siano le condizioni che gli oggetti e link specificati debbano rispettare.
+
+Ad esempio, per esprimere la condizione 2. dell'esempio precedente, si potrebbe scrivere la seguente specifica:
+
+```
+[V.Dipartimento.direttore_anni_afferenza]
+
+Per ogni oggetto dip:Dipartimento, sia dir:Impiegato il direttore di dip, ovvero tale che (dip, dir):dirige. Deve valere che (dir, dip).inizio <= adesso - 5 anni.
+```
+
+Nel caso in cui un vincolo esterno si applichi naturalmente agli oggetti di un'unica classe, è raccomandato **definire tale vincolo direttamente nella [[BD2_02 - UML#Documenti di specifica di una classe|specifica di quella classe]]** piuttosto che tra gli altri vincoli esterni. In questo modo, si otterrà un maggior ordine e il documento di specifica di vincoli esterni conterrà solo vincoli "più complessi", che saranno da attribuire a due o più classi ciascuno.
 ___
