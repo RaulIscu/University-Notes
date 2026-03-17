@@ -321,15 +321,15 @@ def Partiziona(A, ind_primo, ind_ultimo):
 			return j
 ```
 
-
-
 [SLIDES: pag. 5/14]
 [DISPENSE: pag. 21/27]
 [EXYSS: pag. 81/83]
 ___
 ##### Heap Sort
 
-
+[SLIDES: pag. 2/16]
+[DISPENSE: pag. 27/35]
+[EXYSS: pag. 84/89]
 ___
 ## Algoritmi di ordinamento lineari
 

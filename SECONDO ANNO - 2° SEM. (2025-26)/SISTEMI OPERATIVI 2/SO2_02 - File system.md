@@ -389,8 +389,6 @@ Sono previste anche varie opzioni facoltative, tra cui:
 ___
 ##### `df`
 
-
-
 [SLIDES: 03, slide 16]
 ___
 ##### `dd`
