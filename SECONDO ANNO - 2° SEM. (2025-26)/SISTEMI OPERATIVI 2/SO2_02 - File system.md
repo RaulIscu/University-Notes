@@ -142,9 +142,28 @@ Per **eseguire un mounting**, così come **visualizzare informazioni sui file sy
 mount [OPZIONI...] [-t type] [OPZIONI...] device mountpoint
 ```
 
-Tralasciamo, per ora, le opzioni `OPZIONI...`, e concentriamoci sulle altre componenti. 
+Tralasciamo, per ora, le opzioni `OPZIONI...`, e concentriamoci sulle altre componenti. Il parametro **`device`** corrisponde al **percorso del file speciale che rappresenta la partizione da montare**: generalmente, in Linux, i dispositivi si trovano nella cartella **`/dev`** (ad esempio, una chiavetta USB potrebbe rientrare nel percorso `/dev/sdb1`, mentre un CD nel percorso `/dev/cdrom`). Invece, il parametro **`mountpoint`** corrisponde alla **[[SO2_02 - File system|directory]] del sistema principale in cui montare il `device`** (si tenga a mente che tale directory deve già esistere in precedenza). Per quanto riguarda il parametro **`-t type`**, **opzionale**, esso indica il **tipo di file system che si sta montando**; si tratta di un parametro spesso non necessario, essendo i sistemi moderni solitamente in grado di riconoscere da soli questa informazione, ma in alcuni contesti è fondamentale per evitare errori; i tipi `type` più usati sono:
+- **`ext2`**;
+- **`ext3`**;
+- **`ext4`**;
+- **`btrfs`** (file system a B-tree);
+- **`reiserfs`**;
+- **`vfat`** (FAT16 e FAT32);
+- **`exfat`** (FAT64 e exFAT);
+- **`ntfs`**;
+- **`msdos`**.
 
-[SLIDES: 02 - slide 26 - 27]
+Per **visualizzare i file system montati in un istante preciso**, si può eseguire il comando:
+
+```
+cat /etc/mtab
+```
+
+Invece, per **visualizzare le partizioni caricate automaticamente dal sistema all'accensione**, si può eseguire il comando:
+
+```
+cat /etc/fstab
+```
 ___
 ## Utenti e gruppi di utenti nel file system
 
@@ -399,7 +418,20 @@ Ci sono varie opzioni facoltative per il comando `ln`, ma la più comune e di gr
 ___
 ##### `touch`
 
-[SLIDES: 03, slide 14]
+Seppur venga spesso utilizzato per **creare file vuoti**, il comando **`touch`** serve principalmente per **aggiornare i [[SO2_02 - File system#Struttura di file e directory|timestamps]] di un file**. Considerando solo gli argomenti obbligatori, una chiamata al comando `touch` prende la seguente forma:
+
+```
+touch {file}
+```
+
+dove **`file`** è il nome del file in questione. Se il file `file` esiste già, eseguire tale comando non farà altro che aggiornare i timestamps relativi all'ultimo accesso (`atime`) e all'ultima modifica (`mtime`) impostandoli all'orario esatto in cui si è lanciato il comando, pur non aprendo né modificando effettivamente il file stesso; invece, se il file `file` non esiste, il comando creerà un file completamente vuoto con tale nome.
+
+Sono previste anche varie opzioni facoltative, tra cui:
+- **`-a`**, che impone al comando di aggiornare solamente il timestamp relativo all'ultimo accesso, ossia l'`atime`;
+- **`-c`**, o **`--no-create`**, che proibisce al comando di creare nuovi file nell'eventualità in cui il nome di file inserito non venga trovato;
+- **`-m`**, che impone al comando di aggiornare solamente il timestamp relativo all'ultimo accesso, ossia l'`atime`;
+- **`-r=FILE`**, o **`--reference=FILE`**, che impone al comando di aggiornare i timestamps prendendo come riferimento quelli del file `FILE`, invece di quelli attuali;
+- **`-t timestamp`**, che permette di specificare un timestamp specifico della forma **`[[CC]YY]MMDDhhmm[.ss]`** e di utilizzare quello invece di quello attuale.
 ___
 ##### `du`
 
@@ -421,7 +453,25 @@ Sono previste anche varie opzioni facoltative, tra cui:
 ___
 ##### `df`
 
-[SLIDES: 03, slide 16]
+Il comando **`df`** permette di **avere informazioni sulla dimensione e sullo spazio occupato dal file system**. Una chiamata al comando **`df`** assume la seguente forma:
+
+```
+df [OPZIONI...] [file]
+```
+
+dove **`file`** consiste in uno o più nomi di file; se si specifica qualcosa come `file`, il comando visualizzerà informazioni sui file system in cui è contenuto quel qualcosa, mentre se non si specifica nulla e si esegue semplicemente `df` si visualizzeranno informazioni su tutti i file system attualmente [[SO2_02 - File system#Mounting, partizioni e tipi di file system|montati]]. Le informazioni vengono visualizzate sotto forma di una **tabella a 6 colonne**, in cui ogni riga rappresenta un singolo file system e in cui le colonne, in ordine, informano su:
+1. **nome tecnico del file system** considerato (ad esempio, `/dev/sda1` è la prima partizione del primo disco fisico);
+2. **dimensione totale in blocchi** del file system considerato, espressa in blocchi da 1 kilobyte;
+3. **blocchi effettivamente occupati** all'interno file system considerato attualmente;
+4. **blocchi liberi**, e dunque non ancora occupati all'interno del file system considerato attualmente;
+5. **percentuale di spazio occupato** rispetto alla dimensione totale del file system considerato attualmente;
+6. **directory su cui è montato il file system** considerato.
+
+Sono previste anche varie opzioni facoltative, tra cui:
+- **`-h`**, o **`--human-readable`**, che impone al comando di stampare le dimensioni in modo più "leggibile", tipicamente aggiungendo un simbolo che indichi l'unità di misura oppure essendo più preciso con certe misure;
+- **`-i`**, o **`--inodes`**, che permette di visualizzare informazioni diverse rispetto a quelle canoniche, concentrate non più sullo spazio di memoria ma piuttosto sugli inode (in particolare, su quanti ne può contenere in totale ogni file system, quanti sono attualmente presenti e quanti "posti" sono ancora liberi);
+- **`-l`**, o **`--local`**, che impone al comando di visualizzare esclusivamente i file system "locali", ignorando dunque qualsiasi file system di rete o remoto collegato alla macchina;
+- **`-T`**, o **`--print-type`**, che impone al comando di aggiungere una colonna alla tabella di informazioni, contenente il tipo di file system.
 ___
 ##### `dd`
 
