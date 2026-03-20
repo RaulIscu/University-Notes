@@ -112,7 +112,39 @@ in cui, concretamente, è come se la directory `/media` fosse diventata la nuova
 
 Una singola memoria a disco, eventualmente, può essere suddivisa in due o più "**partizioni**", che possiamo definire sostanzialmente come **sezioni virtuali di memoria indipendenti tra di loro**. Ad esempio, è possibile all'interno di un sistema Linux creare una partizione $A$ destinata esclusivamente al sistema operativo (e montarla, ad esempio, sulla radice `/`), e in seguito una partizione $B$ che contenga invece i dati personali degli utenti (e montarla sulla directory `/home`). Il concetto di partizione fornisce, come si può facilmente intuire, **maggiore flessibilità e sicurezza**: ad esempio, nell'eventualità in cui il sistema operativo venga corrotto in qualche modo, i dati personali non verrebbero sfiorati trovandosi in un'altra partizione; ancora, partizionare il disco in questo modo permette anche di installare diverse versioni di Linux senza dover copiare ogni volta i vecchi dati, ma smontando e rimontando la partizione dei dati personali come necessario. 
 
-[SLIDES: 02 - slide 25/27]
+In Linux, un file system non assume sempre la stessa forma, tant'è che possono esserci **diversi tipi di file system**. Alcuni dei principali sono:
+- **Ext2**;
+- **Ext3**;
+- **Ext4**;
+- **ReiserFS**.
+
+In base al tipo di file system, cambiano alcune caratteristiche relative soprattutto a **limiti di grandezza su file, nomi di file e partizioni**, così come al meccanismo di "**journaling**", che sfrutta un registro speciale per prevenire la corruzione dei dati nel caso venga interrotta improvvisamente la corrente. Possiamo riassumere tali caratteristiche nella seguente tabella:
+
+| Tipo di FS | Limite di grandezza<br>sulle partizioni | Limite di grandezza<br>sui file | Limite di grandezza<br>sui nomi dei file | Journaling |
+| ---------- | --------------------------------------- | ------------------------------- | ---------------------------------------- | ---------- |
+| Ext2       | 32 TB                                   | 2 TB                            | 255 byte                                 | NO         |
+| Ext3       | 32 TB                                   | 2 TB                            | 255 byte                                 | SI         |
+| Ext4       | 1000 TB                                 | 16 TB                           | 255 byte                                 | SI         |
+| ReiserFS   | 16 TB                                   | 8 TB                            | 4032 byte                                | SI         |
+
+Oltre a questi, ci sono ovviamente anche **tipi di file system non tipici di Linux**, ad esempio come quelli tipici di Windows, tra cui:
+- NTFS;
+- MSDOS;
+- FAT16;
+- FAT32;
+- FAT64.
+
+Per fortuna, Linux risulta essere **molto compatibile anche con altri file system** (ad esempio, file system di tipo FAT16, FAT32, FAT64 e NTFS possono facilmente essere montati).
+
+Per **eseguire un mounting**, così come **visualizzare informazioni sui file system attualmente montati**, il comando più importante è **`mount`**. La sinossi del comando `mount` è principalmente la seguente:
+
+```
+mount [OPZIONI...] [-t type] [OPZIONI...] device mountpoint
+```
+
+Tralasciamo, per ora, le opzioni `OPZIONI...`, e concentriamoci sulle altre componenti. 
+
+[SLIDES: 02 - slide 26 - 27]
 ___
 ## Utenti e gruppi di utenti nel file system
 
