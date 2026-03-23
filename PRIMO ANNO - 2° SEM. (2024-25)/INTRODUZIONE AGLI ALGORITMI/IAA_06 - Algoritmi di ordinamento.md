@@ -2,11 +2,11 @@
 
 Uno dei problemi più ricorrenti nell'ambito dell'informatica, e dunque da risolvere mediante [[IAA_01 - Introduzione#Algoritmi e problem-solving|algoritmi]], è quello dell'**ordinamento** di un insieme di elementi.
 
-Gli algoritmi che affrontano il problema dell'ordinamento vengono detti, banalmente, "**algoritmi di ordinamento**", e sono definiti come **algoritmi capaci di ordinare gli elementi di un insieme in base a una certa relazione d'ordine**, relazione definita sull'insieme stesso. Per semplicità di trattazione, nell'affrontare questa categoria di algoritmi supporremo di avere **$n$ numeri interi** da ordinare, tutti contenuti in un **array** i cui indici vanno da $0$ a $n-1$; ciononostante, in problemi reali i dati da ordinare possono essere molto più complessi.
+Gli algoritmi che affrontano il problema dell'ordinamento vengono detti, banalmente, "**algoritmi di ordinamento**", e sono definiti come **algoritmi capaci di ordinare gli elementi di un insieme in base a una certa relazione d'ordine**, definita sull'insieme stesso. Per semplicità di trattazione, nell'affrontare questa categoria di algoritmi supporremo di avere **$n$ numeri interi** da ordinare, tutti contenuti in un **array** i cui indici vanno da $0$ a $n-1$; ciononostante, in problemi reali i dati da ordinare possono essere molto più complessi.
 ___
 ## Algoritmi di ordinamento naif
 
-In questo paragrafo, andremo a trattare di tre algoritmi che potremmo inserire nella categoria degli "**algoritmi di ordinamento naif**": si tratta, sostanzialmente, di algoritmi di ordinamento molto semplici a livello di funzionamento, che riescono nel loro intento ma che non lo fanno in modo particolarmente efficiente. In particolare, i tre algoritmi che andremo ad analizzare sono:
+In questo paragrafo, andremo a trattare di tre algoritmi che potremmo inserire nella categoria degli "**algoritmi di ordinamento naif**": si tratta, sostanzialmente, di algoritmi di ordinamento molto semplici a livello di funzionamento, che riescono nel loro intento ma che non lo fanno in modo particolarmente efficiente. In questa sezione, i tre algoritmi che andremo ad analizzare sono:
 - l'**[[IAA_06 - Algoritmi di ordinamento#Insertion Sort|Insertion Sort]]**;
 - il **[[IAA_06 - Algoritmi di ordinamento#Selection Sort|Selection Sort]]**;
 - il **[[IAA_06 - Algoritmi di ordinamento#Bubble Sort|Bubble Sort]]**.
