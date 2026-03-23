@@ -54,7 +54,87 @@ Da questo semplice confronto, si evidenzia già un concetto che vale per le stru
 ___
 ## Liste puntate
 
+Per poter parlare di "**liste puntate**", è opportuno introdurre il concetto di "**puntatore**". In parole povere, un puntatore è una **variabile che contiene l'indirizzo in memoria di un'altra variabile**; si tratta di uno strumento pressoché necessario per costruire **strutture dati dinamiche** e per **passare parametri per riferimento**.
 
+##### Liste puntate semplici
+
+Una **lista puntata semplice**, spesso detta "**lista semplice**" per comodità, è una struttura dati nella quale **gli elementi sono organizzati in successione**. Si possono attribuire, in generale, a una lista puntata semplice le seguenti caratteristiche:
+- l'accesso avviene sempre ad una **estremità della lista**, per mezzo di un puntatore alla testa o alla coda della stessa;
+- è permesso solo un **accesso sequenziale agli elementi** (a differenza degli [[IAA_07 - Strutture dati#Array|array]], le liste puntate non permettono un accesso casuale a uno qualsiasi dei loro elementi);
+- è una struttura dati **dinamica**, dunque le sue dimensioni possono variare;
+- la successione degli elementi è implementata mediante un **collegamento esplicito di ogni elemento a un altro mediante un puntatore**.
+
+Ogni elemento `p` di una lista puntata, detto anche "**nodo**", è un **[[IAA_07 - Strutture dati|record]] a due campi**:
+- un campo **`key`**, contenente l'informazione effettiva associata all'elemento (rappresentato con la notazione `p → key`);
+- un campo **`next`**, contenente un puntatore all'elemento successivo della lista (rappresentato con la notazione `p → next`), e nel caso dell'ultimo elemento il puntatore in questione sarà un valore nullo (rappresentato con il simbolo `/`).
+
+Per avere le idee più chiare, possiamo fornire un'implementazione basilare (anche se non perfettamente corretta) di una classe `Nodo`, che rappresenti un elemento della lista puntata semplice, così come dei metodi che permettano di creare una lista puntata semplice a partire da una lista normale e di stampare una lista puntata semplice:
+
+```
+class Nodo:
+	def __init__(self, key=None, next=None):
+		self.key = key
+		self.next = next
+	
+	
+def crea(lista):                                # crea lista puntata e restituisce puntatore alla testa
+	p = None
+	
+	for x in lista:
+		q = Nodo(x)
+		q.next = p
+		p = q
+	
+	return p
+	
+
+def stampa(p):                                  # stampa lista puntata da p
+	while p:
+		print(p.key)
+		p = p.next
+```
+
+
+##### Operazioni sulle liste puntate semplici
+
+Come abbiamo detto [[IAA_07 - Strutture dati#Liste puntate|in precedenza]], una lista puntata permette esclusivamente un accesso sequenziale ai suoi elementi: questo implica che, in generale, l'**accesso a un qualsiasi dato** di una lista puntata semplice avrà **costo** pari a $O(n)$.
+
+Avendo stabilito ciò, possiamo procedere ad analizzare l'**implementazione di alcune delle operazioni principali** che si possono svolgere su una lista puntata semplice. Ad esempio, un'operazione **`Search(S, k)`** assume la seguente forma:
+
+```
+def search(p: puntatore alla testa, k: valore da cercare):
+	p_corr = p
+	
+	while p_corr != None and p_corr → key != k:
+		p_corr = p_corr → next
+	
+	return p_corr
+```
+
+In parole povere, il funzionamento di tale implementazione di `Search` è il seguente: partendo dalla testa della lista puntata, dunque dal suo primo elemento, si scorre la lista puntata fino al suo termine (`p_corr != null`) o finché non si trova l'elemento `k` (`p_corr → key != k`); se si terminano gli elementi e `k` non è stato ancora trovato, verrà restituito un valore nullo, mentre se `k` viene trovato la funzione restituisce un puntatore ad esso. Ovviamente, tale operazione risulta avere un **costo** pari a $O(n)$.
+
+Vediamo, ora, un'operazione **`Insert_in_testa(S, k)`**, ossia un'operazione di inserimento dell'elemento `k` in testa alla lista puntata:
+
+```
+def insert_in_testa(p: puntatore alla testa, k: valore da inserire):
+	if (k != None):
+		k → next = p
+	
+	p = k
+	return p
+```
+
+
+
+[DISPENSE: pag. 8/12]
+[SLIDES: pag. 12/14]
+[EXYSS: pag. 96 - 97]
+___
+##### Liste puntate doppie
+
+[DISPENSE: pag. 13 - 14]
+[SLIDES: pag. 15]
+[EXYSS: pag. 97 - 98]
 ___
 ## Pile
 
