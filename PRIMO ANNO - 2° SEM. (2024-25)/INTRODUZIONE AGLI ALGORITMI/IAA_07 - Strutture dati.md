@@ -59,7 +59,7 @@ Per poter parlare di "**liste puntate**", è opportuno introdurre il concetto di
 ##### Liste puntate semplici
 
 Una **lista puntata semplice**, spesso detta "**lista semplice**" per comodità, è una struttura dati nella quale **gli elementi sono organizzati in successione**. Si possono attribuire, in generale, a una lista puntata semplice le seguenti caratteristiche:
-- l'accesso avviene sempre ad una **estremità della lista**, per mezzo di un puntatore alla testa o alla coda della stessa;
+- l'accesso avviene sempre ad una **estremità della lista**, per mezzo di un puntatore alla testa della stessa;
 - è permesso solo un **accesso sequenziale agli elementi** (a differenza degli [[IAA_07 - Strutture dati#Array|array]], le liste puntate non permettono un accesso casuale a uno qualsiasi dei loro elementi);
 - è una struttura dati **dinamica**, dunque le sue dimensioni possono variare;
 - la successione degli elementi è implementata mediante un **collegamento esplicito di ogni elemento a un altro mediante un puntatore**.
@@ -93,8 +93,7 @@ def stampa(p):                                  # stampa lista puntata da p
 		print(p.key)
 		p = p.next
 ```
-
-
+___
 ##### Operazioni sulle liste puntate semplici
 
 Come abbiamo detto [[IAA_07 - Strutture dati#Liste puntate|in precedenza]], una lista puntata permette esclusivamente un accesso sequenziale ai suoi elementi: questo implica che, in generale, l'**accesso a un qualsiasi dato** di una lista puntata semplice avrà **costo** pari a $O(n)$.
@@ -124,25 +123,101 @@ def insert_in_testa(p: puntatore alla testa, k: valore da inserire):
 	return p
 ```
 
+Semplicemente, l'operazione `Insert_in_testa` rende l'elemento `k` la nuova testa della lista puntata in questione, e lo fa associando il puntatore alla testa precedente `p` al campo `next` di `k`, e ritornando un puntatore a quest'ultimo. Come si può facilmente dedurre studiando lo pseudocodice, l'operazione di inserimento in testa ha **costo** pari a $\Theta(1)$.
 
+Nell'analizzare questa operazione, e in generale qualsiasi operazione di inserimento di elementi nella lista puntata, risulta evidente che **l'elemento `k` da inserire deve essere a tutti gli effetti un nodo valido**, e deve di conseguenza essere effettuata un'**allocazione di memoria** per tale elemento, in modo che esso possa contenere i campi necessari e supportare le varie operazioni. Nell'implementazione che abbiamo visto nel [[IAA_07 - Strutture dati#Liste puntate|paragrafo precedente]], questa allocazione di memoria avviene mediante l'istruzione `q = Nodo(x)`. 
 
-[DISPENSE: pag. 8/12]
-[SLIDES: pag. 12/14]
-[EXYSS: pag. 96 - 97]
+A questo punto, possiamo pensare a un'ipotetica operazione **`Insert_dopo_d(S, k, d)`**, ossia un inserimento che non aggiunge l'elemento `k` in testa, ma piuttosto dopo un determinato elemento `d`:
+
+```
+def insert_dopo_d(p: puntatore alla testa, k: valore da inserire, d: valore dopo cui inserire k):
+	if d != None:
+		k → next = d → next
+		d → next = k
+		return p
+	else:
+		return None
+```
+
+In parole povere, la prima cosa che fa la funzione è verificare che il nodo `d` esista veramente, e in caso contrario fermare subito l'operazione. Se invece `d` esiste, procede a inserire `k` dopo di esso in due passaggi: prima rende l'elemento inizialmente successivo a `d` successivo a `k`; poi, rende `k` stesso l'elemento successivo a `d`. Così facendo, si inserirà con successo `k` tra `d` e l'elemento inizialmente successivo a `d`. Essendo la lista puntata semplice una struttura dati non inerentemente ordinata, per trovare al suo interno il nodo `d` dopo cui inserire `k` richiede la sua ricerca, mediante l'operazione **`Search`** vista poco fa: avendo tale operazione un costo di $O(n)$, anche il costo avrà in realtà un **costo** pari a $O(n)$ (se, invece, si suppone di avere già il nodo `d`, il costo stretto dell'operazione `insert_dopo_d` diventa $\Theta(1)$).
+
+Vediamo, infine, l'operazione **`Delete(S, k)`**, che potrà essere utilizzata per eliminare l'elemento `k` dalla lista puntata:
+
+```
+def delete(p: puntatore alla testa, k: valore da eliminare):
+	if k != None:
+		if k == p:
+			p = p → next
+			return p
+		
+		p_corr = p
+		
+		while p_corr → next != k:
+			p_corr = p_corr → next
+		
+		p_corr → next = k → next
+	
+	return p
+```
+
+Notiamo che l'implementazione dell'operazione **include**, al suo interno, **pseudocodice equivalente all'operazione di `Search`**: questo perché, per poter eliminare l'elemento, sarà necessario trovare quello precedente. In parole povere, la funzione controlla prima di tutto (assumendo che `k` esista effettivamente) se `k` è la testa della lista puntata, e in tal caso basterà "tagliare" la testa della lista e restituire il puntatore alla nuova testa; altrimenti, si andrà a trovare il nodo precedente a `k` (nello pseudocodice, tale nodo verrà memorizzato in `p_corr`) e si sostituirà il suo puntatore `next` (inizialmente associato a `k` stesso) con il puntatore `next` di `k`, scollegando a tutti gli effetti `k` dalla lista puntata. Il **costo** dell'operazione sarà pari a $O(n)$.
+
+**Le liste puntate sono strutture dati inerentemente ricorsive**: perciò, tutti gli algoritmi proposti finora possono essere implementati anche sfruttando la [[IAA_05 - Ricorsione#Cos'è un algoritmo ricorsivo?|ricorsione]]. Ad esempio, di seguito vediamo un esempio di implementazione ricorsiva dell'operazione di `Delete`:
+
+```
+def delete_ric(p: puntatore alla testa, k: valore da eliminare):
+	if p == k:
+		p = p → next
+	else:
+		p → next = delete_ric(p → next, k)
+	
+	return p
+```
+
+[DISPENSE: pag. 12]
 ___
 ##### Liste puntate doppie
 
-[DISPENSE: pag. 13 - 14]
-[SLIDES: pag. 15]
-[EXYSS: pag. 97 - 98]
+Alcune inefficienze della [[IAA_07 - Strutture dati#Liste puntate semplici|liste puntate semplici]], ad esempio il costo lineare dell'eliminazione di un elemento, si può modificare tale struttura dati in modo che **ogni nodo disponga sia di un puntatore all'elemento successivo** (**`next`**) **che di un puntatore all'elemento precedente** (**`prev`**). Una struttura dati del genere prende il nome di **lista puntata doppia**, spesso detta anche "**lista doppia**" per semplicità. Una lista puntata doppia ha le stesse proprietà di una lista semplice, con la differenza che **una lista doppia può essere attraversata in entrambe le direzioni**.
+
+In tale struttura dati, le [[IAA_07 - Strutture dati#Operazioni sulle liste puntate semplici|operazioni]] di inserimento e di ricerca rimangono pressoché invariate, ma l'operazione **`Delete`** assume la seguente forma:
+
+```
+def delete_doppia(p: puntatore alla testa, k: valore da eliminare):
+	if k → prev != None:
+		k → prev → next = k → next
+	else:
+		p = k → next
+		
+	if k → next != None:
+		k → next → prev = k → prev
+	
+	return p
+```
+
+e il **costo** dell'operazione diventa $\Theta(1)$.
+
+Possiamo riassumere i costi delle varie operazioni nelle liste puntate (semplici e doppie) nella seguente tabella:
+
+| Struttura dati         | Search(S, k) | Min(S) | Max(S) | Pred(S, k) | Succ(S, k) | Insert(S, k) | Delete(S, k) |
+| ---------------------- | ------------ | ------ | ------ | ---------- | ---------- | ------------ | ------------ |
+| Lista puntata semplice | $O(n)$       | $O(n)$ | $O(n)$ | $O(n)$     | $O(n)$     | $\Theta(1)$  | $O(n)$       |
+| Lista puntata doppia   | $O(n)$       | $O(n)$ | $O(n)$ | $O(n)$     | $O(n)$     | $\Theta(1)$  | $\Theta(1)$  |
+
+Eventualmente, si può operare un’ulteriore evoluzione della lista doppia: **la lista circolare**, nella quale **il primo e l’ultimo elemento sono collegati fra loro**. Essa può essere utile nelle situazioni in cui si voglia, ad esempio, effettuare una computazione organizzata per fasi, nella quale ciascuna fase richiede la scansione dell’intera struttura dati; inoltre, semplifica l’implementazione delle operazioni standard poiché in esse non è necessario tenere conto dei casi speciali relativi al primo e all’ultimo elemento della lista.
 ___
-## Pile
+## Pile e code
 
+##### Pile
 
+[DISPENSE: pag. 19/24]
+[SLIDES: pag. 4/7]
+[EXYSS: pag. 98]
 ___
-## Code
 
-
+[DISPENSE: pag. 15/24]
+[SLIDES: pag. 4/13]
+[EXYSS: pag. 98 - 99]
 ___
 ## Alberi
 
