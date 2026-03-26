@@ -210,22 +210,156 @@ ___
 
 ##### Pile
 
-[DISPENSE: pag. 19/24]
-[SLIDES: pag. 4/7]
-[EXYSS: pag. 98]
-___
+La **pila**, detta più comunemente "**stack**", è una struttura dati che si ispira al concetto di una pila di oggetti: inserendo un oggetto nella pila lo andremo ad aggiungere in cima alla stessa, mentre l'oggetto che andremo ad eventualmente rimuovere sarà sempre quello in cima. Più formalmente, la pila è una struttura dati di tipo **LIFO**, cioè "**Last In First Out**". Dunque, una pila ha sempre la seguente proprietà:
+- gli elementi **vengono prelevati** dalla pila **nell'ordine inverso rispetto a quello nel quale vi sono stati inseriti**.
 
-[DISPENSE: pag. 15/24]
-[SLIDES: pag. 4/13]
-[EXYSS: pag. 98 - 99]
+Possiamo trovare, senza neanche pensarci troppo, innumerevoli esempi di utilizzo di strutture del genere: nella nostra quotidianità, una **pila di piatti** o **di sedie** segue la stessa proprietà; nel mondo dell'informatica, la pila viene utilizzata dal sistema operativo per **gestire le chiamate a funzione**, o anche per **memorizzare in ordine le pagine web** che abbiamo visitato, in modo da poterle recuperare "tornando indietro".
+
+Approfondiamo meglio l'utilizzo delle pile negli elaboratori, e in particolare nella catena delle **chiamate a funzione**. Supponiamo che un programma in esecuzione voglia effettuare una chiamata a un'ipotetica funzione `A()`: per fare ciò, deve avvenire il cosiddetto "**context switch**", o **cambio di contesto**, grazie al quale il controllo della CPU passa dal flusso di esecuzione corrente alla funzione `A()`. Questo, ad esempio, significa che la funzione `A()` modificherà, tra le altre cose, il "program counter", ossia l'indirizzo di memoria della prossima istruzione da eseguire, e il contenuto dei registri della CPU: queste informazioni, che fanno parte del cosiddetto "**contesto di esecuzione**", dovranno essere salvate prima di passare il controllo ad `A()`, altrimenti, una volta che l'esecuzione di quest'ultima sarà terminata e il controllo dovrà essere restituito al programma chiamante, esso non potrà riprendere l'esecuzione in modo corretto. Ciò vale anche in caso di catene di chiamate a funzione (potrebbe essere che, durante l'esecuzione di `A()`, venga chiamata un'altra funzione `B()`, e così via). Dato che **i ritorni dalle varie chiamate a funzione si verificano esattamente nell'ordine inverso rispetto a quello in cui sono state chiamate**, la struttura dati più naturale da utilizzare per salvare i vari contesti di esecuzione è proprio la pila.
+
+Di seguito, proviamo a visualizzare meglio quanto detto con delle immagini. Supponiamo che la funzione `A()` contenga una chiamata alla funzione `B()`; immediatamente prima che avvenga tale chiamata, il sistema operativo salva su una pila di sistema il contesto di esecuzione di `A()`:
+
+![[pila_esempio.png]]
+
+E se `B()` fa a sua volta una chiamata a una funzione `C()`? Prima di eseguire tale chiamata, verrà salvato nella pila il contesto di esecuzione di `B()`:
+
+![[pila_esempio1.png]]
+
+Supponiamo, ora, che la funzione `C()` termini la propria esecuzione. Prima di restituire il controllo a `B()`, il sistema operativo dovrà recuperare dalla pila di sistema il contesto di esecuzione di `B()` e ricaricarlo nella CPU, nel modo seguente:
+
+![[pila_esempio2.png]]
+
+e lo stesso avverrà al termine dell'esecuzione di `B()`:
+
+![[pila_esempio3.png]]
+___
+##### Operazioni sulle pile
+
+Tipicamente, una [[IAA_07 - Strutture dati#Pile|pila]] supporta solo **due operazioni**:
+- **`Push`**, ossia l'**aggiunta di un elemento** in cima alla pila;
+- **`Pop`**, ossia l'**estrazione di un elemento** dalla cima della pila.
+
+**Non è prevista**, invece, **la possibilità di scandire gli elementi** della pila (fare ciò implicherebbe il rimuoverli dalla pila stessa), così come quella di **eliminare elementi con mezzi diversi dalla `Pop`**. 
+
+Naturalmente, **le operazioni di `Pop` e `Push`**, per la natura LIFO della pila, **operano sulla stessa estremità della stessa** attraverso un puntatore o un indice **`top`**, a seconda che la pila sia implementata rispettivamente come una sorta di [[IAA_07 - Strutture dati#Liste puntate|lista puntata]] o come un [[IAA_07 - Strutture dati#Array|array]]. Seppur perfettamente valido e facilissimo da implementare, quest'ultimo approccio si rivela spesso poco conveniente, soprattutto per la dimensione fissa che hanno di norma gli array; invece, il primo approccio è molto più versatile e flessibile, ma implica ovviamente una maggiore difficoltà implementativa, dato che ogni elemento memorizzato dovrà disporre di un puntatore **`next`**, che punterà al prossimo elemento della pila (quello subito più "in basso", per intenderci). In questo contesto, si chiarisce subito che **se il puntatore `top` è pari a `None`, vuol dire che la pila considerata è vuota**.
+
+Di seguito, forniamo dunque un'**implementazione delle operazioni effettuabili su una pila** vedendola implementata mediante liste puntate (si presuppone che l'elemento da inserire sia già creato e con valore `None` nel suo campo `next`):
+
+```
+def push_lista(top: puntatore alla cima, e: puntatore all'elemento da inserire):
+	e → next = top
+	top = e
+	return top
+	
+
+def pop_lista(top: puntatore alla cima):
+	if top == None:
+		return None
+	
+	e = top
+	top = e → next
+	e → next = None
+	return e, top
+```
+
+Analizziamo più nel dettaglio cosa fanno queste due operazioni:
+- l'operazione **`push_lista`** va ad associare al campo `next` dell'elemento da inserire `e` il puntatore alla cima originaria della pila, e in seguito sovrascrive il puntatore `top` sostituendolo con un puntatore a `e`, rendendo quest'ultimo a tutti gli effetti la nuova cima della pila (tale operazione ha **costo** pari a $\Theta(1)$);
+- l'operazione **`pop_lista`** controlla innanzitutto che la pila contenga effettivamente un qualche valore da rimuovere, e in seguito salva nella variabile `e` il puntatore alla cima della pila (ossia all'elemento che stiamo rimuovendo), associa a `top` l'elemento successivo a quello da rimuovere, rendendo tale elemento la nuova cima della pila, "scollega" `e` da quest'ultima (`e → next = None`) e infine restituisce un puntatore all'elemento rimosso e alla nuova cima della pila (tale operazione ha **costo** pari a $\Theta(1)$). 
+
+Come detto a inizio paragrafo, le pile potrebbero essere anche realizzate mediante array, se il numero massimo di elementi da memorizzare è noto a priori. Incappiamo, però, in un problema di efficienza: se implementassimo `top` come l'indice del primo elemento dell'array, le operazioni di `Pop` e `Push` non avrebbero più costo costante, dato che si dovrebbe considerare anche lo spostamento (rispettivamente, verso sinistra e verso destra) di tutti gli altri elementi contenuti nell'array. Per questo motivo, conviene **considerare  `top` come l'indice dell'ultimo elemento conservato nell'array**, cioè quello più a destra, in modo che inserimenti e rimozioni non alterino la posizione degli altri elementi.
+___
+##### Code
+
+La **coda**, detta anche "**queue**", è una struttura dati che si ispira al concetto di una coda di persone in attesa: inserendo una persona nella coda la andremo ad aggiungere in fondo alla stessa, e al tempo stesso le persone usciranno dalla coda nell'ordine in cui sono entrate. Più formalmente, la coda è una struttura dati di tipo **FIFO**, cioè "**First In First Out**". In altre parole, una coda ha sempre la seguente proprietà:
+- gli elementi **vengono prelevati** dalla coda **nello stesso ordine nel quale vi sono stati inseriti**.
+___
+##### Operazioni sulle code
+
+Tipicamente, come per una [[IAA_07 - Strutture dati#Pile|pila]], una [[IAA_07 - Strutture dati#Code|coda]] supporta solo **due operazioni**:
+- **`Enqueue`**, ossia l'**aggiunta di un elemento** in fondo alla coda;
+- **`Dequeue`**, ossia l'**estrazione di un elemento** dalla testa della coda.
+
+**Non è prevista**, invece, **la possibilità di scandire gli elementi** della coda, così come quella di **eliminare elementi con mezzi diversi dalla `Dequeue`**.
+
+Per la natura FIFO della coda, a differenza della pila, **le operazioni di `Enqueue` e `Dequeue` non operano sulla stessa estremità della coda**: infatti, l'operazione di `Enqueue` opera sul fondo (**`tail`**) della coda, mentre l'operazione di `Dequeue` opera sulla testa (**`head`**) della coda. Anche nel caso della coda, essa può essere implementata utilizzando una [[IAA_07 - Strutture dati#Liste puntate|lista puntata]] o un [[IAA_07 - Strutture dati#Array|array]]: anche in questo caso, gli array non sono molto convenienti rispetto alle liste puntate, principalmente per la loro dimensione fissa. Nell'implementazione mediante liste puntate, `tail` e `head` sono due puntatori rispettivamente al fondo e alla testa della coda.
+
+Di seguito, forniamo dunque un'**implementazione delle operazioni effettuabili su una coda** vedendola implementata mediante liste puntate (si presuppone che l'elemento da inserire sia già creato e con valore `None` nel suo campo `next`):
+
+```
+def enqueue_lista(head: puntatore alla testa, tail: puntatore al fondo, e: puntatore all'elemento da inserire):
+	if tail == None:
+		tail = e
+		head = e
+	else:
+		tail → next = e
+		tail = e
+	
+	return head, e
+	
+	
+def dequeue_lista(head: puntatore alla testa, tail: puntatore al fondo):
+	if head == None:
+		return None, None, None
+	
+	e = head
+	head = e → next
+	
+	if head == None:
+		tail = None
+	
+	return head, tail, e
+```
+
+Analizziamo più nel dettaglio cosa fanno queste due operazioni:
+- l'operazione di **`Enqueue`** controlla innanzitutto se la coda è vuota (se `tail == None`, vuol dire che non ci sono elementi all'interno della coda), e in tal caso l'elemento `e` da inserire diventerebbe l'unico elemento della coda, motivo per cui è ad esso che punteranno sia `head` che `tail`; invece, se la coda contiene già almeno un elemento, si associa `e` al puntatore `next` dell'elemento originariamente in fondo alla coda, e si aggiorna il puntatore `tail`, rendendo a tutti gli effetti `e` il nuovo fondo della coda; in seguito, si restituiscono `head` e il puntatore a `e` (non viene restituito anche `tail` perché, in seguito a un inserimento, l'elemento inserito è l'ultimo della coda, dunque il puntatore `tail` coincide con il puntatore a tale elemento), terminando l'esecuzione dell'operazione con un **costo** di $\Theta(1)$;
+- l'operazione di **`Dequeue`** controlla innanzitutto se la coda è vuota, e in tal caso non essendoci elementi da rimuovere terminerà subito l'esecuzione; in alternativa, andiamo a memorizzare in una variabile `e` il puntatore all'elemento in testa alla coda (sarà l'elemento che vorremo rimuovere e restituire), e rendiamo invece la nuova `head` l'elemento successivo; a questo punto, viene semplicemente effettuato un ultimo controllo per verificare che la nuova testa della coda esista effettivamente (se la coda conteneva un solo elemento, dopo la `Dequeue` essa risulterà vuota, e dunque il puntatore `head` diventerà un valore nullo), e in caso contrario si aggiorna anche il puntatore `tail` in modo appropriato; l'esecuzione viene terminata dopo aver restituito tre puntatori, ossia `head`, `tail` ed `e`, con **costo** complessivo pari a $\Theta(1)$.
+
+Anche le code, come le pile, possono essere implementate anche con gli **array**, se il numero massimo di elementi da memorizzare è noto a priori. Tuttavia, si incappa in un problema: a seguito di ripetute operazioni di `Enqueue` e `Dequeue`, gli elementi della coda si spostano progressivamente verso una delle due estremità dell’array e, quando la raggiungono, non vi è più apparentemente spazio per i successivi inserimenti. La ragione è che, al fine di garantire costo computazionale costante, i dati da estrarre vengono cancellati solo logicamente e non fisicamente: gli elementi estratti tramite `Dequeue` infatti rimangono nell’array ma sono considerati come eliminati grazie all’opportuna posizione degli indici `head` e `tail`. La soluzione a questo problema è gestire l’array in modo circolare, considerando cioè il primo elemento come successore dell’ultimo. Implementando una coda utilizzando un array, è possibile anche contemplare una funzione **`CodaPiena`**, che restituisca `True` se la coda considerata è piena e `False` altrimenti (si può fare lo stesso con una pila implementata mediante array); si tenga a mente, però, che una funzione del genere può esistere solo con questa implementazione specifica, dato che una lista puntata non ha realmente fine, dunque non potrà mai essere "piena".
+___
+##### Code con priorità
+
+La **coda con priorità** è una variante della [[IAA_07 - Strutture dati#Code|coda]], che si differenzia da quest'ultima per l'**ordine di inserimento degli elementi** al suo interno: la posizione dell'elemento all'interno della coda non dipende dal momento in cui l'elemento è stato inserito al suo interno, ma piuttosto dal valore di una determinata grandezza detta "**priorità**", la quale generalmente è associata a **uno dei campi dell'elemento stesso**. Di conseguenza, **gli elementi di una coda con priorità sono collocati in ordine crescente o decrescente rispetto alla priorità**.
+
+Ad esempio, supponendo di avere una coda con priorità crescente dove la priorità viene associata al valore del campo `key`, quando un nuovo elemento avente `key = x` viene inserito nella coda esso viene collocato come predecessore del primo elemento che abbia il valore `key` maggiore o uguale a `x`. Se, invece, la coda contiene solo elementi con priorità minore a quella dell'elemento che viene inserito, esso diverrà l'elemento in testa alla coda, dunque il primo che verrà eventualmente estratto (essendo quello con priorità maggiore). In questo senso, **un [[IAA_07 - Strutture dati#Array|array]] ordinato può essere visto come una coda con priorità**, in cui la priorità coincide con la chiave dell'elemento. 
+
+Un altro esempio di coda con priorità è la struttura dati **heap**, che abbiamo già incontrato studiando gli [[IAA_06 - Algoritmi di ordinamento#Heap Sort|algoritmi di ordinamento]]. Anche una **coda** può essere intesa come una coda con priorità, in cui il parametro di priorità è il maggior tempo di permanenza nella struttura dati. Viceversa, la **pila** è una coda con priorità dettata dal minor tempo di permanenza nella struttura. Si noti che la coda con priorità presenta un potenziale pericolo di "**starvation**" (detta anche "**attesa illimitata**"): un elemento potrebbe non venire mai estratto, se viene continuamente scavalcato da altri elementi di priorità maggiore che vengono via via immessi nella struttura dati.
+___
+##### Pile, code e `list` di Python
+
+Volendo implementare la funzionalità della **[[IAA_07 - Strutture dati#Pile|pila]]**, possiamo sfruttare i metodi della **classe `list` di Python** così come sono, infatti:
+- `append()` corrisponde all’operazione di `push()`;
+- `pop()` esiste sia per le liste di Python che per le pile.
+
+Inoltre, entrambi questi metodi possono essere eseguiti in **tempo costante**. Non altrettanto si può dire per la **coda**: i metodi `append()` e `pop()`, alla fine di una struttura `list` sono veloci, ma gli `insert()` e i `pop()` all’inizio della stessa hanno **costo lineare**, dato che tutti gli elementi che seguono dovranno slittare di una posizione; se vogliamo implementare la coda con un oggetto `list`, e garantire al tempo stesso che le operazioni abbiano costo costante, dobbiamo scrivere la funzione
+`Dequeue` in modo che gli elementi rimasti in coda non slittino, ma rimangano dove sono.
 ___
 ## Alberi
 
+L'**albero** è una struttura dati estremamente versatile, utilizzabile per modellare una grande quantità di problemi e per progettare le relative soluzioni algoritmiche. 
 
+Per poter fornire una definizione formale dell'albero, è necessario introdurre un'altra struttura dati: il **grafo**. Un grafo $G$ è una tupla $(V, E)$ costituita da **due insiemi**:
+- un insieme finito **$V$** di **nodi**, detti anche **vertici**;
+- un insieme finito $E\subseteq\, V\,\times V$ di **coppie non ordinate di nodi**, detti **archi** o **spigoli**.
+
+All'interno di un grafo, possiamo trovare vari "**cammini**", ossia sequenze $(v_{1},\,v_{2},\,\dots,\,v_{k})$ di nodi distinti appartenenti a $V$ tali che $(v_{i},\,v_{i\,+\,1})$ sia un arco appartenente a $E$ per ogni $i$ compreso tra $1$ e $k-1$. Se, poi, a un cammino generico $(v_{1},\,v_{2},\,\dots,\,v_{k})$ si aggiunge anche l'arco $(v_{k},\,v_{1})$, allora il cammino diventa un "**ciclo**". Un grafo $G$ si dice "**connesso**" se, **per ogni coppia di nodi $(u,\,v)$ appartenente a $V$ esiste un cammino tra $u$ e $v$**. Inoltre, un grafo si dice "**aciclico**" se **non contiene cicli**.
+
+Sulla base delle proprietà dei grafi appena spiegate, possiamo fornire la seguente **definizione di albero**: un albero è un **grafo connesso e aciclico**. Ad esempio, il seguente grafo:
+
+![[albero_esempio.png]]
+
+è a tutti gli effetti un albero.
+
+
+
+[DISPENSE: pag. 26 - 27]
+[SLIDES: pag. 3/8]
+[EXYSS: pag. 101]
 
 ##### Alberi binari
 
-
+[DISPENSE: pag. 28/34]
+[SLIDES: pag. 8/12]
+[EXYSS: pag. 102/104]
 ___
 ##### Visite di alberi
 
