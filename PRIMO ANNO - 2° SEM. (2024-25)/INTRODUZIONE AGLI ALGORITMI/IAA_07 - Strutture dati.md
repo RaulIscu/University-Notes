@@ -349,31 +349,127 @@ Sulla base delle proprietà dei grafi appena spiegate, possiamo fornire la segue
 
 è a tutti gli effetti un albero.
 
+Sugli alberi è definito il seguente **lemma**:
 
+> Sia $G=(V,E)$ un grafo connesso e aciclico. Eliminando da $G$ un arco qualsiasi, $G$ diventa disconnesso, cioè suddiviso in due grafi $G_{1}=(V_{1},\,E_{1})$ e $G_{2}=(V_{2},\,E_{2})$, che risultano però entrambi connessi e aciclici.
+
+Possiamo dimostrare il lemma **per assurdo**. Supponiamo che, dopo l'eliminazione di un arco $e=(u,\,v)$ il grafo $G$ rimanga connesso: questo significherebbe che, nel nuovo grafo privato dell'arco $e$, esiste ancora un cammino tra i due nodi $u$ e $v$. Ciò, però, vorrebbe dire che nel grafo $G$ originario esisteva un ciclo che includeva i nodi $u$ e $v$ (se, eliminando un arco tra questi due nodi, c'è comunque un cammino tra di loro, ciò implica che esiste comunque una sequenza $(u,\,v_{1},\,v_{2},\,\dots,\,v)$ di nodi distinti tutti legati da archi, e l'iniziale presenza anche dell'arco $e=(u,\,v)$ rende tale cammino un ciclo), risultato che andrebbe contro l'ipotesi iniziale, che stabiliva come $G$ fosse un grafo aciclico. Siamo dunque arrivati a una contraddizione, e abbiamo così dimostrato il lemma.
+
+Inoltre, vale il seguente **teorema**:
+
+> Sia $G=(V,E)$ un grafo. Le seguenti due affermazioni sono equivalenti:
+> 1. $G$ è connesso e aciclico (in altre parole, $G$ è un albero);
+> 2. $G$ è connesso, e $|E|=|V|-1$.
+
+Dimostrare che le due proposizioni sono equivalenti vuol dire **dimostrare la seguente doppia implicazione**:
+$$1.\iff 2.$$
+scomponibile in due implicazioni:
+$$1. \Rightarrow 2.\,\,\,\,\,\,\,\,\,\,2.\Rightarrow 1.$$
+
+Partiamo dimostrando la prima, ossia che se $G$ è un grafo connesso e aciclico, allora si ha che $|E|=|V|-1$. Per dimostrare questa affermazione, procediamo per **induzione** sul valore $|V|$, ossia sulla cardinalità dell'insieme $V$ dei nodi del grafo. Partendo con il **caso base**, ossia che $|V|=1$ o che $|V|=2$, l'affermazione è banalmente vera (se il grafo contiene un solo nodo, allora non ci saranno archi dato che l'esistenza di un arco implica l'esistenza di almeno due nodi, mentre se il grafo contiene due nodi allora basterà che ci sia un solo arco che li colleghi, e il grafo risultante sarà connesso e aciclico); a questo punto, procediamo con il **passo induttivo**
 
 [DISPENSE: pag. 26 - 27]
-[SLIDES: pag. 3/8]
-[EXYSS: pag. 101]
+[SLIDES: pag. 5]
+
+Pur avendo stabilito la definizione e le principali caratteristiche di un albero, si potrebbe pensare che gli esempi forniti si discostano comunque dalla tipica struttura ad albero che si è sicuramente vista in altri contesti: con tutta probabilità, l'albero che si ha in mente è il cosiddetto "**albero radicato**", ossia un albero in cui, tra i vari nodi che lo compongono, se ne distingue uno che assume il ruolo di **radice**. Ad esempio, quello della seguente immagine:
+
+![[albero_esempio1.png]]
+
+è un albero radicato, con radice nel nodo $V_{3}$. Come si può notare dall'immagine di esempio appena fornita, tipicamente un albero radicato viene rappresentato come **"crescente" dall'alto verso il basso**, nel senso che la radice si trova in cima all'albero e non alla base. Inoltre, è importante ricordare le seguenti **caratteristiche degli alberi radicati**:
+- **i nodi sono organizzati in livelli**, numerati in ordine crescente man mano che ci si allontana dalla radice, e con il livello della radice che di norma è il livello 0;
+- dato un qualunque nodo $v$ diverso dalla radice, il primo nodo che si incontra sul cammino da $v$ alla radice è detto "**padre di $v$**";
+- due o più **nodi che hanno lo stesso padre** sono detti "**fratelli**", e **la radice è l'unico nodo dell'albero a non avere padre**;
+- ogni nodo sul cammino da $v$ alla radice viene detto "**antenato di $v$**";
+- tutti i nodi che hanno il nodo $v$ come padre sono detti "**figli di $v$**", mentre i **nodi che non hanno figli** vengono detti "**foglie**";
+- tutti i nodi che hanno il nodo $v$ come antenato sono detti "**discendenti di $v$**";
+- l'**altezza** dell'albero radicato è la **lunghezza del più lungo cammino dalla radice a una foglia** (un albero di altezza $h$ contiene $h+1$ livelli, di norma numerati da $0$ a $h$).
+
+Possiamo visualizzare più chiaramente le caratteristiche appena elencate nell'immagine seguente, rappresentante un albero radicato di altezza $h=3$:
+
+![[albero_esempio2.png]]
+
+Inoltre, un albero radicato viene detto "**ordinato**" se viene attribuito un qualche ordine ai figli di ciascun nodo (se un nodo ha $k$ figli, c'è una qualche distinzione tra primo figlio, secondo figlio, e così via).
 
 ##### Alberi binari
 
-[DISPENSE: pag. 28/34]
-[SLIDES: pag. 8/12]
-[EXYSS: pag. 102/104]
+Una particolare sottoclasse degli alberi radicati è quella dei cosiddetti "**alberi binari**". Si tratta di **alberi radicati e ordinati**, con la particolarità che **ogni nodo ha al più due figli**: in questo contesto, possiamo definire ordinato un albero binario dato che i due figli di ciascun nodo vengono distinti in "**figlio sinistro**" e "**figlio destro**". Un albero binario nel quale **tutti i livelli contengono il massimo numero possibile di nodi** è detto "**albero binario completo**"; invece, se tutti i livelli tranne l'ultimo contengono il numero massimo possibile di nodi, mentre l'ultimo livello è riempito completamente da sinistra verso destra solo fino a un certo punto, allora l'albero viene chiamato "**albero binario quasi completo**". Nell'immagine seguente, si mostra un esempio di albero binario completo di altezza 2, costituito cioè da 3 livelli:
+
+![[albero_esempio3.png]]
+
+Si ricordi che abbiamo già incontrato un esempio di albero binario in questo corso, parlando di "[[IAA_06 - Algoritmi di ordinamento#Complessità minima di un ordinamento|alberi di decisione]]" nel contesto degli algoritmi di ordinamento. In tale circostanza, abbiamo accennato ad alcune importanti **caratteristiche degli alberi binari completi**, che elencheremo nuovamente per chiarezza:
+- un albero binario completo ha **$2^{h}$ foglie**;
+- il numero dei **nodi interni** di un albero binario completo è pari a $\sum_{i\,=\,0}^{h\,-\,1}\,2^{i}=\frac{2^{h}-1}{2-1}=2^{h}-1$;
+- il **numero totale di nodi** di un albero binario completo è pari a $2^{h}+2^{h}-1=2^{h\,+\,1}-1$.
+
+A questo punto, possiamo **stimare l'altezza di un albero binario completo contenente $n$ nodi**. Infatti, essendo l'albero considerato un albero completo, potremo affermare che:
+$$n=2^{h\,+\,1}-1$$
+e dunque, sfruttando i logaritmi, abbiamo che:
+$$\log_{2}(n+1)=h+1\,\,\,\,\,\Rightarrow\,\,\,\,\,h=\log(n+1)-1=\log\left( \frac{n+1}{2} \right)$$
+Possiamo, dunque, affermare che **l'altezza di un albero binario completo sia in $\Theta(\log n)$**. Invece, nel caso in cui l'albero non sia completo, l'altezza sarà in $O(n)$ (si pensi, ad esempio, a un **albero pienamente sbilanciato**, in cui tutti i nodi sono agglomerati su uno dei due lati dell'albero).
+
+Ma **come vengono rappresentati in memoria gli alberi binari?** Tendenzialmente, un albero binario può essere rappresentato in tre modi:
+- **record e puntatori**;
+- **rappresentazione posizionale**;
+- **vettore dei padri**.
+
+Il primo, quello dei **record** e dei **puntatori**, è forse il più naturale e comune. In questa implementazione, **ogni nodo è costituito da un record contenente tre campi**:
+- **`key`**, contenente le informazioni pertinenti al nodo stesso;
+- **`left`**, contenente il puntatore al figlio sinistro (o un valore nullo se il nodo in questione non ha un figlio sinistro);
+- **`right`**, contenente il puntatore al figlio destro (o un valore nullo se il nodo in questione non ha un figlio destro).
+
+**L'accesso iniziale all'albero avviene per mezzo di un puntatore alla sua radice**, e a partire da quest'ultimo sarà possibile accedere a qualsiasi nodo dell'albero (ciò è possibile perché un albero è, in generale, un grafo connesso). Un'implementazione tramite record e puntatori ha tutti i vantaggi e la versatilità delle strutture dati dinamiche implementate mediante puntatori, come le [[IAA_07 - Strutture dati#Liste puntate|liste puntate]] ad esempio, ma presenta al contempo alcuni svantaggi: primo su tutti, il fatto che l'unico modo per accedere a un nodo sia scendere verso di esso a partire dalla sua radice, ma che a ogni "bivio" non sia chiaro quale strada prendere (vedremo in seguito come risolvere questo tipo di problemi).
+
+Il secondo tipo di implementazione, quello che abbiamo definito "**rappresentazione posizionale**", consiste nel **memorizzare i nodi in un [[IAA_07 - Strutture dati#Array|array]]**, nel quale **la radice occupa la posizione `0`**, ossia la prima posizione dell'array, e i figli sinistro e destro del generico nodo in posizione $i$ occupano rispettivamente le posizioni $2i+1$ e $2i+2$. Ad esempio, il seguente albero binario:
+
+![[albero_rappresentazioneposizionale_esempio.png]]
+
+può essere rappresentato con il seguente array:
+
+![[albero_rappresentazioneposizionale_esempio1.png]]
+
+Rispetto alla rappresentazione mediante record e puntatori, questa implementazione presenta alcuni svantaggi:
+- richiede di **conoscere a priori l'altezza massima $h$ dell'albero** e, una volta noto tale valore, di **allocare a priori memoria per un array** in grado di contenere un albero binario completo di altezza $h$ (dunque, un array di dimensione $2^{h\,+\,1}-1$);
+- a meno che l'albero non sia abbastanza "denso" di nodi, si avrà quasi sicuramente uno **spreco di memoria**.
+
+L'ultima implementazione che andremo ad analizzare è quella del "**vettore dei padri**". In questo caso, l'albero è rappresentato utilizzando **due array**:
+- un array $A$ contenente i **nodi dell'albero**;
+- un array $P$ contenente **il padre di ciascun nodo**.
+
+Si tratta, sostanzialmente, di due "**array paralleli**", ossia di array in cui uno stesso indice può essere utilizzato per accedere simultaneamente a dati contenuti in tutti questi array. In questo caso, ad esempio, si avrà che **l'elemento `A[i]` conterrà un nodo dell'albero, mentre l'elemento `P[i]` conterrà l'indice del padre di `A[i]` all'interno dell'array $A$**. Si osservi che questo metodo di memorizzazione funziona
+senza alcuna modifica anche per alberi non necessariamente binari, in cui cioè ogni nodo può avere un numero qualunque di figli.
+
+Confrontiamo le diverse implementazioni mostrate finora su alcune **operazioni tipiche** che vengono fatte sugli alberi. In particolare, dato un albero $T$ e un suo nodo $v$, le operazioni su cui faremo tale confronto sono:
+- **trovare il padre di $v$**;
+- sapere **quanti figli ha $v$**;
+- qual è la **distanza dalla radice di $v$**.
+
+**Trovare il padre di un nodo $v$**, nodo di cui abbiamo il puntatore o l'indice (a seconda dell'implementazione), è un'operazione impossibile, per quello che sappiamo ora, nell'implementazione tramite record e puntatori, dato che come detto in precedenza non abbiamo i mezzi per capire quale strada scegliere davanti a un "bivio" tra due nodi; nella rappresentazione posizionale, sappiamo a priori che il padre del nodo si troverà nella posizione $\left[ \frac{i-1}{2} \right]$ (per assicurarsi di trovare il nodo giusto, eventualmente arrotondare per difetto); nel vettore dei padri, invece, basterà accedere all'elemento $P[i]$. Sia per la rappresentazione posizionale che per il vettore dei padri, dunque, trovare il padre di un nodo è un'operazione che ha **costo** pari a $\Theta(1)$.
+
+Per **determinare il numero di figli di un nodo $v$**, nella struttura a record e puntatori basterà controllare se i campi `left` e `right` contengono o meno dei valori nulli; nella rappresentazione posizionale, bisognerà verificare se le posizioni $2i+1$ e $2i+2$ contengono o meno dei nodi; avendo un vettore dei padri, infine, dovremo scorrere l'intero array $P$ e contare il numero di occorrenze del nodo $v$. Dunque, per l'implementazione mediante record e puntatori e per la rappresentazione posizionale determinare il numero di figli di un nodo è un'operazione che ha **costo** pari a $\Theta(1)$, mentre per un albero implementato tramite vettore dei padri tale operazione assume costo pari a **$\Theta(n)$**.
+
+Per **calcolare la distanza di un nodo $v$ dalla radice**, come per la ricerca del padre di un nodo, non abbiamo i mezzi nella struttura a record e puntatori; nel caso della rappresentazione posizionale, sappiamo che il livello su cui si trova il nodo $v$, indicando con $i$ il suo indice, è pari a $\log (i+1)$, e ciò ci permette di calcolare la distanza in modo immediato; nel vettore dei padri, a partire da $P[i]$ si dovrà risalire di padre in padre fino a giungere alla radice. Dunque, nella rappresentazione posizionale calcolare la distanza di un nodo dalla radice è un'operazione di **costo** pari a $\Theta(1)$, mentre nell'implementazione tramite vettore dei padri l'operazione assume costo pari a $\Theta(h)$.
 ___
 ##### Visite di alberi
 
-
+[DISPENSE: pag. 34/41]
+[SLIDES: pag. 1/18]
+[EXYSS: pag. 105/108]
 ___
 ##### Alberi binari di ricerca
 
-
+[DISPENSE: pag. ]
+[SLIDES: pag. ]
+[EXYSS: pag. ]
 ___
 ##### Alberi AVL
 
-
+[DISPENSE: pag. ]
+[SLIDES: pag. ]
+[EXYSS: pag. ]
 ___
 ## Dizionari
 
-
+[DISPENSE: pag. ]
+[SLIDES: pag. ]
+[EXYSS: pag. 117/123]
 ___
