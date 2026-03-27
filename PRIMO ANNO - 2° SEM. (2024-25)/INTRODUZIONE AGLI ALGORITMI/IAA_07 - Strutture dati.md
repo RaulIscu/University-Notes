@@ -451,9 +451,62 @@ Per **calcolare la distanza di un nodo $v$ dalla radice**, come per la ricerca d
 ___
 ##### Visite di alberi
 
-[DISPENSE: pag. 34/41]
-[SLIDES: pag. 1/18]
-[EXYSS: pag. 105/108]
+Un'operazione basilare, ma molto utile, da effettuare sugli alberi, che rappresenta il presupposto per poter risolvere molti problemi su di essi, è la **"visita" di un albero**, ossia l'**accesso a tutti i suoi nodi, uno dopo l'altro**, in modo da poter effettuare una specifica operazione (che dipende dal problema posto) su ciascun nodo.
+
+Nel caso specifico degli [[IAA_07 - Strutture dati#Alberi binari|alberi binari]], nei quali i figli di ogni nodo (e quindi i rispettivi sotto-alberi) sono al massimo due, e volendo comportarsi nello stesso modo su tutti i nodi, la visita può essere effettuata in **tre modi diversi**:
+- una **visita in pre-ordine** (o "**pre-order**"), nella quale un nodo è visitato prima di proseguire con la visita dei suoi sotto-alberi;
+- una **visita in ordine** (o "**in order**"), nella quale il nodo è visitato dopo la visita del suo sotto-albero sinistro e prima della visita del suo sotto-albero destro;
+- una **visita in post-ordine** (o "**post-order**"), nella quale il nodo è visitato dopo aver già visitato entrambi i suoi sotto-alberi.
+
+Per comprendere meglio come funziona ciascun tipo di visita, consideriamo il seguente albero binario:
+
+![[visita_albero_esempio.png]]
+
+Supponiamo, prima di tutto, di effettuare una **visita in pre-ordine** di questo albero. Così facendo, l'ordine di visita dei nodi sarebbe il seguente:
+$$a,\,f,\,z,\,g,\,b,\,k$$
+Ora, immaginiamo di effettuare una **visita in ordine** dello stesso albero, ottenendo così il seguente ordine di visita:
+$$z,\,f,\,g,\,a,\,b,\,k$$
+Infine, effettuando una **visita in post-ordine**, l'ordine di visita diventerebbe il seguente:
+$$z,\,g,\,f,\,k,\,b,\,a$$
+
+La visita di un albero binario ha un'**implementazione molto semplice**, che varia minimamente in base al tipo di visita considerato. Si tratta di un **algoritmo [[IAA_05 - Ricorsione|ricorsivo]]**, e l'unica differenza tra l'implementazione specifica di ciascuno dei tre tipi di visita è la posizione delle istruzioni relative all'accesso al nodo rispetto alle chiamate ricorsive. In particolare, supponendo che l'albero binario venga implementato tramite [[IAA_07 - Strutture dati#Alberi binari|record e puntatori]], indicando con `p` il puntatore alla radice, e supponendo che l'albero sia effettivamente esistente e accessibile, possiamo considerare le seguenti implementazioni:
+
+```
+def visita_preordine(p):
+	if p != None:
+		# istruzioni di accesso al nodo e operazioni conseguenti
+		visita_preordine(p → left)
+		visita_preordine(p → right)
+	return
+	
+	
+def visita_inordine(p):
+	if p != None:
+		visita_inordine(p → left)
+		# istruzioni di accesso al nodo e operazioni conseguenti
+		visita_inordine(p → right)
+	return
+	
+	
+def visita_postordine(p):
+	if p != None:
+		visita_postordine(p → left)
+		visita_postordine(p → right)
+		# istruzioni di accesso al nodo e operazioni conseguenti
+	return
+```
+
+Il **[[IAA_03 - Costo computazionale|costo computazionale]]** dei tre tipi di visita è identico a prescindere da quale si sceglie di implementare; la differenza viene in base all'implementazione scelta per rappresentare l'albero in memoria. Nel caso della struttura a record e puntatori, indicando con $n$ il numero totale di nodi dell'albero, e con $k$ il numero di nodi del sotto-albero sinistro dalla radice, il costo computazionale è definito dalla seguente [[IAA_05 - Ricorsione#Equazioni di ricorrenza|equazione di ricorrenza]]:
+$$\begin{cases} T(0)=T(1)=\Theta(1)\\ T(n)=T(k)+T(n-k-1)+\Theta(1) \end{cases}$$
+[DISPENSE: pag. 38 - 39]
+[SLIDES: pag. 4/7]
+[EXYSS: pag. 106]
+
+
+
+[DISPENSE: pag. 40 - 41]
+[SLIDES: pag. 7/18]
+[EXYSS: pag. 106/108]
 ___
 ##### Alberi binari di ricerca
 
