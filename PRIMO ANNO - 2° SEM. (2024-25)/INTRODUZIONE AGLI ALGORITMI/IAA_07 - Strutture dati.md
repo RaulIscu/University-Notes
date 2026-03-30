@@ -173,8 +173,16 @@ def delete_ric(p: puntatore alla testa, k: valore da eliminare):
 	
 	return p
 ```
+___
+##### Array, liste puntate semplici e `list` di Python
 
-[DISPENSE: pag. 12]
+L'oggetto **`list`**, nel linguaggio Python, ha **somiglianze sia con gli [[IAA_07 - Strutture dati#Array|array]] che con le [[IAA_07 - Strutture dati#Liste puntate semplici|liste puntate semplici]]**: ad esempio, similmente agli array, è possibile accedere agli elementi memorizzati al suo interno tramite la loro posizione, e la sua lunghezza è sempre nota (e ottenibile tramite il comando `len`); invece, come le liste puntate semplici, permette di memorizzare dati non omogenei, dunque di tipo diverso, e la sua lunghezza non è necessariamente fissa.
+
+Questa natura "ibrida" di `list` è possibile grazie alla sua peculiare **implementazione**: ciò che viene fatto, infatti, è **collegare tramite puntatori, elemento per elemento, una lista puntata semplice a un array**. Seppur ciò consenta di ereditare da entrambe le strutture dati alcune proprietà fondamentali, è necessario tenere conto di questa duplice natura quando si calcola il costo delle operazioni semplici che si compiono su una `list`, ad esempio:
+- l'operazione di **`append`**, che consiste in un inserimento in ultima posizione, si esegue in tempo pari a $\Theta(1)$;
+- l'operazione di **`insert`**, che consiste in un inserimento all'$i$-esima posizione, si esegue in tempo pari a $O(n)$, dato che bisogna far scorrere in avanti tutti gli elementi in posizione successiva all'$i$-esima;
+- l'operazione di **`pop`**, che consiste nella rimozione e restituzione dell'elemento in $i$-esima posizione, si esegue in tempo pari a $O(n)$, dato che bisogna far scorrere all'indietro tutti gli elementi in posizione successiva all'$i$-esima;
+- l'operazione di **`concatenate`**, che consiste nell'unire due oggetti `list` in uno solo aggiungendo al termine del primo tutti gli elementi del secondo, si esegue in tempo pari a $\Theta(k)$, dove $k$ è il numero di elementi contenuti nella seconda `list`.
 ___
 ##### Liste puntate doppie
 
@@ -498,9 +506,24 @@ def visita_postordine(p):
 
 Il **[[IAA_03 - Costo computazionale|costo computazionale]]** dei tre tipi di visita è identico a prescindere da quale si sceglie di implementare; la differenza viene in base all'implementazione scelta per rappresentare l'albero in memoria. Nel caso della struttura a record e puntatori, indicando con $n$ il numero totale di nodi dell'albero, e con $k$ il numero di nodi del sotto-albero sinistro dalla radice, il costo computazionale è definito dalla seguente [[IAA_05 - Ricorsione#Equazioni di ricorrenza|equazione di ricorrenza]]:
 $$\begin{cases} T(0)=T(1)=\Theta(1)\\ T(n)=T(k)+T(n-k-1)+\Theta(1) \end{cases}$$
-[DISPENSE: pag. 38 - 39]
-[SLIDES: pag. 4/7]
-[EXYSS: pag. 106]
+L'unico metodo viabile per risolvere tale equazione di ricorrenza è il **[[IAA_05 - Ricorsione#Metodo di sostituzione|metodo di sostituzione]]**: dunque, per poter procedere, occorre farsi un idea di quale potrebbe essere la soluzione. Per fare ciò nel modo più accurato possibile, pensiamo al **caso peggiore** e al **caso migliore** di esecuzione dell'algoritmo: in particolare, il caso peggiore avviene quando si ha un **albero estremamente sbilanciato**, cioè in cui tutti i nodi discendenti dalla radice sono agglomerati in uno dei due sotto-alberi, mentre il caso migliore avviene quando si ha un **albero completo**, cioè in cui ogni nodo (tranne le foglie) possiede esattamente due figli.
+
+Nel caso migliore, entrambi i sotto-alberi radicati nella radice avranno $\frac{n-1}{2}$ nodi, il che porta l'equazione di ricorrenza nella seguente forma:
+$$T(n)=2T\left( \frac{n-1}{2} \right)+\Theta(1)$$
+Notiamo subito che l'equazione ottenuta ricade nel **1° caso del [[IAA_05 - Ricorsione#Metodo principale|metodo principale]]**, dunque **il costo nel caso migliore è pari a $\Theta(n^{\log_{2}2})=\Theta(n)$**.
+
+Nel caso peggiore, se tutti i nodi discendenti della radice sono agglomerati nel sotto-albero sinistro, si ha che $n-k-1=0$, mentre se i nodi sono agglomerati nel sotto-albero destro si ha che $k=0$. In entrambi i casi, si ottiene:
+$$T(n)=T(n-1)+\Theta(1)$$
+Questa nuova equazione diventa facilmente risolvibile, ad esempio, con il **[[IAA_05 - Ricorsione#Metodo iterativo|metodo iterativo]]**, portandoci ad affermare che **il costo nel caso peggiore è pari a $n\cdot\Theta(1)=\Theta(n)$**.
+
+Banalmente, essendo arrivati a dire che **il costo è $\Theta(n)$ nel caso peggiore** (o, generalmente, che il costo è in $O(n)$) **e anche nel caso migliore** (o, generalmente, che il costo è in $\Omega(n)$), potremmo già arrivare alla conclusione che il **costo di una visita è pari a $\Theta(n)$**. Difatti, poiché una visita consiste nell’analizzare tutti i nodi di un albero, e
+poiché $n$ corrisponde al numero di nodi totali, è facilmente intuibile che il costo di una
+visita sia sempre $\Theta(n)$. Ciononostante, per completezza, verifichiamo che ciò sia vero anche applicando effettivamente il **metodo di sostituzione**. Eliminando le notazioni asintotiche dall'equazione di ricorrenza originale, otteniamo:
+$$\begin{cases} T(0)=T(1)=d\\T(n) =T(k)+T(n-k-1)+c \end{cases}$$
+dove $c$ e $d$ sono due costanti note.
+
+[DISPENSE: pag. 39]
+[SLIDES: pag. 6 - 7]
 
 Le visite di un albero sono estremamente utili per **ispezionare l'albero** e **dedurne alcune proprietà**. A seconda dello scopo della visita, torneranno utili vari tipi di visita, come possiamo vedere nei seguenti esempi, in cui andremo a vedere come sfruttare le visite per:
 - calcolare il **numero di nodi** contenuti nell'albero;
