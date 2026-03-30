@@ -65,8 +65,8 @@ Una **lista puntata semplice**, spesso detta "**lista semplice**" per comodità,
 - la successione degli elementi è implementata mediante un **collegamento esplicito di ogni elemento a un altro mediante un puntatore**.
 
 Ogni elemento `p` di una lista puntata, detto anche "**nodo**", è un **[[IAA_07 - Strutture dati|record]] a due campi**:
-- un campo **`key`**, contenente l'informazione effettiva associata all'elemento (rappresentato con la notazione `p → key`);
-- un campo **`next`**, contenente un puntatore all'elemento successivo della lista (rappresentato con la notazione `p → next`), e nel caso dell'ultimo elemento il puntatore in questione sarà un valore nullo (rappresentato con il simbolo `/`).
+- un campo **`key`**, contenente l'informazione effettiva associata all'elemento (rappresentato con la notazione `p.key`);
+- un campo **`next`**, contenente un puntatore all'elemento successivo della lista (rappresentato con la notazione `p.next`), e nel caso dell'ultimo elemento il puntatore in questione sarà un valore nullo (rappresentato con il simbolo `/`).
 
 Per avere le idee più chiare, possiamo fornire un'implementazione basilare (anche se non perfettamente corretta) di una classe `Nodo`, che rappresenti un elemento della lista puntata semplice, così come dei metodi che permettano di creare una lista puntata semplice a partire da una lista normale e di stampare una lista puntata semplice:
 
@@ -104,20 +104,20 @@ Avendo stabilito ciò, possiamo procedere ad analizzare l'**implementazione di a
 def search(p: puntatore alla testa, k: valore da cercare):
 	p_corr = p
 	
-	while p_corr != None and p_corr → key != k:
-		p_corr = p_corr → next
+	while p_corr != None and p_corr.key != k:
+		p_corr = p_corr.next
 	
 	return p_corr
 ```
 
-In parole povere, il funzionamento di tale implementazione di `Search` è il seguente: partendo dalla testa della lista puntata, dunque dal suo primo elemento, si scorre la lista puntata fino al suo termine (`p_corr != null`) o finché non si trova l'elemento `k` (`p_corr → key != k`); se si terminano gli elementi e `k` non è stato ancora trovato, verrà restituito un valore nullo, mentre se `k` viene trovato la funzione restituisce un puntatore ad esso. Ovviamente, tale operazione risulta avere un **costo** pari a $O(n)$.
+In parole povere, il funzionamento di tale implementazione di `Search` è il seguente: partendo dalla testa della lista puntata, dunque dal suo primo elemento, si scorre la lista puntata fino al suo termine (`p_corr != null`) o finché non si trova l'elemento `k` (`p_corr . key != k`); se si terminano gli elementi e `k` non è stato ancora trovato, verrà restituito un valore nullo, mentre se `k` viene trovato la funzione restituisce un puntatore ad esso. Ovviamente, tale operazione risulta avere un **costo** pari a $O(n)$.
 
 Vediamo, ora, un'operazione **`Insert_in_testa(S, k)`**, ossia un'operazione di inserimento dell'elemento `k` in testa alla lista puntata:
 
 ```
 def insert_in_testa(p: puntatore alla testa, k: valore da inserire):
 	if (k != None):
-		k → next = p
+		k.next = p
 	
 	p = k
 	return p
@@ -132,8 +132,8 @@ A questo punto, possiamo pensare a un'ipotetica operazione **`Insert_dopo_d(S, k
 ```
 def insert_dopo_d(p: puntatore alla testa, k: valore da inserire, d: valore dopo cui inserire k):
 	if d != None:
-		k → next = d → next
-		d → next = k
+		k.next = d.next
+		d.next = k
 		return p
 	else:
 		return None
@@ -147,15 +147,15 @@ Vediamo, infine, l'operazione **`Delete(S, k)`**, che potrà essere utilizzata p
 def delete(p: puntatore alla testa, k: valore da eliminare):
 	if k != None:
 		if k == p:
-			p = p → next
+			p = p.next
 			return p
 		
 		p_corr = p
 		
-		while p_corr → next != k:
-			p_corr = p_corr → next
+		while p_corr.next != k:
+			p_corr = p_corr.next
 		
-		p_corr → next = k → next
+		p_corr.next = k.next
 	
 	return p
 ```
@@ -167,9 +167,9 @@ Notiamo che l'implementazione dell'operazione **include**, al suo interno, **pse
 ```
 def delete_ric(p: puntatore alla testa, k: valore da eliminare):
 	if p == k:
-		p = p → next
+		p = p.next
 	else:
-		p → next = delete_ric(p → next, k)
+		p.next = delete_ric(p.next, k)
 	
 	return p
 ```
@@ -184,13 +184,13 @@ In tale struttura dati, le [[IAA_07 - Strutture dati#Operazioni sulle liste punt
 
 ```
 def delete_doppia(p: puntatore alla testa, k: valore da eliminare):
-	if k → prev != None:
-		k → prev → next = k → next
+	if k.prev != None:
+		k.prev.next = k.next
 	else:
-		p = k → next
+		p = k.next
 		
-	if k → next != None:
-		k → next → prev = k → prev
+	if k.next != None:
+		k.next.prev = k.prev
 	
 	return p
 ```
@@ -247,7 +247,7 @@ Di seguito, forniamo dunque un'**implementazione delle operazioni effettuabili s
 
 ```
 def push_lista(top: puntatore alla cima, e: puntatore all'elemento da inserire):
-	e → next = top
+	e.next = top
 	top = e
 	return top
 	
@@ -257,14 +257,14 @@ def pop_lista(top: puntatore alla cima):
 		return None
 	
 	e = top
-	top = e → next
-	e → next = None
+	top = e.next
+	e.next = None
 	return e, top
 ```
 
 Analizziamo più nel dettaglio cosa fanno queste due operazioni:
 - l'operazione **`push_lista`** va ad associare al campo `next` dell'elemento da inserire `e` il puntatore alla cima originaria della pila, e in seguito sovrascrive il puntatore `top` sostituendolo con un puntatore a `e`, rendendo quest'ultimo a tutti gli effetti la nuova cima della pila (tale operazione ha **costo** pari a $\Theta(1)$);
-- l'operazione **`pop_lista`** controlla innanzitutto che la pila contenga effettivamente un qualche valore da rimuovere, e in seguito salva nella variabile `e` il puntatore alla cima della pila (ossia all'elemento che stiamo rimuovendo), associa a `top` l'elemento successivo a quello da rimuovere, rendendo tale elemento la nuova cima della pila, "scollega" `e` da quest'ultima (`e → next = None`) e infine restituisce un puntatore all'elemento rimosso e alla nuova cima della pila (tale operazione ha **costo** pari a $\Theta(1)$). 
+- l'operazione **`pop_lista`** controlla innanzitutto che la pila contenga effettivamente un qualche valore da rimuovere, e in seguito salva nella variabile `e` il puntatore alla cima della pila (ossia all'elemento che stiamo rimuovendo), associa a `top` l'elemento successivo a quello da rimuovere, rendendo tale elemento la nuova cima della pila, "scollega" `e` da quest'ultima (`e . next = None`) e infine restituisce un puntatore all'elemento rimosso e alla nuova cima della pila (tale operazione ha **costo** pari a $\Theta(1)$). 
 
 Come detto a inizio paragrafo, le pile potrebbero essere anche realizzate mediante array, se il numero massimo di elementi da memorizzare è noto a priori. Incappiamo, però, in un problema di efficienza: se implementassimo `top` come l'indice del primo elemento dell'array, le operazioni di `Pop` e `Push` non avrebbero più costo costante, dato che si dovrebbe considerare anche lo spostamento (rispettivamente, verso sinistra e verso destra) di tutti gli altri elementi contenuti nell'array. Per questo motivo, conviene **considerare  `top` come l'indice dell'ultimo elemento conservato nell'array**, cioè quello più a destra, in modo che inserimenti e rimozioni non alterino la posizione degli altri elementi.
 ___
@@ -291,7 +291,7 @@ def enqueue_lista(head: puntatore alla testa, tail: puntatore al fondo, e: punta
 		tail = e
 		head = e
 	else:
-		tail → next = e
+		tail.next = e
 		tail = e
 	
 	return head, e
@@ -302,7 +302,7 @@ def dequeue_lista(head: puntatore alla testa, tail: puntatore al fondo):
 		return None, None, None
 	
 	e = head
-	head = e → next
+	head = e.next
 	
 	if head == None:
 		tail = None
@@ -475,23 +475,23 @@ La visita di un albero binario ha un'**implementazione molto semplice**, che var
 def visita_preordine(p):
 	if p != None:
 		# istruzioni di accesso al nodo e operazioni conseguenti
-		visita_preordine(p → left)
-		visita_preordine(p → right)
+		visita_preordine(p.left)
+		visita_preordine(p.right)
 	return
 	
 	
 def visita_inordine(p):
 	if p != None:
-		visita_inordine(p → left)
+		visita_inordine(p.left)
 		# istruzioni di accesso al nodo e operazioni conseguenti
-		visita_inordine(p → right)
+		visita_inordine(p.right)
 	return
 	
 	
 def visita_postordine(p):
 	if p != None:
-		visita_postordine(p → left)
-		visita_postordine(p → right)
+		visita_postordine(p.left)
+		visita_postordine(p.right)
 		# istruzioni di accesso al nodo e operazioni conseguenti
 	return
 ```
@@ -502,27 +502,189 @@ $$\begin{cases} T(0)=T(1)=\Theta(1)\\ T(n)=T(k)+T(n-k-1)+\Theta(1) \end{cases}$$
 [SLIDES: pag. 4/7]
 [EXYSS: pag. 106]
 
+Le visite di un albero sono estremamente utili per **ispezionare l'albero** e **dedurne alcune proprietà**. A seconda dello scopo della visita, torneranno utili vari tipi di visita, come possiamo vedere nei seguenti esempi, in cui andremo a vedere come sfruttare le visite per:
+- calcolare il **numero di nodi** contenuti nell'albero;
+- **cercare un valore `k` nell'albero**;
+- calcolare l'**altezza** dell'albero;
+- calcolare il **numero di nodi presenti nel livello `k`** dell'albero.
 
+Partiamo col calcolo del numero di nodi di un albero. Poiché il numero di nodi di un albero, in generale, coincide col numero di nodi dei due sotto-alberi destro e sinistro, sommati alla radice stessa dell'albero, possiamo ottenere il numero di nodi totale di un albero, alla cui radice punta il puntatore `p`, nel modo seguente:
 
-[DISPENSE: pag. 40 - 41]
-[SLIDES: pag. 7/18]
-[EXYSS: pag. 106/108]
+```
+def calcola_n(p):
+	if p != None:
+		num_l = calcola_n(p.left)
+		num_r = calcola_n(p.right)
+		num = num_l + num_r + 1
+		return num
+	return 0
+```
+
+La funzione `calcola_n`, come si può facilmente notare dallo pseudocodice, è una funzione [[IAA_05 - Ricorsione|ricorsiva]], che richiama sé stessa sui due sotto-alberi radicati in `p`, in modo da ottenere passo dopo passo il numero di nodi di tali sotto-alberi, ed effettuare in seguito la somma per trovare il numero di nodi totale dell'albero. Si noti che la funzione appena vista sfrutta la **visita in post-ordine**. Possiamo anche comprimere lo pseudocodice precedente in questo modo:
+
+```
+def calcola_n(p):
+	if p != None:
+		return calcola_n(p.left) + calcola_n(p.right) + 1
+	return 0
+```
+
+Pensiamo, ora, alla **ricerca di un valore `k`** all'interno dell'albero. È logico pensare che, nel cercare un nodo specifico all'interno dell'albero, prima di controllare nodi successivi dovremmo controllare che `k` non si trovi nel nodo attuale: dunque, è naturale configurare il problema come una **visita in pre-ordine**:
+
+```
+def cerca(p, k):
+	if p != None:
+		if p.info == k:
+			return true
+		else:
+			if cerca(p.left, k) == true:
+				return true
+			else:
+				return cerca(p.right, k)
+	
+	return false
+```
+
+Anche in questo caso abbiamo davanti una funzione ricorsiva. Vediamo, più in particolare, il funzionamento dell'operazione `cerca`: prima di tutto, si effettua l'accesso e si controlla se il nodo attualmente considerato (quello a cui punta il puntatore `p`) contiene effettivamente l'informazione ricercata `k`, e se ciò si verifica si restituisce subito `true`; altrimenti, si ricerca il valore `k` nei due sotto-alberi che hanno radice nel nodo attuale, andando prima nel sotto-albero sinistro e poi in quello destro. Se non si trova `k` in nessuna delle chiamate ricorsive, viene restituito `false`.
+
+Poi, vediamo un modo per **calcolare l'altezza di un albero binario**: l'altezza di un albero corrisponde all'altezza dei suoi sotto-alberi incrementata di 1, quindi per ottenere tale grandezza potremo utilizzare nuovamente un'operazione ricorsiva, che prenderà la forma di una **visita in post-ordine**:
+
+```
+def calcola_h(p):
+	if p == None:
+		return -1
+	
+	if p.left == None and p.right == None:
+		return 0
+	
+	h = max(calcola_h(p.left), calcola_h(p.right))
+	return h + 1
+```
+
+La prima cosa che fa la funzione `calcola_h` è controllare che `p` punti effettivamente a un nodo, e nel caso contrario restituisce $-1$ per simboleggiare che l'albero considerato è in realtà vuoto; se, invece, l'albero contiene effettivamente dei nodi, il passaggio seguente è controllare se esistono i sotto-alberi radicati nel nodo attuale, e in caso contrario si ritorna $0$ (si ricorda che abbiamo definito l'altezza di un albero come il più lungo cammino dalla radice a una foglia, dunque se l'albero è composto solo dalla sua radice l'albero ha altezza $0$); se, infine, esistono i sotto-alberi, si va a calcolare ricorsivamente la loro altezza, e viene restituito il massimo di queste due altezze incrementato di 1.
+
+Infine, vediamo come **calcolare il numero di nodi presenti nel livello `k`** di un albero. Possiamo utilizzare la seguente funzione:
+
+```
+def conta_k(p, k: livello da controllare, i: livello attuale):
+	if p == None:
+		return 0
+	
+	if k == i:
+		return 1
+		
+	k_left = conta_k(p.left, k, i + 1)
+	k_right = conta_k(p.right, k, i + 1)
+	
+	return k_left + k_right
+```
+
+Prima di tutto, si verifica se l'albero a cui punta `p` contiene effettivamente dei nodi, e in caso contrario si restituisce subito 0 (banalmente, se l'albero non contiene nodi, ci saranno 0 nodi qualsiasi sia il livello `k`). Si arriva, in seguito, al caso base della ricorsione effettuata dalla funzione: se il livello in cui ci si trova corrisponde al livello `k`, usciamo dalla chiamata in questione restituendo 1. A questo punto, avvengono le due chiamate ricorsive sui due sotto-alberi radicati nel nodo attualmente considerato, e infine si restituisce la somma tra `k_left` e `k_right`, che al termine della catena di chiamate corrisponderà alla somma delle varie unità trovate visitando i nodi del livello `k`. Il costo computazionale di tale operazione dipenderà strettamente dal numero di nodi che si trovano nei livelli precedenti a `k`.
+
+Oltre alle visite in pre-ordine, in ordine e in post-ordine viste finora, è possibile effettuare anche una "**visita per livelli**", cioè una visita che scandisca l'albero livello per livello, visitando tutti i nodi di un livello prima di passare al prossimo. Per implementare questa forma di visita, però, sarà necessaria una **[[IAA_07 - Strutture dati#Code|coda]] d'appoggio** nella quale inserire opportunamente i nodi, per poi estrarli al momento della loro visita. Per semplicità, possiamo supporre che **l'implementazione della coda sia fatta in modo tale da poter inserire ed estrarre direttamente puntatori a nodi dell'albero**. Lo pseudocodice di una possibile implementazione della visita per livelli potrebbe essere il seguente:
+
+```
+def visita_per_livelli(r):
+	if r == None:
+		return
+		
+	Enqueue(head, tail, r)
+	
+	while !CodaVuota(head):
+		p = Dequeue(head, tail)
+		
+		# accesso al nodo e operazioni conseguenti
+		
+		if p.left != None:
+			Enqueue(head, tail, p.left)
+		if p.right != None:
+			Enqueue(head, tail, p.right)
+	
+	return
+```
+
+La caratteristica fondamentale di questa implementazione è che vengono inseriti nella coda tutti i nodi del livello $i$ prima che ne venga inserito anche solo uno del livello $i+1$. Inoltre, essendo la coda una struttura di tipo FIFO, ed essendo l'accesso al nodo immediatamente seguente alla sua estrazione, si scandirà con successo l'albero livello per livello. Il **costo computazionale della visita per livelli**, implementata in questo modo, è pari a $\Theta(n)$, dato che, per ognuno degli $n$ nodi dell'albero, si effettua:
+- un'operazione di `Enqueue`, con costo pari a $\Theta(1)$;
+- un'operazione di `Dequeue`, con costo pari a $\Theta(1)$;
+- un numero costante di operazioni elementari, tutte con costo pari a $\Theta(1)$.
 ___
 ##### Alberi binari di ricerca
 
+Gli **alberi binari di ricerca**, comunemente detti in breve **ABR**, sono un particolare tipo di [[IAA_07 - Strutture dati#Alberi binari|albero binario]], nel quale vengono mantenute le seguenti proprietà:
+- **ogni nodo** dell'albero **contiene una chiave**;
+- il valore della chiave contenuta in ciascun nodo è **maggiore del valore della chiave contenuta in ciascun nodo del suo sotto-albero sinistro** (se esiste);
+- il valore della chiave contenuta in ciascun nodo è **minore del valore della chiave contenuta in ciascun nodo del suo sotto-albero destro** (se esiste).
+
+Visivamente, possiamo schematizzare un ABR generico nel modo seguente:
+
+![[abr.png]]
+
+Un esempio più concreto di ABR potrebbe invece essere il seguente:
+
+![[abr_esempio.png]]
+
+Gli ABR supportano tutte le operazioni tipicamente definite su insiemi dinamici, tra cui:
+- **`Search(T, k)`**, che restituisce un puntatore all'elemento con chiave di valore `k` all'interno dell'albero `T` se questo è presente, e un valore nullo altrimenti;
+- **`Minimum(T)`**, che restituisce un puntatore all'elemento con chiave minore all'interno dell'albero `T`;
+- **`Maximum(T)`**, che restituisce un puntatore all'elemento con chiave maggiore all'interno dell'albero `T`;
+- **`Predecessor(T, p)`**, che restituisce un puntatore all'elemento in `T` con la chiave che precederebbe, in una sequenza ordinata, quella contenuta nel nodo puntato da `p`;
+- **`Successor(T, p)`**, che restituisce un puntatore all'elemento in `T` con la chiave che seguirebbe, in una sequenza ordinata, quella contenuta nel nodo puntato da `p`;
+- **`Insert(T, k)`**, che inserisce un elemento con chiave `k` all'interno di `T`;
+- **`Delete(T, p)`**, che elimina da `T` l'elemento a cui punta `p`.
+
+Per natura dell'ABR, al suo interno **il nodo con chiave minima è sempre il nodo più "a sinistra"** dell'albero, e viceversa **il nodo con chiave massima è sempre il nodo più "a destra"**; ciononostante, i nodi più a sinistra e più a destra **non sono necessariamente foglie**, ma possono tranquillamente avere rispettivamente un figlio destro o un figlio sinistro, pur mantenendo le loro proprietà.
+
+In questo contesto, notiamo che se volessimo **elencare in ordine crescente tutte le chiavi** contenute in un ABR basterebbe applicare in modo abbastanza banale una **[[IAA_07 - Strutture dati#Visite di alberi|visita in ordine]]** dell'albero, nel modo seguente:
+
+```
+def stampa_crescente(p):
+	if p != None:
+		stampa_crescente(p.left)
+		print(p.key)
+		stampa_crescente(p.right)
+```
+
+Per certi versi, dunque, **un ABR può essere visto come un'applicazione di un [[IAA_06 - Algoritmi di ordinamento#Cos'è un algoritmo di ordinamento?|algoritmo di ordinamento]]**, costituito da due fasi:
+- l'inserimento di tutte le $n$ chiavi da ordinare in un ABR, inizialmente vuoto;
+- la visita in ordine dell'ABR appena costruito.
+
+Se il costo della visita sappiamo essere pari a $\Theta(n)$, lo stesso non si può dire del costo della costruzione dell'ABR; approfondiremo questo aspetto in seguito.
+
+Approfondiamo come effettuare una **ricerca in un ABR**. Concettualmente, essendo l'ABR una struttura dati "ordinata", la ricerca al suo interno è molto simile alla **[[IAA_04 - Ricerca#Ricerca binaria|ricerca binaria]]**: a partire dalla radice, si scende ad ogni livello in uno o l'altro sotto-albero in base alla chiave contenuta nel nodo considerato (se la chiave del nodo è maggiore di quella cercata, si prosegue nel sotto-albero sinistro, altrimenti in quello destro); quando il nodo con la chiave cercata viene trovato, si restituisce un puntatore a tale nodo; alternativamente, se si arriva a una foglia senza aver trovato tale nodo, si restituirà un valore nullo. La similitudine con la ricerca binaria sta proprio nell'esclusione, ogni volta che si prosegue in un sotto-albero, dell'altro sotto-albero radicato nel nodo di partenza, esclusione che porta **lo spazio di ricerca a restringersi ad ogni iterazione**. 
+
+La ricerca può essere implementata sia con un [[IAA_05 - Ricorsione#Cos'è un algoritmo ricorsivo?|algoritmo ricorsivo]] che con uno iterativo. Vediamo prima l'**implementazione ricorsiva**:
+
+```
+def abr_search_ric(p, k):
+	if p == None or p.key == k:
+		return p
+	
+	if k < p.key:
+		return abr_search_ric(p.left)
+	else:
+		return abr_search_ric(p.right)
+```
+
+
+
+[DISPENSE: pag. 19/30]
+[SLIDES: pag. 7/20]
+[EXYSS: pag. 110/112]
+___
+##### Alberi rosso-neri
+
 [DISPENSE: pag. ]
 [SLIDES: pag. ]
-[EXYSS: pag. ]
+[EXYSS: pag. 112/117]
 ___
 ##### Alberi AVL
 
-[DISPENSE: pag. ]
+[DISPENSE: pag. 30/51]
 [SLIDES: pag. ]
-[EXYSS: pag. ]
 ___
 ## Dizionari
 
-[DISPENSE: pag. ]
+[DISPENSE: pag. 1/16]
 [SLIDES: pag. ]
 [EXYSS: pag. 117/123]
 ___
