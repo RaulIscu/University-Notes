@@ -688,11 +688,106 @@ def abr_search_ric(p, k):
 		return abr_search_ric(p.right)
 ```
 
+Prima di mostrare anche la versione iterativa, chiariamo un punto: nonostante la grande somiglianza con la ricerca binaria, **la ricerca in un ABR non garantisce un costo in $O(\log n)$**. Ciò è dovuto al fatto che **l'algoritmo esegue una iterazione per ogni livello, tuttavia l'ABR non include fra le sue proprietà alcuna limitazione sulla propria altezza**: per intenderci, è tranquillamente possibile ad esempio che l'ABR su cui si sta effettuando la ricerca sia estremamente sbilanciato, situazione in cui la ricerca avrebbe un costo pari a $O(n)$. In particolare, possiamo distinguere un caso migliore e un caso peggiore:
+- nel **caso migliore**, che coincide con l'avere un ABR completo, l'altezza dell'albero è $\log(n+1)-1$ (dove $n$ è il numero totale di nodi dell'albero), per cui il costo della ricerca sarebbe pari a $O(\log n)$;
+- nel **caso peggiore**, che coincide con l'avere un ABR estremamente sbilanciato, l'altezza dell'albero è $n-1$, per cui il costo della ricerca sarebbe pari a $O(n)$.
+
+Dunque, in generale sarebbe più corretto affermare che **la ricerca in un ABR ha costo in $O(h)$**, dove $h$ è l'altezza dell'ABR stesso, e per garantire che tale valore si avvicini il più possibile a $\log n$ è opportuno implementare qualche tecnica di **bilanciamento in altezza**, che ci permetta tenere sotto controllo quest'ultima. Ciononostante, analogamente a quanto visto parlando dell'algoritmo [[IAA_06 - Algoritmi di ordinamento#Quick Sort|Quick Sort]], è dimostrabile che **il caso medio, nella ricerca negli ABR, si avvicina più al caso migliore che al caso peggiore**. Vale, infatti, il seguente teorema:
+
+> L'altezza attesa di un ABR costruito in modo casuale con $n$ chiavi tutte distinte è tipicamente in $O(\log n)$.
+
+Di conseguenza, una strategia che (in media) costruisce un albero bilanciato per un insieme fisso di elementi consiste nel **permutare in modo casuale gli elementi e, in seguito, nell'inserire gli elementi in quell'ordine** all'interno dell'ABR. Questa tecnica, però, non può essere usata se non abbiamo tutti gli elementi contemporaneamente, ad esempio in casi in cui gli elementi vengono ricevuti in input uno alla volta. È proprio in questo contesto che ci preoccupa utilizzare qualche tecnica di bilanciamento in altezza, argomento che verrà approfondito in seguito.
+
+A questo punto, prima di procedere, forniamo anche la **versione iterativa dell'algoritmo di ricerca in un ABR**:
+
+```
+def abr_search_iter(p, k):
+	while p != None and p.key != k:
+		if k < p.key:
+			p = p.left
+		else:
+			p = p.right
+		
+	return p
+```
+
+Un'altra operazione molto comune è l'**inserimento di un nodo nell'ABR**. Anche in questo caso, si tratta di un algoritmo abbastanza semplice: come nel caso della ricerca, vogliamo discendere lungo l'albero a partire dalla radice, facendoci guidare dai valori `key` memorizzati nei nodi che incontriamo lungo la strada, e nel momento in cui si vorrebbe proseguire la discesa verso un puntatore vuoto, in quella posizione si va a inserire un nuovo nodo contenente il valore da inserire. Possiamo vedere un esempio concreto di questo procedimento nella seguente immagine, che illustra come verrebbe inserito in un ABR il valore $11$:
+
+![[abr_inserimento_esempio.png]]
+
+Per convenienza, da ora in poi introdurremo una piccola modifica alla struttura dati dell'ABR: all'interno di un nodo, oltre ai campi `key`, `left` e `right`, introduciamo anche un campo **`parent`**, destinato a contenere un **puntatore al padre del nodo** (naturalmente, in tale campo sarà memorizzato un valore nullo nella radice). L'aggiunta di questo campo torna utile proprio nel contesto dell'inserimento e, soprattutto, dell'eliminazione di nodi da un ABR. Lo **pseudocodice** dell'algoritmo di inserimento, di cui vedremo solo la **versione iterativa**, include anche l'**allocazione di memoria** necessaria per la creazione del nodo da inserire, che verrà fatta grazie al comando `NodoABR(k)`, dove `k` è il valore da inserire nel campo `key` del nuovo nodo (gli altri campi, invece, verranno inizializzati con un valore nullo). Di seguito tale pseudocodice:
+
+```
+def abr_insert(p, k):
+	x, y = p, None
+	z = NodoABR(k)
+	
+	while x != None:
+		y = x
+		
+		if z.key < x.key:
+			x = x.left
+		else:
+			x = x.right
+	
+	if y == None:
+		p = z
+	else:
+		if z.key < y.key:
+			y.left = z
+		else:
+			y.right = z
+			
+	z.parent = y
+	return p
+```
+
+Vediamo, più nel dettaglio, i passaggi che svolge l'algoritmo: prima di tutto, creiamo le variabili `x` e `y` per memorizzare, rispettivamente, il puntatore `p` alla radice dell'ABR e un valore nullo (in seguito, `y` diventerà un puntatore al padre di `x`); nella variabile `z`, invece, effettuiamo l'allocazione di memoria per creare il nodo con chiave `k`. A questo punto, entriamo nel ciclo `while`, il cui scopo è scendere lungo l'ABR fino alla prima posizione disponibile, che sarà proprio quella in cui verrà inserito il nodo `z`. Usciti dal ciclo, si controlla se `y == None`, condizione che si verifica solamente se l'albero considerato era vuoto sin dal principio: in tal caso, il nodo `z` diventa la radice dell'ABR; altrimenti, si va ad inserire il nodo `z` come figlio (sinistro o destro in base al valore della sua chiave) del nodo puntato da `y`, e infine si associa al campo `z.parent` un puntatore al nodo padre di `z`, ossia `y`.
+
+Il costo computazionale dell'operazione appena vista dipende sostanzialmente dal numero di iterazioni eseguite dal ciclo `while`: esso viene eseguito al massimo un numero di volte pari all'altezza dell'ABR, dunque il **costo** è pari a $O(h)$.
+
+Consideriamo, a questo punto, la **ricerca del minimo e del massimo di un ABR**. La soluzione, anche in questo caso, è molto semplice: come già detto, il minimo di un ABR è contenuto nel suo nodo più "a sinistra", e viceversa il massimo è contenuto nel suo nodo più "a destra"; perciò, per arrivare al minimo o al massimo, basterà **scendere sempre a sinistra**, oppure **sempre a destra**, a partire dalla radice dell'albero. Un possibile **pseudocodice** che implementi la ricerca di un minimo, prima iterativamente e poi ricorsivamente, può essere il seguente:
+
+```
+def abr_minimo_ric(p):
+	if p == None:
+		return None
+		
+	if p.left != None:
+		return abr_minimo_ric(p.left)
+	
+	return p
+		
+		
+def abr_minimo_iter(p):
+	if p == None:
+		return None
+	
+	min = p
+	
+	while min.left != None:
+		min = min.left
+	
+	return min
+```
+
+Nel contesto della ricerca del massimo, gli algoritmi sarebbero perfettamente analoghi, con l'unica differenza che starebbe nella sostituzione del campo `left` con il campo `right`. Entrambe queste operazioni, come si può facilmente notare a logica o analizzando l'implementazione, hanno **costo computazionale** limitato superiormente dall'altezza dell'albero, dunque pari a $O(h)$.
+
+Pensiamo, ora, a come **trovare il predecessore o il successore di una chiave `k` contenuta nell'ABR** (ricordiamo che per "predecessore di `k`" si intende il nodo dell'albero contenente la chiave che precederebbe `k` in una sequenza ordinata, e viceversa per "successore di `k`" si intende il nodo dell'albero contenente la chiave che seguirebbe `k` in una sequenza ordinata). 
+
+Per comprendere meglio questo problema, analizziamo più nel dettaglio la ricerca del predecessore. Possiamo distinguere due scenari:
+1. il nodo **ha il sotto-albero sinistro**;
+2. il nodo **non ha il sotto-albero sinistro**.
+
+Nel primo caso, il predecessore del nodo considerato sarà **il massimo del sotto-albero sinistro radicato in tale nodo**, ossia il nodo contenente la chiave maggiore tra quelle minori. Nel secondo caso, l'assenza di un sotto-albero sinistro radicato nel nodo considerato implica che quest'ultimo è il nodo più a sinistra del sotto-albero a cui appartiene, e perciò il minimo di tale sotto-albero: in questo caso, per trovare il predecessore, si dovrà:
+- **risalire alla radice del sotto-albero**, il che significa salire "a destra" finché possibile;
+- una volta giunti alla radice del sotto-albero, **risalire, con un singolo passo "a sinistra", al padre di tale nodo**, e sarà proprio quest'ultimo a essere il predecessore del nodo considerato.
 
 
-[DISPENSE: pag. 19/30]
-[SLIDES: pag. 7/20]
-[EXYSS: pag. 110/112]
+
+[DISPENSE: pag. 26/30]
+[SLIDES: pag. 13/20]
+[EXYSS: pag. 112]
 ___
 ##### Alberi rosso-neri
 
@@ -703,7 +798,7 @@ ___
 ##### Alberi AVL
 
 [DISPENSE: pag. 30/51]
-[SLIDES: pag. ]
+[SLIDES: pag. 1/14]
 ___
 ## Dizionari
 
