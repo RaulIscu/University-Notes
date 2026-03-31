@@ -783,10 +783,18 @@ Nel primo caso, il predecessore del nodo considerato sarà **il massimo del sott
 - **risalire alla radice del sotto-albero**, il che significa salire "a destra" finché possibile;
 - una volta giunti alla radice del sotto-albero, **risalire, con un singolo passo "a sinistra", al padre di tale nodo**, e sarà proprio quest'ultimo a essere il predecessore del nodo considerato.
 
+[DISPENSE: pag. 26]
+[SLIDES: pag. 13 - 14]
+
+Arriviamo, infine, a trattare il problema dell'**eliminazione di un nodo da un ABR**. Si tratta forse del problema più complicato di quelli visti finora, principalmente per la necessità di riaggiustare l'ABR nel caso in cui il nodo da eliminare abbia entrambi i figli. Per "riaggiustare l'ABR" si intende trovare un nodo da collocare al posto di quello che va eliminato, in modo da mantenere connesso l'albero: per fare ciò garantendo il mantenimento delle proprietà fondamentali degli ABR, il nodo che rimpiazzerà quello eliminato sarà necessariamente o il suo predecessore o il suo successore. Dunque, nell'eliminazione di un nodo da un ABR possono verificarsi **tre scenari**:
+1. se **il nodo da eliminare è una foglia**, lo si elimina molto semplicemente, inserendo un valore nullo nell'opportuno campo del nodo padre;
+2. se **il nodo da eliminare ha un solo figlio**, si vanno a collegare direttamente tra loro il padre del nodo eliminato e il figlio dello stesso;
+3. se **il nodo da eliminare ha entrambi i figli**, lo si dovrà sostituire col predecessore o col successore, che a sua volta dovrà essere "eliminato" dalla sua posizione originale.
 
 
-[DISPENSE: pag. 26/30]
-[SLIDES: pag. 13/20]
+
+[DISPENSE: pag. 27/30]
+[SLIDES: pag. 16/20]
 [EXYSS: pag. 112]
 ___
 ##### Alberi rosso-neri
@@ -803,6 +811,6 @@ ___
 ## Dizionari
 
 [DISPENSE: pag. 1/16]
-[SLIDES: pag. ]
+[SLIDES: pag. 1/16]
 [EXYSS: pag. 117/123]
 ___
