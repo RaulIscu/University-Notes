@@ -696,7 +696,7 @@ Dunque, in generale sarebbe più corretto affermare che **la ricerca in un ABR h
 
 > L'altezza attesa di un ABR costruito in modo casuale con $n$ chiavi tutte distinte è tipicamente in $O(\log n)$.
 
-Di conseguenza, una strategia che (in media) costruisce un albero bilanciato per un insieme fisso di elementi consiste nel **permutare in modo casuale gli elementi e, in seguito, nell'inserire gli elementi in quell'ordine** all'interno dell'ABR. Questa tecnica, però, non può essere usata se non abbiamo tutti gli elementi contemporaneamente, ad esempio in casi in cui gli elementi vengono ricevuti in input uno alla volta. È proprio in questo contesto che ci preoccupa utilizzare qualche tecnica di bilanciamento in altezza, argomento che verrà approfondito in seguito.
+Di conseguenza, una strategia che (in media) costruisce un albero bilanciato per un insieme fisso di elementi consiste nel **permutare in modo casuale gli elementi e, in seguito, nell'inserire gli elementi in quell'ordine** all'interno dell'ABR. Questa tecnica, però, non può essere usata se non abbiamo tutti gli elementi contemporaneamente, ad esempio in casi in cui gli elementi vengono ricevuti in input uno alla volta. È proprio in questo contesto che ci preoccupa utilizzare qualche tecnica di bilanciamento in altezza, argomento che verrà approfondito [[IAA_07 - Strutture dati#Alberi rosso-neri|in seguito]].
 
 A questo punto, prima di procedere, forniamo anche la **versione iterativa dell'algoritmo di ricerca in un ABR**:
 
@@ -783,15 +783,44 @@ Nel primo caso, il predecessore del nodo considerato sarà **il massimo del sott
 - **risalire alla radice del sotto-albero**, il che significa salire "a destra" finché possibile;
 - una volta giunti alla radice del sotto-albero, **risalire, con un singolo passo "a sinistra", al padre di tale nodo**, e sarà proprio quest'ultimo a essere il predecessore del nodo considerato.
 
-[DISPENSE: pag. 26]
-[SLIDES: pag. 13 - 14]
+Una situazione perfettamente simmetrica vale per il problema della ricerca del successore di `k`; in entrambi i casi, dunque, si richiede o una discesa lungo un singolo cammino a partire dalla radice, oppure una singola risalita verso la radice. Entrambe queste operazioni, banalmente, avranno **costo** pari a $O(h)$. Indicando con `x` il nodo contenente la chiave `k`, lo **pseudocodice per la ricerca del predecessore di `k` in un ABR** può essere il seguente:
 
-Arriviamo, infine, a trattare il problema dell'**eliminazione di un nodo da un ABR**. Si tratta forse del problema più complicato di quelli visti finora, principalmente per la necessità di riaggiustare l'ABR nel caso in cui il nodo da eliminare abbia entrambi i figli. Per "riaggiustare l'ABR" si intende trovare un nodo da collocare al posto di quello che va eliminato, in modo da mantenere connesso l'albero: per fare ciò garantendo il mantenimento delle proprietà fondamentali degli ABR, il nodo che rimpiazzerà quello eliminato sarà necessariamente o il suo predecessore o il suo successore. Dunque, nell'eliminazione di un nodo da un ABR possono verificarsi **tre scenari**:
+```
+def abr_predecessore(x):
+	if x.left != None:
+		return abr_massimo(x.left)
+		
+	padre = x.parent
+	
+	while padre != None and x == padre.left:
+		x = padre
+		padre = padre.parent
+		
+	return padre
+```
+
+Vediamo più nel dettaglio il funzionamento di questo algoritmo. La prima cosa che viene fatta è controllare se esiste o meno un sotto-albero sinistro: se esiste, ci troviamo nel caso 1 e basterà restituire il massimo di tale sotto-albero. Alternativamente, se non esiste un sotto-albero sinistro, ci troveremo nel caso 2 e dovremo risalire alla radice del sotto-albero in cui ci troviamo, risalita che si ferma o se arriviamo alla radice dell'albero (`padre == None`) o se `x` non è più il figlio sinistro di suo padre (`x != padre.left`): una volta terminato questo ciclo, nella variabile `padre` avremo il predecessore di `x`, che potremo dunque restituire.
+
+Un ragionamento perfettamente analogo può essere fatto per lo **pseudocodice della ricerca del successore di `k`**:
+
+```
+def abr_successore(x):
+	if x.right != None:
+		return abr_minimo(x.right) 
+		
+	padre = x.parent 
+	
+	while padre != None and x == padre.right: 
+		x = padre
+		padre = padre.parent
+		
+	return padre
+```
+
+Arriviamo, infine, a trattare il problema dell'**eliminazione di un nodo da un ABR**. Si tratta forse del problema più complicato tra quelli visti finora, principalmente per la necessità di riaggiustare l'ABR nel caso in cui il nodo da eliminare abbia entrambi i figli. Per "riaggiustare l'ABR" si intende trovare un nodo da collocare al posto di quello che va eliminato, in modo da mantenere connesso l'albero: per fare ciò garantendo il mantenimento delle proprietà fondamentali degli ABR, il nodo che rimpiazzerà quello eliminato sarà necessariamente o il suo predecessore o il suo successore. Dunque, nell'eliminazione di un nodo da un ABR possono verificarsi **tre scenari**:
 1. se **il nodo da eliminare è una foglia**, lo si elimina molto semplicemente, inserendo un valore nullo nell'opportuno campo del nodo padre;
 2. se **il nodo da eliminare ha un solo figlio**, si vanno a collegare direttamente tra loro il padre del nodo eliminato e il figlio dello stesso;
 3. se **il nodo da eliminare ha entrambi i figli**, lo si dovrà sostituire col predecessore o col successore, che a sua volta dovrà essere "eliminato" dalla sua posizione originale.
-
-
 
 [DISPENSE: pag. 27/30]
 [SLIDES: pag. 16/20]
@@ -799,9 +828,84 @@ Arriviamo, infine, a trattare il problema dell'**eliminazione di un nodo da un A
 ___
 ##### Alberi rosso-neri
 
-[DISPENSE: pag. ]
-[SLIDES: pag. ]
-[EXYSS: pag. 112/117]
+Come abbiamo visto parlando di [[IAA_07 - Strutture dati#Alberi binari di ricerca|alberi binari di ricerca]], quasi tutte le operazioni svolgibili su di essi hanno un **costo limitato superiormente dalla loro altezza**, il che vuol dire che, per avere la maggior efficienza possibile, è necessario che **l'ABR sia il più bilanciato possibile**, in modo che la sua altezza $h$ diventi un valore in $O(\log n)$.
+
+Le tecniche di bilanciamento, tipicamente, sono tutte basate sull'idea di **riorganizzare la struttura dell'albero** se essa, a seguito di operazioni di inserimento o di eliminazione di nodi, viola determinati requisiti. In particolare, ciò che ci interessa maggiormente è che **l'altezza dei due sotto-alberi principali non sia "troppo diversa"**. Inoltre, ciò che rende non banali queste tecniche di bilanciamento è che naturalmente si vuole implementarle **senza peggiorare il costo computazionale delle operazioni**, dato che a quel punto perderebbero di significato.
+
+Una variazione dell'ABR che implementa una di queste tecniche è il cosiddetto "**albero rosso-nero**", in breve indicato come **A-RB**. La caratteristica peculiare di un A-RB è che **ogni nodo o è rosso o è nero** (tale informazione verrebbe memorizzata in un campo aggiuntivo). Inoltre, all'albero vengono aggiunte **foglie fittizie**, che non contengono chiavi, in modo che **tutti i nodi "veri" dell'albero abbiano esattamente due figli**. Di conseguenza, possiamo definire un A-RB come un ABR che soddisfa anche le seguenti proprietà:
+1. **ciascun nodo è rosso o nero**;
+2. **ciascuna foglia fittizia è nera**;
+3. **se un nodo è rosso, entrambi i suoi figli sono neri**;
+4. **ogni cammino da un nodo a ciascuna delle foglie del suo sottoalbero contiene lo stesso numero di nodi neri**;
+5. **la radice è sempre nera**;
+6. **nessun cammino dalla radice ad una foglia può essere lungo più del doppio di un cammino dalla radice ad una qualunque altra foglia**.
+
+Di seguito, un esempio di A-RB:
+
+![[a-rb_esempio.png]]
+
+Indichiamo con il termine "**black height**" di `x`, o "**b-altezza**" di `x`, o ancora **`bh(x)`**, il **numero di nodi neri sui cammini dal nodo `x`** (non incluso) **alle foglie sue discendenti**. La b-altezza di un A-RB, di conseguenza, è la **b-altezza della sua radice**.
+
+Dalla combinazione della proprietà n°3 (se un nodo è rosso, entrambi i suoi figli sono neri) e della proprietà n°4 (ogni cammino da un nodo a ciascuna delle foglie del suo sottoalbero contiene lo stesso numero di nodi neri) discende un fatto interessante: **nessun cammino dalla radice ad una foglia può essere più lungo del doppio di un cammino dalla radice ad una qualunque altra**. Possiamo dire ciò perché:
+- per la proprietà n°4, il numero di nodi neri è lo stesso lungo tutti i cammini dalla radice a una qualsiasi foglia (chiamiamo questo numero fisso di nodi $B$), e dunque **il cammino più corto possibile tra una radice e una foglia è quello che non contiene alcun nodo rosso**, ma solo nodi neri (dunque, un cammino lungo $B$);
+- per la proprietà n°3, il numero di nodi rossi lungo un cammino non può essere maggiore del numero di nodi neri lungo lo stesso cammino (se compare un nodo rosso, esso avrà per definizione entrambi i figli neri), dunque per massimizzare la lunghezza di un cammino si dovrebbero alternare perfettamente nodi rossi e neri, e ciò vuol dire che **il cammino più lungo possibile tra una radice e una foglia è quello che contiene lo stesso numero di nodi rossi e nodi neri**;
+- se il cammino più corto possibile è quello formato solamente da $B$ nodi, mentre il cammino più lungo possibile è quello formato da $B$ nodi neri e $B$ nodi rossi, si ottiene che nessun cammino può essere più lungo del doppio di un altro cammino.
+
+Questa proprietà è sufficiente a dimostrare che **l'altezza di un A-RB formato da $n$ nodi è in $O(\log n)$**, come mostra il seguente teorema:
+
+> Un A-RB con $n$ nodi interni ha un'altezza $h$ tale per cui:
+> $$h\le 2\log(n+1)$$
+
+Per poter dimostrare questo teorema, è importante sapere che **il sotto-albero radicato in un qualsiasi nodo `x` contiene almeno $2^{bh(x)}-1$ nodi interni**. Vediamo la dimostrazione. Indicando con $h$ l'altezza dell'A-RB e con $r$ la sua radice, sappiamo già che $h\le 2bh(r)$, ossia che l'altezza dell'A-RB è sempre minore o uguale del doppio della b-altezza dell'A-RB, dunque che:
+$$bh(r)\ge \frac{h}{2}$$
+Inoltre, sappiamo che il numero $n$ di nodi interni dell'A-RB, pari al numero di nodi interni del sotto-albero radicato in $r$, è:
+$$n\,\,\ge\,\, 2^{bh(r)}-1\,\,\ge\,\, 2^{\frac{h}{2}}-1$$
+da cui otteniamo che:
+$$n+1\,\,\ge\,\, 2^{\frac{h}{2}}\,\,\,\Rightarrow\,\,\,2\log(n+1)\ge h$$
+come volevasi dimostrare. Dunque, tale teorema garantisce che le operazioni di **ricerca** di una chiave `k`, del **massimo**, del **minimo**, del **predecessore** e del **successore** siano tutte eseguite con un **costo computazionale pari a $O(\log n)$**. Un discorso a parte, invece, va fatto per gli inserimenti e per le cancellazioni.
+
+L'esigenza di mantenere le proprietà di un A-RB implica che, dopo un inserimento o un'eliminazione, la struttura dell'albero deve essere **riaggiustata**, in termini di:
+- **colori** assegnati ai nodi;
+- **collocazione** dei nodi.
+
+A tal fine, sono definite operazioni dette "**rotazioni di un A-RB**", che permettono di **ripristinare le proprietà di un A-RB dopo un inserimento o un'eliminazione**. Le rotazioni possono essere **destre** o **sinistre**, in base al loro "verso", e sono operazioni di **costo pari a $\Theta(1)$**, che **non modificano l'ordinamento delle chiavi secondo la visita in-ordine**. Ogni rotazione viene effettuata su un nodo `x`, che possiamo vedere come **"perno" della rotazione**: 
+- in una **rotazione a sinistra**, il sotto-albero sinistro $\beta$ del figlio destro del nodo `x` (che chiameremo `y` per comodità) diventa il nuovo sotto-albero destro del nodo `x`, mentre quest'ultimo diventa il figlio sinistro del nodo `y`;
+- in una **rotazione a destra**, il sotto-albero destro $\beta$ del figlio sinistro del nodo `x` (che chiameremo `y` per comodità) diventa il nuovo sotto-albero sinistro del nodo `x`, mentre quest'ultimo diventa il figlio destro del nodo `y`.
+
+Per capire meglio, vediamo un esempio di rotazione a sinistra:
+
+![[a-rb_rotazionesinistra_esempio.png]]
+
+Per effettuare una rotazione a sinistra, si può implementare una funzione con il seguente **pseudocodice**:
+
+```
+def arb_rotazione_sinistra(p: puntatore alla radice, x: nodo perno):
+	y = x.right
+	x.right = y.left
+	
+	if x.right != None:
+		x.right.parent = x
+	
+	y.left = x
+	y.parent = x.parent
+	
+	if x.parent == None:
+		p = y
+	else:
+		if x == x.parent.left:
+			x.parent.left = y
+		else:
+			x.parent.right = y
+	
+	x.parent = y
+	
+	return p
+```
+
+Come si può confermare avendo, ora, a disposizione lo pseudocodice, il costo della rotazione è effettivamente $\Theta(1)$.
+
+[DISPENSE: pag. 55/58]
+[EXYSS: pag. 115/117]
 ___
 ##### Alberi AVL
 
@@ -810,7 +914,73 @@ ___
 ___
 ## Dizionari
 
-[DISPENSE: pag. 1/16]
-[SLIDES: pag. 1/16]
-[EXYSS: pag. 117/123]
+Un **dizionario** è una struttura dati che permette di gestire un **insieme dinamico di dati totalmente ordinato** tramite **tre sole operazioni**:
+- **`Insert`**, ossia l'**inserimento** di un elemento;
+- **`Search`**, ossia la **ricerca** di un elemento;
+- **`Delete`**, ossia l'**eliminazione** di un elemento.
+
+Quando l'esigenza si ferma a queste proprietà, tipicamente si sceglie di implementare un dizionario tramite soluzioni specifiche. In questo capitolo ne approfondiremo due:
+- **tabelle ad indirizzamento diretto**;
+- **tabelle hash**.
+
+Nel trattare queste implementazioni, indicheremo con $U$ l'**insieme delle chiavi**, con $m$ il **numero delle posizioni** a disposizione nella struttura dati, e con $n$ il **numero degli elementi da memorizzare** nel dizionario. Inoltre, si specifica che **i valori delle chiavi sono tutti diversi tra loro**.
+
+##### Tabelle ad indirizzamento diretto
+
+Una **tabella a indirizzamento diretto**, molto semplicemente, consiste in un **[[IAA_07 - Strutture dati#Array|array]] in cui ogni indice corrisponde alla chiave dell'elemento da memorizzare in tale posizione**. Ad esempio, l'elemento avente $25$ come chiave verrà memorizzata nella posizione dell'array avente $25$ come indice:
+
+![[diz_tabellainddir_esempio.png]]
+
+Naturalmente, affinché tale tipologia di dizionario possa funzionare correttamente, è necessario che:
+$$n\,\le\, m\,=\,|U|$$
+ossia che **il numero degli elementi da memorizzare sia minore o uguale del numero di posizioni a disposizione**, e che quest'ultima coincida con il numero di possibili chiavi associabili agli elementi. Si tratta di una struttura che, seppur molto semplice, è **particolarmente efficiente**; infatti, tutte e tre le operazioni che devono essere supportate da un qualsiasi dizionario hanno **costo pari a $\Theta(1)$**. Di seguito, troviamo lo **pseudocodice** di tali operazioni:
+
+```
+def insert_indirizz_diretto(A: array, e: elemento da inserire):
+	A[e.key] = e
+	return
+	
+	
+def search_indirizz_diretto(A, k: chiave da cercare):
+	return A[k]
+	
+	
+def delete_indirizz_diretto(A, k: chiave da cancellare):
+	A[k] = None
+	return
+```
+
+Purtroppo, però, lavorando con problemi reali le tabelle a indirizzamento diretto non sono utili come sembrano, dato che:
+- **l'insieme $U$ potrebbe assumere dimensioni spropositate**, al punto da rendere impraticabile l'allocazione in memoria di un array $A$ di capienza sufficiente;
+- **il numero di chiavi effettivamente utilizzate è spesso molto più piccolo di $|U|$**,il che porta a un grande spreco di memoria dato che in tal caso la maggioranza delle posizioni dell'array $A$ rimarrebbero inutilizzate.
+
+Per questi motivi, spesso si ricorre a implementazioni differenti, a meno che non ci siano delle condizioni ottimali per l'utilizzo dell'indirizzamento diretto (ad esempio il mantenimento di un insieme $U$ relativamente ridotto).
+___
+##### Tabelle hash
+
+Quando l'insieme $U$ dei valori possibili delle chiavi è molto grande, e l'insieme $K$ delle chiavi da memorizzare effettivamente è invece molto più piccolo di $U$, la soluzione migliore è la cosiddetta "**tabella hash**", prima di tutto perché **richiede molta meno memoria rispetto alle [[IAA_07 - Strutture dati#Tabelle ad indirizzamento diretto|tabelle ad indirizzamento diretto]]**.
+
+L'idea, in questo caso, è quella di utilizzare sempre un **[[IAA_07 - Strutture dati#Array|array]] di dimensione $m$**, ma stavolta non metteremo in relazione direttamente le chiavi con l'indice corrispondente (le possibili chiavi sono molte di più rispetto agli indici disponibili, dunque fare ciò sarebbe impossibile), ma piuttosto andremo a definire una "**funzione hash**", ossia una **funzione che permette di calcolare la posizione in cui va inserito un elemento sulla base del valore della sua chiave**. Dunque, supponendo che la tabella hash $T$ contenga $m$ posizioni, i cui indici vanno da $0$ a $m-1$, la funzione hash $h$ potrà essere definita nel modo seguente:
+$$h:U\rightarrow\{0,\,1,\,2,\,\dots,\,m-1\}$$
+In questo contesto, indichiamo con **$h(k)$** il "**valore hash**" della chiave $k$.
+
+Questo meccanismo presenta, però, un problema di fondo: anche nel caso in cui le chiavi da memorizzare sono meno di $m$, **non si può escludere che due chiavi $k_{1}$ e $k_{2}$, diverse tra loro, siano tali per cui $h(k_{1})=h(k_{2})$**, situazione in cui entrambe le chiavi risulterebbero da memorizzare nella stessa posizione nella tabella. Tale situazione viene chiamata "**collisione**", ed è naturalmente un fenomeno da prevenire il più possibile o, altrimenti, da risolvere in qualche modo. A tal fine, una **buona funzione hash** deve essere tale da **rendere il più possibile equiprobabile il valore risultante dall'applicazione della funzione**, ossia tutti i valori dell'insieme $\{0,\,1,\,2,\,\dots,\,m-1\}$; in altre parole, la funzione dovrebbe far apparire quasi "casuale" il valore risultante, disgregando qualunque regolarità della chiave. Al tempo stesso, la funzione deve essere "**deterministica**", il che vuol dire che, **se applicata più volte alla stessa chiave, dovrà sempre restituire lo stesso risultato**.
+
+
+
+[DISPENSE: pag. 5/7]
+[SLIDES: pag. 8 - 9]
+[EXYSS: pag. 120]
+___
+##### Tabelle a liste di trabocco
+
+[DISPENSE: pag. 7/9]
+[SLIDES: pag. 9/11]
+[EXYSS: pag. 120 - 121]
+___
+##### Tabelle ad indirizzamento aperto
+
+[DISPENSE: pag. 9/16]
+[SLIDES: pag. 11/16]
+[EXYSS: pag. 122 - 123]
 ___
