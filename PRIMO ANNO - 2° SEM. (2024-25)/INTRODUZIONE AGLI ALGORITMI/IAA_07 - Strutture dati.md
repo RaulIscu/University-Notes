@@ -966,21 +966,112 @@ In questo contesto, indichiamo con **$h(k)$** il "**valore hash**" della chiave 
 
 Questo meccanismo presenta, però, un problema di fondo: anche nel caso in cui le chiavi da memorizzare sono meno di $m$, **non si può escludere che due chiavi $k_{1}$ e $k_{2}$, diverse tra loro, siano tali per cui $h(k_{1})=h(k_{2})$**, situazione in cui entrambe le chiavi risulterebbero da memorizzare nella stessa posizione nella tabella. Tale situazione viene chiamata "**collisione**", ed è naturalmente un fenomeno da prevenire il più possibile o, altrimenti, da risolvere in qualche modo. A tal fine, una **buona funzione hash** deve essere tale da **rendere il più possibile equiprobabile il valore risultante dall'applicazione della funzione**, ossia tutti i valori dell'insieme $\{0,\,1,\,2,\,\dots,\,m-1\}$; in altre parole, la funzione dovrebbe far apparire quasi "casuale" il valore risultante, disgregando qualunque regolarità della chiave. Al tempo stesso, la funzione deve essere "**deterministica**", il che vuol dire che, **se applicata più volte alla stessa chiave, dovrà sempre restituire lo stesso risultato**.
 
+La situazione ideale, dunque, è quella in cui **ciascuna delle $m$ posizioni è scelta deterministicamente e con la stessa probabilità**: tale nozione è conosciuta come "**ipotesi di uniformità semplice della funzione hash**", e possiamo definirla matematicamente nel modo seguente:
+$$\sum_{k:\,h(k)\,=\,j}P(k)=\frac{1}{m}\,\,\,\,\,\text{per }j=0,\,1,\,2,\,\dots,\,m-1$$
+Avere una funzione hash che rispetti sempre tale ipotesi è sostanzialmente impossibile, infatti l'obiettivo è **minimizzare il più possibile le collisioni** piuttosto che eliminarle del tutto. 
 
+Vediamo alcuni esempi di scelta dell'insieme $U$, dunque di scelta di valori possibili per le chiavi, e per ciascuno una possibile funzione hash da utilizzare. Il primo esempio che andremo ad approfondire è quello in cui si scelgono **numeri reali come chiavi**, e in particolare numeri reali casuali inclusi nell'intervallo $[0,\,1)$. In questo contesto, una possibile funzione hash è:
+$$h(k)=⌊k⋅m⌋$$
+dove $k$ è il valore della chiave considerata e $m$ è il numero di posizioni contemplate dalla tabella hash. Questa funzione, però, per funzionare bene necessita che si assicuri che i valori in ingresso (le chiavi) vengano generate in modo puramente casuale e perfettamente uniforme, anche se nella realtà è difficile che ciò accada.
 
-[DISPENSE: pag. 5/7]
-[SLIDES: pag. 8 - 9]
-[EXYSS: pag. 120]
+Un altro approccio, molto più comune, è quello di utilizzare **numeri interi come chiavi**, in particolare numeri solitamente molto grandi; ciò avviene, ad esempio, quando le chiavi sono in realtà stringhe di caratteri, che vengono però fatte corrispondere a numeri interi dal calcolatore (ad esempio interpretando la codifica ASCII dei caratteri della stringa come numeri). In questo caso, una buona funzione hash può essere:
+$$h(k)=k\text{ mod }m$$
+dove $\text{mod}$ indica l'operazione di modulo, ossia il resto della divisione tra i due operandi (in questo caso $k$ e $m$). L'efficienza di questa funzione hash dipende, in particolare, dalla scelta di $m$, dato che vanno evitati valori che corrispondono a potenze di $2$ (utilizzare valori $m=2^{p}$ restituirebbe l'esatta sequenza dei $p$ bit meno significativi della chiave, il che farebbe dipendere il risultato della funzione $h(k)$ da un sottoinsieme dei bit della chiave $k$, non ottimale per garantire l'uniformità) e preferiti invece valori primi il più lontani possibile da potenze di $2$ (analogamente, se si lavora con l'aritmetica decimale, è consigliato evitare valori che si avvicinano a potenze di $10$).
 ___
 ##### Tabelle a liste di trabocco
 
-[DISPENSE: pag. 7/9]
-[SLIDES: pag. 9/11]
-[EXYSS: pag. 120 - 121]
+Come anticipato nel [[IAA_07 - Strutture dati#Tabelle hash|paragrafo precedente]], **non è possibile prevenire completamente le collisioni** contestualmente all'utilizzo di funzioni hash, dunque l'obiettivo principale è più che altro **minimizzarle** e, se succedono, **poterle risolvere** in qualche modo. Mentre la minimizzazione può essere effettuata scegliendo delle "buone funzioni hash", la risoluzione prevede spesso delle **variazioni della tabella hash originale**.
+
+Una di queste tecniche di risoluzione prevede l'utilizzo delle cosiddette "**liste di trabocco**". In parole povere, ciascuna posizione dell'array $T$ utilizzato non va più a contenere un elemento, ma piuttosto un **puntatore a una [[IAA_07 - Strutture dati#Liste puntate semplici|lista puntata semplice]]**, e gli elementi non verranno quindi memorizzati direttamente nell'array ma verranno **inseriti in testa alla lista puntata associata alla posizione a cui vengono mappati dalla funzione hash**. Possiamo visualizzare questo meccanismo nel modo seguente:
+
+![[diz_listeditrabocco_esempio.png]]
+
+Dunque, per **inserire un elemento `x` in una tabella a liste di trabocco $T$**, si definirà un'operazione che, a sua volta, farà utilizzo dell'[[IAA_07 - Strutture dati#Operazioni sulle liste puntate semplici|inserimento in testa di una lista puntata]]:
+
+```
+def insert_listeditrabocco(T, x):
+	insert_in_testa(T[h(x.key)], x)
+	return
+```
+
+Naturalmente, questa operazione ha sempre **costo** pari a $\Theta(1)$. Invece, per **ricercare un elemento con chiave `k` in una tabella a liste di trabocco $T$**, si definirà un'operazione che farà utilizzo della [[IAA_07 - Strutture dati#Operazioni sulle liste puntate semplici|ricerca in una lista puntata]]:
+
+```
+def search_listeditrabocco(T, k):
+	lista_trabocco = A[h(k)]
+	return search(lista_trabocco, k)
+```
+
+Questa operazione, a differenza dell'inserimento, avrà **costo** pari a $O(i)$, dove $i$ è la lunghezza della lista `lista_trabocco` (nel **caso migliore**, l'elemento cercato sarà il primo ad essere memorizzato nella lista, portando il costo a essere pari a $\Theta(1)$, mentre nel **caso peggiore** l'elemento cercato non si troverà nella lista, per cui quest'ultima verrà scandita nella sua interezza prima di terminare l'esecuzione dell'algoritmo, per un costo di $\Theta(i)$); ciononostante, nel **caso medio** il costo della ricerca dovrebbe essere in $O(\alpha)$, dove $\alpha$ è quello che definiamo "**fattore di carico della tabella**", valore che considerando l'[[IAA_07 - Strutture dati#Tabelle hash|ipotesi di uniformità semplice]] è pari a $\alpha=\frac{n}{m}$.
+
+Infine, per **eliminare un elemento `x` da una tabella a liste di trabocco $T$**, si utilizzerà un'operazione che farà utilizzo dell'[[IAA_07 - Strutture dati#Operazioni sulle liste puntate semplici|eliminazione di un nodo in una lista puntata]]:
+
+```
+def delete_listeditrabocco(T, x):
+	lista_trabocco = A[h(x.key)]
+	return delete(lista_trabocco, x)
+```
+
+In questo caso, il **costo** dipende dall'implementazione delle liste di trabocco.
+
+A questo punto, può essere utile domandarsi quale sia il **comportamento di una tabella hash**, avente $m$ posizioni a disposizione e contenente $n$ elementi, **nel caso medio**. Poiché tale comportamento dipende da quanto bene la funzione hash distribuisce l'insieme delle chiavi sulle $m$ posizioni a disposizione, bisogna fare alcune assunzioni:
+- assumiamo che **la funzione hash goda della proprietà di uniformità semplice**;
+- assumiamo che **la funzione hash sia calcolata in un tempo costante**;
+- indichiamo con $\alpha=\frac{n}{m}$ il **fattore di carico** della tabella hash, che rappresenta la media dei numeri di elementi memorizzati in ciascuna delle liste di trabocco.
+
+Partendo da queste ipotesi, si può enunciare il seguente teorema:
+
+> In una tabella hash in cui le collisioni sono risolte tramite liste di trabocco, nell'ipotesi di uniformità semplice, il **numero atteso di accessi** effettuati da una **ricerca senza successo** è in $\Theta(1+\alpha)$.
+
+Ciò è facilmente dimostrabile ragionando logicamente sulle premesse: nell'ipotesi di uniformità semplice, una chiave `k` corrisponde ad una delle $m$ posizioni in modo equiprobabile, quindi il numero medio di accessi in una ricerca senza successo sarà semplicemente pari a:
+- un accesso per entrare nella lista di trabocco effettiva;
+- $\alpha$ accessi in tale lista, ossia un numero di accessi pari alla lunghezza media delle liste di trabocco.
+
+Sommando queste due quantità, si ottiene proprio un valore in $\Theta(1+\alpha)$.
 ___
 ##### Tabelle ad indirizzamento aperto
 
-[DISPENSE: pag. 9/16]
-[SLIDES: pag. 11/16]
-[EXYSS: pag. 122 - 123]
+Un'altra tecnica di risoluzione delle collisioni è quella del cosiddetto "**indirizzamento aperto**". Utilizzare questa tecnica significa **inserire tutti gli elementi direttamente nella [[IAA_07 - Strutture dati#Tabelle hash|tabella]], senza strutture dati aggiuntive** ma **calcolando la sequenza delle posizioni da esaminare** per ricercare o inserire un dato. Questa tecnica è applicabile nelle seguenti condizioni:
+- $m\ge n$ (dunque il fattore di carico non è mai $>1$);
+- $|U|\gg m$ (ossia, il numero di possibili chiavi è molto più grande del numero di posizioni a disposizione).
+
+In questo contesto, **la funzione hash dipende tipicamente da 2 parametri**:
+- la **chiave `k`**;
+- il **numero di collisioni già trovate**.
+
+Vediamo come vengono implementate le **operazioni in una tabella ad indirizzamento aperto**, partendo dall'**inserimento**. Se la posizione iniziale relativa alla chiave `k` (sostanzialmente, quella in cui si dovrebbe inserire `k` in assenza di collisioni) è già occupata, **si scandisce la tabella fino a trovare una posizione libera e valida** in cui poter inserire l'elemento considerato. Tale scansione è guidata da una sequenza di chiamate alla funzione hash che assume la seguente forma:
+$$h(k,\,0)\,\,\,\Rightarrow\,\,\,h(k,\,1)\,\,\,\Rightarrow\,\,\,h(k,\,2)\,\,\,\Rightarrow\,\,\,\dots$$
+Il **costo** dell'operazione di inserimento, in questo contesto, è limitato superiormente dalla lunghezza della sequenza di caselle da scandire, e nel caso peggiore è pari a $O(n)$ (tale caso si verifica quando tutti gli $n$ elementi memorizzati nella tabella hash vengono mappati nella medesima posizione); il caso medio, invece (sempre supponendo l'ipotesi di uniformità semplice), ha costo $O\left( \frac{m}{m-n} \right)=O\left( \frac{1}{1-\alpha} \right)$.
+
+Per quanto riguarda la **ricerca**, il funzionamento è quasi analogo a quello dell'inserimento: **si scandisce la tabella**, o meglio le posizioni della tabella indicate dalla stessa sequenza di chiamate appena vista, **fino a quando si trova l'elemento o si incontra una casella vuota** (da ciò si deduce che l'elemento non è presente nella tabella). Nell'ipotesi di uniformità semplice, il numero atteso di accessi effettuati da una ricerca senza successo è in $O\left( \frac{m}{m-n} \right)=O\left( \frac{1}{1-\alpha} \right)$.
+
+[Dimostrazione --> DISPENSE: pag. 14 - 15]
+
+Invece, il numero atteso di accessi effettuati da una ricerca con successo è:
+$$\frac{1}{\alpha}\,\ln\left( \frac{1}{1-\alpha} \right)+\frac{1}{\alpha}$$
+
+Infine, l'**eliminazione** è, come spesso accade, l'operazione più complessa: infatti, se si elimina un elemento lasciando la sua posizione vuota, diventa impossibile recuperare elementi memorizzati in caselle successive nella sequenza scandita dalle chiamate della funzione hash (si ricordi, infatti, che una ricerca viene definita "senza successo" nel momento in cui si trova una casella vuota); al tempo stesso, se si marca la casella con un'ipotetico valore `deleted`, si complicherà la ricerca e il costo computazionale di quest'ultima non dipenderà più solo dal fattore di carico ma anche dal numero di posizioni precedentemente occupate da altri elementi e successivamente marcate. A causa di questi fattori, **spesso l'eliminazione di un elemento non è supportata con l'indirizzamento aperto**.
+
+Ora, rimane da chiarire un ultimo aspetto: **che funzioni hash conviene utilizzare con una tabella hash a indirizzamento aperto?** Prima di rispondere in modo specifico, specifichiamo che la sequenza di funzioni dovrebbe possedere **due caratteristiche importanti**:
+- dovrebbe **consentire sempre di visitare tutte le $m$ caselle** della tabella (e quindi **produrre sempre una permutazione della sequenza degli $m$ indici**);
+- dovrebbe **essere in grado di produrre tutte le $m!$ permutazioni possibili degli indici**, in modo da garantire l'uniformità semplice.
+
+Ciò, però, è molto difficile se non impossibile: basti pensare che **le tre sequenze di funzioni hash più comunemente utilizzate**, che vedremo tra poco nel dettaglio, **rispettano tutte la prima condizione ma non la seconda**, limitandosi alla possibilità di produrre **al massimo $m^{2}$ differenti permutazioni**. Le tre sequenze di funzioni di cui si sta parlando sono:
+- **scansione lineare**;
+- **scansione quadratica**;
+- **hashing doppio**.
+
+Di queste, è proprio l'**hashing doppio** a produrre il **maggior numero di permutazioni** e, di conseguenza, è la sequenza di funzioni hash che esibisce le migliori prestazioni.
+
+Partiamo analizzando la **scansione lineare**. Data una funzione hash **$h'(k)$**, la sequenza di funzioni hash definita dalla scansione lineare è la seguente:
+$$h(k,\,i)=(h'(k)+i)\text{ mod } m\,\,\,\,\,\,\,\,\,\,\text{per }i=0,\,1,\,2,\,\dots,\,m-1$$
+In altre parole, la scansione lineare **percorre in modo circolare la tabella hash**, partendo da una posizione iniziale data dal risultato di $h'(k)$, e procedendo grazie alla somma del valore $i$, che aumenterà di $1$ a ogni "iterazione" (la circolarità, invece, viene data dall'operazione di modulo, che ri-azzera il valore ottenuto nel momento in cui esso supera il numero $m$ di posizioni a disposizione). **La scansione lineare**, però, **può produrre solamente $m$ permutazioni diverse** delle posizioni a disposizione, una per ogni valore che la funzione $h'(k)$ può restituire; oltre a ciò, soffre di un problema chiamato "**agglomerazione primaria**", che consiste nella tendenza alla formazione di lunghe sequenze ininterrotte di caselle occupate, che aumentano naturalmente il tempo di ricerca.
+
+La **scansione quadratica** segue un ragionamento simile a quello utilizzato per la scansione lineare, ma leggermente più complesso. Data una funzione hash $h'(k)$, la sequenza di funzioni hash definita dalla scansione quadratica è la seguente:
+$$h(k,\,i)=(h'(k)+c_{1}i+c_{2}i^{2})\text{ mod }m\,\,\,\,\,\,\,\,\,\,\text{per }i=0,\,1,\,2,\,\dots,\,m-1$$
+In questo caso, **l'incremento** ad ogni passo della sequenza di funzioni **ha due componenti, una lineare e una quadratica**, entrambe abbinate a dei coefficienti $c_{1}$ e $c_{2}$; se i valori di $c_{1}$, $c_{2}$ e $m$ sono scelti opportunamente, la scansione quadratica risulta essere **molto più efficace della scansione lineare**. Ciononostante, **anche la scansione quadratica può produrre solamente $m$ permutazioni diverse** delle posizioni a disposizione, una per ogni valore producibile dalla funzione $h'(k)$; inoltre, soffre anch'essa di un problema simile ma meno grave rispetto a quello della scansione lineare, detto "**agglomerazione secondaria**", dato che, per natura della sequenza di funzioni, se due chiavi producono lo stesso valore iniziale di $h'(k)$ anche le successive posizioni visitate saranno esattamente identiche.
+
+Arriviamo, infine, alla tecnica spesso più utilizzata e più flessibile: l'**hashing doppio**. Si tratta di un tipo di sequenza nettamente diverso dalle due scansioni viste in precedenza, soprattutto per un aspetto: in questo caso, **la sequenza di posizioni visitate dipende in due modi distinti dalla chiave $k$ considerata**. Perciò, con l'hashing doppio, viene risolto il problema della scansione lineare e quadratica del visitare sequenze di caselle identiche per due chiavi diverse (ciò capiterà, infatti, solo nel raro caso in cui le funzioni hash producano una collisione per tale coppia di chiavi). Date due diverse funzioni hash $h_{1}(k)$ e $h_{2}(k)$, la sequenza di funzioni hash definita dall'hashing doppio è la seguente:
+$$h(k,\,i)=(h_{1}(k)+i\cdot h_{2}(k))\text{ mod }m\,\,\,\,\,\,\,\,\,\,\text{per }i=0,\,1,\,2,\,\dots,\,m-1$$
+**La posizione iniziale**, nell'hashing doppio, **dipende esclusivamente dal risultato della funzione $h_{1}(k)$** (nella prima "iterazione" della sequenza, infatti, si avrà $i=0$), **mentre le successive posizioni saranno distanziate ciascuna di $h_{2}(k)$ posizioni dalla precedente**. A tal proposito, si noti che è importante che, per ogni valore possibile di $k$, **il valore restituito da $h_{2}(k)$ deve essere primo con $m$**, altrimenti la scansione non potrà mai visitare tutte le caselle; un modo semplice per garantire questa proprietà, ad esempio, è porre $m$ pari a una potenza di 2 e progettare $h_{2}(k)$ in modo che fornisca sempre un valore dispari. **L'hashing doppio può produrre $m^{2}$ permutazioni diverse** delle posizioni a disposizione, una per ogni coppia distinta di valori $(h_{1}(k),\,h_{2}(k))$.
 ___
