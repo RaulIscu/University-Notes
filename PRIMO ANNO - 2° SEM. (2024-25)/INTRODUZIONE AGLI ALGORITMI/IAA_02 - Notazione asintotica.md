@@ -5,11 +5,11 @@ Per valutare l'efficienza di un algoritmo, in modo da poterlo confrontare con al
 - **spazio necessario** in memoria per l'esecuzione dell'algoritmo.
 
 Per ora, concentriamoci sul primo di questi fattori. Il metodo principale per inquadrare il tempo di esecuzione di un algoritmo è la cosiddetta "**notazione asintotica**", che viene utilizzata per stimare **quanto aumenta il tempo di esecuzione dell'algoritmo al crescere della dimensione $n$ dell'input**, ossia, in parole povere, il "**tasso di crescita**" del tempo di esecuzione. In particolare, esistono **tre notazioni asintotiche** diverse:
-- la **notazione $O$**, detta anche "**limite asintotico superiore**;
+- la **notazione $O$**, detta anche "**limite asintotico superiore**";
 - la **notazione $\Omega$**, detta anche "**limite asintotico inferiore**";
 - la **notazione $\Theta$**, detta anche "**limite asintotico stretto**".
 
-Tale forma di valutazione dell'efficienza di un algoritmo ha maggiormente senso contestualmente a input sufficientemente grandi; è per questo che, in questo contesto, si parla di "**efficienza asintotica**" di un algoritmo.
+Tale forma di valutazione dell'efficienza di un algoritmo ha più senso contestualmente a input sufficientemente grandi; è per questo che, in questo contesto, si parla di "**efficienza asintotica**" di un algoritmo.
 ___
 ## Notazione $O$
 
@@ -36,7 +36,7 @@ con $a_{m}>0$. Si osservi, preliminarmente, che per ogni $i$ si ha che:
 
 Di conseguenza, si può affermare che:
 $$\sum_{i\,=\,0}^{m}a_{i}n^{i}\,\,\le\,\,\sum_{i\,:\,a_{i}\,\ge\, 0}^{m}a_{i}n^{i}\,\,\le\,\, n^{m}\cdot\sum_{i\,:\,a_{i}\,\ge\, 0}^{m}a_{i}$$
-Ponendo $c=\sum_{i\text{ t.c. }a_{i}\ge 0}^{m}a_{i}$, e considerando solo il primo e il terzo membro della disuguaglianza, si ottiene che $f(n)\le c\cdot n^{m}$ per ogni $n$, e dunque che $f(n)$ si trova in $O(n^{m})$, come volevasi dimostrare.
+Ponendo $c=\sum_{i\,:\,a_{i}\,\ge\, 0}^{m}\,a_{i}$, e considerando solo il primo e il terzo membro della disuguaglianza, si ottiene che $f(n)\le c\cdot n^{m}$ per ogni $n$, e dunque che $f(n)$ si trova in $O(n^{m})$, come volevasi dimostrare.
 
 In alternativa, si può dimostrare la stessa proposizione procedendo per induzione sul grado $m$. Partiamo col caso base, in cui il grado del polinomio è $m=0$: in questo caso, abbiamo che:
 $$f(n)=a_{0}\cdot n^{0}=a_{o}$$
