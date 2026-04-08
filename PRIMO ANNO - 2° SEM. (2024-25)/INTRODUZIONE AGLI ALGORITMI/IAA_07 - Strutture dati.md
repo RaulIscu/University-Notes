@@ -1,4 +1,4 @@
-Una "**struttura dati**" può essere definita come un **tipo particolare di dato che ne ospita altri**, caratterizzato più dal modo in cui i dati interni essi sono organizzati piuttosto che dal loro tipo. Dunque, **una struttura dati specifica presenterà un modo sistematico di organizzare i dati** al suo interno, e metterà di conseguenza a disposizione determinati **operatori** che permetteranno di accedere e di manipolare la struttura.
+Una "**struttura dati**" può essere definita come un **tipo particolare di dato che ne ospita altri**, caratterizzato più dal modo in cui i dati interni sono organizzati piuttosto che dal loro tipo. Dunque, **una struttura dati specifica presenterà un modo sistematico di organizzare i dati** al suo interno, e metterà di conseguenza a disposizione determinati **operatori** che permetteranno di accedere e di manipolare la struttura.
 
 In generale, una struttura dati può essere "**lineare**" o "**non lineare**", a seconda se esista una forma di sequenzialità al suo interno e se, informalmente, possa essere pensata con un inizio e una fine; al tempo stesso, può essere "**statica**" o "**dinamica**", a seconda se la sua dimensione possa variare nel tempo; infine, può essere anche "**omogenea**" o "**disomogenea**", a seconda se ospiti tutti dati dello stesso tipo o meno. 
 
@@ -110,7 +110,7 @@ def search(p: puntatore alla testa, k: valore da cercare):
 	return p_corr
 ```
 
-In parole povere, il funzionamento di tale implementazione di `Search` è il seguente: partendo dalla testa della lista puntata, dunque dal suo primo elemento, si scorre la lista puntata fino al suo termine (`p_corr != null`) o finché non si trova l'elemento `k` (`p_corr . key != k`); se si terminano gli elementi e `k` non è stato ancora trovato, verrà restituito un valore nullo, mentre se `k` viene trovato la funzione restituisce un puntatore ad esso. Ovviamente, tale operazione risulta avere un **costo** pari a $O(n)$.
+In parole povere, il funzionamento di tale implementazione di `Search` è il seguente: partendo dalla testa della lista puntata, dunque dal suo primo elemento, si scorre la lista puntata fino al suo termine (`p_corr != None`) o finché non si trova l'elemento `k` (`p_corr.key != k`); se si terminano gli elementi e `k` non è stato ancora trovato, verrà restituito un valore nullo, mentre se `k` viene trovato la funzione restituisce un puntatore ad esso. Ovviamente, tale operazione risulta avere un **costo** pari a $O(n)$.
 
 Vediamo, ora, un'operazione **`Insert_in_testa(S, k)`**, ossia un'operazione di inserimento dell'elemento `k` in testa alla lista puntata:
 
@@ -186,7 +186,7 @@ Questa natura "ibrida" di `list` è possibile grazie alla sua peculiare **implem
 ___
 ##### Liste puntate doppie
 
-Alcune inefficienze della [[IAA_07 - Strutture dati#Liste puntate semplici|liste puntate semplici]], ad esempio il costo lineare dell'eliminazione di un elemento, si può modificare tale struttura dati in modo che **ogni nodo disponga sia di un puntatore all'elemento successivo** (**`next`**) **che di un puntatore all'elemento precedente** (**`prev`**). Una struttura dati del genere prende il nome di **lista puntata doppia**, spesso detta anche "**lista doppia**" per semplicità. Una lista puntata doppia ha le stesse proprietà di una lista semplice, con la differenza che **una lista doppia può essere attraversata in entrambe le direzioni**.
+Per ovviare ad alcune inefficienze delle [[IAA_07 - Strutture dati#Liste puntate semplici|liste puntate semplici]], ad esempio il costo lineare dell'eliminazione di un elemento, si può modificare tale struttura dati in modo che **ogni nodo disponga sia di un puntatore all'elemento successivo** (**`next`**) **che di un puntatore all'elemento precedente** (**`prev`**). Una struttura dati del genere prende il nome di **lista puntata doppia**, spesso detta anche "**lista doppia**" per semplicità. Una lista puntata doppia ha le stesse proprietà di una lista semplice, con la differenza che **una lista doppia può essere attraversata in entrambe le direzioni**.
 
 In tale struttura dati, le [[IAA_07 - Strutture dati#Operazioni sulle liste puntate semplici|operazioni]] di inserimento e di ricerca rimangono pressoché invariate, ma l'operazione **`Delete`** assume la seguente forma:
 
@@ -516,8 +516,7 @@ Nel caso peggiore, se tutti i nodi discendenti della radice sono agglomerati nel
 $$T(n)=T(n-1)+\Theta(1)$$
 Questa nuova equazione diventa facilmente risolvibile, ad esempio, con il **[[IAA_05 - Ricorsione#Metodo iterativo|metodo iterativo]]**, portandoci ad affermare che **il costo nel caso peggiore è pari a $n\cdot\Theta(1)=\Theta(n)$**.
 
-Banalmente, essendo arrivati a dire che **il costo è $\Theta(n)$ nel caso peggiore** (o, generalmente, che il costo è in $O(n)$) **e anche nel caso migliore** (o, generalmente, che il costo è in $\Omega(n)$), potremmo già arrivare alla conclusione che il **costo di una visita è pari a $\Theta(n)$**. Difatti, poiché una visita consiste nell’analizzare tutti i nodi di un albero, e
-poiché $n$ corrisponde al numero di nodi totali, è facilmente intuibile che il costo di una
+Banalmente, essendo arrivati a dire che **il costo è $\Theta(n)$ nel caso peggiore** (o, generalmente, che il costo è in $O(n)$) **e anche nel caso migliore** (o, generalmente, che il costo è in $\Omega(n)$), potremmo già arrivare alla conclusione che il **costo di una visita è pari a $\Theta(n)$**. Difatti, poiché una visita consiste nell’analizzare tutti i nodi di un albero, e poiché $n$ corrisponde al numero di nodi totali, è facilmente intuibile che il costo di una
 visita sia sempre $\Theta(n)$. Ciononostante, per completezza, verifichiamo che ciò sia vero anche applicando effettivamente il **metodo di sostituzione**. Eliminando le notazioni asintotiche dall'equazione di ricorrenza originale, otteniamo:
 $$\begin{cases} T(0)=T(1)=d\\T(n) =T(k)+T(n-k-1)+c \end{cases}$$
 dove $c$ e $d$ sono due costanti note.

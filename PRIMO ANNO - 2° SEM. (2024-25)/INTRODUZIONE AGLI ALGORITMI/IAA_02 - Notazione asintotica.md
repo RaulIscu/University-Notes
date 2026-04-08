@@ -79,7 +79,7 @@ Per comprendere meglio questo concetto, vediamo un esempio. Supponiamo di avere 
 
 Generalmente, vale la seguente regola:
 
-> Data una funzione $f(n)$, esistono infinite funzioni $g(n)$ per cui vale che $f(n)$ si trova in $O(g(n))$.
+> Data una funzione $f(n)$, esistono infinite funzioni $g(n)$ per cui vale che $f(n)$ si trova in $\Omega(g(n))$.
 
 ##### Dimostrazione: un polinomio di grado $m$ è in $\Omega(n^{m})$
 
@@ -178,13 +178,13 @@ Vediamo un esempio per comprendere meglio come applicare queste regole. Supponia
 ___
 ##### Commutatività del prodotto
 
-> Per ogni $f(n),\,d(n)>0$, se $f(n) = O(g(n))$ e $d(n)=O(h(n))$ allora si ha che $f(n)\cdot d(n)$ è in $O(f(n)\cdot g(n))$.
+> Per ogni $f(n),\,d(n)>0$, se $f(n) = O(g(n))$ e $d(n)=O(h(n))$ allora si ha che $f(n)\cdot d(n)$ è in $O(g(n)\cdot h(n))$.
 
-> Per ogni $f(n),\,d(n)>0$, se $f(n) = \Omega(g(n))$ e $d(n)=\Omega(h(n))$ allora si ha che $f(n)\cdot d(n)$ è in $\Omega(f(n)\cdot g(n))$.
+> Per ogni $f(n),\,d(n)>0$, se $f(n) = \Omega(g(n))$ e $d(n)=\Omega(h(n))$ allora si ha che $f(n)\cdot d(n)$ è in $\Omega(g(n)\cdot h(n))$.
 
-> Per ogni $f(n),\,d(n)>0$, se $f(n) = \Theta(g(n))$ e $d(n)=\Theta(h(n))$ allora si ha che $f(n)\cdot d(n)$ è in $\Theta(f(n)\cdot g(n))$.
+> Per ogni $f(n),\,d(n)>0$, se $f(n) = \Theta(g(n))$ e $d(n)=\Theta(h(n))$ allora si ha che $f(n)\cdot d(n)$ è in $\Theta(g(n)\cdot h(n))$.
 
-Informalmente, queste tre regole esprimono il fatto che, nel calcolo della notazione asintotica, **data una funzione $p(n)=f(n)\cdot g(n)$ qualsiasi suo limite asintotico è uguale al prodotto tra i limiti asintotici di $f(n)$ e $g(n)$**.
+Informalmente, queste tre regole esprimono il fatto che, nel calcolo della notazione asintotica, **data una funzione $p(n)=f(n)\cdot d(n)$ qualsiasi suo limite asintotico è uguale al prodotto tra i limiti asintotici di $f(n)$ e $d(n)$**.
 
 Possiamo **dimostrare la prima regola** (e, di conseguenza, anche le altre due) abbastanza semplicemente. Affermando che $f(n) = O(g(n))$ e che $d(n)=O(h(n))$, stiamo affermando che esistono quattro costanti $c$, $c'$, $n_{0}$ e $n_{0}'$ tali per cui vale che: $$f(n)\le c\cdot g(n)\,\,\,\,\,\,\,\,\,\,\text{per ogni }n\ge n_{0}$$e che: $$d(n)\le c'\cdot h(n)\,\,\,\,\,\,\,\,\,\,\text{per ogni }n\ge n_{0}'$$Di conseguenza, possiamo effettuare una moltiplicazione membro a membro, e garantire che per ogni $n\ge max(n_{0},\,n_{0}')$ vale che: $$f(n)\cdot d(n)\,\,\le\,\,c\cdot c'\cdot g(n)\cdot h(n)$$Prendendo $c\cdot c'$ come nuova costante $c''$, e mantenendo lo stesso $n_{0}$, si ottiene che $f(n) \cdot d(n)\le c''\cdot g(n)\cdot h(n)$ per ogni $n\ge n_{0}$, il che vuol dire che $f(n)\cdot d(n)$ è in $O(g(n)\cdot h(n))$, come volevasi dimostrare.
 
@@ -220,7 +220,7 @@ Più in generale, vale che:
 
 Più in generale, vale che:
 
-> $$\sum_{i\,=\,1}^{n}\log^{c}i\,=\,\Theta(n\,\log^{c}i)\,\,\,\,\,\,\,\,\,\,\text{per ogni }c>1$$
+> $$\sum_{i\,=\,1}^{n}\log^{c}i\,=\,\Theta(n\,\log^{c}n)\,\,\,\,\,\,\,\,\,\,\text{per ogni }c>1$$
 
 
 
