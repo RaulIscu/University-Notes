@@ -1,8 +1,8 @@
 Nell'informatica, ci sono alcune categorie di problemi che sono più rilevanti di altre, soprattutto per la loro frequenza e per il loro riscontro anche in situazioni reali. Una di queste categorie è quella dei problemi di "**ricerca**", che naturalmente consistono nel **cercare un elemento specifico all'interno di un insieme di elementi**.
 
 Più formalmente, tale problema può essere descritto in forma di **input e output di un algoritmo**:
-- come **input**, si avrà un array $A$ contenente $n$ elementi, tra cui figurerà l'elemento cercato $v$;
-- come **output**, si otterrà l'elemento $v$, oppure un indice $i$ tale che `A[i] = v`, o ancora un valore `None` o $-1$ se l'elemento desiderato non è contenuto nell'array.
+- come **input**, si avrà un array $A$ contenente $n$ elementi, tra cui figurerà o meno l'elemento cercato $v$;
+- come **output**, si otterrà l'elemento $v$, oppure un indice $i$ tale per cui `A[i] = v`, o ancora un valore `None` o $-1$ se l'elemento desiderato non è contenuto nell'array.
 
 Vari approcci alla ricerca sono possibili dal punto di vista algoritmico: in questo capitolo, analizzeremo due dei principali metodi di ricerca, ossia la "**ricerca sequenziale**" e la "**ricerca binaria**".
 ## Ricerca sequenziale
@@ -95,6 +95,6 @@ Per fornire un'**approssimazione per il valore stretto del costo computazionale*
 e così via. In generale, la ricerca binaria esegue $i$ iterazioni solo se $v$ si trova in una delle $2^{i - 1}$ posizioni raggiungibili con tale numero di iterazioni; la probabilità che l'elemento $v$ si trovi in una delle $2^{i -1}$ posizioni è $\frac{2^{i-1}}{n}$, perciò possiamo affermare che il numero medio di iterazioni è dato da:
 $$\sum_{i\,=\,1}^{\log n}i\cdot \frac{2^{i-1}}{n}\,=\,\frac{1}{n}\cdot \sum_{i\,=\,1}^{\log n}(i\cdot 2^{i-1})$$
 Sapendo che $\sum_{i=1}^{k}i\cdot 2^{i-1}\,=\, (k-1)2^{k} + 1$, sostituendo $k = \log n$ troviamo che:
-$$\frac{1}{n}((\log n-1)2^{\log n}+1\,=\,\log n - 1 + \frac{1}{n}$$
+$$\frac{1}{n}((\log n-1)2^{\log n}+1)\,=\,\log n - 1 + \frac{1}{n}$$
 Dunque, abbiamo che **il numero medio di iterazioni si discosta per meno di un'iterazione dal numero massimo di iterazioni**.
 ___

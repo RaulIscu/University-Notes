@@ -327,9 +327,84 @@ def Partiziona(A, ind_primo, ind_ultimo):
 ___
 ##### Heap Sort
 
-[SLIDES: pag. 2/16]
-[DISPENSE: pag. 27/35]
-[EXYSS: pag. 84/89]
+L'algoritmo **Heap Sort**, seppur piuttosto complesso, presenta ottime caratteristiche e prestazioni: come il [[IAA_06 - Algoritmi di ordinamento#Merge Sort|Merge Sort]], presenta un **costo computazionale in $O(n\,\log n)$ anche nel caso peggiore**, mentre come gli [[IAA_06 - Algoritmi di ordinamento#Algoritmi di ordinamento naif|algoritmi di ordinamento naif]] permette di **ordinare in loco**. 
+
+Il funzionamento di questo algoritmo si basa su una particolare organizzazione dei dati, ossia una "**[[IAA_07 - Strutture dati|struttura dati]]**" (argomento che approfondiremo in seguito) detta "**heap**". Possiamo vedere un heap come un **[[IAA_07 - Strutture dati#Alberi binari|albero binario]] completo o quasi completo**, in ci **tutti i livelli eccetto l'ultimo sono pieni** e in cui **i nodi sono addensati a sinistra**. Di seguito, un esempio di heap:
+
+![[heap_esempio.png]]
+
+Come si può facilmente notare dall'immagine, gli heap presentano anche un'altra proprietà fondamentale: **la chiave di ogni nodo** (ossia il valore contenuto al suo interno) **è sempre maggiore o uguale delle chiavi contenute nei suoi figli**, proprietà che possiamo indicare con il nome di "**proprietà di ordinamento verticale**".
+
+Nonostante la struttura ad albero, il modo forse più facile e comune per implementare un heap del genere è tramite un **array**, i cui indici andranno da $0$ fino al numero di nodi dell'heap, ossia il cosiddetto "**Heap Size**", decrementato di $1$. Va da sé, però, che per poter considerare tale array un'implementazione efficace dell'heap esso dovrà rispettare alcune caratteristiche:
+- l'array dovrà essere **riempito da sinistra verso destra**, e se ha dimensione maggiore dell'Heap Size allora gli elementi aventi indice maggiore o uguale a quest'ultimo non faranno parte dell'heap;
+- **ogni nodo dell'heap corrisponde a uno e un solo elemento dell'array**;
+- la **radice dell'albero** corrisponde a **`A[0]`** e rappresenta il **valore massimo dell'heap**, per cui l'ottenimento del massimo valore memorizzato in un heap ha costo pari a $\Theta(1)$;
+- considerato il **nodo generico `A[i]`**, il suo **figlio sinistro** (se esiste) corrisponde all'elemento **`A[2i + 1]`** mentre il suo **figlio destro** (se esiste) corrisponde all'elemento **`A[2i + 2]`**;
+- di conseguenza, considerato sempre un nodo generico `A[i]`, suo **padre** corrisponderà all'elemento **`A[(i - 1) / 2]`**.
+
+Di seguito, un array che corrisponde a un'implementazione dell'heap mostrato in precedenza:
+
+![[heap_esempio1.png]]
+
+e, per visualizzare meglio il passaggio tra modello teorico e modello pratico, si ripropongono questi ultimi in coppia, evidenziando l'ordine di inserimento dei nodi dell'albero all'interno dell'array:
+
+![[heap_esempio2.png]]
+
+Si può pensare sostanzialmente, che **scorrere l'array da sinistra verso destra equivale a muoversi lungo l'albero per livelli**, dall'alto verso il basso e da sinistra verso destra. Viceversa, scorrere l'array da destra verso sinistra equivale a muoversi al contrario lungo l'albero, dunque dal basso verso l'alto e da destra verso sinistra.
+
+Dato che l'heap ha tutti i livelli completamente pieni tranne, eventualmente, l'ultimo, si può affermare che **l'altezza $h$ di un heap è in $\Theta(\log n)$**, dove con $n$ si indica il numero di nodi dell'heap stesso. Inoltre, nell'implementazione tramite array, la proprietà di ordinamento verticale indica che **tutti gli elementi in posizione `i`**, ad eccezione della radice, **sono minori o uguali degli elementi in posizione `(i - 1) / 2`**. 
+
+L'heap viene utilizzato soprattutto per eseguire in modo efficiente operazioni di **estrazione del massimo**, di **inserimento** e di **cancellazione** di elementi. Nella seguente tabella, per dimostrare ciò, facciamo un confronto tra le prestazioni dell'heap e quelle di un semplice array, prima non ordinato e poi ordinato
+
+| Struttura dati     | Estrazione del massimo | Inserimento | Cancellazione |
+| ------------------ | ---------------------- | ----------- | ------------- |
+| Array non ordinato | $\Theta(n)$            | $\Theta(1)$ | $\Theta(1)$   |
+| Array ordinato     | $\Theta(1)$            | $O(n)$      | $O(n)$        |
+| Heap               | $O(\log n)$            | $O(\log n)$ | $O(\log n)$   |
+
+Come si può notare, gli array in certe condizioni potrebbero essere leggermente più efficienti in alcune operazioni, ma sarebbero molto meno efficienti in altre, mentre il costo $O(\log n)$ dell'heap non solo rimane "costante", ma è anche relativamente basso.
+
+A questo punto, avendo chiarito funzionamento e implementazione dell'heap, siamo pronti a parlare più concretamente dell'algoritmo Heap Sort. Per poter applicare tale algoritmo su un array $A$, è necessario prima di tutto **modificare $A$ tramite due funzioni ausiliarie**:
+- **`Heapify`**, che permette di **ripristinare le proprietà di un heap**, posto che i due sotto-alberi della radice siano a loro volta due heap, in un tempo $O(\log n)$;
+- **`Build_Heap`**, che **trasforma un array disordinato in un heap** sfruttando la funzione **`Heapify`**, in un tempo $\Theta(n)$.
+
+Vediamo più nel dettaglio ciascuna di queste funzioni ausiliarie, partendo da **`Heapify`**. Come accennato prima, tale funzione permette di **mantenere o ripristinare le proprietà di un heap**, e in particolare quella di **ordinamento verticale**, partendo però dal presupposto che tali proprietà vengano invece rispettate dai due sotto-alberi della radice dell'albero considerato: ciò implica che **l'unico nodo che può violare la proprietà di ordinamento verticale è la radice stessa**, che potrebbe eventualmente essere minore di uno o di entrambi i figli. Se ciò si verifica, la funzione farà i seguenti passaggi:
+- **scambia la radice con il maggiore dei suoi due figli**;
+- **verifica che il sotto-albero coinvolto nello scambio mantenga le proprietà di un heap**, riapplicandosi [[IAA_05 - Ricorsione#Cos'è un algoritmo ricorsivo?|ricorsivamente]] su tale sotto-albero.
+
+Di seguito, un esempio di applicazione di quanto detto finora:
+
+![[heapify_esempio.png]]
+
+Dunque, in parole povere, `Heapify` va a spostare il valore della radice lungo un opportuno cammino verso il basso finché tutti i sotto-alberi le cui radici si trovano lungo quel cammino risultano rispettare le proprietà di un heap. Di seguito, vediamo lo **pseudocodice** della funzione `Heapify`:
+
+```
+def Heapify(A, i, heap_size):
+	l = A[2i + 1]
+	r = A[2i + 2]
+	indice_max = i
+	
+	if l < heap_size and A[l] > A[i]:
+		indice_max = l
+	if r <= heap_size and A[r] > A[indice_max]:
+		indice_max = r
+		
+	if indice_max != i:
+		A[i], A[indice_max] = A[indice_max], A[i]
+		Heapify(A, indice_max, heap_size)
+```
+
+Ora, troviamo il **[[IAA_03 - Costo computazionale|costo computazionale]]** della funzione `Heapify`. Come si può facilmente notare, tutte le operazioni eseguite dalla funzione, ad eccezione della chiamata ricorsiva, sono istruzioni elementari di costo $\Theta(1)$
+
+[SLIDES: pag. 9]
+[DISPENSE: pag. 32]
+[EXYSS: pag. 86 - 87]
+
+Passiamo, ora, alla funzione **`Build_Heap`**. Come accennato in precedenza, essa si occupa di 
+
+[SLIDES: pag. 10/16]
+[DISPENSE: pag. 32/35]
+[EXYSS: pag. 87/89]
 ___
 ## Algoritmi di ordinamento lineari
 
