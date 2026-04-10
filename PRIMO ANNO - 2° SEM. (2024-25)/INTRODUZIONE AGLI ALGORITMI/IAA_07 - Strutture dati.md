@@ -519,10 +519,17 @@ Questa nuova equazione diventa facilmente risolvibile, ad esempio, con il **[[IA
 Banalmente, essendo arrivati a dire che **il costo è $\Theta(n)$ nel caso peggiore** (o, generalmente, che il costo è in $O(n)$) **e anche nel caso migliore** (o, generalmente, che il costo è in $\Omega(n)$), potremmo già arrivare alla conclusione che il **costo di una visita è pari a $\Theta(n)$**. Difatti, poiché una visita consiste nell’analizzare tutti i nodi di un albero, e poiché $n$ corrisponde al numero di nodi totali, è facilmente intuibile che il costo di una
 visita sia sempre $\Theta(n)$. Ciononostante, per completezza, verifichiamo che ciò sia vero anche applicando effettivamente il **metodo di sostituzione**. Eliminando le notazioni asintotiche dall'equazione di ricorrenza originale, otteniamo:
 $$\begin{cases} T(0)=T(1)=d\\T(n) =T(k)+T(n-k-1)+c \end{cases}$$
-dove $c$ e $d$ sono due costanti note.
+dove $c$ e $d$ sono due costanti note. A questo punto, tentiamo di verificare la soluzione $T(n)=O(n)$: supporre che tale soluzione sia valida vuol dire supporre che $T(n)\le an$ per qualche costante $a$. Procediamo, a questo punto, per induzione su $n$. Il caso base, ossia quello in cui $n\le 1$, è verificato se e solo se vale che $d\le a$, infatti:
+$$T(n)\le an\,\,\,\Rightarrow\,\,\,T(1)\le a\,\,\,\Rightarrow\,\,\,d\le a$$
+Ora, formuliamo la nostra ipotesi induttiva e affermiamo che:
+$$T(r)\le ar$$
+per ogni $r<n$, volendo dimostrare con il passo induttivo che ciò valga anche per $n$. Sappiamo che $T(n)=T(k)+T(n-k-1)+c$, e sostituendo nella nostra ipotesi iniziale otteniamo che:
+$$T(k)+T(n-k-1)+c\le an$$
+e per l'ipotesi induttiva sappiamo che $T(r)\le ar$ per ogni $r<n$, dunque sia per $r=k$ ($k$ è il numero di nodi del sotto-albero sinistro della radice, dunque sappiamo che è un numero sicuramente minore di $n$) che per $r=n-k-1$, per cui possiamo riscrivere la disuguaglianza nel modo seguente:
+$$ak + a(n-k-1)+c\le an\,\,\,\Rightarrow\,\,\,ak+an-ak-a+c\le an\,\,\,\Rightarrow\,\,\,-a+c\le 0\,\,\,\Rightarrow\,\,\,a\ge c$$
+Otteniamo, dunque, che la nostra ipotesi iniziale ($T(n)=O(n)$, dunque $T(n)\le an$) è vera se e solo se vale sia che $d\le a$, sia che $a\ge c$. Esiste sicuramente un qualche valore di $a$ per cui entrambe queste disuguaglianze sono valide, e così abbiamo dimostrato che $T(n)=O(n)$. In modo analogo, si può dimostrare anche che $T(n)\ge bn$, dimostrando quindi che $T(n)=\Omega(n)$, e avendo dimostrato entrambe queste equivalenze si potrà affermare che $T(n)=\Theta(n)$.
 
-[DISPENSE: pag. 39]
-[SLIDES: pag. 6 - 7]
+Ora, come detto quando si è mostrata inizialmente tale equazione di ricorrenza, essa è valida per gli alberi implementati tramite record e puntatori, e rimane **valida anche per la rappresentazione posizionale**. Il discorso è diverso quando si parla di rappresentazione tramite **vettore dei padri**, dato che in quel caso spostarsi di padre in figlio non è più così immediato: infatti, per ciascun nodo si dovrà scorrere l'array alla ricerca dei suoi figli, sui quali poter proseguire poi la visita. Ciò vuol dire che su ogni nodo verrà eseguito un lavoro di costo pari a $O(n)$, il che porta il costo totale della visita a diventare $O(n^{2})$.
 
 Le visite di un albero sono estremamente utili per **ispezionare l'albero** e **dedurne alcune proprietà**. A seconda dello scopo della visita, torneranno utili vari tipi di visita, come possiamo vedere nei seguenti esempi, in cui andremo a vedere come sfruttare le visite per:
 - calcolare il **numero di nodi** contenuti nell'albero;
@@ -823,7 +830,6 @@ Arriviamo, infine, a trattare il problema dell'**eliminazione di un nodo da un A
 
 [DISPENSE: pag. 27/30]
 [SLIDES: pag. 16/20]
-[EXYSS: pag. 112]
 ___
 ##### Alberi rosso-neri
 
