@@ -340,7 +340,29 @@ In questo paragrafo, andremo ad analizzare nel dettaglio una **lista di altri co
 
 ##### `umask`
 
-[SLIDES: 03, slide 5]
+Finora, approfondendo i [[SO2_02 - File system#Permessi di accesso ai file|permessi di accesso]] a file e directory, abbiamo visto cosa permette di fare una determinata combinazione di permessi e come, eventualmente, modificarli. Ma **come vengono decisi i permessi di accesso di un file al momento della creazione?**
+
+Di default, in un sistema Linux ogni nuovo elemento nasce con dei **"permessi massimi" predefiniti**:
+- per le **directory**, si prevedono permessi **`777`**, o **`rwxrwxrwx`**;
+- per i **file**, si prevedono permessi **`666`**, o **`rw-rw-rw-`** (insomma, non vengono mai creati file eseguibili di default).
+
+In questo contesto, **`umask`** funziona come una sorta di "filtro di sicurezza": come suggerisce il nome, è un comando usato per **decidere una maschera utilizzata per sottrarre automaticamente determinati permessi di accesso**. Ad esempio, il valore predefinito di `umask` per la maggior parte dei sistemi Linux moderni è **`022`**; ciò vuol dire che, ogni volta che si creerà un file o una directory in un sistema Linux, quest'ultimo "sottrarrà" preventivamente `2` al valore dei permessi per il gruppo e `2` al valore dei permessi per gli altri. Vediamo cosa implica ciò per directory e file:
+- le directory hanno permessi massimi pari a `777`, o `rwxrwxrwx`, dunque applicare la maschera `022` renderà i permessi, al momento della creazione di una directory, pari a **`755`**, o **`rwxr-xr-x`** (in parole povere, **il creatore della directory avrà pieno controllo su di essa, mentre il gruppo e gli altri utenti potranno leggere ed entrare, ma non potranno modificare nulla**);
+- i file hanno permessi massimi pari a `666`, o `rw-rw-rw-`, dunque applicare la maschera `022` renderà i permessi, al momento della creazione di un file, pari a `644`, o `rw-r--r--` (in parole povere, **il creatore del file potrà leggerlo e modificarlo, mentre il gruppo e gli altri utenti potranno solo leggerlo**).
+
+Per **visualizzare la maschera attuale**, basterà eseguire il comando:
+
+```
+umask
+```
+
+Si tenga conto che si potrebbero vedere 4 cifre invece delle 3 viste finora: in tal caso, la prima cifra si riferirà ai permessi speciali `SetUID`, `SetGID` e `Sticky Bit`. Invece, per **modificare la maschera**, si eseguirà il comando:
+
+```
+umask [mode]
+```
+
+dove `mode` corrisponde proprio alla sequenza di cifre che si vuole assegnare alla maschera. Si ricordi, però, un dettaglio fondamentale: **se l'`umask` viene modificata tramite comando nel terminale, la modifica durerà solo per la sessione corrente**; ciò vuol dire che, alla chiusura della finestra in questione del terminale, o anche al riavvio del sistema, **la maschera tornerà al suo valore di default**, ossia **`022`**. Per rendere una modifica del genere permanente, si dovrebbero andare a modificare alcuni file di configurazione nascosti del sistema.
 ___
 ##### `cp`
 
@@ -478,6 +500,8 @@ ___
 [SLIDES: 03, slide 17 - 18]
 ___
 ##### `mkfs`
+
+Il comando **`mkfs`** permette di **creare un file system su un dispositivo**
 
 [SLIDES: 03, slide 20]
 ___
