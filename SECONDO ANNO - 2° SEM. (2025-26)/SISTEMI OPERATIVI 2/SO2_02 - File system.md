@@ -501,7 +501,16 @@ ___
 ___
 ##### `mkfs`
 
-Il comando **`mkfs`** permette di **creare un file system su un dispositivo**
+Il comando **`mkfs`** permette di **creare un file system su un dispositivo**, ma è comunemente utilizzato anche per **formattare un disco** e per **prepararlo a ospitare file secondo un determinato formato**, specificato proprio dal tipo di file system utilizzato. Una chiamata al comando **`mkfs`** assume la seguente forma:
+
+```
+mkfs [OPZIONI...] [-t type] [fs-options] device [size]
+```
+
+dove:
+- **`type`**
+- **`device`**
+- **`size`**
 
 [SLIDES: 03, slide 20]
 ___
