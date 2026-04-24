@@ -408,13 +408,86 @@ Passiamo, ora, alla funzione **`Build_Heap`**. Come accennato in precedenza, ess
 ___
 ## Algoritmi di ordinamento lineari
 
-
+[[IAA_06 - Algoritmi di ordinamento#Complessità minima di un ordinamento|Qualche paragrafo fa]], abbiamo dimostrato che la complessità minima di un algoritmo di ordinamento basato su confronti è $\Omega(n\,\log n)$. Ciononostante, è possibile trovare degli algoritmi di ordinamento di costo inferiore, a patto che essi non si basino sul confronto degli $n$ elementi da ordinare. In particolare, in questo paragrafo andremo ad approfondire due **algoritmi di ordinamento aventi costo computazionale lineare** (non sempre, ma nel caso medio sì), ossia:
+- il **[[IAA_06 - Algoritmi di ordinamento#Counting Sort|Counting Sort]]**;
+- il **[[IAA_06 - Algoritmi di ordinamento#Bucket Sort|Bucket Sort]]**.
 
 ##### Counting Sort
 
+L'algoritmo di **Counting Sort** si basa sull'ipotesi che **ciascuno degli $n$ elementi da ordinare è un intero compreso in un intervallo $[0,\,k]$**. L'idea è quella di fare in modo che **il valore di ogni elemento determini direttamente la sua posizione nella sequenza ordinata**, senza dunque il bisogno di confrontarlo con altri elementi per trovarla: per fare ciò, si crea un array di supporto di lunghezza $k+1$, dove ogni posizione $i$ dell'array conterrà il numero di occorrenze del valore $i$ all'interno dell'array iniziale; sfruttando, poi, questo array di appoggio, sarà possibile riscrivere l'array iniziale, risultando nella sua versione ordinata.
 
+Per comprendere meglio il funzionamento dell'algoritmo, vediamo un esempio concreto, considerando il seguente array $A$:
+$$[0,\,6,\,7,\,2,\,5,\,6,\,1,\,0,\,4,\,4,\,1,\,6]$$
+Abbiamo che $k=7$, dato che tutti i valori contenuti nell'array $A$ sono inclusi nell'intervallo $[0,\,7]$. Si hanno, inoltre, $n=12$ elementi all'interno di $A$. Creiamo, dunque, un array di appoggio $C$ di lunghezza $k+1=8$, inizialmente contenente $0$ in tutte le sue posizioni, e scorrendo $A$ andiamo a conteggiare il numero di occorrenze di ciascun valore, andando ad incrementare di $1$ il valore $C[i]$ nel momento in cui si trova il valore $i$ in $A$. Così facendo, $C$ assumerà la seguente forma:
+$$[2,\,2,\,1,\,0,\,2,\,1,\,3,\,1]$$
+dato che $0$ compare 2 volte nell'array iniziale, $1$ compare anch'esso 2 volte, $2$ compare una sola volta, e così via. Si noti che, per natura dell'algoritmo, vale la seguente equivalenza:
+$$\sum_{i\,=\,0}^{k}C[i]=n$$
+A questo punto, scorrendo $C$, andremo a sovrascrivere i valori di $A$, ricopiando in esso ciascun indice di $C$ tante volte quanto è il valore di $C$ in tale posizione (dunque, nelle prime due posizioni di $A$ inseriremo due $0$, nelle seguenti due inseriremo due $1$, e così via), portando l'array $A$ a diventare il seguente array ordinato:
+$$[0,\,0,\,1,\,1,\,2,\,4,\,4,\,5,\,6,\,6,\,6,\,7]$$
+
+Di seguito, lo **pseudocodice** dell'algoritmo di Counting Sort:
+
+```
+def Counting_Sort(A):
+	k = max(A)
+	n = len(A)
+	
+	C = [0] * (k + 1)            # creazione di un array C di lunghezza k + 1
+	
+	for j in range(n):
+		C[A[j]] += 1
+	
+	j = 0
+	for i in range(k):
+		while C[i] > 0:
+			A[j] = i
+			j += 1
+			C[i] -= 1
+```
+
+Analizziamo l'algoritmo più nel dettaglio: la prima istruzione si occupa di trovare il massimo dell'array $A$ (essendo l'array non ordinato, tale operazione richiederà di scorrere tutto l'array, e avrà dunque costo pari a $\Theta(n)$) e memorizzarlo nella variabile `k`; in seguito, dopo aver memorizzato in `n` il numero di elementi di $A$, si va ad creare l'array di appoggio $C$, di lunghezza $k$ e con tutti i suoi elementi inizializzati a $0$ (tale operazione avrà costo pari a $\Theta(k)$); entriamo, ora, nel primo ciclo `for` dell'algoritmo, che effettua $n$ iterazioni e che, per ogni elemento contenuto in $A$, va ad incrementare il valore contenuto in $C$ all'indice pari all'elemento di $A$ considerato (in seguito a questo ciclo, dunque, l'array $C$ conterrà il numero di occorrenze di ciascuno dei suoi indici in $A$); a questo punto entreremo nel secondo ciclo `for`, che andrà a scandire l'array $C$ e, per ogni valore $C[i]$, andrà sostanzialmente a scrivere $C[i]$ copie di $i$ nell'array $A$, andando ovviamente in ordine crescente di indici (è qui che avviene l'ordinamento vero e proprio).
+
+Per quanto riguarda il **costo computazionale** dell'algoritmo, esso è pari a:
+$$T(n)\,=\,\Theta(n)+\Theta(1)+\Theta(k)+\Theta(1)\cdot n+\Theta(1)\cdot \sum_{i\,=\,0}^{k}C[i]\,=\,\Theta(k)+\Theta(n)\,=\,\Theta(max(k,\,n))$$
+Nel caso in cui $k=O(n)$, si ottiene che il costo complessivo $T(n)$ dell'algoritmo è pari a $\Theta(n)$, rendendolo in tali casi un algoritmo di ordinamento lineare. Infatti, il costo computazionale si divide sostanzialmente in due casi:
+- se $k\le n$, allora $T(n)=\Theta(n)$;
+- se $k>n$, allora $T(n)=\Theta(k)$.
+
+Questa versione del Counting Sort, seppur perfettamente funzionante con numeri interi inclusi nell'intervallo $[0,\,k]$, non è adeguata in presenza di "**dati satellite**", ossia di ulteriori dati collegati a ciascun elemento da ordinare. In tal caso, si dovrà ricorrere a una soluzione un po' più complessa, nella quale, oltre all'array $A$ che contiene gli $n$ elementi da ordinare, sono necessarie altre due strutture d'appoggio:
+- un array ausiliario $B$ di $n$ elementi, che alla fine conterrà la sequenza ordinata;
+- un array ausiliario $C$, contenente $k$ elementi, per effettuare i conteggi.
+
+Vediamo lo **pseudocodice** di questa nuova versione di Counting Sort:
+
+```
+def Counting_Sort_con_datisatellite(A):
+	k = max(A)
+	n = len(A)
+	
+	C = [0] * (k + 1)
+	B = [0] * n
+	
+	for j in range(n):
+		C[A[j]] += 1
+		
+	for i in range(1, k):
+		C[i] += C[i - 1]
+		
+	for j in range(n, -1, -1):
+		B[C[A[j]]] = A[j]
+		C[A[j]] -= 1
+		
+	return B
+```
+
+Analizziamo più nel dettaglio il funzionamento dell'algoritmo: anche in questo caso, memorizziamo in `k` e in `n` rispettivamente il massimo e la lunghezza di $A$; passiamo, a questo punto, a inizializzare i due array $C$ e $B$, il primo contenente $k+1$ elementi e il secondo contenente $n$ elementi (dato che sarà proprio quest'ultimo a contenere la sequenza ordinata); entriamo, ora, nel primo ciclo `for`, che effettua il conteggio nell'array $C$ come nella versione originale del Counting Sort; a questo punto, entriamo nel secondo ciclo `for` e andiamo a scorrere l'array $C$ una seconda volta (partendo dal secondo elemento), sommando a ogni elemento $C[i]$ l'elemento precedente $C[i - 1]$, e al termine di tale ciclo avremo che $C[i]$ conterrà quella che sarà l'ultima posizione, nel vettore ordinato, di un elemento di valore $i$, mentre la differenza $C[i]-C[i-1]$ corrisponderà al numero di elementi aventi valore pari a $i$; a questo punto, si entra nel terzo e ultimo ciclo `for`, che scorre l'array $A$ da destra verso sinistra, 
+
+[SLIDES: pag. 4 - 5]
+[DISPENSE: pag. 38 - 39]
+[EXYSS: pag. 92]
 ___
 ##### Bucket Sort
 
-
+[SLIDES: pag. 6 - 7]
+[DISPENSE: pag. 39 - 40]
 ___
