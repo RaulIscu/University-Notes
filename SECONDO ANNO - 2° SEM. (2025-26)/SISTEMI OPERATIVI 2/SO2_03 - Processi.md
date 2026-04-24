@@ -65,9 +65,34 @@ andremmo prima a ridirezionare `stderr` sullo stesso flusso a cui punta `stdout`
 ___
 ##### Come sono rappresentati i processi?
 
+Per poter gestire i vari processi, l'OS deve avere un modo per **rappresentare un processo nella memoria principale**. Ciò avviene principalmente grazie a due elementi:
+- il **PID**, o **Process ID**;
+- il **PCB**, o **Process Control Block**.
 
+Il **PID**, come suggerisce il nome, è un **numero identificativo univoco** assegnato al momento della creazione del processo (dunque, nessun'altro processo in esecuzione avrà lo stesso PID di un altro); **quando un processo termina la sua esecuzione, il suo PID viene liberato** e diventa di nuovo eventualmente disponibile per nuovi processi. In sistemi moderni come Linux, **l'assegnazione dei PID spesso avviene in modo casuale** per motivi di sicurezza. 
 
-[SLIDES: 04 - pag. 10/15]
+Il **PCB**, invece, rappresenta una sorta di **"documento d'identità" per un processo**, mantenuto costantemente aggiornato dal kernel dell'OS. **Ogni processo ha un PCB unico**, e ogni PCB contiene tutte le informazioni fondamentali che l'OS deve sapere su ogni processo, tra cui:
+- il **PID** del processo;
+- il **PPID** (**Parent Process ID**), ossia il PID del padre del processo;
+- il **Real UID** (**Real User ID**), ossia l'ID dell'utente che ha avviato il processo;
+- il **Real GID** (**Real Group ID**), ossia l'ID del gruppo a cui appartiene l'utente che ha avviato il processo;
+- l'**Effective UID** (**Effective User ID**), ossia l'ID dell'utente che ha assunto il controllo del processo in esecuzione;
+- l'**Effective GID** (**Effective Group ID**), ossia l'ID del gruppo dell'utente che ha assunto il controllo del processo in esecuzione;
+- il **Saved UID** (**Saved User ID**),
+- il **Saved GID** (**Saved Group ID**),
+- la **current working directory**, ossia la [[SO2_02 - File system|directory]] all'interno della quale sta venendo eseguito il processo;
+- la **[[SO2_02 - File system#`umask`|umask]]**;
+- la "**Nice**", che indica la priorità statica del processo.
+
+[SLIDES: 04 - pag. 12 - 13
+
+Oltre a PID e PCB, ogni processo dispone di un proprio **spazio di indirizzamento**, ossia di una propria area di memoria nella memoria principale, diviso in **sei aree fondamentali**:
+- **Text Segment** (tipicamente accessibile in sola lettura per evitare corruzione dei dati), che contiene le istruzioni in linguaggio macchina da mandare al processore per proseguire l'esecuzione del processo (se si lanciano più istanze dello stesso programma, questo segmento potrebbe essere condiviso per risparmiare memoria);
+- **Data Segment**, che contiene le variabili globali o statiche inizializzate in modo esplicito all'interno del codice;
+- **BSS Segment**, che contiene le variabili globali o statiche non inizializzate; 
+- **Heap**, che rappresenta lo spazio destinato all'[[SO2_04 - C#Allocazione dinamica di memoria|allocazione dinamica di memoria]], controllata dal programmatore durante l'esecuzione del programma tramite funzioni come `malloc`, `calloc` o `free` (si approfondirà l'argomento in seguito);
+- **Memory Mapping Segment**, che contiene dati e informazioni relative a librerie esterne dinamiche usate dal processo;
+- **Stack**, che contiene le variabili locali e non statiche, oltre che tutte le informazioni relative alle varie chiamate a funzione (parametri passati, indirizzi di ritorno, ecc. ecc.); a differenza del Text Segment, o anche del BSS Segment e del Memory Mapping Segment, lo Stack di un processo non è mai condiviso.
 ___
 ##### Stati di un processo
 
