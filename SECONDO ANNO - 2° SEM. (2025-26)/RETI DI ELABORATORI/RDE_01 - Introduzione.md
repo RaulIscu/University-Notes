@@ -12,11 +12,11 @@ All'interno di una rete, gli end system sono collegati tra loro attraverso una *
 
 Nel concreto, i collegamenti di comunicazione sono i mezzi attraverso i quali vengono trasmessi effettivamente i dati tra i calcolatori della rete, e possono essere **fibre**, **cavi in rame**, **onde radio** o anche **satelliti**. Diversi collegamenti di comunicazione possono trasmettere dati a velocità diverse, e questa capacità propria del mezzo considerato viene tipicamente indicata con termini come "**transmission rate**", "**bandwidth**", "**bitrate**" e simili (approfondiremo questo concetto in seguito).
 
-Quando un determinato end system vuole inviare dei dati a un altro end system della sua rete, l'end system "mittente" andrà a **suddividere i dati in questione in blocchi**, ognuno abbinato a dei cosiddetti "**header bytes**" che forniscono informazioni sul significato del blocco di dati e su come ricomporre il tutto; ciascuno di questi blocchi, abbinato al suo header, viene detto "**pacchetto**", e rappresenta l'unità d'informazione principale che viene trasmessa nella rete. Una volta che l'end system mittente avrà suddiviso i dati in pacchetti, essi verranno inviati nella rete e trasmessi fino all'end system "destinatario", che ricomporrà i vari pacchetti per ottenere nuovamente i dati originali: è qui che entrano in gioco gli "**switch di pacchetto**", dispositivi il cui ruolo, all'interno della rete, è di **ricevere eventuali pacchetti in transito e inoltrarli all'esterno lungo la rete**, in modo che eventualmente essi arrivino a destinazione. Gli switch di pacchetto possono presentarsi in varie forme, ma due dei tipi più comuni sono i **routers** e i **link-layer switches**. La sequenza di collegamenti di comunicazione e di switch di pacchetto attraversata da un pacchetto per arrivare dall'end system mittente all'end system destinatario viene detta "**route**".
+Quando un determinato end system vuole inviare dei dati a un altro end system della sua rete, l'end system "mittente" andrà a **suddividere i dati in questione in blocchi**, ognuno abbinato a dei cosiddetti "**header bytes**" che forniscono informazioni sul significato del blocco di dati e su come ricomporre il tutto; ciascuno di questi blocchi, abbinato al suo header, viene detto "**pacchetto**", e rappresenta l'unità d'informazione principale che viene trasmessa nella rete. Una volta che l'end system mittente avrà suddiviso i dati in pacchetti, essi verranno inviati nella rete e trasmessi fino all'end system "destinatario", che ricomporrà i vari pacchetti per ottenere nuovamente i dati originali: è qui che entrano in gioco gli "**switch di pacchetto**", dispositivi il cui ruolo, all'interno della rete, è di **ricevere eventuali pacchetti in transito e inoltrarli lungo la rete**, in modo che eventualmente essi arrivino a destinazione. Gli switch di pacchetto possono presentarsi in varie forme, ma due dei tipi più comuni sono i **routers** e i **link-layer switches**. La sequenza di collegamenti di comunicazione e di switch di pacchetto attraversata da un pacchetto per arrivare dall'end system mittente all'end system destinatario viene detta "**route**".
 ___
 ##### Come accedono a Internet i dispositivi?
 
-Dunque, l'Internet è semplicemente un'enorme rete di dispositivi che rispetta le caratteristiche appena riassunte, o più precisamente una "**rete di reti**" del genere. Ma **come fanno gli end system ad accedere a Internet**?
+Dunque, Internet è semplicemente un'enorme rete di dispositivi che rispetta le caratteristiche appena riassunte, o più precisamente una "**rete di reti**" del genere. Ma **come fanno gli end system ad accedere a Internet**?
 
 Ciò avviene grazie ai cosiddetti "**Internet Service Providers**", o in breve "**ISP**". Ci sono vari tipi di ISP, in base al contesto in cui vengono utilizzati, tra cui:
 - ISP residenziali;
@@ -87,12 +87,10 @@ In generale, ci sono vari fattori possibili per cui una determinata transmission
 
 Mentre la DSL sfrutta la linea telefonica, la **connessione via cavo** utilizza l'**infrastruttura della compagnia di televisione via cavo** per trasmettere dati. In questo caso, dunque, **la compagnia della TV via cavo del cliente sarà anche il suo ISP**.  
 
-[SLIDES: 02... slide 9 - 10, 16 - 17, 19]
+[SLIDES: 02... slide 9 - 10 - 16 - 17 - 19]
 [LIBRO: pag. 44]
 ___
 ## 
-
-[recuperare lezioni del 23 febbraio, del 24 febbraio e del 2 marzo]
 
 Ampiezza di banda: due concetti principali:
 - caratterizzazione del canale o del sistema trasmissivo, l'intervallo di frequenze che un mezzo fisico consente di trasmettere senza danneggiare il segnale; maggiore è l'ampiezza di banda, maggiore è la quantità di informazione che può essere veicolato;

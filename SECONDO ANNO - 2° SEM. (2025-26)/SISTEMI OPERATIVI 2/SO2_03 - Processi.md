@@ -84,7 +84,7 @@ Il **PCB**, invece, rappresenta una sorta di **"documento d'identità" per un pr
 - la **[[SO2_02 - File system#`umask`|umask]]**;
 - la "**Nice**", che indica la priorità statica del processo.
 
-[SLIDES: 04 - pag. 12 - 13
+[SLIDES: 04 - pag. 12 - 13]
 
 Oltre a PID e PCB, ogni processo dispone di un proprio **spazio di indirizzamento**, ossia di una propria area di memoria nella memoria principale, diviso in **sei aree fondamentali**:
 - **Text Segment** (tipicamente accessibile in sola lettura per evitare corruzione dei dati), che contiene le istruzioni in linguaggio macchina da mandare al processore per proseguire l'esecuzione del processo (se si lanciano più istanze dello stesso programma, questo segmento potrebbe essere condiviso per risparmiare memoria);
@@ -96,13 +96,138 @@ Oltre a PID e PCB, ogni processo dispone di un proprio **spazio di indirizzament
 ___
 ##### Stati di un processo
 
-[SLIDES: 04 - pag. 16]
+**Un processo non è sempre attivamente in esecuzione nella CPU**: piuttosto, l'OS effettua uno **scheduling** dell'esecuzione dei processi, in modo da distribuire il più equamente possibile il processore tra di essi. Perciò, un processo può trovarsi in vari "**stati**", in base alla situazione in cui si trovano attualmente. In sistemi Linux, gli stati in cui si può trovare un processo sono:
+- **Running** (**R**), in cui **il processo sta venendo effettivamente eseguito** dal processore;
+- **Runnable** (**R**), in cui **il processo è pronto per essere eseguito** dal processore, e ha tutte le risorse necessarie per farlo, ma sta aspettando che lo scheduling dell'OS assegni ad esso il processore;
+- **Sleep** (**S**), in cui **il processo sta aspettando un determinato evento** (ad esempio, l'input dell'utente o l'arrivo di dati dalla memoria) **e non può proseguire l'esecuzione** finché tale evento non accade;
+- **Uninterruptible Sleep** (**D**), in cui, similmente a Sleep, **il processo sta aspettando un evento, ma è impegnato in operazioni critiche o di I/O con dischi lenti**, e non può dunque essere interrotto o "ucciso" nel mentre;
+- **Stopped** (**T**), in cui **il processo è stato bloccato in modo "esplicito"**, ad esempio avendo ricevuto un segnale `SIGSTOP`;
+- **Traced** (**t**), in cui **il processo è in esecuzione tramite debugger** (quindi la sua esecuzione effettiva è bloccata), o **è in attesa di un segnale**;
+- **Zombie** (**Z**), in cui **il processo ha terminato la sua esecuzione ma l'OS mantiene in memoria il suo [[SO2_03 - Processi#Come sono rappresentati i processi?|PCB]] vuoto**, contenente solamente l'exit status del processo e avendo già liberato le sei aree di memoria occupate tipicamente da un processo (questo avviene quando il processo padre non ha ancora richiesto l'esito del processo considerato).
 ___
 ##### Esecuzione dei processi
 
-[SLIDES: 04 - pag. 17 - 18 - 21 - 22]
+I processi possono essere eseguiti principalmente in due modi:
+- in "**foreground**" (o "**in primo piano**"), ossia la modalità che abbiamo visto finora, in cui **il processo può leggere l'input da tastiera e stampare sullo schermo** e in cui, **fino alla terminazione del processo, il [[SO2_01 - Shell#Prompt e comandi|prompt]] della shell non viene restituito e non si possono lanciare altri comandi**;
+- in "**background**" (o "**in secondo piano**"), una modalità in cui **il processo non può leggere input da tastiera ma può stampare sullo schermo** e in cui **il prompt viene immediatamente restituito**, con la possibilità di eseguire altri comandi mentre quello considerato viene eseguito in background.
+
+Per proseguire la trattazione, è importante fare una **distinzione tra processi e "lavori"**, detti anche "**jobs**": un processo è un gestito direttamente dal kernel, ed è un vero e proprio programma in esecuzione, con un suo PID, le sue aree di memoria, ecc. ecc.; un **lavoro**, invece, è **gestito direttamente dalla [[SO2_01 - Shell|shell]]**, e rappresenta un singolo comando o una singola direttiva che l'utente ha eseguito tramite terminale. Quando un comando viene eseguito in background, la shell associa a tale comando un **numero di lavoro** (partendo da 1), e tale numero potrà essere utilizzato da allora per riferirsi a tale lavoro finché esso sarà in esecuzione. 
+
+Per **eseguire un comando in background**, esso dovrà essere **seguito da una "e commerciale"** (**`&`**).
+
+In generale, **un lavoro può essere composto da uno o più processi**, e dunque da uno o più comandi. Dunque, nella shell, è possibile creare un lavoro che esegua un comando "complesso", a partire da più comandi semplici, tramite un meccanismo chiamato **"pipelining" dei comandi**. Per fare pipelining di due o più comandi, si utilizzano principalmente due operatori:
+- l'operatore **`|`**, che permette di **redirezionare lo `stdout` del comando precedente nello `stdin` del comando successivo**;
+- l'operatore **`|&`**, che permette di **redirezionare lo `stderr` del comando precedente nello `stdin` del comando successivo**.
+
+Naturalmente, il comando $i+1$-esimo non deve necessariamente utilizzare lo `stdout` o `stderr` del comando $i$-esimo.
+
+Un esempio di pipelining di 3 comandi può essere il seguente:
+
+```
+cat mio_file.txt | grep "errore" | wc -l &
+```
+
+e, costituendo un unico lavoro, a questo insieme di comandi verrà assegnato un unico numero di lavoro. 
 ___
 ## Comandi per la gestione dei processi
 
-[SLIDES: 04 - pag. 18/20 - 24/30 - 32 - 34/36 - 38/41]
+Ci sono vari **comandi per la gestione di processi e lavori**, tra cui:
+- **`jobs`**;
+- **`bg`**;
+- **`fg`**;
+- **`ps`**;
+- **`top`**;
+- **`kill`**;
+- **`nice`**;
+- **`renice`**;
+- **`strace`**.
+
+##### `jobs`
+
+Il comando **`jobs`** permette di **ottenere informazioni sui lavori in esecuzione**. La sinossi completa del comando è:
+
+```
+jobs [OPZIONI...]
+```
+
+Eseguire il comando senza opzioni risulterà in un output che rispecchierà una sorta di tabella, in cui ogni riga rappresenta un singolo lavoro e i cui campi (in ordine) rappresentano:
+- il **numero di lavoro**, scritto tra parentesi quadre;
+- eventualmente, un **simbolo `+` o `-`**, tali per cui il lavoro contrassegnato da un `+` corrisponde al lavoro che si ha mandato in background o sospeso per ultimo, mentre il lavoro contrassegnato da un `-` corrisponde al penultimo lavoro su cui si ha agito;
+- lo **stato del lavoro**, e dunque cosa sta facendo attualmente quest'ultimo (tali stati possono essere `Running`, il che vuol dire che il lavoro sta attivamente venendo eseguito in background, `Stopped` o `Suspended`, il che vuol dire che il lavoro è stato bloccato, ad esempio premendo `CTRL + z`, ed è in attesa di essere ripreso, `Done`, il che vuol dire che il lavoro ha terminato con successo la sua esecuzione, o `Terminated`, il che vuol dire il lavoro è stato "ucciso" tramite un segnale);
+- il **comando digitato per lanciare il lavoro**.
+
+Nel caso in cui un lavoro sia composto da più comandi posti in pipeline, ciascuno dei comandi verrà visualizzato su una riga diversa, ma solo la riga contenente il primo comando disporrà del numero di lavoro.
+
+Vediamo, a questo punto, le **opzioni principali** per il comando `jobs`:
+- **`-l`**, che permette di visualizzare, oltre alle informazioni standard appena viste, anche il [[SO2_03 - Processi#Come sono rappresentati i processi?|PID]] del "processo leader" di ogni lavoro, ossia del primo degli eventualmente molteplici processi contenuti nel lavoro;
+- **`-n`**, che impone al comando di mostrare solo i lavori il cui stato è cambiato dall'ultima volta che la shell ha avvisato l'utente;
+- **`-p`**, che impone al comando di mostrare solamente i PID dei processi leader di ogni lavoro;
+- **`-r`**, che impone al comando di mostrare solamente i lavori che sono attualmente in esecuzione;
+- **`-s`**, che impone al comando di mostrare solamente i lavori che attualmente si trovano nello stato `Stopped` o `Suspended`.
+___
+##### `bg`
+
+Il comando **`bg`** permette di **portare l'esecuzione di un lavoro in [[SO2_03 - Processi#Esecuzione dei processi|background]]**; tale comando può essere utile, ad esempio, quando si è eseguito per errore un processo o un lavoro molto lungo in foreground, e in tale contesto è possibile sospendere la sua esecuzione con `CTRL + z` e, in seguito, "risvegliarlo" in background proprio grazie a `bg`. La sinossi completa del comando è:
+
+```
+bg [job_id]
+```
+
+dove **`job_id`** è il **numero di lavoro del lavoro considerato**. Si noti che tale argomento è, in realtà, opzionale: omettere un `job_id`, infatti, porterà all'esecuzione in background del "lavoro corrente", ossia di quello contrassegnato da un `+` nell'output del comando **[[SO2_03 - Processi#`jobs`|jobs]]**. Oltre che con il numero di lavoro, è possibile individuare un determinato lavoro su cui eseguire il comando `bg` anche specificando l'eventuale nome del suo eseguibile.
+___
+##### `fg`
+
+Il comando **`bg`** permette di **portare l'esecuzione di un lavoro in [[SO2_03 - Processi#Esecuzione dei processi|foreground]]**; tale comando può essere utile, ad esempio, per rispondere a una richiesta di input di un lavoro in esecuzione in background (se un processo in background richiede un input da tastiera, l'OS gli lancerà un segnale `SIGTTIN` che sospenderà la sua esecuzione, e per proseguire si dovrà riportare il lavoro in foreground con `fg`, fornire l'input richiesto, e poi decidere se proseguire l'esecuzione in foreground o in background) o per poter "uccidere" in via definitiva un determinato processo. La sinossi completa del comando è:
+
+```
+fg [job_id]
+```
+
+Per quanto riguarda il significato di `job_id` e il funzionamento del comando, valgono le stesse considerazioni fatte per il comando **[[SO2_03 - Processi#`bg`|bg]]**.
+___
+##### `ps`
+
+Il comando **`ps`** viene utilizzato per **ottenere informazioni sui processi in esecuzione**, e fa ciò leggendo le informazioni dei file virtuali contenuti nella directory `/proc`, dove il kernel dell'OS espone le informazioni di sistema in tempo reale. La sinossi completa del comando è:
+
+```
+ps [OPZIONI...]
+```
+
+Eseguire il comando `ps` senza alcuna istruzione risulta in un output relativamente scarno, dato che equivale a **mostrare informazioni esclusivamente sui processi lanciati dall'utente attuale e dalla shell corrente** (spesso, gli unici processi visualizzati in questo contesto saranno il processo `bash` della shell stessa e il processo `ps` lanciato proprio per visualizzare tali informazioni). Sarà possibile visualizzare più informazioni su tali processi, o anche più processi, grazie a opzioni che vedremo in seguito. A livello di base, eseguire `ps` mostrerà una sorta di tabella, in cui **ogni riga corrisponderà a un diverso processo** e i cui **campi** (in ordine) sono:
+- **`PID`**, ossia il PID del processo in questione;
+- **`TTY`**, ossia il terminale (fisico o virtuale) da cui è partito il comando;
+- **`TIME`**, ossia il tempo totale di utilizzo effettivo della CPU da parte del processo;
+- **`CMD`**, ossia il comando eseguito per lanciare tale processo.
+
+Possiamo suddividere le **opzioni principali** del comando `ps` in due categorie: quelle che permettono di selezionare quali processi mostrare, e quelle che permettono di mostrare più o meno informazioni a riguardo. Per quanto riguarda le prime, le più importanti sono:
+- **`-e`**, che impone al comando di **mostrare tutti i processi in esecuzione sulla macchina**, compresi quelli di sistema lanciati al boot, o i processi lanciati da altri utenti;
+- **`-p PID`**, che impone al comando di **mostrare solamente le informazioni di uno o più processi** specificati grazie alla lista `PID`; 
+- **`-u users`**, che impone al comando di **mostrare solamente i processi appartenenti alla lista di utenti `user`**.
+
+Invece, le opzioni che permettono di mostrare più o meno informazioni sui processi considerati sono:
+- **`-f`**, che impone al comando di **aggiungere più informazioni** riguardo i processi visualizzati (in particolare, vengono aggiunti i campi **`UID`**, che indica l'utente che sta effettivamente facendo eseguire il processo, **`PPID`**, che corrisponde al PID del processo padre, **`C`**, che corrisponde alla parte intera della percentuale d'uso attuale della CPU da parte del processo, e **`STIME`** o **`START`**, ossia l'orario o la data in cui è stato avviato il comando);
+- **`-l`**, che impone al comando di **aggiungere ancora più informazioni**, anche rispetto a `-f` (vengono aggiunti i campi: **`F`**, che rappresenta delle flag associate al processo, con 1 che indica che il processo è stato "biforcato" tramite `fork` ma non ancora eseguito, 4 che indica che il processo ha utilizzato privilegi da `root`, 5 che rappresenta la somma delle due flag precedenti e 0 che indica che nessuno dei casi precedenti è applicabile al processo; **`S`**, che rappresenta lo [[SO2_03 - Processi#Stati di un processo|stato]] attuale del processo; **`PRI`**, che indica l'attuale priorità del processo con un numero tale per cui più è alto e minore è la priorità; **`NI`**, che indica la "niceness" del processo; **`ADDR`**, che corrisponde all'indirizzo in memoria del processo ma che spesso viene mostrato vuoto per motivi di retro-compatibilità; **`SZ`**, che corrisponde alla dimensione totale del processo espressa in numero di pagine RAM e disco; **`WCHAN`**, che indica in quale funzione del kernel il processo si è eventualmente bloccato in attesa di un segnale o di un evento);
+- **`-o fields`**, che impone al comando di **mostrare solamente i campi specificati nella lista `fields`**.
+
+Eseguire il comando **`ps -yl`**, in particolare, permette di vedere informazioni leggermente diverse da quelle che verrebbero visualizzate semplicemente tramite `-l`: ad esempio, viene eliminato il campo `F` (spesso poco utile), o ancora viene sostituito il campo `ADDR` con un campo `RSS`, che mostra la dimensione del processo in KB nella memoria principale (non tenendo, dunque, conto delle pagine su disco).
+___
+##### `top`
+
+[SLIDES: 04... pag. 32]
+___
+##### `kill`
+
+[SLIDES: 04... pag. 34/36 - 38]
+___
+##### `nice`
+
+[SLIDES: 04... pag. 39]
+___
+##### `renice`
+
+[SLIDES: 04... pag. 40]
+___
+##### `strace`
+
+[SLIDES: 04... pag. 41]
 ___
