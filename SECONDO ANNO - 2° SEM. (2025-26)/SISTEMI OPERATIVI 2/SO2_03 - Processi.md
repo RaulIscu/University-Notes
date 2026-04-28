@@ -213,11 +213,68 @@ Eseguire il comando **`ps -yl`**, in particolare, permette di vedere informazion
 ___
 ##### `top`
 
-[SLIDES: 04... pag. 32]
+Il comando **`top`** può essere visto come una **versione dinamica di [[SO2_03 - Processi#`ps`|ps]]**: mentre quest'ultimo fornisce una "fotografia" dei processi in esecuzione nel momento in cui viene lanciato il comando, `top` offre una **visualizzazione in tempo reale e in continuo aggiornamento**. La sinossi completa del comando è:
+
+```
+top [OPZIONI...]
+```
+
+Quando si esegue `top`, il terminale diventa sostanzialmente una **dashboard interattiva**: l'interfaccia del terminale viene divisa in due sezioni, di cui la prima costituisce la cosiddetta "**summary area**", che fornisce una panoramica globale dello stato del sistema, e la seconda costituisce la "**task area**", una tabella che elenca i processi in esecuzioni, aggiornati costantemente e ordinati in base alla percentuale di CPU utilizzata.
+
+Le **opzioni principali** per il comando `top` sono:
+- **`-b`**, che impone al comando di eseguirsi in "**batch mode**", eliminando qualsiasi interattività e stampando piuttosto i dati a schermo ogni pochi secondi;
+- **`-n num`**, che impone al comando di **aggiornarsi solo `num` volte** prima di terminare automaticamente la propria esecuzione; 
+- **`-p PID`**, che funziona in modo identico all'opzione omonima di `ps`.
+
+Se `top` viene aperto in modo interattivo (dunque, evitando l'opzione `-b`), sarà possibile premere **`?`** per avere una **lista completa di comandi eseguibili** durante l'esecuzione del comando.
 ___
 ##### `kill`
 
-[SLIDES: 04... pag. 34/36 - 38]
+Il comando **`kill`**, nonostante il suo nome abbastanza intimidatorio, serve per **inviare segnali vari a un processo**. La sinossi completa del comando è:
+
+```
+kill [-l [signal]] [-signal] [PID...]
+```
+
+Analizziamo, passo per passo, i vari contesti in cui può essere utilizzato tale comando, e le opportune combinazioni di opzioni per ciascuno di essi. Il comando `kill` può essere utilizzato per inviare uno qualsiasi dei **57 segnali** previsti, ciascuno dei quali è identificato da un **nome che inizia per `SIG`** (nel riferirsi a un determinato segnale in una chiamata al comando `kill`, tale prefisso può anche essere omesso) o da un **numero**. Per visualizzare tutti i possibili segnali, con annesso il loro numero e nome, basterà eseguire il comando:
+
+```
+kill -l
+```
+
+Inoltre, è possibile eseguire il comando appena visto anche seguito dal nome di un determinato segnale per ottenere il numero associato ad esso, o viceversa il numero di un segnale per ottenere il suo nome. Ad esempio, eseguire:
+
+```
+kill -l SIGKILL
+```
+
+stamperà nel terminale il numero `9`.
+
+Ora, andando avanti e ipotizzando di non star usando l'opzione `-l`, sarà possibile utilizzare il comando `kill` per **inviare un certo segnale `signal` ai processi identificati dalla lista `PID`**. Ad esempio, eseguire uno qualsiasi dei seguenti comandi:
+
+```
+kill -9 123
+kill -SIGKILL 123
+kill -KILL 123
+```
+
+porterà al medesimo risultato, ossia all'invio del segnale `SIGKILL` al processo avente PID pari a `123`. Nello specificare il segnale da mandare, quando ci si riferisce al suo nome e non al suo numero, è possibile inserire l'opzione **`-s`** prima del segnale e omettere il trattino (`-`) che precede quest'ultimo, ad esempio:
+
+```
+kill -s KILL 123
+```
+
+Come si può notare, però, **specificare il segnale da inviare non è obbligatorio**: se lo si omette, eseguendo il comando nella forma base `kill PID`, viene inviato un **segnale di default**, ossia **`SIGTERM`** (identificato dal numero **`15`**). Ma **cosa fanno concretamente i vari segnali?** Per rispondere a questa domanda, forniamo di seguito un elenco dei **segnali più comuni** e più potenti tra i 57 disponibili:
+- **`SIGINT`** (o **`INT`**, identificato dal numero **`2`**), che è il segnale inviato al processo [[SO2_03 - Processi#Esecuzione dei processi|in foreground]] quando si preme **`CTRL + c`**, e serve per **interrompere il processo** (la maggior parte dei programmi si chiude immediatamente, ma in alcuni casi, come con gli editor di testo, essi possono intercettare il segnale e chiedere all'utente di salvare il proprio lavoro prima di terminare l'esecuzione);
+- **`SIGKILL`** (o **`KILL`**, identificato dal numero **`9`**), che serve per **interrompere il processo immediatamente, senza possibilità di intercettazione o ignoramento** (va usato con prudenza, dato che potrebbe portare a corruzione di dati o altri comportamenti non desiderati);
+- **`SIGTERM`** (o **`TERM`**, identificato dal numero **`15`**), che serve per **interrompere un processo in modo "gentile"**, dando tempo al processo di salvare dati, chiudere eventuali file aperti e terminare tutte le operazioni in corso prima di terminare la propria esecuzione;
+- **`SIGCONT`** (o **`CONT`**, identificato dal numero **`18`**), che serve per **far continuare l'esecuzione di un processo bloccato** (viene usato, ad esempio, dai comandi `bg` e `fg`);
+- **`SIGSTOP`** (o **`STOP`**, identificato dal numero **`19`**), che serve per **bloccare il processo immediatamente**, facendolo entrare nello stato di `Sleep`, e come `SIGKILL` non può essere intercettato né ignorato;
+- **`SIGSTP`** (o **`STP`**, identificato dal numero **`20`**), che è **molto simile a `SIGSTOP`**, ma a differenza di quest'ultimo **può essere intercettato dal programma** (è il segnale inviato al processo in foreground quando si preme `CTRL + z`).
+
+**I segnali vengono presi in considerazione solo se il "real user" del processo è lo stesso che invia il segnale** (oppure, **se li invia un super-utente**). In generale, quando un processo riceve un segnale, o fa un'**azione predefinita** (come quelle appena viste), oppure un'**azione personalizzata**.
+
+Oltre a quelli analizzati poco fa, ci sono altri due segnali particolari degni di essere approfonditi: **`SIGUSR1`** (o **`USR1`**, identificato dal numero **`10`**) e **`SIGUSR2`** (o **`USR2`**, identificato dal numero **`12`**). Tali segnali sono un esempio di processi che consentono un'operazione personalizzata, e in particolare consentono una **semplice forma di comunicazione tra processi**: supponendo, ad esempio, di star creando un programma `P1`, si può definire un gestore di segnali per `SIGUSR1`, in modo che se un altro programma `P2` invia un segnale `SIGUSR1` a `P1` quest'ultimo eseguirà il codice del gestore creato. Spesso, se si invia uno di questi segnali a un processo che non li gestisce in modo esplicito, essi causano la terminazione del processo in questione.
 ___
 ##### `nice`
 
@@ -229,5 +286,31 @@ ___
 ___
 ##### `strace`
 
-[SLIDES: 04... pag. 41]
+Il comando **`strace`** viene utilizzato per **eseguire un comando mostrando tutte le sue [[SO2_05 - System calls|chiamate di sistema]] e le risposte a tali chiamate**, oppure per **visualizzare le chiamate di sistema effettuate da un certo processo**. La sinossi completa del comando è:
+
+```
+strace [-p PID] [comando]
+```
+
+Per eseguire un comando `comando` monitorando le sue chiamate di sistema (sostanzialmente eseguendolo in modalità debugging), si dovrà eseguire:
+
+```
+strace comando
+```
+
+Fare ciò stamperà a schermo tutte le librerie caricate dal comando `comando`, tutti gli eventuali [[SO2_02 - File system|file e directory]] aperti durante l'esecuzione, le chiamate di sistema effettuate, ecc. ecc. Alternativamente, è possibile monitorare un processo già in esecuzione eseguendo:
+
+```
+strace -p PID
+```
+
+dove `PID` è, naturalmente, il PID del processo da monitorare.
+
+Nella maggior parte dei casi, l'esecuzione di un programma o di un comando porterà a migliaia di chiamate di sistema, o comunque a quantità enormi di informazioni, che finiranno per "intasare" il terminale: dunque, in questi casi, si preferisce **ridirezionare l'output del comando in un file**. Per fare ciò, ci sono due modi:
+- il modo "grezzo" implica il ridirezionamento dei [[SO2_03 - Processi#Canali standard|canali standard]] del processo, ad esempio eseguendo `strace comando 2> log.txt` (si ridireziona `stderr` e non `stdout`, dato che il comando `strace` stampa sul primo);
+- il modo "elegante" implica l'utilizzo dell'opzione **`-o filename`**, che dovrà precedere il comando da eseguire (ad esempio, `strace -o log.txt ls -l`).
+
+Oltre a quelle viste finora, ci sono altre **opzioni utili** per il comando `strace`, tra cui:
+- **`-c`**, che impone al comando di stampare solo una "tabella" riassuntiva finale, una volta terminata l'esecuzione del processo monitorato;
+- **`-e ops...`**, che permette di filtrare le operazioni di monitorare in base alla lista `ops`.
 ___
