@@ -78,13 +78,13 @@ Il **PCB**, invece, rappresenta una sorta di **"documento d'identità" per un pr
 - il **Real GID** (**Real Group ID**), ossia l'ID del gruppo a cui appartiene l'utente che ha avviato il processo;
 - l'**Effective UID** (**Effective User ID**), ossia l'ID dell'utente che ha assunto il controllo del processo in esecuzione;
 - l'**Effective GID** (**Effective Group ID**), ossia l'ID del gruppo dell'utente che ha assunto il controllo del processo in esecuzione;
-- il **Saved UID** (**Saved User ID**),
-- il **Saved GID** (**Saved Group ID**),
+- il **Saved UID** (**Saved User ID**);
+- il **Saved GID** (**Saved Group ID**);
 - la **current working directory**, ossia la [[SO2_02 - File system|directory]] all'interno della quale sta venendo eseguito il processo;
 - la **[[SO2_02 - File system#`umask`|umask]]**;
 - la "**Nice**", che indica la priorità statica del processo.
 
-[SLIDES: 04 - pag. 12 - 13]
+Per approfondire i **Saved UID** e **Saved GID**, rispolveriamo dei concetti esposti quando parlavamo di [[SO2_02 - File system#Permessi di accesso ai file|permessi di accesso]] a file e directory, e in particolare i bit speciali **SetUID** e **SetGID**: il primo, se settato a `1` per un determinato file eseguibile, fa in modo che quest'ultimo venga eventualmente eseguito con i privilegi del proprietario del file, non di quello che lo ha lanciato; allo stesso modo, se il SetGID è settato a `1`, il file viene eseguito con i privilegi del gruppo proprietario dello stesso. A questo punto, possiamo chiarire il significato di Saved UID e Saved GID: **il Saved UID rappresenta l'UID associato al processo prima dell'esecuzione del SetUID**, e in maniera analoga **il Saved GID rappresenta il GID associato al processo prima dell'esecuzione del SetGID**. Lo scopo principale di Saved UID e Saved GID è quello di **permettere a un processo di effettuare alcune operazioni in modo "non privilegiato"**, per poi eventualmente tornare ad assumere privilegi superiori (ad esempio, il processo potrebbe creare dei file che, terminata l'esecuzione, apparterranno all'utente non privilegiato e non a quello di cui si sono assunti i privilegi, che tipicamente è `root`); ciò viene fatto principalmente per motivi di **sicurezza**, in modo da usare privilegi da `root` solo quando espressamente richiesti.
 
 Oltre a PID e PCB, ogni processo dispone di un proprio **spazio di indirizzamento**, ossia di una propria area di memoria nella memoria principale, diviso in **sei aree fondamentali**:
 - **Text Segment** (tipicamente accessibile in sola lettura per evitare corruzione dei dati), che contiene le istruzioni in linguaggio macchina da mandare al processore per proseguire l'esecuzione del processo (se si lanciano più istanze dello stesso programma, questo segmento potrebbe essere condiviso per risparmiare memoria);
@@ -278,11 +278,25 @@ Oltre a quelli analizzati poco fa, ci sono altri due segnali particolari degni d
 ___
 ##### `nice`
 
-[SLIDES: 04... pag. 39]
+Come già accennato, in sistemi Linux ogni processo dispone di un certo livello di **priorità**, indicata da un numero che **più è basso, più indica una priorità alta**, e dunque un processo importante da eseguire il prima possibile. 
+
+Ora, un utente non può imporre all'OS di assegnare certe priorità piuttosto che altre a un processo; ciononostante, può variare questo valore utilizzando quella che viene chiamata "**niceness**": si tratta di un **numero compreso nell'intervallo $[-20,\,19]$**, che viene sostanzialmente sommato alla priorità assegnata dall'OS per alterare quest'ultima. Dunque, se la niceness assume un valore positivo, il valore della priorità aumenta e dunque la priorità effettiva del processo scende; viceversa, se la niceness assume un valore negativo, il valore della priorità diminuisce e dunque la priorità effettiva sale. **Di default, la niceness è pari a $0$**, tuttavia può essere modificata per un determinato processo proprio utilizzando il comando **`nice`**, la cui sinossi completa è:
+
+```
+nice [-n num] comando
+```
+
+dove **`comando`** è il comando da eseguire, mentre **`num`** è la niceness da assegnare al processo generato dall'esecuzione di tale comando. Se non viene specificata l'opzione `-n num`, tipicamente il comportamento di default del comando è aggiungere $10$ alla niceness del processo.
 ___
 ##### `renice`
 
-[SLIDES: 04... pag. 40]
+Il comando **`renice`** è molto simile al comando **[[SO2_03 - Processi#`nice`|nice]]** appena visto, con una fondamentale differenza: viene utilizzato per **modificare la niceness di processi che sono già in esecuzione**. La sinossi completa del comando è:
+
+```
+renice num PID
+```
+
+dove **`num`** è la nuova niceness da assegnare al processo, mentre **`PID`** rappresenta la lista di PID dei processi a cui assegnare tale niceness.
 ___
 ##### `strace`
 
