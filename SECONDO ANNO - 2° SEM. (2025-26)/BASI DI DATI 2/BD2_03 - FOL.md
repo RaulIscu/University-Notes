@@ -53,15 +53,15 @@ Dato che il simbolo di predicato $=$, ossia quello dell'uguaglianza, è obbligat
 
 Per riferirci a un **simbolo di funzione $f$ di arità $k$**, o anche a un **simbolo di predicato $p$ di arità $k$**, si utilizzeranno rispettivamente le notazioni $f/k$ e $p/k$. In questo contesto, i simboli di funzione di arità $0$ vengono anche detti "**simboli di costante**"; invece, i simboli di predicato di arità $0$ vengono anche detti "**lettere proposizionali**". Vediamo, di seguito, alcuni **esempi di possibili simboli di funzione**, per farci un'idea di come funzionano:
 - **$\text{zero/0}$** è un simbolo di funzione di arità $0$, che può essere utilizzato per indicare il numero naturale $0$ (avendo arità pari a $0$, si tratta di un simbolo di costante);
-- $\text{succ/1}$ è un simbolo di funzione di arità $1$, che può essere utilizzato per indicare il numero naturale successivo a un numero $x$ dato, in modo che $\text{succ}(x)=x+1$;
+- $\text{succ/1}$ è un simbolo di funzione di arità $1$, che può essere utilizzato per indicare il numero naturale successivo a un numero $X$ dato, in modo che $\text{succ}(X)=X+1$;
 - $\text{socrate/0}$ è un simbolo di funzione di arità $0$, che può essere utilizzato per indicare l'individuo Socrate (si tratta di un simbolo di costante);
-- $\text{padre/1}$ è un simbolo di funzione di arità $1$, che può essere utilizzato per indicare il padre di un certo individuo $x$ in modo che $\text{padre}(x)$ sia il padre di $x$.
+- $\text{padre/1}$ è un simbolo di funzione di arità $1$, che può essere utilizzato per indicare il padre di un certo individuo $X$ in modo che $\text{padre}(X)$ sia il padre di $X$.
 
 Ora, vediamo alcuni **esempi di possibili simboli di predicato**:
-- $\text{doppio/2}$ è un simbolo di predicato di arità $2$, che può essere utilizzato per decretare se un numero naturale $y$ è il doppio di un altro numero naturale $x$, in modo che $\text{doppio}(x,\,y)$ sia vero solo se $y=2x$; 
-- $\text{somma/3}$ è un simbolo di predicato di arità $3$, che può essere utilizzato per decretare se un numero naturale $z$ è dato dalla somma di altri due numeri naturali $x$ e $y$, in modo che $\text{somma}(x,\,y,\,z)$ sia vero solo se $x+y=z$; 
-- $\text{uomo/1}$ è un simbolo di predicato di arità $1$, che può essere utilizzato per decretare se un certo individuo $x$ è un uomo, in modo che $\text{uomo}(x)$ sia vero solo se $x$ è un uomo;
-- $\text{mortale/1}$ è un simbolo di predicato di arità $1$, che può essere utilizzato per decretare se un certo individuo $x$ è mortale, in modo che $\text{mortale}(x)$ sia vero solo se $x$ è mortale.
+- $\text{doppio/2}$ è un simbolo di predicato di arità $2$, che può essere utilizzato per decretare se un numero naturale $Y$ è il doppio di un altro numero naturale $X$, in modo che $\text{doppio}(X,\,Y)$ sia vero solo se $Y=2X$; 
+- $\text{somma/3}$ è un simbolo di predicato di arità $3$, che può essere utilizzato per decretare se un numero naturale $z$ è dato dalla somma di altri due numeri naturali $X$ e $Y$, in modo che $\text{somma}(X,\,Y,\,Z)$ sia vero solo se $X+Y=Z$; 
+- $\text{uomo/1}$ è un simbolo di predicato di arità $1$, che può essere utilizzato per decretare se un certo individuo $X$ è un uomo, in modo che $\text{uomo}(X)$ sia vero solo se $X$ è un uomo;
+- $\text{mortale/1}$ è un simbolo di predicato di arità $1$, che può essere utilizzato per decretare se un certo individuo $X$ è mortale, in modo che $\text{mortale}(X)$ sia vero solo se $X$ è mortale.
 
 In caso non si sia capito finora, si chiarisce la **differenza principale tra funzioni e predicati**, e di conseguenza tra simboli degli uni e degli altri: in parole povere, **le funzioni individuano degli oggetti specifici nel "dominio" in cui si sta lavorando, mentre i predicati verificano delle verità riguardanti tali oggetti**. Insomma, i simboli di funzione vengono utilizzati per ottenere dei valori, mentre i simboli di predicato servono per affermare dei fatti riguardo tali valori, o per verificare che dei fatti siano veri.
 ___
@@ -78,12 +78,12 @@ Partiamo dal primo passaggio, ossia la **definizione del linguaggio dei termini*
 
 Ad esempio, supponiamo di avere il seguente insieme $\mathcal{F}$ di simboli di funzione:
 $$\mathcal{F}=\{\text{zero/0},\,\text{succ/1},\,\text{socrate/0},\,\text{padre/1}\}$$
-Dato questo insieme, possiamo affermare che le seguenti sequenze di simboli sono a tutti gli effetti dei termini (si specifica che $\text{MiaVariabile}$ e $x$ sono variabili): 
+Dato questo insieme, possiamo affermare che le seguenti sequenze di simboli sono a tutti gli effetti dei termini (si specifica che $\text{MiaVariabile}$ e $X$ sono variabili): 
 - $\text{zero}$;
 - $\text{MiaVariabile}$;
 - $\text{succ(zero)}$;
 - $\text{padre(padre(socrate))}$;
-- $\text{padre(succ(x))}$;
+- $\text{padre(succ(X))}$;
 - $\text{succ(succ(zero))}$. 
 
 A questo punto, avendo chiarito cosa si intende con "termini", possiamo arrivare alle **formule**. In particolare, l'insieme delle formule è definito induttivamente come segue:
@@ -91,13 +91,57 @@ A questo punto, avendo chiarito cosa si intende con "termini", possiamo arrivare
 - se $\phi$ e $\psi$ sono formule, allora lo sono anche $(\phi)$, $\lnot\phi$, $\phi \lor\psi$, $\phi \land \psi$, $\phi\rightarrow \psi$ e $\phi\leftrightarrow \psi$;
 - se $\phi$ è una formula e $x$ è una variabile, allora $\forall x\,\,\phi$ e $\exists x\,\,\phi$ sono formule.
 
+Per quello che abbiamo detto finora, il simbolo di predicato dell'uguaglianza potrebbe essere utilizzato solo nei modi seguenti in formule valide: $=(X,\,Y)$ per indicare che $x$ e $y$ sono uguali; $\lnot=(X,\,Y)$ per indicare che $X$ e $Y$ non sono uguali. Tuttavia, per semplicità e leggibilità, si preferirà utilizzare le forme $X=Y$ e $X\neq Y$.
 
+Vediamo, a questo punto, alcuni **esempi di formule valide**:
+- $\text{doppio}(\text{succ}(\text{succ}(\text{zero})),\,X)$;
+- $\exists X\,\,\text{doppio}(\text{succ}(\text{succ}(\text{zero})),\,X)$;
+- $\forall X\,\,\text{doppio}(\text{succ}(\text{succ}(\text{zero})),\,X)$;
+- $\text{somma}(\text{succ}(\text{zero}),\,\text{zero},\,\text{succ}(zero))$;
+- $\forall X\,\forall Y\,\,\text{somma}(X,\,X,\,Y)\rightarrow \text{doppio}(X,\,Y)$;
+- $(\forall X\,\exists Y\,\,\text{doppio(X,\,Y)})\,\land\,(\forall I\,\forall J\,\exists K\,\,\text{somma}(I,\,J,\,K))$;
+- $\text{mortale}(\text{socrate})\,\land\,\text{mortale}(\text{padre}(\text{socrate}))$;
+- $\forall X\,\,\text{mortale}(X)$;
+- $\forall X\,\forall Y\,\,\text{uomo}(X)$;
+- $X=\text{socrate}$;
+- $\forall X\,\,\text{uomo}(X)\rightarrow \text{uomo}(\text{socrate})$.
 
-[SLIDES: A.3... pag. 18/20]
+Di seguito, invece, si presentano alcune notazioni che non sono formule, con annesse le motivazioni:
+- $\text{succ}(\text{zero})$, dato che si tratta semplicemente di un termine;
+- $\text{mortale}(\text{mortale}(\text{socrate}))$, dato che **il simbolo di predicato** $\text{mortale}$ **può ricevere come "input" solo un termine**, e $\text{mortale}(\text{socrate})$ non lo è;
+- $\exists\text{socrate}\,\,\text{mortale}(\text{socrate})$, dato che **i quantificatori possono essere applicati solo a variabili**, mentre $\text{socrate}$ è in realtà un [[BD2_03 - FOL#Alfabeto della FOL|simbolo di costante]];
+- $\exists X\,\,\text{padre}(X)$, dato che $\text{padre}(X)$ è un termine, e **i quantificatori formano formule solo se abbinati ad altre formule**;
+- $X\lor Y$, dato che **i connettivi logici servono a collegare due formule**, non due variabili come $X$ e $Y$;
+- $X\land\text{zero}=$, sia per il motivo appena visto sia perché **l'uguaglianza è un predicato binario**, dunque che chiede di avere un termine da un lato e uno dall'altro per formare una formula, mentre in questo esempio non c'è alcun termine nel lato destro.
 ___
 ##### Semantica della FOL
 
-[SLIDES: A.3... pag. 23/35]
+Per poter proseguire nel trattare la **semantica della FOL**, soffermiamoci su un tipo di formule che rappresenteranno il nostro punto di partenza: le "**formule atomiche**". Una formula atomica è una **[[BD2_03 - FOL#Formule nella FOL|formula]] priva di connettivi e di quantificatori, che non può essere divisa in più formule più semplici**. Rappresenta la base della semantica proprio perché consiste nel "mattoncino" logico più semplice possibile, e per verificare la sua realtà non serve fare calcoli logici o semplificazioni di qualche tipo, ma basta **osservare il "mondo" in cui si sta lavorando**. Tipicamente, le formule atomiche nella FOL possono presentarsi solo in tre modi diversi:
+- un **predicato** di arità $n$ **applicato a $n$ termini**;
+- un'**uguaglianza**;
+- un **predicato con arità $0$**, ossia una **lettera proposizionale**.
+
+Ricordiamo brevemente, a questo punto, come funziona la **semantica nella logica proposizionale**, in modo da avere delle basi per la trattazione di quella nella FOL. Nella logica proposizionale, le formule atomiche sono proprio le lettere proposizionali, e la semantica parte da una funzione speciale detta "**interpretazione**" e indicata con la lettera **$I$**: in parole povere, la funzione $I$ serve per **assegnare un valore di verità ad ogni lettera proposizionale** nel mondo in cui si sta lavorando. Data un'interpretazione per le varie lettere proposizionali, entra in gioco una "**funzione di valutazione**" che, data una formula più o meno complessa e un'interpretazione delle sue sotto-formule atomiche, **calcola il valore di verità della formula rispetto all'interpretazione data**. Per comprendere meglio, vediamo un esempio. Supponiamo di avere la formula:
+$$\varphi:\,a\land(b\lor c)$$
+All'interno della formula $\varphi$, le lettere proposizionali sono $a$, $b$ e $c$, dunque per procedere si dovrà fornire un'interpretazione di tali lettere; supponiamo, dunque, che l'interpretazione sia $I(a)=true$, $I(b)=true$ e $I(c)=false$. A questo punto, grazie alla funzione di valutazione, la formula viene valutata induttivamente proprio a partire dei valori dati alle sotto-formule atomiche (ossia, alle lettere proposizionali) dall'interpretazione $I$. Avremo, infatti, che:
+- se $I(b)=true$ e $I(c)=false$, allora per la semantica del connettivo $\lor$ la formula $(b\lor c)$ viene valutata come $true$;
+- se $I(a)=true$ e, come abbiamo appena dimostrato, $(b\lor c)$ vale $true$, allora per la semantica del connettivo $\land$ la formula $a\land (b\lor c)$ vale $true$.
+
+Dunque, nell'interpretazione $I$ data, la formula proposizionale $\varphi$ è vera, e possiamo quindi dire che l'interpretazione $I$ è [[BD2_03 - FOL#Cos'è una "logica"?|modello]] di $\varphi$, o simbolicamente che:
+$$I\,\vDash\,\varphi$$
+In generale, i significati delle formule proposizionali possono essere estesi senza necessariamente fare riferimento a particolari interpretazioni. Infatti, tra le varie formule possibili, possiamo trovare:
+- formule **soddisfacibili**, tali per cui **esiste una interpretazione che è loro modello**;
+- formule **valide**, tali per cui **ogni interpretazione è loro modello**;
+- formule **insoddisfacibili**, tali per cui **nessuna interpretazione è loro modello**.
+
+La **semantica della FOL**, per certi versi, segue lo stesso itinerario che vale per la logica proposizionale: 
+1. si definisce la nozione di **interpretazione**, e dunque di **valutazione delle formule atomiche**;
+2. si definisce **come viene valutata una formula data una particolare interpretazione**;
+3. si stabilisce il **significato di ogni formula senza necessariamente fare riferimento a particolari interpretazioni**.
+
+
+
+[SLIDES: A.3... pag. 28/35]
 ___
 ##### Valutazione dei termini
 
