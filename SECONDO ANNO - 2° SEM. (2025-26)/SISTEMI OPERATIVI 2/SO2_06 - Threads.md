@@ -261,11 +261,57 @@ int main()
 ___
 ##### Terminazione di un processo multi-thread
 
-
-
 [SLIDES: 16, pag. 24 - 25]
 ___
 ##### Attributi di un thread
 
-[SLIDES: 16, pag. 26/28]
+Come abbiamo accennato [[SO2_06 - Threads#Creazione di un nuovo thread|in precedenza]], **un thread è dotato di determinati attributi**, che permettono di personalizzare il suo comportamento. Ciò avviene attraverso un oggetto di tipo **`pthread_attr_t`**, che consiste essenzialmente in una **[[SO2_04 - C#Strutture|struttura]] contenente le varie opzioni di configurazione** del thread (è quella che viene specificata quando si chiama la funzione `pthread_create`, e che contiene attributi predefiniti se al parametro corrispondente di tale funzione si passa `NULL`).
+
+Per poter **assegnare attributi specifici a un nuovo thread**, si dovranno seguire dei passaggi ben precisi:
+1. **dichiarare un oggetto di tipo `pthread_attr_t`**;
+2. **inizializzare l'insieme di attributi** con una chiamata alla funzione **`pthread_attr_init`**;
+3. **modificare i singoli attributi** del thread con funzioni più specifiche (le vedremo in seguito);
+4. **assegnare l'insieme di attributi creato a un nuovo thread**, passando un puntatore agli attributi come parametro a `pthread_create`;
+5. una volta che il thread in questione è stato creato, **l'oggetto di tipo `pthread_attr_t`** non serve più, dunque **andrà eliminato** con una chiamata alla funzione **`pthread_attr_destroy`**.
+
+Vediamo più nel dettaglio le due funzioni appena citate, ossia **`pthread_attr_init`** e **`pthread_attr_destroy`**. La sinossi completa della prima è:
+
+```
+int pthread_attr_init(pthread_attr_t *attr)
+```
+
+Come accennato, tale funzione serve per **inizializzare un oggetto di tipo `pthread_attr_t`, popolandolo con gli attributi predefiniti** dell'OS del calcolatore su cui si sta lavorando. L'unico parametro che riceve tale funzione è **`attr`**, ossia un **[[SO2_04 - C#Puntatori|puntatore]] all'oggetto da inizializzare**; per quanto riguarda il **valore di ritorno**, invece, in caso di successo verrà restituito `0`, altrimenti si restituirà un codice numerico specifico per l'errore che si è incontrato. Abbiamo, poi, la funzione:
+
+```
+int pthread_attr_destroy(pthread_attr_t *attr)
+```
+
+che viene utilizzata per **distruggere un oggetto di tipo `pthread_attr_t`**, in modo da liberare la memoria allocata ad esso durante la sua inizializzazione. Anche in questo caso, l'unico parametro che riceve la funzione è **`attr`**, ossia un **puntatore all'oggetto da distruggere**; per quanto riguarda il valore di ritorno, valgono le stesse considerazioni fatte per `pthread_attr_init`.
+
+Ora, avendo chiarito come inizializzare e distruggere gli oggetti-attributi di un thread, andiamo a vedere più nel dettaglio quali sono effettivamente gli **attributi di un thread**. In particolare, approfondiremo principalmente i seguenti attributi:
+- **`detachstate`**;
+- **`scope`**;
+- **`stackaddr`**;
+- **`stacksize`**;
+- **`schedpolicy`**;
+- **`inheritsched`**;
+- **`priority`**.
+
+L'attributo **`detachstate`** definisce **cosa succede alle risorse del thread nell'istante in cui termina la sua esecuzione**. Il **valore predefinito** di tale attributo è **`PTHREAD_CREATE_JOINABLE`**, che impone al thread di **preservare il suo stato di uscita e le sue risorse dopo la terminazione**, in attesa che un altro thread faccia una chiamata a `pthread_join` su tale thread; in alternativa, è possibile assegnare anche il valore **`PTHREAD_CREATE_DETACHED`**, che impone al thread di **rilasciare istantaneamente la memoria e le risorse utilizzate al termine dell'esecuzione**.
+
+L'attributo **`scope`** definisce **con chi compete il thread per risorse e tempo di esecuzione sulla CPU**. Tipicamente, in Linux il **valore predefinito** di tale attributo è **`PTHREAD_SCOPE_SYSTEM`**, che fa in modo che **il thread competa alla pari con tutti i thread di tutti i processi attivi** nel calcolatore; in alternativa, è possibile assegnare anche **`PTHREAD_SCOPE_PROCESS`**, che fa in modo che **il thread competa solo con gli altri thread appartenenti al suo stesso processo**.
+
+L'attributo **`stackaddr`** permette di specificare l'**indirizzo in memoria dello stack del thread**. Si tratta di un attributo molto delicato, tipicamente settato a **`NULL`**, il che significa che è l'OS a decidere dove allocare lo stack; modificare l'attributo `stackaddr` è un'operazione avanzata e raramente necessaria.
+
+L'attributo **`stacksize`** permette di specificare la **dimensione dello stack del thread**. Il valore predefinito è tipicamente **1 MB** o **2 MB**, a seconda dell'architettura; in certi contesti, però, è opportuno modificare tale dimensione, ad esempio per diminuirla quando si prevede la creazione di un grande numero di thread, o per aumentarla quando si prevede che il thread considerato debba effettuare ricorsioni profonde o allocare array statici di grandi dimensioni.
+
+L'attributo **`schedpolicy`** definisce **quale algoritmo di scheduling utilizzare per gestire il thread** 
+
+[SLIDES: 16, pag. 27]
+
+Per poter **leggere e modificare singoli attributi di un thread**, possiamo utilizzare una famiglia di funzioni  
+___
+## Implementazione dei thread in Linux
+
+[SLIDES: 16, pag. 30/32]
 ___
