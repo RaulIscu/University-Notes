@@ -60,17 +60,212 @@ Infine, il **modello "da molti a molti"** impone che **un numero $n_{u}$ di thre
 
 ![[modello_damoltiamolti.png]]
 
-[SLIDES: 16, pag. 16]
+Alcuni **esempi importanti di implementazione del modello "da molti a 1"** sono la libreria "Green Threads" di Oracle, la libreria "GNU Portable Threads" e altre; invece, **tutti i maggiori OS moderni supportano i modelli "da 1 a 1" e "da molti a molti"**, in particolare con Linux, Windows e MacOS che tendono ad adottare il modello "da 1 a 1", mentre IRIX, HP-UX e Tru64 UNIX scelgono il modello "da molti a molti". In ogni caso, la scelta del modello "da 1 a 1" piuttosto che del modello "da molti a molti" dipende tipicamente dalla libreria di thread utilizzata, piuttosto che dall'OS specifico.
 ___
-##### Vantaggi del multi-threading
+##### Vantaggi ed esempi del multi-threading
 
-[SLIDES: 16, pag. 5/7]
+Il multi-threading rappresenta una tecnica proficua e consigliata, al giorno d'oggi, soprattutto perché ormai **la maggioranza dei calcolatori moderni permette vari meccanismi di parallelismo**: ad esempio, banalmente, la presenza di "**multiprocessori**", ossia di diverse CPU integrate sulla stessa scheda madre, e di **processori "multi-core"**, ossia composti da più unità integrate sullo stesso chip, permette di suddividere l'esecuzione in più flussi da mandare in esecuzione parallelamente; ancora, vari calcolatori supportano un meccanismo chiamato "**hyperthreading**", grazie al quale diversi flussi di esecuzione possono "detenere" un insieme di registri della CPU, e alternare la loro esecuzione sulle unità funzionali della stessa.
+
+Naturalmente, implementare il multi-threading fornisce vari **vantaggi**, tra cui:
+- **riduzione del tempo di risposta**, dato che la presenza di più threads di esecuzione permette a un'applicazione di non rimanere completamente bloccata in attesa di un certo dato o evento;
+- **migliore condivisione delle risorse**, dato che tutti i threads di un'applicazione condividono le stesse risorse e la comunicazione tra tali threads è pressoché immediata;
+- **maggiore efficienza**, dato che l'OS gestisce i threads in modo più efficiente rispetto ai processi (basti pensare che, in sistemi Linux, in media creare un thread richiede circa $\frac{1}{10}$ del tempo richiesto per creare un processo);
+- **maggiore scalabilità**, dato che i thread possono sfruttare in modo implicito il parallelismo interno del calcolatore, e dunque permettere di creare programmi più complessi senza perdita di prestazioni.
+
+Al giorno d'oggi, il multi-threading è una tecnica ampiamente utilizzata e diffusa. Si potrebbero trovare innumerevoli **esempi di applicazioni multi-thread**: si pensi, ad esempio, a un **browser**, che potrebbe prevedere i seguenti thread di esecuzione:
+- un thread principale per il controllo dell'applicazione;
+- un thread per l'interazione con l'utente;
+- un thread per la visualizzazione delle pagine in formato HTML;
+- un thread per la gestione dei trasferimenti di pagine e file dalla rete;
+- un thread per l'esecuzione dei frammenti di codice integrati nelle pagine web;
+
+e così via.
 ___
 ##### Librerie per threads
 
-[SLIDES: 16, pag. 17 - 18]
+Generalmente, per realizzare un'applicazione multi-thread, il programmatore utilizza una **libreria di sistema**, che offre delle API che permettono la creazione e gestione dei threads. **Queste API non sono necessariamente correlate in modo diretto con la tipologia di thread utilizzata**, e possono ad esempio esistere diverse versioni di una libreria con API identiche ma riferite una a threads utente e l'altra a threads kernel (è questo il caso, ad esempio, per la libreria **`pthreads`**, o "**POSIX Threads**"). Ciononostante, **alcune librerie e relative API sono specifiche per un determinato OS o tipo di thread**, come accade ad esempio per la libreria per i thread **`Win32`**. Ancora, in altri casi, **la libreria è specifica di un certo linguaggio ad alto livello**: in questi contesti, l'uso della libreria è implicito e automatico (è il caso, ad esempio, della **libreria di thread di Java**).
+
+Approfondendo la libreria **`pthreads`**, essa è definita dallo **standard POSIX**, che definisce le API della stessa ma non stabilisce in modo stretto quale debba essere la loro implementazione in un OS specifico. In Linux, ad esempio, sono coesistite **tre diverse implementazioni**:
+- **`LinuxThreads`**, la prima delle tre, basata su un modello "[[SO2_06 - Threads#Implementazione di un'applicazione multi-thread|da 1 a 1]]" e non più supportata;
+- **`NGPT`**, o "**Next Generation POSIX Threads**", sviluppata da IBM su un modello "da molti a molti", ma anch'essa non più supportata;
+- **`NPTL`**, o "**Native POSIX Threads Library**", l'ultima implementazione nonché la più efficiente e più aderente allo standard, basata sul modello "da 1 a 1" e l'unica che è ancora attualmente in uso.
 ___
 ## Funzioni utili per gestire i threads
 
-[SLIDES: 16, pag. 20/32]
+Continuando a prendere come riferimento la [[SO2_06 - Threads#Librerie per threads|libreria per thread]] **`pthreads`**, in questo paragrafo andremo ad approfondire alcune **funzioni di libreria utili per gestire i threads**. In particolare, considereremo funzioni utilizzate per:
+- **[[SO2_06 - Threads#Creazione di un nuovo thread|creare un thread]]**;
+- **[[SO2_06 - Threads#Terminazione di un thread|terminare un thread]]**;
+- **[[SO2_06 - Threads#Attesa della terminazione di un thread|far attendere la terminazione di un altro thread]]**;
+- **[[SO2_06 - Threads#Terminazione di un processo multi-thread|terminare un processo multi-thread]]**;
+- **accedere e modificare gli [[SO2_06 - Threads#Attributi di un thread|attributi di un thread]]**.
+
+Si ricordi che, in generale, per lavorare con `pthreads` all'interno di un programma C si dovrà **includere l'header file `pthread.h`**. Inoltre, per poter **compilare un programma che utilizza `pthread.h`**, sarà necessario **aggiungere l'opzione `-pthread`** al comando `gcc`, nel modo seguente:
+
+```
+gcc program.c -o program.o -pthread
+```
+
+##### Creazione di un nuovo thread
+
+Per **creare un nuovo thread** all'interno del processo considerato, la libreria `pthreads` offre la funzione:
+
+```
+int pthread_create(pthread_t *ptid, const pthread_attr_t *pattr, void *start(void *), void *arg)
+```
+
+Approfondiamo nel dettaglio ciascuno dei **parametri** di questa funzione:
+- **`pthread_t *ptid`** consiste in un **[[SO2_04 - C#Puntatori|puntatore]] a una variabile di tipo `pthread_t`**, che in caso di successo della chiamata a `pthread_create` andrà a contenere l'ID del nuovo thread creato, chiamato "**TID**" o "**Thread ID**";
+- **`const pthread_attr_t *pattr`** consiste in un **puntatore a una struttura `pthread_attr_t`**, che permette eventualmente di specificare alcuni attributi specifici per il thread che si sta creando (rivedremo questo concetto [[SO2_06 - Threads#Attributi di un thread|in seguito]]), e che può essere passato come `NULL` o `0` per fare in modo che il thread abbia degli attributi predefiniti;
+- **`void *start(void *)`** consiste nella **funzione che verrà inizialmente eseguita dal thread**, il cui identificatore naturalmente è `start`;
+- **`void *arg`** consiste in un **puntatore passato come argomento a `start`** (l'argomento è unico, dunque se si vogliono passare più dati converrà creare una [[SO2_04 - C#Strutture|struttura]] e passare un puntatore ad essa); se non servono argomenti, tale parametro avrà valore `NULL`.
+
+Il **valore di ritorno** della funzione `pthread_create` è **`0` in caso di successo**, o un **codice numerico positivo in caso di errore**, con tale codice che rappresenta l'errore specifico in cui ha incappato la funzione.
+
+Di seguito, si fornisce un **esempio di utilizzo** di `pthread_create`:
+
+```
+#include <pthread.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+void *stampa_messaggio(void *arg) 
+{
+    char *messaggio = (char *)arg;
+    printf("Il thread dice: %s\n", messaggio);
+    
+    pthread_exit(NULL);
+}
+
+int main() 
+{
+    pthread_t mio_tid; 
+    char *testo = "Ciao dal nuovo thread!";
+    int risultato;
+
+    risultato = pthread_create(&mio_tid, NULL, stampa_messaggio, (void *)testo);
+
+    if (risultato != 0) 
+    {
+        printf("Errore nella creazione del thread\n");
+        return 1;
+    }
+
+    pthread_join(mio_tid, NULL); 
+
+    printf("Il thread ha terminato, il main chiude.\n");
+    return 0;
+}
+```
+___
+##### Terminazione di un thread
+
+Per **terminare l'esecuzione di un thread**, si utilizza la funzione:
+
+```
+void pthread_exit(void *value_ptr)
+```
+
+dove **`value_ptr`** consiste in un **[[SO2_04 - C#Puntatori|puntatore]] generico che rappresenta il "risultato" del thread**. Il thread che viene terminato è proprio il thread che chiama la funzione `pthread_exit`, dunque `value_ptr` sarà ciò che il thread restituirà ad eventuali altri thread dello stesso processo che lo stavano "aspettando" (se il thread non deve restituire nulla di utile, si può passare `NULL` a tale funzione); una cosa importantissima da ricordare, in questo contesto, è di **non restituire mai un puntatore a una variabile locale alla funzione del thread**, dato che alla terminazione del thread il suo stack viene distrutto, e con esso qualsiasi variabile locale interna ad esso. 
+
+Nonostante sia buona pratica **inserire** sempre **una chiamata a `pthread_exit`** al termine del corpo della funzione `start` di un thread, **non è sempre necessario**: infatti, se `start` giunge al termine naturalmente, tale funzione viene invocata implicitamente dall'OS, e se la funzione esegue un'istruzione `return` l'OS prende il valore ritornato e lo utilizza come `value_ptr` della chiamata implicita a `pthread_exit`.
+
+Nel momento in cui **il thread che esegue `pthread_exit` è l'ultimo thread in esecuzione di un processo**, ciò porta alla **terminazione dell'intero processo**, che effettua una chiamata implicita a `exit(0)`.
+
+Di seguito, si fornisce un **esempio di utilizzo** di `pthread_exit`:
+
+```
+#include <pthread.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+void *calcola_risultato(void *arg) 
+{
+    int numero = *(int *)arg;
+    
+    // Allocare memoria nell'Heap, così che non venga distrutta quando il thread muore
+    int *risultato = malloc(sizeof(int)); 
+    *risultato = numero * 10;
+    
+    printf("Thread: sto restituendo %d...\n", *risultato);
+    
+    pthread_exit((void *)risultato); 
+}
+
+int main() {
+    pthread_t tid;
+    int input = 5;
+    void *risultato_thread;
+
+    pthread_create(&tid, NULL, calcola_risultato, &input);
+
+    pthread_join(tid, &eredita_dal_thread); 
+
+    int *valore_letto = (int *)eredita_dal_thread;
+    printf("Il thread ha terminato con successo, restituendo: %d\n", *valore_letto);
+    
+    // Pulire la memoria allocata dal thread defunto
+    free(valore_letto); 
+
+    return 0;
+}
+```
+___
+##### Attesa della terminazione di un thread
+
+Lo strumento fondamentale per la **sincronizzazione tra thread** è la funzione **`pthread_join`**, il cui scopo principale è **far attendere al thread chiamante il termine dell'esecuzione di un altro thread**. La sinossi completa della funzione è:
+
+```
+int pthread_join(pthread_t tid, void *pret)
+```
+
+dove **`tid`** è il **TID del thread che si desidera attendere** (per intenderci, quello ottenuto dalla chiamata a `pthread_create`), mentre **`pret`** è un **puntatore alla variabile che riceverà il valore restituito dal thread terminato** (per intenderci, se il thread che termina esegue `pthread_exit(val)`, `pret` dovrà essere un puntatore a `val`). Nel caso in cui non ci interessi recuperare il valore di ritorno del thread che si sta aspettando, possiamo passare come parametro `pret` il valore nullo `NULL`.
+
+Il **valore di ritorno** della funzione `pthread_join`, analogamente a `pthread_create`, è **`0` in caso di successo** e un **codice numerico positivo in caso di errore** (ad esempio, se si prova a fare un join su un thread non esistente).
+
+Naturalmente, per natura di questa funzione, **`pthread_join` rappresenta una chiamata bloccante**, nel senso che l'esecuzione del thread chiamante viene a tutti gli effetti sospesa, finché il thread indicato da `tid` non termina la sua esecuzione. Oltre a ciò, però, `pthread_join` può avere anche altri scopi, primo su tutti la **pulizia della memoria**: infatti, quando un thread termina, è possibile che le sue risorse (ad esempio, il suo stack) rimanga in memoria se nessun altro thread stava "aspettando" la sua fine; dunque, in questo contesto, effettuare una chiamata a `pthread_join` relativa a tale thread garantisce che tali risorse vengano effettivamente eliminate, liberando memoria.
+
+Di seguito, si fornisce un **esempio di utilizzo** di `pthread_join`:
+
+```
+#include <pthread.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+void *funzione_worker(void *arg) 
+{
+    int *v = malloc(sizeof(int));
+    *v = 42;
+    printf("Thread: Calcolo completato.\n");
+    pthread_exit(v);
+}
+
+int main() 
+{
+    pthread_t tid;
+    void *status;
+
+    pthread_create(&tid, NULL, funzione_worker, NULL);
+
+    printf("Main: In attesa del thread...\n");
+    
+    // Il main si blocca qui finché il thread non finisce
+    pthread_join(tid, &status); 
+
+    int *risultato = (int *)status;
+    printf("Main: Thread terminato. Il risultato è %d\n", *risultato);
+
+    free(risultato); // Pulizia della memoria allocata dal thread
+    return 0;
+}
+```
+___
+##### Terminazione di un processo multi-thread
+
+
+
+[SLIDES: 16, pag. 24 - 25]
+___
+##### Attributi di un thread
+
+[SLIDES: 16, pag. 26/28]
 ___
