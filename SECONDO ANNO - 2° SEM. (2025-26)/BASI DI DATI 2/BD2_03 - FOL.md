@@ -116,7 +116,7 @@ Di seguito, invece, si presentano alcune notazioni che non sono formule, con ann
 ___
 ##### Semantica della FOL
 
-Per poter proseguire nel trattare la **semantica della FOL**, soffermiamoci su un tipo di formule che rappresenteranno il nostro punto di partenza: le "**formule atomiche**". Una formula atomica è una **[[BD2_03 - FOL#Formule nella FOL|formula]] priva di connettivi e di quantificatori, che non può essere divisa in più formule più semplici**. Rappresenta la base della semantica proprio perché consiste nel "mattoncino" logico più semplice possibile, e per verificare la sua realtà non serve fare calcoli logici o semplificazioni di qualche tipo, ma basta **osservare il "mondo" in cui si sta lavorando**. Tipicamente, le formule atomiche nella FOL possono presentarsi solo in tre modi diversi:
+Per poter proseguire nel trattare la **semantica della FOL**, soffermiamoci su un tipo di formule che rappresenteranno il nostro punto di partenza: le "**formule atomiche**". Una formula atomica è una **[[BD2_03 - FOL#Formule nella FOL|formula]] priva di connettivi e di quantificatori, che non può essere divisa in formule più semplici**. Rappresenta la base della semantica proprio perché consiste nel "mattoncino" logico più semplice possibile, e per verificare la sua realtà non serve fare calcoli logici o semplificazioni di qualche tipo, ma basta **osservare il "mondo" in cui si sta lavorando**. Tipicamente, le formule atomiche nella FOL possono presentarsi solo in tre modi diversi:
 - un **predicato** di arità $n$ **applicato a $n$ termini**;
 - un'**uguaglianza**;
 - un **predicato con arità $0$**, ossia una **lettera proposizionale**.
@@ -130,7 +130,7 @@ All'interno della formula $\varphi$, le lettere proposizionali sono $a$, $b$ e $
 Dunque, nell'interpretazione $I$ data, la formula proposizionale $\varphi$ è vera, e possiamo quindi dire che l'interpretazione $I$ è [[BD2_03 - FOL#Cos'è una "logica"?|modello]] di $\varphi$, o simbolicamente che:
 $$I\,\vDash\,\varphi$$
 In generale, i significati delle formule proposizionali possono essere estesi senza necessariamente fare riferimento a particolari interpretazioni. Infatti, tra le varie formule possibili, possiamo trovare:
-- formule **soddisfacibili**, tali per cui **esiste una interpretazione che è loro modello**;
+- formule **soddisfacibili**, tali per cui **esiste un'interpretazione che è loro modello**;
 - formule **valide**, tali per cui **ogni interpretazione è loro modello**;
 - formule **insoddisfacibili**, tali per cui **nessuna interpretazione è loro modello**.
 

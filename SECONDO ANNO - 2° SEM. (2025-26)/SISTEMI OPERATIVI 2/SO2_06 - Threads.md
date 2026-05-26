@@ -309,9 +309,38 @@ L'attributo **`schedpolicy`** definisce **quale algoritmo di scheduling utilizza
 
 [SLIDES: 16, pag. 27]
 
-Per poter **leggere e modificare singoli attributi di un thread**, possiamo utilizzare una famiglia di funzioni  
+Per poter **leggere e modificare singoli attributi di un thread**, è prevista un'ampia famiglia di funzioni. Innanzitutto, per **ottenere gli attributi di un thread già attivo** si utilizza la funzione:
+
+```
+int pthread_getattr_np(pthread_t thread, pthread_attr_t *attr)
+```
+
+dove **`thread`** è il **TID del thread da cui ottenere gli attributi**, e **`attr`** è un **puntatore all'oggetto di tipo `pthread_attr_t` che ospiterà una copia degli attributi correnti di `thread`**. Una volta ottenuti gli attributi nel loro complesso, sarà possibile **ottenere singoli attributi dall'oggetto `pthread_attr_t`** tramite una serie di funzioni "getter", tra cui:
+- **`pthread_attr_getdetachstate(const pthread_attr_t *attr, int *ds)`**, che ottiene l'attributo `detachstate` dell'oggetto `attr` e lo scrive nella variabile a cui punta `ds`;
+- **`pthread_attr_getscope(const pthread_attr_t *attr, int *s)`**, che ottiene l'attributo `scope` dell'oggetto `attr` e lo scrive nella variabile a cui punta `s`;
+- **`pthread_attr_getstacksize(const pthread_attr_t *attr, size_t *ss)`**, che ottiene l'attributo `stacksize` dell'oggetto `attr` (corrispondente ai byte di memoria che si vogliono allocare allo stack) e lo scrive nella variabile a cui punta `ss`;
+- **`pthread_attr_getstack(const pthread_attr_t *attr, void sa, size_t *ss)`**, che ottiene sia l'attributo `stackaddr` dell'oggetto `attr`, scrivendolo nel puntatore `sa`, sia l'attributo `stacksize` (sempre espresso in byte), scrivendolo nella variabile a cui punta `ss`;
+- **`pthread_attr_getschedpolicy(const pthread_attr_t *attr, int *sp)`**, che ottiene l'attributo `schedpolicy` dell'oggetto `attr` e lo scrive nella variabile a cui punta `sp`;
+- **`pthread_attr_getinheritsched(const pthread_attr_t *attr, int *is)`**, che ottiene l'attributo `inheritsched` dell'oggetto `attr` e lo scrive nella variabile a cui punta `is`;
+- **`pthread_attr_getschedparam(const pthread_attr_t *attr, ...)`**, 
+
+Vediamo, poi, le funzioni utilizzate per **modificare gli attributi di un oggetto di tipo `pthread_attr_t`**:
+- **`pthread_attr_setdetachstate(pthread_attr_t *attr, int ds)`**, che modifica l'attributo `detachstate` dell'oggetto `attr` e gli assegna il valore `ds`;
+- **`pthread_attr_setscope(pthread_attr_t *attr, int s)`**, che modifica l'attributo `scope` dell'oggetto `attr` e gli assegna il valore `s`;
+- **`pthread_attr_setstackaddr(pthread_attr_t *attr, void *sa)`**, che modifica l'attributo `stackaddr` dell'oggetto `attr` e gli assegna il valore `sa`;
+- **`pthread_attr_setstacksize(pthread_attr_t *attr, size_t ss)`**, che modifica l'attributo `stacksize` dell'oggetto `attr` e gli assegna il valore `ss`, corrispondente ai byte di memoria che si vogliono allocare allo stack;
+- **`pthread_attr_setstack(pthread_attr_t *attr, void *sa, size_t ss)`**, che modifica sia l'attributo `stackaddr` dell'oggetto `attr`, assegnandogli il valore `sa`, sia l'attributo `stacksize`, assegnandogli il valore `ss` (sempre espresso in byte);
+- **`pthread_attr_setschedpolicy(pthread_attr_t *attr, int sp)`**, che modifica l'attributo `schedpolicy` dell'oggetto `attr` e gli assegna il valore `sp`;
+- **`pthread_attr_setinheritsched(pthread_attr_t *attr, int is)`**, che modifica l'attributo `inheritsched` dell'oggetto `attr` e gli assegna il valore `is`;
+- **`pthread_attr_setschedparam(pthread_attr_t *attr, ...)`**,
+
+[SLIDES: 16, pag. 28]
 ___
 ## Implementazione dei thread in Linux
 
 [SLIDES: 16, pag. 30/32]
+___
+## Sincronizzazione tra threads
+
+[SLIDES: 17, pag. 4/19]
 ___
