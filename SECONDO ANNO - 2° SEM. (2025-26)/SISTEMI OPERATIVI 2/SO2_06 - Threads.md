@@ -305,9 +305,13 @@ L'attributo **`stackaddr`** permette di specificare l'**indirizzo in memoria del
 
 L'attributo **`stacksize`** permette di specificare la **dimensione dello stack del thread**. Il valore predefinito è tipicamente **1 MB** o **2 MB**, a seconda dell'architettura; in certi contesti, però, è opportuno modificare tale dimensione, ad esempio per diminuirla quando si prevede la creazione di un grande numero di thread, o per aumentarla quando si prevede che il thread considerato debba effettuare ricorsioni profonde o allocare array statici di grandi dimensioni.
 
-L'attributo **`schedpolicy`** definisce **quale algoritmo di scheduling utilizzare per gestire il thread** 
+L'attributo **`schedpolicy`** definisce **quale algoritmo di scheduling utilizzare per gestire il thread**. Il **valore predefinito** di tale attributo è tipicamente **`SCHED_OTHER`**, che impone un approccio trovato in molti sistemi (tra cui sistemi Solaris) in cui **un thread viene eseguito finché non viene interrotto da un thread con priorità più alta**, oppure **finché non si blocca volontariamente**. In alternativa, è possibile assegnare altre politiche di scheduling real-time, come:
+- **`SCHED_FIFO`**, con la quale un thread "monopolizza" la CPU finché non decide da solo di fermarsi;
+- **`SCHED_RR`**, con la quale un thread viene costantemente alternato con altri thread real-time seguendo un modello Round Robin.
 
-[SLIDES: 16, pag. 27]
+L'attributo **`inheritsched`** specifica **se il nuovo thread eredita o meno la priorità e lo scheduling del thread padre**. Il **valore predefinito** di tale attributo è **`PTHREAD_INHERIT_SCHED`**, con il quale **il nuovo thread eredita priorità e politiche di scheduling del thread padre** (in questo caso, eventuali valori inseriti negli attributi `schedpolicy` e `priority` del thread figlio vengono ignorati); in alternativa, assegnando a questo attributo il valore **`PTHREAD_EXPLICIT_SCHED`**, si fa in modo che **il nuovo thread non erediti priorità e politiche di scheduling dal thread padre**, facendo invece riferimento a quelle assegnate ad esso stesso. 
+
+L'attributo **`priority`** rappresenta, concretamente, la **priorità assoluta del thread**. Tale valore è contenuto in una **[[SO2_04 - C#Strutture|struttura]] `sched_param`**, nel campo **`int sched_priority`** della stessa, e i valori che può assumere dipendono sia dall'OS con cui si sta lavorando, sia dalla politica di scheduling scelta per il thread considerato: in particolare, se si sceglie una politica di default come `SCHED_OTHER`, la `sched_priority` è tipicamente impostata a **0**, mentre per politiche real-time come `SCHED_FIFO` o `SCHED_RR` il range tipico va **da 1** (priorità minima) **a 99** (priorità massima.
 
 Per poter **leggere e modificare singoli attributi di un thread**, è prevista un'ampia famiglia di funzioni. Innanzitutto, per **ottenere gli attributi di un thread già attivo** si utilizza la funzione:
 
@@ -322,7 +326,7 @@ dove **`thread`** è il **TID del thread da cui ottenere gli attributi**, e **`a
 - **`pthread_attr_getstack(const pthread_attr_t *attr, void sa, size_t *ss)`**, che ottiene sia l'attributo `stackaddr` dell'oggetto `attr`, scrivendolo nel puntatore `sa`, sia l'attributo `stacksize` (sempre espresso in byte), scrivendolo nella variabile a cui punta `ss`;
 - **`pthread_attr_getschedpolicy(const pthread_attr_t *attr, int *sp)`**, che ottiene l'attributo `schedpolicy` dell'oggetto `attr` e lo scrive nella variabile a cui punta `sp`;
 - **`pthread_attr_getinheritsched(const pthread_attr_t *attr, int *is)`**, che ottiene l'attributo `inheritsched` dell'oggetto `attr` e lo scrive nella variabile a cui punta `is`;
-- **`pthread_attr_getschedparam(const pthread_attr_t *attr, ...)`**, 
+- **`pthread_attr_getschedparam(const pthread_attr_t *attr, struct sched_param *p)`**, che ottiene l'attributo `sched_param` dell'oggetto `attr` e lo scrive nella variabile a cui punta `p`.
 
 Vediamo, poi, le funzioni utilizzate per **modificare gli attributi di un oggetto di tipo `pthread_attr_t`**:
 - **`pthread_attr_setdetachstate(pthread_attr_t *attr, int ds)`**, che modifica l'attributo `detachstate` dell'oggetto `attr` e gli assegna il valore `ds`;
@@ -332,9 +336,7 @@ Vediamo, poi, le funzioni utilizzate per **modificare gli attributi di un oggett
 - **`pthread_attr_setstack(pthread_attr_t *attr, void *sa, size_t ss)`**, che modifica sia l'attributo `stackaddr` dell'oggetto `attr`, assegnandogli il valore `sa`, sia l'attributo `stacksize`, assegnandogli il valore `ss` (sempre espresso in byte);
 - **`pthread_attr_setschedpolicy(pthread_attr_t *attr, int sp)`**, che modifica l'attributo `schedpolicy` dell'oggetto `attr` e gli assegna il valore `sp`;
 - **`pthread_attr_setinheritsched(pthread_attr_t *attr, int is)`**, che modifica l'attributo `inheritsched` dell'oggetto `attr` e gli assegna il valore `is`;
-- **`pthread_attr_setschedparam(pthread_attr_t *attr, ...)`**,
-
-[SLIDES: 16, pag. 28]
+- **`pthread_attr_setschedparam(pthread_attr_t *attr, const struct sched_param *p)`**, che modifica l'attributo `sched_param` dell'oggetto `attr` e gli assegna il valore `p`.
 ___
 ## Implementazione dei thread in Linux
 
@@ -342,5 +344,252 @@ ___
 ___
 ## Sincronizzazione tra threads
 
-[SLIDES: 17, pag. 4/19]
+Come abbiamo visto finora, i threads possono essere uno strumento molto potente e comodo, ma **l'esistenza di più flussi di esecuzione concorrenti è anche fonte di molte complicazioni**: infatti, in un'applicazione multi-thread, **ogni thread rappresenta un flusso di esecuzione a sé stante, che si trova** a tutti gli effetti **"in competizione" con gli altri flussi** (rappresentati dagli altri thread); **ogni processo**, del resto, **può essere interrotto da un altro processo** in pressoché qualsiasi momento; infine, se il sistema su cui si lavora dispone di più di un processore, quasi sicuramente **diversi processi saranno in esecuzione contemporaneamente**. In questo contesto, è importantissimo parlare di **"sincronizzazione" tra threads**, in modo da assicurare l'esecuzione corretta di ciascuno di essi senza che si corrompano a vicenda o finiscano a manifestare comportamenti non previsti.
+
+##### Race condition
+
+Parlando di sincronizzazione tra threads, è importante pensare soprattutto al mantenere una **coerenza nelle strutture dati**, in modo che ciascun thread possa lavorare con dati che rappresentino accuratamente lo stato della sua esecuzione. Questa coerenza deve manifestarsi su due livelli diversi:
+- una coerenza nelle **strutture dati private** di ciascun thread;
+- una coerenza nelle **strutture dati condivise** tra più thread.
+
+Se la prima è sostanzialmente garantita a priori grazie al meccanismo del "**context switch**", lo stesso non si può dire della seconda. Dunque, se due o più flussi di esecuzione condividono una determinata struttura dati, la loro concorrenza può determinare uno stato di tale struttura non coerente con la logica di ciascuno dei flussi: questo tipo di situazioni viene detto "**race condition**", e sono naturalmente situazioni da evitare il più possibile, soprattutto per la loro **natura non-deterministica**, nel senso che **lo stato finale della struttura dati dipende imprevedibilmente dall'ordine in cui i thread vengono eseguiti dal processore**.
+
+Un esempio tipico di race condition basilare può essere il seguente: supponiamo di avere due thread `#1` e `#2`, che condividono una variabile `counter` e il cui codice è, per il thread `#1`:
+
+```
+for ( ; ; )
+{
+	crea_risorsa();
+	counter = counter + 1;
+}
+```
+
+e per il thread `#2`:
+
+```
+while (counter > 0)
+{
+	counter = counter - 1;
+	consuma_risorsa();
+}
+```
+
+In questo caso, la race condition è causata proprio dal comportamento della variabile `counter`, unico dato condiviso tra i due threads. In particolare, sono l'incremento e il decremento di `counter` a causare problemi, dato che non si tratta di cosiddette "**operazioni atomiche**", ossia **operazioni indivisibili che vengono eseguite per intero senza interruzioni**, ma piuttosto da operazioni divisibili in tre passi:
+1. lettura del valore dalla memoria principale in un registro;
+2. incremento (o decremento) del registro;
+3. scrittura del valore dal registro alla memoria principale.
+
+Ciò vuol dire che, ad esempio, potrebbe succedere la seguente successione di eventi (si suppone che `counter` parta da un valore pari a 2):
+- nell'istante di tempo $t = 1$, il thread `#1` comincia l'esecuzione dell'istruzione `counter = counter + 1`, dunque carica in un registro $R_{0}$ il valore `counter` dalla memoria principale, e nell'istante seguente $t=2$ incrementa il registro $R_{0}$ di 1 (ora, $R_{0}$ conterrà il valore 3);
+- nell'istante di tempo $t=3$, il thread `#2` interrompe l'esecuzione di `#1`, ed esegue a sua volta l'istruzione `counter = counter - 1`, procedendo dunque a caricare `counter` dalla memoria principale (dato che il thread `#1` non ha ancora scritto il nuovo valore di `counter` in memoria, esso sarà ancora pari a 2) in un registro $R_{1}$, a decrementare il registro $R_{1}$ di 1 nell'istante $t=4$ (ora, $R_{1}$ conterrà il valore 1), e a riscrivere il valore di $R_{1}$ nella variabile `counter` in memoria nell'istante $t=5$;
+- a questo punto, nell'istante di tempo $t=6$, il controllo tornerà al thread `#1`, che scriverà il valore contenuto nel registro $R_{0}$ (ossia, 3) nella variabile `counter` in memoria principale, che però era stata precedentemente settata a 1 dal thread `#2`.
+
+Insomma, è perfettamente possibile che si crei una situazione di incertezza, in cui l'ordine di esecuzione dei thread cambia drasticamente il risultato finale, e produce effetti incoerenti per almeno uno dei threads coinvolti.
+___
+##### Semafori e Mutex
+
+In generale, una **sequenza di istruzioni di un flusso di esecuzione che accede a una struttura dati condivisa**, e quindi che **deve essere eseguita "atomicamente"**, ovvero senza la possibilità di essere interrotta da altri thread, viene detta "**regione critica**" (si specifica, per chiarezza, che seppur una regione critica debba essere eseguita "atomicamente", essa non è di per sé un'istruzione atomica). Il metodo più facile e comune per **proteggere una regione critica**, dunque per assicurarsi che essa venga effettivamente eseguita atomicamente, è il cosiddetto "semaforo".
+
+Il concetto di "**semaforo**", contestualmente alla sincronizzazione tra threads, è stato inventato da E. W. Dijkstra negli anni '60, e si basa su una premessa molto semplice: in parole povere, esso consiste in un **contatore che indica il numero di copie disponibili di una certa risorsa**. Per comprendere meglio, si può pensare a un'analogia con i parcheggi per automobili: spesso, all'ingresso di tali parcheggi, c'è un tabellone che indica quanti posti sono attualmente liberi, e naturalmente se non ci sono posti liberi sarà impossibile entrare nel parcheggio; in questo contesto, si pensi al semaforo come al tabellone dell'esempio, che mostra ai threads quante copie della risorsa condivisa sono disponibili, e non permette il "passaggio" se attualmente sono tutte occupate. Il semaforo viene interamente gestito solo tramite **due operazioni atomiche**:
+- **`wait`**, che **se invocata da un thread pone quest'ultimo in attesa che il contatore del semaforo diventi positivo** (dunque, che si liberi una risorsa), e appena lo diventa **procede a decrementarlo di 1** (appena si libera una risorsa, il thread in attesa va subito ad occuparla);
+- **`signal`**, che **se invocata da un thread incrementa il contatore del semaforo di 1** (dunque, segnalando di aver appena terminato di utilizzare una risorsa).
+
+In genere, **il contatore di un semaforo viene inizializzato con un valore $n > 0$**. In particolare, in base al valore $n$ effettivamente assegnato a tale contatore, si possono distinguere principalmente **due tipi di semafori**:
+- il classico "**semaforo contatore**", in cui si ha $n>1$ e con cui, dunque, possono essere acquisite $n$ risorse in modo concorrente;
+- il "**semaforo binario**", detto anche "**Mutex**" (da "Mutual Exclusion"), in cui si ha $n=1$ e con cui, dunque, può essere acquisita la risorsa da un solo flusso di esecuzione alla volta.
+___
+##### Mutex in POSIX
+
+Approfondiamo, a questo punto, il secondo dei due, ossia il Mutex. Essi sono **implementati nello standard POSIX**, e possono essere dunque utilizzati con la **libreria `pthreads`** con cui abbiamo lavorato finora. In POSIX, il Mutex è implementato con il tipo di dato **`pthread_mutex_t`**, che contiene al suo interno:
+- lo **stato** del Mutex ("aperto", dunque disponibile ad essere acquisito, o "chiuso", dunque già occupato da un altro thread);
+- il **TID del thread attualmente in possesso del Mutex**;
+- la **coda di threads in attesa** che la risorsa protetta dal Mutex si liberi.
+
+Ogni entità di tipo `pthread_mutex_t`, dunque ogni Mutex, avrà poi un suo **insieme di attributi**, contenuti in una **[[SO2_04 - C#Strutture|struttura]] di tipo `pthread_mutexattr_t`**. Senza scendere troppo nei dettagli, tale struttura definisce principalmente il **comportamento del Mutex quando un thread cerca di effettuare un'operazione `lock`** (ossia cerca di acquisirlo) **o un'operazione `unlock`** (ossia cerca di liberarlo) **più volte consecutivamente**. Tali comportamenti determinano di quale dei seguenti tre tipi sarà il Mutex:
+- **`fast`**, ossia un Mutex che, nell'eventualità in cui un thread esegua una `lock` due volte prima di aver eseguito un'`unlock`, **blocca il thread, con l'alto rischio di causare stalli** (non controlla, sostanzialmente, se il thread ad avere eseguito le due `lock` è lo stesso), mentre se un thread esegue un'`unlock` sul Mutex che deteneva esso **viene rilasciato immediatamente** (se, invece, un thread prova a sbloccare un Mutex che non era mai stato bloccato da tale thread, si potrebbero incorrere in crash o comportamenti imprevedibili);
+- **`recursive`**, ossia un Mutex che, nell'eventualità in cui un thread esegua una `lock` due volte prima di aver eseguito un'`unlock`, **incrementa nuovamente un contatore che indica il numero di `lock` eseguite**, come se aggiungesse un ulteriore "lucchetto" alla medesima risorsa, senza bloccare il thread considerato, mentre se un thread esegue un'`unlock` sul Mutex che deteneva quest'ultimo non viene rilasciato immediatamente, ma **viene decrementato il contatore di `lock` eseguite**, e il Mutex sarà considerato effettivamente libero solamente quando tale contatore tornerà a 0 (come suggerisce il nome, questo tipo di Mutex torna utile quando si implementano funzioni ricorsive);
+- **`error-checking`**, ossia un Mutex che, nell'eventualità in cui un thread esegua una `lock` due volte prima di aver eseguito un'`unlock`, **il thread non viene bloccato, ma viene restituito un codice di errore specifico** (si approfondiranno i codici di errore tra poco), e analogamente se un thread esegue un'`unlock` su un Mutex che non gli appartiene viene restituito un ulteriore codice di errore.
+
+Per lavorare con Mutex nello standard POSIX, faremo riferimento principalmente alle seguenti **funzioni**:
+- **`pthread_mutex_init`**;
+- **`pthread_mutex_lock`**;
+- **`pthread_mutex_trylock`**;
+- **`pthread_mutex_unlock`**;
+- **`pthread_mutex_destroy`**.
+
+La funzione **`pthread_mutex_init`**, la cui sinossi completa è:
+
+```
+int pthread_mutex_init(pthread_mutex_t *mutex, const pthread_mutexattr_t *attr)
+```
+
+serve a **inizializzare il Mutex indicato dal puntatore `mutex`**, ponendolo inizialmente in uno stato "aperto" e **assegnandogli gli attributi indicati dal puntatore `attr`**; se il secondo puntatore, ossia `attr`, è uguale al valore nullo `NULL`, al Mutex da inizializzare sarà assegnato di default il tipo `fast`.
+
+La funzione **`pthread_mutex_lock`**, la cui sinossi completa è:
+
+```
+int pthread_mutex_lock(pthread_mutex_t *mutex)
+```
+
+serve a **tentare di acquisire il Mutex indicato dal puntatore `mutex`**. Se quest'ultimo è libero, il thread lo acquisisce, ne diventa il proprietario e la chiamata alla funzione ritorna subito; invece, se il Mutex considerato è già occupato, il thread chiamante viene subito sospeso, e rimarrà tale finché il proprietario corrente del Mutex non lo rilascerà.
+
+La funzione **`pthread_mutex_trylock`**, la cui sinossi completa è:
+
+```
+int pthread_mutex_trylock(pthread_mutex_t *mutex)
+```
+
+ha uno scopo pressoché identico a quello di `pthread_mutex_lock`, ossia **tentare di acquisire il Mutex indicato dal puntatore `mutex`**, ma con una fondamentale differenza: **se il Mutex `mutex` è già occupato, il thread chiamante non viene sospeso**, e quest'ultimo può dunque svolgere altri compiti in attesa che il Mutex venga rilasciato (supponendo, ovviamente, che il programmatore l'abbia previsto).
+
+La funzione **`pthread_mutex_unlock`**, la cui sinossi completa è:
+
+```
+int pthread_mutex_unlock(pthread_mutex_t *mutex)
+```
+
+serve a **rilasciare il Mutex indicato dal puntatore `mutex`**. È importante ricordare che **un Mutex può essere sbloccato solamente dal thread che lo deteneva**, e che se un thread diverso da esso prova a rilasciarlo si verificherà un comportamento indefinito (o un errore esplicito, se il Mutex considerato è di tipo `error-checking`). Una volta che il Mutex viene rilasciato, **l'OS va a "risvegliare" uno degli eventuali thread che stavano attendendo questo evento** in seguito a una chiamata a `pthread_mutex_lock`, permettendogli così di acquisire il Mutex.
+
+La funzione **`pthread_mutex_destroy`**, la cui sinossi completa è:
+
+```
+int pthread_mutex_destroy(pthread_mutex_t *mutex)
+```
+
+serve a **distruggere il Mutex indicato dal puntatore `mutex`**, liberando le risorse ad esso associate. Si tenga a mente che **si può distruggere un Mutex solamente se sbloccato e se nessun altro thread sta attendendo di poterlo acquisire**, in caso contrario la funzione `pthread_mutex_destroy` fallisce.
+
+Tutte le funzioni appena analizzate **restituiscono `0` in caso di successo** e un **codice di errore diverso da `0` altrimenti**, ad eccezione di `pthread_mutex_init`, che restituisce sempre `0`. In particolare, possiamo approfondire i diversi **codici di errore** restituiti da tali funzioni in base a cosa è andato storto nella loro esecuzione:
+- la funzione **`pthread_mutex_lock`** restituisce **`EINVAL`** se **il Mutex non è stato correttamente inizializzato**, oppure restituisce **`EDEADLK`** se **il Mutex è già acquisito dal thread chiamante** (quest'ultimo codice di errore viene restituito esplicitamente solo se il Mutex considerato è di tipo `error-checking`);
+- la funzione **`pthread_mutex_trylock`** restituisce **`EINVAL`** se **il Mutex non è stato correttamente inizializzato**, oppure restituisce **`EBUSY`** se **il Mutex non è libero al momento della chiamata**;
+- la funzione **`pthread_mutex_unlock`** restituisce **`EINVAL`** se **il Mutex non è stato correttamente inizializzato**, oppure restituisce **`EPERM`** se **il thread chiamante non è il proprietario del Mutex** (quest'ultimo codice di errore viene restituito esplicitamente solo se il Mutex considerato è di tipo `error-checking`);
+- la funzione **`pthread_mutex_destroy`** restituisce **`EBUSY`** se **il Mutex non è libero al momento della chiamata**.
+
+Ora che si hanno ben chiare le caratteristiche dei Mutex nello standard POSIX, così come le funzioni utilizzate per gestirli, è opportuno capire **come utilizzare concretamente i Mutex**. In generale, la prima cosa che conviene fare è **inizializzare il Mutex**, tramite una chiamata a `pthread_mutex_init`; in seguito, una volta creata la risorsa condivisa che si vuole proteggere con il Mutex creato, **qualsiasi accesso o modifica a tale risorsa dovrebbe essere "delimitata" da una chiamata `pthread_mutex_lock`** (o `pthread_mutex_trylock`, a seconda delle esigenze) **e una chiamata `pthread_mutex_unlock`**; infine, una volta certi che il Mutex considerato non serve più, lo si può **distruggere con una chiamata a `pthread_mutex_destroy`**.
+___
+##### Barriere
+
+Un altro meccanismo di sincronizzazione tra threads, forse meno comune dei [[SO2_06 - Threads#Semafori e Mutex|semafori]] e dei [[SO2_06 - Threads#Mutex in POSIX|Mutex]] ma ugualmente importante, è costituito dalle cosiddette "**barriere**". A differenza dei semafori e dei Mutex, il cui ruolo è più che altro quello di proteggere risorse evitando che vengano "contaminate" da altri threads, le barriere vengono utilizzate per **coordinare l'esecuzione dei threads**, facendo in modo che **essi proseguano il loro flusso di esecuzione solo se tutti i threads hanno raggiunto un certo risultato**, che rappresenterà concretamente la "barriera" di cui stiamo parlando.
+
+Nello standard POSIX, le barriere sono implementate tramite il **tipo di dato `pthread_barrier_t`**, che al suo interno contiene vari dati, tra cui:
+- un "**target count**", ossia il numero di thread che devono raggiungere la barriera per fare in modo che essa "si apra", e dunque lasci proseguire a tali threads la loro esecuzione;
+- un "**current count**", ossia il numero di thread attualmente in attesa di fronte alla barriera, che viene incrementato ogni volta che un nuovo thread giunge alla barriera stessa (si controlla costantemente se il current count è diventato uguale al target count, e solo in tal caso la barriera viene aperta).
+
+Inoltre, come per i Mutex, ogni entità di tipo `pthread_barrier_t`, dunque ogni barriera, avrà poi un suo **insieme di attributi**, contenuti in una **[[SO2_04 - C#Strutture|struttura]] di tipo `pthread_barrierattr_t`**. Lo scopo principale degli attributi di una barriera è gestire il cosiddetto "**ambito di condivisione**", caratteristica che può essere modificata attraverso la seguente funzione:
+
+```
+int pthread_barrierattr_pshared(pthread_barrierattr_t *attr, int pshared)
+```
+
+Tale funzione prende come parametri **`attr`**, ossia un **puntatore all'oggetto `pthread_barrierattr_t` da modificare**, e **`pshared`**, ossia un **valore intero che determina l'ambito di condivisione della barriera**. In particolare, quest'ultimo parametro prevede solamente due possibili "modalità":
+- **`PTHREAD_PROCESS_PRIVATE`** (modalità di default), che se settata fa in modo che **la barriera sia accessibile solo ai thread creati all'interno dello stesso processo che l'ha inizializzata**;
+- **`PTHREAD_PROCESS_SHARED`**, che se settata fa in modo che **la barriera sia accessibile a qualsiasi thread, anche appartenenti a processi diversi**.
+  
+Utilizzare la seconda modalità, tuttavia, prevede un grado maggiore di attenzione e di sovrastruttura, dato che si dovrà creare la barriera da condividere in un'area di memoria speciale, che non sia di esclusiva proprietà del [[SO2_03 - Processi#Cos'è un processo?|processo]] che l'ha generata.
+
+Per lavorare con barriere nello standard POSIX, faremo riferimento principalmente alle seguenti **funzioni**:
+- **`pthread_barrier_init`**;
+- **`pthread_barrier_wait`**;
+- **`pthread_barrier_destroy`**.
+
+La funzione **`pthread_barrier_init`**, la cui sinossi completa è:
+
+```
+int pthread_barrier_init(pthread_barrier_t *restrict barrier, const pthread_barrierattr_t *restrict attr, unsigned int count)
+```
+
+serve a **inizializzare la barriera indicata dal puntatore `barrier`, assegnandogli gli attributi indicati dal puntatore `attr`**; in particolare, se il puntatore `attr` è uguale al valore nullo `NULL`, alla barriera da inizializzare saranno assegnati attributi di default (primo su tutti, la modalità di condivisione `PTHREAD_PROCESS_PRIVATE`). Il terzo parametro, ossia l'intero senza segno **`count`**, rappresenta il **target count della barriera da inizializzare**, ossia il numero di thread che devono raggiungere la barriera affinché essa "si apra" (bisogna fare attenzione al valore da assegnare a `count`, dato che se si imposta tale parametro a un valore più alto del numero di threads effettivamente previsti, è praticamente certa l'eventualità di uno stallo).
+
+La funzione **`pthread_barrier_wait`**, la cui sinossi completa è:
+
+```
+int pthread_barrier_wait(pthread_barrier_t *barrier)
+```
+
+serve a **far attendere il thread chiamante "di fronte" alla barriera `barrier`, in attesa che essa si apra**. Non appena un thread effettua una chiamata a tale funzione, la sua esecuzione viene sospesa, e i thread "addormentati" di fronte alla barriera vengono risvegliati contemporaneamente non appena si raggiunge il target count della stessa. Al risveglio dei thread, la funzione **restituisce `0` per quasi tutti i thread**, tranne che per uno scelto in modo casuale, a cui viene restituita la **costante speciale `PTHREAD_BARRIER_SERIAL_THREAD`**: tale costante torna utile in contesti in cui, tra una fase di esecuzione e l'altra, è necessaria un'operazione di pulizia o di unione dei dati ottenuti, operazione che deve essere svolta da un solo thread, e il thread in questione sarà proprio quello a cui è stata restituita la costante speciale. 
+
+La funzione **`pthread_barrier_destroy`**, la cui sinossi completa è:
+
+```
+int pthread_barrier_destroy(pthread_barrier_t *barrier)
+```
+
+serve a **distruggere la barriera indicata dal puntatore `barrier`**, liberando le risorse ad essa associate. Si tenga a mente che **si può distruggere una barriera solamente se nessun thread sta attendendo che essa venga aperta**, in caso contrario la funzione `pthread_mutex_destroy` fallisce o porta a comportamenti indefiniti.
+___
+##### Condizioni
+
+L'ultimo meccanismo di sincronizzazione dei threads che andremo a vedere è costituito dalle "**condizioni**", dette anche "**condition variables**". La specialità delle condizioni è il **sospendere l'esecuzione di un thread finché non diventa vera una determinata condizione su un dato condiviso**; in parole povere, serve a far aspettare l'avvenimento di un determinato evento a un thread.
+
+Si tratta di un meccanismo fondamentale, e **sempre associato ai [[SO2_06 - Threads#Semafori e Mutex|Mutex]]**. Per capire meglio il perché, vediamo un semplice esempio. Supponiamo che un thread debba attendere che una variabile globale assuma il valore `1`; per fare ciò senza l'utilizzo di condizioni, si dovrebbe implementare una soluzione mediante un ciclo, che tipicamente assume la seguente forma generale:
+
+```
+pthread_mutex_lock(&mutex);
+
+while (risorsa != 1)
+{
+	pthread_mutex_unlock(&mutex);
+	// Attendi un po', poi riprova...
+	pthread_mutex_lock(&mutex);
+}
+```
+
+Un approccio del genere viene chiamato "**busy waiting**", ed è da evitare soprattutto per una questione di prestazioni: seppur non faccia concretamente nulla, il ciclo viene attivamente eseguito sul processore, mantenendolo occupato, e ciò rallenterà inevitabilmente l'esecuzione di altri threads o processi. Al tempo stesso, l'associazione tra Mutex e condizioni è necessaria per **evitare [[SO2_06 - Threads#Race condition|race conditions]] su una condizione** (potrebbe succedere, ad esempio, che un thread debba mettersi in attesa di una condizione e che un altro thread invii un segnale alla medesima condizione, sbloccandola, prima che il primo thread si sia effettivamente messo in attesa).
+
+[tipo pthread_cond_t e pthread_condattr_t]
+
+Per lavorare con condizioni nello standard POSIX, faremo riferimento principalmente alle seguenti **funzioni**:
+- **`pthread_cond_init`**;
+- **`pthread_cond_signal`**;
+- **`pthread_cond_broadcast`**;
+- **`pthread_cond_wait`**;
+- **`pthread_cond_timedwait`**;
+- **`pthread_cond_destroy`**.
+
+La funzione **`pthread_cond_init`**, la cui sinossi completa è:
+
+```
+int pthread_cond_init(pthread_cond_t *cond, pthread_condattr_t *attr)
+```
+
+
+
+La funzione **`pthread_cond_signal`**, la cui sinossi completa è:
+
+```
+int pthread_cond_signal(pthread_cond_t *cond)
+```
+
+
+
+La funzione **`pthread_cond_broadcast`**, la cui sinossi completa è:
+
+```
+int pthread_cond_broadcast(pthread_cond_t *cond)
+```
+
+
+
+La funzione **`pthread_cond_wait`**, la cui sinossi completa è:
+
+```
+int pthread_cond_wait(pthread_cond_t *cond, pthread_mutex_t *mutex)
+```
+
+
+
+La funzione **`pthread_cond_timedwait`**, la cui sinossi completa è:
+
+```
+int pthread_cond_timedwait(pthread_cond_t *cond, pthread_mutex_t *mutex, const struct timespec *abstime)
+```
+
+
+
+La funzione **`pthread_cond_destroy`**, la cui sinossi completa è:
+
+```
+int pthread_cond_destroy(pthread_cond_t *cond)
+```
+
+
+
+[SLIDES: 17, pag. 18 - 19]
 ___
