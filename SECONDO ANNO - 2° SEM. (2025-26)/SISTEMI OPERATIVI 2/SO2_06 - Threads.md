@@ -110,11 +110,11 @@ gcc program.c -o program.o -pthread
 Per **creare un nuovo thread** all'interno del processo considerato, la libreria `pthreads` offre la funzione:
 
 ```
-int pthread_create(pthread_t *ptid, const pthread_attr_t *pattr, void *start(void *), void *arg)
+int pthread_create(pthread_t *tid, const pthread_attr_t *pattr, void *start(void *), void *arg)
 ```
 
 Approfondiamo nel dettaglio ciascuno dei **parametri** di questa funzione:
-- **`pthread_t *ptid`** consiste in un **[[SO2_04 - C#Puntatori|puntatore]] a una variabile di tipo `pthread_t`**, che in caso di successo della chiamata a `pthread_create` andrà a contenere l'ID del nuovo thread creato, chiamato "**TID**" o "**Thread ID**";
+- **`pthread_t *tid`** consiste in un **[[SO2_04 - C#Puntatori|puntatore]] a una variabile di tipo `pthread_t`**, che in caso di successo della chiamata a `pthread_create` andrà a contenere l'ID del nuovo thread creato, chiamato "**TID**" o "**Thread ID**";
 - **`const pthread_attr_t *pattr`** consiste in un **puntatore a una struttura `pthread_attr_t`**, che permette eventualmente di specificare alcuni attributi specifici per il thread che si sta creando (rivedremo questo concetto [[SO2_06 - Threads#Attributi di un thread|in seguito]]), e che può essere passato come `NULL` o `0` per fare in modo che il thread abbia degli attributi predefiniti;
 - **`void *start(void *)`** consiste nella **funzione che verrà inizialmente eseguita dal thread**, il cui identificatore naturalmente è `start`;
 - **`void *arg`** consiste in un **puntatore passato come argomento a `start`** (l'argomento è unico, dunque se si vogliono passare più dati converrà creare una [[SO2_04 - C#Strutture|struttura]] e passare un puntatore ad essa); se non servono argomenti, tale parametro avrà valore `NULL`.
@@ -496,7 +496,7 @@ La funzione **`pthread_barrier_init`**, la cui sinossi completa è:
 int pthread_barrier_init(pthread_barrier_t *restrict barrier, const pthread_barrierattr_t *restrict attr, unsigned int count)
 ```
 
-serve a **inizializzare la barriera indicata dal puntatore `barrier`, assegnandogli gli attributi indicati dal puntatore `attr`**; in particolare, se il puntatore `attr` è uguale al valore nullo `NULL`, alla barriera da inizializzare saranno assegnati attributi di default (primo su tutti, la modalità di condivisione `PTHREAD_PROCESS_PRIVATE`). Il terzo parametro, ossia l'intero senza segno **`count`**, rappresenta il **target count della barriera da inizializzare**, ossia il numero di thread che devono raggiungere la barriera affinché essa "si apra" (bisogna fare attenzione al valore da assegnare a `count`, dato che se si imposta tale parametro a un valore più alto del numero di threads effettivamente previsti, è praticamente certa l'eventualità di uno stallo).
+serve a **inizializzare la barriera indicata dal puntatore `barrier`, assegnandole gli attributi indicati dal puntatore `attr`**; in particolare, se il puntatore `attr` è uguale al valore nullo `NULL`, alla barriera da inizializzare saranno assegnati attributi di default (primo su tutti, la modalità di condivisione `PTHREAD_PROCESS_PRIVATE`). Il terzo parametro, ossia l'intero senza segno **`count`**, rappresenta il **target count della barriera da inizializzare**, ossia il numero di thread che devono raggiungere la barriera affinché essa "si apra" (bisogna fare attenzione al valore da assegnare a `count`, dato che se si imposta tale parametro a un valore più alto del numero di threads effettivamente previsti, è praticamente certa l'eventualità di uno stallo).
 
 La funzione **`pthread_barrier_wait`**, la cui sinossi completa è:
 
@@ -533,7 +533,11 @@ while (risorsa != 1)
 
 Un approccio del genere viene chiamato "**busy waiting**", ed è da evitare soprattutto per una questione di prestazioni: seppur non faccia concretamente nulla, il ciclo viene attivamente eseguito sul processore, mantenendolo occupato, e ciò rallenterà inevitabilmente l'esecuzione di altri threads o processi. Al tempo stesso, l'associazione tra Mutex e condizioni è necessaria per **evitare [[SO2_06 - Threads#Race condition|race conditions]] su una condizione** (potrebbe succedere, ad esempio, che un thread debba mettersi in attesa di una condizione e che un altro thread invii un segnale alla medesima condizione, sbloccandola, prima che il primo thread si sia effettivamente messo in attesa).
 
-[tipo pthread_cond_t e pthread_condattr_t]
+Come vale per Mutex e [[SO2_06 - Threads#Barriere|barriere]], anche ogni entità di tipo **`pthread_cond_t`**, dunque ogni condizione, avrà un suo **insieme di attributi**, contenuti in una **[[SO2_04 - C#Strutture|struttura]] di tipo `pthread_condattr_t`**. Tra le altre cose, gli attributi di una condizione includono due parametri critici:
+- l'**ambito di condivisione** (analogo a quanto detto per le barriere), attributo che può essere settato a **`PTHREAD_PROCESS_PRIVATE`** (valore di default), per fare in modo che la condizione sia visibile solo all'interno del processo che l'ha inizializzata, o a **`PTHREAD_PROCESS_SHARED`**, per fare in modo che la condizione sia visibile anche all'esterno del suo processo;
+- l'**orologio di riferimento**, attributo che può essere settato a **`CLOCK_REALTIME`** (valore di default), per fare in modo che la condizione prenda come riferimento l'ora corrente del computer, o a **`CLOCK_MONOTONIC`**, per fare in modo che la condizione prenda come riferimento un "cronometro assoluto" che conta i secondi passati da un punto fisso e invariabile (di solito, il boot del computer).
+
+L'ambito di condivisione di un oggetto `pthread_condattr_t` può essere modificato tramite la funzione **`pthread_condattr_setpshared()`**, mentre l'orologio di riferimento tramite la funzione **`pthread_condattr_setclock()`** (vedremo l'importanza di quest'ultimo attributo tra poco).
 
 Per lavorare con condizioni nello standard POSIX, faremo riferimento principalmente alle seguenti **funzioni**:
 - **`pthread_cond_init`**;
@@ -549,7 +553,7 @@ La funzione **`pthread_cond_init`**, la cui sinossi completa è:
 int pthread_cond_init(pthread_cond_t *cond, pthread_condattr_t *attr)
 ```
 
-
+serve a **inizializzare la condizione indicata dal puntatore `cond`, assegnandole gli attributi indicati dal puntatore `attr`**; in particolare, se il puntatore `attr` è uguale al valore nullo `NULL`, alla condizione da inizializzare saranno assegnati attributi di default.
 
 La funzione **`pthread_cond_signal`**, la cui sinossi completa è:
 
@@ -557,7 +561,7 @@ La funzione **`pthread_cond_signal`**, la cui sinossi completa è:
 int pthread_cond_signal(pthread_cond_t *cond)
 ```
 
-
+serve a **risvegliare uno solo dei threads in attesa sulla condizione indicata dal puntatore `cond`**. Sostanzialmente, all'esecuzione della chiamata, l'OS controlla la coda dei thread "dormienti" sulla condizione, ne estrae uno (solitamente il primo in base allo scheduling), e lo sposta dalla coda della condizione alla coda del Mutex, facendo in modo che il thread possa eventualmente acquisire quest'ultimo; se, al momento della chiamata, non ci sono threads in attesa sulla condizione, il segnale viene semplicemente perso.
 
 La funzione **`pthread_cond_broadcast`**, la cui sinossi completa è:
 
@@ -565,7 +569,7 @@ La funzione **`pthread_cond_broadcast`**, la cui sinossi completa è:
 int pthread_cond_broadcast(pthread_cond_t *cond)
 ```
 
-
+è molto simile a `pthread_cond_signal`, con la differenza che essa serve a **risvegliare tutti i threads in attesa sulla condizione indicata dal puntatore `cond`**. In questo caso, all'esecuzione della chiamata, tutti i threads eventualmente in attesa verranno spostati dalla coda della condizione a quella del Mutex associato. 
 
 La funzione **`pthread_cond_wait`**, la cui sinossi completa è:
 
@@ -573,7 +577,7 @@ La funzione **`pthread_cond_wait`**, la cui sinossi completa è:
 int pthread_cond_wait(pthread_cond_t *cond, pthread_mutex_t *mutex)
 ```
 
-
+serve a **sospendere il thread chiamante sulla condizione `cond`, finché un altro thread non invia un segnale**, con **`mutex`** che consiste nel Mutex associato alla condizione in questione. **Il Mutex deve essere già bloccato dal thread chiamante**: infatti, in seguito alla chiamata, tale Mutex verrà automaticamente sbloccato, il thread chiamante verrà "addormentato" e posto in attesa sulla condizione `cond`, e al momento dell'eventuale risveglio esso potrà di nuovo porsi in attesa di riacquisire il Mutex. 
 
 La funzione **`pthread_cond_timedwait`**, la cui sinossi completa è:
 
@@ -581,7 +585,7 @@ La funzione **`pthread_cond_timedwait`**, la cui sinossi completa è:
 int pthread_cond_timedwait(pthread_cond_t *cond, pthread_mutex_t *mutex, const struct timespec *abstime)
 ```
 
-
+è molto simile a `pthread_cond_wait`, con la differenza che **il thread chiamante viene sospeso sulla condizione `cond` per un tempo massimo `abstime`**, dopo il quale tale thread procede a risvegliarsi da solo, senza la necessità di un segnale da un altro thread. 
 
 La funzione **`pthread_cond_destroy`**, la cui sinossi completa è:
 
@@ -589,7 +593,5 @@ La funzione **`pthread_cond_destroy`**, la cui sinossi completa è:
 int pthread_cond_destroy(pthread_cond_t *cond)
 ```
 
-
-
-[SLIDES: 17, pag. 18 - 19]
+serve a **distruggere la condizione indicata dal puntatore `cond`**, liberando le risorse ad essa associate. Si tenga a mente che **si può distruggere una condizione solamente se nessun thread sta attendendo su di essa**, in caso contrario la funzione `pthread_mutex_destroy` fallisce o porta a comportamenti indefiniti.
 ___
