@@ -261,7 +261,18 @@ int main()
 ___
 ##### Terminazione di un processo multi-thread
 
-[SLIDES: 16, pag. 24 - 25]
+Prima di parlare della **terminazione di un processo multi-thread**, è opportuno fare alcune distinzioni per evitare confusione. In Linux, talvolta le [[SO2_05 - System calls#Cos'è una system call?|system calls]] sono "esposte" tramite una funzione C chiamata "**funzione wrapper**" (non si parla delle [[SO2_05 - System calls#System calls vs. funzioni di libreria|funzioni di libreria]], ma di una sorta di intermediario tra funzioni di libreria e system calls), e solitamente (ma non sempre) tale funzione wrapper ha lo stesso nome della system call ad essa associata. Ora, con questa premessa, elenchiamo di seguito tutte le system calls, funzioni wrapper e funzioni di libreria di cui parleremo in questo paragrafo:
+- la **system call `_exit`**;
+- la **system call `exit_group`**;
+- la **funzione wrapper** `_exit`;
+- la **funzione di libreria `exit`**;
+- la **funzione wrapper `_Exit`**.
+
+Abbiamo già visto, [[SO2_05 - System calls#Creazione e terminazione di un processo|in precedenza]], che la system call utilizzata per la terminazione di un [[SO2_03 - Processi|processo]] è **`_exit`**. Ora che abbiamo introdotto il concetto di processo multi-thread, c'è però da fare una precisazione: in Linux, **la system call `_exit` termina un singolo thread**, mentre per **terminare tutti i thread di un processo** si utilizza la system call **`exit_group`**. 
+
+Ora, in modo effettivamente controintuitivo, una chiamata alla funzione wrapper `_exit` non esegue una chiamata alla system call `_exit`, ma piuttosto alla system call `exit_group`, portando quindi alla terminazione di tutti i thread del processo chiamante. La funzione di libreria `exit`, invece, come già visto, invoca al termine della sua esecuzione la funzione wrapper `_exit`; infine, con un ulteriore passo, possiamo affermare che **eseguire `return` nella funzione `main()` di un programma C è equivalente a invocare la funzione di libreria `exit`**, il che ci porta a dire che eseguire `return` equivale a richiedere la terminazione di tutti i thread del processo generato dal `main()` che la contiene.
+
+Come accenno, poi, specifichiamo che la funzione wrapper `_Exit` è perfettamente equivalente alla funzione wrapper `_exit`, e che la funzione di libreria `pthread_exit`, vista [[SO2_06 - Threads#Terminazione di un thread|un paio di paragrafi fa]], invoca direttamente la system call `_exit`.
 ___
 ##### Attributi di un thread
 
@@ -338,9 +349,40 @@ Vediamo, poi, le funzioni utilizzate per **modificare gli attributi di un oggett
 - **`pthread_attr_setinheritsched(pthread_attr_t *attr, int is)`**, che modifica l'attributo `inheritsched` dell'oggetto `attr` e gli assegna il valore `is`;
 - **`pthread_attr_setschedparam(pthread_attr_t *attr, const struct sched_param *p)`**, che modifica l'attributo `sched_param` dell'oggetto `attr` e gli assegna il valore `p`.
 ___
-## Implementazione dei thread in Linux
+## Implementazione dei threads in Linux
 
-[SLIDES: 16, pag. 30/32]
+L'**implementazione dei threads in Linux** si basa sul concetto del "**Light Weight Process**", detto anche "**processo leggero**" o, in breve, "**LWP**". In parole povere, un processo leggero è un [[SO2_03 - Processi#Cos'è un processo?|processo]] che condivide alcune risorse selezionate con il proprio padre.
+
+Per creare processi leggeri, si utilizza una chiamata a **`clone`**, che può essere **sia una [[SO2_05 - System calls#Cos'è una system call?|system call]] che una [[SO2_05 - System calls#System calls vs. funzioni di libreria|funzione di libreria]]**. Partiamo, prima di tutto, dalla funzione di libreria, la cui sinossi completa è:
+
+```
+int clone(int (*start)(void *), void *stack, int flags, void *arg, pid_t *parent_tid, void *tls, pid_t *child_tid)
+```
+
+In questa lunghissima lista di parametri, quelli che ci interessano veramente sono i primi 4 (gli altri sono molto specifici e spesso non importanti):
+- **`start`** è un **puntatore alla funzione che il nuovo processo leggero dovrà eseguire inizialmente**;
+- **`stack`** è l'**indirizzo della cima dello stack del nuovo processo leggero**;
+- **`flags`** è un **elenco di flag poste in OR bit a bit tra di loro**, che permettono di specificare cosa il nuovo processo leggero deve condividere con il suo creatore (vedremo le flag principali tra poco);
+- **`arg`** è un **puntatore all'argomento che verrà passato a `start`**.
+
+Come si può notare subito, la sinossi di questa funzione (considerando solo i parametri appena approfonditi) ricorda molto quella di `pthread_create`, a conferma del fatto che i threads sono, alla base, dei processi leggeri.
+
+Approfondiamo le **principali `flags`** che possiamo inserire in una chiamata alla funzione `clone`:
+- **`CLONE_FILES`** impone la condivisione della stessa **tabella dei descrittori di file** (dunque, se un thread apre un file, anche gli altri threads saranno in grado di vederlo);
+- **`CLONE_FS`** impone la condivisione delle stesse **informazioni sul file system** (ad esempio, la `cwd`);
+- **`CLONE_SIGHAND`** impone la condivisione della stessa **tabella di gestione dei segnali**;
+- **`CLONE_THREAD`** impone la condivisione dello stesso "processo", o meglio dello stesso **gruppo di thread**;
+- **`CLONE_VM`** impone la condivisione dello stesso **spazio di memoria** (Heap, Data Segment e Text Segment).
+
+Possiamo rivelare, a questo punto, che in realtà la system call **`fork`**, così come la funzione **`pthread_create`**, **equivalgono in realtà a chiamate a `clone`**: in particolare, `fork` equivale a chiamare `clone` senza specificare alcuna delle `flags` appena viste; `pthread_create`, invece, equivale a chiamare `clone` specificando tutte le `flags` appena viste.
+
+Come abbiamo detto in precedenza, c'è anche una **system call `clone`**, la cui sinossi completa è:
+
+```
+int clone(flags, stack)
+```
+
+dove **`flags`** è sempre un **elenco di flag poste in OR bit a bit tra di loro** (quelle viste poco fa), mentre **`stack`** è l'**indirizzo della cima dello stack del nuovo processo leggero** (se `stack` è pari a `NULL`, il figlio utilizza una copia dello stack del padre).
 ___
 ## Sincronizzazione tra threads
 
