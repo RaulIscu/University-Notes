@@ -266,8 +266,14 @@ kill -s KILL 123
 
 Come si può notare, però, **specificare il segnale da inviare non è obbligatorio**: se lo si omette, eseguendo il comando nella forma base `kill PID`, viene inviato un **segnale di default**, ossia **`SIGTERM`** (identificato dal numero **`15`**). Ma **cosa fanno concretamente i vari segnali?** Per rispondere a questa domanda, forniamo di seguito un elenco dei **segnali più comuni** e più potenti tra i 57 disponibili:
 - **`SIGINT`** (o **`INT`**, identificato dal numero **`2`**), che è il segnale inviato al processo [[SO2_03 - Processi#Esecuzione dei processi|in foreground]] quando si preme **`CTRL + c`**, e serve per **interrompere il processo** (la maggior parte dei programmi si chiude immediatamente, ma in alcuni casi, come con gli editor di testo, essi possono intercettare il segnale e chiedere all'utente di salvare il proprio lavoro prima di terminare l'esecuzione);
+- **`SIGQUIT`** (o **`QUIT`**, identificato dal numero **`3`**), [SLIDES: 14, slide 7]
+- **`SIGABR`** (o **`ABR`**, identificato dal numero **`6`**), [SLIDES: 14, slide 7]
+- **`SIGFPE`** (o **`FPE`**, identificato dal numero **`8`**), [SLIDES: 14, slide 7]
 - **`SIGKILL`** (o **`KILL`**, identificato dal numero **`9`**), che serve per **interrompere il processo immediatamente, senza possibilità di intercettazione o ignoramento** (va usato con prudenza, dato che potrebbe portare a corruzione di dati o altri comportamenti non desiderati);
+- **`SIGSEGV`** (o **`SEGV`**, identificato dal numero **`11`**), [SLIDES: 14, slide 7]
+- **`SIGPIPE`** (o **`PIPE`**, identificato dal numero **`13`**), [SLIDES: 14, slide 7]
 - **`SIGTERM`** (o **`TERM`**, identificato dal numero **`15`**), che serve per **interrompere un processo in modo "gentile"**, dando tempo al processo di salvare dati, chiudere eventuali file aperti e terminare tutte le operazioni in corso prima di terminare la propria esecuzione;
+- **`SIGCHLD`** (o **`CHLD`**, identificato dal numero **`17`**), [SLIDES: 14, slide 7]
 - **`SIGCONT`** (o **`CONT`**, identificato dal numero **`18`**), che serve per **far continuare l'esecuzione di un processo bloccato** (viene usato, ad esempio, dai comandi `bg` e `fg`);
 - **`SIGSTOP`** (o **`STOP`**, identificato dal numero **`19`**), che serve per **bloccare il processo immediatamente**, facendolo entrare nello stato di `Sleep`, e come `SIGKILL` non può essere intercettato né ignorato;
 - **`SIGSTP`** (o **`STP`**, identificato dal numero **`20`**), che è **molto simile a `SIGSTOP`**, ma a differenza di quest'ultimo **può essere intercettato dal programma** (è il segnale inviato al processo in foreground quando si preme `CTRL + z`).
@@ -275,6 +281,14 @@ Come si può notare, però, **specificare il segnale da inviare non è obbligato
 **I segnali vengono presi in considerazione solo se il "real user" del processo è lo stesso che invia il segnale** (oppure, **se li invia un super-utente**). In generale, quando un processo riceve un segnale, o fa un'**azione predefinita** (come quelle appena viste), oppure un'**azione personalizzata**.
 
 Oltre a quelli analizzati poco fa, ci sono altri due segnali particolari degni di essere approfonditi: **`SIGUSR1`** (o **`USR1`**, identificato dal numero **`10`**) e **`SIGUSR2`** (o **`USR2`**, identificato dal numero **`12`**). Tali segnali sono un esempio di processi che consentono un'operazione personalizzata, e in particolare consentono una **semplice forma di comunicazione tra processi**: supponendo, ad esempio, di star creando un programma `P1`, si può definire un gestore di segnali per `SIGUSR1`, in modo che se un altro programma `P2` invia un segnale `SIGUSR1` a `P1` quest'ultimo eseguirà il codice del gestore creato. Spesso, se si invia uno di questi segnali a un processo che non li gestisce in modo esplicito, essi causano la terminazione del processo in questione.
+
+Se si vuole **analizzare nel dettaglio un segnale specifico**, si può accedere alla **settima sezione del `man`**. Dunque, per ottenere informazioni su un determinato segnale `signal` basterà digitare nel terminale:
+
+```
+man 7 signal
+```
+
+Inoltre, la lista completa dei segnali è contenuta nell'header file **`signal.h`**.
 ___
 ##### `nice`
 
@@ -327,4 +341,12 @@ Nella maggior parte dei casi, l'esecuzione di un programma o di un comando porte
 Oltre a quelle viste finora, ci sono altre **opzioni utili** per il comando `strace`, tra cui:
 - **`-c`**, che impone al comando di stampare solo una "tabella" riassuntiva finale, una volta terminata l'esecuzione del processo monitorato;
 - **`-e ops...`**, che permette di filtrare le operazioni di monitorare in base alla lista `ops`.
+___
+## Un approfondimento sui segnali
+
+[SLIDES: 14, slide 8/17]
+___
+## Comunicazione tra processi
+
+[SLIDES: 14, slide 19/22]
 ___
