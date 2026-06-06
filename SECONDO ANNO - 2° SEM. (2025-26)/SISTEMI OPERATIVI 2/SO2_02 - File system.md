@@ -56,9 +56,16 @@ ls nomedir
 
 per ottenere un elenco del genere riguardante però la directory `nomedir`. 
 
-Utilizzando l'opzione **`-a`** o **`--all`**, si potranno visualizzare anche eventuali **file nascosti** che contenuti nella directory in questione (tipicamente si tratta di file di configurazione o di supporto a comandi e applicazioni, ad esempio `.bash_history` che contiene la cronologia dei comandi eseguiti o `.bashrc` che contiene la configurazione della shell `bash`).
-
-Invece, se non vogliamo fermarci alla directory considerata, ma vogliamo **visualizzare ricorsivamente anche il contenuto delle sotto-directory**, potremo utilizzare l'opzione **`-R`**, o **`--recursive`**.
+Di seguito, si espongono le principali opzioni di questo comando:
+- **`-a`**, o **`--all`**, che permette di **visualizzare anche eventuali file nascosti** contenuti nella directory considerata (tipicamente si tratta di file di configurazione o di supporto a comandi e applicazioni, ad esempio `.bash_history` che contiene la cronologia dei comandi eseguiti o `.bashrc` che contiene la configurazione della shell `bash`);
+- **`-d`**, che impone al comando di **ignorare il contenuto della directory** e di **mostrare informazioni solo sulla directory stessa**;
+- **`-h`**, che viene spesso usata in combinazione con `-l` per **rendere più leggibili alcune informazioni**, come le dimensioni dei file; 
+- **`-l`**, che permette di **visualizzare un maggior numero di dettagli**, mostrando per ogni elemento una riga di informazioni che include **tipo di file** (ad esempio, **`-`** per i file normali, **`d`** per le directory e **`l`** per i link), **[[SO2_02 - File system#Permessi di accesso ai file|permessi di accesso]]**, numero di **[[SO2_02 - File system#`ln`|hard link]]**, nome dell'**utente proprietario** e del **gruppo proprietario**, **dimensione** (in byte), **data e ora dell'ultima modifica** e **nome del file**;
+- **`-n`**, simile a `-l` ma che **mostra gli ID numerici di utenti e gruppi**, invece del loro nome testuale; 
+- **`-r`**, che permette di **invertire l'ordinamento dell'elenco**, qualunque esso sia (può essere abbinato ad altre opzioni di ordinamento, ad esempio `-tr` o `-Sr`);
+- **`-R`**, o **`--recursive`**, che permette di **visualizzare ricorsivamente anche il contenuto delle eventuali sotto-directory**;
+- **`-S`**, che permette di **ordinare l'elenco mostrato in base alla dimensione** (mostrando per primi i file di dimensioni maggiori);
+- **`-t`**, che permette di **ordinare l'elenco mostrato in base alla data di ultima modifica** (mostrando per primi i file modificati più di recente).
 
 È inoltre possibile **visualizzare un albero delle directory**, con radice in quella considerata (la `cwd` o un'altra indicata al momento della chiamata del comando) sfruttando il comando:
 
@@ -497,20 +504,41 @@ Sono previste anche varie opzioni facoltative, tra cui:
 ___
 ##### `dd`
 
-[SLIDES: 03, slide 17 - 18]
+Il comando **`dd`** permette di **copiare dati in modo "grezzo"**, ignorando il concetto di cartelle o di file system e lavorando direttamente con i singoli byte o con i blocchi di memoria. Una chiamata al comando **`df`** assume la seguente forma:
+
+```
+dd [OPZIONI...]
+```
+
+dove le **opzioni** dispongono di una sintassi insolita, dato che andranno concretamente scritte come una **sequenza di notazioni `variabile=valore`**. Tra queste, ci sono due variabili pressoché fondamentali, ossia:
+- **`if`**, o "**input file**", che indica al comando **da dove leggere i dati** (può essere un file normale, una partizione, o anche un intero disco fisico), e che se non inserito assume di default il valore `stdin`, leggendo dunque da tastiera;
+- **`of`**, o "**output file**", che indica al comando **dove scrivere i dati** (se si inserisce un disco o una partizione che contiene già dei dati, questi ultimi verranno immediatamente sovrascritti), e che se non inserito assume di default il valore `stdout`, scrivendo su schermo.
+
+Oltre a queste due variabili, ci sono varie **variabili opzionali**, tra cui:
+- **`bs`**, che indica **quanti byte copiare in un "colpo solo"**, valore che di default è settato a 512 byte, risultando in effetti abbastanza lento;
+- **`count`**, che indica **il numero di blocchi di memoria da copiare** (se non specificato, il comando prosegue fino alla fine del file o del disco di input);
+- **`conv`**, che permette di specificare **come convertire determinati blocchi di dati** (ad esempio, spesso si inserisce `conv=noerror,sync` per fare in modo che eventuali blocchi corrotti non blocchino l'esecuzione del comando, e che vengano sostituiti con degli zeri per mantenere intatta la struttura generale dei dati copiati).
 ___
 ##### `mkfs`
 
 Il comando **`mkfs`** permette di **creare un file system su un dispositivo**, ma è comunemente utilizzato anche per **formattare un disco** e per **prepararlo a ospitare file secondo un determinato formato**, specificato proprio dal tipo di file system utilizzato. Una chiamata al comando **`mkfs`** assume la seguente forma:
 
 ```
-mkfs [OPZIONI...] [-t type] [fs-options] device [size]
+mkfs [OPZIONI...] [-t type] [fs-options] device
 ```
 
 dove:
-- **`type`**
-- **`device`**
-- **`size`**
+- **`type`** è il **tipo di file system da creare** (i tipi previsti sono, tendenzialmente, quelli visti [[SO2_02 - File system#Mounting, partizioni e tipi di file system|qualche paragrafo fa]]);
+- **`device`** è il **"bersaglio" della creazione del nuovo file system**, o nella maggior parte dei casi la partizione da formattare.
 
-[SLIDES: 03, slide 20]
+Spesso si utilizza anche la sintassi:
+
+```
+mkfs.type device ...
+```
+
+Le principali opzioni **`fs-options`**, invece, sono:
+- **`-L "name"`**, che serve ad **assegnare un nome alla partizione** in seguito alla sua formattazione;
+- **`-b dim`**, che serve a **decidere quanto sono grandi i "blocchi" di memoria del file system** (di default, i sistemi Linux utilizzano blocchi da 4096 byte, o 4 KB);
+- **`-m perc`**, che permette di **decidere quanta percentuale della memoria della partizione vada riservata esclusivamente a `root`**, in modo da evitare, in caso di riempimento del disco, che l'OS si blocchi del tutto.
 ___

@@ -106,7 +106,164 @@ Tutte le funzioni di libreria che abbiamo visto in questo paragrafo utilizzano d
 ___
 ## System calls per la gestione di file e directory
 
-[SLIDES: 11, slide 4/16 - 18/21 - 23 - 25/33 - 35/37]
+In sistemi Linux, **qualsiasi risorsa è rappresentata con un file** (ad eccezione dei processi effettivi): file su disco, dispositivi di I/O, periferiche hardware, sockets, tutto viene gestito utilizzando l'astrazione del file. Se il programmatore vuole lavorare sui file, deve necessariamente seguire una **sequenza tipica di azioni**:
+1. **aprire il file** in una determinata modalità (lettura, scrittura, ecc. ecc.);
+2. **operare sul file**;
+3. **chiudere il file** dopo aver finito di leggerlo o manipolarlo.
+
+L'ultimo passaggio può sembrare, apparentemente, superfluo, dato che **un [[SO2_03 - Processi#Cos'è un processo?|processo]], quando termina la sua esecuzione, chiude automaticamente tutti i file che aveva aperto**; ciononostante, è sempre buona pratica chiuderli esplicitamente nel codice, per evitare comportamenti imprevisti.
+
+Quando viene aperto un file, il kernel non restituisce mai direttamente i dati grezzi: di base, l'apertura di un file **genera sequenzialmente un intero piccolo a partire da 0**, intero che prende il nome di "**file descriptor**", o "**descrittore del file**", che viene utilizzato come riferimento a uno specifico file aperto. In particolare, i **[[SO2_03 - Processi#Canali standard|canali standard]]** sono visti come file che **vengono aperti di default per ogni processo**, e assumono i seguenti file descriptors:
+- **`0`** per **`stdin`**;
+- **`1`** per **`stdout`**;
+- **`2`** per **`stderr`**.
+
+Quando un file viene chiuso, il suo file descriptor viene liberato e può essere riutilizzato. È possibile, del resto, anche aprire uno stesso file e ottenere due file descriptor diversi (ad esempio, se due utenti distinti aprono lo stesso file).
+
+Come accennato già in precedenza, all'apertura del file l'OS deve sapere **come si intende utilizzare il file** in questione: per permettere ciò, l'apertura di un file deve disporre anche di determinate "**flags**", che possono essere divise in due categorie:
+- le **"file status" flags**, associato allo **stato corrente di un file** e che sono condivise tra tutti i file descriptors ottenuti, per duplicazione, da un unico file descriptor;
+- le **"file descriptor" flags**, associate al **file descriptor specifico** e che sono indipendenti dal contenuto o dallo stato del file in questione.
+
+Possiamo categorizzare le flags di un file anche in base allo **scopo**, caso in cui otteniamo altre tre categorie:
+- flags relative alla **modalità di accesso**, che vengono specificate all'apertura e che non possono essere modificate in seguito;
+- flags relative all'**apertura**, che definiscono più nello specifico il modo in cui un file viene aperto, e non vengono mantenute in seguito;
+- flags relative alla **modalità operativa**, che definiscono il comportamento delle operazioni di manipolazione del file (lettura, scrittura, ecc. ecc.), e che possono essere modificate in seguito.
+
+Concretamente, le flags sono rappresentate come delle **maschere di bit**, ossia delle sequenze di bit settati quasi tutti a `0` e con un bit settato a `1`, dove la posizione del bit settato a `1` permette di capire quale flag si sta considerando. Al momento dell'apertura di un file, dunque, si potranno **combinare una o più flags con un OR bit a bit tra le stesse**.
+
+A questo punto, siamo pronti per affrontare il vero fulcro di questo paragrafo: le **system calls** (e anche alcune **[[SO2_05 - System calls#System calls vs. funzioni di libreria|funzioni di libreria]]**) **per la gestione dei file**. In particolare, approfondiremo le system calls e funzioni di libreria utilizzate per i seguenti ambiti:
+- **[[SO2_05 - System calls#Apertura di un file|apertura]], [[SO2_05 - System calls#Manipolazione di un file|manipolazione]] e [[SO2_05 - System calls#Chiusura di un file|chiusura di un file]]**;
+- **[[SO2_05 - System calls#Gestione dei metadati di un file|gestione dei metadati di un file]]**;
+- **[[SO2_05 - System calls#Gestione delle directory|gestione delle directory]]**;
+- **[[SO2_05 - System calls#Controllo avanzato dei file|controllo avanzato dei file]]**.
+
+##### Apertura di un file
+
+L'**apertura di un file** viene fatta attraverso la system call **`open`**, la cui sinossi completa è:
+
+```
+int open(const char *pathname, int flags)
+```
+
+dove **`pathname`** è la **stringa contenente il path** (relativo o assoluto) **del file che si vuole aprire**, mentre **`flags`** è l'**insieme delle [[SO2_05 - System calls#System calls per la gestione di file e directory|flags]] specificate per il file in questione** (come accennato in precedenza, ogni singola flag è una maschera di bit, e se si vogliono specificare più flags si devono porre in OR bit a bit). Se l'operazione ha successo, **`open` restituisce i file descriptor del file appena aperto**, e in caso contrario restituisce **`-1`**.
+
+**Il parametro `flags`**, dunque le flags relative al file che si sta aprendo, **è sostanzialmente equivalente al parametro `mode` della funzione di libreria `fopen`**, tant'è che è possibile stilare una tabella in cui si pongono a confronto questi due parametri, per capire quali flags siano necessarie per ottenere l'effetto di una determinata modalità di `fopen` (o viceversa):
+
+| `mode` di `fopen` | `flags` di `open`                 |
+| ----------------- | --------------------------------- |
+| `r`               | `O_RDONLY`                        |
+| `w`               | `O_WRONLY \| O_CREAT \| O_TRUNC`  |
+| `a`               | `O_WRONLY \| O_CREAT \| O_APPEND` |
+| `r+`              | `O_RDWR`                          |
+| `w+`              | `O_RDWR \| O_CREAT \| O_TRUNC`    |
+| `a+`              | `O_RDWR \| O_CREAT \| O_APPEND`   |
+
+Vien da chiedersi, a questo punto, **cosa comporti ciascuna delle `flags` specificabili all'apertura di un file**. Di seguito, si fornisce un elenco comprensivo di queste informazioni, partendo dalle **flags relative alla modalità di accesso**:
+- **`O_RDONLY`** impone di aprire il file in **sola lettura**;
+- **`O_WRONLY`** impone di aprire il file in **sola scrittura**;
+- **`O_RDWR`** impone di aprire il file **sia in lettura che in scrittura**.
+
+Abbiamo, poi, le **flags relative all'apertura**:
+- **`O_CREAT`** impone che, **se il file** specificato con `pathname` **non esiste**, **esso venga creato** (come un file vuoto, inizialmente);
+- **`O_EXCL`** viene utilizzato esclusivamente in coppia con `O_CREAT`, e fa in modo che **`open` restituisca un errore se si cerca di creare un file che esiste già** (può essere utile per evitare di sovrascrivere inavvertitamente dei dati).
+
+Infine, vediamo le **flags relative alla modalità operativa**:
+- **`O_APPEND` forza il cursore del file sempre alla fine dello stesso** prima di ogni operazione di scrittura;
+- **`O_TRUNC`** impone che, **se il file esiste già e viene aperto in scrittura, esso viene completamente sovrascritto al momento dell'apertura** (in altre parole, il contenuto precedente del file viene svuotato appena esso viene aperto);
+- **`O_SYNC`** impone che **le scritture nel file debbano essere "sincrone"** (più lento, ma anche più sicuro).
+
+Va specificata una particolarità: nell'eventualità in cui venga specificata la flag `O_CREAT`, la sinossi della system call cambia, dato che **si richiede di specificare anche i [[SO2_02 - File system#Permessi di accesso ai file|permessi di accesso]] al file che verrebbe eventualmente creato**. In tal caso, la nuova firma di `open` è la seguente:
+
+```
+int open(const char *pathname, int flags, mode_t mode)
+```
+
+dove **`mode`** rappresenta una **stringa di cifre ottali**, simile a quelle già viste in precedenza per condensare i permessi di accesso a un file.
+
+Oltre al confronto tra `flags` e `mode`, la system call `open` e la funzione di libreria `fopen` si differenziano anche per un altro aspetto fondamentale: **`fopen` restituisce un puntatore a un oggetto di tipo `FILE`, mentre `open` restituisce un semplice file descriptor, gestito dal kernel**. Ciò vuol dire che, come si può immaginare, utilizzare `fopen` mette a disposizione molte più informazioni al programmatore, dato che tale oggetto `FILE` contiene, oltre al file descriptor, anche un puntatore a un **buffer**, la **dimensione del buffer** in questione, un **contatore dei caratteri attualmente contenuti nel buffer**, una **flag di errore**, ecc. ecc.
+___
+##### Manipolazione di un file
+
+Per **"manipolazione" di un file** intendiamo principalmente due operazioni: **lettura** e **scrittura**. In questo paragrafo, andremo ad approfondire proprio tali operazioni.
+
+Per **leggere un file aperto**, estraendone i dati, si utilizza la system call **`read`**, la cui sinossi completa è:
+
+```
+ssize_t read(int fd, void *buf, size_t count)
+```
+
+dove **`fd`** è il **file descriptor del file da leggere**, **`buf`** è un **puntatore a un'area di memoria precedentemente allocata**, in cui `read` andrà a depositare i dati letti dal file, e **`count`** è il **numero massimo di byte da leggere** con tale chiamata. Questa system call **restituisce il numero di byte effettivamente letti** (dato che, se il file finisce prima del previsto, `read` leggerà un numero di byte inferiore a `count`), altrimenti **restituisce `-1` in caso di errore**, aggiornando il valore della variabile `errno` con uno dei seguenti codici di errore:
+- **`EBADF`**, se il file descriptor `fd` non è valido, o non è stato aperto con la modalità corretta;
+- **`EFAULT`**, se il puntatore `buf` non è valido;
+- **`EINTR`**, se l'esecuzione è stata interrotta dall'arrivo di un segnale di sistema prima che si potesse trasferire anche solo un byte;
+- **`EINVAL`**, se gli argomenti passati al momento della chiamata non sono validi;
+- **`EIO`**, se si è verificato un errore a livello di hardware;
+- **`EISDIR`**, se il file descriptor `fd` che si sta cercando di leggere indica una directory.
+
+Anche per la system call `read`, possiamo fare un **confronto con `fread`**, la sua funzione di libreria corrispondente. La differenza principale sta nella **"bufferizzazione" dei dati letti**: **la system call `read` non è bufferizzata**, dunque se viene chiamata un certo numero di volte $n$ per leggere anche solo un singolo byte da un file, dovrà effettuare $n$ accessi diretti ai byte grezzi del file su disco, con un grande decremento delle prestazioni; invece, **la funzione di libreria `fread`, lavorando su un oggetto `FILE`, è effettivamente bufferizzata**, dunque, quando `fread` viene chiamata la prima volta per leggere anche solo un singolo byte dal file in questione, essa procede (tramite una chiamata alla system call `read`) a trasferire un ampio blocco di memoria dal disco al buffer, in modo che eventuali chiamate successive restituiscano i dati richiesti quasi istantaneamente. Un'altra differenza importante sta nella **tipizzazione dei dati in lettura**: `read` vede semplicemente byte grezzi, mentre `fread` accetta come parametro anche la grandezza in byte del tipo di dato che si sta leggendo e il numero di elementi letti, "tipizzando" di fatto i dati ottenuti dal file.
+
+Per **scrivere in un file aperto**, invece, si utilizza la system call **`write`**, la cui sinossi completa è:
+
+```
+ssize_t write(int fd, const void *buf, size_t count)
+```
+
+dove **`fd`** è il **file descriptor del file in cui scrivere**, **`buf`** è un **puntatore a un'area di memoria precedentemente allocata**, da cui `write` leggerà i dati da scrivere, e **`count`** è il **numero di byte da scrivere** con tale chiamata. Questa system call **restituisce il numero di byte effettivamente scritti** (dato che, se ad esempio l'esecuzione viene interrotta da un segnale, `write` scriverà un numero di byte inferiore a `count`), altrimenti **restituisce `-1` in caso di errore**, aggiornando il valore della variabile `errno` con uno dei seguenti codici di errore:
+- **`EBADF`**, se il file descriptor `fd` non è valido, o non è stato aperto con la modalità corretta;
+- **`EFAULT`**, se il puntatore `buf` non è valido;
+- **`EINTR`**, se l'esecuzione è stata interrotta dall'arrivo di un segnale di sistema prima che si potesse trasferire anche solo un byte;
+- **`EINVAL`**, se gli argomenti passati al momento della chiamata non sono validi;
+- **`EIO`**, se si è verificato un errore a livello di hardware;
+- **`ENOSPC`**, se il disco è completamente pieno e non c'è più spazio per scrivere i dati richiesti;
+- **`EFBIG`**, se si vogliono scrivere dati che porterebbero il file in questione a superare la dimensione massima consentita dal file system o dall'OS.
+
+Il **confronto tra la system call `write` e la funzione di libreria `fwrite`** porta pressoché alle stesse differenze esposte in precedenza parlando di `read` e `fread`: la differenza principale, dunque, sta nel fatto che `write` non è bufferizzata, mentre `fwrite` sì.
+___
+##### Chiusura di un file
+
+Per **chiudere un file precedentemente aperto**, la system call di riferimento è **`close`**, la cui sinossi completa è:
+
+```
+int close(int fd)
+```
+
+dove **`fd`** è il **file descriptor del file da chiudere**. Tale system call **restituisce `0` in caso di successo**, e **`-1`** altrimenti, aggiornando il valore della variabile `errno` con uno dei seguenti codici di errore:
+- **`EBADF`**, se si cerca di chiudere un file descriptor che non corrisponde a nessun file attualmente aperto, oppure se si cerca di chiudere un file descriptor più di una volta;
+- **`EIO`**, se fallisce la scrittura finale dei dati nel file da chiudere o se, per qualche motivo, i dati vengono persi. 
+
+Concretamente, quello che succede è che viene "reciso" il collegamento tra il file descriptor `fd` e la struttura dati interna che rappresenta il file aperto. Una volta chiamata `close` su un certo file descriptor, quest'ultimo dunque torna a essere disponibile, e potrà essere riassegnato se verranno aperti altri file (tipicamente, infatti, **a un nuovo file aperto si assegna sempre il file descriptor più basso disponibile**).
+
+Bisogna fare attenzione nei contesti in cui un processo apre un grande numero di file senza chiuderli gradualmente: infatti, in Linux, **ogni processo ha un limite massimo di file descriptors che può tenere aperti** (tipicamente, circa 1024); dunque, se si riempiono tutti i posti disponibili, avviene quello che viene chiamato "**File Descriptor Leak**", e il programma risulterà di fatto bloccato, dato che non potrà più aprire file, connessioni di rete, ecc. ecc.
+
+I sistemi Unix e Linux presentano una particolarità proprio riguardo la chiusura di file: **cancellare un file**, in generale, **rimuove "apparentemente" il file dalla cartella** (rendendolo, di fatto, inaccessibile), **ma non distrugge i dati effettivi finché c'è almeno un programma che lo sta ancora leggendo o scrivendo**. In altre parole, un file rimosso viene effettivamente cancellato quando viene chiuso l'ultimo file descriptor che fa riferimento ad esso. Questo comportamento, oltre che utile per evitare comportamenti indesiderati, può essere sfruttato in vari contesti (ad esempio, la creazione di file temporanei sicuri).
+___
+##### Gestione dei metadati di un file
+
+[SLIDES: 11, slide 19/21]
+___
+##### Gestione delle directory
+
+In questo paragrafo, vedremo **3 funzioni di libreria**, che pur non essendo system calls rimangono molto importanti dato che rappresentano il modo principale per **lavorare con directory**. Le funzioni di libreria che approfondiremo sono tutte definite nell'header file **`dirent.h`**, e sono:
+- **`DIR *opendir(const char *name)`**;
+- **`struct dirent *readdir(DIR *dirp)`**;
+- **`int closedir(DIR *dirp)`**.
+
+La funzione **`opendir`** viene utilizzata per **aprire la directory**, **restituendo un puntatore a un oggetto di tipo `DIR`**, molto simile concettualmente al tipo `FILE` utilizzato per i file. L'unico parametro della funzione è **`name`**, ossia una **stringa contenente il percorso** (relativo o assoluto) **della directory da aprire**. In caso di errore, la funzione restituisce un **valore nullo `NULL`**.
+
+Una volta aperta una directory e ottenuto un puntatore a un oggetto `DIR`, possiamo **leggere il contenuto della directory** utilizzando la funzione **`readdir`**: più nello specifico, `readdir` viene utilizzata per **leggere il prossimo elemento disponibile contenuto nella directory**, sia esso un file, una sotto-directory o un link. L'unico parametro della funzione è **`dirp`**, ossia un **puntatore all'oggetto `DIR` rappresentante la directory considerata**; il suo valore di ritorno, invece, è un **puntatore a una [[SO2_04 - C#Strutture|struttura]] di tipo `dirent`**, contenente varie informazioni riguardo all'entità appena letta, tra cui:
+- **`ino_t d_ino`**, ossia il **numero di [[SO2_02 - File system#Struttura di file e directory|inode]] del file appena letto**;
+- **`off_t d_off`**, ossia un **offset** utilizzato dal file system per capire a che punto della lettura della directory si è arrivati;
+- **`unsigned short d_reclen`**, ossia la **lunghezza in byte del file appena letto**;
+- **`unsigned char d_type`**, ossia il **tipo di file appena letto** (ad esempio, un file regolare ha tipo `DT_REG`, una directory ha tipo `DT_DIR`, un link simbolico `DT_LNK`, e così via);
+- **`char d_name[256]`**, ossia il **nome del file appena letto**.
+
+Se si sono esauriti gli elementi della directory, invece, `readdir` restituisce un valore nullo `NULL`.
+
+Infine, una volta terminato il lavoro, per **chiudere una directory precedentemente aperta** si utilizza la funzione **`closedir`**: prende come unico parametro **`dirp`**, ossia un **puntatore alla directory da chiudere**, e restituisce **`0` in caso di successo**, e **`-1`** altrimenti.
+___
+##### Controllo avanzato dei file
+
+[SLIDES: 11, slide 25/33 - 35/37]
 ___
 ## System calls per la gestione di processi
 
