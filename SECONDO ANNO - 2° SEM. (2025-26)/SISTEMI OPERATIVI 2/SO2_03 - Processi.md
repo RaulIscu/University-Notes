@@ -266,14 +266,11 @@ kill -s KILL 123
 
 Come si può notare, però, **specificare il segnale da inviare non è obbligatorio**: se lo si omette, eseguendo il comando nella forma base `kill PID`, viene inviato un **segnale di default**, ossia **`SIGTERM`** (identificato dal numero **`15`**). Ma **cosa fanno concretamente i vari segnali?** Per rispondere a questa domanda, forniamo di seguito un elenco dei **segnali più comuni** e più potenti tra i 57 disponibili:
 - **`SIGINT`** (o **`INT`**, identificato dal numero **`2`**), che è il segnale inviato al processo [[SO2_03 - Processi#Esecuzione dei processi|in foreground]] quando si preme **`CTRL + c`**, e serve per **interrompere il processo** (la maggior parte dei programmi si chiude immediatamente, ma in alcuni casi, come con gli editor di testo, essi possono intercettare il segnale e chiedere all'utente di salvare il proprio lavoro prima di terminare l'esecuzione);
-- **`SIGQUIT`** (o **`QUIT`**, identificato dal numero **`3`**), [SLIDES: 14, slide 7]
-- **`SIGABR`** (o **`ABR`**, identificato dal numero **`6`**), [SLIDES: 14, slide 7]
-- **`SIGFPE`** (o **`FPE`**, identificato dal numero **`8`**), [SLIDES: 14, slide 7]
+- **`SIGQUIT`** (o **`QUIT`**, identificato dal numero **`3`**), che serve per **interrompere il processo immediatamente**, facendo però in modo che tale processo generi un "**core dump**", ossia una sorta di "fotografia" della memoria del processo in quel momento (è molto utile in situazioni di debugging, soprattutto quando il programma è bloccato o non risponde a `CTRL + c`);
+- **`SIGFPE`** (o **`FPE`**, identificato dal numero **`8`**), che **interrompe il processo immediatamente**, generando anche un core dump, **in seguito a una divisione per zero**;
 - **`SIGKILL`** (o **`KILL`**, identificato dal numero **`9`**), che serve per **interrompere il processo immediatamente, senza possibilità di intercettazione o ignoramento** (va usato con prudenza, dato che potrebbe portare a corruzione di dati o altri comportamenti non desiderati);
-- **`SIGSEGV`** (o **`SEGV`**, identificato dal numero **`11`**), [SLIDES: 14, slide 7]
-- **`SIGPIPE`** (o **`PIPE`**, identificato dal numero **`13`**), [SLIDES: 14, slide 7]
+- **`SIGSEGV`** (o **`SEGV`**, identificato dal numero **`11`**), che **interrompe il processo immediatamente**, generando anche un core dump, **in seguito a una Segmentation Fault** (viene mandato, dunque, quando il processo cerca di accedere a un'area di memoria per lui inaccessibile);
 - **`SIGTERM`** (o **`TERM`**, identificato dal numero **`15`**), che serve per **interrompere un processo in modo "gentile"**, dando tempo al processo di salvare dati, chiudere eventuali file aperti e terminare tutte le operazioni in corso prima di terminare la propria esecuzione;
-- **`SIGCHLD`** (o **`CHLD`**, identificato dal numero **`17`**), [SLIDES: 14, slide 7]
 - **`SIGCONT`** (o **`CONT`**, identificato dal numero **`18`**), che serve per **far continuare l'esecuzione di un processo bloccato** (viene usato, ad esempio, dai comandi `bg` e `fg`);
 - **`SIGSTOP`** (o **`STOP`**, identificato dal numero **`19`**), che serve per **bloccare il processo immediatamente**, facendolo entrare nello stato di `Sleep`, e come `SIGKILL` non può essere intercettato né ignorato;
 - **`SIGSTP`** (o **`STP`**, identificato dal numero **`20`**), che è **molto simile a `SIGSTOP`**, ma a differenza di quest'ultimo **può essere intercettato dal programma** (è il segnale inviato al processo in foreground quando si preme `CTRL + z`).
@@ -344,7 +341,83 @@ Oltre a quelle viste finora, ci sono altre **opzioni utili** per il comando `str
 ___
 ## Un approfondimento sui segnali
 
-[SLIDES: 14, slide 8/17]
+Come abbiamo visto parlando del [[SO2_03 - Processi#`kill`|comando]] **`kill`**, un processo può ricevere o mandare (o, ancora, mandare a sé stesso) dei **segnali**, e in base al segnale il processo ricevente risponderà in un certo modo. I segnali, in particolare, sono **eventi "asincroni"**, ossia eventi che possono avvenire pressoché in un qualsiasi momento, senza predeterminazione, dunque si dovrà **decidere preventivamente come reagire all'arrivo di un determinato segnale**. In generale, un determinato processo può reagire in tre modi alla ricezione di un segnale:
+- **ignorare completamente il segnale**, cosa che può essere fatta con tutti i segnali tranne `SIGKILL` e `SIGSTOP`;
+- **catturare il segnale**, eseguendo in risposta una funzione o un handler particolare definito dal programmatore (ciò non può essere fatto con `SIGKILL` e `SIGSTOP`);
+- **eseguire l'azione di default**, ossia il default handler associato a ciascun segnale.
+
+Le azioni di default previste da quest'ultimo punto sono quelle viste in precedenza, quando sono stati analizzati alcuni dei segnali principali, e tipicamente corrispondono alle seguenti procedure:
+- terminazione del processo con generazione del core dump;
+- terminazione del processo senza generazione del core dump;
+- ignoramento e rimozione del segnale;
+- sospensione del processo;
+- ripresa dell'esecuzione del processo;
+
+e così via.
+
+##### Bloccare un segnale
+
+Ora, quando un processo riceve un segnale, che andrà gestito con un qualche handler (sia esso di default o definito dal programmatore), esso dovrà **interrompere la propria esecuzione**, **eseguire l'handler** associato al segnale ricevuto, e solo in seguito potrà **riprendere l'esecuzione** dal punto in cui era stato interrotto. Certe volte, però, si potrebbe voler **"bloccare" dei segnali**, che in altre parole consiste nel **mettere in attesa un segnale ricevuto, e gestirlo in un secondo momento** (ciò può risultare cruciale durante l'esecuzione di sezioni critiche del programma); un segnale bloccato da un processo diventa "**pending**", e quest'ultimo lo riceverà solamente quando esso verrà esplicitamente sbloccato. Per implementare questo meccanismo, si utilizza la **funzione di libreria `sigprocmask`** e la **[[SO2_05 - System calls#Cos'è una system call?|system call]] `rt_sigprocmask`**.
+
+La funzione **`sigprocmask`**, la cui sinossi completa è:
+
+```
+int sigprocmask(int how, const sigset_t *set, sigset_t *oldset)
+```
+
+serve a **manipolare la cosiddetta "maschera dei segnali"**, ossia l'elenco dei segnali che sono correntemente bloccati. In particolare:
+- il parametro **`how`** indica **come gestire i segnali specificati**, e può assumere i valori **`SIG_BLOCK`** (aggiunge i segnali specificati in `set` a quelli già bloccati), **`SIG_UNBLOCK`** (rimuove i segnali specificati in `set` da quelli bloccati), o **`SIG_SETMASK`** (sovrascrive l'intera maschera precedente con `set`);
+- il parametro **`set`** è un **puntatore a una [[SO2_04 - C#Strutture|struttura]] `sigset_t` contenente dei nuovi segnali** da bloccare o sbloccare (se si passa `NULL`, la funzione ignorerà anche il parametro `how` e non modificherà nulla);
+- il parametro **`oldset`** è un **puntatore a una struttura `sigset_t` dove la funzione salverà la maschera dei segnali precedente**, prima di un'eventuale modifica.
+
+La funzione **restituisce `0` in caso di successo**, e **`-1`** altrimenti. Questa funzione, nella sua implementazione, richiama la **system call `rt_sigprocmask`**, la cui sinossi completa è:
+
+```
+int rt_sigprocmask(int how, const kernel_sigset_t *set, kernel_sigset_t *oldset, size_t sigsetsize)
+```
+
+I parametri sono pressoché identici, tranne per l'aggiunta di **`sigsetsize`**, che rappresenta la **dimensione in byte dell'array di segnali `set`** che si sta passando alla system call (`sigsetsize` viene calcolato autonomamente da `sigprocmask`, prima che quest'ultima effettui la chiamata alla system call).
+
+Alcune cose utili da ricordare lavorando con handler di segnali:
+- per la maggior parte dei segnali (ad eccezione, ad esempio, di `SIGCHLD`), **istanze multiple di segnali "pending" verranno ignorate**, mantenendone una sola in attesa;
+- **`sigprocmask`** può essere utilizzata **solo con processi e non con [[SO2_06 - Threads|threads]]**, dato che ognuno di quest'ultimi dispone di una propria maschera di segnali;
+- **ogni processo creato tramite `fork` eredita la maschera di segnali del processo padre**, e tale maschera viene **mantenuta anche dopo un'eventuale `exec`**.
+___
+##### Handler personalizzati di segnali
+
+Ora, avendo approfondito come bloccare dei segnali, vediamo nel dettaglio **come prevedere degli handler personalizzati per determinati segnali**. Ciò può essere generalmente fatto in due modi, utilizzando due funzioni di libreria diverse:
+- **`signal`**, ormai sconsigliata per la sua implementazione non standard, che può variare da sistema a sistema;
+- **`sigaction`**, più robusta e mantenuta.
+
+La funzione **`signal`**, la cui sinossi completa è:
+
+```
+sighandler_t signal(int signum, sighandler_t handler)
+```
+
+permette, molto semplicemente, di **impostare l'handler del segnale identificato da `signum` alla funzione `handler`**. Dunque, quest'ultimo parametro dovrà essere un puntatore a tale funzione, oppure può corrispondere a uno dei seguenti valori:
+- **`SIG_IGN`**, per fare in modo che il processo ignori il segnale `signum`;
+- **`SIG_DFL`**, per reimpostare l'handler di default per il segnale `signum`.
+
+La funzione **`sigaction`**, la cui sinossi completa è:
+
+```
+int sigaction(int signum, const struct sigaction *act, struct sigaction *oldact)
+```
+
+alla base ha lo stesso scopo di `signal`, ma svolge il suo compito in modo più preciso e completo. I parametri sono:
+- **`signum`**, ossia il numero identificativo del segnale da considerare;
+- **`act`**, ossia un puntatore a una struttura `sigaction`, che permette di definire al suo interno non solo una funzione handler personalizzata `sa_handler`, ma anche una maschera di segnali `sa_mask` che verranno bloccati durante l'esecuzione dell'handler, così come delle flags `sa_flags` per modificare il comportamento del segnale;
+- **`oldact`**, ossia un puntatore alla struttura `sigaction` precedente.
+___
+##### Altre funzioni utili per la gestione dei segnali
+
+Di seguito, elenchiamo ulteriori **funzioni utili per la gestione dei segnali**:
+- **`int kill(pid_t pid, int sig)`**, che serve a **inviare il segnale identificato da `sig` al processo `pid`** (analogamente a come fa il [[SO2_03 - Processi#`kill`|comando]] `kill`);
+- **`unsigned int alarm(unsigned int seconds)`**, che serve a **impostare un timer di `seconds` secondi**, dopo il quale il processo riceve un segnale **`SIGALRM`**;
+- **`int pause()`**, che serve a **sospendere l'esecuzione del processo fino all'arrivo di un qualsiasi segnale**;
+- **`int sigpending(sigset_t *set)`**, che **restituisce in `set` i segnali attualmente bloccati**;
+- **`int sigsuspend(const sigset_t *mask)`**, che **sostituisce la maschera dei segnali con `mask`**, e al tempo stesso invoca `pause` sul processo in questione.
 ___
 ## Comunicazione tra processi
 

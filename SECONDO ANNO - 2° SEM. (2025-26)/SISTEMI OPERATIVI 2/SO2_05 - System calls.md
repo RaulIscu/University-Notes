@@ -239,7 +239,61 @@ I sistemi Unix e Linux presentano una particolarità proprio riguardo la chiusur
 ___
 ##### Gestione dei metadati di un file
 
-[SLIDES: 11, slide 19/21]
+A questo punto, dopo aver visto system calls atte a lavorare concretamente con i contenuti di un file, vediamone altre che sono piuttosto destinate a **visualizzare, manipolare e gestire i metadati di un file**. In particolare, in questo paragrafo, andremo ad approfondire le seguenti system calls:
+- **`dup`**;
+- **`stat`**;
+- **`fstat`**;
+- **`chmod`**;
+- **`fchmod`**.
+
+La prima system call che analizziamo è **`dup`**, la cui sinossi completa è:
+
+```
+int dup(int oldfd)
+```
+
+Tale system call serve a **duplicare il file descriptor `oldfd`, restituendo un nuovo file descriptor che però punterà allo stesso identico file**. Il nuovo file descriptor generato sarà il file descriptor più basso disponibile in quel momento (come si è accennato [[SO2_05 - System calls#Chiusura di un file|nello scorso paragrafo]]). Se la system call incappa in un errore durante la sua esecuzione, `dup` restituirà **`-1`**.
+
+Vediamo, poi, una coppia di system calls che restituisce una sorta di **"carta d'identità" di un determinato file**, ossia **`stat`** e **`fstat`**. La sinossi completa di queste due system calls è: 
+
+```
+int stat(const char *path, struct stat *buf)
+int fstat(int fd, struct stat *buf)
+```
+
+Entrambe queste system calls svolgono pressoché lo stesso ruolo: in caso di successo, **scrivono nell'area di memoria a cui punta `buf` le informazioni di stato del file specificato**, formattandole in una **[[SO2_04 - C#Strutture|struttura]] `stat`**; sia `stat` che `fstat`, inoltre, **restituiscono `0` in caso di successo**, e **`-1`** altrimenti. Il contenuto della struttura `stat` consiste in una serie di attributi che contengono dettagli riguardo il file considerato, tra cui:
+- **`ino_t st_ino`**, ossia il **numero di [[SO2_02 - File system#Struttura di file e directory|inode]]** del file;
+- **`mode_t st_mode`**, ossia il **tipo di file** e la sua **modalità**;
+- **`nlink_t st_nlink`**, ossia il **numero di [[SO2_02 - File system#`ln`|hard links]]** associati a tale file;
+- **`uid_t st_uid`**, ossia l'**ID dell'utente proprietario** del file;
+- **`gid_t st_gid`**, ossia l'**ID del gruppo proprietario** del file;
+- **`off_t st_size`**, ossia la **dimensione del file** (espressa in byte);
+
+e altri ancora. In particolare, per "decodificare" le informazioni espresse dal campo `st_mode`, esistono alcune macro utili, tra cui:
+- **`S_ISREG`**, che ritorna `true` se il file in questione è un file regolare;
+- **`S_ISDIR`**, che ritorna `true` se il file in questione è una directory;
+- **`S_ISLNK`**, che ritorna `true` se il file in questione è un link simbolico;
+- **`S_ISSOCK`**, che ritorna `true` se il file in questione è una socket;
+- **`S_ISFIFO`**, che ritorna `true` se il file in questione è una FIFO;
+
+e così via. L'unica **differenza tra `stat` e `fstat`** sta nei loro parametri: **`stat` cerca il file a partire dal suo path** (relativo o assoluto), mentre **`fstat` cerca il file usando il suo file descriptor**.
+
+Infine, diamo un'occhiata a un'altra coppia di system calls, che viene principalmente utilizzata per **modificare i [[SO2_02 - File system#Permessi di accesso ai file|permessi di accesso]] a un file**, ossia **`chmod`** e **`fchmod`**. La sinossi completa di queste due system calls è: 
+
+```
+int chmod(const char *pathname, mode_t mode)
+int fchmod(int fd, mode_t mode)
+```
+
+Anche in questo caso, l'unica **differenza tra `chmod` e `fchmod`** sta nei loro parametri: **`chmod` cerca il file a partire dal suo path** (relativo o assoluto), mentre **`fchmod` cerca il file usando il suo file descriptor**. Concretamente, quello che fanno queste due system calls è manipolare i permessi di accesso al file considerato, aggiornandoli con i permessi specificati in **`mode`**: questo parametro può essere espresso sia in **codifica ottale**, sia utilizzando delle **maschere di bit poste in OR bit a bit** tra di loro. Ad esempio, alcune di queste maschere sono:
+- **`S_ISUID`**, che permette di settare il **SetUID bit**;
+- **`S_ISGID`**, che permette di settare il **SetGID bit**;
+- **`S_ISVTX`**, che permette di settare lo **sticky bit**;
+- **`S_IRUSR`**, che permette di settare il **permesso di lettura per l'utente proprietario**;
+- **`S_IRGRP`**, che permette di settare il **permesso di lettura per il gruppo proprietario**;
+- **`S_IROTH`**, che permette di settare il **permesso di lettura per gli altri utenti**.
+
+Entrambe le system calls **restituiscono `0` in caso di successo**, e **`-1`** altrimenti.
 ___
 ##### Gestione delle directory
 
