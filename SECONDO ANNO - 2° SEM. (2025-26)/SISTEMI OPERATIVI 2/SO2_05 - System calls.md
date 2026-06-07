@@ -102,6 +102,19 @@ Tutte le funzioni di libreria che abbiamo visto in questo paragrafo utilizzano d
 - **`msync`**;
 - **`munmap`**.
 
+Le prime due, ossia **`brk`** e **`sbrk`**, sono in realtà molto semplici e simili tra loro; per poterle spiegare, però, è opportuno introdurre un concetto legato al funzionamento dell'Heap: il "**Program Break**". In parole povere, l'Heap è a tutti gli effetti costituito da un singolo segmento contiguo di memoria, che cresce "verso l'alto", o meglio verso indirizzi di memoria più grandi; il **confine superiore** di questo segmento di memoria è proprio il Program Break, tale per cui tutto ciò che sta sotto di esso è memoria allocata al processo, mentre tutto ciò che sta sopra di esso è memoria a cui il processo non può accedere. Detto ciò, lo scopo di `brk` e `sbrk`, la cui sinossi completa è:
+
+```
+int brk(void *addr)
+void *sbrk(intptr_t increment)
+```
+
+è quello di **spostare il Program Break dell'Heap del processo chiamante**. 
+
+In particolare, **`brk` chiede di spostare il Program Break precisamente all'indirizzo `addr`**, in modo che se quest'ultimo è più alto del Program Break corrente allora verrà allocata più memoria, mentre se è più basso allora della memoria verrà liberata e restituita all'OS. Questa system call **restituisce `0` in caso di successo** e **`-1`** altrimenti.
+
+Invece, **`sbrk`** (quella più comunemente utilizzata) **chiede di spostare il Program Break di un numero esatto `increment` di byte**; in base al segno del valore `increment`, dunque, l'area di memoria dell'Heap verrà o aumentata o diminuita. Questa system call **restituisce l'indirizzo del Program Break precedente**, ossia l'inizio della nuova memoria appena allocata, **in caso di successo**, e **`-1`** altrimenti.
+
 [SLIDES: 10, slide 30/32]
 ___
 ## System calls per la gestione di file e directory
@@ -218,6 +231,19 @@ dove **`fd`** è il **file descriptor del file in cui scrivere**, **`buf`** è u
 - **`EFBIG`**, se si vogliono scrivere dati che porterebbero il file in questione a superare la dimensione massima consentita dal file system o dall'OS.
 
 Il **confronto tra la system call `write` e la funzione di libreria `fwrite`** porta pressoché alle stesse differenze esposte in precedenza parlando di `read` e `fread`: la differenza principale, dunque, sta nel fatto che `write` non è bufferizzata, mentre `fwrite` sì.
+
+Un'altra system call, meno fondamentale di `read` e `write` ma comunque molto utile, è **`lseek`**, la cui sinossi completa è:
+
+```
+off_t lseek(int fd, off_t offset, int whence)
+```
+
+Quello che fa, in parole povere, è **spostare il cursore del file descriptor `fd` di un numero di byte pari a `offset`, a partire da `whence`**. In particolare, `whence` può accettare tre costanti:
+- **`SEEK_SET`**, che fa in modo che l'`offset` parta **dall'inizio del file**;
+- **`SEEK_CUR`**, che fa in modo che l'`offset` parta **dalla posizione corrente**;
+- **`SEEK_END`**, che fa in modo che l'`offset` parta **dalla fine del file**.
+
+Se `lseek` viene eseguita con successo, essa **restituisce il nuovo offset a partire dall'inizio del file** (in byte), e **`-1`** altrimenti.
 ___
 ##### Chiusura di un file
 
@@ -244,7 +270,8 @@ A questo punto, dopo aver visto system calls atte a lavorare concretamente con i
 - **`stat`**;
 - **`fstat`**;
 - **`chmod`**;
-- **`fchmod`**.
+- **`fchmod`**;
+- **`chown`**.
 
 La prima system call che analizziamo è **`dup`**, la cui sinossi completa è:
 
@@ -294,10 +321,18 @@ Anche in questo caso, l'unica **differenza tra `chmod` e `fchmod`** sta nei loro
 - **`S_IROTH`**, che permette di settare il **permesso di lettura per gli altri utenti**.
 
 Entrambe le system calls **restituiscono `0` in caso di successo**, e **`-1`** altrimenti.
+
+Infine, vediamo la system call **`chown`**, la cui sinossi completa è:
+
+```
+int chown(const char *path, uid_t owner, gid_t group)
+```
+
+Lo scopo di `chown` è quello di **modificare l'ID dell'utente proprietario e del gruppo proprietario associati al file indicato da `path`**, sovrascrivendoli rispettivamente con **`owner`** e **`group`**.
 ___
 ##### Gestione delle directory
 
-In questo paragrafo, vedremo **3 funzioni di libreria**, che pur non essendo system calls rimangono molto importanti dato che rappresentano il modo principale per **lavorare con directory**. Le funzioni di libreria che approfondiremo sono tutte definite nell'header file **`dirent.h`**, e sono:
+In questo paragrafo, vedremo **3 funzioni di libreria** e **3 system calls**, tutte molto importanti dato che rappresentano il modo principale per **lavorare con directory**. Le funzioni di libreria che approfondiremo sono tutte definite nell'header file **`dirent.h`**, e sono:
 - **`DIR *opendir(const char *name)`**;
 - **`struct dirent *readdir(DIR *dirp)`**;
 - **`int closedir(DIR *dirp)`**.
@@ -314,6 +349,17 @@ Una volta aperta una directory e ottenuto un puntatore a un oggetto `DIR`, possi
 Se si sono esauriti gli elementi della directory, invece, `readdir` restituisce un valore nullo `NULL`.
 
 Infine, una volta terminato il lavoro, per **chiudere una directory precedentemente aperta** si utilizza la funzione **`closedir`**: prende come unico parametro **`dirp`**, ossia un **puntatore alla directory da chiudere**, e restituisce **`0` in caso di successo**, e **`-1`** altrimenti.
+
+Vediamo, ora, le system calls a cui avevamo accennato in precedenza, ossia:
+- **`int mkdir(const char *pathname, mode_t mode)`**;
+- **`int rmdir(const char *pathname)`**;
+- **`int chdir(const char *pathname)`**.
+
+La system call **`mkdir`** viene utilizzata per **creare una nuova directory, specificata nel path `pathname`**, con il parametro **`mode`** che, come per la system call `open`, definisce i **permessi di accesso iniziali alla nuova directory**.
+
+La system call **`rmdir`** viene utilizzata per **eliminare la directory specificata nel path `pathname`**, directory che per poter essere eliminata deve necessariamente essere vuota, altrimenti l'esecuzione della system call fallirà.
+
+La system call **`chdir`** viene utilizzata per **cambiare la `cwd`**, ossia la "Current Working Directory", **rendendola la directory specificata nel path `pathname`**. Si tenga a mente, utilizzando questa system call, che tale modifica ha effetto esclusivamente sul processo corrente.
 ___
 ##### Controllo avanzato dei file
 
