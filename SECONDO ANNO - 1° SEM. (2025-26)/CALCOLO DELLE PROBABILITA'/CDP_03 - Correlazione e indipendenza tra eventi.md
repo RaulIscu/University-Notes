@@ -5,7 +5,7 @@ $$\mathbb{P}(H_{1}\,|\,E)<\mathbb{P}(H_{1})\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\
 Da tale osservazione, prendiamo spunto per definire due tipi di **correlazione tra $2$ eventi**.
 
 > Siano $A$ e $B$ due eventi, con $\mathbb{P}(A)>0$ e $\mathbb{P}(B)>0$, tali eventi si dicono "**correlati positivamente**" se vale che:
-> $$\mathbb{P}(A\,|\,B)>\mathbb{P(A)}$$
+> $$\mathbb{P}(A\,|\,B)>\mathbb{P}(A)$$
 > Tale relazione è equivalente alla seguente:
 > $$\mathbb{P}(A\cap B)\,>\,\mathbb{P}(A)\cdot\mathbb{P}(B)$$
 

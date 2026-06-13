@@ -207,7 +207,7 @@ Possiamo indicare il numero delle possibili permutazioni di $k$ elementi con la 
 ___
 ##### Combinazioni
 
-Le "**combinazioni di classe $k$ di $n$ elementi**" sono **$k$-uple non ordinate**, dunque in cui non conta l'ordine degli elementi ma solo gli elementi effettivamente presenti, formate a partire da tali $n$ elementi, dove **non è possibile che un elemento si ripeta**, o in altri termini che **gli elementi della disposizione sono tutti diversi tra loro**. Ciò, come per le [[CDP_02 - Probabilità#Disposizioni senza ripetizione|disposizioni senza ripetizione]], implica che debba necessariamente valere che $k\le n$.
+Le "**combinazioni di classe $k$ di $n$ elementi**" sono **$k$-uple non ordinate**, dunque in cui non conta l'ordine degli elementi ma solo gli elementi effettivamente presenti, formate a partire da tali $n$ elementi, dove **non è possibile che un elemento si ripeta**, o in altri termini dove **gli elementi della combinazione sono tutti diversi tra loro**. Ciò, come per le [[CDP_02 - Probabilità#Disposizioni senza ripetizione|disposizioni senza ripetizione]], implica che debba necessariamente valere che $k\le n$.
 
 Un modo alternativo, più semplice, di definire una combinazione di classe $k$ di $n$ elementi è come **un sottoinsieme di cardinalità $k$ degli elementi di un insieme di cardinalità $n$**.
 
@@ -243,12 +243,12 @@ Un'altra identità utile è la cosiddetta "**identità di Vandermonde**", ossia:
 > dove con $k=0\lor(n-s)$ si intende che la sommatoria parte dal valore $k$ più grande tra $0$ e $n-s$, mentre con $n\land r$ si intende che la sommatoria arriva al valore più piccolo tra $n$ e $r$.
 
 [dimostrazione: pag. 33 - 34]
-
-[proprietà dei coefficienti binomiali: pag. 35]
 ___
 ##### Principio fondamentale del calcolo combinatorio
 
-[pag. 42]
+È possibile, in certi casi, che si voglia **determinare in quanti modi è possibile creare un insieme di $h$ elementi scegliendo quest'ultimi uno per uno**, in $h$ passi. Supponendo che, per ciascuno di questi passi, ci sia **un certo numero prefissato $m_{i}$ di scelte possibili** (per il primo elemento avremo $m_{1}$ scelte, per il secondo $m_{2}$ scelte, e così via), e che **sequenze distinte di scelte formino insiemi distinti**, si arriva alla formulazione del "**principio fondamentale del calcolo combinatorio**", che afferma semplicemente che:
+$$|G| = m_{1}\cdot m_{2}\cdot\,\dots\,\cdot m_{h}$$
+dove il valore $|G|$ è pari al numero di modi in cui è possibile creare l'insieme desiderato.
 ___
 ##### Alcuni esempi di applicazione del calcolo combinatorio
 
