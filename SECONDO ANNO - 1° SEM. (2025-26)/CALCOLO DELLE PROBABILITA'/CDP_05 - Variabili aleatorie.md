@@ -70,7 +70,7 @@ Infatti, ponendo $E=\{\omega_{i}\in \Omega:\,X(\omega_{i})=1\}$ abbiamo definito
 $$\begin{align} &p_{1}=p_{X}(1)=p\\&p_{0}=p_{X}(0)=1-p \end{align}$$
 Una distribuzione del genere viene detta "**distribuzione di Bernoulli di parametro $p$**", e si scrive anche $X\sim Bern(p)$.
 
-Le variabili aleatorie sono molto importanti anche nel **riformulare altre variabili aleatorie**. Infatti, possiamo dimostrare la seguente affermazione:
+Le variabili aleatorie binarie sono molto importanti anche nel **riformulare altre variabili aleatorie**. Infatti, possiamo dimostrare la seguente affermazione:
 
 > Una qualunque variabile aleatoria $X$ può essere riscritta come una **combinazione lineare delle variabili aleatorie binarie di tipo $1_{H_{k}^{X}}$**. Infatti, posto $X(\Omega)=\{x_{1},\,x_{2},\,\dots,\,x_{n}\}$ l'insieme dei valori assumibili da $X$, e considerata la partizione $\mathcal{H}^{X}=\{H_{1}^{X},\,H_{2}^{X},\,\dots,\,H_{n}^{X}\}$ generata da $X$, tale per cui:
 > $$H_{l}^{X}=\{X=x_{l}\}\,\,\,\,\,\text{con }l=1,\,2,\,\dots,\,n$$
@@ -112,7 +112,7 @@ Prima di considerare questo esempio, è opportuno soffermarsi sulla seguente oss
 > Siano $E_{1},\,E_{2},\,\dots,\,E_{n}$ degli eventi in uno spazio $(\Omega,\,\mathcal{P}(\Omega))$, e indicati con $X_{1},\,X_{2},\,\dots,\,X_{n}$ i loro rispettivi indicatori, si può definire sullo stesso spazio anche la variabile aleatoria $S_{n}=\sum_{h\,=\,1}^{n}X_{h}$, e si ha dunque che:
 > $$S_{n}(\omega_{i})=\sum_{h\,=\,1}^{n}X_{h}(\omega_{i})=\sum_{h\,=\,1}^{n}1_{E_{h}}(\omega_{i})$$
 
-Nel concreto, naturalmente, $S_{n}$ assume il significato di **numero di successi tra gli eventi $E_{1},\,E_{2},\,\dots,\,E_{n}$**. Si noti che la variabile aleatoria $S_{n}$ può assumere $n+1$ valori, ossia $S_{n}(\Omega)=\{0,\,1,\,\dots,\,n\}$; inoltre, la famiglia degli $n$ eventi $E_{1},\,E_{2},\,\dots,\,E_{n}$ non coincide con la partizione $\{\{S_{n}=0\},\,\{S_{n}=1\},\,\dots,\,\{S_{n}=n\}\}$, dato che la prima ha cardinalità $n$ mentre la seconda ha cardinalità $n+1$.
+Nel concreto, naturalmente, $S_{n}$ assume il significato di **numero di successi tra gli eventi $E_{1},\,E_{2},\,\dots,\,E_{n}$**. Si noti che la variabile aleatoria $S_{n}$ può assumere $n+1$ valori, ossia $S_{n}(\Omega)=\{0,\,1,\,\dots,\,n\}$; perciò, la famiglia degli $n$ eventi $E_{1},\,E_{2},\,\dots,\,E_{n}$ non coincide con la partizione $\{\{S_{n}=0\},\,\{S_{n}=1\},\,\dots,\,\{S_{n}=n\}\}$, dato che la prima ha cardinalità $n$ mentre la seconda ha cardinalità $n+1$.
 
 Passiamo ora all'esempio. Supponiamo di avere $n$ [[CDP_03 - Correlazione e indipendenza tra eventi#Prove bernoulliane|prove bernoulliane]], che si ricorda sono $n$ eventi completamente indipendenti ed equiprobabili, ciascuno di probabilità $\theta$ (con $0<\theta<1$); consideriamo, a questo punto, la variabile aleatoria $S_{n}=\{\text{numero di successi sulle }n\text{ prove}\}$. Naturalmente, i valori che può assumere tale variabile aleatoria sono $S_{n}(\Omega)=\{0,\,1,\,\dots,\,n\}$, e come abbiamo visto parlando di [[CDP_04 - Probabilità binomiali e ipergeometriche#Probabilità binomiali|probabilità binomiali]], si ha che:
 $$p_{S_{n}}(k)=\mathbb{P}(\{S_{n}=k\})=\binom{n}{k}\theta^{k}(1-\theta)^{n-k}$$
@@ -209,7 +209,7 @@ Ora, questo tipo di tabella può essere generalizzato considerando una coppia ge
 ![[prob_congiunte_esempio3.png]]
 
 È interessante osservare che, in generale, dati due insiemi $\{x_{1},\,x_{2},\,\dots,\,x_{n}\}$ e $\{y_{1},\,y_{2},\,\dots,\,y_{m}\}$ e considerata una tabella a doppia entrata riempita dei valori $p_{i,\,j}$ per $i=1,\,2,\,\dots,\,n$ e $j=1,\,2,\,\dots,\,m$, se i valori $p_{i,\,j}$ soddisfano le seguenti condizioni:
-$$p_{i\,j}\ge 0;\,\,\,\,\,\,\,\,\,\,\sum_{i\,=\,1}^{n}\sum_{j\,=\,1}^{m}p_{i,\,j}=1$$
+$$p_{i,\,j}\ge 0;\,\,\,\,\,\,\,\,\,\,\sum_{i\,=\,1}^{n}\sum_{j\,=\,1}^{m}p_{i,\,j}=1$$
 allora è possibile costruire uno spazio di probabilità a partire dall'insieme $\{x_{1},\,x_{2},\,\dots,\,x_{n}\}\times\{y_{1},\,y_{2},\,\dots,\,y_{m}\}$, dove la probabilità è definita a partire dalla seguente densità:
 $$p:\{x_{1},\,x_{2},\,\dots,\,x_{n}\}\times\{y_{1},\,y_{2},\,\dots,\,y_{m}\}\rightarrow[0,\,1];\,\,\,\,\,(x_{i},\,y_{j})\mapsto p(x_{i},\,y_{j}):=p_{i,\,j}$$
 Inoltre, definendo $p'_{i}$ come:
@@ -226,7 +226,7 @@ In una situazione come quella descritta finora in questo paragrafo, ossia due va
 > $$\mathbb{P}(X=x_{i}\,|\,Y=y_{j})=\frac{\mathbb{P}(X=x_{i},\,Y=y_{j})}{\mathbb{P}(Y=y_{j})}$$
 
 Useremo, contestualmente a questo tipo di probabilità, anche la notazione:
-$$p_{X\,|\,Y}(x_{i}\,|\,y_{j})=\mathbb{P}(X=x_{i}\,|\,Y=y_{j})$$
+$$p_{X\,|\,Y}(x_{i}\,|\,y_{j}):=\mathbb{P}(X=x_{i}\,|\,Y=y_{j})$$
 e il termine "**densità discreta di $X$ condizionata a $Y=y_{j}$**" per denotare la seguente funzione:
 $$p_{X\,|\,Y}(\cdot\,|\,y_{j}):\,X(\Omega)\rightarrow[0,\,1];\,\,\,\,\,\,\,\,\,\,x_{i}\mapsto p_{X\,|\,Y}(x_{i}\,|\,y_{j})$$
 Possiamo facilmente ricavare i valori di $p_{X\,|\,Y}(x_{i}\,|\,y_{j})$ sfruttando le probabilità congiunte, infatti:
@@ -245,7 +245,19 @@ $$\mathbb{P}(X=x_{i}\,|\,Y=y_{j})=\frac{\mathbb{P}(X=x_{i})\cdot\mathbb{P}(Y=y_{
 oppure, riadattando la formula al simbolismo breve introdotto:
 $$p'_{i\,|\,j}=\frac{p_{i}'\cdot p''_{j\,|\,i}}{p_{j}''}=\frac{p_{i}'\cdot p_{j\,|\,i}''}{\sum_{l}p_{l}'\cdot p_{j\,|\,l}''}$$
 
-[esempio: pag. 101/103]
+Per comprendere meglio come possiamo applicare quanto detto finora, vediamo un esempio. Sia $X$ una variabile aleatoria che segue una [[CDP_05 - Variabili aleatorie#Variabili aleatorie binomiali|distribuzione binomiale]] di parametri $n=3$ e $\theta=\frac{1}{4}$, dunque tale per cui:
+$$\begin{align} &p_{X}(0)\,=\,\mathbb{P}(X=0)\,=\,\binom{3}{0}\left( \frac{1}{4} \right)^0\left( \frac{3}{4} \right)^3\,=\,\frac{27}{64} \\&p_{X}(1)\,=\,\mathbb{P}(X=1)\,=\,\binom{3}{1}\left( \frac{1}{4} \right)^1\left( \frac{3}{4} \right)^2\,=\,\frac{27}{64} \\&p_{X}(2)\,=\,\mathbb{P}(X=2)\,=\,\binom{3}{2}\left( \frac{1}{4} \right)^2\left( \frac{3}{4} \right)^1\,=\,\frac{9}{64} \\&p_{X}(3)\,=\,\mathbb{P}(X=3)\,=\,\binom{3}{3}\left( \frac{1}{4} \right)^3\left( \frac{3}{4} \right)^0\,=\,\frac{1}{64} \end{align}$$
+Supponiamo, inoltre, che per ogni $h\in X(\Omega)$, la distribuzione condizionata di $Y$ dato $\{X=h\}$ sia uniforme in valori interi $k$ tali per cui $0\le k\le h$, o in altre parole che tale distribuzione contempli esclusivamente valori $k$ inclusi tra $0$ e $h$ (compresi), e che tutti questi valori $k$ sono equiprobabili. Ciò implica, ad esempio, che:
+$$p_{Y\,|\,X}(0\,|\,0)=\mathbb{P}(Y=0\,|\,\{X=0\})=1\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,p_{Y\,|\,X}(k\,|\,0)=\mathbb{P}(Y=k\,|\,\{X=0\})=0\,\,\,\,\,\text{per }k=1,\,2,\,3$$
+se $X=0$, dunque che nell'eventualità in cui la variabile aleatoria $X$ valga $0$ la variabile $Y$ assume una distribuzione uniforme sui valori $\{0\}$, ed essendoci un solo valore in tale insieme esso avrà necessariamente probabilità $1$ (sarà, sostanzialmente, certo), mentre tutti gli altri valori possibili avranno probabilità $0$. Invece, nel caso in cui $X=1$, si ha la seguente situazione:
+$$p_{Y\,|\,X}(k\,|\,1)=\mathbb{P}(Y=k\,|\,\{X=1\})=\frac{1}{2}\,\,\,\,\,\text{per }k=0,\,1\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,p_{Y\,|\,X}(k\,|\,1)=\mathbb{P}(Y=k\,|\,\{X=1\})=0\,\,\,\,\,\text{per }k=2,\,3$$
+e così via. Possiamo, a questo punto, dedurre la densità concreta congiunta di $X$ e $Y$, ossia $p_{X,\,Y}(h,\,k)$, dato che disponiamo sia delle densità marginali $p_{X}$ sia delle densità condizionate $p_{Y\,|\,X}$:
+$$p_{X,\,Y}(h,\,k)=\begin{cases} \frac{1}{h+1}\,\binom{3}{h}\left( \frac{1}{4} \right)^h\left( \frac{3}{4} \right)^{3-h}&\text{per }0\le k\le h\\\\ 0&\text{altrimenti} \end{cases}$$
+Inoltre, a questo punto, sarà possibile anche calcolare la densità marginale di $Y$, e conseguentemente stilare una tabella a doppia entrata che riassuma la situazione:
+
+![[dist_condizionate_esempio.png]]
+
+Infine, potremo calcolare anche la densità discreta condizionata di $X$ dato $\{Y=k\}$.
 ___
 ##### Trasformazioni di coppie di variabili aleatorie in spazi finiti
 
@@ -312,9 +324,17 @@ $$\mathbb{P}(\{X=x_{k}\}\,|\,\{X+Y=z\})=\frac{\mathbb{P}(X=x_{k},\,Y=z-x_{k})}{\
 
 Consideriamo, ora, un altro esempio. Siano $X$ e $Y$ due variabili aleatorie stocasticamente indipendenti, con distribuzioni binomiali rispettivamente di parametri $(r,\,\theta)$ e $(s,\,\theta)$: vogliamo determinare, in questo contesto, la distribuzione di probabilità della variabile $Z=X+Y$, e la distribuzione di probabilità condizionata di $X$ dato $\{Z=k\}$, con $0\le k\le r+s$. Per il primo punto, ricordiamo che $X\sim Bin(r,\,\theta)$ e $Y\sim Bin(s,\,\theta)$ sono due variabili indipendenti, e che $Z=X+Y$; da ciò, otteniamo che:
 $$Z=X+Y\sim Bin(r+s,\,\theta)$$
-[soluzione esercizio: pag. 110]
-
-[pag. 111]
+Infatti, essendo $X\sim Bin(r,\,\theta)$ e $Y\sim Bin(s,\,\theta)$, abbiamo che $Z(\Omega)=0,\,1,\,2,\,\dots,\,r+s$, e dunque che:
+$$\begin{align} \mathbb{P}(Z=l)=\mathbb{P}(X+Y=l)&=\sum_{k,\,h\,:\,k+h=l,\,0\,\le\,k\,\le\,r,\,0\,\le\,h\,\le\,s}\binom{r}{k}\theta^k(1-\theta)^{r-k}\,\binom{s}{h}\theta^h(1-\theta)^{s-h}\\&=\sum_{k,\,h\,:\,k+h=l,\,0\,\le\,k\,\le\,r,\,0\,\le\,h\,\le\,s}  \binom{r}{k}\binom{s}{h}\,\theta^l(1-\theta)^{r+s-l}\\&=\theta^l(1-\theta)^{r+s-l}\,\sum_{0\,\le\,k\,\le\,r,\,0\,\le\,l-k\,\le\,s}\binom{r}{k}\binom{s}{l-k} \end{align}$$
+La sommatoria presente nel risultato finale può essere riscritta sfruttando l'[[CDP_02 - Probabilità#Combinazioni|identità di Vandermonde]], portando al seguente risultato:
+$$\mathbb{P}(Z=l)=\theta^l\,(1-\theta)^{r+s-l}\,\binom{r+s}{l}$$
+Per il secondo punto, dimostreremo che la distribuzione condizionata di $X$ dato $\{Z=k\}$ è di tipo ipergeometrico, e in particolare che:
+$$\mathbf{P}_{X\,|\,Z}(\cdot\,|\,\{k\})\sim Hyp(r+s,\,r,\,k)$$
+Per dimostrare ciò, utilizziamo la definizione di [[CDP_05 - Variabili aleatorie#Distribuzioni condizionate|probabilità condizionata tra variabili aleatorie]], e scriviamo dunque:
+$$\mathbb{P}(X=i\,|\,Z=k)=\frac{\mathbb{P}(X=i,\,Z=k)}{\mathbb{P}(Z=k)}$$
+Ricordiamo, a questo punto, che l'evento $\{X=i,\,Z=k\}$ coincide con l'evento $\{X=i,\,Y=k-i\}$, e che quest'ultimo è diverso dall'insieme vuoto (dunque, ha una probabilità $>0$ di avvenire) solo se $0\le i\le r$ e $0\le k-i \le s$. Inoltre, tenendo conto che $\theta^i\theta^{k-i}=\theta^k$, e che $(1-\theta)^{r-i}(1-\theta)^{s-(k-i)}=(1-\theta)^{r+s-k}$, si ottiene che:
+$$\begin{align} \mathbb{P}(X=i\,|\,Z=k)= \frac{\mathbb{P}(X=i,\,Y=k-i)}{\mathbb{P}(Z=k)}&=\frac{\mathbb{P}(X=i)\,\mathbb{P}(Y=k-i)}{\mathbb{P}(Z=k)}\\&=\frac{\binom{r}{i}\theta^i(1-\theta)^{r-i}\,\binom{s}{k\,-\,i}\theta^{k-i}(1-\theta)^{s-(k-i)}}{\binom{r\,+\,s}{k}\theta^k(1-\theta)^{r+s-k}}\\&= \frac{\binom{r}{i}\binom{s}{k\,-\,i}}{\binom{r\,+\,s}{k}}\end{align}$$
+Il risultato ottenuto, com'è facile notare, definisce una distribuzione ipergeometrica.
 ___
 ## Valore atteso di una variabile aleatoria
 
@@ -339,7 +359,7 @@ Passiamo, ora, a una proprietà relativa alle [[CDP_05 - Variabili aleatorie#Var
 > Sia $E\subseteq \Omega$ un evento, e $X=1_{E}$ la variabile aleatoria indicatrice di $E$, si ha che:
 > $$\mathbb{E}(X)=\mathbb{E}(1_{E})=\mathbb{P}(E)$$
 
-Ciò è facilmente dimostrabile ricordando la definizione di "variabile aleatoria indicatore": una variabile $1_{E}(\omega)$ del genere può assumere solo i valori $0$ e $1$, e in particolare assume il valore $0$ se e solo se $\omega\in\overline{E}$, mentre assume il valore $1$ se e solo se $\omega\in E$, dunque si ottiene che:
+Ciò è facilmente dimostrabile ricordando la definizione di "indicatore": una variabile $1_{E}(\omega)$ del genere può assumere solo i valori $0$ e $1$, e in particolare assume il valore $0$ se e solo se $\omega\in\overline{E}$, mentre assume il valore $1$ se e solo se $\omega\in E$, dunque si ottiene che:
 $$\begin{align} \mathbb{E}(X)=\mathbb{E}(1_{E})&=\sum_{i\,=\,1}^{N}1_{E}(\omega_{i})\,p(\omega_{i})\\&=\sum_{i\,:\,\omega_{i}\,\in\,E}\overbrace{1_{E}(\omega_{i})}^{=\,1}\,p(\omega_{i})\,+\,\sum_{i\,:\,\omega_{i}\,\in\,\overline{E}}\overbrace{1_{E}(\omega_{i})}^{=\,0}\,p(\omega_{i})\\&=\sum_{i\,:\,\omega_{i}\,\in\,E}p(\omega_{i})=\mathbb{P}(E) \end{align}$$
 
 > Siano $a\le b$ due numeri reali tali che $a\le X(\omega_{i})\le b$ per ogni $i$ compreso tra $1$ e $N$, allora si ha sicuramente che:
@@ -398,7 +418,7 @@ Nel caso specifico in cui si sta considerando una **variabile aleatoria $X$ con 
 
 Per dimostrare le proposizioni appena ottenute, ricordiamo innanzitutto la principale conclusione che abbiamo ottenuto parlando, in precedenza, di [[CDP_05 - Variabili aleatorie#Variabili aleatorie a valori interi|variabili aleatorie a valori interi]]:
 $$\mathbb{P}(\{X=j\})\,=\,\mathbb{P}(\{X>j-1\})-\mathbb{P}(\{X>j\})$$
-Possiamo utilizzare questa relazione nello sviluppo dell'espressione di $\mathbb{E}(X)$:
+Possiamo utilizzare questa relazione nello sviluppo dell'espressione generica di $\mathbb{E}(X)$:
 $$\begin{align} \mathbb{E}(X)&=\sum_{j\,=\,0}^{n}j\cdot\mathbb{P}(\{X=j\})\\&=\sum_{j\,=\,1}^{n}j\cdot\mathbb{P}(\{X=j\})\\&= \sum_{j\,=\,1}^{n}j\cdot[\mathbb{P}(\{X>j-1\})-\mathbb{P}(\{X>j\})]\\&=\sum_{j\,=\,1}^{n}[j\cdot\mathbb{P}(\{X>j-1\})-j\cdot\mathbb{P}(\{X>j\})]\\&=\sum_{j\,=\,1}^{n}j\cdot\mathbb{P}(\{X>j-1\})-\sum_{j\,=\,1}^{n}j\cdot\mathbb{P}(\{X>j\}) \end{align}$$
 Ora, ponendo $h=j-1$, e ricordando che stiamo considerando $X(\Omega)\subseteq\{0,\,1,\,\dots,\,n\}$, per cui $\mathbb{P}(\{X>n\})=0$, possiamo scrivere:
 $$\begin{align} \mathbb{E}(X)&=\sum_{j\,=\,1}^{n}j\cdot\mathbb{P}(\{X>j-1\})-\sum_{j\,=\,1}^{n}j\cdot\mathbb{P}(\{X>j\})\\&=\sum_{h\,=\,0}^{n\,-\,1}(h+1)\,\mathbb{P}(\{X>h\})-\sum_{j\,=\,1}^{n\,-\,1}j\cdot\mathbb{P}(X>j)\\&= 1\cdot\mathbb{P}(\{X>0\})+2\cdot\mathbb{P}(\{X>1\})+\,\dots\,+n\cdot\mathbb{P}(\{X>n-1\})-1\cdot\mathbb{P}(\{X>1\})-2\cdot\mathbb{P}(\{X>2\})-\,\dots\,-(n-1)\,\mathbb{P}(\{X>n-1\})\\&=\mathbb{P}(\{X>0\})+(2-1)\,\mathbb{P}(\{X>1\})+\,\dots\,+(n-(n-1))\,\mathbb{P}(\{X>n-1\})\\&=\mathbb{P}(\{X>0\})+\sum_{h\,=\,1}^{n\,-\,1}((h-1)-h)\,\mathbb{P}(\{X>h\})\\&=\sum_{h\,=\,0}^{n\,-\,1}\mathbb{P}(\{X>h\}) \end{align}$$
@@ -423,7 +443,6 @@ di conseguenza, per la [[CDP_05 - Variabili aleatorie#Proprietà del valore atte
 $$\mathbb{E}\left( \sum_{j\,=\,1}^{n}X_{j} \right)=\sum_{j\,=\,1}^{n}\mathbb{E}(X_{j})=n\theta$$
 Sappiamo, d'altra parte, che nel caso particolare in cui $X_{1},\,X_{2},\,\dots,\,X_{n}$ sono indicatori di eventi completamente indipendenti, la variabile aleatoria $S=\sum_{j\,=\,1}^{n}X_{j}$ segue una distribuzione binomiale di parametri $n$ e $\theta$, la stessa di $X$; dunque, visto che il valore atteso di una variabile aleatoria dipende soltanto dalla sua distribuzione di probabilità, abbiamo che, per la nostra variabile aleatoria $X$:
 $$\mathbb{E}(X)=\mathbb{E}(S)=n\theta$$
-[pag. 121 - 122]
 
 Consideriamo, stavolta, una **distribuzione ipergeometrica di parametri $M$, $m_{1}$ e $n$**, che sappiamo essere ad esempio la distribuzione di probabilità di una variabile aleatoria $S$ che conta il numero di successi su $n$ eventi non indipendenti, ciascuno di probabilità $\frac{m_{1}}{M}$. Possiamo scrivere:
 $$S=\sum_{i\,=\,1}^{n}1_{A_{i}}$$
@@ -471,15 +490,65 @@ che sarà positivo, negativo o nullo a seconda che $\mu$ sia rispettivamente min
 ___
 ##### Valori attesi di trasformazioni di variabili aleatorie
 
+Per parlare del **valore atteso di una trasformazione di variabili aleatorie**, è opportuno esplicitare la seguente proprietà:
 
+> Siano $X$ e $Y$ due [[CDP_05 - Variabili aleatorie#Indipendenza stocastica tra variabili aleatorie|variabili aleatorie indipendenti]] definite su uno stesso spazio di probabilità, allora si ha che:
+> $$\mathbb{E}(X\cdot Y)=\mathbb{E}(X)\cdot\mathbb{E}(Y)$$
 
-[pag. 127/130]
+Dimostriamo questa proprietà. Siano rispettivamente $X(\Omega)=\{x_{1},\,x_{2},\,\dots,\,x_{n}\}$ e $Y(\Omega)=\{y_{1},\,y_{2},\,\dots,\,y_{m}\}$ gli insiemi di valori assumibili dalle variabili $X$ e $Y$, possiamo considerare la partizione dello spazio campione $\Omega$ costituita dagli eventi del tipo:
+$$H^{X,\,Y}_{h,\,k}=\{X=x_{h}\}\cap\{Y=y_{k}\}:=\{\omega_{i}\in \Omega:X(\omega_{i})=x_{h},\,Y(\omega_{i})=y_{k}\}$$
+per $h=1,\,2,\,\dots,\,n$ e $k=1,\,2,\,\dots,\,m$. A questo punto, consideriamo che:
+$$X\cdot Y=\sum_{h\,=\,1}^{n}\sum_{k\,=\,1}^{m}x_{h}\, y_{k}\cdot1_{H_{h,\,k}^{X,\,Y}}$$
+Per la [[CDP_05 - Variabili aleatorie#Proprietà del valore atteso|proprietà di linearità]] del valore atteso, ora, possiamo scrivere che:
+$$\mathbb{E}(X\cdot Y)=\sum_{h\,=\,1}^{n}\sum_{k\,=\,1}^{m}x_{h}\,y_{k}\cdot\mathbb{E}(1_{H_{h,\,k}^{X,\,Y}})=\sum_{h\,=\,1}^{n}\sum_{k\,=\,1}^{m}x_{h}\,y_{k}\cdot\mathbb{P}(\{X=x_{h}\}\cap\{Y=y_{k}\})$$
+Infine, ricordandoci che le variabili aleatorie $X$ e $Y$ sono indipendenti, possiamo riscrivere la probabilità $\mathbb{P}(\{X=x_{h}\}\cap\{Y=y_{k}\})$ come $\mathbb{P}(\{X=x_{h}\})\cdot\mathbb{P}(\{Y=y_{k}\})$, il che ci porta a riscrivere il risultato appena ottenuto come:
+$$\begin{align} \mathbb{E}(X\cdot Y)&=\sum_{h\,=\,1}^{n}\sum_{k\,=\,1}^{m}x_{h}\,y_{k}\cdot\mathbb{P}(X=x_{h})\cdot\mathbb{P}(Y=y_{k})\\&=\sum_{h\,=\,1}^{n}x_{h}\,\mathbb{P}(X=x_{h})\,\cdot\,\sum_{k\,=\,1}^{m}y_{k}\,\mathbb{P}(Y=y_{k})\\&=\mathbb{E}(X)\cdot\mathbb{E}(Y) \end{align}$$
+come volevasi dimostrare.
+
+[pag. 128/130]
 ___
 ##### Valore atteso condizionato e formula del valore atteso totale
 
-[pag. 131 - 132]
+Supponiamo di essere venuti a conoscenza del fatto che si è verificato un evento $A$, con $\mathbb{P}(A)>0$, e che per valutare la probabilità di un ulteriore evento $E$ vada utilizzata la [[CDP_02 - Probabilità#Probabilità condizionate|probabilità condizionata]] ad $A$, ossia $\mathbb{P}(E\,|\,A)$; in modo del tutto analogo, per valutare il valore atteso di una variabile aleatoria, andrebbe calcolato il valore atteso condizionato all'evento $A$, e per fare ciò utilizziamo la seguente definizione.
+
+> Sia $A$ un evento, con $\mathbb{P}(A)>0$, e sia $X$ una variabile aleatoria che può assumere i valori $X(\Omega)=\{x_{1},\,x_{2},\,\dots,\,x_{n}\}$, si definisce "**valore atteso di $X$ condizionato all'evento $A$**" il valore:
+> $$\mathbb{E}(X\,|\,A)\,=\,\sum_{i\,=\,1}^{N}X(\omega_{i})\,\mathbb{P}(\{\omega_{i}\}\,|\,A)\,=\,\sum_{k\,=\,1}^{n}x_{k}\,\mathbb{P}(X=x_{k}\,|\,A)$$
+
+A questo punto, a partire dalla definizione appena data e dalla [[CDP_02 - Probabilità#Formula delle probabilità totali|formula delle probabilità totali]], possiamo ottenere la cosiddetta "**formula del valore atteso totale**", che mette in relazione il valore atteso $\mathbb{E}(X)$ di una variabile aleatoria $X$ con i valori attesi condizionati $\mathbb{E}(X\,|\,H_{j})$, con $j=1,\,2,\,\dots,\,m$ e dove gli eventi $H_{j}$ formano una partizione dello spazio campione $\Omega$.
+
+> Data una partizione formata dagli eventi $H_{1},\,H_{2},\,\dots,\,H_{m}$, e se $\mathbb{P}(H_{j})>0$ per ogni $j=1,\,2,\,\dots,\,m$, allora vale che:
+> $$\mathbb{E}(X)=\sum_{j\,=\,1}^{m}\mathbb{E}(X\,|\,H_{j})\,\mathbb{P}(H_{j})$$
+
+La formula è facilmente dimostrabile applicando la definizione di valore atteso condizionato a un evento. Infatti, sappiamo che per ogni $j=1,\,2,\,\dots,\,m$ vale che:
+$$\mathbb{E}(X\,|\,H_{j})=\sum_{k\,=\,1}^{n}x_{k}\,\mathbb{P}(X=x_{k}\,|\,H_{j})$$
+e perciò sarà possibile riscrivere l'uguaglianza fornita come:
+$$\mathbb{E}(X)=\sum_{j\,=\,1}^{m}\sum_{k\,=\,1}^{n}x_{k}\,\mathbb{P}(X=x_{k}\,|\,H_{j})\,\mathbb{P}(H_{j})$$
+Ora, trattandosi di sommatorie finite sarà possibile scambiarne l'ordine senza alterare il risultato, dunque otteniamo:
+$$\begin{align}\mathbb{E}(X) &= \sum_{k\,=\,1}^{n}\sum_{j\,=\,1}^{m}x_{k}\,\mathbb{P}(X=x_{k}\,|\,H_{j})\,\mathbb{P}(H_{j})\\&=\sum_{k\,=1}^{n}x_{k}\,\sum_{j\,=\,1}^{m}\mathbb{P}(X=x_{k}\,|\,H_{j})\,\mathbb{P}(H_{j}) \end{align}$$
+Applichiamo, infine, la formula delle probabilità totali, in modo da arrivare alla seguente notazione:
+$$\begin{align}\mathbb{E}(X)&=\sum_{k\,=\,1}^{n}x_{k}\,\sum_{j\,=\,1}^{m}\mathbb{P}(X=x_{k}\,|\,H_{j})\,\mathbb{P}(H_{j})\\&=\sum_{k\,=\,1}^{n}x_{k}\,\mathbb{P}(X=x_{k}) \end{align}$$
+Notiamo che la notazione ottenuta equivale perfettamente alla definizione generale di valore atteso di una variabile aleatoria, dunque si è dimostrata la validità della formula del valore atteso totale.
+
+Un'applicazione interessante della formula appena dimostrata si ha quando la partizione con cui si sta lavorando è generata da una variabile aleatoria $Y$ con valori in $Y(\Omega)=\{y_{1},\,y_{2},\,\dots,\,y_{m}\}$, ed è dunque composta da eventi del tipo:
+$$H_{j}^{Y}:=\{Y=y_{j}\},\,\,\,\,\,\text{per }j=1,\,2,\,\dots,\,m$$
+In questo caso, la formula diventa:
+$$\begin{align} \mathbb{E}(X)&=\sum_{j\,=\,1}^{m}\mathbb{E}(X\,|\,H_{j}^{Y})\,\mathbb{P}(H_{j}^{Y})\\&=\sum_{j\,=\,1}^{m}\mathbb{E}(X\,|\,\{Y=y_{j}\})\,\mathbb{P}(Y=y_{j})\\&=\sum_{j\,=\,1}^{m}\left( \sum_{k\,=\,1}^{n}x_{k}\,\mathbb{P}(X=x_{k}\,|\,\{Y=y_{j}\}) \right)\,\mathbb{P}(Y=y_{j})\\&=\sum_{j\,=\,1}^{m}\left( \sum_{k\,=\,1}^{n}x_{k}\,p_{X\,|\,Y}(x_{k}\,|\,y_{j}) \right)\,p_{Y}(y_{j}) \end{align}$$
+
+La formula del valore atteso totale torna particolarmente utile dato che permette di **calcolare il valore atteso della variabile aleatoria $X$ senza doverne calcolare la distribuzione**, nel caso in cui siano noti i valori attesi $\mathbb{E}(X\,|\,H_{j})$ (o, in altri casi, i valori attesi dell'eventuale variabile aleatoria $Y$).
 ___
 ## Varianza e covarianza di variabili aleatorie
 
-[pag. 136]
+[pag. 136/143]
+
+##### Media aritmetica e disuguaglianza di Chebyshev
+
+[pag. 143/147]
+___
+##### Standardizzazione di una variabile aleatoria
+
+[pag. 147 - 148]
+___
+##### Disuguaglianza di Cauchy e coefficiente di correlazione
+
+[pag. 148 - 149]
 ___
