@@ -568,6 +568,8 @@ $$Var(X)\,=\,\mathbb{E}((X-\mu)^{2})\,=\,\mathbb{E}(X^{2}-2\mu X+\mu^{2})\,=\,\m
 > Sia $Y=a\cdot X$, con $a\in\mathbb{R}$, allora si ha che:
 > $$Var(Y)=Var(a\cdot X)=a^{2}\cdot Var(X)$$
 
+Queste due proprietà, sostanzialmente, aiutano a semplificare e manipolare le varianze con cui si sta lavorando: la prima afferma che **le costanti additive nelle varianze sono trascurabili**, mentre la seconda afferma che **per estrapolare una costante moltiplicativa da una varianza, la si deve elevare al quadrato**.
+
 > Siano $X$ e $Y$ due variabili aleatorie definite su $(\Omega,\,\mathcal{P}(\Omega))$, allora si ha che:
 > $$Var(X+Y)=Var(X)+Var(Y)+2\mathbb{E}[(X-\mathbb{E}(X))(Y-\mathbb{E}(Y))]$$
 
@@ -634,9 +636,30 @@ $$\begin{align} Var(X)&=n\cdot \frac{m_{1}}{M}\left( 1-\frac{m_{1}}{M} \right)+n
 Indicando con $p$ la probabilità $\frac{m_{1}}{M}$, si può scrivere:
 $$Var(X)=np(1-p)\left( 1-\frac{n-1}{M-1} \right)$$
 ___
-##### Media aritmetica e disuguaglianza di Chebyshev
+##### Media aritmetica di variabili aleatorie
 
-[pag. 143/147]
+Supponiamo di avere $n$ variabili aleatorie $X_{1},\,X_{2},\,\dots,\,X_{n}$, non necessariamente binarie, e per semplicità facciamo le seguenti assunzioni:
+- tutte le variabili considerate hanno lo stesso [[CDP_05 - Variabili aleatorie#Valore atteso di una variabile aleatoria|valore atteso]], dunque $\mathbb{E}(X_{i})=\mu$ per $i=1,\,2,\,\dots,\,n$;
+- tutte le variabili considerate hanno la stessa [[CDP_05 - Variabili aleatorie#Varianza e covarianza di variabili aleatorie|varianza]], dunque $Var(X_{i})=\sigma^{2}$ per $i=1,\,2,\,\dots,\,n$;
+- per ogni coppia di indici $h$ e $k$ diversi tra loro, inclusi nell'intervallo $[1,\,n]$, tutte le coppie di variabili $X_{h}$ e $X_{k}$ hanno la stessa covarianza, dunque $Cov(X_{h},\,X_{k})=\varphi$.
+
+A questo punto, consideriamo una nuova variabile aleatoria $Y_{n}$, rappresentante la **media aritmetica** delle $n$ variabili che abbiamo, ossia:
+$$Y_{n}:=\frac{1}{n}\sum_{h\,=\,1}^{n}X_{h}$$
+Risulta facile il calcolo del valore atteso e della varianza di tale media aritmetica.
+
+> Date $n$ variabili aleatorie $X_{1},\,X_{2},\,\dots,\,X_{n}$, aventi tutte lo stesso valore atteso, la stessa varianza, e con covarianza costante per ogni coppia di variabili diverse scelte dalle stesse $n$, indicando con $Y_{n}$ la media aritmetica delle variabili $X_{1},\,X_{2},\,\dots,\,X_{n}$ si ha che:
+> $$\mathbb{E}(Y_{n})=\mathbb{E}\left( \frac{1}{n} \sum_{h\,=\,1}^{n}X_{h}\right)=\mu$$
+> $$Var(Y_{n})=Var\left( \frac{1}{n}\sum_{h\,=\,1}^{n}X_{k} \right)=\frac{1}{n}[\sigma^{2}+(n-1)\varphi]$$
+> 
+
+Le formule appena fornite sono facilmente verificabili svolgendo i calcoli. Ad esempio, per la prima:
+$$\begin{align} \mathbb{E}(Y_{n})&=\mathbb{E}\left( \frac{1}{n}\sum_{h\,=\,1}^{n}X_{h} \right)\\&=\frac{1}{n}\,\mathbb{E}\left( \sum_{h\,=\,1}^{n}X_{h} \right)\\&=\frac{1}{n}\,\sum_{h\,=\,1}^{n}\mathbb{E}(X_{h})\\&=\frac{1}{n}\,n\mu=\mu \end{align}$$
+Mentre, per la seconda:
+$$\begin{align} Var(Y_{n})&=Var\left( \frac{1}{n}\sum_{h\,=\,1}^{n}X_{h} \right)\\&=\frac{1}{n^{2}}\,Var\left( \sum_{h\,=\,1}^{n}X_{h} \right)\\&=\frac{1}{n^{2}}\,\left[ \sum_{h\,=\,1}^{n}Var(X_{h})+\sum_{h\,\neq\,k}Cov(X_{h},\,X_{k}) \right]\\&=\frac{1}{n^{2}}\,[n\sigma^{2}+n(n-1)\,\varphi]\\&=\frac{1}{n}\,[\sigma^{2}+(n-1)\varphi] \end{align}$$
+___
+##### Disuguaglianza di Chebyshev
+
+[pag. 144/147]
 ___
 ##### Standardizzazione di una variabile aleatoria
 
@@ -645,4 +668,8 @@ ___
 ##### Disuguaglianza di Cauchy e coefficiente di correlazione
 
 [pag. 148 - 149]
+___
+##### Covarianza della somma di variabili aleatorie7
+
+[pag. 149 - 150]
 ___
