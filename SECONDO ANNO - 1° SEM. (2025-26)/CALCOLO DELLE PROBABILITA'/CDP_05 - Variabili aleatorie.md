@@ -538,8 +538,102 @@ La formula del valore atteso totale torna particolarmente utile dato che permett
 ___
 ## Varianza e covarianza di variabili aleatorie
 
-[pag. 136/143]
+Supponiamo di avere due [[CDP_05 - Variabili aleatorie#Cos'è una variabile aleatoria?|variabili aleatorie]] con lo stesso [[CDP_05 - Variabili aleatorie#Valore atteso di una variabile aleatoria|valore atteso]], ma con una distribuzione di probabilità diversa. A prima vista, le due variabili aleatorie sembrano risultare equivalenti (avendo lo stesso valore atteso), ed è dunque necessario trovare altri modi per differenziarle: uno di questi è considerare la cosiddetta "varianza" delle variabili aleatorie considerate. Ma cos'è la varianza?
 
+> Sia $X:\Omega\to X(\Omega)$ una variabile aleatoria, ed indicato brevemente con $\mu$ il valore atteso di $X$, si dice "**varianza** di $X$", e si indica con la notazione $Var(X)$, il valore:
+> $$Var(X)\,=\,\mathbb{E}((X-\mathbb{E}(X))^{2})\,:=\,\sum_{\omega_{i\,\in\,\Omega}}p(\omega_{i})\,(X(\omega_{i})-\mu)^{2}$$
+> ossia, in parole povere, il valore atteso di $(X-\mu)^{2}$.
+
+Come il valore atteso $\mathbb{E}(X)$, anche **la varianza $Var(X)$ dipende esclusivamente dalla distribuzione di probabilità di $X$**. 
+
+In parole povere, il concetto di "varianza" può essere visto come un **indicatore dell'affidabilità del valore atteso**: nel caso in cui **la varianza sia un valore molto piccolo, i valori che può assumere la variabile aleatoria considerata dovrebbero essere per la maggior parte molto vicini tra loro**, dunque il valore atteso sarà notevolmente vicino a qualsiasi di questi valori; invece, **se la varianza è più grande, ciò implica che i valori assumibili dalla variabile considerata dovrebbero essere più dispersi** e contenuti in un intervallo più grande, dunque il valore atteso potrebbe anche essere notevolmente lontano da uno di questi valori.   
+
+##### Proprietà della varianza
+
+A questo punto, per comprendere più in profondità questo nuovo concetto, elenchiamo le **proprietà fondamentali della varianza**.
+
+> **La varianza di una variabile aleatoria $X$ è sempre non negativa**, ovvero:
+> $$Var(X)\ge 0$$
+> Inoltre, se $p(\omega_{i})>0$ per ogni $\omega_{i}\in \Omega$, allora si avrà $Var(X)=0$ se e solo se $X$ è una [[CDP_05 - Variabili aleatorie#Variabili aleatorie degeneri e binarie|variabile aleatoria degenere]].
+
+> Per ogni variabile aleatoria $X$, è possibile calcolarne la varianza anche attraverso la seguente formula:
+> $$Var(X)\,=\,\mathbb{E}(X^{2})-\mu^{2}\,=\,\mathbb{E}(X^{2})-(\mathbb{E}(X))^{2}$$
+
+La validità di tale formula è facilmente dimostrabile osservando che $(X-\mu)^{2}=X^{2}-2\mu X+\mu^{2}$, e applicando la [[CDP_05 - Variabili aleatorie#Proprietà del valore atteso|proprietà di linearità del valore atteso]], dunque:
+$$Var(X)\,=\,\mathbb{E}((X-\mu)^{2})\,=\,\mathbb{E}(X^{2}-2\mu X+\mu^{2})\,=\,\mathbb{E}(X^{2})-2\mu\mathbb{E}(X)+\mu^{2}\,=\,\mathbb{E}(X)-(\mathbb{E}(X))^{2}$$
+
+> Sia $Y=X+b$, con $b\in\mathbb{R}$, allora si ha che:
+> $$Var(Y)=Var(X+b)=Var(X)$$
+
+> Sia $Y=a\cdot X$, con $a\in\mathbb{R}$, allora si ha che:
+> $$Var(Y)=Var(a\cdot X)=a^{2}\cdot Var(X)$$
+
+> Siano $X$ e $Y$ due variabili aleatorie definite su $(\Omega,\,\mathcal{P}(\Omega))$, allora si ha che:
+> $$Var(X+Y)=Var(X)+Var(Y)+2\mathbb{E}[(X-\mathbb{E}(X))(Y-\mathbb{E}(Y))]$$
+
+Per dimostrare questa proprietà, ricordiamo la definizione di varianza, e sviluppiamo i calcoli che ne conseguono:
+$$\begin{align} Var(X+Y)&=\mathbb{E}[(X+Y-\mathbb{E}(X+Y))^{2}]\\&=\mathbb{E}[(X-\mathbb{E}(X)+Y-\mathbb{E}(Y))^{2}]\\&=\mathbb{E}[(X-\mathbb{E}(X))^{2}+(Y-\mathbb{E}(Y))^{2}+2(X-\mathbb{E}(X))(Y-\mathbb{E}(Y))] \end{align}$$
+A questo punto, possiamo applicare la proprietà di linearità del valore atteso, che ci permette di arrivare alla formula vista in precedenza:
+$$\begin{align} Var(X+Y)&=\mathbb{E}[(X-\mathbb{E}(X))^{2}+(Y-\mathbb{E}(Y))^{2}+2(X-\mathbb{E}(X))(Y-\mathbb{E}(Y))]\\&=\mathbb{E}[(X-\mathbb{E}(X))^{2}]+\mathbb{E}[(Y-\mathbb{E}Y)^{2}]+2\mathbb{E}[(X-\mathbb{E}(X))(Y-\mathbb{E}(Y))]\\&=Var(X)+Var(Y)+2\mathbb{E}[(X-\mathbb{E}(X))(Y-\mathbb{E}(Y))] \end{align}$$
+come volevasi dimostrare.
+___
+##### Covarianza di due variabili aleatorie
+
+Se la [[CDP_05 - Variabili aleatorie#Varianza e covarianza di variabili aleatorie|varianza]] di una variabile aleatoria permette di avere più informazioni sui possibili risultati della stessa, la "covarianza" di due variabili aleatorie permette di ottenere informazioni sul **legame tra i valori assumibili da due variabili aleatorie distinte**. Prima di approfondire meglio questo concetto, si fornisce la sua definizione formale.
+
+> Siano date, su uno stesso spazio di probabilità, due variabili aleatorie $X$ e $Y$ e, per comodità, si indichino brevemente con $\mu_{X}$ e $\mu_{Y}$ rispettivamente il valore atteso di $X$ e il valore atteso di $Y$. Si definisce "**covarianza** fra $X$ e $Y$", e si indica con la notazione $Cov(X,\,Y)$, il valore:
+> $$Cov(X,\,Y)=\,\mathbb{E}[(X-\mu_{X})\cdot(Y-\mu_{Y})]$$
+
+Tipicamente, la covarianza fra due variabili $X$ e $Y$ si può inserire in uno dei seguenti **tre scenari**:
+- **$Cov(X,\,Y)>0$**, ovvero c'è una "**covarianza positiva**", caso in cui **le due variabili aleatorie considerate "viaggiano" nella stessa direzione** (se scende il valore di una, scende anche il valore dell'altra, e viceversa);
+- $Cov(X,\,Y)>0$, ovvero c'è una "**covarianza negativa**", caso in cui **le due variabili aleatorie considerate "viaggiano" in direzioni opposte** (se scende il valore di una, sale il valore dell'altra, e viceversa);
+- $Cov(X,\,Y)=0$, ovvero c'è una "**covarianza nulla**", caso in cui **la variazione di una variabile non dice nulla sulla variazione dell'altra** (è questo il caso delle variabili completamente indipendenti, la cui covarianza è necessariamente nulla).
+
+Naturalmente, $Cov(X,\,Y) = Cov(Y,\,X)$; inoltre, se $Y=X$, allora la formula degenera in:
+$$Cov(X,\,Y)\,=\,Cov(X,\,X)=Var(X)$$
+Svolgendo il prodotto $(X-\mu_{X})\cdot(Y-\mu_{Y})$, e applicando la [[CDP_05 - Variabili aleatorie#Proprietà del valore atteso|proprietà di linearità del valore atteso]], è possibile poi ottenere una **formula alternativa per la covarianza**:
+$$\begin{align} Cov(X,\,Y)&=\mathbb{E}[(X-\mu_{X})\cdot(Y-\mu_{Y})]\\&=\mathbb{E}(XY-X\mu_{Y}-Y\mu_{X}+\mu_{X}\mu_{Y})\\&=\mathbb{E}(X\cdot Y)-\mathbb{E}(X\cdot \mu_{Y})-\mathbb{E}(Y\cdot \mu_{X})+\mathbb{E}(\mu_{X}\cdot \mu_{Y})\\&=\mathbb{E}(X\cdot Y)-\mathbb{E}(X)\,\mu_{Y}-\mathbb{E}(Y)\,\mu_{X}+\mu_{X}\,\mu_{Y}\\&=\mathbb{E}(X\cdot Y)-\mu_{X}\,\mu_{Y}\\&=\mathbb{E}(X\cdot Y)-\mathbb{E}(X)\cdot\mathbb{E}(Y) \end{align}$$
+Inoltre, utilizzando la covarianza sarà possibile riscrivere in modo più compatto una formula fornita elencando le [[CDP_05 - Variabili aleatorie#Proprietà della varianza|proprietà della varianza]], in particolare quella relativa alla varianza della somma di due variabili aleatorie $X$ e $Y$:
+$$\begin{align} Var(X+Y)&=Var(X)+Var(Y)+2\mathbb{E}[(X-\mathbb{E}(X))(Y-\mathbb{E}(Y))]\\&=Var(X)+Var(Y)+2\,Cov(X,\,Y) \end{align}$$
+
+Come abbiamo accennato in precedenza, c'è una stretta correlazione tra covarianza e [[CDP_05 - Variabili aleatorie#Indipendenza stocastica tra variabili aleatorie|indipendenza tra due variabili aleatorie]]. In particolare, vale la seguente proposizione:
+
+> Siano date due variabili aleatorie $X$ e $Y$ definite sullo stesso spazio di probabilità, e siano $X$ e $Y$ stocasticamente indipendenti tra di loro, allora:
+> $$Cov(X,\,Y)=0\,\,\,\,\,\,\,\,\,\,\text{e}\,\,\,\,\,\,\,\,\,\,Var(X+Y)=Var(X)+Var(Y)$$
+
+La seconda conclusione è banale sfruttando la nuova formula della varianza $Var(X+Y)$ trovata poco fa, ma per ottenerla dobbiamo comunque dimostrare che $Cov(X,\,Y)=0$ se $X$ e $Y$ sono indipendenti: a questo scopo, basta ricordare che $Cov(X,\,Y)=\mathbb{E}(X\cdot Y)-\mathbb{E}(X)\cdot\mathbb{E}(Y)$, e che per due variabili aleatorie indipendenti si ha che $\mathbb{E}(X\cdot Y)=\mathbb{E}(X)\cdot\mathbb{E}(Y)$, il che porta all'annullamento della covarianza, come volevasi dimostrare.
+
+Ora, generalmente l'implicazione vale con certezza in un solo verso: se due variabili $X$ e $Y$ sono indipendenti tra loro, la loro covarianza è nulla, ma se la covarianza di due variabili $X$ e $Y$ è nulla, non posso dire con certezza che $X$ e $Y$ sono indipendenti (in altri termini, **la condizione $Cov(X,\,Y)=0$ è necessaria, ma non sufficiente per l'indipendenza tra le variabili $X$ e $Y$**). Ciò vale sempre tranne per un caso particolare, ossia quello delle [[CDP_05 - Variabili aleatorie#Variabili aleatorie degeneri e binarie|variabili aleatorie binarie]], ossia quelle con valori in $\{0,\,1\}$. Infatti:
+
+> Siano $X$ e $Y$ due variabili aleatorie binarie, definite su uno stesso spazio di probabilità, anche il loro prodotto $X\cdot Y$ sarà una variabile aleatoria binaria, con:
+> $$\mathbb{E}(X\cdot Y)\,=\,\mathbb{P}(\{X\cdot Y=1\})=\mathbb{P}(\{X=1\}\cap\{Y=1\})$$
+> Dunque, si ha che:
+> $$Cov(X,\,Y)\,=\,\mathbb{P}(\{X=1\}\cap\{Y=1\})-\mathbb{P}(\{X=1\})\cdot\mathbb{P}(\{Y=1\})$$
+
+A questo punto, se ponessimo la covarianza $Cov(X,\,Y)=0$, otterremmo che:
+$$\mathbb{P}(\{X=1\}\cap\{Y=1\})=\mathbb{P}(\{X=1\})\cdot\mathbb{P}(\{Y=1\})$$
+e dato che una variabile aleatoria binaria può assumere solo valori in $\{0,\,1\}$, questo risultato copre sostanzialmente tutti i possibili scenari, e dunque si può dire con certezza che $X$ e $Y$ sono stocasticamente indipendenti.
+___
+##### Varianza di variabili aleatorie binomiali e ipergeometriche
+
+Vediamo, in questo paragrafo, come si comporta la **varianza contestualmente a [[CDP_05 - Variabili aleatorie#Variabili aleatorie binomiali|variabili aleatorie binomiali]] e [[CDP_05 - Variabili aleatorie#Variabili aleatorie ipergeometriche|ipergeometriche]]**, partendo prima di tutto dalle binomiali.
+
+Sia $X$ una variabile aleatoria con distribuzione binomiale di parametri $n$ e $\theta$, dunque:
+$$X\sim Bin(n,\,\theta)$$
+vogliamo sapere il valore della varianza $Var(X)$. Per ottenerla, conviene **vedere $X$ come la somma di $n$ [[CDP_05 - Variabili aleatorie#Variabili aleatorie degeneri e binarie|variabili aleatorie binarie]] indipendenti $X_{1},\,X_{2},\,\dots,\,X_{n}$**: per ogni $i=1,\,2,\,\dots,\,n$, considereremo $X_{i}=1_{A}$, dove i vari eventi $A_{1},\,A_{2},\,\dots,\,A_{n}$ formano uno [[CDP_03 - Correlazione e indipendenza tra eventi#Prove bernoulliane|schema bernoulliano]] (ossia sono tutti eventi indipendenti e aventi probabilità $\theta$ di accadere). Date le premesse, è facile convincersi che ciascuna delle variabili $X_{i}$ ha valore atteso $\mathbb{E}(X_{i})=\theta$ e varianza $Var(X_{i})=\theta \cdot(1-\theta)$, dunque si ottiene che:
+$$Var(X)\,=\,Var\left(\sum_{i\,=\,1}^{n}X_{i}\right)\,=\,\sum_{i\,=\,1}^{n}Var(X_{i})\,=\,n\theta\,(1-\theta)$$
+
+Consideriamo, stavolta, una variabile aleatoria $X$ con distribuzione ipergeometrica di parametri $M$, $m_{1}$ e $n$, dunque: 
+$$X\sim Hyp(M,\,m_{1},\,n)$$
+In questo caso, ci conviene **vedere $X$ coma la somma di $n$ variabili aleatorie binarie $X_{1},\,X_{2},\,\dots,\,X_{n}$ non indipendenti**: per ogni $i=1,\,2,\,\dots,\,n$, considereremo $X_{i}=1_{A_{i}}$, con l'evento $A_{i}=\{\text{all'}i\text{-esima estrazione esce un elemento di tipo }A\}$. Si tratta sostanzialmente di fare $n$ estrazioni senza reinserimento da un'urna che contiene $M$ palline, di cui $m_{1}$ di tipo $A$ e $m_{2}=M-m_{1}$ di tipo $B$. Date le premesse, è facile convincersi che ciascuna delle variabili $X_{i}$ ha valore atteso $\mathbb{E}(X_{i})=\frac{m_{1}}{M}$ e varianza $\frac{m_{1}}{M}\cdot\left( 1-\frac{m_{1}}{M} \right)$, tuttavia la situazione è più complicata di prima per il fatto che le varie variabili $X_{i}$ non sono indipendenti tra loro. Prese a due a due, le variabili $X_{i}$ hanno la stessa covarianza, dunque potremo scrivere che:
+$$Var(X)\,=\,\sum_{k\,=\,1}^{n}Var(X_{k})+\sum_{h\,\neq\,k}^{1\,\le\,h,\,k\,\le\,n}Cov(X_{h},\,X_{k})\,=\,n\cdot \frac{m_{1}}{M}\left( 1-\frac{m_{1}}{M} \right)+n(n-1)\,Cov(X_{1},\,X_{2})$$
+Ora, essendo $X_{1}$ e $X_{2}$ variabili aleatorie binarie, si ha che:
+$$\begin{align} Cov(X_{1},\,X_{2})&=\mathbb{P}(\{X_{1}=1\}\cap\{X_{2}=1\})-\mathbb{P}(\{X_{1}=1\})\cdot\mathbb{P}(\{X_{2}=1\})\\&=\mathbb{P}(\{X_{1}=1\})\cdot\mathbb{P}(\{X_{2}=1\}\,|\,\{X_{1}=1\})-\left( \frac{m_{1}}{M} \right)^{2}\\&=\frac{m_{1}}{M}\cdot \frac{m_{1}-1}{M-1}-\left(\frac{m_{1}}{M}\right)^{2}\\&=\frac{m_{1}}{M}\left( \frac{m_{1}-1}{M-1}-\frac{m_{1}}{M} \right)\\&=-\frac{m_{1}}{M}\left( \frac{M-m_{1}}{M(M-1)} \right)\\&=-\frac{m_{1}}{M}\,\left( 1-\frac{m_{1}}{M} \right)\, \frac{1}{M-1} \end{align}$$
+Infine, concludiamo il nostro calcolo inserendo il risultato appena ottenuto nella formula precedentemente trovata per la varianza $Var(X)$:
+$$\begin{align} Var(X)&=n\cdot \frac{m_{1}}{M}\left( 1-\frac{m_{1}}{M} \right)+n(n-1)\,Cov(X_{1},\,X_{2}) \\&= n\, \frac{m_{1}}{M}\,\left( 1-\frac{m_{1}}{M} \right)+n(n-1)\left( -\frac{m_{1}}{M} \right)\left( 1-\frac{m_{1}}{M} \right) \frac{1}{M-1}\\&=n\cdot \frac{m_{1}}{M}\cdot \frac{M-m_{1}}{M}\cdot \left( 1- \frac{n-1}{M-1} \right) \end{align}$$
+Indicando con $p$ la probabilità $\frac{m_{1}}{M}$, si può scrivere:
+$$Var(X)=np(1-p)\left( 1-\frac{n-1}{M-1} \right)$$
+___
 ##### Media aritmetica e disuguaglianza di Chebyshev
 
 [pag. 143/147]
