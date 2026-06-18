@@ -669,7 +669,7 @@ ___
 
 [pag. 148 - 149]
 ___
-##### Covarianza della somma di variabili aleatorie7
+##### Covarianza della somma di variabili aleatorie
 
 [pag. 149 - 150]
 ___
