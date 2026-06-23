@@ -19,7 +19,7 @@ $$\sum_{i\,=\,1}^{n}x'_{i}=\sum_{i\,=\,1}^{n}x''_{i}=k$$
 sappiamo che quegli stessi eventi risultano anche equiprobabili, ed entrambi di probabilità $\theta^{k}(1-\theta)^{n-k}$. Perciò, dal momento che la cardinalità dell'insieme $\left\{ x\in\{0,\,1\}^{n}:\sum_{i\,=\,1}^{n}x_{i}=k \right\}$ è uguale a $\binom{n}{k}$, potremmo scrivere per $k=0,\,1,\,\dots,\,n$:
 $$\mathbb{P}(\{S_{n}=k\})\,=\,\sum_{x\,\in\,\{0,\,1\}^{n}\,:\,\sum_{i\,=\,1}^{n}x_{i}\,=\,k}\mathbb{P}(\{X_{1}=x_{1},\,X_{2}=x_{2},\,\dots,\,X_{n}=x_{n}\})\,=\,\binom{n}{k}\,\theta^{k}(1-\theta)^{n-k}$$
 > Una probabilità del genere definita sull'insieme $\{0,\,1,\,\dots,\,n\}$ prende il nome di "**probabilità binomiale** di parametri $n$ e $\theta$", e rappresenta una **[[CDP_02 - Probabilità#Misure di probabilità|misura di probabilità]] $\mathbf{P}$ definita sull'insieme delle parti di $\{0,\,1,\,\dots,\,n\}$** come segue:
- $$\mathbf{P}:\mathcal{P}(\{0,\,1,\,\dots,\,n\})\rightarrow[0,\,1],\,\,\,I \mapsto \mathbf{P}(I):=\sum_{k\,\in\,I}p(k)$$
+> $$\mathbf{P}:\mathcal{P}(\{0,\,1,\,\dots,\,n\})\rightarrow[0,\,1],\,\,\,I \mapsto \mathbf{P}(I):=\sum_{k\,\in\,I}p(k)$$
   dove $p(k)=\binom{n}{k}\theta^{k}(1-\theta)^{n-k}$ e $k\,\in\,\{0,\,1,\,\dots,\,n\}$.
 
 ##### Esempi di probabilità binomiali

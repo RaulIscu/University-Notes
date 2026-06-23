@@ -112,7 +112,7 @@ Prima di considerare questo esempio, è opportuno soffermarsi sulla seguente oss
 > Siano $E_{1},\,E_{2},\,\dots,\,E_{n}$ degli eventi in uno spazio $(\Omega,\,\mathcal{P}(\Omega))$, e indicati con $X_{1},\,X_{2},\,\dots,\,X_{n}$ i loro rispettivi indicatori, si può definire sullo stesso spazio anche la variabile aleatoria $S_{n}=\sum_{h\,=\,1}^{n}X_{h}$, e si ha dunque che:
 > $$S_{n}(\omega_{i})=\sum_{h\,=\,1}^{n}X_{h}(\omega_{i})=\sum_{h\,=\,1}^{n}1_{E_{h}}(\omega_{i})$$
 
-Nel concreto, naturalmente, $S_{n}$ assume il significato di **numero di successi tra gli eventi $E_{1},\,E_{2},\,\dots,\,E_{n}$**. Si noti che la variabile aleatoria $S_{n}$ può assumere $n+1$ valori, ossia $S_{n}(\Omega)=\{0,\,1,\,\dots,\,n\}$; perciò, la famiglia degli $n$ eventi $E_{1},\,E_{2},\,\dots,\,E_{n}$ non coincide con la partizione $\{\{S_{n}=0\},\,\{S_{n}=1\},\,\dots,\,\{S_{n}=n\}\}$, dato che la prima ha cardinalità $n$ mentre la seconda ha cardinalità $n+1$.
+Nel concreto, naturalmente, $S_{n}$ assume il significato di **numero di successi tra gli eventi $X_{1},\,X_{2},\,\dots,\,X_{n}$**. Si noti che la variabile aleatoria $S_{n}$ può assumere $n+1$ valori, ossia $S_{n}(\Omega)=\{0,\,1,\,\dots,\,n\}$; perciò, la famiglia degli $n$ eventi $X_{1},\,X_{2},\,\dots,\,X_{n}$ non coincide con la partizione $\{\{S_{n}=0\},\,\{S_{n}=1\},\,\dots,\,\{S_{n}=n\}\}$, dato che la prima ha cardinalità $n$ mentre la seconda ha cardinalità $n+1$.
 
 Passiamo ora all'esempio. Supponiamo di avere $n$ [[CDP_03 - Correlazione e indipendenza tra eventi#Prove bernoulliane|prove bernoulliane]], che si ricorda sono $n$ eventi completamente indipendenti ed equiprobabili, ciascuno di probabilità $\theta$ (con $0<\theta<1$); consideriamo, a questo punto, la variabile aleatoria $S_{n}=\{\text{numero di successi sulle }n\text{ prove}\}$. Naturalmente, i valori che può assumere tale variabile aleatoria sono $S_{n}(\Omega)=\{0,\,1,\,\dots,\,n\}$, e come abbiamo visto parlando di [[CDP_04 - Probabilità binomiali e ipergeometriche#Probabilità binomiali|probabilità binomiali]], si ha che:
 $$p_{S_{n}}(k)=\mathbb{P}(\{S_{n}=k\})=\binom{n}{k}\theta^{k}(1-\theta)^{n-k}$$
@@ -659,7 +659,17 @@ $$\begin{align} Var(Y_{n})&=Var\left( \frac{1}{n}\sum_{h\,=\,1}^{n}X_{h} \right)
 ___
 ##### Disuguaglianza di Chebyshev
 
-[pag. 144/147]
+La conoscenza del [[CDP_05 - Variabili aleatorie#Valore atteso di una variabile aleatoria|valore atteso]] e della [[CDP_05 - Variabili aleatorie#Varianza e covarianza di variabili aleatorie|varianza]] di una variabile aleatoria permette di avere un'idea indicativa della sua distribuzione di probabilità. In particolare, a partire da queste informazioni, si possono ricavare alcune utili disuguaglianze, tra cui la **disuguaglianza di Chebyshev**.
+
+> Sia $X$ una variabile aleatoria, con valore atteso uguale a $\mu$ e varianza uguale a $\sigma^{2}$, allora vale che:
+> $$\mathbb{P}(\{|X-\mu|>\epsilon\})\,\le\, \frac{\sigma^{2}}{\epsilon^{2}}$$
+> per ogni $\epsilon>0$.
+
+Banalmente, si chiarisce che il valore $\epsilon$ dà senso alla disuguaglianza solo maggiore di $0$ dato che, se esso fosse negativo, allora l'evento $\{|X-\mu|>\epsilon\}$ sarebbe certo e perderebbe di significato, e analogamente se $\epsilon=0$ allora non sarebbe definito il secondo membro della disuguaglianza. Inoltre, va osservato che **la disuguaglianza perde di significato anche se $\frac{\sigma^{2}}{\epsilon^{2}}\ge 1$**, dato che è sempre vero che una probabilità sia minore di $1$.
+
+[dimostrazione: pag. 144 - 145]
+
+[pag. 145/147]
 ___
 ##### Standardizzazione di una variabile aleatoria
 

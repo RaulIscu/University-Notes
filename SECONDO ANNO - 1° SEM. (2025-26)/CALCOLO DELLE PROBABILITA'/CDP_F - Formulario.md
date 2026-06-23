@@ -152,9 +152,9 @@ ___
 > 3. $E_{1},\,E_{2}\in\mathcal{G}\,\Rightarrow\,E_{1}\cup E_{2}\in\mathcal{G}$.
 
 > Sia $\mathcal{A}=\{A_{1},\,A_{2},\,\dots,\,A_{n}\}$ una famiglia di eventi in uno spazio campione $\Omega$; definiamo "**algebra generata da $\mathcal{A}$**" la famiglia $\mathcal{G}(\mathcal{A})$ di eventi di $\Omega$ caratterizzata dalle seguenti proprietà:
-> 1. $\mathcal{G}(\mathcal{A})$ è un'algebra;
-> 2. $\mathcal{A}\subseteq\mathcal{G}(\mathcal{A})$;
-> 3. se $\mathcal{C}\subseteq\mathcal{P}(\Omega)$ è un'algebra e $\mathcal{A}\subseteq\mathcal{C}$, allora $\mathcal{G}(\mathcal{A})\subseteq\mathcal{C}$.
+> 4. $\mathcal{G}(\mathcal{A})$ è un'algebra;
+> 5. $\mathcal{A}\subseteq\mathcal{G}(\mathcal{A})$;
+> 6. se $\mathcal{C}\subseteq\mathcal{P}(\Omega)$ è un'algebra e $\mathcal{A}\subseteq\mathcal{C}$, allora $\mathcal{G}(\mathcal{A})\subseteq\mathcal{C}$.
 ___
 ##### Indipendenza completa
 
@@ -174,4 +174,285 @@ ___
 ##### Prove bernoulliane
 
 > Gli eventi $E_{1},\,E_{2},\,\dots,\,E_{n}$ costituiscono delle "**prove bernoulliane**" se sussiste un'[[CDP_03 - Correlazione e indipendenza tra eventi#Indipendenza completa e prove bernoulliane|indipendenza completa]] tra di loro e se tutti hanno una stessa probabilità $\theta$, con $0<\theta<1$.
+___
+## Probabilità binomiali e ipergeometriche
+
+##### Probabilità binomiali
+
+Una **distribuzione binomiale di parametri $n$ e $\theta$** è caratteristica di un insieme di $n$ prove bernoulliane, tutte aventi probabilità $\theta$. La misura di probabilità corrispondente è:
+$$\mathbf{P}:\mathcal{P}(\{0,\,1,\,\dots,\,n\})\rightarrow[0,\,1],\,\,\,I \mapsto \mathbf{P}(I):=\sum_{k\,\in\,I}p(k)$$
+dove $p(k)=\binom{n}{k}\theta^{k}(1-\theta)^{n-k}$ e $0\le k\le n$.
+
+La principale applicazione concreta delle probabilità binomiali, indicate anche come $Bin(n,\,\theta)$, è nell'**estrazione con reinserimento da un'urna**: supponendo di avere $M$ palline nell'urna, con $m_{1}$ palline di tipo $A$ e $m_{2}=M-m_{1}$ palline di tipo $B$, possiamo considerare i vari eventi
+$$A_{i}=\{\text{l'oggetto estratto nell'}i\text{-esima estrazione è di tipo A}\}$$
+Gli eventi $A_{i}$ sono prove bernoulliane, con probabilità $\theta=\frac{m_{1}}{M}$. Ora, indicando con $X_{i}$ la seguente quantità:
+$$X_{i}=\begin{cases}1&\text{se si verifica }A_{i}\\0&\text{se si verifica }\overline{A_{i}}\end{cases}$$
+e considerando:
+$$S_{n}=\sum_{i\,=\,1}^{n}X_{i}$$
+dove $S_{n}$ rappresenta il numero di elementi di tipo $A$ estratti nell'estrazione casuale con reinserimento di $n$ elementi considerata, possiamo affermare che:
+$$\mathbb{P}(\{S_{n}=k\})=\binom{n}{k}\left( \frac{m_{1}}{M} \right)^{k}\left( \frac{m_{2}}{M} \right)^{n-k}$$
+___
+##### Probabilità ipergeometriche
+
+Una **distribuzione ipergeometrica di parametri $M$, $m_{1}$ e $n$**, indicata anche come $Hyp(M,\,m_{1},\,n)$, è caratteristica delle **estrazioni senza reinserimento da un'urna**: supponendo di avere $M$ palline nell'urna, con $m_{1}$ palline di tipo $A$ e $m_{2}=M-m_{1}$ palline di tipo $B$, possiamo considerare i vari eventi
+$$A_{i}=\{\text{l'oggetto estratto nell'}i\text{-esima estrazione è di tipo }A\}$$
+Ora, indicando con $X_{i}$ la seguente quantità:
+$$X_{i}=\begin{cases} 1&\text{se si verifica }A_{i}\\0&\text{se si verifica }\overline{A_{i}} \end{cases}$$
+e considerando:
+$$S_{n}=\sum_{i\,=\,1}^{n}X_{i}$$
+dove $S_{n}$ rappresenta il numero di elementi di tipo $A$ estratti nell'estrazione casuale senza reinserimento di $n$ elementi considerata, possiamo affermare che:
+$$\mathbb{P}(\{S_{n}=k\})=\begin{cases} \frac{\binom{m_{1}}{k}\binom{m_{2}}{n\,-\,k}}{\binom{M}{n}}&\text{per }max(0,\,n+m_{1}-M)\le k\le min(n,\,m_{1}) \\0&\text{altrimenti}\end{cases}$$
+Nel caso delle estrazioni senza reinserimento le probabilità di estrarre un oggetto di tipo $A$ all'$i$-esima estrazione sono tutte pari alla probabilità di estrarre un oggetto di tipo $A$ alla prima estrazione, e dunque hanno lo stesso valore delle analoghe probabilità calcolate nel caso delle estrazioni con reinserimento:
+$$\mathbb{P}(A_{i})=\frac{m_{1}}{M}$$
+___
+## Variabili aleatorie
+
+> Sia $\Omega$ un insieme finito. Un'applicazione:
+> $$X:\Omega\rightarrow X(\Omega)\subseteq\mathbb{R}$$
+> viene detta "**variabile aleatoria**" definita su $(\Omega,\,\mathcal{P}(\Omega))$.
+
+> La funzione:
+> $$p_{X}:X(\Omega)\rightarrow[0,\,1]\subset\mathbb{R};\,\,\,\,\,x\mapsto p_{X}(x):=\mathbb{P}(\{X=x\})$$
+> viene detta "**densità discreta di $X$**".
+
+> La misura di probabilità $\mathbf{P}_{X}(\cdot)$ su $\mathcal{P}(X(\Omega))$, definita equivalentemente come:
+> $$\mathbf{P}_{X}(A)=\mathbb{P}(X\,\in\,A)$$
+> o come:
+> $$\mathbf{P}_{X}(A)=\sum_{l\,:\,x_{l}\,\in\,A}p_{X}(x_{l})$$
+> prende il nome di "**distribuzione di probabilità della variabile aleatoria $X$**".
+
+##### Variabili aleatorie degeneri e binarie
+
+> Una variabile aleatoria $X$, definita su $\Omega$, è una "**variabile aleatoria degenere**" se esiste $\overline{x}\in\mathbb{R}$ tale per cui $X(\Omega)=\{\overline{x}\}$.
+
+> Una variabile aleatoria $X$, definita su $\Omega$, è una "**variabile aleatoria binaria**" se $X(\Omega)=\{0,\,1\}$.
+
+> Sia $E\in\mathcal{P}(\Omega)$ un qualsiasi evento, e sia $1_{E}$ la funzione definita nel modo seguente:
+> $$1_{E}(\omega)=\begin{cases} 1&\text{per }\omega\in E\,\,\,\,\,\text{(cioè se si è verificato l'evento E)}\\0&\text{per }\omega\not\in E\,\,\,\,\,\text{(cioè se non si è verificato l'evento E)} \end{cases}$$
+> Possiamo affermare che la funzione $1_{E}$, chiamata "**indicatore di $E$**", o anche "**funzione indicatrice di $E$**", costituisce un esempio di variabile aleatoria binaria.
+
+La **distribuzione di una variabile aleatoria binaria** $X=1_{E}$, ponendo $p=\mathbb{P}(E)$, è individuata ovviamente dal fatto che $X(\Omega)=\{0,\,1\}$, e di conseguenza da:
+$$\begin{align} &p_{1}=p_{X}(1)=p\\&p_{0}=p_{X}(0)=1-p \end{align}$$
+Una distribuzione del genere viene detta "**distribuzione di Bernoulli di parametro $p$**", e si scrive anche $X\sim Bern(p)$.
+
+> Una qualunque variabile aleatoria $X$ può essere riscritta come una **combinazione lineare delle variabili aleatorie binarie di tipo $1_{H_{k}^{X}}$**. Infatti, posto $X(\Omega)=\{x_{1},\,x_{2},\,\dots,\,x_{n}\}$ l'insieme dei valori assumibili da $X$, e considerata la partizione $\mathcal{H}^{X}=\{H_{1}^{X},\,H_{2}^{X},\,\dots,\,H_{n}^{X}\}$ generata da $X$, tale per cui:
+> $$H_{l}^{X}=\{X=x_{l}\}\,\,\,\,\,\text{con }l=1,\,2,\,\dots,\,n$$
+> allora si ha che:
+> $$X(\omega)=\sum_{k\,=\,1}^{n}x_{k}\,1_{H_{k}^{X}}(\omega)$$
+___
+##### Variabili aleatorie binomiali
+
+
+> Siano $E_{1},\,E_{2},\,\dots,\,E_{n}$ degli eventi in uno spazio $(\Omega,\,\mathcal{P}(\Omega))$, e indicati con $X_{1},\,X_{2},\,\dots,\,X_{n}$ i loro rispettivi indicatori, si può definire sullo stesso spazio anche la variabile aleatoria $S_{n}=\sum_{h\,=\,1}^{n}X_{h}$, e si ha dunque che:
+> $$S_{n}(\omega_{i})=\sum_{h\,=\,1}^{n}X_{h}(\omega_{i})=\sum_{h\,=\,1}^{n}1_{E_{h}}(\omega_{i})$$
+
+Nel concreto, naturalmente, $S_{n}$ assume il significato di **numero di successi tra gli eventi $E_{1},\,E_{2},\,\dots,\,E_{n}$**. Supponiamo di avere $n$ prove bernoulliane, ciascuna di probabilità $\theta$ (con $0<\theta<1$); consideriamo, a questo punto, la variabile aleatoria $S_{n}=\{\text{numero di successi sulle }n\text{ prove}\}$. Naturalmente, i valori che può assumere tale variabile aleatoria sono $S_{n}(\Omega)=\{0,\,1,\,\dots,\,n\}$, e si ha che:
+$$p_{S_{n}}(k)=\mathbb{P}(\{S_{n}=k\})=\binom{n}{k}\,\theta^{k}\,(1-\theta)^{n-k}$$
+In casi del genere, si dice che $S_{n}$ segue una **distribuzione binomiale di parametri $n$ e $\theta$**, proprietà che scriviamo come $S_{n}\sim Bin(n,\,\theta)$.
+___
+##### Variabili aleatorie ipergeometriche
+
+Supponiamo di effettuare $n$ **estrazioni casuali senza reinserimento** da una popolazione che contiene complessivamente $M$ elementi, di cui $m_{1}$ elementi sono di tipo $A$ e $m_{2}=M-m_{1}$ elementi sono di tipo $B$. Consideriamo, ora, la variabile aleatoria $S_{n}=\{\text{numero di elementi di tipo }A$$\text{ estratti dopo }n\text{ estrazioni}\}$. Si ha che:
+$$p_{S_{n}}(k)=\mathbb{P}(\{S_{n}=k\})=\frac{\binom{m_{1}}{k}\binom{m_{2}}{n-k}}{\binom{M}{n}}$$
+per qualsiasi $k$ tale per cui $0\le k\le m_{1}$ e $0\le n-k\le m_{2}$. In casi del genere, si dice che $S_{n}$ segue una **distribuzione ipergeometrica di parametri $M$, $m_{1}$ e $n$**, proprietà che scriviamo come $S_{n}\sim Hyp(M,\,m_{1},\,n)$.
+___
+##### Variabili aleatorie a valori interi
+
+> Per una variabile aleatoria $X$ a valori interi, cioè tale per cui $X(\Omega)\subseteq\mathbb{Z}$, può essere spesso conveniente calcolare la distribuzione di probabilità tenendo conto della relazione:
+> $$\mathbb{P}(X=k)=\mathbb{P}(X\le k)-\mathbb{P}(X\le k-1)$$
+> Al tempo stesso, può tornare utile anche la seguente equivalenza:
+> $$\begin{align} \mathbb{P}(X=k)&=\mathbb{P}(X\ge k)-\mathbb{P}(X\ge k+1) \\&= \mathbb{P}(X>k-1)-\mathbb{P}(X>k) \end{align}$$
+___
+##### Variabili aleatorie geometriche
+
+Consideriamo una successione di prove bernoulliane $\{E_{1},\,E_{2},\,\dots\}$ di probabilità $\theta$ (con $0<\theta<1$). Siano $X_{1},\,X_{2},\,\dots$ le corrispondenti variabili aleatorie indicatrici, e sia $T$ la variabile aleatoria definita da:
+$$T:=min\{n\ge 1\,|\,X_{n}=1\}$$
+ossia la variabile aleatoria che indica **il numero minimo di prove da effettuare per ottenere un successo**, o in altre parole il "**tempo di primo successo**". Si dice che la variabile $T$ segue una "**distribuzione geometrica di parametro $\theta$**", e si utilizza la notazione $T\sim Geom(\theta)$.
+
+La densità discreta di $T$ è:
+$$p_{T}(k)\,=\,\mathbb{P}(T=k)\,=\,(1-\theta)^{k-1}\,\theta$$
+
+Considerando, invece, la variabile aleatoria $T'$ definita come **il numero di insuccessi prima del primo successo**, si ha che:
+$$p_{T'}(k)\,=\,\mathbb{P}(T'=k)\,=\,\mathbb{P}(T=k+1)\,=\,(1-\theta)^k\,\theta$$
+___
+##### Variabili aleatorie di Pascal
+
+tempo di r-esimo successo 
+$$\mathbb{P}(X=k)=\binom{k-1}{r-1}\,\theta^{r}\,(1-\theta)^{k-r}$$
+___
+##### Trasformazioni di variabili aleatorie
+
+Avendo una variabile aleatoria $X$, e un'ulteriore variabile $Z=h(X)$, dunque una funzione della variabile aleatoria $X$, per ottenere più informazioni su $Z$ si potrà:
+1. ricavare $Z(\Omega)$ a partire da $X(\Omega)$, applicando la funzione $h$ a tutti i singoli valori contenuti in $X(\Omega)$;
+2. ricavare le densità discrete di $Z$, sommando per ogni valore in $Z(\Omega)$ le probabilità dei valori corrispondenti in $X(\Omega)$.
+___
+##### Distribuzioni congiunte di più variabili aleatorie
+
+D'ora in poi, per comodità la notazione $\{X=x_{i}\}\cap\{Y=y_{j}\}$ potrebbe essere sostituita con $\{X=X_{i},\,Y=y_{j}\}$.
+
+> La funzione:
+> $$X(\Omega)\times Y(\Omega)\rightarrow[0,\,1];\,\,\,\,\,(x_{i},\,y_{j})\mapsto p_{X,\,Y}(x_{i},\,y_{j})$$
+> prende il nome di "**densità discreta congiunta di $X$ e $Y$**".
+
+I vari eventi $\{X=x_{1},\,Y=y_{j}\}$ formano una partizione, quindi possiamo affermare che:
+$$p_{X,\,Y}(x_{i},\,y_{j})\ge 0,\,\,\,\,\,\,\,\,\,\,\sum_{i\,=\,1}^{n}\sum_{j\,=\,1}^{m}p_{X,\,Y}(x_{i},\,y_{j})=1$$
+Considerate due variabili aleatorie $X$ e $Y$, e sia la loro distribuzione di probabilità congiunta individuata dalla densità discreta congiunta, ossia dalle probabilità:
+$$p_{X,\,Y}(x_{i},\,y_{j})=\mathbb{P}(\{X=x_{i},\,Y=y_{j}\})$$
+nel momento in cui tale distribuzione è nota, è possibile ottenere la distribuzione relativa a una sola delle due variabili considerate: tali distribuzioni vengono dette "**distribuzioni marginali**", e attribuiscono ai valori possibili di ciascuna delle due variabili aleatorie le seguenti probabilità:
+$$\begin{align} &p_{X}(x_{i})=\mathbb{P}(X=x_{i})=\sum_{j\,=\,1}^{m}\mathbb{P}(\{X=x_{i},\,Y=y_{j}\})=\sum_{j\,=\,1}^{m}p_{X,\,Y}(x_{i},\,y_{j}) \\& p_{Y}(y_{j})=\mathbb{P}(Y=y_{j})=\sum_{i\,=\,1}^{n}\mathbb{P}(\{X=x_{i},\,Y=y_{j}\})=\sum_{i\,=\,1}^{n}p_{X,\,Y}(x_{i},\,y_{j})\end{align}$$
+In questo contesto, la funzione $x_{i}\mapsto p_{X}(x_{i})$ viene detta "**densità discreta marginale di $X$**", mentre $y_{j}\mapsto p_{Y}(y_{j})$ viene detta "**densità discreta marginale di $Y$**".
+
+> Le variabili $X$ e $Y$ si dicono **stocasticamente indipendenti** se
+> $$\mathbb{P}(X\in I,\,Y\in J)\,=\,\mathbb{P}(X\in I)\cdot\mathbb{P}(Y\in J)$$
+> per un qualsiasi $I\subseteq X(\Omega)$ e $J\subseteq Y(\Omega)$ o, equivalentemente, se le due partizioni:
+> $$\mathcal{A}=\{\{X=x_{1}\},\,\{X=x_{2}\},\,\dots,\,\{X=x_{n}\}\}\,\,\,\,\,\,\,\,\,\,\mathcal{B}=\{\{Y=y_{1}\},\,\{Y=y_{2}\},\,\dots,\,\{Y=y_{m}\}\}$$
+> sono indipendenti tra loro.
+
+In altre parole, le variabili aleatorie $X$ e $Y$ sono stocasticamente indipendenti se e solo se la densità discreta congiunta è il prodotto delle densità discrete marginali.
+___
+## Valore atteso di una variabile aleatoria
+
+> Sia $X:\Omega\rightarrow X(\Omega)$, con $\Omega=\{\omega_{1},\,\omega_{2},\,\dots,\,\omega_{N}\}$ una variabile aleatoria definita su $(\Omega,\,\mathcal{P}(\Omega))$; se su tale tupla è definita una probabilità $\mathbb{P}$, si può definire "**valore atteso di $X$ rispetto a $\mathbb{P}$**" il valore:
+> $$\mathbb{E}(X):=\sum_{i\,=\,1}^{N}p(\omega_{i})\,X(\omega_{i})$$
+
+##### Proprietà del valore atteso
+
+> Se $X$ è una [[CDP_05 - Variabili aleatorie#Variabili aleatorie degeneri e binarie|variabile aleatoria degenere]], dunque tale per cui $X(\omega_{i})=\hat{x}$ per ogni $i=1,\,2,\,\dots,\,N$, allora si ha che:
+> $$\mathbb{E}(X)=\hat{x}$$
+
+> Sia $E\subseteq \Omega$ un evento, e $X=1_{E}$ la variabile aleatoria indicatrice di $E$, si ha che:
+> $$\mathbb{E}(X)=\mathbb{E}(1_{E})=\mathbb{P}(E)$$
+
+> Siano $a\le b$ due numeri reali tali che $a\le X(\omega_{i})\le b$ per ogni $i$ compreso tra $1$ e $N$, allora si ha sicuramente che:
+> $$a\le\mathbb{E}(X)\le b$$
+
+> Siano $X$ e $Y$ due variabili aleatorie, e sia $X(\omega)\le Y(\omega)$ per ogni $\omega\in \Omega$, allora si ha sicuramente che:
+> $$\mathbb{E}(X)\le\mathbb{E}(Y)$$
+
+> Siano $a$ e $b$ due numeri reali arbitrari, e $X$ e $Y$ due variabili aleatorie definite su $\Omega$. Ora, consideriamo la variabile aleatoria $Z$ definita come la **combinazione lineare di $X$ e $Y$ con coefficienti $a$ e $b$**, ossia:
+> $$Z(\omega_{i})=aX(\omega_{i})+bY(\omega_{i})\,\,\,\,\,\,\,\,\,\,\text{per ogni }1\le i\le N$$
+> Si ha che:
+> $$\mathbb{E}(Z)=a\mathbb{E}(X)+b\mathbb{E}(Y)$$
+
+> Sia $a$ un numero reale, e considerata una variabile aleatoria $X$ poniamo un'altra variabile $Z=a\cdot X$; risulta che:
+> $$\mathbb{E}(Z)=a\cdot\mathbb{E}(X)$$
+
+> Sia $b$ un numero reale, e considerata una variabile aleatoria $X$ poniamo un'altra variabile $Z=X+b$; risulta che:
+> $$\mathbb{E}(Z)=\mathbb{E}(X)+b$$
+___
+##### Valore atteso di una variabile aleatoria a valori interi non negativi
+
+> Sia $X(\Omega)\subseteq\{0,\,1,\,\dots,\,n\}$; allora si ha:
+> $$\mathbb{E}(X)=\sum_{j\,=\,0}^{n\,-\,1}\mathbb{P}(\{X>j\})$$
+> In particolare, se $X(\Omega)=\{1,\,2,\,\dots,\,n\}$, allora si ha:
+> $$\mathbb{E}(X)=1+\sum_{j\,=\,1}^{n\,-\,1}\mathbb{P}(\{X>j\})$$
+___
+##### Valori attesi notevoli
+
+Valore atteso di una variabile aleatoria $X$ che segue una **distribuzione uniforme**, dove $a$ è il valore più piccolo possibile e $b$ è il valore più grande possibile:
+$$\mathbb{E}(X)=\frac{a+b}{2}$$
+
+Valore atteso di una variabile aleatoria $X$ che segue una **distribuzione bernoulliana di parametro $\theta$** (successo di un evento avente probabilità $\theta$):
+$$\mathbb{E}(X)=\theta$$
+
+Valore atteso di una variabile aleatoria $X$ che segue una **distribuzione binomiale di parametri $n$ e $\theta$** (numero di successi su $n$ prove bernoulliane con probabilità $\theta$):
+$$\mathbb{E}(X)=n\cdot\theta$$
+
+Valore atteso di una variabile aleatoria $X$ che segue una **distribuzione ipergeometrica di parametri $M$, $m_{1}$ e $n$** (numero di elementi di tipo $A$, con $|A|=m_{1}$, estratti da $M$ elementi totali in $n$ estrazioni senza reinserimento):
+$$\mathbb{E}(X)=n\cdot \frac{m_{1}}{M}$$
+
+Valore atteso di una **media aritmetica $Y_{n}$ di $n$ variabili aleatorie $X_{1},\,X_{2},\,\dots,\,X_{n}$ aventi tutte stesso valore atteso $\mu$**:
+$$\mathbb{E}(Y_{n})=\mu$$
+
+Valore atteso di una variabile aleatoria $X$ che segue una **distribuzione geometrica di parametro $\theta$** (tempo di primo successo, ossia numero di tentativi da fare per ottenere un evento di probabilità $\theta$, tentativo di successo compreso):
+$$\mathbb{E}(X)=\frac{1}{\theta}$$
+
+Valore atteso di una variabile aleatoria $X$ che segue una **distribuzione di Pascal di parametri $r$ e $\theta$** (tempo di $r$-esimo successo, ossia numero di tentativi da fare per ottenere $r$ volte un evento di probabilità $\theta$, tentativo di successo compreso):
+$$\mathbb{E}(X)=\frac{r}{p}$$
+
+[esponenziale, poisson, gaussiana]
+___
+##### Valore atteso condizionato e formula del valore atteso totale
+
+> Sia $A$ un evento, con $\mathbb{P}(A)>0$, e sia $X$ una variabile aleatoria che può assumere i valori $X(\Omega)=\{x_{1},\,x_{2},\,\dots,\,x_{n}\}$, si definisce "**valore atteso di $X$ condizionato all'evento $A$**" il valore:
+> $$\mathbb{E}(X\,|\,A)\,=\,\sum_{i\,=\,1}^{N}X(\omega_{i})\,\mathbb{P}(\{\omega_{i}\}\,|\,A)\,=\,\sum_{k\,=\,1}^{n}x_{k}\,\mathbb{P}(X=x_{k}\,|\,A)$$
+
+> Data una partizione formata dagli eventi $H_{1},\,H_{2},\,\dots,\,H_{m}$, e se $\mathbb{P}(H_{j})>0$ per ogni $j=1,\,2,\,\dots,\,m$, allora vale che:
+> $$\mathbb{E}(X)=\sum_{j\,=\,1}^{m}\mathbb{E}(X\,|\,H_{j})\,\mathbb{P}(H_{j})$$
+___
+## Varianza e covarianza
+
+> Sia $X:\Omega\to X(\Omega)$ una variabile aleatoria, ed indicato brevemente con $\mu$ il valore atteso di $X$, si dice "**varianza** di $X$", e si indica con la notazione $Var(X)$, il valore:
+> $$Var(X)\,=\,\mathbb{E}((X-\mathbb{E}(X))^{2})\,:=\,\sum_{\omega_{i\,\in\,\Omega}}p(\omega_{i})\,(X(\omega_{i})-\mu)^{2}$$
+> ossia, in parole povere, il valore atteso di $(X-\mu)^{2}$.
+
+##### Proprietà della varianza
+
+> **La varianza di una variabile aleatoria $X$ è sempre non negativa**, ovvero:
+> $$Var(X)\ge 0$$
+> Inoltre, se $p(\omega_{i})>0$ per ogni $\omega_{i}\in \Omega$, allora si avrà $Var(X)=0$ se e solo se $X$ è una [[CDP_05 - Variabili aleatorie#Variabili aleatorie degeneri e binarie|variabile aleatoria degenere]].
+
+> Per ogni variabile aleatoria $X$, è possibile calcolarne la varianza anche attraverso la seguente formula:
+> $$Var(X)\,=\,\mathbb{E}(X^{2})-\mu^{2}\,=\,\mathbb{E}(X^{2})-(\mathbb{E}(X))^{2}$$
+
+> Sia $Y=X+b$, con $b\in\mathbb{R}$, allora si ha che:
+> $$Var(Y)=Var(X+b)=Var(X)$$
+
+> Sia $Y=a\cdot X$, con $a\in\mathbb{R}$, allora si ha che:
+> $$Var(Y)=Var(a\cdot X)=a^{2}\cdot Var(X)$$
+
+> Siano $X$ e $Y$ due variabili aleatorie definite su $(\Omega,\,\mathcal{P}(\Omega))$, allora si ha che:
+> $$Var(X+Y)=Var(X)+Var(Y)+2\mathbb{E}[(X-\mathbb{E}(X))(Y-\mathbb{E}(Y))]$$
+___
+##### Varianze notevoli
+
+Valore atteso di una variabile aleatoria $X$ che segue una **distribuzione uniforme**, dove $a$ è il valore più piccolo possibile e $b$ è il valore più grande possibile:
+$$\mathbb{E}(X)=\frac{a+b}{2}$$
+
+Varianza di una variabile aleatoria $X$ che segue una **distribuzione bernoulliana di parametro $\theta$** (successo di un evento avente probabilità $\theta$):
+$$Var(X)=\theta\,(1-\theta)$$
+
+Varianza di una variabile aleatoria $X$ che segue una **distribuzione binomiale di parametri $n$ e $\theta$** (numero di successi su $n$ prove bernoulliane con probabilità $\theta$):
+$$Var(X)=n\cdot\theta\,(1-\theta)$$
+
+Varianza di una variabile aleatoria $X$ che segue una **distribuzione ipergeometrica di parametri $M$, $m_{1}$ e $n$** (numero di elementi di tipo $A$, con $|A|=m_{1}$, estratti da $M$ elementi totali in $n$ estrazioni senza reinserimento), indicando con $p$ la quantità $\frac{m_{1}}{M}$:
+$$Var(X)=n\cdot p\,(1-p)\,\left( 1-\frac{n-1}{M-1} \right)$$
+
+Varianza di una **media aritmetica $Y_{n}$ di $n$ variabili aleatorie $X_{1},\,X_{2},\,\dots,\,X_{n}$ aventi tutte stessa varianza $\sigma^{2}$** (se $X_{1},\,X_{2},\,\dots,\,X_{n}$ sono indipendenti):
+$$Var(Y_{n})=\frac{\sigma^{2}}{n}$$
+Varianza di una **media aritmetica $Y_{n}$ di $n$ variabili aleatorie $X_{1},\,X_{2},\,\dots,\,X_{n}$ aventi tutte stessa varianza $\sigma^{2}$** (se $X_{1},\,X_{2},\,\dots,\,X_{n}$ non sono indipendenti, con covarianza $\varphi$ tra le varie coppie):
+$$Var(Y_{n})=\frac{1}{n}\,[\sigma^{2}+(n-1)\varphi]$$
+
+Varianza di una variabile aleatoria $X$ che segue una **distribuzione geometrica di parametro $\theta$** (tempo di primo successo, ossia numero di tentativi da fare per ottenere un evento di probabilità $\theta$, tentativo di successo compreso):
+$$Var(X)=\frac{1-\theta}{\theta^{2}}$$
+
+Varianza di una variabile aleatoria $X$ che segue una **distribuzione di Pascal di parametri $r$ e $\theta$** (tempo di $r$-esimo successo, ossia numero di tentativi da fare per ottenere $r$ volte un evento di probabilità $\theta$, tentativo di successo compreso):
+$$Var(X)=r\cdot\frac{1-\theta}{\theta^{2}}$$
+
+[esponenziale, poisson, gaussiana]
+___
+##### Covarianza di due variabili aleatorie
+
+> Siano date, su uno stesso spazio di probabilità, due variabili aleatorie $X$ e $Y$ e, per comodità, si indichino brevemente con $\mu_{X}$ e $\mu_{Y}$ rispettivamente il valore atteso di $X$ e il valore atteso di $Y$. Si definisce "**covarianza** fra $X$ e $Y$", e si indica con la notazione $Cov(X,\,Y)$, il valore:
+> $$Cov(X,\,Y)=\,\mathbb{E}[(X-\mu_{X})\cdot(Y-\mu_{Y})]$$
+
+La covarianza fra due variabili $X$ e $Y$ si può inserire in uno dei seguenti **tre scenari**:
+- **$Cov(X,\,Y)>0$** (**covarianza positiva**), caso in cui **le due variabili aleatorie considerate "viaggiano" nella stessa direzione**;
+- $Cov(X,\,Y)>0$ (**covarianza negativa**), caso in cui **le due variabili aleatorie considerate "viaggiano" in direzioni opposte**;
+- $Cov(X,\,Y)=0$ (**covarianza nulla**), caso in cui **la variazione di una variabile non dice nulla sulla variazione dell'altra**.
+
+Se $Y=X$, allora la formula degenera in:
+$$Cov(X,\,Y)\,=\,Cov(X,\,X)=Var(X)$$
+È possibile poi ottenere una **formula alternativa per la covarianza**:
+$$Cov(X,\,Y)=\mathbb{E}(X\cdot Y)-\mathbb{E}(X)\cdot\mathbb{E}(Y)$$
+Inoltre, utilizzando la covarianza sarà possibile riscrivere in modo più compatto la formula per il calcolo della varianza della somma di due variabili aleatorie $X$ e $Y$:
+$$Var(X+Y)=Var(X)+Var(Y)+2\,Cov(X,\,Y)$$
+
+> Siano date due variabili aleatorie $X$ e $Y$ definite sullo stesso spazio di probabilità, e siano $X$ e $Y$ stocasticamente indipendenti tra di loro, allora:
+>$$Cov(X,\,Y)=0\,\,\,\,\,\,\,\,\,\,\text{e}\,\,\,\,\,\,\,\,\,\,Var(X+Y)=Var(X)+Var(Y)$$
+
+> Siano $X$ e $Y$ due variabili aleatorie binarie, definite su uno stesso spazio di probabilità, anche il loro prodotto $X\cdot Y$ sarà una variabile aleatoria binaria, con:
+> $$\mathbb{E}(X\cdot Y)\,=\,\mathbb{P}(\{X\cdot Y=1\})=\mathbb{P}(\{X=1\}\cap\{Y=1\})$$
+> Dunque, si ha che:
+> $$Cov(X,\,Y)\,=\,\mathbb{P}(\{X=1\}\cap\{Y=1\})-\mathbb{P}(\{X=1\})\cdot\mathbb{P}(\{Y=1\})$$
 ___
