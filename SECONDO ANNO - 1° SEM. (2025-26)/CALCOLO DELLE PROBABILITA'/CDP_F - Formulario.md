@@ -406,8 +406,8 @@ ___
 ___
 ##### Varianze notevoli
 
-Valore atteso di una variabile aleatoria $X$ che segue una **distribuzione uniforme**, dove $a$ è il valore più piccolo possibile e $b$ è il valore più grande possibile:
-$$\mathbb{E}(X)=\frac{a+b}{2}$$
+Varianza di una variabile aleatoria $X$ che segue una **distribuzione uniforme**, dove $a$ è il valore più piccolo possibile e $b$ è il valore più grande possibile:
+$$Var(X)=\frac{(b-a)(b-a+2)}{12}$$
 
 Varianza di una variabile aleatoria $X$ che segue una **distribuzione bernoulliana di parametro $\theta$** (successo di un evento avente probabilità $\theta$):
 $$Var(X)=\theta\,(1-\theta)$$

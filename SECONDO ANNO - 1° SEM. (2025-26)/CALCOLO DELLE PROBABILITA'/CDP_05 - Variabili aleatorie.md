@@ -663,17 +663,43 @@ La conoscenza del [[CDP_05 - Variabili aleatorie#Valore atteso di una variabile 
 
 > Sia $X$ una variabile aleatoria, con valore atteso uguale a $\mu$ e varianza uguale a $\sigma^{2}$, allora vale che:
 > $$\mathbb{P}(\{|X-\mu|>\epsilon\})\,\le\, \frac{\sigma^{2}}{\epsilon^{2}}$$
-> per ogni $\epsilon>0$.
+> per ogni $\epsilon>0$. In alternativa, sfruttando la proprietà della [[CDP_02 - Probabilità#Proprietà delle probabilità|probabilità del complementare]], si può affermare equivalentemente che:
+> $$\mathbb{P}(\{|X-\mu|\le \epsilon\})\ge 1-\frac{\sigma^{2}}{\epsilon^{2}}$$
 
 Banalmente, si chiarisce che il valore $\epsilon$ dà senso alla disuguaglianza solo maggiore di $0$ dato che, se esso fosse negativo, allora l'evento $\{|X-\mu|>\epsilon\}$ sarebbe certo e perderebbe di significato, e analogamente se $\epsilon=0$ allora non sarebbe definito il secondo membro della disuguaglianza. Inoltre, va osservato che **la disuguaglianza perde di significato anche se $\frac{\sigma^{2}}{\epsilon^{2}}\ge 1$**, dato che è sempre vero che una probabilità sia minore di $1$.
 
-[dimostrazione: pag. 144 - 145]
+La dimostrazione di questa disuguaglianza segue direttamente dalla definizione di [[CDP_05 - Variabili aleatorie#Varianza e covarianza di variabili aleatorie|varianza]]:
+$$\begin{align} \sigma^{2}&=\sum_{\omega_{i\,\in\,\Omega}}p(\omega_{i})\,(X(\omega_{i})-\mu)^{2}\\&=\sum_{\omega_{i}\,:\,|X(\omega_{i})\,-\,\mu|\,>\,\epsilon}p(\omega_{i})\,(X(\omega_{i})-\mu)^{2}+\sum_{\omega_{i}\,:\,|X(\omega_{i})\,-\,\mu|\,\le\,\epsilon}p(\omega_{i})\,(X(\omega_{i})-\mu)^{2}\end{align}$$
+Ora, essendo il secondo termine della somma ottenuta sicuramente positivo (si tratta di una sommatoria di prodotti positivi), possiamo affermare con sicurezza che la quantità $\sigma^{2}$ è sicuramente maggiore o uguale della stessa quantità privata di quella sommatoria, e dunque:
+$$\sigma^{2}\ge\sum_{\omega_{i}\,:\,|X(\omega_{i})\,-\,\mu|\,>\,\epsilon}p(\omega_{i})\,(X(\omega_{i})-\mu)^{2}$$
+All'interno della sommatoria rimasta, si considerano gli eventi $\omega_{i}$ tali per cui $|X(\omega_{i})-\mu|>\epsilon$, e dunque per cui $(X(\omega_{i})-\mu)^{2}>\epsilon^{2}$. Stabilito ciò, è facile convincersi che sostituire la quantità $(X(\omega_{i})-\mu)^{2}$ con $\epsilon^{2}$ all'interno della disuguaglianza non ne invalida la correttezza, e dunque scriviamo:
+$$\sigma^{2}\ge\sum_{\omega_{i}\,:\,|X(\omega_{i})\,-\,\mu|\,>\,\epsilon}p(\omega_{i})\,\epsilon^{2}$$
+Possiamo riscrivere la sommatoria come:
+$$\sum_{\omega_{i}\,:\,|X(\omega_{i})\,-\,\mu|\,>\,\epsilon}p(\omega_{i})\,\epsilon^{2}\,=\,\epsilon^{2}\,\sum_{\Omega_{i}\,:\,|X(\omega_{i})\,-\,\mu|\,>\,\epsilon}p(\omega_{i})\,=\,\epsilon^{2}\cdot\mathbb{P}(\{|X-\mu|>\epsilon\})$$
+e, sostituendo questa nuova notazione nella disuguaglianza, arriviamo proprio all'enunciato della disuguaglianza di Chebyshev:
+$$\sigma^{2}\ge \epsilon^{2}\cdot\mathbb{P}(\{|X-\mu|>\epsilon\})\,\Rightarrow\,\mathbb{P}(\{|X-\mu|>\epsilon\})\le \frac{\sigma^{2}}{\epsilon^{2}}$$
 
-[pag. 145/147]
+Sostanzialmente, la disuguaglianza di Chebyshev permette di fornire una **minorazione della probabilità che il valore della [[CDP_05 - Variabili aleatorie#Cos'è una variabile aleatoria?|variabile aleatoria]] $X$ si allontani dal suo valore medio $\mu$ di uno stacco maggiore di $\epsilon$**; in altre parole, pone un limite su quanto sia probabile che il risultato di un esperimento aleatorio dia un risultato "imprevisto", o perlomeno lontano dalle aspettative.
+
+Avendo chiarito ciò, vediamo un'applicazione specifica della disuguaglianza di Chebyshev, che permette di ricavarne una formulazione alternativa in certi contesti. Consideriamo **$n$ variabili aleatorie $X_{1},\,X_{2},\,\dots,\,X_{n}$, tutte aventi lo stesso valore atteso $\mu$, la stessa varianza $\sigma^{2}$, e covarianza nulla ($\varphi=0$)**; a questo punto, indicando con $Y_{n}$ la **media aritmetica** di queste $n$ variabili aleatorie, ossia $Y_{n}=\frac{\sum_{k\,=\,1}^{n}X_{k}}{n}$, la disuguaglianza di Chebyshev assume la seguente forma:
+$$\mathbb{P}(\{|Y_{n}-\mu|>\epsilon\})\,=\,\mathbb{P}\left( \left\{\left| \frac{1}{n}\sum_{k\,=\,1}^{n}X_{k}-\mu\right|>\epsilon \right\} \right)\le \frac{\sigma^{2}}{n\,\epsilon^{2}}$$
+In altre parole, la disuguaglianza di Chebyshev applicata su una media aritmetica $Y_{n}$ **dipende esclusivamente dalla varianza $\sigma^{2}$ delle variabili aleatorie sommate nella media e dal numero $n$ delle stesse**. Banalmente, anche per questo caso particolare, vale la "formula alternativa" mostrata a inizio paragrafo:
+$$\mathbb{P}(\{|Y_{n}-\mu|\le \epsilon\})\ge 1 - \frac{\sigma^{2}}{n\,\epsilon^{2}}$$
+Se $n$ è molto grande, in modo che il valore $1-\frac{\sigma^{2}}{n\,\epsilon^{2}}$ sia molto vicino a $1$, la tesi può essere sostanzialmente parafrasata affermando che è "quasi certo" che la media aritmetica $Y_{n}$ e il suo valore atteso $\mu$ differiscano tra loro di una quantità minore di $\epsilon$. In questo senso, questa proposizione rappresenta un primo passo verso la "**Legge dei Grandi Numeri**".
 ___
 ##### Standardizzazione di una variabile aleatoria
 
-[pag. 147 - 148]
+> Una variabile aleatoria $Z$ viene detta "**standard**" se vale che:
+> $$\mathbb{E}(Z)=0\,\,\,\,\,\,\,\,\,\,Var(Z)=1$$
+
+Supponendo di applicare la [[CDP_05 - Variabili aleatorie#Disuguaglianza di Chebyshev|disuguaglianza di Chebyshev]] appena vista a questo tipo particolare di variabile aleatoria, si ottiene che:
+$$\mathbb{P}(\{|Z|>\epsilon\})\le \frac{1}{\epsilon^{2}}$$
+
+Le variabili aleatorie standard non si presentano molto spesso in modo naturale, ma è possibile **"standardizzare" una variabile aleatoria $X$**, costruendo una variabile aleatoria standard che sia funzione di $X$. In particolare, assumendo che $X$ abbia valore atteso $\mu$ e varianza $\sigma^{2}$, possiamo creare la variabile aleatoria $X^{*}$, definita come:
+$$X^{*}\,=\,\frac{X-\mu}{\sigma}\,=\,\frac{X-\mathbb{E}(X)}{\sqrt{Var(X)}}$$
+La variabile $X^{*}$ appena creata viene detta **"standardizzata" di $X$**, mentre il valore $\sigma=\sqrt{ \sigma^{2} }$ prende il nome di "**scarto standard**", o anche "**scarto quadratico medio**". Vedendo questo procedimento nel verso opposto, possiamo affermare con certezza che una qualsiasi variabile aleatoria $X$, con valore atteso $\mu$ e varianza $\sigma^{2}$, può essere scritta nella forma:
+$$X=\sigma Z+\mu$$
+dove $Z$ è una variabile aleatoria standard.
 ___
 ##### Disuguaglianza di Cauchy e coefficiente di correlazione
 
