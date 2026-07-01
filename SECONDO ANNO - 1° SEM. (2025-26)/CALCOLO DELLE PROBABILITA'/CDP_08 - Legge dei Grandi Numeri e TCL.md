@@ -21,7 +21,36 @@ Per confermare la validità di questa legge, va fatta un'ulteriore precisazione:
 ___
 ## Teorema Centrale del Limite
 
+Come abbiamo già detto in precedenza, la [[CDP_05 - Variabili aleatorie#Disuguaglianza di Chebyshev|disuguaglianza di Chebyshev]] permette di trovare delle limitazioni inferiori alle probabilità del tipo:
+$$\mathbb{P}\left( \left\{\left| \frac{S_{n}}{n}-\mu\right|\le \epsilon \right\} \right)$$
+Tuttavia, se si conoscesse la **funzione di distribuzione $F_{S_{n}}(x)$** della variabile aleatoria $S_{n}$, ossia la probabilità $\mathbb{P}(S_{n}\le x)$, tale probabilità si potrebbe calcolare in modo esatto, infatti:
+$$\begin{align} \mathbb{P}\left( \left\{ \left| \frac{S_{n}}{n}-\mu \right| \le \epsilon \right\} \right) &=\mathbb{P}(n(\mu-\epsilon)\le S_{n}\le n(\mu+\epsilon))\\&= F_{S_{n}}(n(\mu+\epsilon)) -F_{S_{n}}(n(\mu-\epsilon)^{-})\\&=F_{S_{n}}(n(\mu+\epsilon))-F_{S_{n}}(n(\mu-\epsilon))+\mathbb{P}(\{S_{n}=n(\mu-\epsilon)\}) \end{align}$$
+Naturalmente, però, trovare la distribuzione di somme $S_{n}$ con $n$ abbastanza alti diventa molto difficile, se non impossibile; dovremo quindi passare per vie alternative. Innanzitutto, osserviamo che calcolare **la funzione di distribuzione $F_{S_{n}}(x)$ equivale a calcolare la distribuzione di una trasformata di $S_{n}$**: infatti, dati due numeri reali $a_{n}$ e $b_{n}$, con $b_{n}>0$, possiamo affermare che:
+$$\{S_{n}\le x\}=\left\{ \frac{S_{n}-a_{n}}{b_{n}}\le \frac{x-a_{n}}{b_{n}} \right\}$$
+Ora, per quanto riguarda la scelta di $a_{n}$ e $b_{n}$, una scelta naturale che permette una notevole semplificazione è $a_{n}=\mathbb{E}(S_{n})$ e $b_{n}=\sqrt{Var(S_{n})}$, che portano alla **[[CDP_05 - Variabili aleatorie#Standardizzazione di una variabile aleatoria|standardizzazione]] della variabile aleatoria $S_{n}$**. In questo modo, per la disuguaglianza di Chebyshev, sappiamo che qualunque siano $n$ e $\alpha>0$ si ottiene:
+$$\mathbb{P}\left( -\alpha\le \frac{S_{n}-\mathbb{E}(S_{n})}{\sqrt{Var(S_{n})}}\le\alpha \right)\ge 1 - \frac{1}{\alpha^{2}}$$
+In particolare, è possibile dimostrare il seguente risultato:
 
+> Considerando $n$ variabili aleatorie $X_{i}$, tutte indipendenti e con la stessa distribuzione, che ammettono dunque uno stesso valore atteso $\mu$ e una stessa varianza $\sigma^{2}$, e siano $\mu$ e $\sigma^{2}$ finiti (in particolare, $\sigma^{2}$ dovrà anche essere non nulla), allora sappiamo che $\mathbb{E}(S_{n})=n\mu$, e che $Var(S_{n})=n\sigma^{2}$, dunque:
+> $$F_{S_{n}}(x)=\mathbb{P}(S_{n}\le x)=\mathbb{P}\left( \frac{S_{n}-n\mu}{\sqrt{n\sigma^{2}}}\le \frac{x-n\mu}{\sqrt{n\sigma^{2}}} \right)\simeq\Phi\left( \frac{x-n\mu}{\sqrt{n\sigma^{2}}} \right)$$
+> dove $\Phi(x)$ è la **funzione di distribuzione di una variabile aleatoria gaussiana standard $\mathcal{N}(0,\,1)$**.
 
-[pag. 249/255]
+Tutto ciò ci porta, finalmente, alla formulazione del **Teorema Centrale del Limite**:
+
+> Considerando $n$ variabili aleatorie $X_{i}$, tutte indipendenti e con la stessa distribuzione, che ammettono dunque uno stesso valore atteso $\mu$ e una stessa varianza $\sigma^{2}$, e siano $\mu$ e $\sigma^{2}$ finiti (in particolare, $\sigma^{2}$ dovrà anche essere non nulla), allora indicando con $S_{n}^{*}$ la standardizzazione della variabile $S_{n}$ ossia:
+> $$S_{n}^{*}=\frac{S_{n}-\mathbb{E}(S_{n})}{\sqrt{Var(S_{n})}}=\frac{S_{n}-n\mu}{\sqrt{n\sigma^{2}}}$$
+> e indicando on $F_{S_{n}^{*}}(x)$ la funzione di distribuzione di $S_{n}^{*}$, abbiamo che:
+> $$\lim_{n\,\to\,\infty}F_{S_{n}^{*}}(x)=\lim_{n\,\to\,\infty}\mathbb{P}(S_{n}^{*}\le x)=\Phi(x)$$
+> dove $\Phi$ è la funzione di distribuzione di una variabile aleatoria gaussiana standard. In altri termini, si può affermare che:
+> $$\lim_{n\,\to\,\infty}\mathbb{P}\left( \frac{S_{n}-n\mu}{\sqrt{ n\sigma^{2}}}\le x\right)=\int_{-\infty}^{x} \frac{1}{\sqrt{2\pi}}\,e^{- \frac{y^{2}}{2}}dy$$
+
+Si precisa che **per la validità del Teorema Centrale del Limite, è necessario che le variabili aleatorie $X_{i}$ siano completamente indipendenti** tra loro.
+
+Ora, avendo esplicitato con chiarezza questo teorema, è facile notare che abbiamo trovato un modo semplice e immediato per calcolare le probabilità del tipo $\mathbb{P}\left( \left\{\left| \frac{S_{n}}{n}-\mu\right|\le \epsilon \right\} \right)$ che cercavamo a inizio paragrafo. Infatti, l'enunciato del teorema implica che:
+$$\lim_{n\,\to\,\infty}\mathbb{P}\left( a\le \frac{S_{n}-n\mu}{\sqrt{ n\sigma^{2}}}\le b \right)=\Phi(b)-\Phi(a)$$
+ossia che, per $n$ sufficientemente grandi ($n$, infatti, tende a infinito), la probabilità cercata può essere accuratamente approssimata con la sottrazione $\Phi(b)-\Phi(a)$; per poter applicare questo ragionamento, dunque, si dovrà standardizzare la variabile aleatoria $S_{n}$, modificando di conseguenza anche gli estremi della disuguaglianza in cui è coinvolta. Ora, indicando con $Y_{n}$ la media aritmetica $\frac{S_{n}}{n}$, notiamo che:
+$$Y_{n}-\mu=\frac{S_{n}-n\mu}{n}$$
+e, di conseguenza, che:
+$$\frac{Y_{n}-\mu}{\sqrt{\frac{\sigma^{2}}{n}}}\,=\,\sqrt{\frac{n}{\sigma^{2}}}\,(Y_{n}-\mu)\,=\,\sqrt{\frac{n}{\sigma^{2}}}\, \frac{S_{n}-n\mu}{n}\,=\, \frac{\sqrt{n}}{\sqrt{\sigma^{2}}}\, \frac{S_{n}-n\mu}{n}\,=\, \frac{S_{n}-n\mu}{\sqrt{n\sigma^{2}}}$$
+In altre parole, **la standardizzazione $Y_{n}^{*}$ della media aritmetica $Y_{n}$ equivale perfettamente alla standardizzazione della somma campionaria $S_{n}$**, il che vuol dire che anche lavorando con $Y_{n}$ sarà possibile applicare il Teorema Centrale del Limite in modo analogo.
 ___
