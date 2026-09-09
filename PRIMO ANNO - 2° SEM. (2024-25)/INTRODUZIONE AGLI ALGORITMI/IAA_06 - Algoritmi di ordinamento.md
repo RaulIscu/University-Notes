@@ -321,8 +321,21 @@ def Partiziona(A, ind_primo, ind_ultimo):
 			return j
 ```
 
-[SLIDES: pag. 5/14]
-[DISPENSE: pag. 21/27]
+Analizziamo, più nel dettaglio, il funzionamento di questo sotto-algoritmo. In questa implementazione, **il `pivot` è il primo elemento della sequenza considerata $A$**; oltre al `pivot`, inizializziamo anche due variabili **`i`** e **`j`**, che verranno utilizzati come **due puntatori** e di cui, in particolare, il primo opererà sulla parte sinistra della sequenza, per cui naturalmente il secondo opererà sulla parte destra. Entriamo, a questo punto, dentro il primo ciclo `while`, che ne contiene altri due al suo interno: il primo ciclo annidato lavora sul puntatore **`i`**, che **viene spostato verso destra** finché non viene trovato un valore `A[i]` minore del `pivot`; analogamente, nel secondo ciclo annidato, il puntatore **`j` viene spostato verso sinistra** finché non viene trovato un valore `A[j]` maggiore del `pivot`. Se `i` e `j` non si sono ancora incrociati, i due valori trovati sono "fuori posto", dato che `A[i]`, essendo minore del pivot, dovrebbe trovarsi nella parte sinistra della sequenza, mentre il valore `A[j]` dovrebbe trovarsi nella parte destra: dunque, in questo caso, **i due valori vengono scambiati** di posto. Questa catena di operazioni viene ripetuta **fino alla prima volta in cui `i` e `j` si incrociano**, poiché ciò implica che l'intera sequenza è stata esplorata senza trovare valori da scambiare; a questo punto, non rimane che **restituire `j`**, che fungerà da `ind_medio` nel corpo dell'algoritmo principale.
+
+In seguito alla restituzione di `ind_medio` da parte di `Partiziona`, si avrà necessariamente che tutti i valori prima di `ind_medio` sono minori di quelli dopo di esso, dunque si potrà procedere con le chiamate ricorsive del Quick Sort sulle due sotto-sequenze generate, per ordinare anch'esse.
+
+Ora, per comprendere meglio il funzionamento del Quick Sort, applichiamolo a un **esempio**. Supponiamo di avere il seguente array $A$:
+$$[4,\,8,\,7,\,1,\,3,\,5,\,6,\,2]$$
+Prendiamo il primo elemento dell'array, ossia $4$, come pivot e applichiamo il sotto-algoritmo `Partiziona`: vengono effettuati tre scambi durante la sua esecuzione, in ordine $2\,-\,4$, $3\,-\,8$ e $1\,-\,7$, portando l'array ad assumere la seguente forma:
+$$[2,\,3,\,1,\,7,\,8,\,5,\,6,\,4]$$
+L'`ind_medio` restituito sarà $2$, infatti possiamo osservare che tutti gli elementi contenuti nelle prime 3 posizioni di $A$ sono minori del pivot $4$, mentre tutti gli elementi contenuti nelle altre posizioni a destra sono maggiori o uguali dello stesso. In seguito, lo stesso algoritmo verrà applicato ricorsivamente sui due sotto-array $[2,\,3,\,1]$ e $[7,\,8,\,5,\,6,\,4]$, e così via al loro interno, fino ad arrivare all'array ordinato:
+$$[1,\,2,\,3,\,4,\,5,\,6,\,7,\,8]$$
+
+Vediamo, a questo punto, di calcolare il **costo computazionale** dell'algoritmo di Quick Sort. 
+
+[SLIDES: pag. 6/14]
+[DISPENSE: pag. 23/27]
 [EXYSS: pag. 81/83]
 ___
 ##### Heap Sort
