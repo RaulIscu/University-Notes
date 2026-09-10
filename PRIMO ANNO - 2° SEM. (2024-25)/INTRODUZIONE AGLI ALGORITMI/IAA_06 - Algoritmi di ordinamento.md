@@ -332,11 +332,27 @@ $$[2,\,3,\,1,\,7,\,8,\,5,\,6,\,4]$$
 L'`ind_medio` restituito sarà $2$, infatti possiamo osservare che tutti gli elementi contenuti nelle prime 3 posizioni di $A$ sono minori del pivot $4$, mentre tutti gli elementi contenuti nelle altre posizioni a destra sono maggiori o uguali dello stesso. In seguito, lo stesso algoritmo verrà applicato ricorsivamente sui due sotto-array $[2,\,3,\,1]$ e $[7,\,8,\,5,\,6,\,4]$, e così via al loro interno, fino ad arrivare all'array ordinato:
 $$[1,\,2,\,3,\,4,\,5,\,6,\,7,\,8]$$
 
-Vediamo, a questo punto, di calcolare il **costo computazionale** dell'algoritmo di Quick Sort. 
+Vediamo, a questo punto, di calcolare il **[[IAA_03 - Costo computazionale|costo computazionale]]** dell'algoritmo di Quick Sort, partendo da quello del sotto-algoritmo `Partiziona`. Le prime istruzioni, banalmente, sono istruzioni elementari di costo $\Theta(1)$. La parte interessante arriva con il ciclo `while` più esterno, il cui costo è strettamente dipendente da ciò che avviene al suo interno (dato che la sua condizione, in realtà, imposta un ciclo infinito): i due cicli `while` annidati spostano i loro puntatori sempre e solo in un verso (`i` si sposta sempre verso destra, `j` si sposta sempre verso sinistra) e l'esecuzione si interrompe quando essi si incontrano o si oltrepassano, il che vuol dire che se `i` ha compiuto un numero $k$ di "passi", `j` deve necessariamente averne compiuti $n-k$. Sommando questi due valori abbiamo che, al termine dell'esecuzione di `Partiziona`, i due cicli annidati hanno compiuto complessivamente $k+(n-k)=n$ iterazioni, ed essendo ogni iterazione composta da un'istruzione elementare, il costo complessivo del ciclo diventa $n\cdot \Theta(1)=\Theta(n)$, il che ci porta ad affermare che **il costo computazionale di `Partiziona` è pari a $\Theta(n)$**. Ora, tornando all'algoritmo principale, notiamo che `Partiziona` suddivide l'array originale in due sotto-array, uno contenente $k$ elementi e l'altro contenente $n-k$ elementi, e applica ricorsivamente lo stesso algoritmo su questi due sotto-array, per cui è possibile stilare la seguente [[IAA_05 - Ricorsione#Equazioni di ricorrenza|equazione di ricorrenza]]:
+$$\begin{cases} T(1) = \Theta(1) \\T(n)=\Theta(n) + T(k) + T(n-k)\end{cases}$$
+Risolvere quest'equazione di ricorrenza risulta abbastanza infattibile con quasi tutti i metodi che conosciamo, tranne quello di **[[IAA_05 - Ricorsione#Metodo di sostituzione|sostituzione]]**, per cui è necessario ipotizzare una soluzione valida. Per farci un'idea, possiamo analizzare il caso migliore e il caso peggiore. Partiamo dal **caso migliore**, che corrisponde al caso in cui, ad ogni ricorsione, ogni sotto-array viene diviso in due metà simmetriche (ciò permette di dividere il "lavoro" equamente tra le due chiamate ricorsive, aumentando l'efficienza), caso in cui si ha $k=n-k=\frac{n}{2}$, e dunque:
+$$\begin{cases} T(1)=\Theta(1) \\ T(n) = \Theta(n)+2T\left( \frac{n}{2} \right) \end{cases}$$
+Quest'equazione di ricorrenza, di facile risoluzione e analoga a quella trovata per il [[IAA_06 - Algoritmi di ordinamento#Merge Sort|Merge Sort]], ha come soluzione **$T(n)=\Theta(n\,\log n)$**. Passiamo, ora, al **caso peggiore**, che corrisponde al caso in cui, ad ogni ricorsione, la dimensione di uno dei due sotto-array è 1 (ciò porta al maggiore squilibrio possibile tra le due chiamate ricorsive, diminuendo l'efficienza), caso in cui si ha $k=1$, e dunque:
+$$\begin{cases} T(1)=\Theta(1) \\ T(n)=\Theta(n)+T(n-1) \end{cases}$$
+Anche in questo caso, l'equazione risultante è facilmente risolvibile, ad esempio utilizzando il [[IAA_05 - Ricorsione#Metodo iterativo|metodo iterativo]], e la soluzione è $T(n)=\Theta(n^{2})$.
 
-[SLIDES: pag. 6/14]
-[DISPENSE: pag. 23/27]
-[EXYSS: pag. 81/83]
+Notiamo che il costo computazionale del caso migliore è diverso da quello del caso peggiore, il che non ci permette ancora di fare una stima accurata; a questo punto, ci è utile pensare al **caso medio**, ossia quello in cui è equiprobabile, con probabilità $\frac{1}{n-1}$, che il pivot divida l'array da ordinare in due sotto-array di dimensioni $k$ e $n-k$, per tutti i valori di $k$ compresi tra $1$ e $n-1$. In questo caso, l'equazione di ricorrenza diventa:
+$$\begin{cases} T(1)=\Theta(1) \\ T(n)= \Theta(n)+ \frac{1}{n-1}\cdot\sum_{k\,=\,1}^{n\,-\,1}(T(k)+T(n-k)) \end{cases}$$
+Ora, per semplificarci un po' i calcoli, notiamo che per ogni valore $k$ da $1$ a $n-1$ il termine $T(k)$ compare in realtà due volte, dato che la sequenza di valori $k$ coincide in realtà con la sequenza di valori $n-k$, solo in ordine inverso; perciò, possiamo riscrivere la sommatoria ottenuta come:
+$$\begin{cases} T(1)=\Theta(1) \\ T(n)=\Theta(n)+ \frac{2}{n-1}\cdot \sum_{q\,=\,1}^{n\,-\,1}\,T(q) \end{cases}$$
+Proviamo a risolvere questa nuova equazione di ricorrenza con il **metodo di sostituzione**. Prima di tutto, **eliminiamo le notazioni asintotiche**:
+$$\begin{cases} T(1)=k \\ T(n)= hn+ \frac{2}{n-1}\cdot\sum_{q\,=\,1}^{n\,-\,1}\,T(q) \end{cases}$$
+A questo punto, ipotizziamo la soluzione $T(n)=O(n\,\log n)$, ossia che $T(n)\le an\,\log n$ per un qualche valore $a$. Procediamo verificando la soluzione nel **caso base**, ossia $T(2) = 2h + \frac{2}{2-1}\cdot T(1)=2h+2k$ (non usiamo $T(1)$ perché $\log \,1=0$, il che invaliderebbe il nostro procedimento, ma non ci sono sostanziali differenze), e otteniamo:
+$$T(2)\,\le\,2a\,\log(2)\,\,\,\Rightarrow\,\,\,2h+2k\,\le \,2a\,\,\,\Rightarrow\,\,\,a\,\ge h+k$$
+Dunque, per $a$ sufficientemente grande, il caso base è verificato. Passando al **passo induttivo**, 
+
+[SLIDES: pag. 10/14]
+[DISPENSE: pag. 25/27]
+[EXYSS: pag. 82 - 83]
 ___
 ##### Heap Sort
 
