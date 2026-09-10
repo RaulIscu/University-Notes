@@ -1,9 +1,7 @@
-## Cos'è un algoritmo di ordinamento?
-
 Uno dei problemi più ricorrenti nell'ambito dell'informatica, e dunque da risolvere mediante [[IAA_01 - Introduzione#Algoritmi e problem-solving|algoritmi]], è quello dell'**ordinamento** di un insieme di elementi.
 
 Gli algoritmi che affrontano il problema dell'ordinamento vengono detti, banalmente, "**algoritmi di ordinamento**", e sono definiti come **algoritmi capaci di ordinare gli elementi di un insieme in base a una certa relazione d'ordine**, definita sull'insieme stesso. Per semplicità di trattazione, nell'affrontare questa categoria di algoritmi supporremo di avere **$n$ numeri interi** da ordinare, tutti contenuti in un **array** i cui indici vanno da $0$ a $n-1$; ciononostante, in problemi reali i dati da ordinare possono essere molto più complessi.
-___
+
 ## Algoritmi di ordinamento naif
 
 In questo paragrafo, andremo a trattare di tre algoritmi che potremmo inserire nella categoria degli "**algoritmi di ordinamento naif**": si tratta, sostanzialmente, di algoritmi di ordinamento molto semplici a livello di funzionamento, che riescono nel loro intento ma che non lo fanno in modo particolarmente efficiente. In questa sezione, i tre algoritmi che andremo ad analizzare sono:
@@ -350,9 +348,13 @@ A questo punto, ipotizziamo la soluzione $T(n)=O(n\,\log n)$, ossia che $T(n)\le
 $$T(2)\,\le\,2a\,\log(2)\,\,\,\Rightarrow\,\,\,2h+2k\,\le \,2a\,\,\,\Rightarrow\,\,\,a\,\ge h+k$$
 Dunque, per $a$ sufficientemente grande, il caso base è verificato. Passando al **passo induttivo**, 
 
-[SLIDES: pag. 10/14]
+[SLIDES: pag. 10/12]
 [DISPENSE: pag. 25/27]
-[EXYSS: pag. 82 - 83]
+[EXYSS: pag. 82]
+
+Dunque, per input di grandi dimensioni, generalmente **il Quick Sort è la scelta preferibile per l'ordinamento**, sia per il suo costo ridotto nella maggioranza dei casi e sia perché, a differenza del Merge Sort, esso esegue l'ordinamento in loco, senza bisogno di altro spazio d'appoggio. **Questo vantaggio**, però, **decade in certe situazioni**, ad esempio **quando i valori in input sono "poco disordinati"**, dato che per la natura dell'algoritmo ciò porterebbe a una serie di chiamate ricorsive molto inefficiente (se la sequenza da ordinare è poco disordinata, con tutta probabilità il pivot sarà il minimo o uno dei minimi, e ciò porterà a una suddivisione in sotto-sequenze sbilanciata); difatti, estremizzando questa ipotesi, il caso peggiore di esecuzione del Quick Sort corrisponde proprio a quello in cui la sequenza $A$ parte già come ordinata, risultando in un costo pari a $\Theta(n^{2})$. Per ovviare a tale inconveniente, si possono adottare alcune tecniche per **"randomizzare" la sequenza di valori da ordinare**, in modo da assicurare, o perlomeno rendere molto più probabile, un'esecuzione che ricada nel caso medio. Tra queste, le tecniche più comuni sono:
+- **permutare casualmente i valori della sequenza**;
+- **scegliere il pivot casualmente**, piuttosto che scegliere a priori il valore più a sinistra o più a destra.
 ___
 ##### Heap Sort
 
@@ -474,7 +476,7 @@ def Counting_Sort(A):
 			C[i] -= 1
 ```
 
-Analizziamo l'algoritmo più nel dettaglio: la prima istruzione si occupa di trovare il massimo dell'array $A$ (essendo l'array non ordinato, tale operazione richiederà di scorrere tutto l'array, e avrà dunque costo pari a $\Theta(n)$) e memorizzarlo nella variabile `k`; in seguito, dopo aver memorizzato in `n` il numero di elementi di $A$, si va ad creare l'array di appoggio $C$, di lunghezza $k$ e con tutti i suoi elementi inizializzati a $0$ (tale operazione avrà costo pari a $\Theta(k)$); entriamo, ora, nel primo ciclo `for` dell'algoritmo, che effettua $n$ iterazioni e che, per ogni elemento contenuto in $A$, va ad incrementare il valore contenuto in $C$ all'indice pari all'elemento di $A$ considerato (in seguito a questo ciclo, dunque, l'array $C$ conterrà il numero di occorrenze di ciascuno dei suoi indici in $A$); a questo punto entreremo nel secondo ciclo `for`, che andrà a scandire l'array $C$ e, per ogni valore $C[i]$, andrà sostanzialmente a scrivere $C[i]$ copie di $i$ nell'array $A$, andando ovviamente in ordine crescente di indici (è qui che avviene l'ordinamento vero e proprio).
+Analizziamo l'algoritmo più nel dettaglio: la prima istruzione si occupa di trovare il massimo dell'array $A$ (essendo l'array non ordinato, tale operazione richiederà di scorrere tutto l'array, e avrà dunque costo pari a $\Theta(n)$) e memorizzarlo nella variabile `k`; in seguito, dopo aver memorizzato in `n` il numero di elementi di $A$, si va a creare l'array di appoggio $C$, di lunghezza $k + 1$ e con tutti i suoi elementi inizializzati a $0$ (tale operazione avrà costo pari a $\Theta(k)$); entriamo, ora, nel primo ciclo `for` dell'algoritmo, che effettua $n$ iterazioni e che, per ogni elemento contenuto in $A$, va ad incrementare il valore contenuto in $C$ all'indice pari all'elemento di $A$ considerato (in seguito a questo ciclo, dunque, l'array $C$ conterrà il numero di occorrenze di ciascuno dei suoi indici in $A$); a questo punto entreremo nel secondo ciclo `for`, che andrà a scandire l'array $C$ e, per ogni valore $C[i]$, andrà sostanzialmente a scrivere $C[i]$ copie di $i$ nell'array $A$, andando ovviamente in ordine crescente di indici (è qui che avviene l'ordinamento vero e proprio).
 
 Per quanto riguarda il **costo computazionale** dell'algoritmo, esso è pari a:
 $$T(n)\,=\,\Theta(n)+\Theta(1)+\Theta(k)+\Theta(1)\cdot n+\Theta(1)\cdot \sum_{i\,=\,0}^{k}C[i]\,=\,\Theta(k)+\Theta(n)\,=\,\Theta(max(k,\,n))$$
@@ -516,6 +518,8 @@ Analizziamo più nel dettaglio il funzionamento dell'algoritmo: anche in questo 
 [EXYSS: pag. 92]
 ___
 ##### Bucket Sort
+
+L'algoritmo di **Bucket Sort**, similmente a quello di [[IAA_06 - Algoritmi di ordinamento#Counting Sort|Counting Sort]], necessita di una pre-condizione sui valori presi in input: si assume che **gli $n$ valori da ordinare siano equamente distribuiti in un intervallo $[1,\,k]$**.
 
 [SLIDES: pag. 6 - 7]
 [DISPENSE: pag. 39 - 40]
