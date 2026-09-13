@@ -1,6 +1,6 @@
 ## Cos'è un algoritmo ricorsivo?
 
-Nel capitolo precedente si è approfondito il problema della [[IAA_04 - Ricerca|ricerca]], e in particolare uno degli algoritmi analizzati è quello della [[IAA_04 - Ricerca#Ricerca binaria|ricerca binaria]]: l'implementazione proposta in precedenza è perfettamente iterativa, ma è possibile implementare lo stesso algoritmo anche utilizzando la "**ricorsione**". Avendo un array $A$ e l'elemento cercato $v$, in parole povere possiamo effettuare la ricerca binaria anche seguendo i seguenti passaggi:
+Nel capitolo precedente si è approfondito il problema della [[IAA_04 - Ricerca|ricerca]], e in particolare uno degli algoritmi analizzati è quello della [[IAA_04 - Ricerca#Ricerca binaria|ricerca binaria]]: l'implementazione proposta in precedenza è perfettamente iterativa, ma è possibile implementare lo stesso algoritmo anche utilizzando la "**ricorsione**". In parole povere, avendo un array $A$ e l'elemento cercato $v$, possiamo effettuare la ricerca binaria anche seguendo i seguenti passaggi:
 - se $A$ è vuoto, l'elemento $v$ non è sicuramente contenuto al suo interno, quindi restituire subito $-1$;
 - ispezionare l'elemento centrale dell'array $A$, e se corrisponde a $v$ restituire il suo indice;
 - se l'elemento considerato non è quello cercato, confrontarlo con quest'ultimo per vedere se è minore o maggiore;
