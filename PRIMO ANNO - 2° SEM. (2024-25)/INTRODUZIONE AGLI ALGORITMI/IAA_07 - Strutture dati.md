@@ -827,8 +827,38 @@ Arriviamo, infine, a trattare il problema dell'**eliminazione di un nodo da un A
 2. se **il nodo da eliminare ha un solo figlio**, si vanno a collegare direttamente tra loro il padre del nodo eliminato e il figlio dello stesso;
 3. se **il nodo da eliminare ha entrambi i figli**, lo si dovrà sostituire col predecessore o col successore, che a sua volta dovrà essere "eliminato" dalla sua posizione originale.
 
-[DISPENSE: pag. 27/30]
-[SLIDES: pag. 16/20]
+Avendo fatto queste considerazioni, mostriamo lo **pseudocodice** di una possibile implementazione di un algoritmo di eliminazione di un nodo da un ABR:
+
+```
+def abr_delete(p, z):
+	if z.left == None or z.right == None:
+		y = z
+	else:
+		y = ABR_successor(z)
+
+	if y.left != None:
+		x = y.left
+	else:
+		x = y.right
+
+	if (x != None):
+		x.parent = y.parent
+
+	if y.parent == None:
+		p = x
+	else:
+		if y == y.parent.left:
+			y.parent.left = x
+		else:
+			y.parent.right = x
+
+	if y != z:
+		z.key = y.key
+
+	return p
+```
+
+[DISPENSE: pag. 29 - 30]
 ___
 ##### Alberi rosso-neri
 
@@ -913,8 +943,44 @@ Come si può confermare avendo, ora, a disposizione lo pseudocodice, il costo de
 ___
 ##### Alberi AVL
 
-[DISPENSE: pag. 30/51]
-[SLIDES: pag. 1/14]
+Come abbiamo visto [[IAA_07 - Strutture dati#Alberi binari di ricerca|in precedenza]], **un ABR di altezza $h$ contenente $n$ nodi supporta le principali operazioni fondamentali in tempo $O(h)$**, ma di base non offre alcuna garanzia sul valore di $h$, che può essere tranquillamente in $O(n)$, portando a un notevole degrado delle prestazioni. Dunque, per motivi di efficienza, risulta essenziale mantenere l'altezza $h$ il più piccola possibile, e ciò vuol dire fare in modo che **$h$ sia in $O(\log n)$**.
+
+Sappiamo bene che un albero con altezza logaritmica viene anche chiamato "**albero bilanciato**"; con questa premessa, scopriamo le principali "**tecniche di bilanciamento**" di un ABR, ossia tecniche che permettono di trasformare un ABR in un ABR bilanciato. Tali provvedimenti puntano tutti a **riorganizzare la struttura dell'albero nel caso in cui essa violi certi prerequisiti in seguito a un'operazione di inserimento o eliminazione di un nodo**: in particolare, il requisito principale da controllare è che, per ciascun nodo dell'albero, **l'altezza dei suoi sotto-alberi non sia "troppo diversa"**. Nella nostra trattazione, andremo ad approfondire principalmente una di queste tecniche: quella del "**fattore di bilanciamento**".
+
+In un albero binario generico, il **fattore di bilanciamento** di un nodo è definito come la **differenza tra l'altezza del suo sotto-albero sinistro e quella del suo sotto-albero destro**. In questo contesto, una foglia ha sempre un fattore di bilanciamento pari a $0$. Per comprendere meglio tale concetto, nella seguente immagine, si fornisce un esempio di albero binario in cui, per ogni nodo, è indicato il rispettivo fattore di bilanciamento:
+
+![[ab_fattorebilanciamento_esempio.png]]
+
+Introdotto formalmente il concetto di fattore di bilanciamento, possiamo finalmente giungere a una definizione di "**albero AVL**", il soggetto di questo paragrafo:
+
+> Un **albero AVL** è un [[IAA_07 - Strutture dati#Alberi binari di ricerca|albero binario di ricerca]] in cui il fattore di bilanciamento di ciascuno dei suoi nodi è compreso tra $-1$ e $1$.
+
+In altre parole, per ogni nodo di un albero AVL si ha che le altezze dei suoi sotto-alberi si discostano al massimo di $1$. Di seguito, un esempio di albero AVL:
+
+![[avl_esempio.png]]
+
+Dimostriamo, a questo punto, in modo rigoroso che **gli alberi AVL sono bilanciati**. Per fare ciò, indichiamo con $N(h)$ il numero minimo di nodi che può avere un albero AVL di altezza $h$, e dimostriamo che per qualsiasi albero AVL con $n\ge 2$ nodi vale la relazione:
+$$h\le 2\log n$$
+Partiamo dai "casi base", e risulta evidente che per alberi di altezza $h=0$ e $h=1$ si ha rispettivamente che $N(0)=1$ (se l'albero ha altezza pari a $0$, disporrà di un unico livello, e dunque necessariamente l'unico nodo contenuto al suo interno sarà la radice) e che $N(1)=2$ (se l'albero ha altezza pari a $1$, disporrà di due livelli, dunque l'albero con il numero minimo di nodi conterrà solo la radice e un altro nodo, figlio della stessa). 
+
+[DISPENSE: pag. 32/35]
+[SLIDES: pag. 4 - 5]
+
+La dimostrazione appena vista ci permette di garantire che tutte le seguenti operazioni:
+- **ricerca di una chiave**;
+- **ricerca di massimo e minimo**;
+- **ricerca di predecessore e successore**;
+
+siano compiute in modo identico a un generico ABR, ma con un **[[IAA_03 - Costo computazionale|costo computazionale]] pari a $O(\log n)$**. Lo stesso, tuttavia, non può essere detto per quanto riguarda le operazioni di **inserimento** e di **eliminazione di un nodo**, dato che in tali casi sarà eventualmente necessario ribilanciare l'albero AVL (ciò avviene quando, in seguito a un inserimento o eliminazione, il fattore di bilanciamento di almeno un nodo dell'albero non è più compreso nell'intervallo $[-1,\,1]$). 
+
+Per modificare la struttura di un albero AVL in modo da ribilanciarlo, senza però modificare l'ordinamento dei nodi, l'operazione più importante è la "**rotazione**". In particolare, andremo a considerare due tipi di rotazione: la **rotazione destra** e la **rotazione sinistra**. Per comprendere meglio la differenza tra queste due operazioni, l'immagine seguente le mostra a confronto su un esempio stilizzato di albero AVL:
+
+![[avl_rotazione.png]]
+
+Le rotazioni permettono di **ripristinare le proprietà dell'albero AVL in tempo $O(\log n)$**. 
+
+[DISPENSE: pag. 36/51]
+[SLIDES: pag. 7/14]
 ___
 ## Dizionari
 
