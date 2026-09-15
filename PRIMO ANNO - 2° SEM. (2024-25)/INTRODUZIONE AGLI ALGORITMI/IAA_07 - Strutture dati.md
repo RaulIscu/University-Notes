@@ -1,4 +1,4 @@
-Una "**struttura dati**" può essere definita come un **tipo particolare di dato che ne ospita altri**, caratterizzato più dal modo in cui i dati interni sono organizzati piuttosto che dal loro tipo. Dunque, **una struttura dati specifica presenterà un modo sistematico di organizzare i dati** al suo interno, e metterà di conseguenza a disposizione determinati **operatori** che permetteranno di accedere e di manipolare la struttura.
+Una "**struttura dati**" può essere definita come un **tipo particolare di dato che ne ospita altri**, caratterizzato più dal modo in cui i dati interni sono organizzati piuttosto che dal loro tipo. Dunque, **una struttura dati specifica presenterà un modo sistematico di organizzare i dati** al suo interno, e metterà di conseguenza a disposizione determinati **operatori** che permetteranno l'accesso e la manipolazione della struttura.
 
 In generale, una struttura dati può essere "**lineare**" o "**non lineare**", a seconda se esista una forma di sequenzialità al suo interno e se, informalmente, possa essere pensata con un inizio e una fine; al tempo stesso, può essere "**statica**" o "**dinamica**", a seconda se la sua dimensione possa variare nel tempo; infine, può essere anche "**omogenea**" o "**disomogenea**", a seconda se ospiti tutti dati dello stesso tipo o meno. 
 
@@ -8,7 +8,7 @@ Comunque sia, **una struttura dati serve a memorizzare e manipolare insiemi dina
 
 Nel continuo della nostra trattazione, per semplicità, assumeremo che **ogni elemento coincida con la propria chiave** (a meno che non venga specificato il contrario), e dunque i termini "chiave" e "valore" diventeranno pressoché interscambiabili.
 
-Tipicamente, le **operazioni** che si compiono su un insieme dinamico $S$, e dunque sulla struttura dati che ne permette la gestione, si dividono nelle due categorie di operazioni di interrogazione e operazioni di modifica. Tra le **operazioni di interrogazione**, ossia operazioni che ottengono informazioni sull'insieme ma non ne modificano la forma, alcuni esempi comuni sono:
+Tipicamente, le **operazioni** che si compiono su un insieme dinamico $S$, e dunque sulla struttura dati che ne permette la gestione, si dividono nelle due categorie di "operazioni di interrogazione" e "operazioni di modifica". Tra le **operazioni di interrogazione**, ossia operazioni che ottengono informazioni sull'insieme ma non ne modificano la forma, alcuni esempi comuni sono:
 - **`Search(S, k)`**, che permette di recuperare l'elemento con chiave `k`, se è presente all'interno di `S`, e di restituire un valore speciale nullo in caso contrario;
 - **`Min(S)`**, che permette di recuperare l'elemento di valore minimo presente in `S`;
 - **`Max(S)`**, che permette di recuperare l'elemento di valore massimo presente in `S`;
@@ -41,7 +41,7 @@ Ora, un array ordinato e uno non ordinato supportano generalmente le medesime **
 
 Per quanto riguarda **l'implementazione delle principali operazioni di modifica**:
 - l'operazione **`Insert(S, k)`**, nel caso in cui `S` sia un array non ordinato, non richiede particolari requisiti per la posizione che assumerà `k` nell'array, dunque basterà posizionare tale elemento nella prima posizione libera trovata, operazione il cui **costo** sarà pari a $\Theta(1)$; se, invece, `S` è un array ordinato di dimensione $n$, l'inserimento di `k` dovrà avvenire mantenendo l'ordinamento degli elementi, pertanto supponendo di aver già individuato la posizione in cui dovrebbe essere inserito `k` bisognerà "fare posto" a tale elemento, spostando tutti gli elementi successivi di una posizione verso destra, il che porta il **costo** dell'operazione a essere $O(n)$;
-- l'operazione **`Delete(S, k)`**, nel caso in cui `S` sia un array non ordinato, basterà scambiare l'elemento `k` da cancellare con l'ultimo elemento dell'array (in modo da mantenere l'array privo di "buchi") ed eliminarlo, operazione che avrà **costo** pari a $\Theta(1)$; se, invece, `S` è un array ordinato di dimensione $n$, l'eliminazione di `k` implica anche il dover spostare di una posizione verso sinistra tutti gli elementi successivi, sempre per evitare spazi vuoti all'interno dell'array, e perciò il **costo** diventa $O(n)$.
+- per l'operazione **`Delete(S, k)`**, nel caso in cui `S` sia un array non ordinato, basterà scambiare l'elemento `k` da cancellare con l'ultimo elemento dell'array (in modo da mantenere l'array privo di "buchi") ed eliminarlo, operazione che avrà **costo** pari a $\Theta(1)$; se, invece, `S` è un array ordinato di dimensione $n$, l'eliminazione di `k` implica anche il dover spostare di una posizione verso sinistra tutti gli elementi successivi, sempre per evitare spazi vuoti all'interno dell'array, e perciò il **costo** diventa $O(n)$.
 
 Possiamo riassumere quanto appena detto nella seguente tabella:
 
@@ -125,7 +125,7 @@ def insert_in_testa(p: puntatore alla testa, k: valore da inserire):
 
 Semplicemente, l'operazione `Insert_in_testa` rende l'elemento `k` la nuova testa della lista puntata in questione, e lo fa associando il puntatore alla testa precedente `p` al campo `next` di `k`, e ritornando un puntatore a quest'ultimo. Come si può facilmente dedurre studiando lo pseudocodice, l'operazione di inserimento in testa ha **costo** pari a $\Theta(1)$.
 
-Nell'analizzare questa operazione, e in generale qualsiasi operazione di inserimento di elementi nella lista puntata, risulta evidente che **l'elemento `k` da inserire deve essere a tutti gli effetti un nodo valido**, e deve di conseguenza essere effettuata un'**allocazione di memoria** per tale elemento, in modo che esso possa contenere i campi necessari e supportare le varie operazioni. Nell'implementazione che abbiamo visto nel [[IAA_07 - Strutture dati#Liste puntate|paragrafo precedente]], questa allocazione di memoria avviene mediante l'istruzione `q = Nodo(x)`. 
+Nell'analizzare quest'operazione, e in generale qualsiasi operazione di inserimento di elementi nella lista puntata, risulta evidente che **l'elemento `k` da inserire deve essere a tutti gli effetti un nodo valido**, e deve di conseguenza essere effettuata un'**allocazione di memoria** per tale elemento, in modo che esso possa contenere i campi necessari e supportare le varie operazioni. Nell'implementazione che abbiamo visto nel [[IAA_07 - Strutture dati#Liste puntate|paragrafo precedente]], questa allocazione di memoria avviene mediante l'istruzione `q = Nodo(x)`. 
 
 A questo punto, possiamo pensare a un'ipotetica operazione **`Insert_dopo_d(S, k, d)`**, ossia un inserimento che non aggiunge l'elemento `k` in testa, ma piuttosto dopo un determinato elemento `d`:
 
@@ -218,8 +218,7 @@ ___
 
 ##### Pile
 
-La **pila**, detta più comunemente "**stack**", è una struttura dati che si ispira al concetto di una pila di oggetti: inserendo un oggetto nella pila lo andremo ad aggiungere in cima alla stessa, mentre l'oggetto che andremo ad eventualmente rimuovere sarà sempre quello in cima. Più formalmente, la pila è una struttura dati di tipo **LIFO**, cioè "**Last In First Out**". Dunque, una pila ha sempre la seguente proprietà:
-- gli elementi **vengono prelevati** dalla pila **nell'ordine inverso rispetto a quello nel quale vi sono stati inseriti**.
+La **pila**, detta più comunemente "**stack**", è una struttura dati che si ispira al concetto di una pila di oggetti: inserendo un oggetto nella pila lo andremo ad aggiungere in cima alla stessa, mentre l'oggetto che andremo ad eventualmente rimuovere sarà sempre quello in cima. Più formalmente, la pila è una struttura dati di tipo **LIFO**, cioè "**Last In First Out**". Dunque, una pila ha sempre la seguente proprietà: gli elementi **vengono prelevati** dalla pila **nell'ordine inverso rispetto a quello nel quale vi sono stati inseriti**.
 
 Possiamo trovare, senza neanche pensarci troppo, innumerevoli esempi di utilizzo di strutture del genere: nella nostra quotidianità, una **pila di piatti** o **di sedie** segue la stessa proprietà; nel mondo dell'informatica, la pila viene utilizzata dal sistema operativo per **gestire le chiamate a funzione**, o anche per **memorizzare in ordine le pagine web** che abbiamo visitato, in modo da poterle recuperare "tornando indietro".
 
@@ -384,7 +383,7 @@ Pur avendo stabilito la definizione e le principali caratteristiche di un albero
 ![[albero_esempio1.png]]
 
 è un albero radicato, con radice nel nodo $V_{3}$. Come si può notare dall'immagine di esempio appena fornita, tipicamente un albero radicato viene rappresentato come **"crescente" dall'alto verso il basso**, nel senso che la radice si trova in cima all'albero e non alla base. Inoltre, è importante ricordare le seguenti **caratteristiche degli alberi radicati**:
-- **i nodi sono organizzati in livelli**, numerati in ordine crescente man mano che ci si allontana dalla radice, e con il livello della radice che di norma è il livello 0;
+- **i nodi sono organizzati in livelli**, numerati in ordine crescente man mano che ci si allontana dalla radice, e con il livello della radice che di norma è il livello $0$;
 - dato un qualunque nodo $v$ diverso dalla radice, il primo nodo che si incontra sul cammino da $v$ alla radice è detto "**padre di $v$**";
 - due o più **nodi che hanno lo stesso padre** sono detti "**fratelli**", e **la radice è l'unico nodo dell'albero a non avere padre**;
 - ogni nodo sul cammino da $v$ alla radice viene detto "**antenato di $v$**";
@@ -451,7 +450,7 @@ Confrontiamo le diverse implementazioni mostrate finora su alcune **operazioni t
 - sapere **quanti figli ha $v$**;
 - qual è la **distanza dalla radice di $v$**.
 
-**Trovare il padre di un nodo $v$**, nodo di cui abbiamo il puntatore o l'indice (a seconda dell'implementazione), è un'operazione impossibile, per quello che sappiamo ora, nell'implementazione tramite record e puntatori, dato che come detto in precedenza non abbiamo i mezzi per capire quale strada scegliere davanti a un "bivio" tra due nodi; nella rappresentazione posizionale, sappiamo a priori che il padre del nodo si troverà nella posizione $\left[ \frac{i-1}{2} \right]$ (per assicurarsi di trovare il nodo giusto, eventualmente arrotondare per difetto); nel vettore dei padri, invece, basterà accedere all'elemento $P[i]$. Sia per la rappresentazione posizionale che per il vettore dei padri, dunque, trovare il padre di un nodo è un'operazione che ha **costo** pari a $\Theta(1)$.
+**Trovare il padre di un nodo $v$**, nodo di cui abbiamo il puntatore o l'indice (a seconda dell'implementazione), è un'operazione impossibile, per quello che sappiamo ora, nell'implementazione tramite record e puntatori, dato che come detto in precedenza non abbiamo i mezzi per capire quale strada scegliere davanti a un "bivio" tra due nodi; nella rappresentazione posizionale, sappiamo a priori che il padre del nodo si troverà nella posizione $\lfloor \frac{i-1}{2} \rfloor$; nel vettore dei padri, invece, basterà accedere all'elemento $P[i]$. Sia per la rappresentazione posizionale che per il vettore dei padri, dunque, trovare il padre di un nodo è un'operazione che ha **costo** pari a $\Theta(1)$.
 
 Per **determinare il numero di figli di un nodo $v$**, nella struttura a record e puntatori basterà controllare se i campi `left` e `right` contengono o meno dei valori nulli; nella rappresentazione posizionale, bisognerà verificare se le posizioni $2i+1$ e $2i+2$ contengono o meno dei nodi; avendo un vettore dei padri, infine, dovremo scorrere l'intero array $P$ e contare il numero di occorrenze del nodo $v$. Dunque, per l'implementazione mediante record e puntatori e per la rappresentazione posizionale determinare il numero di figli di un nodo è un'operazione che ha **costo** pari a $\Theta(1)$, mentre per un albero implementato tramite vettore dei padri tale operazione assume costo pari a **$\Theta(n)$**.
 
@@ -779,7 +778,7 @@ def abr_minimo_iter(p):
 
 Nel contesto della ricerca del massimo, gli algoritmi sarebbero perfettamente analoghi, con l'unica differenza che starebbe nella sostituzione del campo `left` con il campo `right`. Entrambe queste operazioni, come si può facilmente notare a logica o analizzando l'implementazione, hanno **costo computazionale** limitato superiormente dall'altezza dell'albero, dunque pari a $O(h)$.
 
-Pensiamo, ora, a come **trovare il predecessore o il successore di una chiave `k` contenuta nell'ABR** (ricordiamo che per "predecessore di `k`" si intende il nodo dell'albero contenente la chiave che precederebbe `k` in una sequenza ordinata, e viceversa per "successore di `k`" si intende il nodo dell'albero contenente la chiave che seguirebbe `k` in una sequenza ordinata). 
+Pensiamo, ora, a come **trovare il predecessore o il successore di una chiave `k` contenuta nell'ABR** (ricordiamo che per "predecessore di `k`" si intende il nodo dell'albero contenente la chiave che precederebbe `k` in una sequenza ordinata, e viceversa per "successore di `k`" si intende il nodo dell'albero contenente la chiave che seguirebbe `k` in una sequenza ordinata).
 
 Per comprendere meglio questo problema, analizziamo più nel dettaglio la ricerca del predecessore. Possiamo distinguere due scenari:
 1. il nodo **ha il sotto-albero sinistro**;
