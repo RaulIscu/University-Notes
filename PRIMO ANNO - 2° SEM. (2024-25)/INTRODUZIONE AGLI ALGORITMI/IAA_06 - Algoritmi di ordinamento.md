@@ -268,7 +268,7 @@ Sostituendo $h$ all'interno dell'equazione ottenuta, abbiamo:
 $$\begin{align} T(n)\,&=\,2^{h}\,T\left( \frac{n}{2^{h}} \right)+\sum_{i\,=\,0}^{h\,-\,1}\Theta(n)\\&=\,2^{\log\left( \frac{n}{k} \right)}\cdot \Theta(k^{2})+\sum_{i\,=\,0}^{\log\left( \frac{n}{k} \right)\,-\,1}\Theta(n)\\&=\,\frac{n}{k}\,\Theta(k^{2})+\Theta\left( n\log\left( \frac{n}{k} \right) \right)\\&=\,\Theta(nk)+\Theta(n\,\log n)-\Theta(n\,\log k) \end{align}$$
 Ponendo $k=O(\log n)$, il che vuol dire che deve valere la disuguaglianza $k\le c\cdot \log n$, otteniamo che:
 $$T(n)=\Theta(n\,\log n)+\Theta(n\,\log n)-\Theta(n\,\log(\log n))=\Theta(n\,\log n)$$
-Concludiamo, così, che se per valori $n\le c\cdot \log n$ viene utilizzato l'Insertion Sort internamente al Merge Sort, si ottiene **un costo computazionale invariato ma una riduzione notevole di costo in termini di memoria**, dato che l'Insertion Sort è un algoritmo che lavora in-place.
+Concludiamo, così, che se per valori $k\le c\cdot \log n$ viene utilizzato l'Insertion Sort internamente al Merge Sort, si ottiene **un costo computazionale invariato ma una riduzione notevole di costo in termini di memoria**, dato che l'Insertion Sort è un algoritmo che lavora in-place.
 
 Una piccola curiosità: in Python, il comando `sort`, che può essere utilizzato per ordinare un oggetto di tipo `list`, viene implementato utilizzando la variante del Merge Sort integrata con l'Insertion Sort (variante che viene anche detta "**Timsort**"), e pertanto ha costo computazionale pari a $\Theta(n\,\log n)$.
 
