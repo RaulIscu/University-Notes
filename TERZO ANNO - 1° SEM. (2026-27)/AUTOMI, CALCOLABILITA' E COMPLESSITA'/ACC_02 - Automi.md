@@ -48,7 +48,7 @@ Da questa definizione formale, possiamo anche capire meglio il comportamento di 
 
 ##### Linguaggi
 
-Indicando con $\Sigma^{*}$ l'insieme di tutte le possibili sequenze di lunghezza $k\in\mathbb{N}$ di caratteri contenuti nell'alfabeto $\Sigma$, possiamo dire che **a ogni automa finito corrisponde un "linguaggio" $L\subseteq \Sigma^{*}$**. Ma cos'è un linguaggio? Informalmente, possiamo vedere un linguaggio come l'**insieme di tutte le sequenze di simboli accettate dall'automa $M$ considerato**; indicando con $A$ tale insieme, scriviamo che:
+Indicando con $\Sigma^{*}$ l'insieme di tutte le possibili sequenze di lunghezza $k\in\mathbb{N}$ di caratteri contenuti nell'alfabeto $\Sigma$, possiamo dire che **a ogni automa finito corrisponde un "linguaggio"**. Ma cos'è un linguaggio? Informalmente, possiamo vedere un linguaggio come un qualsiasi sottoinsieme $L$ dell'insieme $\Sigma^*$ (dunque, $L\subseteq \Sigma^*$); in particolare, indichiamo con $L(M)$ il **linguaggio riconosciuto dall'automa $M$**, che consiste nell'**insieme di tutte le sequenze di simboli accettate dall'automa $M$ considerato**. Indicando con $A$ tale insieme, scriviamo che:
 $$L(M)=A$$
 In questo contesto, si dice che "**$M$ riconosce $A$**", oppure che "**$M$ accetta $A$**". Nel caso in cui un determinato automa non accetti alcuna sequenza in input, esso riconoscerà comunque un linguaggio $L$, semplicemente con $L(M)=\emptyset$.
 ___
@@ -108,7 +108,30 @@ Vediamo un ultimo esempio, con l'automa $M_{4}$:
 
 In questo caso, si ha $Q=\{q_{0},\,q_{1},\,q_{2}\}$ e $\Sigma=\{(RESET),\,0,\,1,\,2\}$, con $q_{0}$ come stato iniziale e stato accettante. Seppur possa sembrare particolarmente complessa rispetto agli esempi visti finora, si tratta di un automa che svolge una mansione molto semplice: conserva al suo interno la somma parziale dei simboli che legge in input, modulo $3$ (se $M_{4}$ si trova in $q_{0}$ tale somma vale $0$, se si trova in $q_{1}$ tale somma vale $1$, e così via), e ogni volta che riceve il simbolo $(RESET)$ riporta il conto a $0$. Con questo chiarimento, diventa palese che $M_{4}$ accetta tutte le sequenze che risultano in una somma pari a $0\text{ mod }3$, ossia in una somma che è multipla di $3$.
 ___
-#####  
+##### Definizione formale di computazione
+
+Finora, ci siamo occupati di definire, informalmente e poi formalmente, gli automi finiti, ma non abbiamo veramente fatto lo stesso per la **computazione**, la mansione effettivamente svolta da un automa. Di seguito, dunque, forniamo una **definizione formale del concetto di "computazione"**:
+
+> Sia $M=(Q,\,\Sigma,\,\delta,\,q_{0},\,F)$ un automa finito, e sia $w=w_{1}w_{2}\dots w_{n}$ una stringa dove ogni elemento $w_{i}$ è un simbolo dell'alfabeto $\Sigma$. Si dice che "**$M$ accetta $w$**" se esiste una sequenza di stati $r_{0},\,r_{1},\,\dots,\,r_{n}$ in $Q$ tale per cui:
+> 1. $r_{0}=q_{0}$;
+> 2. $\delta(r_{i},\,w_{i\,+\,1})=r_{i\,+\,1}$ per $i=0,\,1,\,\dots,\,n-1$;
+> 3. $r_{n}\in F$.
+
+In altre parole, la prima condizione impone che l'automa parta dallo stato iniziale $q_{0}$, la seconda che l'automa passi da uno stato all'altro seguendo seguendo la sua funzione di transizione $\delta$, e la terza che lo stato di arrivo definito dalla sequenza presa in input sia uno stato accettante.
+
+Forniamo, a questo punto, anche un'altra definizione, quella di "**linguaggio regolare**".
+
+> Un linguaggio è detto "**linguaggio regolare**" se esiste un automa finito che lo riconosce.
+
+In questo contesto, è chiaro che i vari linguaggi visti negli esempi del [[ACC_02 - Automi#Esempi di automi finiti|paragrafo precedente]], ossia:
+$$\begin{align} &L(M_{1})=\{w\,|\,w\text{ contiene almeno un } 1\text{ e un numero pari di } 0\text{ segue l'ultimo }1\} \\&L(M_{2})=\{w\,|\,w\text{ termina con un }1\} \\&L(M_{3})=\{w\,|\,w\text{ è la stringa vuota }\epsilon\text{ oppure termina con uno 0}\} \\&L(M_{4})=\{w\,|\,\text{la somma dei simboli in }w\text{ è }0\text{ mod }3,\text{ con }(RESET)\text{ che riporta la somma a }0\} \end{align}$$
+sono tutti linguaggi regolari, dato che tutti sono riconosciuti da un automa finito. Vedremo, in seguito, che **non tutti i linguaggi sono regolari**, e ne esistono molti che non possono essere riconosciuti da un automa.
+___
+##### Progettare un automa finito
+
+Ora che siamo perfettamente coscienti di cosa sia un automa finito, delle componenti che lo caratterizzano, e del concetto di linguaggio, dovremmo avere tutti gli strumenti per essere in grado di **progettare un automa finito che riconosca un determinato linguaggio**. Per fare ciò, nonostante non ci siano formule immediate o metodi infallibili, è comunque possibile seguire alcune linee guida e consigli, che sicuramente facilitano molto la progettazione.
+
+
 
 [pag. 34]
 ___
