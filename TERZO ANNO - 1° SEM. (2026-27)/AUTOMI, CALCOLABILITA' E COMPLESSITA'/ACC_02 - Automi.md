@@ -1,4 +1,4 @@
-Per poter affrontare nel dettaglio la teoria della computazione, partiamo dal modellare ciò su cui tale computazione avviene, ossia un computer. Naturalmente, analizzare teoricamente un computer effettivo risulterebbe fin troppo complesso, dunque in questi contesti si preferisce utilizzare dei cosiddetti "**modelli di computazione**". Un modello di computazione rappresenta, sostanzialmente, un'astrazione di un calcolatore, che può essere accurata in alcuni aspetti e meno in altri; per questo motivo, durante questo corso si vedranno diversi modelli di computazione, a seconda delle caratteristiche su cui ci si vorrà concentrare.
+Per poter affrontare nel dettaglio la teoria della computazione, partiamo dal modellare ciò su cui tale computazione avviene, ossia un computer. Naturalmente, analizzare teoricamente un computer effettivo risulterebbe fin troppo complesso, dunque in questi contesti di merda si preferisce utilizzare dei cosiddetti "**modelli di computazione**". Un modello di computazione rappresenta, sostanzialmente, un'astrazione di un calcolatore, che può essere accurata in alcuni aspetti e meno in altri; per questo motivo, durante questo corso si vedranno diversi modelli di computazione, a seconda delle caratteristiche su cui ci si vorrà concentrare.
 
 Il primo modello di computazione che andremo ad analizzare, il più semplice, è il cosiddetto "**automa finito**", chiamato anche "**macchina a stati finiti**".
 
@@ -170,7 +170,28 @@ Con le considerazioni fatte, possiamo costruire l'automa finito $E_{2}$:
 
 ![[automa_esempio11.png]]
 ___
-## Operazioni regolari
+## Proprietà e operazioni sui linguaggi
 
-[pag. 36]
+Una volta visti nel dettaglio gli [[ACC_02 - Automi#Cos'è un automa finito?|automi finiti]], e approfondito il concetto di broccolo, [[ACC_02 - Automi#Linguaggi|linguaggio]] e di [[ACC_02 - Automi#Definizione formale di computazione|linguaggio regolare]], studiamo le loro **proprietà**. Nella teoria della computazione, i linguaggi sono gli "oggetti di base", e abbiamo a disposizione vari strumenti per gestirli e modificarli. 
+
+##### Operazioni regolari
+
+Definiamo, per prima cosa, tre operazioni chiamate "**operazioni regolari**", e usiamole per studiare le proprietà dei linguaggi regolari.
+
+> Siano $A$ e $B$ due linguaggi, possiamo definire le seguenti **operazioni regolari**:
+> - **unione**, indicata dal simbolo $\cup$ e definita formalmente come $A\cup B=\{x\,|\,x\in A\,\lor\,x\in B\}$;
+> - **concatenazione**, indicata dal simbolo $\circ$ e definita formalmente come $A\circ B=\{xy\,|\,x\in A\,\land\,x\in B\}$;
+> - **star**, indicata dal simbolo $^*$ e definita formalmente come $A^*=\{x_{1}x_{2}\dots x_{k}\,|\,k\ge 0,\,\text{ogni }x_{i}\in A\}$.
+
+In altre parole, presi due linguaggi $A$ e $B$: l'operazione di unione $A\cup B$ definisce un nuovo linguaggio che include **tutte le stringhe contenute almeno in uno dei due linguaggi operandi**; l'operazione di concatenazione definisce un nuovo linguaggio che include **le stringhe generate anteponendo una stringa di $A$ a una stringa di $B$ in tutti i modi possibili**; l'operazione star è un'operazione unaria, dato che opera su un singolo linguaggio, e definisce un nuovo linguaggio che include **tutte le possibili concatenazioni di stringhe di $A$**.
+
+Sarà utile, in questo contesto, definire anche il concetto di "**chiusura rispetto a un'operazione**".
+
+> Una classe di oggetti si dice **"chiusa" rispetto a un'operazione** se l'applicazione di tale operazione agli elementi della classe restituisce sempre un oggetto appartenente alla stessa classe.
+
+Data questa definizione, vogliamo dimostrare che **i linguaggi regolari sono chiusi rispetto a tutte e tre le operazioni regolari**. 
+
+Iniziamo con l'operazione di unione. Vogliamo dimostrare che, avendo due linguaggi regolari $A_{1}$ e $A_{2}$, anche l'unione $A_{1}\cup A_{2}$ definisce un linguaggio regolare. L'idea di fondo è questa: poiché $A_{1}$ e $A_{2}$ sono entrambi regolari, sappiamo che esiste un automa finito $M_{1}$ che riconosce $A_{1}$, e un altro automa $M_{2}$ che riconosce $A_{2}$, dunque vogliamo costruire, a partire da $M_{1}$ e $M_{2}$, un terzo automa finito $M$ che riconosca l'unione $A_{1}\cup A_{2}$; in altre parole, l'automa $M$ dovrà accettare qualsiasi input che verrebbe accettato da $M_{1}$ o da $M_{2}$. 
+
+[pag. 37]
 ___
