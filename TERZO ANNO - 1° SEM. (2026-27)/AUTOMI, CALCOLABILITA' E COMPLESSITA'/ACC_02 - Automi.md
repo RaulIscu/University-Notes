@@ -170,11 +170,11 @@ Con le considerazioni fatte, possiamo costruire l'automa finito $E_{2}$:
 
 ![[automa_esempio11.png]]
 ___
-## Proprietà e operazioni sui linguaggi
+## Operazioni regolari
 
 Una volta visti nel dettaglio gli [[ACC_02 - Automi#Cos'è un automa finito?|automi finiti]], e approfondito il concetto di broccolo, [[ACC_02 - Automi#Linguaggi|linguaggio]] e di [[ACC_02 - Automi#Definizione formale di computazione|linguaggio regolare]], studiamo le loro **proprietà**. Nella teoria della computazione, i linguaggi sono gli "oggetti di base", e abbiamo a disposizione vari strumenti per gestirli e modificarli. 
 
-##### Operazioni regolari
+##### Esempi di operazioni regolari e dimostrazione della chiusura rispetto all'unione
 
 Definiamo, per prima cosa, tre operazioni chiamate "**operazioni regolari**", e usiamole per studiare le proprietà dei linguaggi regolari.
 
@@ -191,7 +191,22 @@ Sarà utile, in questo contesto, definire anche il concetto di "**chiusura rispe
 
 Data questa definizione, vogliamo dimostrare che **i linguaggi regolari sono chiusi rispetto a tutte e tre le operazioni regolari**. 
 
-Iniziamo con l'operazione di unione. Vogliamo dimostrare che, avendo due linguaggi regolari $A_{1}$ e $A_{2}$, anche l'unione $A_{1}\cup A_{2}$ definisce un linguaggio regolare. L'idea di fondo è questa: poiché $A_{1}$ e $A_{2}$ sono entrambi regolari, sappiamo che esiste un automa finito $M_{1}$ che riconosce $A_{1}$, e un altro automa $M_{2}$ che riconosce $A_{2}$, dunque vogliamo costruire, a partire da $M_{1}$ e $M_{2}$, un terzo automa finito $M$ che riconosca l'unione $A_{1}\cup A_{2}$; in altre parole, l'automa $M$ dovrà accettare qualsiasi input che verrebbe accettato da $M_{1}$ o da $M_{2}$. 
+Iniziamo con l'operazione di **unione**. Vogliamo dimostrare che, **avendo due linguaggi regolari $A_{1}$ e $A_{2}$, anche l'unione $A_{1}\cup A_{2}$ definisce un linguaggio regolare**. L'idea di fondo è questa: poiché $A_{1}$ e $A_{2}$ sono entrambi regolari, sappiamo che esiste un automa finito $M_{1}$ che riconosce $A_{1}$, e un altro automa $M_{2}$ che riconosce $A_{2}$, dunque vogliamo costruire, a partire da $M_{1}$ e $M_{2}$, un terzo automa finito $M$ che riconosca l'unione $A_{1}\cup A_{2}$; in altre parole, l'automa $M$ dovrà accettare qualsiasi input che verrebbe accettato da $M_{1}$ o da $M_{2}$. Un possibile approccio è fare in modo che $M$ simuli sia $M_{1}$ che $M_{2}$ sull'input che riceve, e accettare quest'ultimo se almeno una tra queste due simulazioni lo accettano. Queste simulazioni, però, devono avvenire contemporaneamente, dato che l'input non può essere letto per una di esse, riavvolto e poi riletto per l'altra. Dunque, immedesimandoci in $M$, le informazioni che dovremo memorizzare relativamente alle due simulazioni sono semplicemente lo stato in cui $M_{1}$ e $M_{2}$ si troverebbero se avessero letto l'input fino a quel punto: in altre parole, quella che deve essere memorizzata è sostanzialmente una coppia di stati. Supponendo che $M_{1}$ abbia $k_{1}$ stati, e che $M_{2}$ abbia $k_{2}$ stati, il numero delle possibili coppie di stati, ossia il numero di stati effettivi di $M$, sarà pari a $k_{1}\times k_{2}$. Per quanto riguarda gli stati accettanti di $M$, essi saranno tutti quelli relativi a una coppia di stati tale per cui $M_{1}$ o $M_{2}$ si trova in uno stato accettante. 
+
+Cerchiamo quindi di formalizzare quanto detto finora. Supponiamo, dati i due linguaggi $A_{1}$ e $A_{2}$, che $M_{1}=(Q_{1},\,\Sigma,\,\delta_{1},\,q_{1},\,F_{1})$ riconosca $A_{1}$ e che $M_{2}=(Q_{2},\,\Sigma,\,\delta_{2},\,q_{2},\,F_{2})$ riconosca $A_{2}$, e costruiamo l'automa $M=(Q,\,\Sigma,\,\delta,\,q_{0},\,F)$ che riconosca l'unione $A_{1}\cup A_{2}$. In base a quanto detto:
+- $Q=\{(r_{1},\,r_{2})\,|\,r_{1}\in Q_{1}\,\land\,r_{2}\in Q_{2}\}$, che è del resto un altro modo per denotare il prodotto cartesiano degli insiemi $Q_{1}$ e $Q_{2}$ (indicabile anche come $Q_{1}\times Q_{2}$), ossia l'insieme di tutte le coppie possibili di stati, dove il primo appartiene all'automa $M_{1}$ e il secondo a $M_{2}$;
+- $\Sigma$ sarà lo stesso alfabeto di $M_{1}$ e $M_{2}$, condizione che assumiamo per semplicità ma non necessaria per la dimostrazione (anche se i due automi operandi hanno due alfabeti $\Sigma_{1}$ e $\Sigma_{2}$ diversi, valgono pressoché le stesse considerazioni, ponendo però $\Sigma=\Sigma_{1}\cup \Sigma_{2}$);
+- $\delta$ è definita come una funzione ricevente, in input, uno stato di $M$ (ossia una coppia $(r_{1},\,r_{2})$ di stati di $M_{1}$ e $M_{2}$) e un simbolo, e restituente lo stato successivo di $M$, dunque
+$$\delta((r_{1},\,r_{2}),\,a)=(\delta_{1}(r_{1},\,a),\,\delta_{2}(r_{2},\,a))$$
+- $q_{0}$ sarà lo stato coincidente con la coppia $(q_{1},\,q_{2})$;
+- $F$ consiste nell'insieme delle coppie $(r_{1},\,r_{2})$ in cui o $r_{1}$ o $r_{2}$ è uno stato accettante, dunque
+$$F=\{(r_{1},\,r_{2})\,|\,r_{1}\in F_{1}\,\lor\,r_{2}\in F_{2}\}\,\,\,\,\,\,\,\,\,\,\text{oppure}\,\,\,\,\,\,\,\,\,\,F=(F_{1}\times Q_{2})\cup(F_{2}\times Q_{1})$$
+
+Siamo riusciti, così, a costruire un automa $M$ che riconosce l'unione dei due linguaggi regolari generici $A_{1}$ e $A_{2}$ in modo relativamente semplice. La correttezza di questa costruzione risulta evidente dal ragionamento informale esposto in precedenza, ma in situazioni più complesse potrebbero essere necessarie ulteriori discussioni o prove formali (tali prove, tendenzialmente, vengono esposte procedendo per **induzione**).
 
 [pag. 37]
+___
+## Automi finiti non-deterministici
+
+[pag. 38]
 ___
