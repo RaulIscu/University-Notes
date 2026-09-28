@@ -56,7 +56,7 @@ ___
 
 Riprendiamo l'automa visto in precedenza, $M_{1}$, che ricordiamo essere definito da tale diagramma di stato:
 
-![[automa_esempio4 1.png]]
+![[automa_esempio5.png]]
 
 Cerchiamo di formalizzare $M_{1}$ sulla base della definizione appena data. Costruiamo dunque la tupla $(Q,\,\Sigma,\,\delta,\,q_{0},\,F)$:
 - $Q$ è l'insieme degli stati di $M_{1}$, dunque sarà $\{q_{1},\,q_{2},\,q_{3}\}$;
@@ -77,7 +77,7 @@ $$L(M_{1})=\{w\,|\,w\text{ contiene almeno un } 1\text{ e un numero pari di } 0\
 
 Andiamo avanti, e vediamo un nuovo esempio $M_{2}$ di automa finito, identificato dal seguente diagramma:
 
-![[automa_esempio4 1.png]]
+![[automa_esempio5.png]]
 
 In questo caso, abbiamo:
 - $Q=\{q_{1},\,q_{2}\}$;
@@ -97,14 +97,14 @@ $$L(M_{2})=\{w\,|\,w\text{ termina con un }1\}$$
 
 Passiamo a un altro esempio, con l'automa finito $M_{3}$:
 
-![[automa_esempio5.png]]
+![[automa_esempio6.png]]
 
 Notiamo subito, ad occhio, che $M_{3}$ è quasi identico a $M_{2}$, con la sola eccezione che $F=\{q_{1}\}$, dunque troviamo un caso particolare in cui lo stato iniziale è anche lo stato finale dell'automa. Data questa particolarità, possiamo subito affermare con certezza che $M_{3}$ accetta la stringa vuota $\epsilon$. Oltre a ciò, si può osservare che $M_{3}$ accetta tutte le sequenze che terminano con uno $0$, dunque abbiamo che:
 $$L(M_{3})=\{w\,|\,w\text{ è la stringa vuota }\epsilon\text{ oppure termina con uno 0}\}$$
 
 Vediamo un ultimo esempio, con l'automa $M_{4}$:
 
-![[automa_esempio6.png]]
+![[automa_esempio7.png]]
 
 In questo caso, si ha $Q=\{q_{0},\,q_{1},\,q_{2}\}$ e $\Sigma=\{(RESET),\,0,\,1,\,2\}$, con $q_{0}$ come stato iniziale e stato accettante. Seppur possa sembrare particolarmente complessa rispetto agli esempi visti finora, si tratta di un automa che svolge una mansione molto semplice: conserva al suo interno la somma parziale dei simboli che legge in input, modulo $3$ (se $M_{4}$ si trova in $q_{0}$ tale somma vale $0$, se si trova in $q_{1}$ tale somma vale $1$, e così via), e ogni volta che riceve il simbolo $(RESET)$ riporta il conto a $0$. Con questo chiarimento, diventa palese che $M_{4}$ accetta tutte le sequenze che risultano in una somma pari a $0\text{ mod }3$, ossia in una somma che è multipla di $3$.
 ___
@@ -131,7 +131,46 @@ ___
 
 Ora che siamo perfettamente coscienti di cosa sia un automa finito, delle componenti che lo caratterizzano, e del concetto di linguaggio, dovremmo avere tutti gli strumenti per essere in grado di **progettare un automa finito che riconosca un determinato linguaggio**. Per fare ciò, nonostante non ci siano formule immediate o metodi infallibili, è comunque possibile seguire alcune linee guida e consigli, che sicuramente facilitano molto la progettazione.
 
+Innanzitutto, può essere utile approcciarsi al problema **immedesimandosi nell'automa da progettare**: in altre parole, conviene immaginare di dover analizzare l'input in prima persona, in modo da capire meglio se la stringa di simboli vista finora appartiene al linguaggio che si vuole riconoscere. Per prendere queste decisioni, occorre capire **cosa è utile ricordare della stringa letta**: sarà, infatti, pressoché impossibile ricordarla tutta (data la finitezza della memoria di un automa finito), e ciononostante risulterebbe in soluzioni incredibilmente complesse, inefficienti e poco eleganti. Le informazioni necessarie da ricordare dipendono dal linguaggio, dunque sarà nostro compito reinterpretare la definizione del linguaggio fornito, in modo da identificarne le caratteristiche fondamentali e osservarle nell'automa.
 
+Vediamo un esempio, in modo da concretizzare quanto detto finora. Supponiamo di avere l'alfabeto $\Sigma=\{0,\,1\}$, e il linguaggio:
+$$L=\{w\,|\,w\text{ contiene un numero dispari di 1}\}$$
+e di voler costruire un automa finito $E_{1}$ che riconosca il linguaggio $L$. Naturalmente, supponendo di ricevere in input, un simbolo per volta, una qualsiasi sequenza di $0$ e $1$, non sarà necessario (né possibile) ricordare l'intera sequenza per verificarne la validità, ma basterà tenere traccia dell'unica informazione fondamentale: la parità o disparità del numero di $1$. Per memorizzare questa informazione, utilizziamo un meccanismo molto semplice: se viene letto un $1$, la risposta viene cambiata (ovviamente, se finora abbiamo letto un numero pari di $1$ e ne leggiamo un altro, tale numero diventerà dispari, e viceversa); se viene letto uno $0$, la risposta rimane invariata.
 
-[pag. 34]
+Siamo arrivati, dunque, a un ragionamento semplice e diretto che ci permette di memorizzare l'informazione richiesta. Ma come possiamo applicare questa conoscenza per progettare $E_{1}$? Per fare ciò, bisogna **rappresentare le informazioni memorizzate come una lista finita di possibilità**, che diventeranno l'insieme finito degli stati dell'automa. Nel nostro esempio, le possibilità sono due, ossia:
+- la stringa letta finora ha un numero pari di $1$;
+- la stringa letta finora ha un numero dispari di $1$.
+
+Dunque, assegnando uno stato per ciascuna di queste possibilità (ad esempio, $q_{\text{even}}$ per la prima e $q_{\text{odd}}$ per la seconda), cominciamo ad abbozzare il nostro automa $E_{1}$:
+
+![[automa_esempio8.png]]
+
+A questo punto, definiamo le transizioni che collegano questi stati, e fare ciò sarà facile dato che abbiamo già definito, in precedenza, il ragionamento da seguire per memorizzare l'informazione desiderata: a prescindere dallo stato in cui ci troviamo, ricevere in input un $1$ porterà l'automa a cambiare stato, mentre ricevere uno $0$ lascerà lo stato invariato. Dunque:
+
+![[automa_esempio9.png]]
+
+Ora rimangono da definire solo lo stato iniziale e l'insieme degli stati accettanti. Lo stato iniziale corrisponderà alla possibilità associata all'aver letto la stringa vuota $\epsilon$, dunque nel nostro esempio con l'aver letto $0$ volte un $1$, e dato che consideriamo $0$ come un numero pari lo stato iniziale sarà $q_{\text{even}}$. Per quanto riguarda gli stati accettanti, per la definizione del linguaggio l'unico stato accettante dovrà necessariamente essere $q_{\text{odd}}$, per cui l'automa $E_{1}$ assume la seguente forma:
+
+![[automa_esempio10.png]]
+
+Vediamo un altro esempio, leggermente più complesso. Supponiamo di avere nuovamente lo stesso alfabeto $\Sigma=\{0,\,1\}$, e di voler progettare un automa finito $E_{2}$ che riconosca il linguaggio:
+$$L=\{w\,|\,w\text{ contiene al suo interno la sotto-stringa }001\}$$
+Il nostro obiettivo, nel leggere la stringa un simbolo alla volta, sarà dunque memorizzare se, finora, abbiamo letto la sotto-stringa di simboli $001$, e per fare ciò sarà utile memorizzare anche le "possibilità intermedie" che devono verificarsi prima del nostro obiettivo, ossia:
+- la lettura di uno $0$;
+- la lettura di $00$;
+- la lettura di $001$.
+
+Il ragionamento, in poche parole, è questo: inizialmente, si ignorano tutti gli $1$ che vengono letti nell'input; non appena si legge uno $0$, memorizziamo tale evento e leggiamo il simbolo successivo; se leggiamo un altro $0$, memorizziamo di aver letto $00$ e leggiamo il simbolo successivo, mentre se leggiamo un $1$ torniamo allo stato iniziale; infine, se leggiamo un $1$ dopo due $0$, sappiamo che la stringa contiene la sotto-stringa $001$, dunque in seguito a ciò qualsiasi input non cambierà questa certezza. La lista delle possibilità può essere tradotta nei seguenti 4 stati:
+- non si è ancora visto lo $0$ iniziale della sotto-stringa;
+- si è visto il primo $0$ della sotto-stringa;
+- si è visto il secondo $0$ della sotto-stringa;
+- si è visto l'$1$ finale della sotto-stringa.
+
+Con le considerazioni fatte, possiamo costruire l'automa finito $E_{2}$:
+
+![[automa_esempio11.png]]
+___
+## Operazioni regolari
+
+[pag. 36]
 ___
