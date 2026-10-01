@@ -180,16 +180,18 @@ Definiamo, per prima cosa, tre operazioni chiamate "**operazioni regolari**", e 
 
 > Siano $A$ e $B$ due linguaggi, possiamo definire le seguenti **operazioni regolari**:
 > - **unione**, indicata dal simbolo $\cup$ e definita formalmente come $A\cup B=\{x\,|\,x\in A\,\lor\,x\in B\}$;
-> - **concatenazione**, indicata dal simbolo $\circ$ e definita formalmente come $A\circ B=\{xy\,|\,x\in A\,\land\,x\in B\}$;
+> - **intersezione**, indicata dal simbolo $\cap$ e definita formalmente come $A\cap B=\{x\,|\,x\in A\,\land\,x\in B\}$;
+> - **complemento**, indicata dal simbolo $\overline{}$ e definita formalmente come $\overline{A}=\{x\,|\,x\not\in A\}$;
+> - **concatenazione**, indicata dal simbolo $\circ$ e definita formalmente come $A\circ B=\{xy\,|\,x\in A\,\land\,x\in B\}$;2
 > - **star**, indicata dal simbolo $^*$ e definita formalmente come $A^*=\{x_{1}x_{2}\dots x_{k}\,|\,k\ge 0,\,\text{ogni }x_{i}\in A\}$.
 
-In altre parole, presi due linguaggi $A$ e $B$: l'operazione di unione $A\cup B$ definisce un nuovo linguaggio che include **tutte le stringhe contenute almeno in uno dei due linguaggi operandi**; l'operazione di concatenazione definisce un nuovo linguaggio che include **le stringhe generate anteponendo una stringa di $A$ a una stringa di $B$ in tutti i modi possibili**; l'operazione star è un'operazione unaria, dato che opera su un singolo linguaggio, e definisce un nuovo linguaggio che include **tutte le possibili concatenazioni di stringhe di $A$**.
+In altre parole, presi due linguaggi $A$ e $B$: l'operazione di unione $A\cup B$ definisce un nuovo linguaggio che include **tutte le stringhe contenute almeno in uno dei due linguaggi operandi**; l'operazione di intersezione definisce un nuovo linguaggio che include **tutte le stringhe contenute in entrambi i linguaggi operandi**; l'operazione di complemento definisce un nuovo linguaggio che include **tutte le stringhe non contenute nel linguaggio operando**; l'operazione di concatenazione definisce un nuovo linguaggio che include **le stringhe generate anteponendo una stringa di $A$ a una stringa di $B$ in tutti i modi possibili**; l'operazione star è un'operazione unaria, dato che opera su un singolo linguaggio, e definisce un nuovo linguaggio che include **tutte le possibili concatenazioni di stringhe di $A$**.
 
 Sarà utile, in questo contesto, definire anche il concetto di "**chiusura rispetto a un'operazione**".
 
 > Una classe di oggetti si dice **"chiusa" rispetto a un'operazione** se l'applicazione di tale operazione agli elementi della classe restituisce sempre un oggetto appartenente alla stessa classe.
 
-Data questa definizione, vogliamo dimostrare che **i linguaggi regolari sono chiusi rispetto a tutte e tre le operazioni regolari**. 
+Data questa definizione, vogliamo dimostrare che **i linguaggi regolari sono chiusi rispetto a tutte e cinque le operazioni regolari**.
 
 Iniziamo con l'operazione di **unione**. Vogliamo dimostrare che, **avendo due linguaggi regolari $A_{1}$ e $A_{2}$, anche l'unione $A_{1}\cup A_{2}$ definisce un linguaggio regolare**. L'idea di fondo è questa: poiché $A_{1}$ e $A_{2}$ sono entrambi regolari, sappiamo che esiste un automa finito $M_{1}$ che riconosce $A_{1}$, e un altro automa $M_{2}$ che riconosce $A_{2}$, dunque vogliamo costruire, a partire da $M_{1}$ e $M_{2}$, un terzo automa finito $M$ che riconosca l'unione $A_{1}\cup A_{2}$; in altre parole, l'automa $M$ dovrà accettare qualsiasi input che verrebbe accettato da $M_{1}$ o da $M_{2}$. Un possibile approccio è fare in modo che $M$ simuli sia $M_{1}$ che $M_{2}$ sull'input che riceve, e accettare quest'ultimo se almeno una tra queste due simulazioni lo accettano. Queste simulazioni, però, devono avvenire contemporaneamente, dato che l'input non può essere letto per una di esse, riavvolto e poi riletto per l'altra. Dunque, immedesimandoci in $M$, le informazioni che dovremo memorizzare relativamente alle due simulazioni sono semplicemente lo stato in cui $M_{1}$ e $M_{2}$ si troverebbero se avessero letto l'input fino a quel punto: in altre parole, quella che deve essere memorizzata è sostanzialmente una coppia di stati. Supponendo che $M_{1}$ abbia $k_{1}$ stati, e che $M_{2}$ abbia $k_{2}$ stati, il numero delle possibili coppie di stati, ossia il numero di stati effettivi di $M$, sarà pari a $k_{1}\times k_{2}$. Per quanto riguarda gli stati accettanti di $M$, essi saranno tutti quelli relativi a una coppia di stati tale per cui $M_{1}$ o $M_{2}$ si trova in uno stato accettante. 
 
@@ -204,7 +206,7 @@ $$F=\{(r_{1},\,r_{2})\,|\,r_{1}\in F_{1}\,\lor\,r_{2}\in F_{2}\}\,\,\,\,\,\,\,\,
 
 Siamo riusciti, così, a costruire un automa $M$ che riconosce l'unione dei due linguaggi regolari generici $A_{1}$ e $A_{2}$ in modo relativamente semplice. La correttezza di questa costruzione risulta evidente dal ragionamento informale esposto in precedenza, ma in situazioni più complesse potrebbero essere necessarie ulteriori discussioni o prove formali (tali prove, tendenzialmente, vengono esposte procedendo per **induzione**).
 
-Le dimostrazioni relative alla concatenazione e alla star, purtroppo, non sono ugualmente immediate, e per effettuarle sarà necessario introdurre un nuovo concetto fondamentale: il "**[[ACC_02 - Automi#Non-determinismo|non-determinismo]]**".
+Altre dimostrazioni, ad esempio quelle relative a concatenazione o a intersezione, purtroppo non sono ugualmente immediate, e per effettuarle sarà necessario introdurre un nuovo concetto fondamentale: il "**[[ACC_02 - Automi#Non-determinismo|non-determinismo]]**".
 ___
 ## Non-determinismo
 
