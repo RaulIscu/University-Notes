@@ -60,5 +60,11 @@ I tipi di sistema esposti in questo paragrafo si differenziano per il rapporto c
 ___
 ##### Consonanza e risonanza
 
-[01 - slide 37/40]
+Proprio in relazione a [[OGA_01 - L'impresa#Vari tipi di sistema|relazioni e interazioni]], è opportuno introdurre due concetti cardine dell'approccio sistemico a un'impresa: la "**consonanza**" e la "**risonanza**".
+
+La prima, tipica delle **relazioni** e dunque più astratta, indica la **compatibilità strutturale tra i sistemi considerati**, la cui presenza o meno consente che questi si possano rapportare in modo efficace dal punto di vista strutturale; in altre parole, la consonanza rappresenta più la **"potenzialità" di connessione** tra due o più sistemi, prima che avvenga concretamente. La seconda, tipica delle **interazioni** e dunque più concreta, rappresenta l'**espressione ideale della consonanza**, l'**attivazione delle relazioni tra due o più sistemi** in modo armonioso ed efficace.
+
+Per comprendere meglio la dualità di consonanza e risonanza, si può pensare a un'orchestra: in questo contesto, la consonanza è garantita dal fatto che, se l'orchestra è strutturata accuratamente, i diversi strumenti che la compongono avranno dei range sonori strutturalmente compatibili tra loro, e saranno perfettamente capaci di sviluppare una collaborazione congiunta e armonica; la consonanza si sviluppa poi in risonanza quando questi strumenti suonano, producendo melodie coese e agendo come un unico organismo. 
+
+[01 - slide 40]
 ___

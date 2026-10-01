@@ -24,7 +24,7 @@ Ora, a partire da questo esempio, vediamo di generalizzare e di arrivare eventua
 
 ![[automa_esempio3.png]]
 
-I 3 nodi del diagramma sono detti "**stati**", e in questo esempio sono etichettati come $q_{1}$, $q_{2}$ e $q_{3}$. Tra questi, possiamo identificare $q_{1}$ come lo "**stato iniziale**" dell'automa, dato che presenta un arco entrante in esso ma non uscente da altri stati; al tempo stesso, possiamo identificare $q_{2}$ come lo "**stato accettante**", o "**stato finale**", dell'automa, dato che presenta un contorno doppio. Formalmente, infine, gli archi tra i vari stati si dicono "**transizioni**", e i valori annessi a ciascuna transizione sono i **valori di input** che provocano tale transizione.
+I 3 nodi del diagramma sono detti "**stati**", e in questo esempio sono etichettati come $q_{1}$, $q_{2}$ e $q_{3}$. Tra questi, possiamo identificare $q_{1}$ come lo "**stato iniziale**" dell'automa, dato che presenta un arco entrante in esso ma non uscente da altri stati; al tempo stesso, possiamo identificare $q_{2}$ come lo "**stato accettante**", o "**stato finale**", dell'automa, dato che presenta un contorno doppio (uno stato accettante può apparire anche come un cerchio con l'interno colorato). Formalmente, infine, gli archi tra i vari stati si dicono "**transizioni**", e i valori annessi a ciascuna transizione sono i **valori di input** che provocano tale transizione.
 
 In generale, **un automa finito prende in input una sequenza di simboli**, simboli che devono far parte di un **alfabeto $\Sigma$** (in questo esempio, l'alfabeto è $\Sigma=\{0,\,1\}$), e tali simboli vengono **letti uno alla volta, da sinistra verso destra**. Sono proprio tali simboli che, come nell'esempio della porta automatica, determinano le transizioni di stato dell'automa considerato. Ad esempio, se l'automa $M_{1}$ riceve in input la sequenza `1101`, avvengono le seguenti transizioni:
 1. l'automa parte dallo stato iniziale $q_{1}$;
@@ -204,9 +204,32 @@ $$F=\{(r_{1},\,r_{2})\,|\,r_{1}\in F_{1}\,\lor\,r_{2}\in F_{2}\}\,\,\,\,\,\,\,\,
 
 Siamo riusciti, così, a costruire un automa $M$ che riconosce l'unione dei due linguaggi regolari generici $A_{1}$ e $A_{2}$ in modo relativamente semplice. La correttezza di questa costruzione risulta evidente dal ragionamento informale esposto in precedenza, ma in situazioni più complesse potrebbero essere necessarie ulteriori discussioni o prove formali (tali prove, tendenzialmente, vengono esposte procedendo per **induzione**).
 
-[pag. 37]
+Le dimostrazioni relative alla concatenazione e alla star, purtroppo, non sono ugualmente immediate, e per effettuarle sarà necessario introdurre un nuovo concetto fondamentale: il "**[[ACC_02 - Automi#Non-determinismo|non-determinismo]]**".
 ___
-## Automi finiti non-deterministici
+## Non-determinismo
+
+Il **non-determinismo** è un concetto che ha avuto un forte impatto sulla teoria della computazione, e che per certi versi la rivoluziona. Finora, nel parlare di [[ACC_02 - Automi#Cos'è un automa finito?|DFA]], ossia di automi a stati finiti deterministici, ogni passo della computazione seguiva in modo univoco dal passo precedente, dunque quando l'automa si trovava in un determinato stato e leggeva un simbolo in input, lo stato successivo era determinato in modo certo e univoco. È proprio qui che sta il "**determinismo**", dei DFA. La differenza nel non-determinismo sta proprio in come l'automa passa da uno stato all'altro: in un **NFA**, o **Non-Deterministic Finite-State Automaton**, a partire da un determinato stato e ricevendo un determinato input **si può transitare "non-deterministicamente" in un insieme di stati**.
+
+In generale, **il non-determinismo rappresenta una generalizzazione del determinismo**, il che implica che **ogni DFA è anche un NFA**. Ciò detto, tipicamente un NFA presenta alcune caratteristiche peculiari, che non troviamo nei DFA. 
+
+##### Differenze tra DFA e NFA
+
+Per capire meglio di cosa si sta parlando, vediamo un esempio di NFA:
+
+[screen automa slide lezione 3]
+
+La prima differenza evidente sta nelle transizioni: in particolare, mentre in un DFA c'è sempre esattamente un arco di transizione uscente da ogni stato per ogni simbolo nell'alfabeto, **in un NFA uno stato può avere $0$, $1$ o più archi uscenti per ogni simbolo dell'alfabeto** (nel nostro caso, ciò avviene ad esempio in $q_{1}$, che presenta 2 archi uscenti per il simbolo $1$). Un'altra peculiarità sta proprio nei simboli associati a tali archi di transizione: mentre in un DFA non è prevista una transizione in corrispondenza della stringa vuota $\epsilon$ (se un DFA non riceve input, rimane nello stato corrente), **un NFA può avere archi di transizione relativi sia a simboli dell'alfabeto che a $\epsilon$**. Fatte queste considerazioni, possiamo in realtà già fornire una **definizione formale di NFA**:
+
+>  Un **automa finito non-deterministico**, o "**NFA**" (Non-Deterministic Finite-State Automaton), è una tupla $(Q,\,\Sigma,\,\delta,\,q_{0},\,F)$, dove:
+> - **$Q$** è un insieme finito chiamato "**insieme degli stati**";
+> - **$\Sigma$** è un insieme finito chiamato "**alfabeto**";
+> - **$\delta:Q\times(\Sigma\cup\epsilon)\to \mathcal{P}(Q)$** è una "**funzione di transizione**";
+> - **$q_{0}\in Q$** è lo **stato iniziale**;
+> - **$F\subseteq Q$** è l'**insieme degli stati accettanti**.
+
+Si noti, dunque, che quasi tutte le componenti di un NFA sono definite identicamente a un [[ACC_02 - Automi#Cos'è un automa finito?|DFA]], tranne per la funzione di transizione $\delta$: in questo caso, $\delta$ include nei possibili simboli in input la stringa vuota $\epsilon$, e non restituisce un singolo stato in modo deterministico ma piuttosto un insieme di stati in modo non-deterministico. 
+
+A livello strutturale, le differenze principali sono queste. Ma **come avviene la computazione in un NFA?** Può sembrare, infatti, un controsenso affermare che l'automa può transitare in un insieme di stati: come si decide in quale di questi stati si transita? La risposta è, in realtà, che si transita in tutti questi stati! Avendo a che fare con NFA, infatti, si parla di più "**rami di computazione**", o anche "**cammini di computazione**", in cui quest'ultima si dirama in corrispondenza di transizioni di stato non-deterministiche.
 
 [pag. 38]
 ___
