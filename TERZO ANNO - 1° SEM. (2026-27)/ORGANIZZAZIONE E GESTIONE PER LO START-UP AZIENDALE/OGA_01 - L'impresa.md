@@ -72,3 +72,7 @@ Consonanza e risonanza sono due fattori fondamentali per la **sopravvivenza dell
 
 L'equilibrio di queste dimensioni definisce quello che possiamo definire "**grado complessivo di risonanza**" dell'impresa.
 ___
+##### 
+
+[02 - Slide 6]
+___

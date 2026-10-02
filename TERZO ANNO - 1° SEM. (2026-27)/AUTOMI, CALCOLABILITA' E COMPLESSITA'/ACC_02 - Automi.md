@@ -44,13 +44,19 @@ Forniamo, a questo punto, una **definizione formale di automa finito**:
 > - **$q_{0}\in Q$** è lo **stato iniziale**;
 > - **$F\subseteq Q$** è l'**insieme degli stati accettanti**.
 
-Da questa definizione formale, possiamo anche capire meglio il comportamento di un automa finito in eventuali casi limite: ad esempio, porre $F=\emptyset$ è tranquillamente consentito, il che implica che **un automa finito può non avere stati accettanti**. Chiariamo, a questo punto, anche il concetto di "funzione di transizione", non analizzato concretamente finora: la funzione $\delta$ associa a una tupla costituita da uno stato e un simbolo un nuovo stato, dunque in parole povere **definisce le transizioni dell'automa finito considerato**, specificando esattamente uno stato successivo per ogni possibile combinazione di uno stato e un simbolo di input.
+Da questa definizione formale, possiamo anche capire meglio il comportamento di un automa finito in eventuali casi limite: ad esempio, porre $F=\emptyset$ è tranquillamente consentito, il che implica che **un automa finito può non avere stati accettanti**. 
+
+Chiariamo, a questo punto, anche il concetto di "funzione di transizione", non analizzato concretamente finora: la funzione $\delta$ associa a una tupla costituita da uno stato e un simbolo un nuovo stato, dunque in parole povere **definisce le transizioni dell'automa finito considerato**, specificando esattamente uno stato successivo per ogni possibile combinazione di uno stato e un simbolo di input.
 
 ##### Linguaggi
 
 Indicando con $\Sigma^{*}$ l'insieme di tutte le possibili sequenze di lunghezza $k\in\mathbb{N}$ di caratteri contenuti nell'alfabeto $\Sigma$, possiamo dire che **a ogni automa finito corrisponde un "linguaggio"**. Ma cos'è un linguaggio? Informalmente, possiamo vedere un linguaggio come un qualsiasi sottoinsieme $L$ dell'insieme $\Sigma^*$ (dunque, $L\subseteq \Sigma^*$); in particolare, indichiamo con $L(M)$ il **linguaggio riconosciuto dall'automa $M$**, che consiste nell'**insieme di tutte le sequenze di simboli accettate dall'automa $M$ considerato**. Indicando con $A$ tale insieme, scriviamo che:
 $$L(M)=A$$
-In questo contesto, si dice che "**$M$ riconosce $A$**", oppure che "**$M$ accetta $A$**". Nel caso in cui un determinato automa non accetti alcuna sequenza in input, esso riconoscerà comunque un linguaggio $L$, semplicemente con $L(M)=\emptyset$.
+In questo contesto, si dice che "**$M$ riconosce $A$**", oppure che "**$M$ accetta $A$**". Se vogliamo fornire una definizione più rigorosa del linguaggio riconosciuto da un automa $M$, si dovrà definire la cosiddetta "**funzione di transizione estesa**", una variante $\delta^*$ della funzione di transizione $\delta$, che non cattura più un singolo "passo di computazione" ma più passi tutti assieme, senza particolare attenzione verso i passi intermedi. La firma della funzione è $\delta^*:Q\times \Sigma^*\to Q$, e può essere definita ricorsivamente nel modo seguente:
+$$\begin{cases} \delta^*(q,\,\epsilon)=\delta(q,\,\epsilon)\\ \delta^*(q,\,ax)=\delta^*(\delta(q,\,a),\,x) \end{cases}$$
+dove $\epsilon$ rappresenta la stringa vuota, $a\in \Sigma$ un singolo simbolo e $x\in \Sigma^*$ una stringa di simboli. Data tale definizione, il linguaggio riconosciuto da un DFA $M$, ossia $L(M)$, può essere definito come segue:
+$$L(M)=\{x\in\Sigma^*\,|\,\delta^*(q_{0},\,x)\in F\}$$
+Nel caso in cui un determinato automa non accetti alcuna sequenza in input, esso riconoscerà comunque un linguaggio $L$, semplicemente con $L(M)=\emptyset$.
 ___
 ##### Esempi di automi finiti
 
@@ -110,7 +116,21 @@ In questo caso, si ha $Q=\{q_{0},\,q_{1},\,q_{2}\}$ e $\Sigma=\{(RESET),\,0,\,1,
 ___
 ##### Definizione formale di computazione
 
-Finora, ci siamo occupati di definire, informalmente e poi formalmente, gli automi finiti, ma non abbiamo veramente fatto lo stesso per la **computazione**, la mansione effettivamente svolta da un automa. Di seguito, dunque, forniamo una **definizione formale del concetto di "computazione"**:
+Finora, ci siamo occupati di definire, informalmente e poi formalmente, gli automi finiti, ma non abbiamo veramente fatto lo stesso per la **computazione**, la mansione effettivamente svolta da un automa. 
+
+Prima di fare ciò, introduciamo un concetto importante: la "**configurazione**". Formalmente, essa è una **coppia in $Q\times \Sigma^*$**, dunque una tupla $(q,\,x)$ contenente uno stato e una stringa di simboli; in parole povere, essa viene utilizzata per fornire una **"fotografia" dell'automa in un determinato momento**, dato che $q$ sarà lo stato corrente dell'automa, mentre $x$ sarà la porzione della sequenza di simboli di input che deve ancora essere letta e processata dall'automa. In particolare, la configurazione $(q_{0},\,w)$, dove $q_{0}$ è lo stato iniziale dell'automa e $w$ è l'intera sequenza di input, viene detta "**configurazione iniziale**". Ora, definire la configurazione ci permette di fare passi avanti verso la formalizzazione della computazione, dato che avere a disposizione le varie fotografie dei passi di computazione, insieme alla funzione di transizione $\delta$, ci permette di **mettere in relazione le varie configurazioni**: se l'automa $M$ si trova nella configurazione $(q,\,ax)$, e $\delta$ impone che leggere $a$ nello stato $q$ porti l'automa nello stato $p$, allora si sa già che la prossima configurazione di $M$ sarà proprio $(p,\,x)$. Formalmente, questo passaggio viene indicato con il simbolo di "**produzione**", ossia:
+$$(q,\,ax)\,\vdash_{M}\,(p,\,x)$$
+relazione che, per quanto detto finora, vale se e solo se $\delta(q,\,a)=p$. Ora, così come abbiamo esteso la funzione di transizione $\delta$ in $\delta^*$, è ugualmente possibile estendere la relazione $\vdash_{M}$ in $\vdash_{M}^*$. Anche in questo caso, converrà farlo in modo ricorsivo, dunque:
+$$\begin{cases} (q,\,x)\,\vdash_{M}^*\,(q,\,x) \\ \text{se }(q,\,aby)\vdash_{M}(p,\,by)\text{ e }(p,\,by)\vdash_{M}(r,\,y),\text{ allora }(q,\,aby)\vdash_{M}^*(r,\,y) \end{cases}$$
+Secondo questa definizione formale, **la relazione $\vdash_{M}^*$ è riflessiva e transitiva**.
+
+Di seguito, dunque, forniamo una **definizione formale del concetto di "computazione"**:
+
+> Sia $M=(Q,\,\Sigma,\,\delta,\,q_{0},\,F)$ un automa finito, e sia $w$ una stringa dove ogni elemento è un simbolo dell'alfabeto $\Sigma$. Si dice che "**$M$ accetta $w$**" se e solo se vale la relazione:
+> $$(q_{0},\,w)\,\vdash_{M}^*\,(q,\,\epsilon)$$
+> con $q\in F$, o alternativamente se $\delta^*(q_{0},\,w)\in F$.
+
+Non volendo utilizzare la relazione $\vdash_{M}^*$, è possibile fornire anche una **definizione alternativa**:
 
 > Sia $M=(Q,\,\Sigma,\,\delta,\,q_{0},\,F)$ un automa finito, e sia $w=w_{1}w_{2}\dots w_{n}$ una stringa dove ogni elemento $w_{i}$ è un simbolo dell'alfabeto $\Sigma$. Si dice che "**$M$ accetta $w$**" se esiste una sequenza di stati $r_{0},\,r_{1},\,\dots,\,r_{n}$ in $Q$ tale per cui:
 > 1. $r_{0}=q_{0}$;
@@ -121,7 +141,8 @@ In altre parole, la prima condizione impone che l'automa parta dallo stato inizi
 
 Forniamo, a questo punto, anche un'altra definizione, quella di "**linguaggio regolare**".
 
-> Un linguaggio è detto "**linguaggio regolare**" se esiste un automa finito che lo riconosce.
+> Un linguaggio è detto "**linguaggio regolare**" se esiste un automa finito che lo riconosce. Formalmente, indichiamo l'insieme dei linguaggi regolari con $REG$, dove:
+> $$REG=\{L\subseteq \Sigma^*\,|\,\exists\,M\text{ tale che }L(M)=L\}$$
 
 In questo contesto, è chiaro che i vari linguaggi visti negli esempi del [[ACC_02 - Automi#Esempi di automi finiti|paragrafo precedente]], ossia:
 $$\begin{align} &L(M_{1})=\{w\,|\,w\text{ contiene almeno un } 1\text{ e un numero pari di } 0\text{ segue l'ultimo }1\} \\&L(M_{2})=\{w\,|\,w\text{ termina con un }1\} \\&L(M_{3})=\{w\,|\,w\text{ è la stringa vuota }\epsilon\text{ oppure termina con uno 0}\} \\&L(M_{4})=\{w\,|\,\text{la somma dei simboli in }w\text{ è }0\text{ mod }3,\text{ con }(RESET)\text{ che riporta la somma a }0\} \end{align}$$
@@ -182,16 +203,18 @@ Definiamo, per prima cosa, tre operazioni chiamate "**operazioni regolari**", e 
 > - **unione**, indicata dal simbolo $\cup$ e definita formalmente come $A\cup B=\{x\,|\,x\in A\,\lor\,x\in B\}$;
 > - **intersezione**, indicata dal simbolo $\cap$ e definita formalmente come $A\cap B=\{x\,|\,x\in A\,\land\,x\in B\}$;
 > - **complemento**, indicata dal simbolo $\overline{}$ e definita formalmente come $\overline{A}=\{x\,|\,x\not\in A\}$;
-> - **concatenazione**, indicata dal simbolo $\circ$ e definita formalmente come $A\circ B=\{xy\,|\,x\in A\,\land\,x\in B\}$;2
+> - **concatenazione**, indicata dal simbolo $\circ$ e definita formalmente come $A\circ B=\{xy\,|\,x\in A\,\land\,x\in B\}$;
+> - **potenza**, definita formalmente in modo ricorsivo come
+>$$\begin{cases} L^0=\{\epsilon\}\\L^{n+1}=L^n \circ L\,\,\,\,\,\,\,\,\,\,\text{per }n\ge 0 \end{cases}$$
 > - **star**, indicata dal simbolo $^*$ e definita formalmente come $A^*=\{x_{1}x_{2}\dots x_{k}\,|\,k\ge 0,\,\text{ogni }x_{i}\in A\}$.
 
-In altre parole, presi due linguaggi $A$ e $B$: l'operazione di unione $A\cup B$ definisce un nuovo linguaggio che include **tutte le stringhe contenute almeno in uno dei due linguaggi operandi**; l'operazione di intersezione definisce un nuovo linguaggio che include **tutte le stringhe contenute in entrambi i linguaggi operandi**; l'operazione di complemento definisce un nuovo linguaggio che include **tutte le stringhe non contenute nel linguaggio operando**; l'operazione di concatenazione definisce un nuovo linguaggio che include **le stringhe generate anteponendo una stringa di $A$ a una stringa di $B$ in tutti i modi possibili**; l'operazione star è un'operazione unaria, dato che opera su un singolo linguaggio, e definisce un nuovo linguaggio che include **tutte le possibili concatenazioni di stringhe di $A$**.
-
+In altre parole, presi due linguaggi $A$ e $B$: l'operazione di unione $A\cup B$ definisce un nuovo linguaggio che include **tutte le stringhe contenute almeno in uno dei due linguaggi operandi**; l'operazione di intersezione definisce un nuovo linguaggio che include **tutte le stringhe contenute in entrambi i linguaggi operandi**; l'operazione di complemento definisce un nuovo linguaggio che include **tutte le stringhe non contenute nel linguaggio operando**; l'operazione di concatenazione definisce un nuovo linguaggio che include **le stringhe generate anteponendo una stringa di $A$ a una stringa di $B$ in tutti i modi possibili**; l'operazione di potenza è un'operazione unaria, dato che opera su un singolo linguaggio, e definisce un nuovo linguaggio che include **le stringhe generate concatenando il linguaggio con sé stesso $n$ volte**; l'operazione star è un'operazione unaria, e definisce un nuovo linguaggio che include **tutte le possibili concatenazioni di stringhe di $A$**. In particolare, l'operazione star può anche essere vista come un'unione di potenze, infatti:
+$$L^*\,=\,\bigcup_{n\,\ge\,0}L^n\,=\,\{\epsilon\}\cup L\cup L^2\cup \,\dots$$
 Sarà utile, in questo contesto, definire anche il concetto di "**chiusura rispetto a un'operazione**".
 
 > Una classe di oggetti si dice **"chiusa" rispetto a un'operazione** se l'applicazione di tale operazione agli elementi della classe restituisce sempre un oggetto appartenente alla stessa classe.
 
-Data questa definizione, vogliamo dimostrare che **i linguaggi regolari sono chiusi rispetto a tutte e cinque le operazioni regolari**.
+Data questa definizione, vogliamo dimostrare che **i linguaggi regolari sono chiusi rispetto a tutte e sei le operazioni regolari**.
 
 Iniziamo con l'operazione di **unione**. Vogliamo dimostrare che, **avendo due linguaggi regolari $A_{1}$ e $A_{2}$, anche l'unione $A_{1}\cup A_{2}$ definisce un linguaggio regolare**. L'idea di fondo è questa: poiché $A_{1}$ e $A_{2}$ sono entrambi regolari, sappiamo che esiste un automa finito $M_{1}$ che riconosce $A_{1}$, e un altro automa $M_{2}$ che riconosce $A_{2}$, dunque vogliamo costruire, a partire da $M_{1}$ e $M_{2}$, un terzo automa finito $M$ che riconosca l'unione $A_{1}\cup A_{2}$; in altre parole, l'automa $M$ dovrà accettare qualsiasi input che verrebbe accettato da $M_{1}$ o da $M_{2}$. Un possibile approccio è fare in modo che $M$ simuli sia $M_{1}$ che $M_{2}$ sull'input che riceve, e accettare quest'ultimo se almeno una tra queste due simulazioni lo accettano. Queste simulazioni, però, devono avvenire contemporaneamente, dato che l'input non può essere letto per una di esse, riavvolto e poi riletto per l'altra. Dunque, immedesimandoci in $M$, le informazioni che dovremo memorizzare relativamente alle due simulazioni sono semplicemente lo stato in cui $M_{1}$ e $M_{2}$ si troverebbero se avessero letto l'input fino a quel punto: in altre parole, quella che deve essere memorizzata è sostanzialmente una coppia di stati. Supponendo che $M_{1}$ abbia $k_{1}$ stati, e che $M_{2}$ abbia $k_{2}$ stati, il numero delle possibili coppie di stati, ossia il numero di stati effettivi di $M$, sarà pari a $k_{1}\times k_{2}$. Per quanto riguarda gli stati accettanti di $M$, essi saranno tutti quelli relativi a una coppia di stati tale per cui $M_{1}$ o $M_{2}$ si trova in uno stato accettante. 
 
@@ -231,7 +254,9 @@ La prima differenza evidente sta nelle transizioni: in particolare, mentre in un
 
 Si noti, dunque, che quasi tutte le componenti di un NFA sono definite identicamente a un [[ACC_02 - Automi#Cos'è un automa finito?|DFA]], tranne per la funzione di transizione $\delta$: in questo caso, $\delta$ include nei possibili simboli in input la stringa vuota $\epsilon$, e non restituisce un singolo stato in modo deterministico ma piuttosto un insieme di stati in modo non-deterministico. 
 
-A livello strutturale, le differenze principali sono queste. Ma **come avviene la computazione in un NFA?** Può sembrare, infatti, un controsenso affermare che l'automa può transitare in un insieme di stati: come si decide in quale di questi stati si transita? La risposta è, in realtà, che si transita in tutti questi stati! Avendo a che fare con NFA, infatti, si parla di più "**rami di computazione**", o anche "**cammini di computazione**", in cui quest'ultima si dirama in corrispondenza di transizioni di stato non-deterministiche.
+A livello strutturale, le differenze principali sono queste. Ma **come avviene la computazione in un NFA?** Può sembrare, infatti, un controsenso affermare che l'automa può transitare in un insieme di stati: come si decide in quale di questi stati si transita? La risposta è, in realtà, che si transita in tutti questi stati! Avendo a che fare con NFA, infatti, si parla di più "**rami di computazione**", o anche "**cammini di computazione**", in cui quest'ultima si dirama in corrispondenza di transizioni di stato non-deterministiche. Per capire meglio di cosa stiamo parlando, vediamo un esempio ponendo a confronto le computazioni di un DFA e di un NFA:
+
+[esempio]
 
 [pag. 38]
 ___
