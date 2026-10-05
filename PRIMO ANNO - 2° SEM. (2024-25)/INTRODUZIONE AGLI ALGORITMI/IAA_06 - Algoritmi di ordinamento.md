@@ -272,6 +272,22 @@ Concludiamo, così, che se per valori $k\le c\cdot \log n$ viene utilizzato l'In
 
 Una piccola curiosità: in Python, il comando `sort`, che può essere utilizzato per ordinare un oggetto di tipo `list`, viene implementato utilizzando la variante del Merge Sort integrata con l'Insertion Sort (variante che viene anche detta "**Timsort**"), e pertanto ha costo computazionale pari a $\Theta(n\,\log n)$.
 
+Infine, per chiudere il paragrafo del Merge Sort, ne forniamo anche una **versione iterativa**: infatti, non solo il sotto-algoritmo `Fondi` è già iterativo, ma è possibile riformulare il corpo principale del Merge Sort rendendolo un algoritmo iterativo. Di seguito, si fornisce lo **pseudocodice della versione iterativa di Merge Sort**:
+
+```
+def Merge_Sort_Iterativo(A):
+	l = 1
+	
+	while (l <= len(A) // 2):
+		i = 0
+		
+		while (i <= len(A) - 2 * l):
+			Fondi(A, i, i + l, i + 2 * l - 1)
+			i += 2 * l
+			
+		l *= 2
+```
+
 [versione iterativa del Merge Sort: 09, slide 1 - 2]
 ___
 ##### Quick Sort
