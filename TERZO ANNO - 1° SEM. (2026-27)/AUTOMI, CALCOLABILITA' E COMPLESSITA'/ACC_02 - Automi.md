@@ -241,7 +241,7 @@ In generale, **il non-determinismo rappresenta una generalizzazione del determin
 
 Per capire meglio di cosa si sta parlando, vediamo un esempio di NFA:
 
-[screen automa slide lezione 3]
+[TODO: Esempio di NFA (Lezione 3, pag. 1)]
 
 La prima differenza evidente sta nelle transizioni: in particolare, mentre in un DFA c'è sempre esattamente un arco di transizione uscente da ogni stato per ogni simbolo nell'alfabeto, **in un NFA uno stato può avere $0$, $1$ o più archi uscenti per ogni simbolo dell'alfabeto** (nel nostro caso, ciò avviene ad esempio in $q_{1}$, che presenta 2 archi uscenti per il simbolo $1$). Un'altra peculiarità sta proprio nei simboli associati a tali archi di transizione: mentre in un DFA non è prevista una transizione in corrispondenza della stringa vuota $\epsilon$ (se un DFA non riceve input, rimane nello stato corrente), **un NFA può avere archi di transizione relativi sia a simboli dell'alfabeto che a $\epsilon$**. Fatte queste considerazioni, possiamo in realtà già fornire una **definizione formale di NFA**:
 
@@ -256,7 +256,15 @@ Si noti, dunque, che quasi tutte le componenti di un NFA sono definite identicam
 
 A livello strutturale, le differenze principali sono queste. Ma **come avviene la computazione in un NFA?** Può sembrare, infatti, un controsenso affermare che l'automa può transitare in un insieme di stati: come si decide in quale di questi stati si transita? La risposta è, in realtà, che si transita in tutti questi stati! Avendo a che fare con NFA, infatti, si parla di più "**rami di computazione**", o anche "**cammini di computazione**", in cui quest'ultima si dirama in corrispondenza di transizioni di stato non-deterministiche. Per capire meglio di cosa stiamo parlando, vediamo un esempio ponendo a confronto le computazioni di un DFA e di un NFA:
 
-[esempio]
+[TODO: Confronto tra computazioni di DFA e NFA (Lezione 3, pag. 2)]
+
+In questo contesto, l'**accettazione di una sequenza di simboli in input** assume un significato leggermente diverso: infatti, **un NFA accetta "overall" una sequenza se esiste almeno un cammino di computazione accettante**, dunque se almeno uno dei rami generati dalla computazione dell'NFA termina in uno stato accettante.
+
+[TODO: Configurazione di un NFA (Lezione 3, pag. 5)]
 
 [pag. 38]
+___
+##### Linguaggi regolari tra NFA e DFA
+
+[TODO: Teorema (Lezione 3, pag. 6/8)]
 ___
