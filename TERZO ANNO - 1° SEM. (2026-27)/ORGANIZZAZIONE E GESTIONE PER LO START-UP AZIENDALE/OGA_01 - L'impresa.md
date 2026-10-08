@@ -72,7 +72,26 @@ Consonanza e risonanza sono due fattori fondamentali per la **sopravvivenza dell
 
 L'equilibrio di queste dimensioni definisce quello che possiamo definire "**grado complessivo di risonanza**" dell'impresa.
 ___
-##### 
+##### L'organo di governo
 
-[02 - Slide 6]
+L'organizzazione di un'impresa viene eseguita, a grandi linee, attraverso **tre livelli decisionali successivi**:
+1. il primo livello è quello delle **decisioni preliminari**, in cui si gettano le basi dell'impresa stessa, predisponendo uno [[OGA_01 - L'impresa#Cos'è un sistema?|schema organizzativo di massima]], scegliendo le principali componenti strutturali e abbozzando le relazioni tra di esse;
+2. il secondo livello è quello delle **decisioni di governo**, più strategico e cruciale, in cui si passa a definire o a modificare la struttura specifica dell'impresa considerato, e si crea uno schema organizzativo definito;
+3. infine, il terzo livello è quello delle **decisioni operative**, il più concreto dei tre, che riguarda l'utilizzo effettivo della struttura creata nei due livelli precedenti, l'implementazione di sistemi di controllo e di feedback e l'eventuale correzione di errori.
+
+
+
+[02 - Slide 6/8]
+___
+##### Caratteristiche principali di un sistema-impresa
+
+[02 - Slide 9/17]
+___
+##### Le "sette S" di McKinsey
+
+[02 - Slide 19/22]
+___
+##### Ambiente di riferimento
+
+[02 - Slide 24/37]
 ___
