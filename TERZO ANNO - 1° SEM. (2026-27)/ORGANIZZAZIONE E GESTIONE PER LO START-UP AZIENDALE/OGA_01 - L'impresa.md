@@ -79,19 +79,80 @@ L'organizzazione di un'impresa viene eseguita, a grandi linee, attraverso **tre 
 2. il secondo livello è quello delle **decisioni di governo**, più strategico e cruciale, in cui si passa a definire o a modificare la struttura specifica dell'impresa considerato, e si crea uno schema organizzativo definito;
 3. infine, il terzo livello è quello delle **decisioni operative**, il più concreto dei tre, che riguarda l'utilizzo effettivo della struttura creata nei due livelli precedenti, l'implementazione di sistemi di controllo e di feedback e l'eventuale correzione di errori.
 
-
-
-[02 - Slide 6/8]
+La maggior parte di queste decisioni, in particolare quelle di governo e quelle operative, sono responsabilità del cosiddetto "**organo di governo**". Si tratta del "cervello" del sistema, dell'entità decisionale al fulcro dell'impresa, che tramite il suo lavoro permette a quest'ultima di:
+- **filtrare e ricomporre le pressioni interne ed esterne**, individuando gli obiettivi intra-sistemici e inter-sistemici;
+- **perseguire tali obiettivi** tenendo conto delle capacità e delle attese del sistema;
+- **disegnare la "dinamica evolutiva"**, regolando [[OGA_01 - L'impresa#Vari tipi di sistema|le relazioni e le interazioni]] del sistema.
 ___
 ##### Caratteristiche principali di un sistema-impresa
 
-[02 - Slide 9/17]
+Nella visione di un'**impresa come sistema**, è possibile individuare alcune **caratteristiche principali**, la cui analisi permette di comprenderne meglio il funzionamento e le relazioni in cui è coinvolta:
+- l'**entropia negativa**;
+- l'**equifinalità**;
+- la **trasformazione**;
+- l'**omeostasi**.
+
+Parliamo più nel dettaglio di ciascuna di esse, a partire dall'**entropia negativa**. In generale, quando si parla di "entropia", si vuole indicare la tendenza più o meno elevata di un processo a degenerare nel disordine, nella perdita dei collegamenti e delle relazioni che lo caratterizzano; perciò, come si può facilmente intuire, l'entropia negativa è la tendenza opposta, ossia la **capacità di un sistema aperto di evolversi verso uno stato di ordine**, di **distribuzione non casuale dei sub-sistemi che lo compongono**, in modo da essere più stabili e, di conseguenza, sicuri e prosperosi. Un sistema-impresa può raggiungere un buon grado di entropia negativa in vari modi, ad esempio tramite l'**implementazione di norme, routine e processi standardizzati**, andando a creare un ambiente in cui tutto è prevedibile e sotto controllo.
+
+Per quanto riguarda l'**equifinalità**, si tratta di un principio che afferma che **uno stesso traguardo può essere raggiunto con percorsi diversi, o a partire da condizioni iniziali diverse**; contestualmente al sistema-impresa, tale principio stabilisce il fatto che non esiste quasi mai una "best way", un modo migliore a priori per arrivare a tale traguardo.
+
+Arriviamo, così, alla **trasformazione**, che rappresenta il **motore effettivo dell'impresa** e consiste in un **ciclo continuo di conversione di un input a un output**. Dato che il sistema-impresa è tipicamente un sistema aperto o parzialmente aperto, tale conversione necessita di continui scambi con l'ambiente esterno, da cui preleva risorse e a cui restituisce prodotti e servizi. Una particolarità interessante di questo scambio è che **il sistema-impresa funziona come un sistema di input-output "energetico"**, nel senso che l'ambiente esterno, nel ricevere l'output, fornirà un ritorno in "energia" all'impresa (concretamente ricavi economici, o anche status nel mercato).
+
+Infine, diamo un'occhiata all'**omeostasi**, ossia al **meccanismo di regolazione interna del sistema-impresa**. In generale, un'impresa si definisce "omeostatica" se è in grado di assicurare l'equilibrio tra le varie componenti dinamiche, sia in relazione ai suoi sub-sistemi sia in relazione all'ambiente esterno. Per raggiungere questo equilibrio, **l'entropia interna del sistema-impresa dovrà essere compatibile con quella esterna**. 
+
+Tutte queste caratteristiche, come anticipato, concorrono al corretto funzionamento del sistema-impresa; quest'ultimo, però, deve essere sostenuto grazie a delle **risorse**, che possono essere:
+- **risorse materiali** (fisiche e finanziarie);
+- **risorse immateriali** (di mercato, specifiche dell'impresa).
 ___
 ##### Le "sette S" di McKinsey
 
-[02 - Slide 19/22]
+Per valutare la capacità di un'impresa di attuare una determinata strategia, è stata proposta dal professore **James McKinsey** un'analisi basata su sette elementi, nota come "**analisi delle sette S**". Ma quali sono queste sette S? Le troviamo tutte nel seguente elenco:
+- **Strategy**;
+- **Structure**;
+- **Systems**;
+- **Shared values**;
+- **Style**;
+- **Staff**;
+- **Skills**.
+
+In particolare, le prime tre S fanno parte degli "**hard elements**", mentre le altre quattro dei "**soft elements**". I primi fanno riferimento ad aspetti più concreti, formali, o strutturali, che possono essere definiti chiaramente e in modo sistematico; i secondi, invece, riguardano aspetti più immateriali, comportamentali o umani, che sono meno tangibili e misurabili poiché strettamente associati alle persone che fanno parte dell'impresa.
+
+Vediamo più nel dettaglio gli **hard elements**:
+- "**Strategy**" descrive soprattutto come un'impresa intende **costruire o mantenere un vantaggio competitivo**;
+- "**Structure**" indica **come è strutturata l'impresa** dal punto di vista della gestione e dei sub-sistemi;
+- "**Systems**" riguarda l'analisi di qualsiasi **processo presente nelle operazioni aziendali** quotidiane (ad esempio, lo sviluppo di un prodotto, o la sua distribuzione).
+
+I **soft elements**, invece, sono i seguenti:
+- "**Shared values**" tratta dei **valori fondamentali di un'impresa**, che ne definiscono la cultura e le modalità operative;
+- "**Style**" riguarda lo **stile di gestione della leadership dell'impresa**, così come il modo in cui i comportamenti e le azioni dei leader definiscono lo standard per gli altri dipendenti;
+- "**Staff**" si riferisce ai **dipendenti dell'impresa** e alla loro **motivazione**, **preparazione** e **capacità di svolgere con successo le proprie mansioni**;
+- "**Skills**" descrive le **abilità di cui dispone il personale dell'impresa**, dato che il livello di competenza del personale determina anche il livello di realizzazione dell'impresa.
 ___
 ##### Ambiente di riferimento
 
 [02 - Slide 24/37]
+___
+## Organizzazione di un'impresa
+
+[03 - Slide 5/13]
+
+##### Modello gerarchico
+
+[03 - Slide 15/31]
+___
+##### Modello divisionale
+
+[03 - Slide 33/36]
+___
+##### Modello per area geografica
+
+[03 - Slide 38 - 39]
+___
+##### Modello a matrice
+
+[03 - Slide 41/44]
+___
+##### Modello a rete e a outsourcing
+
+[03 - Slide 46/49]
 ___
