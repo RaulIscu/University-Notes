@@ -134,7 +134,39 @@ ___
 ___
 ## Organizzazione di un'impresa
 
-[03 - Slide 5/13]
+Nel [[OGA_01 - L'impresa#L'impresa come sistema|capitolo precedente]], abbiamo preso familiarità con le varie parti, indipendenti e correlate, che compongono un'impresa; siamo pronti, a questo punto, per approfondire più nel dettaglio l'**organizzazione dell'impresa**, dunque come queste parti sono ordinate e suddivise, e come interagiscono tra di loro. La funzione organizzativa di un'impresa è molto importante, e ne definisce:
+- i **centri decisionali**, di **controllo** ed **esecutivi**;
+- l'**autorità** e la **responsabilità** di ciascuno di questi centri;
+- l'**organigramma** dell'impresa, e la descrizione delle singole mansioni incluse al suo interno;
+- le **procedure organizzative**.
+
+L'organizzazione di un'impresa, dal punto di vista analitico, corrisponde a una determinata "**struttura organizzativa**", che consiste in un'unione di tre componenti principali:
+- l'**insieme di relazioni tra le persone** che operano nell'impresa considerata;
+- la **distribuzione dell'autorità e delle responsabilità** all'interno dell'impresa considerata;
+- l'**insieme di processi elementari** che effettua l'impresa considerata.
+
+Sotto un altro punto di vista, possiamo vedere la struttura organizzativa come composta da elementi di due tipi: gli **elementi di struttura**, che definiscono le specifiche funzioni per ciascuna delle parti dell'impresa; gli **elementi decisionali**, che stabiliscono anche le norme da rispettare e le relazioni tra le varie parti. Per comprendere meglio tale distinzione, si può pensare agli elementi di struttura come l'hardware di un dispositivo, e agli elementi decisionali come al software, che regola come i primi operano per raggiungere un determinato scopo. Inoltre, una struttura organizzativa può essere di tipo "formale" o "informale": una **struttura organizzativa formale** definisce esplicitamente la divisione delle mansioni e la loro integrazione, e viene tipicamente rappresentata tramite grafici chiamati "**organigrammi**"; una **struttura organizzativa informale**, invece, si riferisce piuttosto ai rapporti spontanei all'interno del personale, così come ai fattori di influenza e di potere al suo interno. 
+
+Approfondiamo per un momento gli **organigrammi**, che si rivelano essere uno strumento discretamente potente per formalizzare e analizzare la struttura di un'impresa. Si tratta di **rappresentazioni grafiche globali** (che riguardano, cioè, l'intera impresa), di immediata percezione visiva, il cui scopo è **evidenziare gli aspetti fondamentali del funzionamento dell'impresa**, le varie **posizioni strutturali** e i **collegamenti tra le funzioni aziendali**. Di seguito, ad esempio, troviamo un organigramma relativo all'azienda Leonardo:
+
+![[organigramma_leonardo.png]]
+
+Un altro esempio è l'organigramma di Microsoft:
+
+![[organigramma_microsoft.png]]
+
+Gli organigrammi, seppur degli ottimi grafici informativi, hanno comunque dei **limiti**: ad esempio, si noti che **mancano informazioni sull'importanza delle posizioni rappresentate**, così come **sui rapporti non gerarchici** tra le persone che lavorano nell'impresa; ancora, nell'analizzare un organigramma si riscontra una discreta **difficoltà nell'estrapolare informazioni sull'ambiente in cui opera l'impresa**. Questi limiti possono essere superati creando ulteriori documenti, che forniscono informazioni aggiuntive sulla struttura organizzativa considerata, tra cui:
+- i "**mansionari**", che evidenziano appunto la mansione dei vari organi aziendali, descrivendo più esplicitamente i compiti assegnati agli stessi;
+- le "**norme procedurali**", che specificano come vengano svolte le varie mansioni.
+
+Nel seguito di questo capitolo, andremo ad analizzare alcuni **modelli organizzativi**, che possiamo vedere come una sorta di "template" per l'organizzazione di un'impresa. I principali che andremo a vedere sono:
+- il **[[OGA_01 - L'impresa#Modello gerarchico|modello gerarchico]]**;
+- il **[[OGA_01 - L'impresa#Modello divisionale|modello divisionale]]**;
+- il **[[OGA_01 - L'impresa#Modello per area geografica|modello per area geografica]]**;
+- il **[[OGA_01 - L'impresa#Modello a matrice|modello a matrice]]**;
+- il **[[OGA_01 - L'impresa#Modello a rete e a outsourcing|modello a rete e a outsourcing]]**.
+
+Naturalmente, questi non sono gli unici modelli possibili, ma solamente alcuni dei più comuni e facilmente analizzabili.
 
 ##### Modello gerarchico
 
