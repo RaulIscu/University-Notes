@@ -170,15 +170,50 @@ Naturalmente, questi non sono gli unici modelli possibili, ma solamente alcuni d
 
 ##### Modello gerarchico
 
-[03 - Slide 15/31]
+All'interno del **modello gerarchico**, come suggerisce il nome, **l'autorità, la responsabilità e le competenze sono massime al vertice dell'organizzazione** ("principio di gerarchia"), e **le mansioni vengono delegate verso il basso** secondo il cosiddetto "principio di delega"; inoltre, seguendo il "principio di eccezione", **in caso di difficoltà, il problema viaggia gradualmente verso il vertice per la propria risoluzione**, e secondo il "principio dell'unità di direzione" **ciascun dipendente deve sapere chiaramente da chi prendere ordini, e a chi rivolgersi in caso di indecisioni**.
+
+Di seguito, una generalizzazione di un possibile [[OGA_01 - L'impresa#Organizzazione di un'impresa|organigramma]] di un'impresa organizzata secondo un modello gerarchico:
+
+![[modgerarchico_esempio.png]]
+
+
+
+[03 - Slide 17/31]
 ___
 ##### Modello divisionale
 
-[03 - Slide 33/36]
+Nel **modello divisionale**, come suggerisce il nome, **l'impresa di organizza in più divisioni separate in una forma decentrata**; in questo contesto, ogni divisione è tipicamente responsabile di un singolo prodotto, servizio, programma o centro di profitto, e per questo motivo questo modello viene chiamato spesso anche "**struttura per prodotto**" o "**struttura per funzioni strategiche**". Il principio fondamentale per il corretto funzionamento di questo modello è il **massimo coordinamento tra le singole unità funzionali** all'interno di una stessa divisione, e come accennato poco fa la **decentralizzazione del processo decisionale**, che verrà gestito in modo autonomo nelle varie divisioni.
+
+Di seguito, una generalizzazione di un possibile [[OGA_01 - L'impresa#Organizzazione di un'impresa|organigramma]] di un'impresa organizzata secondo un modello divisionale:
+
+![[moddivisionale_esempio.png]]
+
+Possiamo individuare vari **pro e contro** nell'organizzare la propria impresa secondo un modello divisionale. I principali punti di forza sono i seguenti:
+- è molto **versatile e resiliente in ambienti instabili**, dove avvengono cambiamenti rapidi e frequenti;
+- le **responsabilità sul prodotto** e i **punti di contatto** sono ben definiti;
+- genera un **alto grado di coordinamento tra le funzioni interne**;
+- permette alle varie divisioni di **adattarsi** pienamente alle differenze geografiche, di clientela o di tipo di prodotto;
+- è **preferibile in organizzazioni di grandi dimensioni**, che cercano di gestire molti prodotti contemporaneamente.
+
+Di seguito, invece, elenchiamo i punti di debolezza del modello divisionale:
+- vengono **eliminate le economie di scala** all'interno delle unità funzionali;
+- porta ad uno **scarso coordinamento tra le divisioni**;
+- **elimina**, o perlomeno limita, **l'approfondimento delle competenze** e la specializzazione tecnica;
+- rende **difficile l'integrazione e la standardizzazione** tra le varie linee di prodotto.
+
+Uno degli esempi più egregi e famosi di impresa che segue un modello divisionale è **Alphabet**, una delle aziende più grandi al mondo che, tra le altre cose, gestisce Google, YouTube, Android e molti altri brand ben noti. Possiamo vedere un organigramma (molto sintetico) di Alphabet, che evidenzia la divisione tra le sue linee di prodotto:
+
+![[org_alphabet.png]]
+
+In questo grafico, in particolare, i riquadri in arancione indicano i prodotti o servizi che sono stati acquistati e in seguito inglobati nei ranghi di Alphabet, piuttosto che sviluppati internamente.
 ___
 ##### Modello per area geografica
 
-[03 - Slide 38 - 39]
+Il **modello per area geografica** rappresenta un modello molto simile a quello [[OGA_01 - L'impresa#Modello divisionale|divisionale]]: la particolarità principale è il fatto che **le divisioni in cui è organizzata l'azienda sono divise per aree geografiche**. Questa scelta lascia trasparire che tale struttura è **basata sui clienti** (o utenti) dell'organizzazione in questione, e aiuta quest'ultima a espandersi in nuovi mercati e fare un uso più efficiente delle proprie risorse.
+
+Di seguito, una generalizzazione di un possibile [[OGA_01 - L'impresa#Organizzazione di un'impresa|organigramma]] di un'impresa organizzata secondo un modello per area geografica:
+
+![[modgeografica_esempio.png]]
 ___
 ##### Modello a matrice
 
