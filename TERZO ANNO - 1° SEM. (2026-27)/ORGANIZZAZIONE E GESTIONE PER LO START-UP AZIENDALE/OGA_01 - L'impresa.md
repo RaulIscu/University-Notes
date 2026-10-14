@@ -130,7 +130,36 @@ I **soft elements**, invece, sono i seguenti:
 ___
 ##### Ambiente di riferimento
 
-[02 - Slide 24/37]
+L'impresa, in quanto [[OGA_01 - L'impresa#Vari tipi di sistema|sistema aperto]] o parzialmente aperto, riceve input e restituisce output all'ambiente esterno. È evidente, dunque, la necessità di approfondire questo ambiente esterno, detto più formalmente "**ambiente di riferimento**".
+
+Quando si parla dell'ambiente di riferimento di un'impresa, si parla di **tutto ciò che può influire direttamente o indirettamente sulla sopravvivenza, sulla crescita o sulla dinamica evolutiva dell'impresa**. Tra le altre cose, l'ambiente di riferimento fornisce dunque i vincoli, o le regole, che influenzano le azioni dell'impresa, così come le minacce o le opportunità che essa incontra. Più nello specifico, l'impresa può percepire l'ambiente che la circonda come:
+- "**competitivo**", dunque in cui si trovano relazioni concorrenziali e cooperative;
+- "**socio-culturale**", dunque in cui ritrova cultura, infrastrutture sociali, enti con potere normativo e giuridico, tecnologie, ecc. ecc.;
+- "**fisico-naturale**", dunque letteralmente la natura, il paesaggio.
+
+L'ambiente di riferimento non è propriamente "unico", ma **si divide in base al grado di vicinanza all'azienda**. Possiamo farci un'idea questi diversi gradi di vicinanza nel seguente grafico:
+
+![[ambiente_riferimento_schema.png]]
+
+Quando un'azienda nasce, e comincia dunque ad interfacciarsi con il suo ambiente di riferimento, si comporta come una "**impresa passiva**", che tende ad adeguarsi alle condizioni ambientali e a reagire di conseguenza; col passare del tempo e con l'accumularsi dell'esperienza, si auspica che si passi ad una "**impresa proattiva**", nel senso di impresa che è in grado di prevedere e gestire gli eventi che avvengono nell'ambiente di riferimento, anche prima che si verifichino. L'impresa moderna deve infatti saper reagire tempestivamente alle "sorprese", perseguendo quello che possiamo definire un **"sincronismo adattivo" tra mercato e impresa**: l'obiettivo è mantenere un **rapporto [[OGA_01 - L'impresa#Consonanza e risonanza|consonante]] con l'ambiente esterno**, cercando di percepire le modifiche dell'ambiente, anticiparle e adeguare le proprie azioni, la propria struttura e la propria organizzazione in modo "sincrono" con l'ambiente.
+
+Al giorno d'oggi, le imprese agiscono in un ambiente di riferimento altamente incerto e complesso, in cui servono elasticità e flessibilità a livello operativo e strategico. Per ottenerle, l'impresa dovrà essere capace di esplorare attentamente l'ambiente di riferimento, e di sviluppare accuratamente le strutture interne. Ciononostante, l'equilibrio dinamico con l'ambiente non potrà mai essere veramente ottimale, dato l'elevato numero di variabili e di influenze esterne; si può però ambire a un equilibrio completo sul breve termine, condizione che indichiamo con il termine "**morfogenesi autonoma**". Per poter prosperare negli ambienti odierni, conviene dunque che un'azienda adotti determinate caratteristiche, tra cui due delle principali sono:
+- **internazionalizzazione**;
+- **globalizzazione**.
+
+L'internazionalizzazione consiste nel **processo attraverso il quale le imprese si aprono ai mercati esteri**, instaurando rapporti con altre aziende, consumatori e istituzioni operanti su quei territori allo scopo di vendere, produrre, acquistare materie prime o trovare nuove fonti di finanziamento. Ci sono diversi livelli di internazionalizzazione: a grandi linee, possiamo innanzitutto distinguere tra "**internazionalizzazione leggera**", prevalentemente di tipo mercantile, e "**internazionalizzazione pesante**", che spesso coincide anche con il trasferimento di risorse produttive all'estero.
+
+La globalizzazione è una sorta di evoluzione dell'internazionalizzazione, e consiste nell'**unificazione dei mercati a livello mondiale**, consentita in buona parte dalle innovazioni tecnologiche degli ultimi tempi, che hanno spinto verso modelli di consumo e di produzione più uniformi e convergenti. Da un lato, infatti, si assiste a una **progressiva e irreversibile omogeneità di bisogni** e a una conseguente scomparsa delle tradizionali differenze tra i gusti dei consumatori; dall'altro, **le imprese sono maggiormente in grado di sfruttare economie di scala nella produzione, distribuzione e marketing dei prodotti**, soprattutto relativamente a beni di consumo standardizzati. Anche la globalizzazione può essere vista in diversi gradi, tra cui principalmente:
+- una "**globalizzazione geografica**", prettamente relativa alla sfumatura dei confini dei mercati nazionali;
+- una "**globalizzazione sistemica**", per cui l'impresa amplia il proprio raggio d'azione, smettendo di concentrarsi sulla soddisfazione di un singolo bisogno e interessandosi a un target più largo.
+
+In questo contesto, è importante distinguere tra "**imprese globali**", ossia che **vendono lo stesso bene o la stessa gamma di beni in tutto il mondo**, senza sostanziali differenze e adottando strategie uniformi, e "**imprese multinazionali**", che invece **assecondano le condizioni presenti nei paesi in cui operano**.
+
+Internazionalizzazione e globalizzazione portano a diverse conseguenze all'interno della gestione di un'impresa, tra cui:
+- un **incremento della pressione competitiva** in tutti i settori economici (quella che viene chiamata "**ipercompetizione**");
+- una maggiore concentrazione sulle "**core competences**";
+- un **confronto con nuovi fornitori, concorrenti e clienti**, anche geograficamente e culturalmente lontani;
+- un maggiore **decentramento** e "**reticolarizzazione**".
 ___
 ## Organizzazione di un'impresa
 
@@ -222,4 +251,12 @@ ___
 ##### Modello a rete e a outsourcing
 
 [03 - Slide 46/49]
+___
+## Ciclo di vita di un'impresa
+
+[04 - Slide 5/14]
+___
+## Il declino di un'impresa
+
+[04 - Slide 16/30]
 ___
