@@ -237,13 +237,13 @@ Il **non-determinismo** è un concetto che ha avuto un forte impatto sulla teori
 
 In generale, **il non-determinismo rappresenta una generalizzazione del determinismo**, il che implica che **ogni DFA è anche un NFA**. Ciò detto, tipicamente un NFA presenta alcune caratteristiche peculiari, che non troviamo nei DFA. 
 
-##### Differenze tra DFA e NFA
+##### Definizione di NFA e differenze con i DFA
 
 Per capire meglio di cosa si sta parlando, vediamo un esempio di NFA:
 
 ![[nfa_esempio.png]]
 
-La prima differenza evidente sta nelle transizioni: in particolare, mentre in un DFA c'è sempre esattamente un arco di transizione uscente da ogni stato per ogni simbolo nell'alfabeto, **in un NFA uno stato può avere $0$, $1$ o più archi uscenti per ogni simbolo dell'alfabeto** (nel nostro caso, ciò avviene ad esempio in $q_{1}$, che presenta 2 archi uscenti per il simbolo $1$). Un'altra peculiarità sta proprio nei simboli associati a tali archi di transizione: mentre in un DFA non è prevista una transizione in corrispondenza della stringa vuota $\epsilon$ (se un DFA non riceve input, rimane nello stato corrente), **un NFA può avere archi di transizione relativi sia a simboli dell'alfabeto che a $\epsilon$**. Fatte queste considerazioni, possiamo in realtà già fornire una **definizione formale di NFA**:
+La prima differenza evidente sta nelle transizioni: in particolare, mentre in un DFA c'è sempre esattamente un arco di transizione uscente da ogni stato per ogni simbolo nell'alfabeto, **in un NFA uno stato può avere $0$, $1$ o più archi uscenti per ogni simbolo dell'alfabeto** (nel nostro caso, ciò avviene ad esempio in $q_{1}$, che presenta 2 archi uscenti per il simbolo $1$). Un'altra peculiarità sta proprio nei simboli associati a tali archi di transizione: mentre in un DFA non è prevista una transizione in corrispondenza della stringa vuota $\epsilon$ (se un DFA non riceve input, rimane nello stato corrente), **un NFA può avere archi di transizione relativi sia a simboli dell'alfabeto che a $\epsilon$** (d'ora in poi, chiameremo tali archi "**$\epsilon$-archi**"). Fatte queste considerazioni, possiamo in realtà già fornire una **definizione formale di NFA**:
 
 >  Un **automa finito non-deterministico**, o "**NFA**" (Non-Deterministic Finite-State Automaton), è una tupla $(Q,\,\Sigma,\,\delta,\,q_{0},\,F)$, dove:
 > - **$Q$** è un insieme finito chiamato "**insieme degli stati**";
@@ -254,15 +254,27 @@ La prima differenza evidente sta nelle transizioni: in particolare, mentre in un
 
 Si noti, dunque, che quasi tutte le componenti di un NFA sono definite identicamente a un [[ACC_02 - Automi#Cos'è un automa finito?|DFA]], tranne per la funzione di transizione $\delta$: in questo caso, $\delta$ include nei possibili simboli in input la stringa vuota $\epsilon$, e non restituisce un singolo stato in modo deterministico ma piuttosto un insieme di stati in modo non-deterministico. 
 
-A livello strutturale, le differenze principali sono queste. Ma **come avviene la computazione in un NFA?** Può sembrare, infatti, un controsenso affermare che l'automa può transitare in un insieme di stati: come si decide in quale di questi stati si transita? La risposta è, in realtà, che si transita in tutti questi stati! Avendo a che fare con NFA, infatti, si parla di più "**rami di computazione**", o anche "**cammini di computazione**", in cui quest'ultima si dirama in corrispondenza di transizioni di stato non-deterministiche. Per capire meglio di cosa stiamo parlando, vediamo un esempio ponendo a confronto le computazioni di un DFA e di un NFA:
+A livello strutturale, le differenze principali sono queste. Ma **come avviene la computazione in un NFA?** Può sembrare, infatti, un controsenso affermare che l'automa può transitare in un insieme di stati: come si decide in quale di questi stati si transita? La risposta è, in realtà, che si transita in tutti questi stati! Avendo a che fare con NFA, infatti, si parla di più "**rami di computazione**", o anche "**cammini di computazione**", in cui quest'ultima si dirama in corrispondenza di transizioni di stato non-deterministiche. Per capire meglio di cosa stiamo parlando, vediamo uno schema generalizzato che pone a confronto le computazioni di un DFA e di un NFA:
 
 ![[confronto_dfa_nfa.png]]
 
 Come si può vedere chiaramente dall'immagine, mentre **un DFA segue un unico flusso di computazione sequenziale**, e deciderà solo al termine dello stesso se accettare o rifiutare l'input ricevuto; **un NFA**, invece, **esegue tutti i suoi cammini di computazione in parallelo**, e ciascuno di questi cammini può terminare con un'accettazione o un rifiuto dell'input ricevuto. In questo contesto, l'accettazione di una sequenza di simboli assume un significato leggermente diverso: infatti, **un NFA accetta "overall" una sequenza se esiste almeno un cammino di computazione accettante**, dunque se almeno uno dei rami generati dalla computazione dell'NFA termina in uno stato accettante.
 
-[TODO: Configurazione di un NFA (Lezione 3, pag. 5)]
+Come abbiamo detto, un NFA include nel suo alfabeto anche la stringa vuota $\epsilon$; ma cosa vuol dire concretamente ciò nel contesto della computazione? In parole povere, **in corrispondenza di un $\epsilon$-arco, l'NFA si dirama automaticamente nello stato di arrivo di tale arco**, senza bisogno dunque di un ulteriore input. E invece cosa succede se, una volta letto un determinato simbolo, non c'è nessun arco di transizione uscente dallo stato corrente associato a tale simbolo? Semplicemente, **il cammino di computazione considerato "muore"**, viene terminato, e si continuano a considerare gli eventuali altri.  
 
-[pag. 38]
+Ora, abbiamo tutta la conoscenza necessaria per comprendere un **esempio concreto di computazione di un NFA**. Considerando lo stesso automa fornito come esempio all'inizio di questo paragrafo, vediamo cosa succede se gli forniamo la sequenza di input $010110$:
+
+![[computazione_nfa_esempio.png]]
+
+Iniziamo, naturalmente, partendo dallo stato iniziale $q_{1}$, e leggiamo il primo simbolo $0$, che ci porta a rimanere su $q_{1}$; leggiamo poi il secondo simbolo $1$, e troviamo due archi di transizione, dunque la computazione si dirama in due cammini diversi, uno che rimane in $q_{1}$ e un altro che passa a $q_{2}$; al tempo stesso, però, appena arrivati in $q_{2}$ troviamo un arco di transizione con $\epsilon$, dunque viene generato subito anche un terzo cammino, che ci porta nello stato $q_{3}$; ora, leggiamo il terzo simbolo $0$, e notiamo subito che il cammino che si trova in $q_{3}$ muore, dato che $q_{3}$ non presenta nessun arco uscente associato a $0$; e così via. Dallo schema, notiamo che l'NFA finisce per accettare l'input $010110$, dato che almeno uno dei suoi cammini di computazione termina in uno stato accettante (in questo esempio, $q_{4}$). Più in generale, l'automa proposto accetta qualsiasi sequenza di simboli che contiene al suo interno la sotto-sequenza $101$ o $11$.
+
+Come fatto per i DFA, anche per gli NFA possiamo introdurre il concetto di **configurazione**. In questo caso, si tratterà di una tupla $(q,\,x)\in Q\times \Sigma_{\epsilon}^*$, dato che l'alfabeto degli NFA include anche la stringa vuota $\epsilon$. Anche in questo caso, definire la configurazione ci permette di fare passi avanti verso la formalizzazione della computazione: se l'automa $M$ si trova nella configurazione $(q,\,ax)$, e $\delta$ impone che leggere $a$ nello stato $q$ porti l'automa nello stato $p$, allora si sa già che la prossima configurazione di $M$ sarà proprio $(p,\,x)$. Si tratta del medesimo passaggio di **produzione**, ossia:
+$$(q,\,ax)\,\vdash_{M}\,(p,\,x)$$
+In questo caso, però, la relazione vale se e solo se $p \in \delta(q,\,a)$, e non se i due membri coincidono (questo perché, tecnicamente, negli NFA $\delta(q,\,a)$ è un insieme di stati, non uno stato unico). Come abbiamo fatto in precedenza, anche stavolta è possibile estendere la relazione $\vdash_{M}$ in $\vdash_{M}^*$, e si ha che **la relazione $\vdash_{M}^*$ è riflessiva e transitiva**. Dunque, **la definizione formale di computazione rimane pressoché invariata**.
+
+
+
+[pag. 39]
 ___
 ##### Linguaggi regolari tra NFA e DFA
 
