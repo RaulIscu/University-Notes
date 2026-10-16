@@ -272,11 +272,55 @@ Come fatto per i DFA, anche per gli NFA possiamo introdurre il concetto di **con
 $$(q,\,ax)\,\vdash_{M}\,(p,\,x)$$
 In questo caso, però, la relazione vale se e solo se $p \in \delta(q,\,a)$, e non se i due membri coincidono (questo perché, tecnicamente, negli NFA $\delta(q,\,a)$ è un insieme di stati, non uno stato unico). Come abbiamo fatto in precedenza, anche stavolta è possibile estendere la relazione $\vdash_{M}$ in $\vdash_{M}^*$, e si ha che **la relazione $\vdash_{M}^*$ è riflessiva e transitiva**. Dunque, **la definizione formale di computazione rimane pressoché invariata**.
 
-
-
-[pag. 39]
+In generale, **[[ACC_02 - Automi#Trasformare un NFA in un DFA|ogni NFA può essere trasformato in un DFA equivalente]]**, ma costruire un NFA è spesso più facile, o perlomeno più semplice.
 ___
 ##### Linguaggi regolari tra NFA e DFA
 
-[TODO: Teorema (Lezione 3, pag. 6/8)]
+Definiamo i **[[ACC_02 - Automi#Linguaggi|linguaggi regolari]] per gli NFA** nel modo seguente:
+
+> Un linguaggio è detto "**linguaggio regolare per gli NFA**" se esiste un NFA che lo riconosce. Formalmente, indichiamo l'insieme di tali linguaggi con $\mathcal{L}(NFA)$, dove:
+> $$\mathcal{L}(NFA)=\{L\subseteq \Sigma^*_{\epsilon}\,|\,\exists\text{ un NFA }N\text{ tale che }L(N)=L\}$$
+
+È possibile dimostrare che l'insieme dei linguaggi regolari per gli NFA coincide con quello dei linguaggi regolari per i DFA, e che tali insiemi coincidano con l'insieme $REG$ definito in precedenza. Vogliamo dimostrare, dunque, che:
+$$\mathcal{L}(NFA)=\mathcal{L}(DFA)=REG$$
+Per dimostrare tale equivalenza, conviene dividere il procedimento in due parti ben distinte, ossia:
+$$\mathcal{L}(NFA)\supseteq\mathcal{L}(DFA)\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,\mathcal{L}(NFA)\subseteq\mathcal{L}(DFA)$$
+Il primo verso, ossia che **$\mathcal{L}(DFA)$ sia un sottoinsieme di $\mathcal{L}(DFA)$**, è in realtà di banale dimostrazione: sappiamo che, per definizione, gli NFA rappresentano una generalizzazione dei DFA, o meglio che quest'ultimi consistono in un caso particolare di NFA, il che implica che lo stesso vale per i linguaggi riconosciuti da queste due categorie di automi.
+
+Il secondo verso andrà, invece, formalmente dimostrato. L'idea alla base della nostra dimostrazione sarà la seguente: considerando un generico NFA $N=(Q_{N},\,\Sigma,\,\delta_{N},\,q_{0}^N,\,F_{N})$ che riconosca un determinato linguaggio $L$, vogliamo costruire un generico DFA $D=(Q_{D},\,\Sigma,\,\delta_{D},\,q_{0}^D,\,F_{D})$ che riconosca il medesimo linguaggio. Per fare ciò, il DFA $D$ dovrà essere in grado di tenere traccia di tutti i possibili [[ACC_02 - Automi#Definizione di NFA e differenze con i DFA|cammini di computazione]] esplorati dall'NFA $N$. Per semplicità, iniziamo questa costruzione supponendo che non ci siano $\epsilon$-archi (la dimostrazione verrà completata in seguito, aggiungendoli alle supposizioni che stiamo per fare):
+- **l'insieme $Q_{D}$ degli stati di $D$**, dato che quest'ultimo dovrà tenere traccia di tutti i possibili cammini di computazione di $N$, **coinciderà con l'insieme $\mathcal{P}(Q_{N})$** (in altre parole, **ogni stato di $D$ corrisponde a un insieme di stati di $N$**);
+- l'alfabeto $\Sigma$ rimane identico;
+- **la funzione di transizione $\delta_{D}$** è definita come segue: 
+$$\delta_{D}:Q_{D}\times \Sigma\to F_{D}\,\,\,\,\,\,\,\,\,\,\delta_{D}(R,\,a)=\bigcup_{r\,\in\,R}\delta_{N}(r,\,a)$$
+     Informalmente, la funzione $\delta_{D}$ fa in modo che $D$ passi da uno stato $R$, che in realtà sappiamo rappresentare un insieme di stati $r$ di $N$, a un nuovo stato che rappresenta l'unione degli output dati da $\delta_{N}$ per quello stesso input;
+- banalmente, **lo stato iniziale $q_{0}^D$ sarà lo stato corrispondente all'insieme $\{q_{0}^N\}$**;
+- **l'insieme $F_{D}$** viene definito come $\{R\in Q_{D}\,|\,R\cap F_{N}\neq \emptyset\}$ (in altre parole, **è l'insieme degli stati $R$ di $D$ tali per cui $R$ contiene almeno uno stato accettante di $N$**).
+
+La correttezza dell'automa $D$ appena creato non verrà dimostrata rigorosamente. A questo punto, per aggiungere la possibilità di $\epsilon$-archi e completare la dimostrazione, andiamo a definire, per ogni stato $R$ di $D$, l'insieme $E(R)$, ossia:
+$$E(R)=\{q\in Q_{N}\,|\,q\text{ può essere raggiunto da stati in }R\text{ attraverso 0 o più }\epsilon\text{-archi}\}$$
+A questo punto, possiamo utilizzare $E(R)$ per modificare alcune delle caratteristiche del DFA $D$: innanzitutto, visto che è possibile che $N$ abbia degli $\epsilon$-archi uscenti dal suo stato iniziale $q_{0}^N$, definiamo il nuovo stato iniziale $q_{0}^D$ come:
+$$q_{0}^D=E(\{q_{0}^N\})$$
+Modifichiamo anche la funzione di transizione $\delta_{D}$:
+$$\delta_{D}(R,\,a)=\bigcup_{r\,\in\,R}E(\delta_{N}(r,\,a))$$
+Abbiamo completato, a questo punto, la costruzione dell'automa $D$, dimostrando il teorema iniziale.
+___
+##### Trasformare un NFA in un DFA
+
+Nella [[ACC_02 - Automi#Linguaggi regolari tra NFA e DFA|dimostrazione]] che abbiamo visto nel paragrafo precedente, abbiamo visto come creare, generalmente, un DFA equivalente a un NFA. Vediamo come farlo in modo concreto, partendo da un NFA $N$ e trasformandolo in un DFA $D$.
+
+Consideriamo, ad esempio, il seguente NFA $N$:
+
+![[nfa_to_dfa_esempio.png]]
+
+L'**insieme degli stati** di $N$ è $Q_{N}=\{1,\,2,\,3\}$, dunque sappiamo subito che il DFA $D$ avrà un insieme di stati:$$Q_{D}=\mathcal{P}(Q_{N})=\{\emptyset,\,\{1\},\,\{2\},\,\{3\},\,\{1,\,2\},\,\{2,\,3\},\,\{1,\,3\},\,\{1,\,2,\,3\}\}$$Gli **stati iniziali** di $D$ saranno dati dall'insieme $E(\{1\})$, ossia dall'insieme degli stati raggiungibili da $1$ passando attraverso $\epsilon$-archi (più $1$ stesso); abbiamo un solo $\epsilon$-arco uscente da $1$, che porta a $3$, quindi otteniamo:$$q_{0}^D=E(\{1\})=\{1,\,3\}$$Per quanto riguarda gli **stati accettanti** di $D$, ossia l'insieme $F_{D}$, esso conterrà tutti gli stati che, al loro interno, contengono lo stato accettante di $N$. Dunque:
+$$F_{D}=\{\{1\},\,\{1,\,2\},\,\{1,\,3\},\,\{1,\,2,\,3\}\}$$
+Infine, determiniamo la **funzione di transizione** $\delta_{D}$. Per farlo, [TODO: Funzione di transizione di D (pag. 43)]
+
+Abbiamo, a questo punto, tutte le caratteristiche necessarie per disegnare il diagramma dell'automa $D$:
+
+![[nfa_to_dfa_esempio1.png]]
+
+L'automa ottenuto può essere semplificato osservando che nessun arco di transizione entra negli stati $\{1\}$ e $\{1,\,2\}$, per cui essi potranno essere rimossi senza ripercussioni. Facendo ciò, l'automa $D$ diventa:
+
+![[nfa_to_dfa_esempio2.png]]
 ___
