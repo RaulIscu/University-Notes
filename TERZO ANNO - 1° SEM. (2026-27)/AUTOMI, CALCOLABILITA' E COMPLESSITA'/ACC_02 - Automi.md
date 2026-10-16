@@ -314,13 +314,40 @@ Consideriamo, ad esempio, il seguente NFA $N$:
 
 L'**insieme degli stati** di $N$ è $Q_{N}=\{1,\,2,\,3\}$, dunque sappiamo subito che il DFA $D$ avrà un insieme di stati:$$Q_{D}=\mathcal{P}(Q_{N})=\{\emptyset,\,\{1\},\,\{2\},\,\{3\},\,\{1,\,2\},\,\{2,\,3\},\,\{1,\,3\},\,\{1,\,2,\,3\}\}$$Gli **stati iniziali** di $D$ saranno dati dall'insieme $E(\{1\})$, ossia dall'insieme degli stati raggiungibili da $1$ passando attraverso $\epsilon$-archi (più $1$ stesso); abbiamo un solo $\epsilon$-arco uscente da $1$, che porta a $3$, quindi otteniamo:$$q_{0}^D=E(\{1\})=\{1,\,3\}$$Per quanto riguarda gli **stati accettanti** di $D$, ossia l'insieme $F_{D}$, esso conterrà tutti gli stati che, al loro interno, contengono lo stato accettante di $N$. Dunque:
 $$F_{D}=\{\{1\},\,\{1,\,2\},\,\{1,\,3\},\,\{1,\,2,\,3\}\}$$
-Infine, determiniamo la **funzione di transizione** $\delta_{D}$. Per farlo, [TODO: Funzione di transizione di D (pag. 43)]
+Infine, determiniamo la **funzione di transizione** $\delta_{D}$, analizzando il comportamento dell'automa $D$ in base ai possibili input ricevuti e allo stato in cui esso viene ricevuto. Analizziamo, per primo, lo stato $\{2\}$:
+- se viene letto $a$, $D$ va nello stato $\{2,\,3\}$ (in $N$, lo stato $2$ va sia in sé stesso che in $3$ con tale input, e non si va più lontano tramite $\epsilon$-archi); 
+- se viene letto $b$, $D$ va nello stato $\{3\}$ (in $N$, lo stato $2$ va solo nello stato $3$ con tale input, e non si va più lontano tramite $\epsilon$-archi). 
 
-Abbiamo, a questo punto, tutte le caratteristiche necessarie per disegnare il diagramma dell'automa $D$:
+Vediamo, poi, come ci si comporta nello stato $\{1\}$:
+- se viene letto $a$, $D$ va nello stato $\emptyset$ (in $N$, non c'è un arco di transizione associato ad $a$ uscente dallo stato $1$);
+- se viene letto $b$, $D$ va nello stato $\{2\}$ (in $N$, lo stato $1$ va solo nello stato $2$ con tale input, e non si va più lontano tramite $\epsilon$-archi).
+
+Passiamo allo stato $\{3\}$:
+- se viene letto $a$, $D$ va nello stato $\{1,\,3\}$ (in $N$, lo stato $3$ va solo nello stato $1$ con tale input, ma torna anche in $3$ tramite un $\epsilon$-arco);
+- se viene letto $b$, $D$ va nello stato $\emptyset$ (in $N$, non c'è un arco di transizione associato a $b$ uscente dallo stato $3$).
+
+Ora vediamo come ci si comporta con stati un po' più particolari, come ad esempio $\{1,\,2\}$:
+- se viene letto $a$, $D$ va nello stato $\{2,\,3\}$ (in $N$, non c'è un arco di transizione associato ad $a$ uscente dallo stato $1$; al tempo stesso, però, lo stato $2$ va sia in sé stesso che in $3$ con tale input);
+- se viene letto $b$, $D$ va nello stato $\{2,\,3\}$ (in $N$, lo stato $1$ va solo nello stato $2$ con tale input; al tempo stesso, lo stato $2$ va solo nello stato $3$ con tale input).
+
+Procedendo in modo analogo per gli stati rimanenti, abbiamo a questo punto tutte le caratteristiche necessarie per disegnare il diagramma dell'automa $D$:
 
 ![[nfa_to_dfa_esempio1.png]]
 
 L'automa ottenuto può essere semplificato osservando che nessun arco di transizione entra negli stati $\{1\}$ e $\{1,\,2\}$, per cui essi potranno essere rimossi senza ripercussioni. Facendo ciò, l'automa $D$ diventa:
 
 ![[nfa_to_dfa_esempio2.png]]
+___
+## Chiusura rispetto alle operazioni regolari (continua)
+
+[[ACC_02 - Automi#Esempi di operazioni regolari e dimostrazione della chiusura rispetto all'unione|In precedenza]], ci eravamo fermati nel dimostrare la chiusura dei linguaggi regolari rispetto alle operazioni considerate per l'eccessiva complessità delle prove utilizzando automi deterministici. Tuttavia, ora che è stato introdotto il [[ACC_02 - Automi#Non-determinismo|non-determinismo]] e l'NFA, tali dimostrazioni potranno essere esposte molto più semplicemente.
+
+##### Chiusura rispetto all'unione tramite NFA
+
+Come prima cosa, torniamo a dimostrare la **chiusura rispetto all'operazione di unione**, ma stavolta facciamolo **tramite NFA** piuttosto che tramite DFA.
+
+
+
+[TODO: Dimostrazione della chiusura rispetto all'unione con NFA (Lezione 4, pag. 5)]
+[Libro: pag. 44]
 ___
