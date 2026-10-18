@@ -205,9 +205,52 @@ Di seguito, una generalizzazione di un possibile [[OGA_01 - L'impresa#Organizzaz
 
 ![[modgerarchico_esempio.png]]
 
+Questa variante del modello gerarchico rappresenta una "**struttura monofunzionale**", un'organizzazione cioè che viene gestita, sostanzialmente, come un'unica "funzione", e in cui la divisione in dipartimenti specializzati è effimera o anche non esistente. Si tratta di un modello che funziona bene come sistema prevalentemente chiuso in un regime di stabilità, dove i cambiamenti nell'[[OGA_01 - L'impresa#Ambiente di riferimento|ambiente]] sono lenti e prevedibili, ma che comincia a mostrare segni di debolezza in contesti più dinamici. 
 
+È per questi motivi che si arriva a un'evoluzione necessaria di tale modello, ossia il "**modello gerarchico funzionale**". In questo modello, si aggiunge un "**principio di specializzazione**", per cui l'azienda **raggruppa gli elementi della sua gerarchia in base a funzioni comuni**, inserendo nello schema anche dei responsabili legati a ciascuna di queste funzioni; fare ciò permette di facilitare notevolmente la gestione dell'impresa al crescere delle sue dimensioni e della dinamicità dei mercati in cui opera, così come l'apprendimento e la diffusione di competenze all'interno di una medesima funzione. Di seguito, una generalizzazione di un possibile organigramma di un'impresa organizzata secondo un modello gerarchico funzionale:
 
-[03 - Slide 17/31]
+![[modgerarchicofunzionale_esempio.png]]
+
+I principali **punti di forza** del modello gerarchico funzionale sono i seguenti:
+- facilita le **economie di scala** all'interno delle singole unità funzionali;
+- permette lo **sviluppo di competenze approfondite**;
+- permette il **conseguimento di obiettivi funzionali**;
+- è **molto efficace se l'azienda deve gestire uno o pochi prodotti**.
+
+Invece, i principali **punti di debolezza** sono:
+- **tempi di risposta lenti** di fronte a cambiamenti ambientali sostanziali, e dunque **minore innovazione**;
+- può avvenire un **accumulo di decisioni al vertice** e un **sovraccarico della gerarchia** (anche nella variante funzionale del modello);
+- **scarso coordinamento orizzontale** tra le unità funzionali dell'azienda.
+
+Tipicamente, nel modello gerarchico funzionale, la gerarchia si divide principalmente in **tre livelli organizzativi fondamentali**:
+1. la "**direzione generale**", a cui è affidato il compito di **amministrare l'azienda come sistema unitario**, cioè con una visione d'insieme che le consenta di definire gli obiettivi primari e di coordinare l'azione delle diverse aree funzionali;
+2. le "**direzioni dei dipartimenti funzionali**", che sono **specializzate nelle funzioni dell'azienda** e il cui operato, dunque, sarà valutato non su problemi generali ma sul raggiungimento degli obiettivi prefissati all'interno delle rispettive aree di competenza;
+3. le "**unità operative**", organi che fanno capo ai dipartimenti funzionali e che si occupano di **realizzare i piani predisposti da essi** (hanno, dunque, un ruolo prevalentemente esecutivo).
+
+Approfondiamo, in particolare, le **direzioni di dipartimenti funzionali**. Tipicamente, all'interno di un'azienda qualsiasi, le principali direzioni saranno:
+- la direzione del **marketing**;
+- la direzione della **produzione**;
+- la direzione del **personale**;
+- la direzione **amministrativa**;
+- la direzione della **finanza**;
+- la direzione della **ricerca** e dello **sviluppo**.
+
+La **direzione del marketing** è responsabile della gestione di tutti i diversi aspetti del marketing: l'insieme di **caratteristiche** considerate il protagonista del prodotto da vendere; la **comunicazione** del prodotto, tramite tecniche e strumenti che permettano di effettuare una buona pubblicità, promuovere le vendite e incentivare i venditori; la **distribuzione**, ossia il trasferimento dalla produzione al consumo; il **prezzo** del prodotto.
+
+La **direzione della produzione** coordina l'attività di **trasformazione dei fattori produttivi** (materiali, immateriali e personali) **in prodotti finiti** da collocare sul mercato; questa direzione assume un ruolo rilevante soprattutto nelle **aziende industriali**, dove influenza lo svolgimento del lavoro di tutte le altre funzioni. In questo contesto, il "**responsabile della produzione**" svolge numerosi compiti: bilancia le esigenze commerciali con quelle produttive; definisce le modalità di utilizzo dei macchinari; determina i ritmi della produzione; e così via.
+
+La **direzione del personale** è incaricata di sovrintendere ala **gestione del personale dell'azienda**, svolgendo tra gli altri i seguenti compiti:
+- gestire la ricerca, selezione, assunzione e inserimento del personale;
+- provvedere al pagamento delle retribuzioni e delle indennità spettanti al personale, nonché al versamento dei contributi previdenziali e assistenziali;
+- elaborare i piani di sviluppo delle carriere;
+- seguire le questioni di carattere sindacale, così come ogni controversia nel mercato del lavoro;
+- curare l'applicazione corretta delle disposizioni di legge riguardanti il personale.
+
+La **direzione amministrativa** si occupa di tutto ciò che riguarda la tenuta della **contabilità** e i relativi adempimenti, disciplinati dalle leggi civili e dalla normativa fiscale. I compiti della direzione in questo ambito sono principalmente la gestione delle procedure amministrativo-contabili, la produzione di informazioni economico-finanziarie, e la gestione degli adempimenti di tipo civile e fiscale.
+
+La **direzione finanziaria** ha tipicamente come compito la **gestione del capitale** dell'azienda, soprattutto nei momenti di reperimento e di impiego dello stesso. Gli obiettivi di tale direzione, perciò, sono principalmente il dimensionamento delle risorse finanziarie, l'allocazione delle stesse, il loro reperimento e gestione ottimale, la gestione delle relazioni con il sistema bancario, e la gestione valutaria.
+
+Infine, la **direzione della ricerca e dello sviluppo** si occupa della **scoperta e valorizzazione di nuove conoscenze**, al fine di conseguire un'innovazione dell'azienda a livello di processi di produzione, di prodotto o di entrambe, innovazione essenziale per la sopravvivenza e lo sviluppo dell'azienda nel corso del tempo.
 ___
 ##### Modello divisionale
 
@@ -246,11 +289,47 @@ Di seguito, una generalizzazione di un possibile [[OGA_01 - L'impresa#Organizzaz
 ___
 ##### Modello a matrice
 
-[03 - Slide 41/44]
-___
-##### Modello a rete e a outsourcing
+Il **modello a matrice** rappresenta una concezione più aperta e flessibile del sistema-impresa, che cerca di **unire i vantaggi del [[OGA_01 - L'impresa#Modello gerarchico|modello gerarchico funzionale]]** (specializzazione ed efficienza) **e del [[OGA_01 - L'impresa#Modello divisionale|modello divisionale]]** (focalizzazione sulle esigenze del cliente e sul prodotto). In particolare, in un modello a matrice, **una stessa unità organizzativa può rispondere a due diverse strutture di autorità**, di cui tipicamente:
+- una è focalizzata sulle **funzioni**, dunque sulle diverse mansioni svolte tipicamente da un'azienda;
+- una è focalizzata su **prodotti e progetti**, dunque sulle aree di mercato in cui si inserisce l'azienda e su ciò che offre all'[[OGA_01 - L'impresa#Ambiente di riferimento|ambiente]].
 
-[03 - Slide 46/49]
+Per comprendere meglio come funziona questo modello, osserviamo il seguente schema:
+
+![[modmatrice_esempio.png]]
+
+In questo schema di esempio, il sistema considerato gestisce le funzioni di progettazione, di marketing, della finanza e altri, in relazione ai progetti `PM1`, `PM2` e `PM3`; dunque, le unità organizzative di cui stavamo parlando si troveranno alle intersezioni delle direttrici verticali e orizzontali dello schema, rispondendo dunque a diverse autorità in base all'aspetto d'interesse.
+
+Come tutti i modelli, anche quello a matrice ha i suoi pro e contro. I **pregi** principali sono:
+- realizzazione del **coordinamento necessario per** far fronte a **eventuali richieste duali** da parte dei clienti;
+- assicurazione della **condivisione flessibile delle risorse umane** tra i prodotti gestiti dall'azienda;
+- maggiore **adattamento** a decisioni complesse e cambiamenti frequenti;
+- maggiori **opportunità per lo sviluppo di competenze**, sia a livello funzionale che di prodotto;
+- il modello in questione risulta **preferibile in organizzazioni di media grandezza con molteplici prodotti**.
+
+Di seguito, invece, elenchiamo i maggiori **punti di debolezza**:
+- esporre il personale a una duplice autorità può creare **confusione e frustrazione interna**;
+- **è necessario**, per il buon funzionamento del modello, **che il personale abbia discrete capacità interpersonali**, oltre che una formazione completa e approfondita;
+- risulta essere **più time-consuming** a livello di gestione (soprattutto per le frequenti riunioni e sessioni di risoluzione dei conflitti necessarie).
+
+Tra le aziende che conosciamo, molte implementano strutture aziendali ascrivibili al modello a matrice: alcune di esse sono Intel, Spotify, Philips, Starbucks, Microsoft, IBM, ecc. ecc.
+___
+##### Modello a rete (o a outsourcing)
+
+Il **modello a rete**, chiamato anche "**modello a outsourcing**", ha come caratteristica principale l'**estensione della collaborazione orizzontale**, portando quest'ultima oltre i confini dell'azienda **affidando varie parti dell'organizzazione a partner esterni**. Si parla, infatti, di "outsourcing" quando si ricorre a fornitori esterni per svolgere determinati compiti o funzioni, come la produzione, il reperimento delle risorse umane, o la gestione dei crediti. La gestione delle funzioni delegate viene gestita in modo flessibile e leggero dall'azienda committente, che funge comunque da "quartier generale".
+
+Tra i principali **punti di forza** di tale modello, troviamo:
+- possibilità anche per organizzazioni di piccole dimensioni di operare su scale maggiori e attingere a risorse internazionali;
+- ampio raggio di azione senza grandi investimenti in impianti, macchinari o strutture di distribuzione;
+- alta flessibilità e bassi tempi di risposta a eventuali mutazioni del mercato;
+- riduzione dei costi amministrativi.
+
+Invece, i principali **punti di debolezza** sono:
+- scarso controllo sulle attività delegate;
+- grande quantità di tempo destinata alla gestione delle relazioni e dei potenziali conflitti con i partner;
+- rischio di fallimento organizzativo nell'eventualità in cui i partner cessino l'attività o tardino nelle loro consegne;
+- debole fedeltà dei dipendenti, e cultura aziendale scarsa o inesistente.
+
+Uno degli esempi più egregi di implementazione di un modello a rete è la Nike, che delega a partner esterni gli interi processi di produzione e distribuzione, e che si occupa internamente solamente dei settori legati al marketing, al design dei prodotti, alla finanza e alle risorse umane.
 ___
 ## Ciclo di vita di un'impresa
 
