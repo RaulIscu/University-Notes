@@ -333,9 +333,66 @@ Uno degli esempi più egregi di implementazione di un modello a rete è la Nike,
 ___
 ## Ciclo di vita di un'impresa
 
-[04 - Slide 5/14]
-___
-## Il declino di un'impresa
+Nella crescita di un'impresa da una piccola realtà a un'azienda di dimensioni importanti, il suo **ciclo di vita** percorre diverse fasi. Le principali, in ordine (solitamente) cronologico, sono:
+1. lo "**stadio imprenditoriale**";
+2. lo "**stadio della collettività**";
+3. lo "**stadio della formalizzazione**";
+4. lo "**stadio di elaborazione**".
 
-[04 - Slide 16/30]
+Per ognuna di queste fasi, vedremo più nel dettaglio come si configura l'impresa al suo interno, così come le possibili crisi che possono metterla in difficoltà o stimolarne il passaggio a fasi successive.
+
+Il primo stadio è tipicamente quello **imprenditoriale**, in cui un'impresa muove i suoi primi passi e in cui l'enfasi è posta sulla **creazione di un prodotto o di un servizio**, nonché sulla **sopravvivenza nel mercato**. In questa fase, l'impresa ha un'**organizzazione abbastanza informale** e non burocratica, e il controllo della maggior parte delle mansioni è diretto, da parte del proprietario dell'azienda. In questa fase di crescita, una delle possibili crisi può essere il **bisogno di leadership**: infatti, con l'aumento dei dipendenti e delle ambizioni dell'azienda, sorgono nuovi problemi e vanno affrontate nuove questioni relative alla gestione della stessa, per cui gli imprenditori dovranno adattare la struttura dell'organizzazione.
+
+Se questa crisi viene superata con successo, l'azienda ne esce rafforzata con una leadership forte, ed entra nello stadio della **collettività**: in questa fase, inizia lo **sviluppo concreto degli obiettivi e di una direzione chiara**; vengono strutturate le **unità organizzative**, insieme a una gerarchia di autorità; vengono definiti nel dettaglio i compiti di ciascuna unità, e avviene una prima **divisione del lavoro**. Questa è una fase fondamentale anche per la nascita della cultura aziendale, e per fare in modo che **i dipendenti si identifichino nella missione dell'organizzazione** in cui si trovano, dedicando tempo ed energie al suo successo. Nonostante tutto, la comunicazione e la gestione dell'azienda rimane prevalentemente informale, ma cominciano a sorgere gradualmente alcuni sistemi formali. In questo contesto, il principale problema diventa il **bisogno di delega**: i dipendenti dei livelli inferiori potrebbero sentirsi limitati dalla leadership esercitata dall'alto; al tempo stesso, i manager di livello inferiore iniziano ad acquisire fiducia e a richiedere un maggior grado di discrezionalità. L'organizzazione dovrà dunque trovare un modo di equilibrare la gerarchia aziendale, controllando e coordinando le diverse unità anche senza la supervisione diretta del vertice.
+
+Supponendo che l'azienda esca vincente anche da questa crisi, si entra nello stadio della **formalizzazione**: vengono introdotte e utilizzate **regole**, **procedure** e **sistemi di controllo**; **la comunicazione diventa più formale**, e segue maggiormente la struttura gerarchica interna dell'azienda; vengono assunte **figure più specializzate** per la gestione di determinate mansioni; ci si interessa maggiormente a **strategia** e **pianificazione**, lasciando gli aspetti prettamente produttivi ai livelli inferiori. Stavolta, il rischio maggiore è l'**eccesso di burocrazia**, che può portare a un soffocamento dei dipendenti e dei manager di livello medio o basso, e a un eccessiva complicazione dell'organizzazione.
+
+Superata anche questa difficoltà, l'azienda entra nello stadio di **elaborazione**: si trova un nuovo spirito di collaborazione e di lavoro di squadra, i manager imparano a lavorare all'interno della burocrazia senza accrescerla, e in generale l'impresa prolifera e si stabilizza all'interno della sua fetta di mercato. A questo punto, si è arrivati a una **maturità aziendale** che non richiede necessariamente ulteriori sviluppi importanti, ma può avere **bisogno di rivitalizzazione**: se l'impresa rimane "stagnante", o eccessivamente lenta o burocratizzata, può entrare in periodi intermittenti di temporaneo declino, con una necessità di rinnovamento ad esempio tramite un'innovazione della struttura interna o uno snellimento della stessa.
+
+Ricapitoliamo quanto detto finora nella seguente tabella:
+
+![[ciclo_vita_impresa.png]]
+
+##### Burocrazia
+
+[04 - Slide 12/14]
+___
+##### Il declino di un'impresa
+
+Come anticipato [[OGA_01 - L'impresa#Ciclo di vita di un'impresa|all'inizio di questo capitolo]], è normale per un'azienda attraversare dei **periodi di declino temporaneo**, tipicamente un "**declino organizzativo**": concretamente, esso si traduce tipicamente in una **diminuzione sostanziale di risorse in un certo periodo di tempo**, ed è spesso associato a un **declino ambientale** (diminuzione della domanda, cambiamento di preferenze dei consumatori, ecc. ecc.). Più nello specifico, possiamo individuare tre fattori che sono generalmente causa di un declino organizzativo:
+- **atrofia organizzativa**, ossia un'inefficienza o sovra-burocratizzazione dell'azienda, che si riscontra spesso con un numero eccessivo di personale, procedure amministrative ingombranti, una mancanza di comunicazione o una struttura organizzativa obsoleta (spesso, l'atrofia organizzativa sorge in un'azienda dopo un periodo di successo, in cui quest'ultima si è "adagiata" e ha smesso di innovarsi);
+- **vulnerabilità**, ossia un'incapacità strategica di prosperare all'interno dell'[[OGA_01 - L'impresa#Ambiente di riferimento|ambiente di riferimento]] (spesso, ciò accade alle piccole organizzazioni non ancora pienamente consolidate);
+- **declino ambientale**, o **competizione**, ossia una diminuzione dell'energia e delle risorse disponibili, in risposta delle quali un'azienda dovrà diminuire progressivamente le sue attività o spostarsi in un nuovo ambiente di riferimento.
+
+Non sempre, però, il declino di un'impresa è solo temporaneo. In generale, è possibile inquadrare il declino di un'organizzazione secondo il **modello di Weitzel e Jonsson**, secondo il quale, se il declino non è gestito correttamente, si attraversano **5 stadi** fino alla dissoluzione completa dell'organizzazione. Tali stadi sono:
+1. stadio della **cecità**;
+2. stadio dell'**inattività**;
+3. stadio dell'**errore**;
+4. stadio della **crisi**;
+5. stadio della **dissoluzione**.
+
+Nella prima fase, quella della **cecità**, l'azienda **inizia a subire cambiamenti negativi** (interni o esterni che siano), **ma i manager non se ne rendono conto**, per negligenza o per mancanza di sistemi di controllo adeguati. Alcuni dei segnali tipici di questa fase, e dunque dell'inizio del declino, sono un eccesso di personale, un rallentamento dei processi decisionali, un aumento dei conflitti interni o anche un calo dei profitti. Ciononostante, se si riesce a riscontrare il declino in questa fase, c'è un **margine di recupero elevato**, e il declino è facilmente prevenibile.
+
+Se i problemi diventano evidenti senza che vengano presi provvedimenti adeguati, si entra nella seconda fase: lo stadio dell'**inattività**. Ciò avviene quando si spera che la crisi si risolva da sola, o quando le decisioni sono bloccate per vari motivi; tramite azioni rapide (ristrutturazioni interne, riduzioni dei costi, nuovi approcci al problem-solving) **il recupero è ancora possibile**, ma meno immediato.
+
+Il terzo stadio di declino è quello dell'**errore**: lo si raggiunge quando, di fronte alla crisi, **si interviene con decisioni sbagliate o inadeguate**. Generalmente, ciò accade per panico, conflitti al vertice, o riforme parziali e non adatte alla situazione che si sta affrontando, tutti fattori che peggiorano il problema invece di risolverlo. In questo contesto, **il margine di recupero è critico** (tendenzialmente questa è l'ultima finestra utile per un vero cambiamento, prima di finire nell'irreparabile); per risolvere la crisi in questa fase, spesso si deve ricorrere a cambiamenti drastici, come una riduzione ingente dei costi o un taglio al personale.
+
+Entriamo nella parte quasi irrecuperabile del declino, e approfondiamo lo stadio della **crisi**. A questo punto, l'azienda è nel caos, i risultati crollano, e **la sopravvivenza è a rischio immediato** per molti motivi (perdita di fiducia da parte degli investitori e dei dipendenti, abbandono dell'azienda da parte di figure importanti, ecc. ecc.). **Il recupero diventa quasi impossibile**, e richiede cambiamenti radicali che potrebbero anche stravolgere l'azienda in un'entità completamente diversa.
+
+Arriviamo, infine, allo stadio della **dissoluzione**: a questo punto, **il declino è irreversibile**, i tentativi di riorganizzazione sono falliti e le parti interessate hanno definitivamente abbandonato l'azienda. Essa smette di esistere, viene liquidata oppure acquisita o incorporata da un competitor.
+
+Possiamo utilizzare il modello di Weitzel e Jonsson per analizzare esempi reali di declini di aziende. Consideriamo, ad esempio, il **caso BlackBerry**, che è passata dall'essere il leader assoluto degli smartphone aziendali a collassare completamente nei primi anni dopo il 2010. Il declino di BlackBerry può essere inquadrato proprio negli stadi appena visti:
+1. lo **stadio della cecità** si riscontra per la prima volta nel **2007**, quando Apple lancia il primo iPhone e i piani alti di BlackBerry non si rendono conto della minaccia che ciò rappresenta per loro a livello di mercato (il nuovo prodotto della Apple viene visto come un "giocattolo", inadatto per i clienti aziendali, con poca batteria e scarsa sicurezza); BlackBerry, nel fare ciò, ignora i segnali di cambiamento del mercato, non si rende conto che i consumatori preferiscono l'innovazione dell'iPhone alla rigidità dei dispositivi prodotti da loro; oltre a ciò, tale periodo è caratterizzato da un'ingente perdita economica accaduta nel 2006, dovuta alla sconfitta in una causa dovuta alla violazione di un brevetto;
+2. lo **stadio dell'inattività** può essere individuato **tra il 2008 e il 2009**, quando i nuovi dispositivi Apple e Android iniziano concretamente a "rubare" quote di mercato ma il management di BlackBerry, forte dei dati di vendita generali ancora apparentemente favorevoli, decide di non cambiare la propria strategia, continuando a puntare su tecnologie ormai già obsolete come la tastiera fisica e il sistema chiuso di messagistica BlackBerry Messenger;
+3. lo **stadio dell'errore** si verifica **tra il 2010 e il 2011**, anni in cui la crisi diventa innegabile e in cui BlackBerry reagisce ma in modo inadeguato, lanciando prodotti frettolosi e mal progettati nel tentativo di rincorrere la concorrenza, sprecando sostanzialmente risorse;
+4. lo **stadio della crisi** raggiunge il suo picco **tra il 2012 e il 2014**, con le quote di mercato che cominciano a crollare, e con l'azienda che subisce perdite miliardarie ed è costretta a licenziare migliaia di dipendenti; in questo contesto, BlackBerry cade nel caos organizzativo, i clienti e gli investitori la abbandonano in massa, e l'azienda si trova costretta ad avviare una ristrutturazione radicale guidata dal nuovo CEO John Chen, che decide di tagliare quasi completamente la produzione di prodotti hardware;
+5. lo **stadio della dissoluzione** si riscontra **a partire dal 2016** e sussiste ancora oggi: BlackBerry, per come era conosciuta un tempo, cessa di esistere; i diritti per l'uso del marchio sui telefoni viene venduto a società terze, nel 2022 viene interrotto definitivamente il supporto per i servizi storici dei vecchi dispositivi, e l'azienda nella sua totalità si riconfigura e ridimensiona radicalmente, abbandonando la telefonia per diventare una più piccola "software house", specializzata in cybersecurity e sistemi operativi per auto.
+___
+## Aziende in Italia
+
+[05 - Slide 5/10]
+___
+## Il bilancio di un'azienda
+
+[05 - Slide 12/38]
 ___
