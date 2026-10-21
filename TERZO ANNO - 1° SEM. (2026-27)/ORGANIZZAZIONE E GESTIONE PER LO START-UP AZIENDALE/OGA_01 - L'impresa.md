@@ -355,7 +355,22 @@ Ricapitoliamo quanto detto finora nella seguente tabella:
 
 ##### Burocrazia
 
-[04 - Slide 12/14]
+Con l'emergere di un'azienda, generalmente essa assume sempre più caratteristiche burocratiche. Ma cosa si intende per "**burocrazia**"? Secondo la definizione di **Max Weber**, la burocrazia è la **forma di organizzazione più efficiente e razionale sviluppabile**, indispensabile per il funzionamento del capitalismo moderno e delle grandi amministrazioni; viene visto, sostanzialmente, come l'unico modo razionale di gestire qualunque tipo di potere. Le teorie classiche della burocrazie, come quelle sviluppate da Weber, Taylor o Fayol, si basano sul **ricorso alla scienza**, sulla **ricerca di soluzioni ottimali e universali** e sull'**enfasi sugli aspetti formali**.
+
+Se volessimo riassumere una "corretta" burocrazia in una serie di **principi fondamentali**, essi sarebbero i seguenti:
+- la **formalizzazione**, intesa come standardizzazione di qualsiasi cosa;
+- la **divisione del lavoro**, dunque l'assegnamento di compiti precisi e ben definiti per ogni ruolo;
+- la **gerarchia degli uffici**, dunque una chiara struttura di comando e subordinazione;
+- la **competenza tecnica**, che si riscontra nell'assunzione e promozione del personale basate su qualifiche, esami o meriti professionali, e non su favoritismi;
+- l'**impersonalità**, dunque l'applicazione delle regole in modo uguale per tutti, senza preferenze personali;
+- la **separazione tra ufficio e vita privata**;
+- la **documentazione scritta**, nel senso che tutti gli atti, le decisioni e le regole dovrebbero essere archiviati per garantire tracciabilità e trasparenza.
+
+Pur considerandola tecnicamente superiore a ogni altro sistema, Weber stesso avvertiva però anche sui **limiti e rischi della burocrazia**, tra cui:
+- la cosiddetta "**gabbia d'acciaio**", ossia l'eccessiva razionalizzazione che può imprigionare in un meccanismo rigido, soffocando creatività e libertà umana;
+- l'**eccessivo potere dei funzionari**, ossia il rischio che la macchina burocratica diventi troppo potente, dominando l'azienda stessa;
+- la **spersonalizzazione** e **freddezza**, ossia l'eliminazione dei rapporti umani;
+- il **conservatorismo** e la **burocratizzazione del fine**, ossia l'obbedienza alle regole che diventa un fine in sé invece che un mezzo, rendendo l'organizzazione incapace di adattarsi e di prosperare.
 ___
 ##### Il declino di un'impresa
 
@@ -390,9 +405,75 @@ Possiamo utilizzare il modello di Weitzel e Jonsson per analizzare esempi reali 
 ___
 ## Aziende in Italia
 
-[05 - Slide 5/10]
+Nei capitoli precedenti abbiamo analizzato l'impresa sotto ogni punto di vista: come [[OGA_01 - L'impresa#L'impresa come fenomeno|fenomeno]], come [[OGA_01 - L'impresa#L'impresa come sistema|sistema]], la sua [[OGA_01 - L'impresa#Organizzazione di un'impresa|organizzazione interna]] e anche il suo [[OGA_01 - L'impresa#Ciclo di vita di un'impresa|ciclo di vita]]. Quanto detto finora, però, è prettamente generico e valido per qualsiasi tipo di azienda o impresa del mondo. Viene naturale chiedersi, però, **come sono gestite e regolate le aziende in Italia**, nel paese in cui viviamo?
+
+Nel **Codice Civile**, in particolare nell'**articolo 2555**, l'azienda è definita come "**il complesso dei beni organizzati dall'imprenditore per l'esercizio dell'impresa**". Questa definizione si espande per andare a comprendere organizzazioni divise principalmente in **due macro-categorie**:
+- le "**aziende di produzione**", dette anche **imprese "profit"**, che **soddisfano bisogni in via indiretta**, rendendo disponibili i loro prodotti e servizi per il consumo o per altre imprese mediante uno scambio di mercato;
+- le "**aziende di erogazione**", che **soddisfano in via diretta bisogni di soggetti specifici** (associati, affiliati, fondatori, ecc. ecc.) e che, a loro volta, si dividono in **corporazioni**, basate principalmente sull'elemento umano e in cui si raccolgono contributi per soddisfare i bisogni degli associati, e **fondazioni**, basate principalmente sul capitale, che sorgono in virtù di donazioni o destinazione di patrimoni e che sono amministrate per raggiungere scopi solidaristici e di utilità sociale.
+
+Per adesso, concentriamoci sulla prima macro-categoria, ossia quella delle **aziende di produzione**. Esse possono esercitate in **forma individuale** o in **forma collettiva** (andando a creare la cosiddetta "**società**"). 
+
+Nella prima forma, **l'azienda fa capo a un singolo individuo fisico**, che ha una "**responsabilità illimitata**" riguardo le obbligazioni contratte dalla stessa, indipendentemente da quanta parte del suo patrimonio ha investito (qualsiasi debito aziendale dovrà essere saldato da lui, anche a prezzo di beni personali). Tale assetto presenta alcuni **vantaggi**, come l'imposizione fiscale unica, la semplicità della contabilità e la gestione poco costosa; in compenso, lo **svantaggio** principale è appunto la responsabilità illimitata.
+
+Nella seconda forma, ossia della **società**, "**due o più persone conferiscono beni o servizi per l'esercizio comune di un'attività economica allo scopo di dividerne gli utili**" (articolo 2247 del Codice Civile). Le società si dividono tipicamente in altre due categorie: 
+- le "**società di persone**", che possono presentarsi come **società semplici** (**S.s.**, una forma basilare che però può essere utilizzata solo per attività non commerciali, in cui tutti i soci hanno responsabilità illimitata e solidale), **società in nome collettivo** (**S.n.c.**, a differenza delle S.s. può svolgere attività commerciali, e anche in questo caso a tutti i soci spetta responsabilità illimitata e solidale) o **società in accomandita semplice** (**S.a.S.**, permette la coesistenza di due categorie di soci, gli "accomandatari", che hanno il diritto/dovere di amministrare la società e perciò mantengono una responsabilità illimitata, e gli "accomandanti", che finanziano l'impresa fornendo capitale ma che sono esclusi dalla gestione aziendale);
+- le "**società di capitali**", che possono presentarsi come **società per azioni** (**S.p.A.**, modello pensato per aziende di medie e grandi dimensioni, in cui il capitale sociale è diviso in azioni, titoli standardizzati e facilmente trasferibili, e il capitale minimo richiesto per la costituzione è di 50.000€, prevede una struttura articolata e rigida per amministrazione e controllo), **società in accomandita per azioni** (**S.A.p.A.**, modello ibrido tra S.p.A. e S.a.S., con un capitale diviso in azioni e al tempo stesso una distinzione dei soci in accomandatari e accomandanti), **società a responsabilità limitata** (**S.r.l.**, la forma più diffusa per le piccole e medie imprese, in cui il capitale sociale è diviso in quote e il capitale minimo richiesto per la costituzione è di 10.000€, offre una grande flessibilità organizzativa) e **società a responsabilità limitata semplificata** (**S.r.l.s.**, una sottocategoria delle S.r.l. pensata per agevolare l'avvio di nuove iniziative con costi notarili e di avvio abbattuti, ma al tempo stesso più rigida a livello di gestione).
+
+In generale, per tutte le **società di persone**, abbiamo come **vantaggi** l'imposizione fiscale unica, la relativa semplicità della contabilità e la gestione poco onerosa, mentre come **svantaggi** troviamo la responsabilità illimitata e la difficoltà di attrarre capitali di terzi (caratteristiche simili alle ditte individuali). Per quanto riguarda le **società di capitali**, invece, tra i **vantaggi** c'è la responsabilità limitata e la possibilità di attrarre capitali di terzi, mentre come **svantaggi** troviamo la maggiore complessità di gestione e l'imposizione fiscale doppia (le tasse vengono pagate sia dalla società che dai singoli soci).
+
+All'interno di un'azienda, tipicamente, troviamo una distinzione tra "**soggetto giuridico**" e "**soggetto economico**". Quando si parla di **soggetto giuridico**, si intende il **soggetto a cui fanno capo gli effetti giuridici** (diritti e doveri) **conseguenti allo svolgimento di un'attività aziendale**; può essere una persona fisica (è così, ad esempio, nelle [[OGA_01 - L'impresa#Diversi tipi di aziende|ditte individuali]]) o una società. Invece, il **soggetto economico** è il **soggetto che ha il controllo dell'impresa**, dunque degli aspetti economico-finanziari; anche in questo caso, può trattarsi di una persona fisica o, in caso di società, di un gruppo di persone o di capitali.
+
+Gli investimenti che vengono fatti in un'azienda, e dunque le risorse finanziare a disposizione della stessa, si dividono in **due tipi di capitale**:
+- **capitale fisso**, o **immobilizzato**, ossia beni durevoli che servono all'azienda a lungo termine, che possono essere materiali (fabbricati, impianti, ecc. ecc.), immateriali (brevetti, marchi, ecc. ecc.) o finanziari (titoli, partecipazioni in altre aziende, ecc. ecc.);
+- **capitale circolante**, ossia risorse liquide o facilmente trasformabili in liquidità nel breve termine (scorte di magazzino, crediti, contanti, conti in banca, ecc. ecc.).
+
+L'unione di capitale fisso e circolante di un'azienda ne formano quello che chiamiamo "**capitale di funzionamento**".
 ___
 ## Il bilancio di un'azienda
 
-[05 - Slide 12/38]
+Uno dei modi migliori per valutare l'andamento di un'azienda e la sua situazione patrimoniale e finanziaria è il "**bilancio d'esercizio**". Si tratta di un documento sul quale confluiscono tutte le rilevazioni sistemiche effettuate tramite la contabilità generale, attraverso il quale è possibile determinare il reddito d'esercizio e il [[OGA_01 - L'impresa#Aziende in Italia|capitale di funzionamento]]; è prevalentemente finalizzato al soddisfacimento delle esigenze informative di un insieme eterogeneo di soggetti (banche, imprenditori, investitori, clienti, fornitori, ecc. ecc.), mediante una lista di informazioni esaurienti e attendibili sulle vicende economico-aziendali dell'impresa.
+
+In generale, **tutte le aziende sono obbligate a redigere annualmente il proprio bilancio d'esercizio**, tuttavia sono previste modalità differenti in base all'[[OGA_01 - L'impresa#Aziende in Italia|assetto dell'azienda]]:
+- per le **società di capitali**, il bilancio deve essere compilato seguendo una **struttura obbligatoria stabilita dalla legge**, e **deve essere reso pubblico mediante deposito presso il Registro delle Imprese** (ciò avviene perché la legge impone rigidi obblighi informativi a tutela dei creditori);
+- per le **società di persone** e per le **aziende individuali**, la legge **non prescrive uno schema** per la redazione del bilancio, ed esso **non è necessariamente soggetto a pubblicazione**; inoltre, è possibile per questi tipi di azienda presentare un bilancio d'esercizio "in forma abbreviata", secondo lo schema del Codice Civile previsto per le società di piccole dimensioni (gli obblighi, in questo caso, sono meno severi proprio per la responsabilità illimitata a cui sono soggetti gli individui coinvolti nell'azienda).
+
+Il bilancio d'esercizio è composto dai seguenti elementi:
+- lo **[[OGA_01 - L'impresa#Stato patrimoniale|stato patrimoniale]]**;
+- il **[[OGA_01 - L'impresa#Conto economico|conto economico]]**;
+- la **[[OGA_01 - L'impresa#Nota integrativa|nota integrativa]]**.
+
+##### Stato patrimoniale
+
+La sezione dello **stato patrimoniale** rappresenta prettamente la **situazione patrimoniale e finanziaria della società**. 
+
+Secondo lo schema prescritto dall'articolo 2424 del Codice Civile, lo stato patrimoniale è principalmente diviso in due sezioni contrapposte: l'**attivo** e il **passivo**. L'**attivo** mostra, sostanzialmente, **dove l'azienda ha investito il suo denaro**, e questa macro-sezione si divide in 4 sottoclassi:
+- **crediti verso i soci** (**A**), ossia somme di denaro dovute dai soci per il capitale sottoscritto;
+- **immobilizzazioni** (**B**), ossia beni a uso durevole, divisi in immateriali (brevetti, marchi), materiali (fabbricati, macchinari) e finanziarie (partecipazioni, crediti a lungo termine);
+- **attivo circolante** (**C**), ossia beni a rapido realizzo, come rimanenze di magazzino, crediti a breve termine, attività finanziarie, contanti e conti bancari;
+- **ratei e risconti attivi** (**D**), ossia quote di proventi o costi di competenza per esercizi futuri.
+
+Il passivo, invece, indica **da dove arrivano i soldi dell'azienda**, e anche questa sezione si divide, stavolta, in 5 sottoclassi:
+- **patrimonio netto** (**A**), ossia il capitale sociale, le riserve, e l'utile;
+- **fondi, rischi e oneri** (**B**), ossia accantonamenti previsti per coprire perdite o debiti futuri (probabili o certi che siano);
+- **trattamento di fine rapporto**, o **TFR** (**C**), ossia l'indennità maturata dai dipendenti durante il loro lavoro;
+- **debiti** (**D**), ossia finanziamenti bancari, debiti verso fornitori, tributari o altri soggetti;
+- **ratei e risconti passivi** (**E**), ossia quote di costi o ricavi di competenza per esercizi successivi.
+
+In generale, **attivo e passivo di un bilancio devono coincidere**, banalmente perché bisogna giustificare da dove proviene tutto il denaro speso o investito dall'azienda.
+___
+##### Conto economico
+
+La sezione del **conto economico** evidenzia, come suggerisce il nome, il **risultato economico dell'esercizio d'impresa**.
+
+Esso fornisce una rappresentazione delle operazioni di gestione, mediante una sintesi dei componenti positivi e negativi di reddito che hanno contribuito a determinare il risultato economico. I componenti positivi e negativi, all'interno del conto economico, sono raggruppati in modo da fornire anche significativi risultati intermedi. Lo schema da seguire nella redazione del conto economico è prescritto dall'articolo 2425 del Codice Civile, mediante una forma espositiva di tipo scalare e una classificazione dei costi per natura.
+
+[05 - Slide 21/27]
+___
+##### Nota integrativa
+
+La **nota integrativa**, a differenza di [[OGA_01 - L'impresa#Stato patrimoniale|stato patrimoniale]] e [[OGA_01 - L'impresa#Conto economico|conto economico]], non è uno schema contabile ma un **documento descrittivo**, che contiene **informazioni che illustrano meglio quanto elencato nelle altre due sezioni**, chiarendone il contenuto. La sua redazione, similmente a quella delle altre sezioni, è regolata dal Codice Civile, più precisamente dall'articolo 2427.
+___
+## L'analisi di bilancio
+
+[05 - Slide 29/38]
 ___
