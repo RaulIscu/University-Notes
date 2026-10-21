@@ -465,9 +465,20 @@ ___
 
 La sezione del **conto economico** evidenzia, come suggerisce il nome, il **risultato economico dell'esercizio d'impresa**.
 
-Esso fornisce una rappresentazione delle operazioni di gestione, mediante una sintesi dei componenti positivi e negativi di reddito che hanno contribuito a determinare il risultato economico. I componenti positivi e negativi, all'interno del conto economico, sono raggruppati in modo da fornire anche significativi risultati intermedi. Lo schema da seguire nella redazione del conto economico è prescritto dall'articolo 2425 del Codice Civile, mediante una forma espositiva di tipo scalare e una classificazione dei costi per natura.
+Esso fornisce una rappresentazione delle operazioni di gestione, mediante una sintesi dei componenti positivi e negativi di reddito che hanno contribuito a determinare il risultato economico. I componenti positivi e negativi, all'interno del conto economico, sono raggruppati in modo da fornire anche significativi risultati intermedi. In altre parole, il conto economico **espone costi e ricavi riferibili al periodo amministrativo**, così come il **reddito dell'azienda** in tale periodo. Lo schema da seguire nella redazione del conto economico è prescritto dall'articolo 2425 del Codice Civile, mediante una forma espositiva di tipo scalare e una classificazione dei costi per natura, che si articola per tre livelli:
+- **gestione caratteristica**, che rappresenta il core business e da cui si ottengono valori come l'**EBITDA** che mostrano l'andamento della pura attività operativa dell'azienda;
+- **gestione finanziaria e straordinaria**, che include proventi e oneri legati ai finanziamenti, così come eventi imprevedibili totalmente estranei alla normale operatività;
+- **risultato d'esercizio**, il traguardo finale del conto economico, in cui si ottiene l'utile (o la perdita) finale dell'azienda, importo che verrà poi riportato nel passivo dello [[OGA_01 - L'impresa#Stato patrimoniale|stato patrimoniale]].
 
-[05 - Slide 21/27]
+Approfondiamo meglio i principali risultati di ciascuna delle 3 sezioni appena viste, partendo dalla gestione caratteristica. Eseguendo la seguente differenza:
+$$\text{valore della produzione}-\text{costi della produzione}$$
+ossia la differenza tra i ricavi derivanti dalla vendita di beni, dalla prestazione di servizi e altro, e i costi sostenuti per l'acquisto dei fattori produttivi, si ottiene il cosiddetto **EBITDA**, acronimo di "Earnings Before Interest, Taxes, Depreciation and Amortization". In riferimento alla gestione finanziaria e straordinaria, eseguendo la seguente differenza:
+$$\text{proventi finanziari}-\text{oneri finanziari}$$
+ossia la differenza tra i ricavi derivati dall'impiego di somme di denaro e i costi sostenuti per ottenere finanziamenti, si ottiene il **risultato della gestione finanziaria**; invece, con la differenza:
+$$\text{proventi straordinari}-\text{oneri straordinari}$$
+ossia la differenza tra i ricavi originati da eventi imprevedibili o estranei dalla normale attività aziendale e i costi dello stesso tipo, si ottiene il **risultato della gestione straordinaria**. Passiamo, infine, al risultato d'esercizio, in cui troviamo la seguente differenza:
+$$\text{risultato economico prima delle imposte}-\text{imposte dell'esercizio}$$
+che ci permette di ottenere, come anticipato in precedenza, l'**utile** (o **perdita**) dell'azienda.
 ___
 ##### Nota integrativa
 
