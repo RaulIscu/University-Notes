@@ -486,5 +486,17 @@ La **nota integrativa**, a differenza di [[OGA_01 - L'impresa#Stato patrimoniale
 ___
 ## L'analisi di bilancio
 
-[05 - Slide 29/38]
+Avendo a disposizione il [[OGA_01 - L'impresa#Il bilancio di un'azienda|bilancio d'esercizio]] di un'azienda, si può procedere alla cosiddetta "**analisi di bilancio**", una tecnica fondamentale per la conoscenza della gestione aziendale in modo storico e prospettico. L'analisi di bilancio ha come obiettivi principali **verificare il rispetto degli equilibri fondamentali di gestione** e **monitorare lo stato di salute dell'impresa**; per fare ciò, essa tiene in conto di **indicatori reddituali, finanziari e patrimoniali**.
+
+Il primo passo per effettuare una buona analisi di bilancio è la **riclassificazione del bilancio** stesso, un'operazione necessaria per poterne utilizzare e analizzare i dati, il cui obiettivo è:
+1. **rendere omogenei i dati di bilancio**;
+2. **far emergere alcune informazioni non immediate**.
+
+Sullo **[[OGA_01 - L'impresa#Stato patrimoniale|stato patrimoniale]]**, la riclassificazione viene effettuata seguendo il **criterio della liquidità ed esigibilità crescente**, ossia ponendo attenzione su quanto sia "disponibile" il denaro a disposizione di un'azienda (liquidità, il criterio viene applicato sull'attivo) e sull'urgenza con cui l'azienda deve restituire capitale a terzi (esigibilità, il criterio viene applicato sul passivo). In questo contesto, per ciascuno di questi due criteri si crea una sorta di "scala": per il criterio della liquidità, la scala dall'alto verso al basso include l'**attivo immobilizzato** (i beni a lungo termine, che richiedono oltre 12 mesi per tornare in forma liquida) e l'**attivo corrente** (beni a breve termine o immediati); per il criterio dell'esigibilità, la scala nello stesso verso include il **patrimonio netto** (il capitale proprio dell'azienda, che dunque non costituisce un vero e proprio debito), il **passivo consolidato** (debiti a medio-lungo termine, la cui scadenza supera i 12 mesi) e il **passivo corrente** (debiti a breve termine, da saldare entro l'anno).
+
+Sul **[[OGA_01 - L'impresa#Conto economico|conto economico]]**, [TODO: 05 - Slide 32]
+
+
+
+[05 - Slide 33/38]
 ___
