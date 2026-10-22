@@ -494,9 +494,16 @@ Il primo passo per effettuare una buona analisi di bilancio è la **riclassifica
 
 Sullo **[[OGA_01 - L'impresa#Stato patrimoniale|stato patrimoniale]]**, la riclassificazione viene effettuata seguendo il **criterio della liquidità ed esigibilità crescente**, ossia ponendo attenzione su quanto sia "disponibile" il denaro a disposizione di un'azienda (liquidità, il criterio viene applicato sull'attivo) e sull'urgenza con cui l'azienda deve restituire capitale a terzi (esigibilità, il criterio viene applicato sul passivo). In questo contesto, per ciascuno di questi due criteri si crea una sorta di "scala": per il criterio della liquidità, la scala dall'alto verso al basso include l'**attivo immobilizzato** (i beni a lungo termine, che richiedono oltre 12 mesi per tornare in forma liquida) e l'**attivo corrente** (beni a breve termine o immediati); per il criterio dell'esigibilità, la scala nello stesso verso include il **patrimonio netto** (il capitale proprio dell'azienda, che dunque non costituisce un vero e proprio debito), il **passivo consolidato** (debiti a medio-lungo termine, la cui scadenza supera i 12 mesi) e il **passivo corrente** (debiti a breve termine, da saldare entro l'anno).
 
-Sul **[[OGA_01 - L'impresa#Conto economico|conto economico]]**, [TODO: 05 - Slide 32]
+Sul **[[OGA_01 - L'impresa#Conto economico|conto economico]]**, la riclassificazione viene effettuata focalizzandosi sul **valore della produzione** e sul **valore aggiunto**, che si ottiene proprio dalla differenza tra il primo e i costi necessari per la produzione stessa (acquisti di materie prime, utenze, servizi esterni). Con un calcolo progressivo, si arriva al calcolo dell'**utile**, o **perdita**, **d'esercizio**, che formalizziamo in questa tabella:
 
+![[analisi_bilancio_contoeconomico.png]]
 
+Ora, come detto a inizio paragrafo, l'analisi di bilancio permette di ricavare alcuni **indicatori** sull'andamento dell'azienda, indicatori che possono essere:
+- **di natura reddituale**, come gli indici di **redditività** e di **economicità**;
+- **di natura finanziaria**, come gli indici di **liquidità** e di **indebitamento**;
+- **di natura patrimoniale**, come gli indici di **solidità** e di **solvibilità**.
 
-[05 - Slide 33/38]
+Concentriamoci, in particolare, sugli **indici di redditività**. I principali sono: il **ROI**, o "**Return On Investment**", che consiste nel rapporto tra il reddito operativo e il capitale investito; il **ROS**, o "**Return On Sales**", che consiste nel rapporto tra il reddito operativo e i ricavi; il **ROE**, o "**Return On Equity**", che consiste nel rapporto tra l'utile netto e i mezzi propri.
+
+[05 - Slide 37 - 38]
 ___
