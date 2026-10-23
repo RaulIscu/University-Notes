@@ -70,5 +70,14 @@ ___
 ___
 ## Le start-up in Italia
 
-[06 - Slide 57/59]
+Nell'**ordinamento giuridico italiano**, è prevista una **specifica disciplina per le start-up innovative**, introdotta dal decreto-legge del 18 ottobre 2012 n°179, convertito poi con delle modificazioni nella legge del 17 dicembre 2012 n° 221. La definizione, in particolare, si trova nell'articolo 25, comma 2, secondo cui è definibile una start-up innovativa "**la società di capitali, costituita anche in forma cooperativa, le cui azioni o quote rappresentative del capitale sociale non sono quotate su un mercato regolamentato o su un sistema multilaterale di negoziazione, che possieda determinati requisiti previsti dalla norma e che abbia come oggetto sociale esclusivo o prevalente lo sviluppo, la produzione e la commercializzazione di prodotti o servizi innovativi ad alto valore tecnologico**".
+
+Ma quali sono questi requisiti previsti dalla norma? In generale, in Italia le start-up innovative devono soddisfare almeno uno di questi criteri:
+1. **almeno il 15%** del maggiore tra costi e valore totale della produzione è costituito da **spese in ricerca e sviluppo**;
+2. **almeno un terzo della forza lavoro** complessiva è costituito da **dottori di ricerca, dottorandi o personale laureato** che abbia svolto attività di ricerca certificata per almeno tre anni, oppure **almeno due terzi della forza lavoro** è costituito da **possessori di laurea magistrale**;
+3. l'impresa è titolare, depositaria o licenziataria di almeno una **privativa industriale** pertinente alla propria attività, oppure è **titolare dei diritti relativi a un software registrato**.
+
+Per favorire il sorgere delle start-up, sono previste delle forme di **incentivazione** (principalmente delle agevolazioni fiscali) per chi investe nelle stesse. Ad esempio:
+- le **persone fisiche** possono **detrarre dall'IRPEF un importo pari al 30% dell'investimento effettuato** nel capitale di una o più start-up innovative, **fino a un massimo di 1.000.000€** per periodo d'imposta, con l'obbligo però di **mantenere l'investimento per almeno tre anni**;
+- i **soggetti passivi IRES** possono **dedurre dalla base imponibile un importo pari al 30% dell'investimento effettuato** nel capitale di una o più start-up innovative, **fino a un massimo di 1.800.000€** per periodo d'imposta, anche in questo caso con l'obbligo di **mantenere l'investimento per almeno tre anni**.
 ___

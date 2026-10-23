@@ -503,7 +503,11 @@ Ora, come detto a inizio paragrafo, l'analisi di bilancio permette di ricavare a
 - **di natura finanziaria**, come gli indici di **liquidità** e di **indebitamento**;
 - **di natura patrimoniale**, come gli indici di **solidità** e di **solvibilità**.
 
-Concentriamoci, in particolare, sugli **indici di redditività**. I principali sono: il **ROI**, o "**Return On Investment**", che consiste nel rapporto tra il reddito operativo e il capitale investito; il **ROS**, o "**Return On Sales**", che consiste nel rapporto tra il reddito operativo e i ricavi; il **ROE**, o "**Return On Equity**", che consiste nel rapporto tra l'utile netto e i mezzi propri.
-
-[05 - Slide 37 - 38]
+Concentriamoci, in particolare, sugli **indici di redditività**. I principali sono: il **ROI**, o "**Return On Investment**", che consiste nel rapporto tra il reddito operativo e il capitale investito; il **ROS**, o "**Return On Sales**", che consiste nel rapporto tra il reddito operativo e i ricavi; il **ROE**, o "**Return On Equity**", che consiste nel rapporto tra l'utile netto e i mezzi propri. Questi indicatori possono essere utilizzati, a confronto con dei **parametri di riferimento**, per valutare se un'impresa crea valore o meno: ad esempio, **un'impresa crea valore quando il rendimento sul capitale investito**, ossia il ROI, **è maggiore del costo medio ponderato del capitale**, una grandezza indicata come **WACC**, dunque se vale che:
+$$ROI>WACC$$
+In parole povere, se il denaro generato dagli investimenti è maggiore del denaro effettivamente investito, l'azienda ha generato un profitto. Sappiamo come calcolare il ROI ($\frac{\text{reddito operativo}}{\text{capitale investito}}$), mentre per calcolare il WACC ricorreremo alla seguente formula:
+$$WACC=C_{MP}\,\frac{MP}{(MP+D)}+C_{D}\,\frac{D}{(MP+D)}$$
+dove $MP$ rappresenta i mezzi propri, $D$ il debito, $C_{D}$ il costo del capitale di credito (sostanzialmente, il tasso d'interesse) e $C_{MP}$ il costo del capitale di rischio (sostanzialmente, il rendimento atteso di un investimento). Quest'ultima grandezza risulta abbastanza complessa da calcolare, ma è approssimabile mediante il modello del CAPM (Capital Asset Pricing Model), che fornisce la seguente formula:
+$$C_{MP}=R_{f}+\beta(R_{m}-R_{f})$$
+dove $R_{f}$ indica il rendimento risk-free, $R_{m}$ il rendimento del mercato, e $\beta$ il coefficiente di rischiosità dell'azienda (se $\beta>1$, l'impresa è "più rischiosa" del mercato, mentre se $0<\beta<1$ l'impresa è "meno rischiosa").
 ___
